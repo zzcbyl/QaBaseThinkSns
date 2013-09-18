@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 class SelectFriendsAction extends Action {
 	
         //------------------------------------------------以下是选择好友组件相关-----------------------------------
@@ -10,14 +10,14 @@ class SelectFriendsAction extends Action {
 				if($name){
 					//从我关注的人中找				
 					$followings = $Model->field('follow.fid AS fuid,user.uname AS funame')
-										->table("{$db_prefix}weibo_follow AS follow LEFT JOIN {$db_prefix}user AS user ON follow.fid=user.uid")
+										->table("{$db_prefix}user_follow AS follow LEFT JOIN {$db_prefix}user AS user ON follow.fid=user.uid")
 										->where("follow.uid={$this->mid} AND user.uname LIKE '%{$name}%'")
 										->order('follow.follow_id DESC')
 										->limit(10)
 										->findAll();
 					//从我的粉丝中找	
 					$followers  = $Model->field('follow.uid AS fuid,user.uname AS funame')
-										->table("{$db_prefix}weibo_follow AS follow LEFT JOIN {$db_prefix}user AS user ON follow.uid=user.uid")
+										->table("{$db_prefix}user_follow AS follow LEFT JOIN {$db_prefix}user AS user ON follow.uid=user.uid")
 										->where("follow.fid={$this->mid} AND user.uname LIKE '%{$name}%'")
 										->order('follow.follow_id DESC')
 										->limit(10)
@@ -44,24 +44,24 @@ class SelectFriendsAction extends Action {
 				$db_prefix  =  C('DB_PREFIX');
 				if($typeId==2){
 					$follow = M('')->field('follow.fid AS fuid,user.uname AS funame')
-								   ->table("{$db_prefix}weibo_follow AS follow LEFT JOIN {$db_prefix}user AS user ON follow.fid=user.uid")
+								   ->table("{$db_prefix}user_follow AS follow LEFT JOIN {$db_prefix}user AS user ON follow.fid=user.uid")
 								   ->where("follow.uid={$this->mid}")
 								   ->order('follow.follow_id DESC')
 								   ->findPage(15);				
 				}elseif($typeId==3){
 					$follow = M('')->field('follow.uid AS fuid,user.uname AS funame')
-								   ->table("{$db_prefix}weibo_follow AS follow LEFT JOIN {$db_prefix}user AS user ON follow.uid=user.uid")
+								   ->table("{$db_prefix}user_follow AS follow LEFT JOIN {$db_prefix}user AS user ON follow.uid=user.uid")
 								   ->where("follow.fid={$this->mid}")
 								   ->order('follow.follow_id DESC')
 								   ->findPage(15);
 				}else{//默认显示互粉
 					$follow = M('')->field('follow.fid AS fuid,user.uname AS funame')
-								   ->table("{$db_prefix}weibo_follow AS follow LEFT JOIN {$db_prefix}user AS user ON follow.fid=user.uid")
-								   ->where("follow.uid={$this->mid} AND follow.fid IN (SELECT uid FROM {$db_prefix}weibo_follow WHERE fid={$this->mid})")
+								   ->table("{$db_prefix}user_follow AS follow LEFT JOIN {$db_prefix}user AS user ON follow.fid=user.uid")
+								   ->where("follow.uid={$this->mid} AND follow.fid IN (SELECT uid FROM {$db_prefix}user_follow WHERE fid={$this->mid})")
 								   ->order('follow.follow_id DESC')
 								   ->findPage(15);
 				}
-				//$follow = M('')->query("SELECT follow.fid AS fuid,user.uname AS funame FROM {$db_prefix}weibo_follow AS follow LEFT JOIN {$db_prefix}user AS user ON follow.fid=user.uid WHERE follow.uid={$this->mid} AND follow.type={$typeId}");
+				//$follow = M('')->query("SELECT follow.fid AS fuid,user.uname AS funame FROM {$db_prefix}user_follow AS follow LEFT JOIN {$db_prefix}user AS user ON follow.fid=user.uid WHERE follow.uid={$this->mid} AND follow.type={$typeId}");
 
                 foreach($follow['data'] as $k=>$v) {
                         $out[$k]['fUid'] = $v['fuid'];
@@ -89,11 +89,11 @@ class SelectFriendsAction extends Action {
                 $typeId = intval($_GET['typeId']);
                 $db_prefix  =  C('DB_PREFIX');
 				if($typeId==2){
-					$followNum = M('')->field('follow.fid AS fuid,user.uname AS funame')->table("{$db_prefix}weibo_follow AS follow LEFT JOIN {$db_prefix}user AS user ON follow.fid=user.uid")->where("follow.uid={$this->mid}")->order('follow.follow_id DESC')->count();				
+					$followNum = M('')->field('follow.fid AS fuid,user.uname AS funame')->table("{$db_prefix}user_follow AS follow LEFT JOIN {$db_prefix}user AS user ON follow.fid=user.uid")->where("follow.uid={$this->mid}")->order('follow.follow_id DESC')->count();				
 				}elseif($typeId==3){
-					$followNum = M('')->field('follow.uid AS fuid,user.uname AS funame')->table("{$db_prefix}weibo_follow AS follow LEFT JOIN {$db_prefix}user AS user ON follow.uid=user.uid")->where("follow.fid={$this->mid}")->order('follow.follow_id DESC')->count();				
+					$followNum = M('')->field('follow.uid AS fuid,user.uname AS funame')->table("{$db_prefix}user_follow AS follow LEFT JOIN {$db_prefix}user AS user ON follow.uid=user.uid")->where("follow.fid={$this->mid}")->order('follow.follow_id DESC')->count();				
 				}else{//默认显示互粉
-					$followNum = M('')->field('follow.fid AS fuid,user.uname AS funame')->table("{$db_prefix}weibo_follow AS follow LEFT JOIN {$db_prefix}user AS user ON follow.fid=user.uid")->where("follow.uid={$this->mid} AND follow.fid IN (SELECT uid FROM {$db_prefix}weibo_follow WHERE fid={$this->mid})")->order('follow.follow_id DESC')->count();
+					$followNum = M('')->field('follow.fid AS fuid,user.uname AS funame')->table("{$db_prefix}user_follow AS follow LEFT JOIN {$db_prefix}user AS user ON follow.fid=user.uid")->where("follow.uid={$this->mid} AND follow.fid IN (SELECT uid FROM {$db_prefix}user_follow WHERE fid={$this->mid})")->order('follow.follow_id DESC')->count();
 				}
 				echo $followNum;
         }
