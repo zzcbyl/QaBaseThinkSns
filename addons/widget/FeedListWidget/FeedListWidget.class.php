@@ -149,6 +149,13 @@ class FeedListWidget extends Widget {
     					}
     				}
     				$list =  model('Feed')->getFollowingFeed($where,$this->limitnums,'',$var['fgid']);
+					/*while($key=current($list['data']))
+					{
+						print_r ($key);
+						print('<br />');
+						next($list['data']);
+						}*/
+
     			}
     			break;
     		case 'all'://所有的 --正在发生的

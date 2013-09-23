@@ -19,8 +19,17 @@
 		    </div> 
 			<div class="input" model-node="weibo_post_box">
 				<div class="input_before mb5" model-node="mini_editor" model-args="prompt=<?php echo ($prompt); ?>">
-					<textarea id="inputor<?php echo ($time); ?>" name="at" class="input_tips" event-node="mini_editor_textarea" model-args='t=feed'><?php if(trim($topicHtml) != ''): ?><?php echo ($topicHtml); ?><?php endif; ?></textarea>
-					<div model-node="post_ok" style="display:none;text-align:center;position:absolute;left:0;top:10px;width:100%"><i class="ico-ok"></i><?php echo L('PUBLIC_SHARE_SUCCESS');?></div>
+                    <table width="100%" style="line-height:35px;">
+				       <tr>
+				            <td style="width:50px; text-align:right; vertical-align:top;"><span style="color:#666;">问题：</span></td>
+				            <td><textarea id="inputor<?php echo ($time); ?>" name="at" class="input_tips" style="width:600px; height:37px; display:inline;" event-node="mini_editor_textarea" model-args='t=feed'><?php if(trim($topicHtml) != ''): ?><?php echo ($topicHtml); ?><?php endif; ?></textarea></td>
+				        </tr>
+				        <tr>
+				            <td style="width:50px; text-align:right; vertical-align:top;"><span style="color:#666;">描述：</span></td>
+				            <td><textarea event-node="mini_editor_textarea" style="width:600px; height:78px;  font-size: 14px; padding:5px; background: none repeat scroll 0 0 #FFFFFF; border: 1px solid #DDDDDD; box-shadow: 1px 1px 3px #DCDCDC inset;" ></textarea></td>
+				        </tr>
+				    </table>					
+                    <div model-node="post_ok" style="display:none;text-align:center;position:absolute;left:0;top:10px;width:100%"><i class="ico-ok"></i><?php echo L('PUBLIC_SHARE_SUCCESS');?></div>
 				</div>
 				<div class="action clearfix" model-node='send_action'>
 					<div class="kind">

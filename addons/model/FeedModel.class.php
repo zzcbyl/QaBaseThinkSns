@@ -120,8 +120,10 @@ class FeedModel extends Model {
 		// 目前处理方案格式化数据
 		$data['content'] = str_replace(chr(31), '', $data['content']);
 		$data['body'] = str_replace(chr(31), '', $data['body']);
+		$data['description'] = str_replace(chr(31), '', $data['description']);
+		
 		// 添加关联数据
-		$feed_data = D('FeedData')->data(array('feed_id'=>$feed_id,'feed_data'=>serialize($data),'client_ip'=>get_client_ip(),'feed_content'=>$data['body']))->add();
+		$feed_data = D('FeedData')->data(array('feed_id'=>$feed_id,'feed_data'=>serialize($data),'client_ip'=>get_client_ip(),'feed_content'=>$data['body'],'feed_description'=>$data['description']))->add();
 
 		// 添加微博成功后
 		if($feed_id && $feed_data) {

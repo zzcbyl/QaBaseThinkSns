@@ -78,6 +78,9 @@ class FeedAction extends Action {
 		$d['content'] = isset($_POST['content']) ? filter_keyword(h($_POST['content'])) : '';
 		// 原始数据内容
 		$d['body'] = filter_keyword($_POST['body']);
+		// 原始问题描述
+		$d['description'] = filter_keyword($_POST['description']);		
+	
 		// 安全过滤
 		foreach($_POST as $key => $val) {
 			$_POST[$key] = t($_POST[$key]);
