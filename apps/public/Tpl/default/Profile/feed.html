@@ -37,7 +37,19 @@ function addDigg(feed_id){
                                 
                                 <p class="clearfix">
                                     <span event-node="show_admin" event-args="feed_id={$feedInfo['feed_id']}&uid={$feedInfo['uid']}&feed_del={:CheckPermission('core_admin','feed_del')}&channel_recommend={:CheckPermission('channel_admin','channel_recommend')}&isrefresh=1" href="javascript:;" class="right f12 hover f9" style="display:none;cursor:pointer">管理</span>
-                                {$feedInfo.body|format=true}
+                                
+
+                                <table width="589px" style="line-height:22px;">
+	                                <tr>
+	                                    <td style="width:50px; text-align:right; vertical-align:top;">问题：</td>
+	                                    <td style="width:539px; display:block;"><a href="{:U('public/Profile/feed',array('feed_id'=>$vl['feed_id'],'uid'=>$vl['uid']))}">{$feedInfo.body|format=true}</a></td>
+	                                </tr>
+	                                <tr>
+	                                    <td style="width:50px; text-align:right; vertical-align:top;">描述：</td>
+	                                    <td style="width:539px; display:block;"><span class="contents">{$feedInfo.description|format=true}</span></td>
+	                                </tr>
+	                            </table>
+
                                 </p>
                                 <p class="info">
                                 <span class="right">
@@ -115,6 +127,16 @@ function addDigg(feed_id){
                         </dl>
                     </div>
                     <!--feed list-->
+
+                    <div  class="feed_lists">
+						<dl class="feed_list feed_comment">
+							<dd class="content">
+                                <div class="repeat clearfix pading">
+                                    {:W('Answer',array('title'=>'回答', 'feedID'=>$vl['feed_id']))}
+                                </div>
+							</dd>
+						</dl>
+					</div>
 
 					<div  class="feed_lists">
 						<dl class="feed_list feed_comment">

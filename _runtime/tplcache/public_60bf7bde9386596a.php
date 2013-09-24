@@ -7,8 +7,17 @@
 	<p class="hd"><?php echo ($title); ?>
 		<?php if(is_array($GroupData[$user_info['uid']])): ?><?php $i = 0;?><?php $__LIST__ = $GroupData[$user_info['uid']]?><?php if( count($__LIST__)==0 ) : echo "" ; ?><?php else: ?><?php foreach($__LIST__ as $key=>$v2): ?><?php ++$i;?><?php $mod = ($i % 2 )?><img style="width:auto;height:auto;display:inline;cursor:pointer" src="<?php echo ($v2['user_group_icon_url']); ?>" title="<?php echo ($v2['user_group_name']); ?>" />&nbsp;<?php endforeach; ?><?php endif; ?><?php else: echo "" ;?><?php endif; ?>
 	</p>
-	
-	<span class="contents"><?php if(($body)  !=  ""): ?><?php echo (format($body,true)); ?><?php endif; ?></span>
+	<table width="589px" style="line-height:22px;">
+	    <tr>
+	        <td style="width:50px; text-align:right; vertical-align:top;">问题：</td>
+	        <td style="width:539px; display:block;"><a href="<?php echo U('public/Profile/feed',array('feed_id'=>$feed_id,'uid'=>$uid));?>"><span class="contents"><?php echo (format($body,true)); ?></span></a></td>
+	    </tr>
+	    <tr>
+	        <td style="width:50px; text-align:right; vertical-align:top;">描述：</td>
+	        <td style="width:539px; display:block;"><span class="contents"><?php echo (format($description,true)); ?></span></td>
+	    </tr>
+	</table>
+	<!--<span class="contents"><?php if(($body)  !=  ""): ?><?php echo (format($body,true)); ?><?php endif; ?></span>-->
 	<p class="info">
 		<span class="right">
 	<span id='digg<?php echo ($feed_id); ?>' rel='0'>

@@ -94,28 +94,6 @@ return array (
     'open' => '1',
     'replace' => '**',
   ),
-  'feed' => 
-  array (
-    'weibo_nums' => '140',
-    'weibo_type' => 
-    array (
-      0 => 'face',
-      1 => 'at',
-      2 => 'image',
-      3 => 'video',
-      4 => 'file',
-      5 => 'topic',
-      6 => 'contribute',
-    ),
-    'weibo_premission' => 
-    array (
-      0 => 'repost',
-      1 => 'comment',
-    ),
-    'weibo_send_info' => '记录，就是一种态度！',
-    'weibo_default_topic' => '',
-    'weibo_at_me' => '0',
-  ),
   'register' => 
   array (
     'register_type' => 'open',
@@ -163,6 +141,28 @@ return array (
     'site_online_count' => '1',
     'site_rewrite_on' => '0',
     'site_analytics_code' => '',
+  ),
+  'feed' => 
+  array (
+    'weibo_nums' => '200',
+    'weibo_type' => 
+    array (
+      0 => 'face',
+      1 => 'at',
+      2 => 'image',
+      3 => 'video',
+      4 => 'file',
+      5 => 'topic',
+      6 => 'contribute',
+    ),
+    'weibo_premission' => 
+    array (
+      0 => 'repost',
+      1 => 'comment',
+    ),
+    'weibo_send_info' => '记录，就是一种态度！',
+    'weibo_default_topic' => '',
+    'weibo_at_me' => '0',
   ),
 );
 ?>

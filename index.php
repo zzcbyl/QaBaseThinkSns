@@ -1,6 +1,6 @@
 <?php
 error_reporting(E_ERROR);
-
+define('APP_DEBUG',TRUE);
 /** ///调试、找错时请去掉///前空格
 ini_set('display_errors',true);
 error_reporting(E_ALL); 

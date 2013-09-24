@@ -1,1 +1,2 @@
 1、给wb_feed_data增加字段：feed_description，feed_type
+2、修改wb_feed_data中的字段feed_type改成feed_questionid（修改名称和注释）

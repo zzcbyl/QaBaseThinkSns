@@ -127,8 +127,11 @@ M.addEventFns({
 
             var description_editor = this.parentModel.parentModel.childModels['mini_editor'][0];
             var description = $(mini_editor).find('textarea').get(1);
-            //alert(textarea.value);
-            core.weibo.post_feed(_this, mini_editor, textarea, description);
+
+            var questionid_editor = this.parentModel.parentModel.childModels['mini_editor'][0];
+            var questionid = $(mini_editor).find('input').get(0);
+
+            core.weibo.post_feed(_this, mini_editor, textarea, description_editor, description, questionid);
         }
     },
     post_feed_box: {

@@ -177,9 +177,10 @@ core.weibo = {
         M(document.getElementById('feed-lists'));
     },
     // 发布微博之后操作
-    afterPost: function (obj, textarea, topicHtml, close) {
+    afterPost: function (obj, textarea, topicHtml, description_editor, description, close) {
         if (topicHtml == '') {
             textarea.value = '';
+            description.value = '';
         } else {
             textarea.value = topicHtml;
         }
@@ -187,6 +188,7 @@ core.weibo = {
         obj.parentModel.parentModel.childModels['numsLeft'][0].innerHTML = L('PUBLIC_INPUT_TIPES', { 'sum': '<span>' + initNums + '</span>' });
         var fadeOutObj = function () {
             textarea.ready = null;
+            description.ready = null;
         };
 
         $(obj.childModels['post_ok'][0]).fadeOut(500, fadeOutObj);
@@ -298,7 +300,7 @@ core.weibo = {
         }
     },
     // 发布微博
-    post_feed: function (_this, mini_editor, textarea, description, isbox, url) {
+    post_feed: function (_this, mini_editor, textarea, description_editor, description, questionid, isbox, url) {
         var obj = this;
         // 避免重复发送
         if ("undefined" == typeof (obj.isposting)) {
@@ -356,28 +358,35 @@ core.weibo = {
             obj.isposting = false;
             return false;
         }
-        var txtVal = description.value;
-        if (txtVal == '' || txtVal.length < 0) {
-            // TODO 只有一次情况才会执行到这里面 一般是不会的
-            ui.error(L('PUBLIC_CENTE_ISNULL'));
-            obj.isposting = false;
-            return false;
-        }
-        txtVal = removeHTMLTag(txtVal);
-        if (txtVal == '' || txtVal.length < 0) {
-            ui.error('请勿输入非法与敏感字符');
-            obj.isposting = false;
-            return false;
+
+        var txtVal = '';
+        if (description != undefined) {
+            txtVal = description.value;
+            if (txtVal == '' || txtVal.length < 0) {
+                // TODO 只有一次情况才会执行到这里面 一般是不会的
+                ui.error(L('PUBLIC_CENTE_ISNULL'));
+                obj.isposting = false;
+                return false;
+            }
+            txtVal = removeHTMLTag(txtVal);
+            if (txtVal == '' || txtVal.length < 0) {
+                ui.error('请勿输入非法与敏感字符');
+                obj.isposting = false;
+                return false;
+            }
         }
 
         if (!url) {
             url = U('public/Feed/PostFeed');
         }
 
-        //alert(url);exit;
-        // 发布微博
-        $.post(url, { body: data, type: type, app_name: app_name, content: '', attach_id: attach_id, videourl: videourl, channel_id: channel_id, source_url: attrs.source_url, gid: attrs.gid, description: txtVal }, function (msg) {
+        var Qid = 0;
+        if (questionid != null && questionid != undefined)
+            Qid = questionid.value;
 
+        //alert(Qid); exit;
+        // 发布微博
+        $.post(url, { body: data, type: type, app_name: app_name, content: '', attach_id: attach_id, videourl: videourl, channel_id: channel_id, source_url: attrs.source_url, gid: attrs.gid, description: txtVal, questionid: Qid }, function (msg) {
             obj.isposting = false;
             _this.className = 'btn-grey-white';
             $(_this).html('<span>' + L('PUBLIC_SHARE_BUTTON') + '</span>');
@@ -387,7 +396,7 @@ core.weibo = {
                 }
                 var postOk = mini_editor.childModels['post_ok'][0];
                 $(postOk).fadeIn('fast');
-                core.weibo.afterPost(mini_editor, textarea, attrs.topicHtml);
+                core.weibo.afterPost(mini_editor, textarea, attrs.topicHtml, description_editor, description);
                 if (!isbox) {
                     core.weibo.insertToList(msg.data, msg.feedId);
                 } else {

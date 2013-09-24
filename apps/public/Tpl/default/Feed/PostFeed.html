@@ -9,8 +9,17 @@
         	<img style="width:auto;height:auto;display:inline;cursor:pointer" src="{$v2['user_group_icon_url']}" title="{$v2['user_group_name']}" />&nbsp;
     	</volist>
 	</p>
-	
-	<span class="contents"><neq name="body" value="">{$body|format=true}</neq></span>
+	<table width="589px" style="line-height:22px;">
+	    <tr>
+	        <td style="width:50px; text-align:right; vertical-align:top;">问题：</td>
+	        <td style="width:539px; display:block;"><a href="{:U('public/Profile/feed',array('feed_id'=>$feed_id,'uid'=>$uid))}"><span class="contents">{$body|format=true}</span></a></td>
+	    </tr>
+	    <tr>
+	        <td style="width:50px; text-align:right; vertical-align:top;">描述：</td>
+	        <td style="width:539px; display:block;"><span class="contents">{$description|format=true}</span></td>
+	    </tr>
+	</table>
+	<!--<span class="contents"><neq name="body" value="">{$body|format=true}</neq></span>-->
 	<p class="info">
 		<span class="right">
 	<span id='digg{$feed_id}' rel='0'>
