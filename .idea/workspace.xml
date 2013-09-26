@@ -1,88 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4d96b4d3-c82a-43e9-b50e-9d552ccd2fe2" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/_runtime/datacache/0/d/TS_0dfa1c33ef01747f308a667e9a8306fc.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/_runtime/datacache/1/4/TS_14032acc1f03546ea290f35050ae5e1b.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/_runtime/datacache/1/6/TS_16933ec48b5424b8ba8a53e5a4726573.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/_runtime/datacache/2/4/TS_244130ef08b290e82f094459fd340b82.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/_runtime/datacache/2/6/TS_26aee02e2e0fd68d072e35a328e56f33.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/_runtime/datacache/2/6/TS_26b03e222fbde7e1c36db5e9554ef842.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/_runtime/datacache/2/6/TS_26d36cd480324b9bc51417c535fbaefa.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/_runtime/datacache/5/6/TS_5648fbefa3b8ddedc649dd92f1dd4ab7.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/_runtime/datacache/6/0/TS_60dbef6974384c0fe77153102acc29c8.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/_runtime/datacache/6/0/TS_60ef04faa01afd5f2aeffa25025b3a67.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/_runtime/datacache/7/7/TS_77eab7950b0452de9fced86b215b2891.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/_runtime/datacache/8/2/TS_82af723e7a06959c3ca0db4864725cd9.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/_runtime/datacache/8/2/TS_82d0caed646f9f05f43c59ce975eb2d5.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/_runtime/datacache/8/4/TS_8498796ec8ec17e19bc70309d5508b21.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/_runtime/datacache/9/9/TS_9954b4aeedd2f26d67a97c55288efeaa.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/_runtime/datacache/a/2/TS_a2e13ac720014872307987874772269b.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/_runtime/datacache/b/3/TS_b39a9c9973bb04602eebfb42b73751c7.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/_runtime/datacache/b/7/TS_b7ac0453f7e63bc25902816c14217ade.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/_runtime/datacache/c/7/TS_c73d1744fa0511b40f3bc1ab600de0f0.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/_runtime/datacache/c/9/TS_c9ec16f55cf0e93828ab06bc814f3b48.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/_runtime/tplcache/public_04d413deb37b79c4.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/_runtime/tplcache/public_1512505ee6fb90c8.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/_runtime/tplcache/public_19960e0bda079aa3.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/_runtime/tplcache/public_19db182118026b87.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/_runtime/tplcache/public_2d2210d8e5253f01.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/_runtime/tplcache/public_3644d990fb7f67bf.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/_runtime/tplcache/public_3c9dc897ac42de7e.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/_runtime/tplcache/public_458d86361b8fdb3f.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/_runtime/tplcache/public_530c30d99fac7f89.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/_runtime/tplcache/public_5907b876bb8069a1.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/_runtime/tplcache/public_60bf7bde9386596a.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/_runtime/tplcache/public_71c4441e788f18e1.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/_runtime/tplcache/public_897e1aa463b6be29.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/_runtime/tplcache/public_928659815aaab2ad.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/_runtime/tplcache/public_93a772a2b5cdfc3d.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/_runtime/tplcache/public_9441b433edd719a8.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/_runtime/tplcache/public_a2309e3e477e55a9.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/_runtime/tplcache/public_beecadc783a5b87a.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/_runtime/tplcache/public_d215200722eed6e0.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/_runtime/tplcache/public_dc8982e1b2655da2.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/_runtime/tplcache/public_f8a23cc3124162b2.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/_runtime/tplcache/widget_a2309e3e477e55a9.php" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/addons/widget/FeedListWidget/FeedListWidget.class.php" afterPath="$PROJECT_DIR$/addons/widget/FeedListWidget/FeedListWidget.class.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/addons/model/FeedModel.class.php" afterPath="$PROJECT_DIR$/addons/model/FeedModel.class.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_runtime/datacache/0/4/TS_04d1169fbdb4bdf6765917151f4f7e82.php" afterPath="$PROJECT_DIR$/_runtime/datacache/0/4/TS_04d1169fbdb4bdf6765917151f4f7e82.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_runtime/datacache/1/2/TS_12dcc3d164c372c145b0f217e301c453.php" afterPath="$PROJECT_DIR$/_runtime/datacache/1/2/TS_12dcc3d164c372c145b0f217e301c453.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_runtime/datacache/2/4/TS_242f8b00510d0a2961d5aa90554b80ba.php" afterPath="$PROJECT_DIR$/_runtime/datacache/2/4/TS_242f8b00510d0a2961d5aa90554b80ba.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_runtime/datacache/2/6/TS_267d86efd60e7bd123507e3e36be5305.php" afterPath="$PROJECT_DIR$/_runtime/datacache/2/6/TS_267d86efd60e7bd123507e3e36be5305.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_runtime/datacache/3/5/TS_353984cf2b075254f66c8b03bd2b598c.php" afterPath="$PROJECT_DIR$/_runtime/datacache/3/5/TS_353984cf2b075254f66c8b03bd2b598c.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_runtime/datacache/3/7/TS_372c89a32ac3b7272189946b54d1d0fe.php" afterPath="$PROJECT_DIR$/_runtime/datacache/3/7/TS_372c89a32ac3b7272189946b54d1d0fe.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_runtime/datacache/3/8/TS_38067a39c0fec4846dcce0378e9e2eb7.php" afterPath="$PROJECT_DIR$/_runtime/datacache/3/8/TS_38067a39c0fec4846dcce0378e9e2eb7.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_runtime/datacache/3/b/TS_3b7a14bcdd0f9d8952e75c468262c520.php" afterPath="$PROJECT_DIR$/_runtime/datacache/3/b/TS_3b7a14bcdd0f9d8952e75c468262c520.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_runtime/datacache/4/1/TS_418e2035dd0c690528587584f10a7ea8.php" afterPath="$PROJECT_DIR$/_runtime/datacache/4/1/TS_418e2035dd0c690528587584f10a7ea8.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_runtime/datacache/4/2/TS_42f192c49da35b440e09e3f576afe96e.php" afterPath="$PROJECT_DIR$/_runtime/datacache/4/2/TS_42f192c49da35b440e09e3f576afe96e.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_runtime/datacache/4/3/TS_43bc0e2504180e5184cca91842340d4f.php" afterPath="$PROJECT_DIR$/_runtime/datacache/4/3/TS_43bc0e2504180e5184cca91842340d4f.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_runtime/datacache/4/3/TS_43c18298030ade8fc3bf1d344221b276.php" afterPath="$PROJECT_DIR$/_runtime/datacache/4/3/TS_43c18298030ade8fc3bf1d344221b276.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_runtime/datacache/4/4/TS_44e065d6f17952d70d56368879fb8149.php" afterPath="$PROJECT_DIR$/_runtime/datacache/4/4/TS_44e065d6f17952d70d56368879fb8149.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_runtime/datacache/7/6/TS_761ed9ff1c573d84f95edf456816c313.php" afterPath="$PROJECT_DIR$/_runtime/datacache/7/6/TS_761ed9ff1c573d84f95edf456816c313.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_runtime/datacache/7/d/TS_7d9e4f453ed3e3a29410a8d27cecf07d.php" afterPath="$PROJECT_DIR$/_runtime/datacache/7/d/TS_7d9e4f453ed3e3a29410a8d27cecf07d.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_runtime/datacache/8/1/TS_81e31d3f9b29603b751c84c1486d0833.php" afterPath="$PROJECT_DIR$/_runtime/datacache/8/1/TS_81e31d3f9b29603b751c84c1486d0833.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_runtime/datacache/8/4/TS_841177a836024d5d86bc076177470795.php" afterPath="$PROJECT_DIR$/_runtime/datacache/8/4/TS_841177a836024d5d86bc076177470795.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_runtime/datacache/8/d/TS_8d0577c38de7010d3f86728dbc60c7db.php" afterPath="$PROJECT_DIR$/_runtime/datacache/8/d/TS_8d0577c38de7010d3f86728dbc60c7db.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_runtime/datacache/9/9/TS_993b211a245a51f6a26925f694105cd7.php" afterPath="$PROJECT_DIR$/_runtime/datacache/9/9/TS_993b211a245a51f6a26925f694105cd7.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_runtime/datacache/a/6/TS_a60c1420ead69a6590f19105981779db.php" afterPath="$PROJECT_DIR$/_runtime/datacache/a/6/TS_a60c1420ead69a6590f19105981779db.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_runtime/datacache/a/6/TS_a6cbd1b9cc5aca6d634691d709e0e0e0.php" afterPath="$PROJECT_DIR$/_runtime/datacache/a/6/TS_a6cbd1b9cc5aca6d634691d709e0e0e0.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_runtime/datacache/a/9/TS_a953b99dee427e7f4b07b7f1f2335f7d.php" afterPath="$PROJECT_DIR$/_runtime/datacache/a/9/TS_a953b99dee427e7f4b07b7f1f2335f7d.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_runtime/datacache/a/e/TS_aec8578d47906c0ccb10d8d2f7643a43.php" afterPath="$PROJECT_DIR$/_runtime/datacache/a/e/TS_aec8578d47906c0ccb10d8d2f7643a43.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_runtime/datacache/b/7/TS_b7937b23d2afdd8cf265c3ab7e7156a3.php" afterPath="$PROJECT_DIR$/_runtime/datacache/b/7/TS_b7937b23d2afdd8cf265c3ab7e7156a3.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_runtime/datacache/b/a/TS_ba7d98fbeef5ca31651a4d53e4440908.php" afterPath="$PROJECT_DIR$/_runtime/datacache/b/a/TS_ba7d98fbeef5ca31651a4d53e4440908.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_runtime/datacache/c/0/TS_c04dec70f365cae75674cf9494e94ba5.php" afterPath="$PROJECT_DIR$/_runtime/datacache/c/0/TS_c04dec70f365cae75674cf9494e94ba5.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_runtime/datacache/d/3/TS_d3d6446940003e3e8b8657f693f71b42.php" afterPath="$PROJECT_DIR$/_runtime/datacache/d/3/TS_d3d6446940003e3e8b8657f693f71b42.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_runtime/datacache/d/c/TS_dc63f9b4e76bf505de071246fd1acddb.php" afterPath="$PROJECT_DIR$/_runtime/datacache/d/c/TS_dc63f9b4e76bf505de071246fd1acddb.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_runtime/filecache/initSiteLang.lock.php" afterPath="$PROJECT_DIR$/_runtime/filecache/initSiteLang.lock.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-    </list>
+    <list default="true" id="4d96b4d3-c82a-43e9-b50e-9d552ccd2fe2" name="Default" comment="" />
     <ignored path="QaBaseThinkSns.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="4d96b4d3-c82a-43e9-b50e-9d552ccd2fe2" time="1380184275120" ignored="false" />
-    <file path="/index.html" changelist="4d96b4d3-c82a-43e9-b50e-9d552ccd2fe2" time="1380184967858" ignored="false" />
-    <file path="/FeedListWidget.class.php" changelist="4d96b4d3-c82a-43e9-b50e-9d552ccd2fe2" time="1380188392169" ignored="false" />
-    <file path="/FeedModel.class.php" changelist="4d96b4d3-c82a-43e9-b50e-9d552ccd2fe2" time="1380189337679" ignored="false" />
+    <file path="/Dummy.txt" changelist="4d96b4d3-c82a-43e9-b50e-9d552ccd2fe2" time="1379924757960" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -102,42 +24,22 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
+      <file leaf-file-name="cleancache.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cleancache.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="3" column="0" selection-start="44" selection-end="44" vertical-scroll-proportion="-2.0357144">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="FeedModel.class.php" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/addons/model/FeedModel.class.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="374" column="24" selection-start="12347" selection-end="12347" vertical-scroll-proportion="-0.12261146">
+            <state line="108" column="16" selection-start="3678" selection-end="3678" vertical-scroll-proportion="0.26429674">
               <folding>
-                <marker date="1380189464000" expanded="true" signature="22059:22075" placeholder="..." />
+                <marker date="1379923874336" expanded="true" signature="22024:22040" placeholder="..." />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="FeedListWidget.class.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/addons/widget/FeedListWidget/FeedListWidget.class.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="150" column="60" selection-start="5367" selection-end="5383" vertical-scroll-proportion="-5.7">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="_FeedList.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/addons/widget/FeedListWidget/_FeedList.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="55" column="13" selection-start="2652" selection-end="2652" vertical-scroll-proportion="-16.2">
-              <folding>
-                <marker date="1380104854000" expanded="false" signature="6384:6393" placeholder="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="FeedList.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/addons/widget/FeedListWidget/FeedList.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="12" column="10" selection-start="402" selection-end="402" vertical-scroll-proportion="-7.5">
-              <folding />
             </state>
           </provider>
         </entry>
@@ -157,15 +59,6 @@
       <MyDateState />
     </option>
   </component>
-  <component name="IdeDocumentHistory">
-    <option name="changedFiles">
-      <list>
-        <option value="$PROJECT_DIR$/apps/public/Tpl/default/Index/index.html" />
-        <option value="$PROJECT_DIR$/addons/widget/FeedListWidget/FeedListWidget.class.php" />
-        <option value="$PROJECT_DIR$/addons/model/FeedModel.class.php" />
-      </list>
-    </option>
-  </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true">
     <include_path>
       <path value="E:\WorkCode\QaBaseThinkSns" />
@@ -173,98 +66,9 @@
   </component>
   <component name="ProjectFrameBounds">
     <option name="x" value="-8" />
-    <option name="y" value="22" />
+    <option name="y" value="-8" />
     <option name="width" value="1456" />
-    <option name="height" value="839" />
-  </component>
-  <component name="ProjectInspectionProfilesVisibleTreeState">
-    <entry key="Project Default">
-      <profile-state>
-        <expanded-state>
-          <State>
-            <id />
-          </State>
-          <State>
-            <id>ActionScript specificJavaScript</id>
-          </State>
-          <State>
-            <id>CSS</id>
-          </State>
-          <State>
-            <id>Code StylePHP</id>
-          </State>
-          <State>
-            <id>Code quality toolsJavaScript</id>
-          </State>
-          <State>
-            <id>Code style issuesJavaScript</id>
-          </State>
-          <State>
-            <id>Control flow issuesJavaScript</id>
-          </State>
-          <State>
-            <id>DOM issuesJavaScript</id>
-          </State>
-          <State>
-            <id>Data flow issuesJavaScript</id>
-          </State>
-          <State>
-            <id>Error handlingJavaScript</id>
-          </State>
-          <State>
-            <id>General</id>
-          </State>
-          <State>
-            <id>GeneralJavaScript</id>
-          </State>
-          <State>
-            <id>HTML</id>
-          </State>
-          <State>
-            <id>Internationalization issues</id>
-          </State>
-          <State>
-            <id>JavaScript</id>
-          </State>
-          <State>
-            <id>JavaScript validity issuesJavaScript</id>
-          </State>
-          <State>
-            <id>PHP</id>
-          </State>
-          <State>
-            <id>Portability issues</id>
-          </State>
-          <State>
-            <id>Potentially confusing code constructsJavaScript</id>
-          </State>
-          <State>
-            <id>Probable bugsJavaScript</id>
-          </State>
-          <State>
-            <id>Probably bugPHP</id>
-          </State>
-          <State>
-            <id>SQL</id>
-          </State>
-          <State>
-            <id>Spelling</id>
-          </State>
-          <State>
-            <id>Type compatibilityPHP</id>
-          </State>
-          <State>
-            <id>UndefinedPHP</id>
-          </State>
-          <State>
-            <id>XML</id>
-          </State>
-          <State>
-            <id>XPath</id>
-          </State>
-        </expanded-state>
-      </profile-state>
-    </entry>
+    <option name="height" value="876" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -292,6 +96,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -307,176 +112,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="QaBaseThinkSns" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="QaBaseThinkSns" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="QaBaseThinkSns" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="public" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="QaBaseThinkSns" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="QaBaseThinkSns" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="core" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="QaBaseThinkSns" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="QaBaseThinkSns" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="apps" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="QaBaseThinkSns" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="QaBaseThinkSns" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="apps" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="public" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Tpl" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="default" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="QaBaseThinkSns" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="QaBaseThinkSns" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="apps" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="public" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Tpl" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="default" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Index" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="QaBaseThinkSns" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="QaBaseThinkSns" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="apps" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="public" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="QaBaseThinkSns" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="QaBaseThinkSns" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="api" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="QaBaseThinkSns" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="QaBaseThinkSns" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="addons" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="widget" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="QaBaseThinkSns" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="QaBaseThinkSns" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="addons" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="widget" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="FeedListWidget" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -512,126 +147,15 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="QaBaseThinkSns" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="QaBaseThinkSns" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="_runtime" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="QaBaseThinkSns" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="QaBaseThinkSns" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="_runtime" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="datacache" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="QaBaseThinkSns" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="QaBaseThinkSns" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="_runtime" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="datacache" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="e" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="e" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="QaBaseThinkSns" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="QaBaseThinkSns" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="_runtime" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="datacache" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="e" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="7" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="QaBaseThinkSns" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="QaBaseThinkSns" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="_runtime" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="datacache" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="e" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="options.splitter.main.proportions" value="0.3" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="options.lastSelected" value="editor.preferences.appearance" />
     <property name="recentsLimit" value="5" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="FullScreen" value="false" />
-    <property name="options.searchVisible" value="true" />
-    <property name="options.splitter.details.proportions" value="0.2" />
   </component>
   <component name="RunManager" selected="PHP Script.index.php">
     <configuration default="false" name="FeedModel.class.php" type="PhpLocalRunConfigurationType" factoryName="PHP Console" temporary="true" path="$PROJECT_DIR$/addons/model/FeedModel.class.php">
@@ -642,10 +166,6 @@
     <configuration default="false" name="index.php" type="PhpLocalRunConfigurationType" factoryName="PHP Console" temporary="true" path="$PROJECT_DIR$/index.php" scriptParameters="app=public&amp;mod=Index&amp;act=index">
       <RunnerSettings RunnerId="PhpScriptDebugRunner" />
       <ConfigurationWrapper RunnerId="PhpScriptDebugRunner" />
-      <method />
-    </configuration>
-    <configuration default="true" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
-      <TestRunner />
       <method />
     </configuration>
     <configuration default="true" type="PhpLocalRunConfigurationType" factoryName="PHP Console">
@@ -672,26 +192,26 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="22" width="1456" height="839" extended-state="0" />
-    <editor active="true" />
+    <frame x="-8" y="-8" width="1456" height="876" extended-state="6" />
+    <editor active="false" />
     <layout>
-      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24680851" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24318507" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
     </layout>
   </component>
   <component name="VcsContentAnnotationSettings">
@@ -753,82 +273,29 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="5" />
+      <breakpoints>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/addons/model/FeedModel.class.php</url>
+          <line>122</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+      <option name="time" value="2" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/cleancache.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+        <state line="3" column="0" selection-start="44" selection-end="44" vertical-scroll-proportion="-2.0357144">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/addons/model/FeedModel.class.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="108" column="16" selection-start="3678" selection-end="3678" vertical-scroll-proportion="0.0">
+        <state line="108" column="16" selection-start="3678" selection-end="3678" vertical-scroll-proportion="0.26429674">
           <folding>
-            <marker date="1380189464000" expanded="true" signature="22059:22075" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cleancache.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="0" selection-start="44" selection-end="44" vertical-scroll-proportion="-0.625">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/apps/public/Tpl/default/Index/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="54" column="48" selection-start="4465" selection-end="4465" vertical-scroll-proportion="1.097561">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/addons/widget/FeedListWidget/FeedList.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="10" selection-start="402" selection-end="402" vertical-scroll-proportion="-7.5">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/addons/widget/FeedListWidget/_FeedList.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="55" column="13" selection-start="2652" selection-end="2652" vertical-scroll-proportion="-16.2">
-          <folding>
-            <marker date="1380104854000" expanded="false" signature="6384:6393" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/addons/model/XdataModel.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="25" selection-start="619" selection-end="619" vertical-scroll-proportion="0.49475262">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/addons/widget/FeedListWidget/FeedListWidget.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="150" column="60" selection-start="5367" selection-end="5383" vertical-scroll-proportion="-5.7">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/_runtime/datacache/e/7/TS_e7d9d9b718c9b05d197e557010993324.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="8" selection-start="14" selection-end="14" vertical-scroll-proportion="0.022488756">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/addons/model/FeedModel.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="374" column="24" selection-start="12347" selection-end="12347" vertical-scroll-proportion="-0.12261146">
-          <folding>
-            <marker date="1380189464000" expanded="true" signature="22059:22075" placeholder="..." />
+            <marker date="1379923874336" expanded="true" signature="22024:22040" placeholder="..." />
           </folding>
         </state>
       </provider>
