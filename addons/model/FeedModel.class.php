@@ -321,7 +321,6 @@ class FeedModel extends Model {
 		$feedlist = $this->table($table)->where($_where)->field('a.feed_id')->order('a.publish_time DESC')->findPage($limit);
 		$feed_ids = getSubByKey($feedlist['data'], 'feed_id');
 		$feedlist['data'] = $this->getFeeds($feed_ids);
-
 		return $feedlist;
 	}
 
@@ -339,7 +338,6 @@ class FeedModel extends Model {
 		$feedlist = $this->table($table)->where($map)->field('source_id AS feed_id')->order('source_id DESC')->findPage($limit);
 		$feed_ids = getSubByKey($feedlist['data'],'feed_id');
 		$feedlist['data'] = $this->getFeeds($feed_ids);
-
 		return $feedlist;
 	}
 
@@ -434,14 +432,12 @@ class FeedModel extends Model {
 	public function getFeeds($feed_ids) {
 		$feedlist = array();
 		$feed_ids = array_filter(array_unique($feed_ids));
-		
 		// 获取数据
 		if(count($feed_ids) > 0) {
 			$cacheList = model('Cache')->getList('fd_', $feed_ids);
 		} else {
 			return false;
 		}
-
 		// 按照传入ID顺序进行排序
 		foreach($feed_ids as $key => $v) {
 			if($cacheList[$v]) {

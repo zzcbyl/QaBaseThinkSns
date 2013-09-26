@@ -251,7 +251,7 @@ class FeedListWidget extends Widget {
     	$content['pageHtml'] = $list['html'];
 	    // 渲染模版
 	    $content['html'] = $this->renderFile(dirname(__FILE__)."/".$tpl, $var);
-      
+
 	    return $content;
     }
 
