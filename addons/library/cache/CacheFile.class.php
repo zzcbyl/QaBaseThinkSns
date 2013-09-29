@@ -111,6 +111,7 @@ class CacheFile extends Cache {
                 $content   =   gzuncompress($content);
             }
             $content    =   unserialize($content);
+			
             return $content;
         }
         else {

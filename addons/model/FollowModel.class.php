@@ -85,18 +85,25 @@ class FollowModel extends Model {
 			$map['ctime'] = time();
 			$result = $this->add($map);
 			// 通知和微博
-/*			model('Notify')->send($fid, 'user_follow', '', $uid);
-			model('Feed')->put('user_follow', array('fid'=>$fid), $uid);*/
+			/*			model('Notify')->send($fid, 'user_follow', '', $uid);
+						model('Feed')->put('user_follow', array('fid'=>$fid), $uid);*/
 			if($result) {
 				$maps['key'] = 'email';
-                $maps['uid'] = $fid;
-                $isEmail = D('user_privacy')->where($map)->field('value')->find();
-                if($isEmail['value'] === 0){
-                	$userInfo = model('User')->getUserInfo($fid);
-                    model('Mail')->send_email($userInfo['email'],'您增加了一个新粉丝','content');
-                }
+				$maps['uid'] = $fid;
+				$isEmail = D('user_privacy')->where($map)->field('value')->find();
+				if($isEmail['value'] === 0){
+					$userInfo = model('User')->getUserInfo($fid);
+					model('Mail')->send_email($userInfo['email'],'您增加了一个新粉丝','content');
+				}
 				$this->error = L('PUBLIC_ADD_FOLLOW_SUCCESS');			// 关注成功
 				$this->_updateFollowCount($uid, $fid, true);			// 更新统计
+				
+				//更新好友数(关系相同)
+				if($this->getFollowState($uid, $fid) == $this->getFollowState($fid, $uid))
+				{
+					$this->_updateFriendCount($uid, $fid, true);			// 更新统计
+				}
+
 				$follow_state['following'] = 1;
 				return $follow_state;
 			} else {
@@ -222,6 +229,8 @@ class FollowModel extends Model {
 				//D('UserFollowGroupLink')->where($map)->delete();
 				$this->error = L('PUBLIC_ADMIN_OPRETING_SUCCESS');			// 操作成功
 				$this->_updateFollowCount($uid, $fid, false);				// 更新统计
+				//更新好友数
+				$this->_updateFriendCount($uid, $fid, false);			// 更新统计
 				$follow_state['following'] = 0;
 				return $follow_state;
 			} else {
@@ -346,6 +355,33 @@ class FollowModel extends Model {
 
 		return $list;
 	}
+	
+	/**
+	* 获取指定用户的好友列表(互粉)
+	* @param integer $uid 用户ID
+	* @param integer $limit 结果集数目，默认为10
+	* @return array 指定用户的好友列表
+	*/
+	public function getFriendList($uid, $limit = 10) {
+		$limit = intval($limit) > 0 ? $limit : 10;
+		// 好友列表
+		$list = $this->field('a.*')
+			->table("{$this->tablePrefix}{$this->tableName} as a inner join {$this->tablePrefix}{$this->tableName} as b on a.uid=b.fid and a.fid=b.uid")
+			->where("a.uid={$uid}")
+			->order('a.follow_id DESC')
+			->findPage($limit);
+		//$list = $this->where("`fid`={$uid}")->order('`follow_id` DESC')->findPage($limit);
+		$fids = getSubByKey($list['data'], 'uid');
+		// 格式化数据
+		//foreach($list['data'] as $key => $value) {
+		//	$uid = $value['uid'];
+		//	$fid = $value['fid'];
+		//	$list['data'][$key]['uid'] = $fid;
+		//	$list['data'][$key]['fid'] = $uid;
+		//}
+
+		return $list;
+	}
 
 	/**
 	 * 获取用户uid与用户fid的关注状态，已uid为主
@@ -453,6 +489,25 @@ class FollowModel extends Model {
 			// 添加粉丝数
 			$data_model->setUid($f_v)->updateKey('follower_count', 1, $inc);
 			$data_model->setUid($f_v)->updateKey('new_folower_count', 1, $inc);
+		}
+	}
+	
+	/**
+	 * 更新好友数目
+	 * @param integer $uid 操作用户ID
+	 * @param array $fids 被操作用户ID数组
+	 * @param boolean $inc 是否为加数据，默认为true
+	 * @return void
+	 */
+	private function _updateFriendCount($uid, $fids, $inc = true) {
+		!is_array($fids) && $fids = explode(',', $fids);
+		$data_model = model('UserData');
+		// 添加或减少好友数
+		$data_model->setUid($uid)->updateKey('friend_count', count($fids), $inc);
+		foreach($fids as $f_v) {
+			// 添加或减少好友数
+			$data_model->setUid($f_v)->updateKey('friend_count', 1, $inc);
+			$data_model->setUid($f_v)->updateKey('new_friend_count', 1, $inc);
 		}
 	}
 

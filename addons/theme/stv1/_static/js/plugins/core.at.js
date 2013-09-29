@@ -156,7 +156,7 @@ core.at = {
 //		//this.textarea.text(oldHtml+'<label><a href="###" data="@{uid='+uid+'|'+uname+'}">@'+uname+'</a></label>&nbsp;');
 //	    this.textarea.click();
 //		core.bindkey.unbind();
-		this.inputor.inputToEnd('@'+uname+' ');
+	    this.inputor.WBInputToEnd('@' + uname + ' ');
 //		this._startAt();
 	},
 	/**

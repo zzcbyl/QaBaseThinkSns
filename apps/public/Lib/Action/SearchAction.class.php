@@ -45,7 +45,7 @@ class SearchAction extends Action
 		$this->setKeywords( '搜索'.$this->key );
 		$this->setDescription( '搜索'.$this->key );
 
-		if($this->curType == 2){     //搜索用户
+		if($this->curType == 2){     //搜索微博
 			if($this->key != ""){
 				if(t($_GET['Stime']) && t($_GET['Etime'])){
 					$Stime = strtotime(t($_GET['Stime']));
@@ -69,7 +69,7 @@ class SearchAction extends Action
 			}
 			$this->display('search_feed');
 
-		}else{	
+		}else{	//搜索用户或者标签
 			if($this->key != ""){
 				if($this->curType == 3){         //按标签搜索
 					$data['name'] = $this->key;

@@ -39,6 +39,7 @@ class FeedListWidget extends Widget {
         } else {
         	$content = $this->getData($var,'_FeedList.html');
         }
+		
         // 查看是否有更多数据
         if(empty($content['html'])) {
         	// 没有更多的
@@ -50,8 +51,9 @@ class FeedListWidget extends Widget {
         	$var['pageHtml']	= $content['pageHtml'];
         }
 	    $content['html'] = $this->renderFile(dirname(__FILE__)."/".$var['tpl'], $var); 
+		
 		self::$rand ++;
-		unset($var, $data);
+		//unset($var, $data);
         //输出数据
 		return $content['html'];
     }
@@ -137,7 +139,7 @@ class FeedListWidget extends Widget {
     				//关键字匹配 采用搜索引擎兼容函数搜索 后期可能会扩展为搜索引擎
     				$list = model('Feed')->searchFeed($var['feed_key'],'following',$var['loadId'],$this->limitnums);
     			}else{
-    				$where =' (a.is_audit=1 OR a.is_audit=0 AND a.uid='.$GLOBALS['ts']['mid'].') AND a.is_del = 0 ';
+					$where =' (a.is_audit=1 OR a.is_audit=0 AND a.uid='.$GLOBALS['ts']['mid'].') AND a.is_del = 0 AND a.feed_questionid=0 ';
     				if($var['loadId'] > 0){ //非第一次
     					$where .=" AND a.feed_id < '".intval($var['loadId'])."'";
     				}
@@ -149,6 +151,7 @@ class FeedListWidget extends Widget {
     					}
     				}
     				$list =  model('Feed')->getFollowingFeed($where,$this->limitnums,'',$var['fgid']);
+					//print_r($list);
     			}
     			break;
     		case 'all'://所有的 --正在发生的
@@ -156,7 +159,7 @@ class FeedListWidget extends Widget {
     				//关键字匹配 采用搜索引擎兼容函数搜索 后期可能会扩展为搜索引擎
     				$list = model('Feed')->searchFeed($var['feed_key'],'all',$var['loadId'],$this->limitnums);
     			}else{
-                    $where =' (is_audit=1 OR is_audit=0 AND uid='.$GLOBALS['ts']['mid'].') AND is_del = 0 ';
+					$where =' (is_audit=1 OR is_audit=0 AND uid='.$GLOBALS['ts']['mid'].') AND is_del = 0 AND feed_questionid=0 ';
     				if($var['loadId'] > 0){ //非第一次
     					$where .=" AND feed_id < '".intval($var['loadId'])."'";
     				}
@@ -171,7 +174,7 @@ class FeedListWidget extends Widget {
     			}
     			break;
     		case 'newfollowing'://关注的人的最新微博
-    			$where = ' a.is_del = 0 and a.is_audit = 1 and a.uid != '.$GLOBALS['ts']['uid'];
+				$where = ' a.is_del = 0 and a.is_audit = 1 and a.uid != '.$GLOBALS['ts']['uid'].' and a.feed_questionid=0 ';
     			if($var['maxId'] > 0){
     				$where .=" AND a.feed_id > '".intval($var['maxId'])."'";
     				$list = model('Feed')->getFollowingFeed($where);
@@ -180,6 +183,7 @@ class FeedListWidget extends Widget {
     			break;
     		case 'newall':	//所有人最新微博 -- 正在发生的
     			if($var['maxId'] > 0){
+					$map['feed_questionid'] = 0;
     				$map['feed_id'] = array('gt',intval($var['maxId']));
     				$map['is_del'] = 0;
                     $map['is_audit'] = 1;
@@ -196,13 +200,14 @@ class FeedListWidget extends Widget {
 	    			if($var['loadId']>0){
 	    				$map['feed_id'] = array('lt',intval($var['loadId']));
 	    			}
+					$map['feed_questionid'] = 0;
 	    			$map['is_del'] = 0;
                     if($GLOBALS['ts']['mid'] != $GLOBALS['ts']['uid']) $map['is_audit'] = 1;
     				$list = model('Feed')->getUserList($map,$GLOBALS['ts']['uid'],  $var['feedApp'], $var['feed_type'],$this->limitnums);
     			}
     			break;
             case 'channel':
-                $where = ' (c.is_audit=1 OR c.is_audit=0) AND c.is_del = 0 ';
+				$where = ' (c.is_audit=1 OR c.is_audit=0) AND c.is_del = 0 AND c.feed_questionid=0 ';
                 if($var['loadId'] > 0) { //非第一次
                     $where .= " AND c.feed_id < '".intval($var['loadId'])."'";
                 }
@@ -248,10 +253,11 @@ class FeedListWidget extends Widget {
             	$var['followUids'] = array();
             }
     	}
+
+		
     	$content['pageHtml'] = $list['html'];
 	    // 渲染模版
 	    $content['html'] = $this->renderFile(dirname(__FILE__)."/".$tpl, $var);
-
 	    return $content;
     }
 

@@ -80,6 +80,8 @@ class FeedAction extends Action {
 		$d['body'] = filter_keyword($_POST['body']);
 		// 原始问题描述
 		$d['description'] = filter_keyword($_POST['description']);		
+		// 问题ID
+		$d['questionid'] = filter_keyword($_POST['questionid']);		
 	
 		// 安全过滤
 		foreach($_POST as $key => $val) {
@@ -110,7 +112,15 @@ class FeedAction extends Action {
 		// 微博配置
 		$weiboSet = model ( 'Xdata' )->get ( 'admin_Config:feed' );
 		$this->assign ( 'weibo_premission', $weiboSet ['weibo_premission'] );
-		$return ['data'] = $this->fetch ();
+		
+		if($_POST['questionid']!=null&&$_POST['questionid']!="0")
+		{
+			$return ['data'] = $this->fetch('answer');
+		}
+		else{
+			$return ['data'] = $this->fetch();
+		}
+		
 		// 微博ID
 		$return ['feedId'] = $data ['feed_id'];
 		$return ['is_audit'] = $data ['is_audit'];

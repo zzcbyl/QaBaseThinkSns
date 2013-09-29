@@ -74,7 +74,7 @@ function addDigg(feed_id){
                                     </eq>
                                     <php>if(in_array('comment',$weibo_premission)):</php>
                                     <i class="vline">|</i>  
-                                    <a href="javascript:void(0)">{:L('PUBLIC_STREAM_COMMENT')}
+                                    <a href="javascript:void(0)" onclick="if($('#commentBlock').css('display')=='none') $('#commentBlock').show(); else  $('#commentBlock').hide();">{:L('PUBLIC_STREAM_COMMENT')}
                                     <neq name='feedInfo.comment_count' value='0'>({$feedInfo['comment_count']})</neq></a>
                                     <php> endif; </php>
                                 </span>
@@ -126,19 +126,7 @@ function addDigg(feed_id){
                             </dd>
                         </dl>
                     </div>
-                    <!--feed list-->
-
-                    <div  class="feed_lists">
-						<dl class="feed_list feed_comment">
-							<dd class="content">
-                                <div class="repeat clearfix pading">
-                                    {:W('Answer',array('title'=>'回答', 'feedID'=>$vl['feed_id']))}
-                                </div>
-							</dd>
-						</dl>
-					</div>
-
-					<div  class="feed_lists">
+                    <div id="commentBlock" class="feed_lists" style="display:none;">
 						<dl class="feed_list feed_comment">
 							<dd class="content">
                                 <div class="repeat clearfix pading">
@@ -148,6 +136,21 @@ function addDigg(feed_id){
 							</dd>
 						</dl>
 					</div>
+
+                    <div  class="feed_lists-1">
+						<dl class="feed_list feed_comment">
+							<dd class="content">
+                                <div class="repeat clearfix pading">
+                                    <div></div>
+                                    {:W('Answer',array('title'=>'回答', 'feedID'=>$feedInfo['feed_id']))}
+                                </div>
+							</dd>
+						</dl>
+					</div>
+
+                    <!--feed list-->
+                    {:W('AnswerList',array('type'=>'answer','feed_id'=>t($_GET['feed_id']),'uid'=>t($_GET['uid']),'feed_type'=>'','feed_key'=>'','fgid'=>t($_GET['fgid'])))}
+
                     </div>
                  </div>
             <php>}else{</php>
@@ -157,4 +160,6 @@ function addDigg(feed_id){
     </div>
 </div>
 <include file="__THEME__/public_footer" />
-<script src="__THEME__/js/module.weibo.js"></script>
+<!--<script src="__THEME__/js/module.weibo.js"></script>-->
+<script type="text/javascript" src="__THEME__/js/home/module.home.js"></script>
+<script type="text/javascript" src="__THEME__/js/module.weibo.js"></script>

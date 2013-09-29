@@ -41,7 +41,9 @@ class UserInformationWidget extends Widget {
 		strtolower(ACTION_NAME) == 'myfeed' && strtolower(MODULE_NAME) == 'index' && $var['current'] = 'myfeed';
 		strtolower(ACTION_NAME) == 'following' && strtolower(MODULE_NAME) == 'index' && $var['current'] = 'following';
 		strtolower(ACTION_NAME) == 'follower' && strtolower(MODULE_NAME) == 'index' && $var['current'] = 'follower';
+		strtolower(ACTION_NAME) == 'friend' && strtolower(MODULE_NAME) == 'index' && $var['current'] = 'friend';
 		strtolower(ACTION_NAME) == 'index' && strtolower(MODULE_NAME) == 'collection' && $var['current'] = 'collection';
+		
 		// 用户分类信息
 		$map['app'] = 'public';
 		$map['table'] = 'user';

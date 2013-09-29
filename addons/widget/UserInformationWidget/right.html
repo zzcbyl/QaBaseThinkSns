@@ -12,9 +12,9 @@
 			</div>
 			
 			<div class="user-grade">
-			<volist name='userCredit.credit' id='vo'>
+			<!--<volist name='userCredit.credit' id='vo'>
 			<div class="grade f9" style="color:#666">{$vo.alias}：<span>{:intval($vo['value'])}点</span></div>
-			</volist>
+			</volist>-->
 			
 			<php>if($isReturn) {</php></div>
 			<div class="home"><i class="ico-home"></i><a href="{:U('public/Index/index')}" class="f3">返回我的首页</a></div>
@@ -23,10 +23,13 @@
 	</dl>
 
 	<ul class="person-info-b clearfix mb10">
-		<li><a href="{:U('public/Index/myFeed')}" <eq name="current" value="myfeed">class="current"</eq>><span>微博</span><strong event-node="weibo_count" event-args="uid={$GLOBALS['ts']['mid']}">{$userData.weibo_count|default=0}</strong></a></li>
 		<li><a href="{:U('public/Index/following')}" <eq name="current" value="following">class="current"</eq>><span>关注</span><strong event-node="following_count" event-args="uid={$GLOBALS['ts']['mid']}">{$userData.following_count|default=0}</strong></a></li>
 		<li><a href="{:U('public/Index/follower')}" <eq name="current" value="follower">class="current"</eq>><span>粉丝</span><strong event-node="follower_count" event-args="uid={$GLOBALS['ts']['mid']}">{$userData.follower_count|default=0}</strong></a></li>
-		<li class="no-border "><a href="{:U('public/Collection/index')}" <eq name='current' value='collection'>class="current"</eq>><span>收藏</span><strong event-node="favorite_count" event-args="uid={$GLOBALS['ts']['mid']}">{$userData.favorite_count|default=0}</strong></a></li>
+        <li><a href="{:U('public/Index/friend')}" <eq name="current" value="friend">class="current"</eq>><span>好友</span><strong event-node="friend_count" event-args="uid={$GLOBALS['ts']['mid']}">{$userData.friend_count|default=0}</strong></a></li>
+        <li><a href="{:U('public/Index/myFeed')}" <eq name="current" value="myfeed">class="current"</eq>><span>提问</span><strong event-node="weibo_count" event-args="uid={$GLOBALS['ts']['mid']}">{$userData.weibo_count|default=0}</strong></a></li>
+        <li><span>回答</span><strong event-node="weibo_count" event-args="uid={$GLOBALS['ts']['mid']}">{$userData.answer_count|default=0}</strong></li>
+		
+		<!--<li class="no-border "><a href="{:U('public/Collection/index')}" <eq name='current' value='collection'>class="current"</eq>><span>收藏</span><strong event-node="favorite_count" event-args="uid={$GLOBALS['ts']['mid']}">{$userData.favorite_count|default=0}</strong></a></li>-->
 	</ul>
 	{:W('MedalList')}
 </div>

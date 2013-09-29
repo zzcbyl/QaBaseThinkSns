@@ -3,8 +3,11 @@
 		<![CDATA[{$actor}]]>
 	</title>
 	<body>
+		<![CDATA[{$body|t|replaceUrl} ]]>
+	</body>
+	<description>
 		<![CDATA[ 
-			{$body|t|replaceUrl}
+			{$description|t|replaceUrl}
 			<br/>
 			<div class="feed_img_lists" rel='small' >
 			<ul class="small">
@@ -27,6 +30,6 @@
 			</ul>
 			</div>
 		 ]]>
-	</body>
+	</description>
 	<feedAttr comment="true" repost="true" like="false" favor="true" delete="true" />
 </feed>

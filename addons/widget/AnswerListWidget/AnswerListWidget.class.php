@@ -48,6 +48,8 @@ class AnswerListWidget extends Widget {
         	$var['firstId'] = $content['firstId'] ? $content['firstId'] : 0;
         	$var['pageHtml']	= $content['pageHtml'];
         }
+		if($_REQUEST['feed_id']!=null)
+			$var['feed_id']=$_REQUEST['feed_id'];
 	    $content['html'] = $this->renderFile(dirname(__FILE__)."/".$var['tpl'], $var); 
 		self::$rand ++;
 		unset($var, $data);

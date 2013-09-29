@@ -7,7 +7,7 @@
 class FeedModel extends Model {
 
 	protected $tableName = 'feed';
-	protected $fields = array('feed_id','uid','type','app','app_row_id','app_row_table','publish_time','is_del','from','comment_count','repost_count','comment_all_count','digg_count','is_repost','is_audit','_pk'=>'feed_id');
+	protected $fields = array('feed_id','uid','type','app','app_row_id','app_row_table','publish_time','is_del','from','comment_count','repost_count','comment_all_count','digg_count','is_repost','is_audit','feed_questionid','answer_count','_pk'=>'feed_id');
 
 	public $templateFile = '';			// 模板文件
 
@@ -55,6 +55,7 @@ class FeedModel extends Model {
 		$data['from'] = isset($data['from']) ? intval($data['from']) : getVisitorClient();
 		$data['is_del'] = $data['comment_count'] = $data['repost_count'] = 0;
 		$data['is_repost'] = $is_repost;
+		$data['feed_questionid'] = $data['questionid'];
 		//判断是否先审后发
 		$weiboSet = model('Xdata')->get('admin_Config:feed');
         $weibo_premission = $weiboSet['weibo_premission'];
@@ -111,6 +112,18 @@ class FeedModel extends Model {
 		// 添加微博信息
 		$feed_id =  $this->data($data)->add();
 		if(!$feed_id) return false;
+		
+		$data['answer_count']=0;
+		//如果是回答,增加问题的回答数量
+		if($data['questionid']!=null && $data['questionid']!='0')
+		{
+			$feed_Qid=model('feed')->where('feed_id='.$feed_id)->getField('feed_questionid');
+			$updData['answer_count']=model('feed')->where('feed_questionid='.$feed_Qid)->count();
+			model('feed')->where('feed_id='.$feed_Qid)->save($updData);
+			$this->	cleanCache(array($feed_Qid));
+			$this->	updateFeedCache($feed_Qid,'update');
+		}
+		
 		if(!$data['is_audit']){
 			$touid = D('user_group_link')->where('user_group_id=1')->field('uid')->findAll();
 			foreach($touid as $k=>$v){
@@ -160,10 +173,16 @@ class FeedModel extends Model {
 			$return['app_row_id'] = $data['app_row_id'];
 			$return['is_audit'] = $data['is_audit'];
 			// 统计数修改
-			model('UserData')->setUid($uid)->updateKey('feed_count', 1);
-			// if($app =='public'){ //TODO 微博验证条件
+			if($data['questionid']!=null&&$data['questionid']!='0')
+				model('UserData')->setUid($uid)->updateKey('answer_count', 1);
+			else
+			{
+				model('UserData')->setUid($uid)->updateKey('feed_count', 1);
+				// if($app =='public'){ //TODO 微博验证条件
 				model('UserData')->setUid($uid)->updateKey('weibo_count', 1);
-			// }
+				// }
+			}
+			
 			if(!$return) {
 				$this->error = L('PUBLIC_CACHE_FAIL');				// Feed缓存写入失败
 			}
@@ -317,9 +336,9 @@ class FeedModel extends Model {
 			$table .=" LEFT JOIN {$this->tablePrefix}user_follow_group_link AS c ON a.uid = c.fid AND c.uid ='{$buid}' ";
 			$_where .= " AND c.follow_group_id = ".intval($fgid);
 		}
-
 		$feedlist = $this->table($table)->where($_where)->field('a.feed_id')->order('a.publish_time DESC')->findPage($limit);
 		$feed_ids = getSubByKey($feedlist['data'], 'feed_id');
+
 		$feedlist['data'] = $this->getFeeds($feed_ids);
 		return $feedlist;
 	}
@@ -338,6 +357,7 @@ class FeedModel extends Model {
 		$feedlist = $this->table($table)->where($map)->field('source_id AS feed_id')->order('source_id DESC')->findPage($limit);
 		$feed_ids = getSubByKey($feedlist['data'],'feed_id');
 		$feedlist['data'] = $this->getFeeds($feed_ids);
+
 		return $feedlist;
 	}
 
@@ -432,6 +452,7 @@ class FeedModel extends Model {
 	public function getFeeds($feed_ids) {
 		$feedlist = array();
 		$feed_ids = array_filter(array_unique($feed_ids));
+		
 		// 获取数据
 		if(count($feed_ids) > 0) {
 			$cacheList = model('Cache')->getList('fd_', $feed_ids);
@@ -514,6 +535,8 @@ class FeedModel extends Model {
 				$v['info'] = $parseData['info'];
 				$v['title'] = $parseData['title'];
 				$v['body'] = $parseData['body'];
+				$v['description'] = $parseData['description'];
+				//$v['answer_count'] = $parseData['answer_count'];
 				$v['api_source'] = $parseData['api_source'];
 				$v['actions'] = $parseData['actions'];
 				$v['user_info'] = $parseData['userInfo'];
@@ -529,7 +552,9 @@ class FeedModel extends Model {
 			$value['info'] = $parseData['info'];
 			$value['title'] = $parseData['title'];
 			$value['body'] = $parseData['body'];
+			$value['description'] = $parseData['description'];
 			$value['api_source'] = $parseData['api_source'];
+			//$value['answer_count'] = $parseData['answer_count'];
 			$value['actions'] = $parseData['actions'];
 			$value['user_info'] = $parseData['userInfo'];
 			$value['GroupData'] = model('UserGroupLink')->getUserGroupData($value['uid']);
@@ -600,10 +625,12 @@ class FeedModel extends Model {
 		$return["actor_groupData"] = $var["actor_groupData"];
 		$return['title'] = trim((string) $result[0]->title);
 	    $return['body'] =  trim((string) $result[0]->body);
+		$return['description'] =  trim((string) $result[0]->description);
 		// $return['sbody'] = trim((string) $result[0]->sbody);
 	    $return['info'] =  trim((string) $result[0]['info']);
 	    //$return['title'] =  parse_html($return['title']); 
 	    $return['body']  =  parse_html($return['body']);
+		$return['description']  =  parse_html($return['description']);
 	    $return['api_source'] = $var['sourceInfo'];
 		// $return['sbody'] =  parse_html($return['sbody']); 
 	    $return['actions'] = $actions['@attributes'];

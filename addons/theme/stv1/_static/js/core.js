@@ -131,18 +131,18 @@ core.loadCss = core._loadCss();
  * 
  * @author yangjs
  */
-core.plugInit = function() {
-	if(arguments.length > 0) {
-		var arg = arguments;
-		var back = function() {
-			eval("var func = core." + arg[0] + ";");
-			if("undefined" != typeof(func)) {
-				func._init(arg);	
-			}
-		};
-		var file = THEME_URL + '/js/plugins/core.' + arguments[0] + '.js';
-		core.loadFile(file, back);
-	}
+core.plugInit = function () {
+    if (arguments.length > 0) {
+        var arg = arguments;
+        var back = function () {
+            eval("var func = core." + arg[0] + ";");
+            if ("undefined" != typeof (func)) {
+                func._init(arg);
+            }
+        };
+        var file = THEME_URL + '/js/plugins/core.' + arguments[0] + '.js';
+        core.loadFile(file, back);
+    }
 };
 //与上面方法类似 只不过可以自己写回调函数（不主动执行init）
 core.plugFunc = function(plugName,callback){

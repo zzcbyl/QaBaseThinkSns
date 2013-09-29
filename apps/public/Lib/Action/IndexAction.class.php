@@ -220,6 +220,52 @@ class IndexAction extends Action {
 	}
 	
 	/**
+	* 我的好友页面
+	*/
+	public function friend() {
+		// 清空新粉丝提醒数字
+		if($this->uid == $this->mid){
+			$udata = model('UserData')->getUserData($this->mid);
+			$udata['new_folower_count'] > 0 && model('UserData')->setKeyValue($this->mid,'new_folower_count',0);	
+		}
+		// 获取用户的粉丝列表
+		$followerList = model('Follow')->getFriendList($this->mid, 20);
+		$fids = getSubByKey($followerList['data'], 'fid');
+		// 获取用户信息
+		$followerUserInfo = model('User')->getUserInfoByUids($fids);
+		// 获取用户统计数目
+		$userData = model('UserData')->getUserDataByUids($fids);
+		// 获取用户标签
+		$this->_assignUserTag($fids);
+		// 获取用户用户组信息
+		$userGroupData = model('UserGroupLink')->getUserGroupData($fids);
+		$this->assign('userGroupData',$userGroupData);
+		// 获取用户的最后微博数据
+		//$lastFeedData = model('Feed')->getLastFeed($fids);
+		// 获取用户的关注信息状态
+		$followState = model('Follow')->getFollowStateByFids($this->mid, $fids);
+		// 组装数据
+		foreach($followerList['data'] as $key => $value) {
+			$followerList['data'][$key] = array_merge($followerList['data'][$key], $followerUserInfo[$value['fid']]);
+			$followerList['data'][$key] = array_merge($followerList['data'][$key], $userData[$value['fid']]);
+			$followerList['data'][$key] = array_merge($followerList['data'][$key], array('feedInfo'=>$lastFeedData[$value['fid']]));
+			$followerList['data'][$key] = array_merge($followerList['data'][$key], array('followState'=>$followState[$value['fid']]));
+		}
+		$this->assign($followerList);
+		// 是否有返回按钮
+		$this->assign('isReturn', 1);
+		// 粉丝人数
+		$midData = model('UserData')->getUserData($this->mid);
+		$this->assign('followerCount', $midData['follower_count']);
+
+		$userInfo = model('User')->getUserInfo($this->mid);
+		$lastFeed = model('Feed')->getLastFeed(array($fids[0]));
+		$this->setTitle('我的粉丝');
+		$this->setKeywords($userInfo['uname'].'的粉丝');
+		$this->display();
+	}
+	
+	/**
 	 * 意见反馈页面
 	 */
 	public function feedback() {

@@ -17,6 +17,9 @@ core.weibo = {
         this.firstId = args.firstId;
         this.topic_id = args.topic_id; 	// 是否为话题
         this.gid = args.gid;
+        //alert(agrs.feedid);
+        this.answerid = agrs.answerid;
+
         //this.pre_page = "undefined" == typeof(pre_page) ? 1 :pre_page;//分页用到的前一页
         if ("undefined" == typeof (this.loadCount)) {
             this.loadCount = 1;
@@ -47,7 +50,13 @@ core.weibo = {
                 _this.loadCount = _this.loadCount + 1;
                 if ($('#feed-lists').length > 0 && _this.loadId != null) {
                     $('#feed-lists').append("<div class='loading' id='loadMore'>" + L('PUBLIC_LOADING') + "<img src='" + THEME_URL + "/image/load.gif' class='load'></div>");
-                    core.weibo.loadMoreFeed();
+                    //alert('answerid='+this.answerid);
+                    if (this.answerid != null && this.answerid != undefined) {
+                        core.weibo.loadMoreAnswer(this.answerid); //加载答案
+                    }
+                    else {
+                        core.weibo.loadMoreFeed();
+                    }
                 }
             }
         });
@@ -58,6 +67,67 @@ core.weibo = {
         _this.canLoading = false;
         // 获取微博数据
         $.get(U('widget/FeedList/loadMore'), { 'loadId': _this.loadId, 'type': _this.feedType, 'uid': _this.uid, 'feed_type': _this.feed_type, 'feed_key': _this.feed_key, 'fgid': fgid, 'topic_id': _this.topic_id, 'load_count': _this.loadCount, 'gid': _this.gid }, function (msg) {
+            // 加载失败
+            if (msg.status == "0" || msg.status == "-1") {
+                $('#loadMore').remove();
+                if (msg.status == 0 && ("undefined" != typeof (msg.msg)) && _this.loadmore > 0) {
+                    $('#feed-lists').append('<div class="loading" id="loadMore">' + msg.msg + '</div>');
+                }
+            }
+            // 加载成功
+            if (msg.status == "1") {
+                if (msg.firstId > 0 && _this.loadnew == 1) {
+                    _this.firstId = msg.firstId;
+                    // 启动查找最新的loop
+                    //					_this.startNewLoop();
+                }
+                $('#loadMore').remove();
+                if (_this.loadCount >= 4) {
+                    var $lastDl = $('<div></div>');
+                    $lastDl.html(msg.html);
+                    msg.html = $lastDl.find('dl').filter('.feed_list').slice(30);
+                }
+                $('#feed-lists').append(msg.html);
+                _this.canLoading = true;
+                _this.loadId = msg.loadId;
+                if (_this.loadCount >= 4) {
+                    $('#feed-lists').append('<div id="page" class="page" style="display:none;">' + msg.pageHtml + '</div>');
+                    if ($('#feed-lists .page').find('a').size() > 2) {
+                        // 4ping + next 说明还有30个以上
+                        var href = false;
+                        $('#feed-lists .page').find('a').each(function () {
+                            href = $(this).attr('href');
+                        });
+                        // 重组分页结构
+                        $('#feed-lists .page').html(msg.pageHtml).show();
+                        $('#feed-lists .page').find('a').each(function () {
+                            var href = $(this).attr('href');
+                            if (href) {
+                                $(this).attr('href', 'javascript:;');
+                                $(this).click(function () {
+                                    core.weibo.loadMoreByPage(href);
+                                });
+                            }
+                        });
+                    } else {
+                        if ($('#feed-lists').find('dl').size() > 0) {
+                            $('#feed-lists').append('<div class="loading" id="loadMore">' + L('PUBLIC_ISNULL') + '</div>');
+                        }
+                    }
+                } else {
+                    core.weibo.bindScroll();
+                }
+                M(document.getElementById('feed-lists'));
+            }
+        }, 'json')
+        return false;
+    },
+    // 加载更多问题答案
+    loadMoreAnswer: function (answerid) {
+        var _this = this;
+        _this.canLoading = false;
+        // 获取微博数据
+        $.get(U('widget/AnswerList/loadMore'), { 'feed_id': answerid, 'loadId': _this.loadId, 'type': _this.feedType, 'uid': _this.uid, 'feed_type': _this.feed_type, 'feed_key': _this.feed_key, 'fgid': fgid, 'topic_id': _this.topic_id, 'load_count': _this.loadCount, 'gid': _this.gid }, function (msg) {
             // 加载失败
             if (msg.status == "0" || msg.status == "-1") {
                 $('#loadMore').remove();
@@ -180,7 +250,8 @@ core.weibo = {
     afterPost: function (obj, textarea, topicHtml, description_editor, description, close) {
         if (topicHtml == '') {
             textarea.value = '';
-            description.value = '';
+            if (description != undefined)
+                description.value = ''; ;
         } else {
             textarea.value = topicHtml;
         }
@@ -188,9 +259,9 @@ core.weibo = {
         obj.parentModel.parentModel.childModels['numsLeft'][0].innerHTML = L('PUBLIC_INPUT_TIPES', { 'sum': '<span>' + initNums + '</span>' });
         var fadeOutObj = function () {
             textarea.ready = null;
-            description.ready = null;
+            if (description != undefined)
+                description.ready = null;
         };
-
         $(obj.childModels['post_ok'][0]).fadeOut(500, fadeOutObj);
         // 修改微博数目
         if ("undefined" == typeof (close) || !close) {
@@ -384,7 +455,6 @@ core.weibo = {
         if (questionid != null && questionid != undefined)
             Qid = questionid.value;
 
-        //alert(Qid); exit;
         // 发布微博
         $.post(url, { body: data, type: type, app_name: app_name, content: '', attach_id: attach_id, videourl: videourl, channel_id: channel_id, source_url: attrs.source_url, gid: attrs.gid, description: txtVal, questionid: Qid }, function (msg) {
             obj.isposting = false;

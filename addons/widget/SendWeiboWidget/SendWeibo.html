@@ -38,7 +38,7 @@
 						<a class="btn-grey-white" event-node='{$post_event}' event-args='type={$type}&app_name={$app_name}&topicHtml={$initHtml}' href="javascript:;"><span>发布</span></a>
 					</div>
 
-					<div class="acts">
+					<div class="acts" style="margin-left:40px;">
 						<eq name="actions.face" value="true">
 						<php>if(in_array('face',$weibo_type)):</php>
 					    <a event-node="insert_face" class="face-block" href="javascript:;"><i class="face"></i>表情</a>
@@ -62,7 +62,7 @@
 					    <php>endif;</php>
 					    </eq>
 
-					    <eq name="actions.video" value="true">
+					    <!--<eq name="actions.video" value="true">
 					    <php>if(in_array('video',$weibo_type)):</php>
 					    <input type="hidden" id="postvideourl" value="" />
 					    <a event-node="insert_video" rel="{$post_event}" class="video-block" href="javascript:;"><i class="video"></i>视频</a>
@@ -90,7 +90,7 @@
 					    <a event-node="insert_contribute" class="contribute-block" href="javascript:;"><i class="contribute"></i>投稿</a>
 					    <input type="hidden" autocomplete="off" value="" id="contribute" />
 					    <php>endif;</php>
-					    </eq>
+					    </eq>-->
 						{:Addons::hook('home_index_middle_publish_type',array('position'=>'index'))}
 					</div>	
 					<div class="clear"></div>

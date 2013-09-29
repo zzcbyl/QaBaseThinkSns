@@ -83,13 +83,13 @@ class CacheModel {
 		if(!empty($sc)) {
 			return $sc;
 		}
-
 		// 获取缓存数据
 		$data = $this->handler->get($key);
 		// 未设置缓存 
 		if(!$data) {
 			return false;
 		}
+		
 			// mutex模式未开启
 		if (! $mutex) {
 			if ($data ['CacheExpire'] < 0 || ($data ['CacheMtime'] + $data ['CacheExpire'] > time ())) {
