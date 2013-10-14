@@ -79,6 +79,7 @@ class CommentModel extends Model {
         	$v['sourceInfo'] = model('Source')->getSourceInfo($v['table'], $v['row_id'], false, $v['app']);
             //$v['data'] = unserialize($v['data']);
         }
+		//print_r($data);
         return $data;
     }
     

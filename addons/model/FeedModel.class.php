@@ -362,23 +362,29 @@ class FeedModel extends Model {
 		//关注的人和自己的问题
 		$table .= "(select a.feed_id, a.publish_time from {$this->tablePrefix}feed AS a LEFT JOIN {$this->tablePrefix}user_follow AS b ON a.uid=b.fid AND b.uid = {$buid} where {$_where}) union ";
 		//关注的人和自己的回答
-		$table .= "(SELECT feed_questionid as feed_id, publish_time FROM {$this->tablePrefix}feed WHERE (`uid` ={$buid} or uid IN (SELECT `fid` FROM `{$this->tablePrefix}user_follow` WHERE `uid` ={$buid})) AND feed_questionid >0 GROUP BY feed_questionid) ";
+		$table .= "(SELECT feed_questionid as feed_id, publish_time FROM {$this->tablePrefix}feed WHERE (`uid` ={$buid} or uid IN (SELECT `fid` FROM `{$this->tablePrefix}user_follow` WHERE `uid` ={$buid})) AND feed_questionid >0 GROUP BY feed_questionid) union ";
 		//关注人的评论
+		$table .= "(SELECT `row_id` as feed_id,`ctime` as publish_time FROM `{$this->tablePrefix}comment` WHERE `app`='public' and `table`='feed' and (`uid` = {$buid} or `uid` IN (SELECT `fid` FROM `{$this->tablePrefix}user_follow` WHERE `uid` = {$buid} ) ) group by row_id) ";
 		
 		$table .= ") tt";
+		//print($table);
 		//$feedlist = $this->table($table)->where($_where)->field('a.feed_id')->order('a.publish_time DESC')->findPage($limit);
-		$feedlist = $this->table($table)->where($_LoadWhere)->order('tt.feed_id DESC')->findPage($limit);
+		$feedlist = $this->table($table)->where($_LoadWhere)->group('feed_id')->order('tt.feed_id DESC')->findPage($limit);
+		//print($this->getLastSql());
 		//print_r($feedlist);
 		$feed_ids = getSubByKey($feedlist['data'], 'feed_id');
+		
+		//print_r($feed_ids);
 	
 		$feedlist['data'] = $this->getFeeds($feed_ids);
 		
 		//增加答案块
 		foreach( $feedlist["data"] as $v => $vv )
 		{
-			if($vv['uid']!= $GLOBALS['ts']['mid'])
+			if($vv['uid']!= $GLOBALS['ts']['mid']) //问题的用户ID不等于当前用户ID
 			{
-				$AnswerWhere='feed_questionid='.$vv['feed_id'].' and uid!='.$vv['uid'].' and (uid='.$GLOBALS['ts']['mid'].' or uid in (SELECT `fid` FROM `wb_user_follow` WHERE `uid` = '.$GLOBALS['ts']['mid'].'))';
+				//答案
+				$AnswerWhere='feed_questionid='.$vv['feed_id'].' and uid!='.$vv['uid'].' and (uid='.$GLOBALS['ts']['mid'].' or uid in (SELECT `fid` FROM `'.$this->tablePrefix.'user_follow` WHERE `uid` = '.$GLOBALS['ts']['mid'].'))';
 				$AnswerFeed = $this->field('feed_id')->where($AnswerWhere)->order("feed_id DESC")->findPage(1);				
 				$AnswerFeed_id = getSubByKey($AnswerFeed['data'], 'feed_id');
 				$AnswerFeedData = $this->getFeeds($AnswerFeed_id);
@@ -389,6 +395,17 @@ class FeedModel extends Model {
 				/*print_r($vv);
 				print('<br /><br /><br /><br />');*/
 				
+				//评论
+				$CommentWhere='row_id='.$vv['feed_id'].' and (uid='.$GLOBALS['ts']['mid'].' or uid in (SELECT `fid` FROM `'.$this->tablePrefix.'user_follow` WHERE `uid` = '.$GLOBALS['ts']['mid'].'))';
+				$CommentFeed = model('Comment')->field('comment_id')->where($CommentWhere)->order("comment_id DESC")->findPage(1);	
+				if(is_array($CommentFeed['data']))
+				{
+					$CommentFeedData =	model('Comment')->getCommentInfo($CommentFeed['data'][0]['comment_id']);
+					//print_r($CommonFeedData);
+					$vv["comment"] = $CommentFeedData;
+					$feedlist["data"][$v]=$vv;
+					//print_r($vv);
+				}
 			}
 		}
 		return $feedlist;
