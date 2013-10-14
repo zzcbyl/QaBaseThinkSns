@@ -145,7 +145,8 @@ class AnswerListWidget extends Widget {
 						$where .=" AND type = '".t($var['feed_type'])."'";
 					}
 				}
-				$list = model('Feed')->getList($where,$this->limitnums);
+				$list = model('Feed')->getList($where,$this->limitnums,'feed_id DESC');
+				//print_r($list);
 				break;
 		}
     	// 分页的设置

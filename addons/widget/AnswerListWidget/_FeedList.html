@@ -48,7 +48,7 @@ $admintaskrecom = CheckPermission('vtask_admin','vtask_recommend');
     <table width="589px" style="line-height:22px;">
 	    <tr>
 	        <td style="width:50px; text-align:right; vertical-align:top;">答案：</td>
-	        <td style="width:539px; display:block;"><span class="contents">{$vl.body|format=true}</span></td>
+	        <td style="width:539px; display:block;"><span class="contents"><!--{$vl.feed_id|format=true}-->{$vl.body|format=true}</span></td>
 	    </tr>
 	</table>
 	

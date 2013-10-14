@@ -122,7 +122,7 @@ core.weibo = {
         }, 'json')
         return false;
     },
-    // 加载更多问题答案
+    // 加载更多答案
     loadMoreAnswer: function (answerid) {
         var _this = this;
         _this.canLoading = false;

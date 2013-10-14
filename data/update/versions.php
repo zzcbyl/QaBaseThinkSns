@@ -72,5 +72,13 @@ return array (
     'package' => 'thinksns_d2013092501_v27972.zip',
     'status' => 0,
   ),
+  2013093001 => 
+  array (
+    'id' => '2013093001',
+    'title' => 'ThinkSNS V3.1 RC2 测试版升级包，适用于2013-06-03以后发布的版本（后台升级后，请更新rewrite规则文件）',
+    'version' => 'ThinkSNS.V3.28021',
+    'package' => 'thinksns_d2013093001_v28021.zip',
+    'status' => 0,
+  ),
 );
 ?>

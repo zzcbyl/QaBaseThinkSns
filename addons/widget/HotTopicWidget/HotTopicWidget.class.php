@@ -19,6 +19,8 @@ class HotTopicWidget extends Widget {
 		$where =' (is_audit=1 OR is_audit=0) AND is_del = 0 AND feed_questionid=0 ';
 		$list = model('Feed')->getList($where,$this->limitnums,'answer_count desc, feed_id desc');
 		$var['data'] = $list['data'];
+		
+		//print_r($var['data']);
 
 		//渲染模版
 		$content = $this->renderFile(dirname(__FILE__)."/HotTopic.html",$var);

@@ -163,7 +163,7 @@ a:hover .contribute{background-position:0 -207px;}
 .feed_img_lists .big{border:#f0f0f0 solid 1px;padding:6px 15px 15px 15px;background:#f9fafa;border-radius:3px;color:#ddd;}
 .feed_img_lists .big li{margin:3px 0;position:relative;float:none;}
 *+html .feed_img_lists .big li{padding:3px 0;}
-.feed_img_lists .big li a{border:none 0;padding:0;margin:0;display:block;}
+.feed_img_lists .big li a{border:none 0;padding:0;margin:0;display:block; overflow:hidden;}
 .feed_img_lists .big li a .imgsmall{max-width:557px;_width:expression(documentElement.clientWidth > 557 ? "557px" : (documentElement.clientWidth < 1? "1px" : "auto"));}
 .feed_list .comment .feed_img_lists .big{border:none 0;border-radius:0;padding:0;color:#ddd;}
 .feed_img_lists .ico-show-big{visibility:hidden;position:absolute;left:0;top:0;z-index:99;_visibility:visible;}

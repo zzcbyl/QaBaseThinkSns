@@ -200,7 +200,7 @@ class UploadFile
         }
         $fileInfo = array();
         $isUpload   = false;
-
+		
         // 获取上传的文件信息
         // 对$_FILES数组信息处理
         $files	 =	 $this->dealFiles($_FILES);
@@ -208,7 +208,7 @@ class UploadFile
         foreach($files as $key => $file) {
             //过滤无效的上传
             if(!empty($file['name'])) {
-
+				
                 $file['key']        = $key;
                 $file['extension']  = $this->getExt($file['name']);
                 $file['savepath']   = $savePath;
@@ -306,7 +306,7 @@ class UploadFile
             	if(isset($this->maxSize) && !empty($this->maxSize)){
             		$size = byte_format($this->maxSize);
             	}
-                $this->error = '上传文件大小不符，文件不能超过 '.$size;
+                $this->error = '上传文件大小不符，文件不能超过'.$size;
             	break;
             case 2:
          		$size = ini_get("upload_max_filesize");

@@ -132,7 +132,6 @@ class FeedListWidget extends Widget {
     	$var['remarkHash'] = model('Follow')->getRemarkHash($GLOBALS['ts']['mid']);
     	$map = $list = array();
     	$type = $var['new'] ? 'new'.$var['type'] : $var['type'];	// 最新的微博与默认微博类型一一对应
-
     	switch($type) {
     		case 'following':// 我关注的
     			if(!empty($var['feed_key'])){
@@ -140,8 +139,10 @@ class FeedListWidget extends Widget {
     				$list = model('Feed')->searchFeed($var['feed_key'],'following',$var['loadId'],$this->limitnums);
     			}else{
 					$where =' (a.is_audit=1 OR a.is_audit=0 AND a.uid='.$GLOBALS['ts']['mid'].') AND a.is_del = 0 AND a.feed_questionid=0 ';
+					$LoadWhere = '';
     				if($var['loadId'] > 0){ //非第一次
-    					$where .=" AND a.feed_id < '".intval($var['loadId'])."'";
+    					//$where .=" AND a.feed_id < '".intval($var['loadId'])."'";
+						$LoadWhere = "feed_id < '".intval($var['loadId'])."'";
     				}
     				if(!empty($var['feed_type'])){
     					if ( $var['feed_type'] == 'post' ){
@@ -150,7 +151,7 @@ class FeedListWidget extends Widget {
     						$where .=" AND a.type = '".t($var['feed_type'])."'";
     					}
     				}
-    				$list =  model('Feed')->getFollowingFeed($where,$this->limitnums,'',$var['fgid']);
+					$list =  model('Feed')->getFollowingFeed($where,$this->limitnums,'',$var['fgid'],$LoadWhere);
 					//print_r($list);
     			}
     			break;
@@ -204,6 +205,7 @@ class FeedListWidget extends Widget {
 	    			$map['is_del'] = 0;
                     if($GLOBALS['ts']['mid'] != $GLOBALS['ts']['uid']) $map['is_audit'] = 1;
     				$list = model('Feed')->getUserList($map,$GLOBALS['ts']['uid'],  $var['feedApp'], $var['feed_type'],$this->limitnums);
+					//print_r($list);
     			}
     			break;
             case 'channel':
@@ -254,6 +256,7 @@ class FeedListWidget extends Widget {
             }
     	}
 
+		//print_r($var);
 		
     	$content['pageHtml'] = $list['html'];
 	    // 渲染模版

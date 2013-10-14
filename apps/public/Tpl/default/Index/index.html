@@ -17,24 +17,28 @@
                     <div class="feed-nav">
                     <!--tab menu-->
                     <div class="tab-menu">
-                        <div class="feed-group">
+                        <!--<div class="feed-group">
                         <php>if(isset($_GET['feed_type']) || !empty($_GET['feed_key'])){</php>
                          <i class="arrow-nav-t" event-node='feed_tab_btn' title="{:L('PUBLIC_FOLD')}"></i>
                         <php>}else{</php>
                         <i class="arrow-nav-b" event-node='feed_tab_btn' title="{:L('PUBLIC_UNFOLD')}"></i>
                         <php>}</php>
-                        </div>
+                        </div>-->
                         <ul>
                             <switch name="type">
                                 <case value="following">
-                                <li class="current" model-node="myfollow"><span><a href="javascript:void(0);" title="{$groupname}">{$groupname|getShort=###, 4}<i class="arrow-down"></i></a></span></li> 
+                                <li class="current" model-node="myfollow"><span><a href="javascript:void(0);" title="提问列表">提问列表</a></span></li> 
                                 <li><span><a href="{:U('public/Index/index',array('type'=>'all'))}">{:L('PUBLIC_ACTIVITY')}</a></span></li>
-                                <eq name="isChannelOpen" value="true"><li><span><a href="{:U('public/Index/index',array('type'=>'channel'))}">我关注的频道<i class="arrow-down"></i></a></span></li></eq>
+                                <!--<li class="current" model-node="myfollow"><span><a href="javascript:void(0);" title="{$groupname}">{$groupname|getShort=###, 4}<i class="arrow-down"></i></a></span></li> 
+                                <li><span><a href="{:U('public/Index/index',array('type'=>'all'))}">{:L('PUBLIC_ACTIVITY')}</a></span></li>
+                                <eq name="isChannelOpen" value="true"><li><span><a href="{:U('public/Index/index',array('type'=>'channel'))}">我关注的频道<i class="arrow-down"></i></a></span></li></eq>-->
                                 </case>
                                 <case value="all">
-                                <li><span><a href="{:U('public/Index/index')}">{:L('PUBLIC_ACTIVITY_STREAM')}<i class="arrow-down"></i></a></span></li>
+                                <li><span><a href="{:U('public/Index/index')}" title="提问列表">提问列表</a></span></li> 
                                 <li class="current"><span><a href="{:U('public/Index/index',array('type'=>'all'))}">{:L('PUBLIC_ACTIVITY')}</a></span></li>
-                                <eq name="isChannelOpen" value="true"><li><span><a href="{:U('public/Index/index',array('type'=>'channel'))}">我关注的频道<i class="arrow-down"></i></a></span></li></eq>
+                                <!--<li><span><a href="{:U('public/Index/index')}">{:L('PUBLIC_ACTIVITY_STREAM')}<i class="arrow-down"></i></a></span></li>
+                                <li class="current"><span><a href="{:U('public/Index/index',array('type'=>'all'))}">{:L('PUBLIC_ACTIVITY')}</a></span></li>
+                                <eq name="isChannelOpen" value="true"><li><span><a href="{:U('public/Index/index',array('type'=>'channel'))}">我关注的频道<i class="arrow-down"></i></a></span></li></eq>-->
                                 </case>
                                 <case value="channel">
                                 <li><span><a href="{:U('public/Index/index')}">{:L('PUBLIC_ACTIVITY_STREAM')}<i class="arrow-down"></i></a></span></li>
@@ -44,7 +48,7 @@
                             </switch>
                         </ul>
                     </div>
-                    <div class="mod-feed-tab" id="mod-feed-tab" <php>if(!isset($_GET['feed_type']) && empty($_GET['feed_key'])){</php> style="display:none"<php>}</php> >
+                    <!--<div class="mod-feed-tab" id="mod-feed-tab" <php>if(!isset($_GET['feed_type']) && empty($_GET['feed_key'])){</php> style="display:none"<php>}</php> >
                         <ul class="inner-feed-nav">
                             <li <eq name='feed_type' value=''>class="current"</eq>>
                                 <a href="{:U('public/Index/index',array('type'=>$type,'feed_type'=>''))}">{:L('PUBLIC_ALL_STREAM')}</a></li>
@@ -59,7 +63,7 @@
                             <li <eq name="feed_type" value="postvideo">class="current"</eq>>
                             <a href="{:U('public/Index/index',array('type'=>$type,'feed_type'=>'postvideo'))}">视频</a></li>
                         </ul>
-                    </div>
+                    </div>-->
                     </div>
                     {:Addons::hook('home_index_left_feedtop')}
                     <!--feed list-->

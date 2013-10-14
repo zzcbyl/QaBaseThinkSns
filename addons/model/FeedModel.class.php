@@ -311,10 +311,30 @@ class FeedModel extends Model {
 	 * @param integer $limit 结果集数目，默认为10
 	 * @return array 微博列表数据
 	 */
-	public function getList($map, $limit = 10 , $order = 'publish_time DESC') {
+	public function getList($map, $limit = 10 , $order = 'feed_id DESC') {
 		$feedlist = $this->field('feed_id')->where($map)->order($order)->findPage($limit); 
 		$feed_ids = getSubByKey($feedlist['data'], 'feed_id');
 		$feedlist['data'] = $this->getFeeds($feed_ids);
+		
+		//增加答案块
+		foreach( $feedlist["data"] as $v => $vv )
+		{
+			if($vv['uid']!= $GLOBALS['ts']['mid'])
+			{
+				$AnswerWhere='feed_questionid='.$vv['feed_id'].' and uid!='.$vv['uid'].' and (uid='.$GLOBALS['ts']['mid'].' or uid in (SELECT `fid` FROM `wb_user_follow` WHERE `uid` = '.$GLOBALS['ts']['mid'].'))';
+				$AnswerFeed = $this->field('feed_id')->where($AnswerWhere)->order("feed_id DESC")->findPage(1);				
+				$AnswerFeed_id = getSubByKey($AnswerFeed['data'], 'feed_id');
+				$AnswerFeedData = $this->getFeeds($AnswerFeed_id);
+				
+				$vv["answer"] = $AnswerFeedData;
+				$feedlist["data"][$v]=$vv;
+				
+				/*print_r($vv);
+				print('<br /><br /><br /><br />');*/
+				
+			}
+		}
+		
 		return $feedlist;
 	}
 
@@ -326,20 +346,51 @@ class FeedModel extends Model {
 	 * @param integer $fgid 关组组ID，默认为空
 	 * @return array 指定用户所关注人的所有微博，默认为当前登录用户
 	 */
-	public function getFollowingFeed($where = '', $limit = 10, $uid = '', $fgid = '') {
+	public function getFollowingFeed($where = '', $limit = 10, $uid = '', $fgid = '', $LoadWhere = '') {
 		$buid = empty($uid) ? $_SESSION['mid'] : $uid;
-		$table = "{$this->tablePrefix}feed AS a LEFT JOIN {$this->tablePrefix}user_follow AS b ON a.uid=b.fid AND b.uid = {$buid}";
+		//$table = "{$this->tablePrefix}feed AS a LEFT JOIN {$this->tablePrefix}user_follow AS b ON a.uid=b.fid AND b.uid = {$buid}";
 		// 加上自己的信息，若不需要屏蔽下语句
 		$_where = !empty($where) ? "(a.uid = '{$buid}' OR b.uid = '{$buid}') AND ($where)" : "(a.uid = '{$buid}' OR b.uid = '{$buid}')";
+		//加载更多的条件
+		$_LoadWhere = !empty($LoadWhere) ? "$LoadWhere" : "";
 		// 若填写了关注分组
 		if(!empty($fgid)) {
 			$table .=" LEFT JOIN {$this->tablePrefix}user_follow_group_link AS c ON a.uid = c.fid AND c.uid ='{$buid}' ";
 			$_where .= " AND c.follow_group_id = ".intval($fgid);
 		}
-		$feedlist = $this->table($table)->where($_where)->field('a.feed_id')->order('a.publish_time DESC')->findPage($limit);
+		$table = "(";
+		//关注的人和自己的问题
+		$table .= "(select a.feed_id, a.publish_time from {$this->tablePrefix}feed AS a LEFT JOIN {$this->tablePrefix}user_follow AS b ON a.uid=b.fid AND b.uid = {$buid} where {$_where}) union ";
+		//关注的人和自己的回答
+		$table .= "(SELECT feed_questionid as feed_id, publish_time FROM {$this->tablePrefix}feed WHERE (`uid` ={$buid} or uid IN (SELECT `fid` FROM `{$this->tablePrefix}user_follow` WHERE `uid` ={$buid})) AND feed_questionid >0 GROUP BY feed_questionid) ";
+		//关注人的评论
+		
+		$table .= ") tt";
+		//$feedlist = $this->table($table)->where($_where)->field('a.feed_id')->order('a.publish_time DESC')->findPage($limit);
+		$feedlist = $this->table($table)->where($_LoadWhere)->order('tt.feed_id DESC')->findPage($limit);
+		//print_r($feedlist);
 		$feed_ids = getSubByKey($feedlist['data'], 'feed_id');
-
+	
 		$feedlist['data'] = $this->getFeeds($feed_ids);
+		
+		//增加答案块
+		foreach( $feedlist["data"] as $v => $vv )
+		{
+			if($vv['uid']!= $GLOBALS['ts']['mid'])
+			{
+				$AnswerWhere='feed_questionid='.$vv['feed_id'].' and uid!='.$vv['uid'].' and (uid='.$GLOBALS['ts']['mid'].' or uid in (SELECT `fid` FROM `wb_user_follow` WHERE `uid` = '.$GLOBALS['ts']['mid'].'))';
+				$AnswerFeed = $this->field('feed_id')->where($AnswerWhere)->order("feed_id DESC")->findPage(1);				
+				$AnswerFeed_id = getSubByKey($AnswerFeed['data'], 'feed_id');
+				$AnswerFeedData = $this->getFeeds($AnswerFeed_id);
+				
+				$vv["answer"] = $AnswerFeedData;
+				$feedlist["data"][$v]=$vv;
+				
+				/*print_r($vv);
+				print('<br /><br /><br /><br />');*/
+				
+			}
+		}
 		return $feedlist;
 	}
 
@@ -385,6 +436,7 @@ class FeedModel extends Model {
 			return false;
 		}
 		$feed_ids = getSubByKey($feedlist['data'], 'feed_id');
+		
 		$feedlist['data'] = $this->getFeeds($feed_ids);
 
 		return $feedlist;

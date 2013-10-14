@@ -128,6 +128,7 @@ class CommentWidget extends Widget
     	$data['app'] = $data['app_name'];
     	$data['table'] = $data['table_name'];
         $data['content'] = h($data['content']);
+
         // 判断资源是否被删除
         switch ($data['table']) {
             case 'photo':
