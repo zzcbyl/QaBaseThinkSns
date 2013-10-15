@@ -55,6 +55,8 @@ class FeedModel extends Model {
 		$data['from'] = isset($data['from']) ? intval($data['from']) : getVisitorClient();
 		$data['is_del'] = $data['comment_count'] = $data['repost_count'] = 0;
 		$data['is_repost'] = $is_repost;
+		if($data['questionid']==null)
+			$data['questionid']=0;
 		$data['feed_questionid'] = $data['questionid'];
 		//判断是否先审后发
 		$weiboSet = model('Xdata')->get('admin_Config:feed');
@@ -74,7 +76,8 @@ class FeedModel extends Model {
 			$scream = explode('//', $data['body']);
 			// 截取内容信息为微博内容字数 - 重点
 			$feedConf = model('Xdata')->get('admin_Config:feed');
-			$feedNums = $feedConf['weibo_nums'];
+			//$feedNums = $feedConf['weibo_nums'];
+			$feedNums = 43;
 			$body = array();
 			foreach($scream as $value) {
 				$tbody[] = $value;

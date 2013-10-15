@@ -7,6 +7,9 @@
 if("undefined" == typeof(initNums)){
 	var initNums = "140";
 }
+if ("undefined" == typeof (shareNums)) {
+    var shareNums = "140";
+}
 if("undefined" == typeof(maxId)){
 	var maxId = 0;
 }
@@ -46,7 +49,8 @@ if("undefinde" == typeof(gid)){
 var _doc = document;
 var feedbtnlock = 0;
 var args = new Array();
-args['initNums'] 	= initNums;
+args['initNums'] = initNums;
+args['shareNums'] = shareNums;
 args['maxId']		= maxId;
 args['loadId']		= loadId;
 args['firstId']		= firstId;

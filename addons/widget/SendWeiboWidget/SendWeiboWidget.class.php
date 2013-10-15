@@ -31,7 +31,9 @@ class SendWeiboWidget extends Widget {
 		is_array($data) && $var = array_merge($var,$data);
 		!$var['send_type'] && $var['send_type'] = 'send_weibo';
 		$weiboSet = model('Xdata')->get('admin_Config:feed');
-		$var['initNums'] = $weiboSet['weibo_nums'];
+		//$var['initNums'] = $weiboSet['weibo_nums'];
+		$var['initNums'] = 43;
+		$var['shareNums'] = $weiboSet['weibo_nums'];
 		$var['weibo_type'] = $weiboSet['weibo_type'];
 		$var['weibo_premission'] = $weiboSet['weibo_premission'];
 		!$var['type'] && $var['type'] = 'post';

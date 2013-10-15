@@ -45,7 +45,7 @@ body{background:url(body_bg1.jpg) repeat;width:100%;}
 
 /*---链接样式--- */
 a{ color:#3366cc; text-decoration:none; }
-a:hover { color:#3366cc; text-decoration:none; }
+a:hover { color:#3366cc; text-decoration:underline; }
 .btn_b, a.btn_b, a.btn_b:hover, a.btn_b:visited {color: #FFFFFF;}
 a.add_atn,a.add_atn:visited{color:#fff}
 .btn_w, a.btn_w, a.btn_w:hover, a.btn_w:visited {color: #3366cc;}

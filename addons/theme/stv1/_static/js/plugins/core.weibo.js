@@ -256,7 +256,7 @@ core.weibo = {
             textarea.value = topicHtml;
         }
 
-        obj.parentModel.parentModel.childModels['numsLeft'][0].innerHTML = L('PUBLIC_INPUT_TIPES', { 'sum': '<span>' + initNums + '</span>' });
+        //obj.parentModel.parentModel.childModels['numsLeft'][0].innerHTML = L('PUBLIC_INPUT_TIPES', { 'sum': '<span>' + initNums + '</span>' });
         var fadeOutObj = function () {
             textarea.ready = null;
             if (description != undefined)
@@ -282,19 +282,21 @@ core.weibo = {
         }
         //alert(123);exit;
         if ($('#feed-lists').length > 0) {
-            var before = $('#feed-lists dl').eq(0);
-            $dl = $('<dl></dl>');
+            var before = $('#feed-lists div').eq(0);
+            $dl = $('<dl style="border:0; padding:15px 5px 10px 5px;"></dl>');
             $dl.attr('model-node', 'feed_list');
             $dl.attr('id', 'feed' + feedId);
             $dl.addClass('feed_list');
             $dl.html(html);
+            $div = $('<div style="border:1px solid #ccc; margin-bottom:10px;"></div>');
+            $div.html($dl);
             if (before.length > 0) {
-                $dl.insertBefore(before);
+                $div.insertBefore(before);
             } else {
-                if ($('#feed-lists').find('dl').size() > 0) {
-                    $('#feed-lists').append($dl);
+                if ($('#feed-lists').find('div').size() > 0) {
+                    $('#feed-lists').append($div);
                 } else {
-                    $('#feed-lists').html($dl);
+                    $('#feed-lists').html($div);
                 }
             }
             M($dl[0]);
@@ -324,50 +326,97 @@ core.weibo = {
     },
     // 检验微博内容，obj = 要验证的表单对象，post = 表示是否发布
     checkNums: function (obj, post) {
-        if ("undefined" == typeof (obj.parentModel.parentModel.parentModel.childModels['numsLeft'])) {
-            return true;
-        }
+        //        if ("undefined" == typeof (obj.parentModel.parentModel.parentModel.childModels['numsLeft'])) {
+        //            return true;
+        //        }
+        var titleValue = obj.value;
+        if (obj.value == "请用一句话描述您的困惑")
+            titleValue = "";
+
         // 获取输入框中还能输入的数字个数
-        var strlen = core.getLength(obj.value, true);
+        var strlen = core.getLength(titleValue, true);
         // 匹配尾部空白符
-        if ($.trim(obj.value) !== '') {
-            var blank = obj.value.match(/\s+$/g);
+        if ($.trim(titleValue) !== '') {
+            var blank = titleValue.match(/\s+$/g);
             if (blank !== null) {
                 strlen += Math.ceil(blank[0].length / 2);
             }
         }
-        var leftNums = initNums - strlen;
-        if (leftNums == initNums && 'undefined' != typeof (post)) {
-            return false;
-        }
-        // 获取按钮对象
-        var objInput = '';
-        if ($(obj.parentModel.parentModel.childModels['send_action']).html() != null) {
-            objInput = $(obj.parentModel.parentModel.childModels['send_action'][0]).find('a').eq(0);
-        }
-        // 获取剩余字数
-        if (leftNums >= 0) {
-            var html = (leftNums == initNums) ? L('PUBLIC_INPUT_TIPES', { 'sum': '<span>' + leftNums + '</span>' }) : L('PUBLIC_PLEASE_INPUT_TIPES', { 'sum': '<span>' + leftNums + '</span>' });
-            obj.parentModel.parentModel.parentModel.childModels['numsLeft'][0].innerHTML = html;
-            $(obj).removeClass('fb');
-            if (leftNums == initNums && $(obj).find('img').size() == 0) {
+        if (obj.parentModel.parentModel.parentModel.childModels['numsLeft'] == undefined) {
+            var leftNums = initNums - strlen;
+            if (leftNums == initNums && 'undefined' != typeof (post)) {
+                return false;
+            }
+            // 获取按钮对象
+            var objInput = '';
+            if ($(obj.parentModel.parentModel.childModels['send_action']).html() != null) {
+                objInput = $(obj.parentModel.parentModel.childModels['send_action'][0]).find('a').eq(0);
+            }
+            // 获取剩余字数
+            if (leftNums >= 0) {
+                //var html = (leftNums == initNums) ? L('PUBLIC_INPUT_TIPES', { 'sum': '<span>' + leftNums + '</span>' }) : L('PUBLIC_PLEASE_INPUT_TIPES', { 'sum': '<span>' + leftNums + '</span>' });
+                var html = leftNums;
+                //alert(html);
+                $("#numsLeft").html(html);
+                //obj.parentModel.parentModel.parentModel.childModels['numsLeft'][0].innerHTML = html;
+                $(obj).removeClass('fb');
+                if (leftNums == initNums && $(obj).find('img').size() == 0) {
+                    if (typeof (objInput) == 'object') {
+                        objInput[0].className = 'btn-grey-white';
+                    }
+                    return false; // 没有输入内容
+                }
+                if (typeof (objInput) == 'object') {
+                    objInput[0].className = 'btn-green-big';
+                }
+                return true;
+            } else {
+                //var html = L('PUBLIC_INPUT_ERROR_TIPES', { 'sum': '<span style="color:red">' + Math.abs(leftNums) + '</span>' });
+                //alert(html);
+                var html = leftNums;
+                $(obj).addClass('fb');
+                $("#numsLeft").html(html);
+                //obj.parentModel.parentModel.parentModel.childModels['numsLeft'][0].innerHTML = html;
                 if (typeof (objInput) == 'object') {
                     objInput[0].className = 'btn-grey-white';
                 }
-                return false; // 没有输入内容
+                return false;
             }
-            if (typeof (objInput) == 'object') {
-                objInput[0].className = 'btn-green-big';
+        }
+        else {
+            var leftNums = shareNums - strlen;
+            if (leftNums == shareNums && 'undefined' != typeof (post)) {
+                return false;
             }
-            return true;
-        } else {
-            var html = L('PUBLIC_INPUT_ERROR_TIPES', { 'sum': '<span style="color:red">' + Math.abs(leftNums) + '</span>' });
-            $(obj).addClass('fb');
-            obj.parentModel.parentModel.parentModel.childModels['numsLeft'][0].innerHTML = html;
-            if (typeof (objInput) == 'object') {
-                objInput[0].className = 'btn-grey-white';
+            // 获取按钮对象
+            var objInput = '';
+            if ($(obj.parentModel.parentModel.childModels['send_action']).html() != null) {
+                objInput = $(obj.parentModel.parentModel.childModels['send_action'][0]).find('a').eq(0);
             }
-            return false;
+            // 获取剩余字数
+            if (leftNums >= 0) {
+                var html = (leftNums == initNums) ? L('PUBLIC_INPUT_TIPES', { 'sum': '<span>' + leftNums + '</span>' }) : L('PUBLIC_PLEASE_INPUT_TIPES', { 'sum': '<span>' + leftNums + '</span>' });
+                obj.parentModel.parentModel.parentModel.childModels['numsLeft'][0].innerHTML = html;
+                $(obj).removeClass('fb');
+                if (leftNums == initNums && $(obj).find('img').size() == 0) {
+                    if (typeof (objInput) == 'object') {
+                        objInput[0].className = 'btn-grey-white';
+                    }
+                    return false; // 没有输入内容
+                }
+                if (typeof (objInput) == 'object') {
+                    objInput[0].className = 'btn-green-big';
+                }
+                return true;
+            } else {
+                var html = L('PUBLIC_INPUT_ERROR_TIPES', { 'sum': '<span style="color:red">' + Math.abs(leftNums) + '</span>' });
+                $(obj).addClass('fb');
+                obj.parentModel.parentModel.parentModel.childModels['numsLeft'][0].innerHTML = html;
+                if (typeof (objInput) == 'object') {
+                    objInput[0].className = 'btn-grey-white';
+                }
+                return false;
+            }
         }
     },
     // 发布微博
@@ -433,23 +482,25 @@ core.weibo = {
         var txtVal = '';
         if (description != undefined) {
             txtVal = description.value;
-            if (txtVal == '' || txtVal.length < 0) {
-                // TODO 只有一次情况才会执行到这里面 一般是不会的
-                ui.error(L('PUBLIC_CENTE_ISNULL'));
-                obj.isposting = false;
-                return false;
-            }
-            txtVal = removeHTMLTag(txtVal);
-            if (txtVal == '' || txtVal.length < 0) {
-                ui.error('请勿输入非法与敏感字符');
-                obj.isposting = false;
-                return false;
+            if (txtVal == "您可以在这里继续补充问题细节")
+                txtVal = "";
+
+            if (txtVal != "") {
+                txtVal = removeHTMLTag(txtVal);
+                if (txtVal == '' || txtVal.length < 0) {
+                    ui.error('请勿输入非法与敏感字符');
+                    obj.isposting = false;
+                    return false;
+                }
             }
         }
 
         if (!url) {
             url = U('public/Feed/PostFeed');
         }
+
+        //        alert(data);
+        //        return;
 
         var Qid = 0;
         if (questionid != null && questionid != undefined)

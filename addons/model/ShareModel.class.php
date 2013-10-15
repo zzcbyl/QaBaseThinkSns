@@ -71,7 +71,7 @@ class ShareModel {
 		}
 
 		$d['from'] = isset($data['from']) ? intval($data['from']) : 0;
-
+		
 		if($res = model('Feed')->put($GLOBALS['ts']['mid'], $app, $feedType, $d, $appId, $appTable, null, $lessUids, $isOther,1)) {
 			if($data['comment'] != 0 && $oldInfo['uid'] != $data['comment_touid']) {
 				// 发表评论
