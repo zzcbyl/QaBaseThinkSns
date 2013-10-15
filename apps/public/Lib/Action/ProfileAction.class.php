@@ -403,6 +403,60 @@ class ProfileAction extends Action {
 		$this->display ();
 	}
 	
+	
+	/**
+	* 获取用户好友列表
+	* 
+	* @return void
+	*/
+	public function friend() {
+		// 获取用户信息
+		$user_info = model ( 'User' )->getUserInfo ( $this->uid );
+		// 用户为空，则跳转用户不存在
+		if (empty ( $user_info )) {
+			$this->error ( L ( 'PUBLIC_USER_NOEXIST' ) );
+		}
+		// 个人空间头部
+		$this->_top ();
+		// 判断隐私设置
+		$userPrivacy = $this->privacy ( $this->uid );
+		if ($userPrivacy ['space'] !== 1) {
+			$following_list = model ( 'Follow' )->getFriendList ( $this->uid, 20 );
+			$fids = getSubByKey ( $following_list ['data'], 'fid' );
+			if ($fids) {
+				$uids = array_merge ( $fids, array (
+					$this->uid 
+					) );
+			} else {
+				$uids = array (
+					$this->uid 
+					);
+			}
+			// 获取用户组信息
+			$userGroupData = model ( 'UserGroupLink' )->getUserGroupData ( $uids );
+			$this->assign ( 'userGroupData', $userGroupData );
+			$this->_assignFollowState ( $uids );
+			$this->_assignUserInfo ( $uids );
+			$this->_assignUserProfile ( $uids );
+			$this->_assignUserTag ( $uids );
+			$this->_assignUserCount ( $fids );
+			// 关注分组
+			($this->mid == $this->uid) && $this->_assignFollowGroup ( $fids );
+			$this->assign ( 'following_list', $following_list );
+		} else {
+			$this->_assignUserInfo ( $this->uid );
+		}
+		$this->assign ( 'userPrivacy', $userPrivacy );
+		
+		$this->setTitle ( L ( 'PUBLIC_TA_FOLLOWING', array (
+			'user' => $GLOBALS ['ts'] ['_user'] ['uname'] 
+			) ) );
+		$this->setKeywords ( L ( 'PUBLIC_TA_FOLLOWING', array (
+			'user' => $GLOBALS ['ts'] ['_user'] ['uname'] 
+			) ) );
+		$this->display ();
+	}
+	
 	/**
 	 * 批量获取用户的相关信息加载
 	 * 

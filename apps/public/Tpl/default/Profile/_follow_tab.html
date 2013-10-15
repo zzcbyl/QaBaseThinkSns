@@ -15,5 +15,6 @@
 	<ul>
 		<li <if condition="'following' eq ACTION_NAME">class="current"</if>><span><a href="{:U('public/Profile/following', array('uid'=>$uid))}">{:L('PUBLIC_FOLLOWING')}</a></span></li>
 		<li <if condition="'follower' eq ACTION_NAME">class="current"</if>><span><a href="{:U('public/Profile/follower', array('uid'=>$uid))}">{:L('PUBLIC_FOLLOWERS')}</a></span></li>
+		<li <if condition="'friend' eq ACTION_NAME">class="current"</if>><span><a href="{:U('public/Profile/friend', array('uid'=>$uid))}">{:L('PUBLIC_FRIEND')}</a></span></li>
 	</ul>
 </div>
