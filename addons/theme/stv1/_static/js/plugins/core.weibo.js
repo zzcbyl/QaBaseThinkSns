@@ -85,11 +85,15 @@ core.weibo = {
                 if (_this.loadCount >= 4) {
                     var $lastDl = $('<div></div>');
                     $lastDl.html(msg.html);
-                    msg.html = $lastDl.find('dl').filter('.feed_list').slice(30);
+                    //alert(msg.html);
+                    msg.html = $lastDl.find('div').filter('.NullClassDiv').slice(30);
+                    //alert(msg.html.html());
                 }
+
                 $('#feed-lists').append(msg.html);
                 _this.canLoading = true;
                 _this.loadId = msg.loadId;
+
                 if (_this.loadCount >= 4) {
                     $('#feed-lists').append('<div id="page" class="page" style="display:none;">' + msg.pageHtml + '</div>');
                     if ($('#feed-lists .page').find('a').size() > 2) {
@@ -275,28 +279,43 @@ core.weibo = {
         }
     },
     // 将json数据插入到feed-lists中
-    insertToList: function (html, feedId) {
+    insertToList: function (html, feedId, questionid) {
         //alert(html);exit;
         if ("undefined" == typeof (html) || html == '') {
             return false;
         }
         //alert(123);exit;
         if ($('#feed-lists').length > 0) {
-            var before = $('#feed-lists div').eq(0);
-            $dl = $('<dl style="border:0; padding:15px 5px 10px 5px;"></dl>');
-            $dl.attr('model-node', 'feed_list');
-            $dl.attr('id', 'feed' + feedId);
-            $dl.addClass('feed_list');
-            $dl.html(html);
-            $div = $('<div style="border:1px solid #ccc; margin-bottom:10px;"></div>');
-            $div.html($dl);
-            if (before.length > 0) {
-                $div.insertBefore(before);
-            } else {
-                if ($('#feed-lists').find('div').size() > 0) {
-                    $('#feed-lists').append($div);
+            if (questionid == undefined || questionid <= 0) { //提交问题
+                var before = $('#feed-lists div').eq(0);
+
+                $div = $("<div style=\"border:1px solid #ccc; margin-bottom:10px;\"><div style=\"position:absolute; padding:5px; \">问题</div><dl id=\"feed" + feedId + "\" model-node=\"feed_list\" class=\"feed_list\" style=\"border:0; padding:15px 5px 10px 40px;\">" + html + "</dl></div>");
+
+                if (before.length > 0) {
+                    $div.insertBefore(before);
                 } else {
-                    $('#feed-lists').html($div);
+                    if ($('#feed-lists').find('div').size() > 0) {
+                        $('#feed-lists').append($div);
+                    } else {
+                        $('#feed-lists').html($div);
+                    }
+                }
+            }
+            else {  //提交回答
+                var before = $('#feed-lists dl').eq(0);
+                $dl = $('<dl></dl>');
+                $dl.attr('model-node', 'feed_list');
+                $dl.attr('id', 'feed' + feedId);
+                $dl.addClass('feed_list');
+                $dl.html(html);
+                if (before.length > 0) {
+                    $dl.insertBefore(before);
+                } else {
+                    if ($('#feed-lists').find('dl').size() > 0) {
+                        $('#feed-lists').append($dl);
+                    } else {
+                        $('#feed-lists').html($dl);
+                    }
                 }
             }
             M($dl[0]);
@@ -449,7 +468,6 @@ core.weibo = {
         }
         var videourl = $('#postvideourl').val();
         var app_name = attrs.app_name;
-
         if (obj.checkNums(textarea, 'post') == false) {
             if (type == 'postimage') {
                 textarea.value = L('PUBLIC_SHARE_IMAGES');
@@ -519,14 +537,14 @@ core.weibo = {
                 $(postOk).fadeIn('fast');
                 core.weibo.afterPost(mini_editor, textarea, attrs.topicHtml, description_editor, description);
                 if (!isbox) {
-                    core.weibo.insertToList(msg.data, msg.feedId);
+                    core.weibo.insertToList(msg.data, msg.feedId, questionid);
                 } else {
                     ui.box.close();
                     var mini = M.getModelArgs(mini_editor);
                     ui.success(mini.prompt);
                     if (document.getElementById('feed-lists') != null && channel_id == 0) {
                         setTimeout(function () {
-                            core.weibo.insertToList(msg.data, msg.feedId);
+                            core.weibo.insertToList(msg.data, msg.feedId, questionid);
                         }, 1500);
                     }
                 }

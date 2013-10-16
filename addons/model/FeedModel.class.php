@@ -361,7 +361,7 @@ class FeedModel extends Model {
 			$table .=" LEFT JOIN {$this->tablePrefix}user_follow_group_link AS c ON a.uid = c.fid AND c.uid ='{$buid}' ";
 			$_where .= " AND c.follow_group_id = ".intval($fgid);
 		}
-		$table = "(";
+		$table = "(select * from (";
 		//关注的人和自己的问题
 		$table .= "(select a.feed_id, a.publish_time from {$this->tablePrefix}feed AS a LEFT JOIN {$this->tablePrefix}user_follow AS b ON a.uid=b.fid AND b.uid = {$buid} where {$_where}) union ";
 		//关注的人和自己的回答
@@ -369,10 +369,10 @@ class FeedModel extends Model {
 		//关注人的评论
 		$table .= "(SELECT `row_id` as feed_id,`ctime` as publish_time FROM `{$this->tablePrefix}comment` WHERE `app`='public' and `table`='feed' and (`uid` = {$buid} or `uid` IN (SELECT `fid` FROM `{$this->tablePrefix}user_follow` WHERE `uid` = {$buid} ) ) group by row_id) ";
 		
-		$table .= ") tt";
+		$table .= ") tt group by feed_id) tab";
 		//print($table);
 		//$feedlist = $this->table($table)->where($_where)->field('a.feed_id')->order('a.publish_time DESC')->findPage($limit);
-		$feedlist = $this->table($table)->where($_LoadWhere)->group('feed_id')->order('tt.feed_id DESC')->findPage($limit);
+		$feedlist = $this->table($table)->where($_LoadWhere)->order('tab.feed_id DESC')->findPage($limit);
 		//print($this->getLastSql());
 		//print_r($feedlist);
 		$feed_ids = getSubByKey($feedlist['data'], 'feed_id');
@@ -384,32 +384,40 @@ class FeedModel extends Model {
 		//增加答案块
 		foreach( $feedlist["data"] as $v => $vv )
 		{
-			if($vv['uid']!= $GLOBALS['ts']['mid']) //问题的用户ID不等于当前用户ID
+			/*if($vv['uid']!= $GLOBALS['ts']['mid']) //问题的用户ID不等于当前用户ID
+			{*/
+
+			//答案
+			$AnswerWhere='';
+			$AnswerFeed=Array();
+			$AnswerFeed_id=Array();
+			$AnswerFeedData=Array();
+			$AnswerWhere='feed_questionid='.$vv['feed_id'].' and (uid='.$GLOBALS['ts']['mid'].' or uid in (SELECT `fid` FROM `'.$this->tablePrefix.'user_follow` WHERE `uid` = '.$GLOBALS['ts']['mid'].'))';
+			$AnswerFeed = $this->field('feed_id')->where($AnswerWhere)->order("feed_id DESC")->findPage(1);				
+			$AnswerFeed_id = getSubByKey($AnswerFeed['data'], 'feed_id');
+			$AnswerFeedData = $this->getFeeds($AnswerFeed_id);
+			
+			$vv["answer"] = $AnswerFeedData;
+			$feedlist["data"][$v]=$vv;
+
+			
+			/*print_r($vv);
+			print('<br /><br /><br /><br />');*/
+			
+			//评论
+			$CommentWhere='';
+			$CommentFeed=Array();
+			$CommentWhere='row_id='.$vv['feed_id'].' and (uid='.$GLOBALS['ts']['mid'].' or uid in (SELECT `fid` FROM `'.$this->tablePrefix.'user_follow` WHERE `uid` = '.$GLOBALS['ts']['mid'].'))';
+			$CommentFeed = model('Comment')->field('comment_id')->where($CommentWhere)->order("comment_id DESC")->findPage(1);	
+			if(is_array($CommentFeed['data']) && count($CommentFeed['data']) > 0)
 			{
-				//答案
-				$AnswerWhere='feed_questionid='.$vv['feed_id'].' and uid!='.$vv['uid'].' and (uid='.$GLOBALS['ts']['mid'].' or uid in (SELECT `fid` FROM `'.$this->tablePrefix.'user_follow` WHERE `uid` = '.$GLOBALS['ts']['mid'].'))';
-				$AnswerFeed = $this->field('feed_id')->where($AnswerWhere)->order("feed_id DESC")->findPage(1);				
-				$AnswerFeed_id = getSubByKey($AnswerFeed['data'], 'feed_id');
-				$AnswerFeedData = $this->getFeeds($AnswerFeed_id);
-				
-				$vv["answer"] = $AnswerFeedData;
+				$CommentFeedData =	model('Comment')->getCommentInfo($CommentFeed['data'][0]['comment_id']);
+				//print_r($CommonFeedData);
+				$vv["comment"] = $CommentFeedData;
 				$feedlist["data"][$v]=$vv;
-				
-				/*print_r($vv);
-				print('<br /><br /><br /><br />');*/
-				
-				//评论
-				$CommentWhere='row_id='.$vv['feed_id'].' and (uid='.$GLOBALS['ts']['mid'].' or uid in (SELECT `fid` FROM `'.$this->tablePrefix.'user_follow` WHERE `uid` = '.$GLOBALS['ts']['mid'].'))';
-				$CommentFeed = model('Comment')->field('comment_id')->where($CommentWhere)->order("comment_id DESC")->findPage(1);	
-				if(is_array($CommentFeed['data']))
-				{
-					$CommentFeedData =	model('Comment')->getCommentInfo($CommentFeed['data'][0]['comment_id']);
-					//print_r($CommonFeedData);
-					$vv["comment"] = $CommentFeedData;
-					$feedlist["data"][$v]=$vv;
-					//print_r($vv);
-				}
+				//print_r($vv);
 			}
+			//}
 		}
 		return $feedlist;
 	}

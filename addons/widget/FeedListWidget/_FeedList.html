@@ -27,13 +27,13 @@ $adminchannelrecom = CheckPermission('channel_admin','channel_recommend');
 $admintaskrecom = CheckPermission('vtask_admin','vtask_recommend');
 </php>
 <volist name='data' id ='vl'>
-<div style="border:1px solid #ccc; margin-bottom:10px;">
+<div class="NullClassDiv" style="border:1px solid #ccc; margin-bottom:10px;">
     <!--评论-->
     <php>
         if($GLOBALS['ts']['mid'] != $vl['uid'] && is_array($vl['comment']) ) {
     </php>
-        <div style="border-bottom:1px dotted #DFDFDF; padding:5px;">
-            
+        <div style="border-bottom:1px dotted #DFDFDF; padding:5px 0 0 40px;">
+            <div style="position:absolute; margin-left:-35px;">评论</div>
 
 	        <dl class="feed_list"  id ='Dl2' model-node='feed_list' style="border-bottom:0;">
 	        <dt class="face">
@@ -71,7 +71,9 @@ $admintaskrecom = CheckPermission('vtask_admin','vtask_recommend');
 	<php>
 		$cancomment_old = empty($vl['app_row_id'])  ? 0 : 1;
 	</php>
-	<dl class="feed_list"  id ='feed{$vl.feed_id}' model-node='feed_list' style="border:0; padding:15px 5px 10px 5px">
+    <div style="position:absolute; padding:5px; ">问题</div>
+	<dl class="feed_list"  id ='feed{$vl.feed_id}' model-node='feed_list' style="border:0; padding:15px 5px 10px 40px">
+    
 	<dt class="face">
 	<a href="{$vl['user_info']['space_url']}"><img src="{$vl['user_info']['avatar_small']}"  event-node="face_card" uid='{$vl['user_info']['uid']}'></a></dt>
 	<dd class="content">
@@ -86,12 +88,12 @@ $admintaskrecom = CheckPermission('vtask_admin','vtask_recommend');
 	<php>}</php>
 	<php>if(!empty($vl['body'])){</php><php>}</php>
 	</p>
-    <table width="575px" style="line-height:22px;">
+    <table width="535px" style="line-height:22px;">
 	    <tr>
-	        <td style="width:575px; display:block;"><a href="{:U('public/Profile/feed',array('feed_id'=>$vl['feed_id'],'uid'=>$vl['uid']))}"><span class="contents"><!--{$vl.feed_id|format=true}-->{$vl.body|format=true}</span></a></td>
+	        <td style="width:535px; display:block;"><a href="{:U('public/Profile/feed',array('feed_id'=>$vl['feed_id'],'uid'=>$vl['uid']))}"><span class="contents"><!--{$vl.feed_id|format=true}-->{$vl.body|format=true}</span></a></td>
 	    </tr>
 	    <tr>
-	        <td style="width:575px; display:block;"><span class="contents"><!--({$vl.answer_count|format=true})-->{$vl.description|format=true}</span></td>
+	        <td style="width:535px; display:block;"><span class="contents"><!--({$vl.answer_count|format=true})-->{$vl.description|format=true}</span></td>
 	    </tr>
 	</table>
 	
@@ -177,10 +179,10 @@ $admintaskrecom = CheckPermission('vtask_admin','vtask_recommend');
 
     <!--答案-->
     <php>
-        if($GLOBALS['ts']['mid'] != $vl['uid'] && is_array($vl['answer']) ) {
+        if(is_array($vl['answer']) ) {
     </php>
-        <div style="padding:5px; border-top:1px dotted #DFDFDF;">
-
+        <div style="padding:5px 0 0 40px; border-top:1px dotted #DFDFDF;">
+            <div style="position:absolute; margin-left:-35px; ">答案</div>
 
 
 	        <php>
@@ -201,9 +203,9 @@ $admintaskrecom = CheckPermission('vtask_admin','vtask_recommend');
 	        <php>}</php>
 	        <php>if(!empty($vl['answer'][0]['body'])){</php><php>}</php>
 	        </p>
-            <table width="579px" style="line-height:22px;">
+            <table width="539px" style="line-height:22px;">
 	            <tr>
-	                <td style="width:575px; display:block;"><span class="contents"><!--{$vl['answer'][0].feed_id|format=true}-->{$vl['answer'][0].body|format=true}</span></td>
+	                <td style="width:535px; display:block;"><span class="contents"><!--{$vl['answer'][0].feed_id|format=true}-->{$vl['answer'][0].body|format=true}</span></td>
 	            </tr>
 	        </table>
 	
