@@ -250,7 +250,7 @@ a:hover .contribute{background-position:0 -207px;}
 .feed_file_list span.tips{color:#999}
 
 /*微博发布框*/
-.send_weibo{margin:0 0 15px;}
+.send_weibo{margin:0 0 5px;}
 .send_weibo .title{font-size:12px;font-weight:normal; color:#535353;}
 .send_weibo .title span{}
 .send_weibo .title a,.send_weibo .title a:hover{font-size: 14px;color:#666; font-weight:bold;display:inline-block; height:30px; line-height:30px;}

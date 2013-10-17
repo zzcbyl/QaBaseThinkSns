@@ -1,4 +1,4 @@
-<div class="person-info clearfix border-b mb20">
+<div class="person-info clearfix border-b mb20" style="margin-bottom:0px;">
 	<dl class="person-info-t clearfix">
 		<dt><a href="{$userInfo.space_url}"><img src="{$userInfo.avatar_big}" /></a><a href="{:U('public/Account/avatar')}" class="face">更换头像</a></dt>
 		<dd>
@@ -27,7 +27,7 @@
 		<li><a href="{:U('public/Index/follower')}" <eq name="current" value="follower">class="current"</eq>><span>粉丝</span><strong event-node="follower_count" event-args="uid={$GLOBALS['ts']['mid']}">{$userData.follower_count|default=0}</strong></a></li>
         <li><a href="{:U('public/Index/friend')}" <eq name="current" value="friend">class="current"</eq>><span>好友</span><strong event-node="friend_count" event-args="uid={$GLOBALS['ts']['mid']}">{$userData.friend_count|default=0}</strong></a></li>
         <li><a href="{:U('public/Index/myFeed')}" <eq name="current" value="myfeed">class="current"</eq>><span>提问</span><strong event-node="weibo_count" event-args="uid={$GLOBALS['ts']['mid']}">{$userData.weibo_count|default=0}</strong></a></li>
-        <li><span>回答</span><strong event-node="weibo_count" event-args="uid={$GLOBALS['ts']['mid']}">{$userData.answer_count|default=0}</strong></li>
+        <li><a href="{:U('public/Index/myAnswer')}" <eq name="current" value="myanswer">class="current"</eq>><span>回答</span><strong event-node="answer_count" event-args="uid={$GLOBALS['ts']['mid']}">{$userData.answer_count|default=0}</strong></a></li>
 		
 		<!--<li class="no-border "><a href="{:U('public/Collection/index')}" <eq name='current' value='collection'>class="current"</eq>><span>收藏</span><strong event-node="favorite_count" event-args="uid={$GLOBALS['ts']['mid']}">{$userData.favorite_count|default=0}</strong></a></li>-->
 	</ul>

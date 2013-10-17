@@ -7,7 +7,7 @@
 class FeedModel extends Model {
 
 	protected $tableName = 'feed';
-	protected $fields = array('feed_id','uid','type','app','app_row_id','app_row_table','publish_time','is_del','from','comment_count','repost_count','comment_all_count','digg_count','is_repost','is_audit','feed_questionid','answer_count','_pk'=>'feed_id');
+	protected $fields = array('feed_id','uid','type','app','app_row_id','app_row_table','publish_time','is_del','from','comment_count','repost_count','comment_all_count','digg_count','is_repost','is_audit','feed_questionid','answer_count','disapprove_count','_pk'=>'feed_id');
 
 	public $templateFile = '';			// 模板文件
 
@@ -322,22 +322,44 @@ class FeedModel extends Model {
 		//增加答案块
 		foreach( $feedlist["data"] as $v => $vv )
 		{
-			if($vv['uid']!= $GLOBALS['ts']['mid'])
-			{
-				$AnswerWhere='feed_questionid='.$vv['feed_id'].' and uid!='.$vv['uid'].' and (uid='.$GLOBALS['ts']['mid'].' or uid in (SELECT `fid` FROM `wb_user_follow` WHERE `uid` = '.$GLOBALS['ts']['mid'].'))';
-				$AnswerFeed = $this->field('feed_id')->where($AnswerWhere)->order("feed_id DESC")->findPage(1);				
-				$AnswerFeed_id = getSubByKey($AnswerFeed['data'], 'feed_id');
-				$AnswerFeedData = $this->getFeeds($AnswerFeed_id);
-				
-				$vv["answer"] = $AnswerFeedData;
-				$feedlist["data"][$v]=$vv;
-				
-				/*print_r($vv);
-				print('<br /><br /><br /><br />');*/
-				
-			}
+			$AnswerWhere='feed_questionid='.$vv['feed_id'].' and uid!='.$vv['uid'].' and (uid='.$GLOBALS['ts']['mid'].' or uid in (SELECT `fid` FROM `wb_user_follow` WHERE `uid` = '.$GLOBALS['ts']['mid'].'))';
+			$AnswerFeed = $this->field('feed_id')->where($AnswerWhere)->order("feed_id DESC")->findPage(1);				
+			$AnswerFeed_id = getSubByKey($AnswerFeed['data'], 'feed_id');
+			$AnswerFeedData = $this->getFeeds($AnswerFeed_id);
+			
+			$vv["answer"] = $AnswerFeedData;
+			$feedlist["data"][$v]=$vv;
+			
+			/*print_r($vv);
+			print('<br /><br /><br /><br />');*/
 		}
 		
+		return $feedlist;
+	}
+	/**
+		* 获取回答列表
+		* $where 查询条件
+		* $limit 结果集数目，默认为10
+		* @return array 微博列表数据
+	**/
+	public function getAnswerList($where, $limit=10, $order='feed_id DESC')
+	{
+		$feedlist = $this->field('feed_id')->where($where)->order($order)->findPage($limit); 
+		$feed_ids = getSubByKey($feedlist['data'], 'feed_id');
+		$feedlist['data'] = $this->getFeeds($feed_ids, false);
+		
+		//根据答案取问题,调换数组位置
+		foreach($feedlist["data"] as $v => $vv )
+		{
+			$questionID=Array($vv['feed_questionid']);
+			$AnswerFeedData = $this->getFeeds($questionID);
+			if(is_array($AnswerFeedData))
+			{
+				$AnswerFeedData[0]['answer'][0]=$vv;;
+				$feedlist["data"][$v]=$AnswerFeedData[0];
+			}
+		}
+	
 		return $feedlist;
 	}
 
@@ -367,7 +389,7 @@ class FeedModel extends Model {
 		//关注的人和自己的回答
 		$table .= "(SELECT feed_questionid as feed_id, publish_time FROM {$this->tablePrefix}feed WHERE (`uid` ={$buid} or uid IN (SELECT `fid` FROM `{$this->tablePrefix}user_follow` WHERE `uid` ={$buid})) AND feed_questionid >0 GROUP BY feed_questionid) union ";
 		//关注人的评论
-		$table .= "(SELECT `row_id` as feed_id,`ctime` as publish_time FROM `{$this->tablePrefix}comment` WHERE `app`='public' and `table`='feed' and (`uid` = {$buid} or `uid` IN (SELECT `fid` FROM `{$this->tablePrefix}user_follow` WHERE `uid` = {$buid} ) ) group by row_id) ";
+		$table .= "(select feed_id, ctime from (SELECT case b.feed_questionid when 0 then b.feed_id else b.feed_questionid end as feed_id,a.ctime FROM `{$this->tablePrefix}comment` a left join `{$this->tablePrefix}feed` b on a.row_id=b.feed_id WHERE a.app='public' and a.table='feed' and (a.uid = {$buid} or a.uid IN (SELECT `fid` FROM `{$this->tablePrefix}user_follow` WHERE `uid` = {$buid} ))) atab group by feed_id) ";
 		
 		$table .= ") tt group by feed_id) tab";
 		//print($table);
@@ -411,7 +433,8 @@ class FeedModel extends Model {
 			$CommentFeed = model('Comment')->field('comment_id')->where($CommentWhere)->order("comment_id DESC")->findPage(1);	
 			if(is_array($CommentFeed['data']) && count($CommentFeed['data']) > 0)
 			{
-				$CommentFeedData =	model('Comment')->getCommentInfo($CommentFeed['data'][0]['comment_id']);
+				
+				$CommentFeedData = model('Comment')->getCommentInfo($CommentFeed['data'][0]['comment_id']);
 				//print_r($CommonFeedData);
 				$vv["comment"] = $CommentFeedData;
 				$feedlist["data"][$v]=$vv;
@@ -419,6 +442,7 @@ class FeedModel extends Model {
 			}
 			//}
 		}
+		
 		return $feedlist;
 	}
 
@@ -529,9 +553,10 @@ class FeedModel extends Model {
 	 * @param array $feed_ids 微博ID数组
 	 * @return array 给定微博ID的微博信息
 	 */
-	public function getFeeds($feed_ids) {
+	public function getFeeds($feed_ids, $isfilter=true) {
 		$feedlist = array();
-		$feed_ids = array_filter(array_unique($feed_ids));
+		if($isfilter)
+			$feed_ids = array_filter(array_unique($feed_ids));
 		
 		// 获取数据
 		if(count($feed_ids) > 0) {

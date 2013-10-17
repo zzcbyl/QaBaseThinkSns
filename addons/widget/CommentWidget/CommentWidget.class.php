@@ -96,6 +96,7 @@ class CommentWidget extends Widget
     	$map['app'] 	= t($_POST['app_name']);
     	$map['table']	= t($_POST['table']);
     	$map['row_id']	= intval($_POST['row_id']);	//必须存在
+		$map['comment_type']	= t($_POST['comment_type']);
     	if(!empty($map['row_id'])){
     		//分页形式数据
     		$var['limit'] 	 = 10;
@@ -128,7 +129,8 @@ class CommentWidget extends Widget
     	$data['app'] = $data['app_name'];
     	$data['table'] = $data['table_name'];
         $data['content'] = h($data['content']);
-
+		$data['comment_type'] = $data['comment_type'];
+		
         // 判断资源是否被删除
         switch ($data['table']) {
             case 'photo':

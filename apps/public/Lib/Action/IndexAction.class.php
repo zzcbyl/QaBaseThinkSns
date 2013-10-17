@@ -85,8 +85,25 @@ class IndexAction extends Action {
 		$this->assign('feedType', $feedType);
 		// 是否有返回按钮
 		$this->assign('isReturn', 1);
-		$this->setTitle('我的微博');	
-		$this->setKeywords('我的微博');
+		$this->setTitle('我的提问');	
+		$this->setKeywords('我的提问');
+		$this->display();
+	}
+	
+	/**
+	* 我的回答页面
+	*/
+	public function myAnswer() {
+		// 获取用户统计数目
+		$userData = model('UserData')->getUserData($this->mid);
+		$this->assign('answerCount', $userData['answer_count']);
+		// 微博过滤内容
+		$feedType = t($_GET['feed_type']);
+		$this->assign('feedType', $feedType);
+		// 是否有返回按钮
+		$this->assign('isReturn', 1);
+		$this->setTitle('我的回答');	
+		$this->setKeywords('我的回答');
 		$this->display();
 	}
 
@@ -260,8 +277,8 @@ class IndexAction extends Action {
 
 		$userInfo = model('User')->getUserInfo($this->mid);
 		$lastFeed = model('Feed')->getLastFeed(array($fids[0]));
-		$this->setTitle('我的粉丝');
-		$this->setKeywords($userInfo['uname'].'的粉丝');
+		$this->setTitle('我的好友');
+		$this->setKeywords($userInfo['uname'].'的好友');
 		$this->display();
 	}
 	

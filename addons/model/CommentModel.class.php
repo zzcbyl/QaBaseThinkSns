@@ -7,7 +7,7 @@
 class CommentModel extends Model {
 
     protected $tableName = 'comment';
-	protected $fields = array('comment_id','app','table','row_id','app_uid','uid','content','to_comment_id','to_uid','data','ctime','is_del','client_type','is_audit','storey');
+	protected $fields = array('comment_id','app','table','row_id','app_uid','uid','content','to_comment_id','to_uid','data','ctime','is_del','client_type','is_audit','storey','comment_type');
 
     private $_app = null;                                                   // 所属应用
     private $_app_table = null;                                             // 所属资源表
@@ -141,6 +141,7 @@ class CommentModel extends Model {
         }else{
             $add['is_audit'] = 1;
         }
+
         if($res = $this->add($add)) {
             //添加楼层信息
             $storeyCount = $this->where('row_id='.$data['row_id'].' and comment_id<'.$res)->count();
@@ -159,7 +160,14 @@ class CommentModel extends Model {
        		model('Atme')->setAppName('Public')->setAppTable('comment')->addAtme(trim($scream[0]), $res, null, $lessUids);
         	// 被评论内容的“评论统计数”加1，同时可检测出app，table，row_id的有效性
             $pk = D($add['table'])->getPk();
-            D($add['table'])->setInc('comment_count', "`{$pk}`={$add['row_id']}", 1);
+			if($add['comment_type']==0||$add['comment_type']==1)
+			{
+				D($add['table'])->setInc('comment_count', "`{$pk}`={$add['row_id']}", 1);
+			}
+			else
+			{
+				D($add['table'])->setInc('disapprove_count', "`{$pk}`={$add['row_id']}", 1);
+			}
             //兼容旧版本app
             D($add['table'])->setInc('commentCount', "`{$pk}`={$add['row_id']}", 1);
             D($add['table'])->setInc('comment_all_count', "`{$pk}`={$add['row_id']}", 1);
@@ -399,7 +407,8 @@ class CommentModel extends Model {
         $add['data'] = serialize($data['data']);
         $add['ctime'] = $_SERVER['REQUEST_TIME'];
         $add['client_type'] = isset($data['client_type']) ? intval($data['client_type']) : getVisitorClient();
-    
+		//if($data['comment_type']!=null)
+		$add['comment_type'] = $data['comment_type'];
         return $add;
     }
 

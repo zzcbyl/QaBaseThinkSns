@@ -134,327 +134,327 @@ M.addModelFns({
 	}
 });
 M.addEventFns({
-	widget_toggle:{
-		click:function(){
-			$(this.parentModel.childModels['widget_child'][0]).toggle('500');
-		}
-	},
-	widget_setup:{
-		click:function(){
-			$(this.parentModel.childModels['wigdet_setbox'][0]).toggle('500');	
-		}
-	},
-	widget_cancel_set:{
-		click:function(){
-			$(this.parentModel).hide('500');
-		}
-	},
-	widget_close:{
-		click:function(){
-			var args = M.getModelArgs(this.parentModel);
-			core.widget.removeWidget(this,args,this.parentModel);
-		}
-	},
-	widget_add:{
-		click:function(){
-			var args = M.getEventArgs(this);
-			core.widget.addWidget(args);
-		}
-	},
-	invite_colleague: {
-		click: function() {
-			ui.box.load( this.href, L('PUBLIC_INVITE_COLLEAGUE') );
-			return false;
-		}
-	},	
-	invite_addemail:{
-		click: function() {
-			var input1 = document.getElementById("email_input").value,
+    widget_toggle: {
+        click: function () {
+            $(this.parentModel.childModels['widget_child'][0]).toggle('500');
+        }
+    },
+    widget_setup: {
+        click: function () {
+            $(this.parentModel.childModels['wigdet_setbox'][0]).toggle('500');
+        }
+    },
+    widget_cancel_set: {
+        click: function () {
+            $(this.parentModel).hide('500');
+        }
+    },
+    widget_close: {
+        click: function () {
+            var args = M.getModelArgs(this.parentModel);
+            core.widget.removeWidget(this, args, this.parentModel);
+        }
+    },
+    widget_add: {
+        click: function () {
+            var args = M.getEventArgs(this);
+            core.widget.addWidget(args);
+        }
+    },
+    invite_colleague: {
+        click: function () {
+            ui.box.load(this.href, L('PUBLIC_INVITE_COLLEAGUE'));
+            return false;
+        }
+    },
+    invite_addemail: {
+        click: function () {
+            var input1 = document.getElementById("email_input").value,
 				$email_input = $("#email_input"),
 				dInput = this.parentModel.childEvents["email"][0],
-				dInputClone = dInput.cloneNode( true );
+				dInputClone = dInput.cloneNode(true);
 
-			dInputClone.value = "";
-			$email_input.append( dInputClone );
-			M( dInputClone );
-			return false;
-		}
-	},
-	face_card:{
-		load:function(){
-			//载入小名片js
-			core.plugInit('facecard'); //只初始化那个框体
-		},
-		mouseenter:function(){
-			var uid = $(this).attr('uid');
-			if(MID<1 || (MID == uid) || (UID ==uid)){
-				return false;
-			}
-			var obj = $(this);
-			//setTimeout(function(){
-			if("undefined" == typeof(core.facecard)){
-				core.plugFunc('facecard',function(){
-					core.facecard.show(obj,uid);
-				})
-			}else{
-				core.facecard.show(obj,uid);
-			}
-			//},'250');
-			
-		},
-		mouseleave:function(){
-			if(MID<1){
-				return false;
-			}
-			core.facecard.hide();
-		},
-		blur:function(){
-			core.facecard.hide();	
-		}
-	},
-	//个人信息
-	more_person_info: {
-		click: function() {
-			var li;
+            dInputClone.value = "";
+            $email_input.append(dInputClone);
+            M(dInputClone);
+            return false;
+        }
+    },
+    face_card: {
+        load: function () {
+            //载入小名片js
+            core.plugInit('facecard'); //只初始化那个框体
+        },
+        mouseenter: function () {
+            var uid = $(this).attr('uid');
+            if (MID < 1 || (MID == uid) || (UID == uid)) {
+                return false;
+            }
+            var obj = $(this);
+            //setTimeout(function(){
+            if ("undefined" == typeof (core.facecard)) {
+                core.plugFunc('facecard', function () {
+                    core.facecard.show(obj, uid);
+                })
+            } else {
+                core.facecard.show(obj, uid);
+            }
+            //},'250');
 
-			li = this.parentNode;
-			li.style.display = "block";
-			
-			if($(this).attr('rel')=='hide'){
-				var _display = 'block';
-				$(this).attr('rel','show');
-				$('.mod-person .person-info a').text(L('PUBLIC_PUT')+"↑")
-			}else{
-				var _display = 'none';
-				$(this).attr('rel','hide');
-				$('.mod-person .person-info a').text(L('PUBLIC_OPEN_MORE')+"↓")
-			}
-			
-			while ( li = li.nextSibling ) {
-				( "LI" === li.tagName ) && ( li.style.display = _display );
+        },
+        mouseleave: function () {
+            if (MID < 1) {
+                return false;
+            }
+            core.facecard.hide();
+        },
+        blur: function () {
+            core.facecard.hide();
+        }
+    },
+    //个人信息
+    more_person_info: {
+        click: function () {
+            var li;
 
-			}
-			
-			return false;
-		}
-	},
-	ico_wallet:{//财富
-		mouseenter:function(){
-			this._model.style.display = 'block';
-		},
-		mouseleave:function(){
-			this._model.style.display = 'none';
-		},
-		load:function(){
-			var _model = M.getModels('layer_wallet');
-			this._model = _model[0];
-		}
-	},
-	ico_level:{//等级
-		mouseenter:function(){
-			this._model.style.display = 'block';
-		},
-		mouseleave:function(){
-			this._model.style.display = 'none';
-		},
-		load:function(){
-			var _model = M.getModels('layer_level');
-			this._model = _model[0];
-		}
-	},
-	share:{//分享操作
-		click : function(){
-			var attrs =M.getEventArgs(this);
-			//alert(typeof(attrs));exit;
-			// if(attrs.appname == 'weiba' && attrs.feedtype == 'weiba_post'){
-			// 	var sid = attrs.curid;
-			// }else{
-			var sid = attrs.sid;
-			//}
-			var stable = attrs.stable;
-			var initHTML = attrs.initHTML;
-			var curtable =attrs.curtable;
-			var curid = attrs.curid;
-			var appname = attrs.appname;
-			var cancomment = attrs.cancomment;
-			var is_repost = attrs.is_repost;
-			share(sid,stable,initHTML,curid,curtable,appname,cancomment,is_repost);
-			return false;
-		}
-	},
-	share_to_feed:{//分享操作
-		load: function () {
-			var attrs = M.getEventArgs(this);
-			if (attrs.isLoad == 1) {
-				var initHTML = attrs.initHTML;
-				var attachId = attrs.attachId;
-				var from = attrs.from;
-				var appname = attrs.appname;
-				var source_url = attrs.url;
-				var url = U('public/Share/shareToFeed')+'&initHTML='+initHTML+'&attachId='+attachId+'&from='+from+'&appname='+appname+'&source_url='+source_url;
-				ui.box.load(url,'分享');
-			}
-			return false;
-		},
-		click : function(){
-			var attrs =M.getEventArgs(this);
-			var initHTML = attrs.initHTML;
-			var attachId = attrs.attachId;
-			var from = attrs.from;
-			var appname = attrs.appname;
-			var source_url = attrs.url;
-			var url = U('public/Share/shareToFeed')+'&initHTML='+initHTML+'&attachId='+attachId+'&from='+from+'&appname='+appname+'&source_url='+source_url;
-			ui.box.load(url,'分享');
-			return false;
-		}
-	},
-	setremark:{	//设置备注
-		click:function(){
-			var remark = $(this).attr('remark');
-			var uid = $(this).attr('uid');
-			ui.box.load(U('widget/Remark/edit')+'&remark='+remark+'&uid='+uid,L('PUBLIC_EDIT_FOLLWING'));
-		}
-	},
-	/**
-	 * 添加关注
-	 * @type {Object}
-	 */
-	doFollow: {
-		click: function() {
-			follow.doFollow(this);
-			return false;
-		},
-		load: function() {
-			follow.createBtn(this);
-		}
-	},
-	unFollow: {
-		click: function() {
-			follow.unFollow( this );
-			return false;
-		},
-		load: function() {
-			follow.createBtn( this );
-		}
-	},
-	setFollowGroup:{
-		click:function(){
-			var args = M.getEventArgs(this);
-			follow.setFollowGroup(this,args.fid);
-		}
-	},
-	follow_check: {
-		click: function( e ) {
-			var check = this.getElementsByTagName( "input" )[0];
-			setTimeout( function() {
-				check.checked = !check.checked;
-				check = undefined;
-			}, 1);
-			return false;
-		}
-	},
-	comment:{	
-		click:function(){	//点击评论的时候
-			var attrs = M.getEventArgs(this);
-			var comment_list = this.parentModel.childModels['comment_detail'][0];
-			
-//			if("undefined" == typeof(core.comment)){
-//				core.plugInit('comment',attrs,comment_list);
-//				core.setTimeout("core.comment.display()",150);
-//			}else{
-			
-				core.comment.init(attrs,comment_list);
-				core.comment.display();
-//			}
-			return false;
-		}
-	},
-	reply_comment:{	//点某条回复
-		click:function(){
-			var attrs = M.getEventArgs(this);
-			var comment_list = this.parentModel.parentModel;
-			var docomment = comment_list.childModels['comment_textarea'][0].childEvents['do_comment'][0];
-			$(docomment).attr('to_comment_id',attrs.to_comment_id);
-			$(docomment).attr('to_uid',attrs.to_uid);
-			$(docomment).attr('to_comment_uname',attrs.to_comment_uname);
-			core.plugFunc('comment',function(){
-				core.comment.init(attrs,comment_list);
-				core.comment.initReply();
-			});
-			//core.plugInit('comment',attrs,comment_list);
-			//core.setTimeout("core.comment.initReply()",150);
-		}
-	},
-	comment_del:{
-		click:function(){
-			var attrs = M.getEventArgs(this);
-			$(this.parentModel).fadeOut();
-			if("undefined"==typeof(core.comment)){
-				core.plugFunc('comment',function(){
-					core.comment.delComment(attrs.comment_id);
-				});
-			}else{
-				core.comment.delComment(attrs.comment_id);	
-			}
-		}
-	},
-	do_comment:{	//回复操作
-		click:function(){
-			if ( this.noreply == 1 ){
-				return;
-			}
-			var attrs = M.getEventArgs(this);
-			attrs.to_comment_id = $(this).attr('to_comment_id');
-			attrs.to_uid = $(this).attr('to_uid');
-			attrs.to_comment_uname = $(this).attr('to_comment_uname');
-			attrs.addToEnd = $(this).attr('addtoend');
-			
-			var comment_list = this.parentModel.parentModel;
-			core.comment.init(attrs,comment_list);
+            li = this.parentNode;
+            li.style.display = "block";
 
-			var _this = this;
-			var after = function(){
-				$(_this).attr('to_uid','0');
-				$(_this).attr('to_comment_id','0');
-				$(_this).attr('to_comment_uname','');
-				if(attrs.closeBox == 1){
-					ui.box.close();
-					ui.success( L('PUBLIC_CENTSUCCESS') );
-				}
-			}
-			core.comment.addComment(after,this);
-			this.noreply = 1;
-			setTimeout(function (){
-				_this.noreply = 0;
-			},5000);
-		},
-		load:function(){
-			var attrs = M.getEventArgs(this);
-			attrs.to_comment_id = $(this).attr('to_comment_id');
-			attrs.to_uid = $(this).attr('to_uid');
-			attrs.to_comment_uname = $(this).attr('to_comment_uname');
-			attrs.addToEnd = $(this).attr('addtoend');
-			var comment_list = this.parentModel.parentModel;
-			core.plugInit('comment',attrs,comment_list);
-		}
-	},
-	comment_insert_face:{
-		click:function(){
-			var target = this.parentModel.childModels["mini_editor"][0];		
-			var _faceDiv = this.parentModel.childModels['faceDiv'][0];
-			core.plugInit('face',this,$(target).find('textarea'),_faceDiv);
-		}
-	},
-	showCategory:{
-		click:function(){
-			var attrs = M.getEventArgs(this);
-			//显示分类
-			var obj = this;
-			core.plugFunc('category',function(){
-				core.category.loadSelect(obj,attrs.model_name,attrs.app_name,attrs.method,attrs.id,attrs.inputname,attrs.callback);
-			});
-		}
-	}
+            if ($(this).attr('rel') == 'hide') {
+                var _display = 'block';
+                $(this).attr('rel', 'show');
+                $('.mod-person .person-info a').text(L('PUBLIC_PUT') + "↑")
+            } else {
+                var _display = 'none';
+                $(this).attr('rel', 'hide');
+                $('.mod-person .person-info a').text(L('PUBLIC_OPEN_MORE') + "↓")
+            }
+
+            while (li = li.nextSibling) {
+                ("LI" === li.tagName) && (li.style.display = _display);
+
+            }
+
+            return false;
+        }
+    },
+    ico_wallet: {//财富
+        mouseenter: function () {
+            this._model.style.display = 'block';
+        },
+        mouseleave: function () {
+            this._model.style.display = 'none';
+        },
+        load: function () {
+            var _model = M.getModels('layer_wallet');
+            this._model = _model[0];
+        }
+    },
+    ico_level: {//等级
+        mouseenter: function () {
+            this._model.style.display = 'block';
+        },
+        mouseleave: function () {
+            this._model.style.display = 'none';
+        },
+        load: function () {
+            var _model = M.getModels('layer_level');
+            this._model = _model[0];
+        }
+    },
+    share: {//分享操作
+        click: function () {
+            var attrs = M.getEventArgs(this);
+            //alert(typeof(attrs));exit;
+            // if(attrs.appname == 'weiba' && attrs.feedtype == 'weiba_post'){
+            // 	var sid = attrs.curid;
+            // }else{
+            var sid = attrs.sid;
+            //}
+            var stable = attrs.stable;
+            var initHTML = attrs.initHTML;
+            var curtable = attrs.curtable;
+            var curid = attrs.curid;
+            var appname = attrs.appname;
+            var cancomment = attrs.cancomment;
+            var is_repost = attrs.is_repost;
+            share(sid, stable, initHTML, curid, curtable, appname, cancomment, is_repost);
+            return false;
+        }
+    },
+    share_to_feed: {//分享操作
+        load: function () {
+            var attrs = M.getEventArgs(this);
+            if (attrs.isLoad == 1) {
+                var initHTML = attrs.initHTML;
+                var attachId = attrs.attachId;
+                var from = attrs.from;
+                var appname = attrs.appname;
+                var source_url = attrs.url;
+                var url = U('public/Share/shareToFeed') + '&initHTML=' + initHTML + '&attachId=' + attachId + '&from=' + from + '&appname=' + appname + '&source_url=' + source_url;
+                ui.box.load(url, '分享');
+            }
+            return false;
+        },
+        click: function () {
+            var attrs = M.getEventArgs(this);
+            var initHTML = attrs.initHTML;
+            var attachId = attrs.attachId;
+            var from = attrs.from;
+            var appname = attrs.appname;
+            var source_url = attrs.url;
+            var url = U('public/Share/shareToFeed') + '&initHTML=' + initHTML + '&attachId=' + attachId + '&from=' + from + '&appname=' + appname + '&source_url=' + source_url;
+            ui.box.load(url, '分享');
+            return false;
+        }
+    },
+    setremark: {	//设置备注
+        click: function () {
+            var remark = $(this).attr('remark');
+            var uid = $(this).attr('uid');
+            ui.box.load(U('widget/Remark/edit') + '&remark=' + remark + '&uid=' + uid, L('PUBLIC_EDIT_FOLLWING'));
+        }
+    },
+    /**
+    * 添加关注
+    * @type {Object}
+    */
+    doFollow: {
+        click: function () {
+            follow.doFollow(this);
+            return false;
+        },
+        load: function () {
+            follow.createBtn(this);
+        }
+    },
+    unFollow: {
+        click: function () {
+            follow.unFollow(this);
+            return false;
+        },
+        load: function () {
+            follow.createBtn(this);
+        }
+    },
+    setFollowGroup: {
+        click: function () {
+            var args = M.getEventArgs(this);
+            follow.setFollowGroup(this, args.fid);
+        }
+    },
+    follow_check: {
+        click: function (e) {
+            var check = this.getElementsByTagName("input")[0];
+            setTimeout(function () {
+                check.checked = !check.checked;
+                check = undefined;
+            }, 1);
+            return false;
+        }
+    },
+    comment: {
+        click: function () {	//点击评论的时候
+            var attrs = M.getEventArgs(this);
+            var comment_list = this.parentModel.childModels['comment_detail'][0];
+
+            //			if("undefined" == typeof(core.comment)){
+            //				core.plugInit('comment',attrs,comment_list);
+            //				core.setTimeout("core.comment.display()",150);
+            //			}else{
+
+            core.comment.init(attrs, comment_list);
+            core.comment.display();
+            //			}
+            return false;
+        }
+    },
+    reply_comment: {	//点某条回复
+        click: function () {
+            var attrs = M.getEventArgs(this);
+            var comment_list = this.parentModel.parentModel;
+            var docomment = comment_list.childModels['comment_textarea'][0].childEvents['do_comment'][0];
+            $(docomment).attr('to_comment_id', attrs.to_comment_id);
+            $(docomment).attr('to_uid', attrs.to_uid);
+            $(docomment).attr('to_comment_uname', attrs.to_comment_uname);
+            core.plugFunc('comment', function () {
+                core.comment.init(attrs, comment_list);
+                core.comment.initReply();
+            });
+            //core.plugInit('comment',attrs,comment_list);
+            //core.setTimeout("core.comment.initReply()",150);
+        }
+    },
+    comment_del: {
+        click: function () {
+            var attrs = M.getEventArgs(this);
+            $(this.parentModel).fadeOut();
+            if ("undefined" == typeof (core.comment)) {
+                core.plugFunc('comment', function () {
+                    core.comment.delComment(attrs.comment_id);
+                });
+            } else {
+                core.comment.delComment(attrs.comment_id);
+            }
+        }
+    },
+    do_comment: {	//回复操作
+        click: function () {
+            if (this.noreply == 1) {
+                return;
+            }
+            var attrs = M.getEventArgs(this);
+            attrs.to_comment_id = $(this).attr('to_comment_id');
+            attrs.to_uid = $(this).attr('to_uid');
+            attrs.to_comment_uname = $(this).attr('to_comment_uname');
+            attrs.addToEnd = $(this).attr('addtoend');
+
+            var comment_list = this.parentModel.parentModel;
+            core.comment.init(attrs, comment_list);
+
+            var _this = this;
+            var after = function () {
+                $(_this).attr('to_uid', '0');
+                $(_this).attr('to_comment_id', '0');
+                $(_this).attr('to_comment_uname', '');
+                if (attrs.closeBox == 1) {
+                    ui.box.close();
+                    ui.success(L('PUBLIC_CENTSUCCESS'));
+                }
+            }
+            core.comment.addComment(after, this);
+            this.noreply = 1;
+            setTimeout(function () {
+                _this.noreply = 0;
+            }, 5000);
+        },
+        load: function () {
+            var attrs = M.getEventArgs(this);
+            attrs.to_comment_id = $(this).attr('to_comment_id');
+            attrs.to_uid = $(this).attr('to_uid');
+            attrs.to_comment_uname = $(this).attr('to_comment_uname');
+            attrs.addToEnd = $(this).attr('addtoend');
+            var comment_list = this.parentModel.parentModel;
+            core.plugInit('comment', attrs, comment_list);
+        }
+    },
+    comment_insert_face: {
+        click: function () {
+            var target = this.parentModel.childModels["mini_editor"][0];
+            var _faceDiv = this.parentModel.childModels['faceDiv'][0];
+            core.plugInit('face', this, $(target).find('textarea'), _faceDiv);
+        }
+    },
+    showCategory: {
+        click: function () {
+            var attrs = M.getEventArgs(this);
+            //显示分类
+            var obj = this;
+            core.plugFunc('category', function () {
+                core.category.loadSelect(obj, attrs.model_name, attrs.app_name, attrs.method, attrs.id, attrs.inputname, attrs.callback);
+            });
+        }
+    }
 });
 
 //分享

@@ -145,9 +145,9 @@ core.plugInit = function () {
     }
 };
 //与上面方法类似 只不过可以自己写回调函数（不主动执行init）
-core.plugFunc = function(plugName,callback){
-	var file = THEME_URL+'/js/plugins/core.'+plugName+'.js';
-	core.loadFile(file,callback);
+core.plugFunc = function (plugName, callback) {
+    var file = THEME_URL + '/js/plugins/core.' + plugName + '.js';
+    core.loadFile(file, callback);
 };
 
 /**
