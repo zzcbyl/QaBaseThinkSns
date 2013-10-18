@@ -362,7 +362,7 @@ M.addEventFns({
             //				core.plugInit('comment',attrs,comment_list);
             //				core.setTimeout("core.comment.display()",150);
             //			}else{
-
+            //alert('3333');
             core.comment.init(attrs, comment_list);
             core.comment.display();
             //			}

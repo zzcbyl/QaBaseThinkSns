@@ -41,12 +41,10 @@ function addDigg(feed_id){
 
                                 <table width="589px" style="line-height:22px;">
 	                                <tr>
-	                                    <td style="width:50px; text-align:right; vertical-align:top;">问题：</td>
-	                                    <td style="width:539px; display:block;"><a href="{:U('public/Profile/feed',array('feed_id'=>$vl['feed_id'],'uid'=>$vl['uid']))}">{$feedInfo.body|format=true}</a></td>
+	                                    <td style="width:589px; display:block;"><a href="{:U('public/Profile/feed',array('feed_id'=>$vl['feed_id'],'uid'=>$vl['uid']))}">{$feedInfo.body|format=true}</a></td>
 	                                </tr>
 	                                <tr>
-	                                    <td style="width:50px; text-align:right; vertical-align:top;">描述：</td>
-	                                    <td style="width:539px; display:block;"><span class="contents">{$feedInfo.description|format=true}</span></td>
+	                                    <td style="width:589px; display:block;"><span class="contents">{$feedInfo.description|format=true}</span></td>
 	                                </tr>
 	                            </table>
 

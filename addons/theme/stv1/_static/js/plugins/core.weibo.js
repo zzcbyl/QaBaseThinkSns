@@ -348,6 +348,7 @@ core.weibo = {
         //        if ("undefined" == typeof (obj.parentModel.parentModel.parentModel.childModels['numsLeft'])) {
         //            return true;
         //        }
+        //alert(obj.value);
         var titleValue = obj.value;
         if (obj.value == "请用一句话描述您的困惑")
             titleValue = "";
@@ -468,7 +469,9 @@ core.weibo = {
         }
         var videourl = $('#postvideourl').val();
         var app_name = attrs.app_name;
-        if (obj.checkNums(textarea, 'post') == false) {
+
+        if (questionid == undefined && obj.checkNums(textarea, 'post') == false) {
+            //alert('34444');
             if (type == 'postimage') {
                 textarea.value = L('PUBLIC_SHARE_IMAGES');
             } else if (type == 'postfile') {

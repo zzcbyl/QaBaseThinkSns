@@ -83,6 +83,58 @@ class ProfileAction extends Action {
 		! empty ( $seo ['des'] ) && $this->setDescription ( $seo ['des'] );
 		$this->display ();
 	}
+	
+	/**
+	 *个人档案的回答列表
+	 */
+	public function answer()
+	{
+		// 获取用户信息
+		$user_info = model ( 'User' )->getUserInfo ( $this->uid );
+		// 用户为空，则跳转用户不存在
+		if (empty ( $user_info )) {
+			$this->error ( L ( 'PUBLIC_USER_NOEXIST' ) );
+		}
+		// 个人空间头部
+		$this->_top ();
+		$this->_tab_menu();
+		
+		// 判断隐私设置
+		$userPrivacy = $this->privacy ( $this->uid );
+		if ($userPrivacy ['space'] !== 1) {
+			$this->_sidebar ();
+			// 加载微博筛选信息
+			$d ['feed_type'] = t ( $_REQUEST ['feed_type'] ) ? t ( $_REQUEST ['feed_type'] ) : '';
+			$d ['feed_key'] = t ( $_REQUEST ['feed_key'] ) ? t ( $_REQUEST ['feed_key'] ) : '';
+			$this->assign ( $d );
+		} else {
+			$this->_assignUserInfo ( $this->uid );
+		}
+		
+		// 添加积分
+		model ( 'Credit' )->setUserCredit ( $this->uid, 'space_access' );
+		
+		$this->assign ( 'userPrivacy', $userPrivacy );
+		// seo
+		$seo = model ( 'Xdata' )->get ( "admin_Config:seo_user_profile" );
+		$replace ['uname'] = $user_info ['uname'];
+		if ($feed_id = model ( 'Feed' )->where ( 'uid=' . $this->uid )->order ( 'publish_time desc' )->limit ( 1 )->getField ( 'feed_id' )) {
+			$replace ['lastFeed'] = D ( 'feed_data' )->where ( 'feed_id=' . $feed_id )->getField ( 'feed_content' );
+		}
+		$replaces = array_keys ( $replace );
+		foreach ( $replaces as &$v ) {
+			$v = "{" . $v . "}";
+		}
+		$seo ['title'] = str_replace ( $replaces, $replace, $seo ['title'] );
+		$seo ['keywords'] = str_replace ( $replaces, $replace, $seo ['keywords'] );
+		$seo ['des'] = str_replace ( $replaces, $replace, $seo ['des'] );
+		! empty ( $seo ['title'] ) && $this->setTitle ( $seo ['title'] );
+		! empty ( $seo ['keywords'] ) && $this->setKeywords ( $seo ['keywords'] );
+		! empty ( $seo ['des'] ) && $this->setDescription ( $seo ['des'] );
+		$this->display ();
+	}
+	
+	
 	function appList() {
 		// 获取用户信息
 		$user_info = model ( 'User' )->getUserInfo ( $this->uid );

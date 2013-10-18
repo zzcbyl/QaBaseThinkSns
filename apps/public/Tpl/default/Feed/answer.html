@@ -11,15 +11,14 @@
 	</p>
 	<table width="589px" style="line-height:22px;">
 	    <tr>
-	        <td style="width:50px; text-align:right; vertical-align:top;">答案：</td>
-	        <td style="width:539px; display:block;"><span class="contents">{$body|format=true}</span></td>
+	        <td style="width:589px; display:block;"><span class="contents">{$body|format=true}</span></td>
 	    </tr>
 	    
 	</table>
 	<!--<span class="contents"><neq name="body" value="">{$body|format=true}</neq></span>-->
 	<p class="info">
 		<span class="right">
-	<span id='digg{$feed_id}' rel='0'>
+	<!--<span id='digg{$feed_id}' rel='0'>
 	   <a href="javascript:void(0)" onclick="addDigg({$feed_id})" >赞</a>
   </span>
 	<i class="vline">|</i>
@@ -38,13 +37,17 @@
 			
 			{:W('Collection',array('sid'=>$feed_id,'stable'=>'feed','sapp'=>$app))}
 			</eq>
-
+            <i class="vline">|</i>
+            -->
 			<php>if(in_array('comment',$weibo_premission)):</php>
 			<eq name='actions.comment' value='true'>
 			<php>$cancomment_old = empty($app_row_id) ? 0 : 1;</php>
 			<php> $cancomment = intval(CheckPermission('core_normal','feed_comment')); </php>
-			<i class="vline">|</i>
-			<a event-node="comment" href="javascript:void(0)" event-args='row_id={$feed_id}&app_uid={$uid}&to_comment_id=0&to_uid=0&app_name={$app}&table=feed&app_row_id={$app_row_id}&app_row_table={$app_row_table}&cancomment={$cancomment}&cancomment_old={$cancomment_old}'>{:L('PUBLIC_STREAM_COMMENT')}</a>
+			
+			<!--<a event-node="comment" href="javascript:void(0)" event-args='row_id={$feed_id}&app_uid={$uid}&to_comment_id=0&to_uid=0&app_name={$app}&table=feed&app_row_id={$app_row_id}&app_row_table={$app_row_table}&cancomment={$cancomment}&cancomment_old={$cancomment_old}'>{:L('PUBLIC_STREAM_COMMENT')}</a>-->
+            <a event-node="comment" href="javascript:void(0)" event-args="row_id={$feed_id}&app_uid={$uid}&to_comment_id=0&to_uid=0&app_name={$app}&table=feed&app_row_id={$app_row_id}&app_row_table={$app_row_table}&cancomment={$cancomment}&cancomment_old={$cancomment_old}&comment_type=1">赞同</a>
+            <i class="vline">|</i>
+            <a event-node="comment" href="javascript:void(0)" event-args="row_id={$feed_id}&app_uid={$uid}&to_comment_id=0&to_uid=0&app_name={$app}&table=feed&app_row_id={$app_row_id}&app_row_table={$app_row_table}&cancomment={$cancomment}&cancomment_old={$cancomment_old}&comment_type=2">反对</a>
 			</eq>
 			<php>endif;</php>
 		</span>

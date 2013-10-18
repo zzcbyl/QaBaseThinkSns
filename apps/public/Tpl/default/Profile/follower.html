@@ -7,7 +7,7 @@
         <div id="col" class="st-grid boxShadow minh content-bg">
             <php>if($userPrivacy['space'] != 1){</php>
             <div id="" class="boxShadow">
-                <div class="extend border minh">
+                <div class="extend-foot">
                 <!-- tag-menu -->
                 <include file="_follow_tab" />
                 <div class="search-main clearfix">
@@ -40,7 +40,11 @@
                                         <i class="vline">|</i>
                                         {:L('PUBLIC_FOLLOWERS')}：<a href="{:U('public/Profile/follower', array('uid'=>$_follower['fid']))}">{:(int)$user_count[$_follower['fid']]['follower_count']}</a>
                                         <i class="vline">|</i>
+									    {:L('PUBLIC_FRIEND')}：<a href="{:U('public/Profile/friend', array('uid'=>$_follower['fid']))}">{:(int)$user_count[$_follower['fid']]['friend_count']}</a>
+                                        <i class="vline">|</i>
                                         {:L('PUBLIC_WEIBO')}：<a href="{$user_info[$_follower['fid']]['space_url']}">{:(int)$user_count[$_follower['fid']]['weibo_count']}</a>
+                                        <i class="vline">|</i>
+									    {:L('PUBLIC_ANSWER')}：<a href="{:U('public/Profile/answer', array('uid'=>$_follower['fid']))}">{:(int)$user_count[$_follower['fid']]['answer_count']}</a>
                                     </p>
                                     <php>if($user_info[$_follower['fid']]['intro']){</php>
                                         <p class="info">

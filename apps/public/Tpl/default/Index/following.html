@@ -54,8 +54,12 @@
 										{:L('PUBLIC_FOLLOWING')}：<a href="{:U('public/Profile/following', array('uid'=>$vo['uid']))}">{$vo.following_count|default=0}</a>
 										<i class="vline">|</i>
 										{:L('PUBLIC_FOLLOWERS')}：<a href="{:U('public/Profile/follower', array('uid'=>$vo['uid']))}">{$vo.follower_count|default=0}</a>
+                                        <i class="vline">|</i>
+										{:L('PUBLIC_FRIEND')}：<a href="{:U('public/Profile/friend', array('uid'=>$vo['uid']))}">{$vo.friend_count|default=0}</a>
 										<i class="vline">|</i>
 										{:L('PUBLIC_WEIBO')}：<a href="{:U('public/Profile/index', array('uid'=>$vo['uid']))}">{$vo.feed_count|default=0}</a>
+                                        <i class="vline">|</i>
+										{:L('PUBLIC_ANSWER')}：<a href="{:U('public/Profile/answer', array('uid'=>$vo['uid']))}">{$vo.answer_count|default=0}</a>
 									</p>
 									<php>if($vo['intro']){</php>
 										<p class="info">

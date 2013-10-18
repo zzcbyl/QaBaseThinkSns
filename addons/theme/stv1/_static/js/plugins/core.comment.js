@@ -103,12 +103,12 @@ core.comment = {
         this.comment_textarea = commentListObj.childModels['comment_textarea'][0];
         var mini_editor = this.comment_textarea.childModels['mini_editor'][0];
         var _textarea = $(mini_editor).find('textarea').get(0);
-        var strlen = core.getLength(_textarea.value);
-        var leftnums = initNums - strlen;
-        if (leftnums < 0 || leftnums == initNums) {
-            flashTextarea(_textarea);
-            return false;
-        }
+//        var strlen = core.getLength(_textarea.value);
+//        var leftnums = initNums - strlen;
+//        if (leftnums < 0 || leftnums == initNums) {
+//            flashTextarea(_textarea);
+//            return false;
+//        }
 
         // 如果转发到自己的微博
         if (this.canrepost == 1) {

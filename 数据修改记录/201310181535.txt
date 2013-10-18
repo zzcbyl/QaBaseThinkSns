@@ -1,0 +1,10 @@
+后台修改:
+1、微博登录插件
+2、微博配置-》字数可以修改
+3、附件配置-》最大允许值2M
+4、语言配置-》添加配置： 语言KEY	   应用名称	文件类型	简体	繁体	英文
+	 		 PUBLIC_FRIEND	   PUBLIC	PHP文件	        好友	好友    Friend
+			 PUBLIC_ANSWER     PUBLIC       PHP文件         回答    回答    Answer 
+
+   语言配置-》修改配置： PUBLIC_WEIBO      PUBLIC       PHP文件         微博    微博    Weibo  =>改成:
+			 PUBLIC_WEIBO      PUBLIC       PHP文件         提问    提問    Question  

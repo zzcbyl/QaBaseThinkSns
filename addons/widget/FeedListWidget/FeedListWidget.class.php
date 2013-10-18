@@ -224,7 +224,9 @@ class FeedListWidget extends Widget {
 					//关键字匹配 采用搜索引擎兼容函数搜索 后期可能会扩展为搜索引擎
 					$list = model('Feed')->searchFeed($var['feed_key'],'space',$var['loadId'],$this->limitnums,'',$var['feed_type']);
 				}else{
-					$where =' uid='.$GLOBALS['ts']['mid'].' AND is_del = 0 AND feed_questionid!=0 AND (is_audit=1 OR is_audit=0) ';
+					$current_uid=$GLOBALS['ts']['mid'];
+					if($var['uid']!=null&&$var['uid']!='0') $current_uid = $var['uid'];
+					$where =' uid='.$current_uid.' AND is_del = 0 AND feed_questionid!=0 AND (is_audit=1 OR is_audit=0) ';
 					$list = model('Feed')->getAnswerList($where, $this->limitnums);
 					//print_r($list);
 				}

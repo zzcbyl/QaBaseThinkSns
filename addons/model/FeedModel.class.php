@@ -53,7 +53,7 @@ class FeedModel extends Model {
 		$data['app_row_table'] = $app_table;
 		$data['publish_time'] = time();
 		$data['from'] = isset($data['from']) ? intval($data['from']) : getVisitorClient();
-		$data['is_del'] = $data['comment_count'] = $data['repost_count'] = 0;
+		$data['is_del'] = $data['comment_count'] = $data['repost_count'] = $data['disapprove_count'] = 0;
 		$data['is_repost'] = $is_repost;
 		if($data['questionid']==null)
 			$data['questionid']=0;
@@ -75,14 +75,15 @@ class FeedModel extends Model {
 			// 获取用户发送的内容，仅仅以//进行分割
 			$scream = explode('//', $data['body']);
 			// 截取内容信息为微博内容字数 - 重点
-			$feedConf = model('Xdata')->get('admin_Config:feed');
+			//$feedConf = model('Xdata')->get('admin_Config:feed');
 			//$feedNums = $feedConf['weibo_nums'];
 			$feedNums = 43;
 			$body = array();
 			foreach($scream as $value) {
 				$tbody[] = $value;
 				$bodyStr = implode('//', $tbody);
-				if(get_str_length(ltrim($bodyStr)) > $feedNums) {
+				//答案就不检测字数
+				if($data['questionid'] == 0 && get_str_length(ltrim($bodyStr)) > $feedNums) {
 					break;
 				}
 				$body[] = $value;
@@ -400,17 +401,19 @@ class FeedModel extends Model {
 		$feed_ids = getSubByKey($feedlist['data'], 'feed_id');
 		
 		//print_r($feed_ids);
-	
+
+		//查询到的数据
 		$feedlist['data'] = $this->getFeeds($feed_ids);
 		
-		//增加答案块
+		//存放结果
+		$result = $feedlist;
+		$result['data'] = Array();
+		
+		//增加答案块/评论块
 		foreach( $feedlist["data"] as $v => $vv )
-		{
-			/*if($vv['uid']!= $GLOBALS['ts']['mid']) //问题的用户ID不等于当前用户ID
-			{*/
-
+		{			
 			//答案
-			$AnswerWhere='';
+			/*$AnswerWhere='';
 			$AnswerFeed=Array();
 			$AnswerFeed_id=Array();
 			$AnswerFeedData=Array();
@@ -418,32 +421,86 @@ class FeedModel extends Model {
 			$AnswerFeed = $this->field('feed_id')->where($AnswerWhere)->order("feed_id DESC")->findPage(1);				
 			$AnswerFeed_id = getSubByKey($AnswerFeed['data'], 'feed_id');
 			$AnswerFeedData = $this->getFeeds($AnswerFeed_id);
-			
+						
 			$vv["answer"] = $AnswerFeedData;
-			$feedlist["data"][$v]=$vv;
-
+			$feedlist["data"][$v]=$vv;*/
 			
-			/*print_r($vv);
+			$AnswerTable = '(SELECT max(feed_id) answer_id FROM `wb_feed` WHERE `feed_questionid` = '.$vv['feed_id'].' and (uid='.$GLOBALS['ts']['mid'].' or uid in (SELECT `fid` FROM `'.$this->tablePrefix.'user_follow` WHERE `uid` = '.$GLOBALS['ts']['mid'].')) group by uid) tt';
+			$AnswerList = $this->table($AnswerTable)->order('answer_id DESC')->select();
+			if(is_array($AnswerList)&&count($AnswerList)>0)
+			{
+				foreach( $AnswerList as $a => $aa )
+				{
+					//答案
+					$AnswerFeed_id = Array($aa['answer_id']);
+					$AnswerFeedData = $this->getFeeds($AnswerFeed_id);
+					$vv["answer"] = $AnswerFeedData;
+					
+					//对答案的评论
+					$CommentTable = '(SELECT max(comment_id) comment_id FROM `wb_comment` WHERE `row_id` = '.$aa['answer_id'].' and (uid='.$GLOBALS['ts']['mid'].' or uid in (SELECT `fid` FROM `'.$this->tablePrefix.'user_follow` WHERE `uid` = '.$GLOBALS['ts']['mid'].'))  group by uid) atab';
+					//print($this->getLastSql());
+					$CommentList = $this->table($CommentTable)->order('comment_id DESC')->select();
+					//print_r($CommentList);
+					if(is_array($CommentList) && count($CommentList) > 0)
+					{
+						foreach( $CommentList as $c => $cc )
+						{
+							$CommentFeedData = model('Comment')->getCommentInfo($cc['comment_id']);
+							$vv["comment"] = $CommentFeedData;
+							$result["data"][count($result["data"])]=$vv;
+						}
+					}
+					else
+					{
+						$result["data"][count($result["data"])]=$vv;
+					}
+				}
+			}
+			else
+			{
+				//对问题的评论
+				$CommentTable = '(SELECT max(comment_id) comment_id FROM `wb_comment` WHERE `row_id` = '.$vv['feed_id'].' and (uid='.$GLOBALS['ts']['mid'].' or uid in (SELECT `fid` FROM `'.$this->tablePrefix.'user_follow` WHERE `uid` = '.$GLOBALS['ts']['mid'].'))  group by uid) atab';
+				$CommentList = $this->table($CommentTable)->order('comment_id DESC')->select();
+				if(is_array($CommentList) && count($CommentList) > 0)
+				{
+					foreach( $CommentList as $c => $cc )
+					{
+						$CommentFeedData = model('Comment')->getCommentInfo($cc['comment_id']);
+						$vv["comment"] = $CommentFeedData;
+						$result["data"][count($result["data"])]=$vv;
+					}
+				}
+				else
+				{
+					$result["data"][count($result["data"])]=$vv;
+				}
+			}
+			
+			/*print_r($result["data"]);
+			print_r($vv);
 			print('<br /><br /><br /><br />');*/
 			
+			
 			//评论
-			$CommentWhere='';
+			/*$CommentWhere='';
 			$CommentFeed=Array();
+						
 			$CommentWhere='row_id='.$vv['feed_id'].' and (uid='.$GLOBALS['ts']['mid'].' or uid in (SELECT `fid` FROM `'.$this->tablePrefix.'user_follow` WHERE `uid` = '.$GLOBALS['ts']['mid'].'))';
 			$CommentFeed = model('Comment')->field('comment_id')->where($CommentWhere)->order("comment_id DESC")->findPage(1);	
 			if(is_array($CommentFeed['data']) && count($CommentFeed['data']) > 0)
 			{
-				
 				$CommentFeedData = model('Comment')->getCommentInfo($CommentFeed['data'][0]['comment_id']);
 				//print_r($CommonFeedData);
 				$vv["comment"] = $CommentFeedData;
 				$feedlist["data"][$v]=$vv;
 				//print_r($vv);
-			}
-			//}
+			}*/
+			
+			
+			
 		}
 		
-		return $feedlist;
+		return $result;
 	}
 
 	/**

@@ -367,23 +367,27 @@ M.addEventFns({
     // 微博内容输入框
     mini_editor_textarea: {
         click: function () {
-            if (!this.ready) {
-                this.ready = 1;
-                var _this = this;
-                var checknums = function () {
-                    core.weibo.checkNums(_this);
-                };
-                var t = setInterval(checknums, 250);
+            if ($(this).attr('texttype') == undefined || $(this).attr('texttype') == "") {
+                if (!this.ready) {
+                    this.ready = 1;
+                    var _this = this;
+                    var checknums = function () {
+                        core.weibo.checkNums(_this);
+                    };
+                    var t = setInterval(checknums, 250);
+                }
             }
         },
         focus: function () {
-            if (!this.ready) {
-                this.ready = 1;
-                var _this = this;
-                var checknums = function () {
-                    core.weibo.checkNums(_this);
-                };
-                var t = setInterval(checknums, 250);
+            if ($(this).attr('texttype') == undefined || $(this).attr('texttype') == "") {
+                if (!this.ready) {
+                    this.ready = 1;
+                    var _this = this;
+                    var checknums = function () {
+                        core.weibo.checkNums(_this);
+                    };
+                    var t = setInterval(checknums, 250);
+                }
             }
         },
         load: function () {

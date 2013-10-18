@@ -7,7 +7,7 @@
     	      <div id="col" class="st-grid boxShadow minh content-bg">
                 <php>if($userPrivacy['space'] != 1){</php>
             <div id="" class="boxShadow">
-                <div class="extend border minh">
+                <div class="extend-foot">
                 <!-- tag-menu -->
                 <php>if($_GET['type']!=null&&$_GET['type']=='friend') { </php>
                     <include file="_tab_menu"/>
@@ -54,7 +54,11 @@
                                     <i class="vline">|</i>
                                     {:L('PUBLIC_FOLLOWERS')}：<a href="{:U('public/Profile/follower', array('uid'=>$_following['fid']))}">{:(int)$user_count[$_following['fid']]['follower_count']}</a>
                                     <i class="vline">|</i>
+									{:L('PUBLIC_FRIEND')}：<a href="{:U('public/Profile/friend', array('uid'=>$_following['fid']))}">{:(int)$user_count[$_following['fid']]['friend_count']}</a>
+                                    <i class="vline">|</i>
                                     {:L('PUBLIC_WEIBO')}：<a href="{$user_info[$_following['fid']]['space_url']}">{:(int)$user_count[$_following['fid']]['weibo_count']}</a>
+                                    <i class="vline">|</i>
+									{:L('PUBLIC_ANSWER')}：<a href="{:U('public/Profile/answer', array('uid'=>$_following['fid']))}">{:(int)$user_count[$_following['fid']]['answer_count']}</a>
                                 </p>
                                 <php>if($user_info[$_following['fid']]['intro']){</php>
                                     <p class="info">

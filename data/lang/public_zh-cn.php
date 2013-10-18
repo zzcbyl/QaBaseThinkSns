@@ -133,7 +133,7 @@ return array(
 'PUBLIC_MY_COLLEAGUE'=>'我的好友',
 'PUBLIC_FOLLOWING'=>'关注',
 'PUBLIC_FOLLOWERS'=>'粉丝',
-'PUBLIC_WEIBO'=>'微博',
+'PUBLIC_WEIBO'=>'提问',
 'PUBLIC_ADD_FOLLOW'=>'加关注',
 'PUBLIC_FOLLOW_EACH_OTHER'=>'互相关注',
 'PUBLIC_CANCEL_FOLOW'=>'取消关注',
@@ -1105,5 +1105,6 @@ return array(
 'NOTIFY_SITELIST_DENY_TITLE'=>'',
 'DIGG_MESSAGE_CONTENT'=>'{user} 赞了你的微博:<br/>{content} <a href="{sourceurl}&digg=1" target=‘_blank‘>去看看>></a>',
 'DIGG_MESSAGE_TITLE'=>'{user} 赞了你的微博',
-'PUBLIC_FRIEND'=>'好友'
+'PUBLIC_FRIEND'=>'好友',
+'PUBLIC_ANSWER'=>'回答'
 );

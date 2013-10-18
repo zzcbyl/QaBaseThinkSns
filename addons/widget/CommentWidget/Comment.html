@@ -3,12 +3,12 @@
 <!--评论列表-->
 <!--评论框-->
 <eq name='cancomment' value = "1">
-<div class="action clearfix mb10">
+<!--<div class="action clearfix mb10">
 	<div class="num"  model-node="numsLeft">{:L('PUBLIC_INPUT_CHARACTER_LIMIT',array('num'=>'<span>'.$initNums.'</span>'))}</div>
-</div>
+</div>-->
 <div class="input" model-node="comment_textarea">
 <div class="input_before1" model-node="mini_editor">
-<textarea class="input_tips" id="comment_inputor" event-node="mini_editor_textarea" hidefocus="true" model-args='t=comment'></textarea>
+<textarea class="input_tips" texttype="comment" id="comment_inputor" event-node="mini_editor_textarea" hidefocus="true" model-args='t=comment'></textarea>
 </div>
 <div class="action clearfix">
 <div><a href="javascript:void(0);" class="btn-green-small right" event-node="do_comment" 

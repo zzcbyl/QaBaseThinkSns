@@ -50,9 +50,9 @@ $admintaskrecom = CheckPermission('vtask_admin','vtask_recommend');
             <span event-node="show_admin" event-args="feed_id={$vl['comment']['feed_id']}&uid={$vl['comment']['user_info']['uid']}&feed_del={$adminfeeddel}&channel_recommend={$adminchannelrecom}&vtask_recommend={$admintaskrecom}" href="javascript:;" class="right f12 f9 hover" style="display:none;cursor:pointer">管理</span>
 	        <eq name='vl.is_del' value='0'>
 	        <p class="hd">{$vl['comment']['user_info'].space_link}</p>
-            <table width="575px" style="line-height:22px;">
+            <table width="535px" style="line-height:22px;">
 	            <tr>
-	                <td style="width:575px; display:block;"><span class="contents"><!--{$vl['comment'].feed_id|format=true}-->{$vl['comment'].content|format=true}</span></td>
+	                <td style="width:535px; display:block;"><span class="contents"><!--{$vl['comment'].feed_id|format=true}-->{$vl['comment'].content|format=true}</span></td>
 	            </tr>
 	        </table>
 	        <p class="info">
@@ -121,13 +121,13 @@ $admintaskrecom = CheckPermission('vtask_admin','vtask_recommend');
 	</eq>
 	<php>endif;</php>
 	
-	<eq name='vl.actions.favor' value='true'>
+	<!--<eq name='vl.actions.favor' value='true'>
 		{:W('Collection',array('type'=>$type,'sid'=>$vl['feed_id'],'stable'=>'feed','sapp'=>$vl['app']))}
 	</eq>
+    <i class="vline">|</i>-->
 
 	<php>if(in_array('comment',$weibo_premission)):</php>
 	<eq name='vl.actions.comment' value='true'>
-		<i class="vline">|</i>
 		<a event-node="comment" href="javascript:void(0)" event-args='row_id={$vl.feed_id}&app_uid={$vl.uid}&app_row_id={$vl.app_row_id}&app_row_table={$vl.app_row_table}&to_comment_id=0&to_uid=0&app_name={$vl.app}&table=feed&cancomment={$cancomment}&cancomment_old={$cancomment_old}&comment_type=0'>{:L('PUBLIC_STREAM_COMMENT')}<neq name='vl.comment_count' value='0'> ({$vl.comment_count}) </neq></a>
 	</eq>
 	<php>endif;</php>
@@ -204,7 +204,7 @@ $admintaskrecom = CheckPermission('vtask_admin','vtask_recommend');
 	        <php>}</php>
 	        <php>if(!empty($vl['answer'][0]['body'])){</php><php>}</php>
 	        </p>
-            <table width="539px" style="line-height:22px;">
+            <table width="535px" style="line-height:22px;">
 	            <tr>
 	                <td style="width:535px; display:block;"><span class="contents"><!--{$vl['answer'][0].feed_id|format=true}-->{$vl['answer'][0].body|format=true}</span></td>
 	            </tr>
@@ -219,7 +219,7 @@ $admintaskrecom = CheckPermission('vtask_admin','vtask_recommend');
 	           已赞<if condition="!empty($vl['answer'][0][digg_count])">({$vl['answer'][0].digg_count})</if>
 	        <php> } </php>
             </span>
-	        <i class="vline">|</i>-->
+	        <i class="vline">|</i>
 	        <php>if(in_array('repost',$weibo_premission)):</php>
 	        <eq name='vl.actions.repost' value='true'>
 	        <php>if($canfeedshare){</php>
@@ -236,10 +236,10 @@ $admintaskrecom = CheckPermission('vtask_admin','vtask_recommend');
 	        <eq name='vl.actions.favor' value='true'>
 		        {:W('Collection',array('type'=>$type,'sid'=>$vl['answer'][0]['feed_id'],'stable'=>'feed','sapp'=>$vl['answer'][0]['app']))}
 	        </eq>
-
+            <i class="vline">|</i>
+            -->
 	        <php>if(in_array('comment',$weibo_premission)):</php>
 	        <eq name='vl.actions.comment' value='true'>
-		        <i class="vline">|</i>
 		        <!--<a event-node="comment" href="javascript:void(0)" event-args="row_id={$vl['answer'][0].feed_id}&app_uid={$vl['answer'][0].uid}&app_row_id={$vl['answer'][0].app_row_id}&app_row_table={$vl['answer'][0].app_row_table}&to_comment_id=0&to_uid=0&app_name={$vl['answer'][0].app}&table=feed&cancomment={$cancomment}&cancomment_old={$cancomment_old_answer}">{:L('PUBLIC_STREAM_COMMENT')}<neq name='vl.comment_count' value='0'> ({$vl['answer'][0].comment_count}) </neq></a>-->
                 <a event-node="comment" href="javascript:void(0)" event-args="row_id={$vl['answer'][0].feed_id}&app_uid={$vl['answer'][0].uid}&app_row_id={$vl['answer'][0].app_row_id}&app_row_table={$vl['answer'][0].app_row_table}&to_comment_id=0&to_uid=0&app_name={$vl['answer'][0].app}&table=feed&cancomment={$cancomment}&cancomment_old={$cancomment_old_answer}&comment_type=1">赞同<neq name="vl['answer'][0].comment_count" value='0'> ({$vl['answer'][0].comment_count}) </neq></a>
                 <i class="vline">|</i>

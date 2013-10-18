@@ -131,7 +131,7 @@ return array(
 'PUBLIC_MY_COLLEAGUE'=>'My Friend',
 'PUBLIC_FOLLOWING'=>'Followed',
 'PUBLIC_FOLLOWERS'=>'Followers',
-'PUBLIC_WEIBO'=>'Weibo',
+'PUBLIC_WEIBO'=>'Question',
 'PUBLIC_ADD_FOLLOW'=>'Plus Interest',
 'PUBLIC_FOLLOW_EACH_OTHER'=>'Mutual Concern',
 'PUBLIC_CANCEL_FOLOW'=>'unfollow',
@@ -1106,5 +1106,6 @@ Label class does not exist',
 'NOTIFY_SITELIST_DENY_TITLE'=>'',
 'DIGG_MESSAGE_CONTENT'=>'',
 'DIGG_MESSAGE_TITLE'=>'',
-'PUBLIC_FRIEND'=>'Friend'
+'PUBLIC_FRIEND'=>'Friend',
+'PUBLIC_ANSWER'=>'Answer'
 );
