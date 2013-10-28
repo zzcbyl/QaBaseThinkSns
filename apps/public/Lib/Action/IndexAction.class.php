@@ -68,6 +68,110 @@ class IndexAction extends Action {
 
 		$this->display();
 	}
+	
+	
+	/**
+	* 获取指定用户的某条动态
+	* 
+	* @return void
+	*/
+	public function feed() {
+		
+		$feed_id = intval ( $_GET ['feed_id'] );
+		
+		if (empty ( $feed_id )) {
+			$this->error ( L ( 'PUBLIC_INFO_ALREADY_DELETE_TIPS' ) );
+		}
+		
+		//获取微博信息
+		$feedInfo = model ( 'Feed' )->get ( $feed_id );
+
+		if (!$feedInfo){
+			$this->error ( '该微博不存在或已被删除' );
+			exit();
+		}
+		
+		if ($feedInfo ['is_audit'] == '0' && $feedInfo ['uid'] != $this->mid) {
+			$this->error ( '此微博正在审核' );
+			exit();
+		}
+
+		if ($feedInfo ['is_del'] == '1') {
+			$this->error ( L ( 'PUBLIC_NO_RELATE_WEIBO' ) );
+			exit();
+		}
+		
+		//判断用户是否已经回答过
+		$feedlist = model ( 'Feed' )->getAnswerList('feed_questionid='.$feed_id.' and uid='.$GLOBALS['ts']['mid'].' and is_del = 0 and (is_audit=1 OR is_audit=0)');
+		if(is_array($feedlist) && is_array($feedlist['data']) && count($feedlist['data'])>0)
+		{
+			$this->assign ( 'hasAnswer', '1' );
+		}
+
+		// 获取用户信息
+		$user_info = model ( 'User' )->getUserInfo ( $feedInfo['uid'] );
+		
+		// 个人空间头部
+		//$this->_top ();
+		
+		// 判断隐私设置
+		$userPrivacy = $this->privacy ( $this->uid );
+		if ($userPrivacy ['space'] !== 1) {
+			//$this->_sidebar ();		
+			$weiboSet = model ( 'Xdata' )->get ( 'admin_Config:feed' );
+			$a ['initNums'] = $weiboSet ['weibo_nums'];
+			$a ['weibo_type'] = $weiboSet ['weibo_type'];
+			$a ['weibo_premission'] = $weiboSet ['weibo_premission'];
+			$this->assign ( $a );
+			switch ($feedInfo ['app']) {
+				case 'weiba' :
+					$feedInfo ['from'] = getFromClient ( 0, $feedInfo ['app'], '微吧' );
+					break;
+				default :
+					$feedInfo ['from'] = getFromClient ( $from, $feedInfo ['app'] );
+					break;
+			}
+			// $feedInfo['from'] = getFromClient( $feedInfo['from'] , $feedInfo['app']);
+			$this->assign ( 'feedInfo', $feedInfo );
+		} else {
+			$this->_assignUserInfo ( $this->uid );
+		}
+		// seo
+		$feedContent = unserialize ( $feedInfo ['feed_data'] );
+		$seo = model ( 'Xdata' )->get ( "admin_Config:seo_feed_detail" );
+		$replace ['content'] = $feedContent ['content'];
+		$replace ['uname'] = $feedInfo ['user_info'] ['uname'];
+		$replaces = array_keys ( $replace );
+		foreach ( $replaces as &$v ) {
+			$v = "{" . $v . "}";
+		}
+		$seo ['title'] = str_replace ( $replaces, $replace, $seo ['title'] );
+		$seo ['keywords'] = str_replace ( $replaces, $replace, $seo ['keywords'] );
+		$seo ['des'] = str_replace ( $replaces, $replace, $seo ['des'] );
+		! empty ( $seo ['title'] ) && $this->setTitle ( $seo ['title'] );
+		! empty ( $seo ['keywords'] ) && $this->setKeywords ( $seo ['keywords'] );
+		! empty ( $seo ['des'] ) && $this->setDescription ( $seo ['des'] );
+		$this->assign ( 'userPrivacy', $userPrivacy );
+		// 赞功能
+		$diggArr = model ( 'FeedDigg' )->checkIsDigg ( $feed_id, $this->mid );
+		$this->assign ( 'diggArr', $diggArr );
+		
+		$this->display ();
+	}
+	
+	/**
+	 * 隐私设置
+	 */
+	public function privacy($uid) {
+		if ($this->mid != $uid) {
+			$privacy = model ( 'UserPrivacy' )->getPrivacy ( $this->mid, $uid );
+			return $privacy;
+		} else {
+			return true;
+		}
+	}
+
+
 
 	public function loginWithoutInit(){
 		$this->index();

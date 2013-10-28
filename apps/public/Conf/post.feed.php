@@ -6,7 +6,7 @@
 		<![CDATA[{$body|t|replaceUrl} ]]>
 	</body>
 	<description comment="feed描述内容/引用的描述内容">
-		<![CDATA[{$description|t|replaceUrl} ]]>
+		<![CDATA[{$description} ]]>
 	</description>
 	<feedAttr comment="true" repost="true" like="false" favor="true" delete="true" />
 </feed>

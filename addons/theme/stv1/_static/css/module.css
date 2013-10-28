@@ -45,6 +45,10 @@ a:hover .contribute{background-position:0 -207px;}
 .feed_list .face img{vertical-align: top;width:50px;height:50px;}
 .feed_list a.date{color:#bbb}
 .feed_list .content{font-size: 14px;line-height: 22px;margin: 0 0 0 60px;}
+.feed_list .content table { letter-spacing:0.4px; }
+.feed_list .content .contentTable div div { width:auto;}
+.feed_list .content .contentTable div { width:535px;}.
+
 .feed_list .content em,.feed_list .comment .arrline{vertical-align:top;color:#e1e1e1;font-style:normal;}
 .feed_list .content em img{vertical-align:middle;}
 .feed_list .content p.hd{font-size:14px;padding:0 0 5px 0;vertical-align:top;}
@@ -113,7 +117,7 @@ a:hover .contribute{background-position:0 -207px;}
 .feed_list .arrow{height: 11px;overflow:hidden;width: 25px;position:absolute;top:-10px;left:10px;}
 .feed_list .type-bg{background:#fff;border-radius:2px;-moz-border-radius:2px;-webkit-border-radius:2px;padding:0 3px;}
 .feed_list .bgcolor_arrow{color:#F2F2F2;}
-.feed_list em.arrline,.feed_list .comment span.downline{display: block;font-family: "SimSun";font-size: 21px;height: 10px;overflow: hidden;_display:none;}	
+.feed_list em.arrline,.feed_list .comment span.downline{display: block;font-family: "SimSun";font-size: 21px;height: 10px;overflow: hidden;_display:none; vertical-align:top;color:#e1e1e1;font-style:normal;}	
 /*.feed_list .comment span{margin:-9px 0 0;}*/
 .feed_list .comment span.downline{color:#F9FAFA;margin:-9px 0 0;}
 

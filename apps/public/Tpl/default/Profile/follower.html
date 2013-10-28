@@ -1,20 +1,23 @@
 <include file="__THEME__/public_header" />
 <div id="page-wrap">
-    <div id="main-wrap">
-        <div class="profile-title  boxShadow">
-                <include file="_top"/> 
-        </div>
-        <div id="col" class="st-grid boxShadow minh content-bg">
+    <div id="main-wrap" class="content-bg">
+        <div id="col" class="st-grid boxShadow minh" style="float:left;">
+            <div class="profile-title">
+                <include file="_top" />
+                <div style="height: 10px;" class="boxShadow">
+                </div>
+            </div>
             <php>if($userPrivacy['space'] != 1){</php>
-            <div id="" class="boxShadow">
+            <div id="col5" class="st-index-main">
                 <div class="extend-foot">
-                <!-- tag-menu -->
-                <include file="_follow_tab" />
-                <div class="search-main clearfix">
-                <php>if($follower_list['data']){</php>
-                    <!--搜索列表-->
-                  <div class="sperson-feedlist<php> echo $_GET['show'];</php>">
-                        <volist name="follower_list.data" id="_follower">
+                    <!-- tag-menu -->
+                    <include file="_tab_menu" />
+                    <include file="_tab_menu2" />
+                    <div class="search-main clearfix">
+                        <php>if($follower_list['data']){</php>
+                        <!--搜索列表-->
+                        <div class="sperson-feedlist<php> echo $_GET['show'];</php>">
+                            <volist name="follower_list.data" id="_follower">
                             <php> $img = !empty($_GET['show']) ? $user_info[$_follower['fid']]['avatar_big']:$user_info[$_follower['fid']]['avatar_middle']; </php>
                       <dl class="feed_list">
                             <dt class="face"><a href="{$user_info[$_follower['fid']]['space_url']}">
@@ -58,21 +61,29 @@
                           </dd>
                         </dl>
                         </volist>
+                        </div>
+                        <!--搜索列表/end-->
+                        <!--页码-->
+                        <div id="page" class="page">
+                            {$follower_list.html}</div>
+                        <!--页码/end-->
+                        <php>}else{</php>
+                        <p>
+                            暂时没有关注TA的人</p>
+                        <php>}</php>
                     </div>
-                    <!--搜索列表/end-->
-                    <!--页码-->
-                    <div id="page" class="page">{$follower_list.html}</div>
-                    <!--页码/end-->
-                    <php>}else{</php>
-                        <p>暂时没有关注TA的人</p>
-                    <php>}</php>
-                </div>
                 </div>
             </div>
             <php>}else{</php>
-                    <p class="extend">-_-。sorry！根据对方隐私设置，您无权查看TA的主页</p>
+            <p class="extend">
+                -_-。sorry！根据对方隐私设置，您无权查看TA的主页</p>
             <php>}</php>
-      </div>
+        </div>
+        <div style="float: right;">
+            <include file="_sidebar" />
+        </div>
+        <div style="clear: both;">
+        </div>
     </div>
 </div>
 <include file="__THEME__/public_footer" />

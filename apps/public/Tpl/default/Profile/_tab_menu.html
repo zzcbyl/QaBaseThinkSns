@@ -1,16 +1,18 @@
 <php> 
       if(ACTION_NAME=='index'){ $tabClass['public'] = 'current'; }
       elseif(ACTION_NAME=='data'){ $tabClass['public_data'] = 'current'; }
-      elseif(ACTION_NAME=='friend'){ $tabClass['public_friend'] = 'current'; }
+      elseif(ACTION_NAME=='friend' || ACTION_NAME=='following' || ACTION_NAME=='follower'){ $tabClass['public_friend'] = 'current'; }
+      elseif(ACTION_NAME=='question'){ $tabClass['public_question'] = 'current'; }
       elseif(ACTION_NAME=='answer'){ $tabClass['public_answer'] = 'current'; }
 	  else{ $tabClass[$type] = 'current'; }
 </php>
 <div class="tab-menu clearfix">
   <ul>
     <li class="{$tabClass.public}"><span><a href="{:U('public/Profile/index',array('type'=>$type,'feed_type'=>'','uid'=>$uid))}"><php>$GLOBALS['ts']['mid']==$uid?print('我'):print('他')</php>的主页</a></span></li>
+    <li class="{$tabClass.public_question}"><span><a href="{:U('public/Profile/question',array('type'=>$type,'feed_type'=>'','uid'=>$uid))}"><php>$GLOBALS['ts']['mid']==$uid?print('我'):print('他')</php>的提问</a></span></li>
     <li class="{$tabClass.public_answer}"><span><a href="{:U('public/Profile/answer',array('type'=>$type,'feed_type'=>'','uid'=>$uid))}"><php>$GLOBALS['ts']['mid']==$uid?print('我'):print('他')</php>的回答</a></span></li>
+    <li class="{$tabClass.public_friend}"><span><a href="{:U('public/Profile/friend',array('uid'=>$uid,'type'=>'friend'))}"><php>$GLOBALS['ts']['mid']==$uid?print('我的'):print('他的')</php>好友/关注/粉丝</a></span></li>
     <li class="{$tabClass.public_data}"><span><a href="{:U('public/Profile/data',array('uid'=>$uid))}"><php>$GLOBALS['ts']['mid']==$uid?print('我的'):print('他的')</php>资料</a></span></li>
-    <li class="{$tabClass.public_friend}"><span><a href="{:U('public/Profile/friend',array('uid'=>$uid,'type'=>'friend'))}"><php>$GLOBALS['ts']['mid']==$uid?print('我的'):print('他的')</php>好友</a></span></li>
 	<!--<volist name='appArr' id='vo'>
 	    <li class="{$tabClass[$key]}"><span><a href="{:U('public/Profile/appList',array('type'=>$key,'uid'=>$uid))}">{$vo}</a></span></li>
 	</volist>-->

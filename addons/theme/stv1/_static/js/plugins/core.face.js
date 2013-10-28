@@ -60,11 +60,25 @@ core.face = {
     },
     face_chose: function (obj) {
         var imgtitle = $(obj).attr('title');
+        if (this.textarea.get(1) == undefined) {
+            this.textarea.inputToEnd('[' + imgtitle + ']');
+            //if ("undefined" != typeof (core.weibo)) {
+            //    core.weibo.checkNums(this.textarea.get(0));
+            //}
+        }
+        else {
+            if (this.textarea.get(1).value == "您可以在这里继续补充问题细节") {
+                this.textarea.get(1).value = "";
+            }
+            this.textarea.WBInputToEnd('[' + imgtitle + ']');
+            //if ("undefined" != typeof (core.weibo)) {
+            //    core.weibo.checkNums(this.textarea.get(1));
+            //}
+        }
         //var args =  M.getModelArgs(this.textarea);
         //var strVal = this.textarea.get(1).value;
         //this.textarea.get(1).value = strVal + '[' + imgtitle + ']';
-        this.textarea.WBInputToEnd('[' + imgtitle + ']');
-
+        //this.textarea.WBInputToEnd('[' + imgtitle + ']');
         //			if("undefined" == typeof(args.t) || args.t == 'feed'){
         //				this.textarea.focus();
         //				document.execCommand("insertImage",false,imgsrc);
@@ -77,9 +91,7 @@ core.face = {
         //				this.textarea.focus();
         //			}
 
-        if ("undefined" != typeof (core.weibo)) {
-            core.weibo.checkNums(this.textarea.get(0));
-        }
+        
         return false;
     }
 };

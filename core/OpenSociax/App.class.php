@@ -115,8 +115,9 @@ class App
                 throw_exception( L('_MODULE_NOT_EXIST_').' '.MODULE_NAME );
             }
         }
-
+		
         $module =   new $className();
+		
 
         //异常处理
         if(!$module) {

@@ -251,13 +251,18 @@ core.weibo = {
         M(document.getElementById('feed-lists'));
     },
     // 发布微博之后操作
-    afterPost: function (obj, textarea, topicHtml, description_editor, description, close) {
+    afterPost: function (obj, textarea, topicHtml, description_editor, description, close, questionid) {
         if (topicHtml == '') {
             textarea.value = '';
             if (description != undefined)
                 description.value = ''; ;
         } else {
             textarea.value = topicHtml;
+        }
+
+        //回答完成隐藏回答框
+        if (questionid > 0) {
+            $('#AnswerQuestionDiv').hide();
         }
 
         //obj.parentModel.parentModel.childModels['numsLeft'][0].innerHTML = L('PUBLIC_INPUT_TIPES', { 'sum': '<span>' + initNums + '</span>' });
@@ -516,6 +521,8 @@ core.weibo = {
             }
         }
 
+        txtVal = txtVal.replace(/\n/g, "<br />")
+
         if (!url) {
             url = U('public/Feed/PostFeed');
         }
@@ -538,7 +545,7 @@ core.weibo = {
                 }
                 var postOk = mini_editor.childModels['post_ok'][0];
                 $(postOk).fadeIn('fast');
-                core.weibo.afterPost(mini_editor, textarea, attrs.topicHtml, description_editor, description);
+                core.weibo.afterPost(mini_editor, textarea, attrs.topicHtml, description_editor, description, false, Qid);
                 if (!isbox) {
                     core.weibo.insertToList(msg.data, msg.feedId, questionid);
                 } else {

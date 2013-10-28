@@ -338,6 +338,21 @@ class FeedModel extends Model {
 		return $feedlist;
 	}
 	/**
+	* 获取问题列表
+	* $where 查询条件
+	* $limit 结果集数目，默认为10
+	* @return array 微博列表数据
+	**/
+	public function getQuestionList($where, $limit=10, $order='feed_id DESC')
+	{
+		$feedlist = $this->field('feed_id')->where($where)->order($order)->findPage($limit); 
+		$feed_ids = getSubByKey($feedlist['data'], 'feed_id');
+		$feedlist['data'] = $this->getFeeds($feed_ids, false);
+		
+		return $feedlist;
+	}
+	
+	/**
 		* 获取回答列表
 		* $where 查询条件
 		* $limit 结果集数目，默认为10
@@ -438,12 +453,24 @@ class FeedModel extends Model {
 					
 					//对答案的评论
 					$CommentTable = '(SELECT max(comment_id) comment_id FROM `wb_comment` WHERE `row_id` = '.$aa['answer_id'].' and (uid='.$GLOBALS['ts']['mid'].' or uid in (SELECT `fid` FROM `'.$this->tablePrefix.'user_follow` WHERE `uid` = '.$GLOBALS['ts']['mid'].'))  group by uid) atab';
-					//print($this->getLastSql());
 					$CommentList = $this->table($CommentTable)->order('comment_id DESC')->select();
-					//print_r($CommentList);
+					
+					//对问题的评论
+					$QCommentTable = '(SELECT comment_id FROM `wb_comment` WHERE `row_id` = '.$vv['feed_id'].' and (uid='.$GLOBALS['ts']['mid'].' or uid in (SELECT `fid` FROM `'.$this->tablePrefix.'user_follow` WHERE `uid` = '.$GLOBALS['ts']['mid'].'))  ) atab';
+					$QCommentList = $this->table($QCommentTable)->order('comment_id DESC')->select();
+					
 					if(is_array($CommentList) && count($CommentList) > 0)
 					{
-						foreach( $CommentList as $c => $cc )
+						foreach($CommentList as $c => $cc )
+						{
+							$CommentFeedData = model('Comment')->getCommentInfo($cc['comment_id']);
+							$vv["comment"] = $CommentFeedData;
+							$result["data"][count($result["data"])]=$vv;
+						}
+					}
+					else if(is_array($QCommentList) && count($QCommentList) > 0)
+					{
+						foreach( $QCommentList as $c => $cc )
 						{
 							$CommentFeedData = model('Comment')->getCommentInfo($cc['comment_id']);
 							$vv["comment"] = $CommentFeedData;
@@ -459,7 +486,7 @@ class FeedModel extends Model {
 			else
 			{
 				//对问题的评论
-				$CommentTable = '(SELECT max(comment_id) comment_id FROM `wb_comment` WHERE `row_id` = '.$vv['feed_id'].' and (uid='.$GLOBALS['ts']['mid'].' or uid in (SELECT `fid` FROM `'.$this->tablePrefix.'user_follow` WHERE `uid` = '.$GLOBALS['ts']['mid'].'))  group by uid) atab';
+				$CommentTable = '(SELECT comment_id FROM `wb_comment` WHERE `row_id` = '.$vv['feed_id'].' and (uid='.$GLOBALS['ts']['mid'].' or uid in (SELECT `fid` FROM `'.$this->tablePrefix.'user_follow` WHERE `uid` = '.$GLOBALS['ts']['mid'].')) ) atab';
 				$CommentList = $this->table($CommentTable)->order('comment_id DESC')->select();
 				if(is_array($CommentList) && count($CommentList) > 0)
 				{
@@ -1329,4 +1356,8 @@ class FeedModel extends Model {
 		$feed = model('Feed')->put($uid, 'public', $type, $d, '', 'feed');
 		return $feed['feed_id'];
 	}
+	
+
+
+
 }

@@ -155,7 +155,10 @@ core.at = {
 //	    this.textarea.blur();
 //		//this.textarea.text(oldHtml+'<label><a href="###" data="@{uid='+uid+'|'+uname+'}">@'+uname+'</a></label>&nbsp;');
 //	    this.textarea.click();
-//		core.bindkey.unbind();
+	    //		core.bindkey.unbind();
+	    if (this.inputor.get(1).value == "您可以在这里继续补充问题细节") {
+	        this.inputor.get(1).value = "";
+	    }
 	    this.inputor.WBInputToEnd('@' + uname + ' ');
 //		this._startAt();
 	},

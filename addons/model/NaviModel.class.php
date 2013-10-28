@@ -34,7 +34,7 @@ class NaviModel extends Model {
 			empty($topNav) && $topNav = array();
 			model('Cache')->set('topNav', $topNav);
 		}
-
+		
 		return $topNav;
 	}	
 
@@ -63,7 +63,7 @@ class NaviModel extends Model {
 			empty($bottomNav) && $bottomNav = array();
 			model('Cache')->set('bottomNav', $bottomNav);
 		}
-
+		
 		return $bottomNav;
 	}
 

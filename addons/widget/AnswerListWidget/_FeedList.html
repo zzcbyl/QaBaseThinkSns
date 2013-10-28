@@ -30,7 +30,9 @@ $admintaskrecom = CheckPermission('vtask_admin','vtask_recommend');
 	<php>
 		$cancomment_old = empty($vl['app_row_id'])  ? 0 : 1;
 	</php>
-	<dl class="feed_list"  id ='feed{$vl.feed_id}' model-node='feed_list'>
+    
+	<dl class="feed_list"  id ='feed{$vl.feed_id}' model-node='feed_list' style="padding-left:40px;">
+    <div style="position:absolute; margin-left:-40px; margin-top:-5px; "><img src="__THEME__/image/answer_small.jpg"  /></div>
 	<dt class="face">
 	<a href="{$vl['user_info']['space_url']}"><img src="{$vl['user_info']['avatar_small']}"  event-node="face_card" uid='{$vl['user_info']['uid']}'></a></dt>
 	<dd class="content">
@@ -45,9 +47,9 @@ $admintaskrecom = CheckPermission('vtask_admin','vtask_recommend');
 	<php>}</php>
 	<php>if(!empty($vl['body'])){</php><php>}</php>
 	</p>
-    <table width="589px" style="line-height:22px;">
+    <table width="550px" style="line-height:22px;">
 	    <tr>
-	        <td style="width:589px; display:block;"><span class="contents"><!--{$vl.feed_id|format=true}-->{$vl.body|format=true}</span></td>
+	        <td style="width:550px; display:block;"><span class="contents"><!--{$vl.feed_id|format=true}-->{$vl.body|format=true}</span></td>
 	    </tr>
 	</table>
 	

@@ -135,6 +135,57 @@ class ProfileAction extends Action {
 	}
 	
 	
+	/**
+	 *个人档案的问题列表
+	 */
+	public function question()
+	{
+		// 获取用户信息
+		$user_info = model ( 'User' )->getUserInfo ( $this->uid );
+		// 用户为空，则跳转用户不存在
+		if (empty ( $user_info )) {
+			$this->error ( L ( 'PUBLIC_USER_NOEXIST' ) );
+		}
+		// 个人空间头部
+		$this->_top ();
+		$this->_tab_menu();
+		
+		// 判断隐私设置
+		$userPrivacy = $this->privacy ( $this->uid );
+		if ($userPrivacy ['space'] !== 1) {
+			$this->_sidebar ();
+			// 加载微博筛选信息
+			$d ['feed_type'] = t ( $_REQUEST ['feed_type'] ) ? t ( $_REQUEST ['feed_type'] ) : '';
+			$d ['feed_key'] = t ( $_REQUEST ['feed_key'] ) ? t ( $_REQUEST ['feed_key'] ) : '';
+			$this->assign ( $d );
+		} else {
+			$this->_assignUserInfo ( $this->uid );
+		}
+		
+		// 添加积分
+		model ( 'Credit' )->setUserCredit ( $this->uid, 'space_access' );
+		
+		$this->assign ( 'userPrivacy', $userPrivacy );
+		// seo
+		$seo = model ( 'Xdata' )->get ( "admin_Config:seo_user_profile" );
+		$replace ['uname'] = $user_info ['uname'];
+		if ($feed_id = model ( 'Feed' )->where ( 'uid=' . $this->uid )->order ( 'publish_time desc' )->limit ( 1 )->getField ( 'feed_id' )) {
+			$replace ['lastFeed'] = D ( 'feed_data' )->where ( 'feed_id=' . $feed_id )->getField ( 'feed_content' );
+		}
+		$replaces = array_keys ( $replace );
+		foreach ( $replaces as &$v ) {
+			$v = "{" . $v . "}";
+		}
+		$seo ['title'] = str_replace ( $replaces, $replace, $seo ['title'] );
+		$seo ['keywords'] = str_replace ( $replaces, $replace, $seo ['keywords'] );
+		$seo ['des'] = str_replace ( $replaces, $replace, $seo ['des'] );
+		! empty ( $seo ['title'] ) && $this->setTitle ( $seo ['title'] );
+		! empty ( $seo ['keywords'] ) && $this->setKeywords ( $seo ['keywords'] );
+		! empty ( $seo ['des'] ) && $this->setDescription ( $seo ['des'] );
+		$this->display ();
+	}
+	
+	
 	function appList() {
 		// 获取用户信息
 		$user_info = model ( 'User' )->getUserInfo ( $this->uid );
@@ -294,6 +345,13 @@ class ProfileAction extends Action {
 			$this->error ( L ( 'PUBLIC_NO_RELATE_WEIBO' ) );
 			exit();
 		}
+		
+		//判断用户是否已经回答过
+		$feedlist = model ( 'Feed' )->getAnswerList('feed_questionid='.$feed_id.' and uid='.$GLOBALS['ts']['mid'].' and is_del = 0 and (is_audit=1 OR is_audit=0)');
+		if(is_array($feedlist) && is_array($feedlist['data']) && count($feedlist['data'])>0)
+		{
+			$this->assign ( 'hasAnswer', '1' );
+		}
 
 		// 获取用户信息
 		$user_info = model ( 'User' )->getUserInfo ( $feedInfo['uid'] );
@@ -363,6 +421,8 @@ class ProfileAction extends Action {
 		// 判断隐私设置
 		$userPrivacy = $this->privacy ( $this->uid );
 		if ($userPrivacy ['space'] !== 1) {
+			$this->_sidebar ();
+			
 			$following_list = model ( 'Follow' )->getFollowingList ( $this->uid, t ( $_GET ['gid'] ), 20 );
 			$fids = getSubByKey ( $following_list ['data'], 'fid' );
 			if ($fids) {
@@ -378,7 +438,7 @@ class ProfileAction extends Action {
 			$userGroupData = model ( 'UserGroupLink' )->getUserGroupData ( $uids );
 			$this->assign ( 'userGroupData', $userGroupData );
 			$this->_assignFollowState ( $uids );
-			$this->_assignUserInfo ( $uids );
+			//$this->_assignUserInfo ( $uids );
 			$this->_assignUserProfile ( $uids );
 			$this->_assignUserTag ( $uids );
 			$this->_assignUserCount ( $fids );
@@ -416,6 +476,8 @@ class ProfileAction extends Action {
 		// 判断隐私设置
 		$userPrivacy = $this->privacy ( $this->uid );
 		if ($userPrivacy ['space'] !== 1) {
+			$this->_sidebar ();
+			
 			$follower_list = model ( 'Follow' )->getFollowerList ( $this->uid, 20 );
 			$fids = getSubByKey ( $follower_list ['data'], 'fid' );
 			if ($fids) {
@@ -431,7 +493,7 @@ class ProfileAction extends Action {
 			$userGroupData = model ( 'UserGroupLink' )->getUserGroupData ( $uids );
 			$this->assign ( 'userGroupData', $userGroupData );
 			$this->_assignFollowState ( $uids );
-			$this->_assignUserInfo ( $uids );
+			//$this->_assignUserInfo ( $uids );
 			$this->_assignUserProfile ( $uids );
 			$this->_assignUserTag ( $uids );
 			$this->_assignUserCount ( $fids );
@@ -470,9 +532,12 @@ class ProfileAction extends Action {
 		}
 		// 个人空间头部
 		$this->_top ();
+	
 		// 判断隐私设置
 		$userPrivacy = $this->privacy ( $this->uid );
 		if ($userPrivacy ['space'] !== 1) {
+			$this->_sidebar ();
+			
 			$following_list = model ( 'Follow' )->getFriendList ( $this->uid, 20 );
 			$fids = getSubByKey ( $following_list ['data'], 'fid' );
 			if ($fids) {
@@ -488,7 +553,7 @@ class ProfileAction extends Action {
 			$userGroupData = model ( 'UserGroupLink' )->getUserGroupData ( $uids );
 			$this->assign ( 'userGroupData', $userGroupData );
 			$this->_assignFollowState ( $uids );
-			$this->_assignUserInfo ( $uids );
+			//$this->_assignUserInfo ( $uids );
 			$this->_assignUserProfile ( $uids );
 			$this->_assignUserTag ( $uids );
 			$this->_assignUserCount ( $fids );
@@ -714,13 +779,15 @@ class ProfileAction extends Action {
 		$uids = array (
 				$this->uid 
 		);
-		
+
 		$followingfids = getSubByKey ( $sidebar_following_list ['data'], 'fid' );
 		$followingfids && $uids = array_merge ( $uids, $followingfids );
 		
 		$followerfids = getSubByKey ( $sidebar_follower_list ['data'], 'fid' );
 		$followerfids && $uids = array_merge ( $uids, $followerfids );
-		
+
 		$this->_assignUserInfo ( $uids );
 	}
+	
+
 }

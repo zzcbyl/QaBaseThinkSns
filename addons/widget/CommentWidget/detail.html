@@ -1,15 +1,15 @@
 <!--评论框-->
 <eq name='cancomment' value="1">
 <div class="action clearfix">
-<div class="action clearfix mb10">
+<!--<div class="action clearfix mb10">
   <div class="num"  model-node="numsLeft">{:L('PUBLIC_INPUT_CHARACTER_LIMIT',array('num'=>'<span>'.$initNums.'</span>'))}</div>
-</div>
+</div>-->
 <div class="input" model-node="comment_textarea">
 <div class="input_before1" model-node="mini_editor">
-<textarea class="input_tips" id="comment_inputor" event-node="mini_editor_textarea" hidefocus="true"  model-args='t=comment'></textarea>
+<textarea class="input_tips" texttype="comment" id="comment_inputor" event-node="mini_editor_textarea" hidefocus="true"  model-args='t=comment'></textarea>
 </div>
 <div class="mt10">
-    <a class="btn-green-small right" href="javascript:void(0);"  event-node="do_comment"  event-args='row_id={$row_id}&app_uid={$app_uid}&app_row_id={$app_row_id}&app_name={$app_name}&table={$table}&canrepost={$canrepost}' to_comment_id="0" to_uid="0" to_comment_uname="" addtoend='0' ><span>{:L('PUBLIC_STREAM_REPLY')}</span></a>
+    <a class="btn-green-small right" href="javascript:void(0);"  event-node="do_comment"  event-args='row_id={$row_id}&app_uid={$app_uid}&app_row_id={$app_row_id}&app_name={$app_name}&table={$table}&canrepost={$canrepost}&comment_type={$comment_type}' to_comment_id="0" to_uid="0" to_comment_uname="" addtoend='0' ><span>{:L('PUBLIC_STREAM_REPLY')}</span></a>
     <div class="acts">
       <a class="face-block" href="javascript:;" event-node="comment_insert_face"><i class="face"></i>表情</a>
     </div>

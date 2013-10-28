@@ -18,8 +18,8 @@ body{background:url(body_bg1.jpg) repeat;width:100%;}
 .content-bg{background:url(content_bg.png)}
 /*---导航菜单样式---*/
 #header{background:url(head_bg1.png) repeat-x;}
-#header .head-bd .nav .current a.app,#header .head-bd .nav a.app:hover{background:#414448;}
-#header .head-bd .person a.username:hover{background:#414448;}
+#header .head-bd .nav .current a.app,#header .head-bd .nav a.app:hover{background:#85001C;}
+#header .head-bd .person a.username:hover{background:#85001C;}
 
 .header_holder,.header_bg{z-index:9999;width:100%;min-width:1000px;background:url(head_bg.png) repeat-x 0 0 transparent;left:0;top:0;-moz-opacity:1;opacity:1}
 /*.header_holder0{z-index:9999;width:100%;min-width:1000px;background:url(head_bg.png) repeat-x 0 0 transparent;left:0;top:0;-moz-opacity:1;opacity:1}

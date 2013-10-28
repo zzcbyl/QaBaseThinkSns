@@ -108,13 +108,13 @@ body{background:url(../image/body-b.jpg) repeat-x center 0 #e4f3f7;}
 .st-grid{overflow:hidden;zoom:1}
 /*.st-grid:after, .st-section:after{visibility: hidden;display: block;font-size: 0;content: ".";clear: both;height: 0}*/
 .st-index-right{float:right;/*background:url(../image/right-bg.png) repeat;*/min-height:1600px;_height:1600px;_overflow:visible;}
-.st-index-main{background:#fff;float:left;border-right:1px solid #e1e1e1;min-height:1600px;*zoom:1;_height:1600px;_overflow:visible;}
+.st-index-main{background:#fff;float:left;min-height:1600px;*zoom:1;_height:1600px;_overflow:visible;}
 .st-index-left{float:left;width:118px;padding:0 0 40px;display:none;}
 .st-section{overflow:hidden;*zoom:1;_margin:0}
 .st-search-grid{border-bottom:#ebebeb solid 1px;padding:0}
 
 /*导航-----------------------------------------------*/
-#header{background:#0f8ca8;height:40px;width:100%;/*color:#fff;*/left:0;top:0;z-index:999;position:fixed;_overflow:hidden;}
+#header{background:#0f8ca8;height:42px;width:100%;/*color:#fff;*/left:0;top:0;z-index:999;position:fixed;_overflow:hidden;}
 #header .head-bd{margin: 0 auto;width: 960px;height:40px;position:relative;z-index:999}
 #header .header-wrap{height:40px}
 #header .head-bd .nav{float:left;height:40px;margin:0 0 0 140px;_margin:0 0 0 70px;}
@@ -970,7 +970,7 @@ a.top_stick:hover{background-position:-51px 0;text-decoration:none}
 .person-info .person-info-b li a:hover span,.person-info .person-info-b li a:hover strong,.person-info .person-info-b li a.current span,.person-info .person-info-b li a.current strong{font-weight:bold;color:#333;_background:transparent;}
 .person-info .person-info-b .no-border{border-right:0;}
 .person-info-face{float: left;}
-.person-info-face img{width:180px;height:180px;}
+.person-info-face img{width:160px;height:160px;}
 
 
 
@@ -1036,14 +1036,14 @@ a.btn-register:link,a.btn-register:visited,a.btn-register:hover,.btn-register sp
 
 
 /*个人空间*/
-.profile-title{margin:0 0 10px 0;height:180px;}
-.profile-title .person-info{margin:0 0 0 180px;padding:20px 20px 0 20px;position:relative;*height:160px;*padding:20px 20px 0 10px;}
+.profile-title{ width:689px; }
+.profile-title .person-info{margin:0 0 0 160px;padding:20px 20px 0 20px;position:relative;*height:160px;*padding:20px 20px 0 10px;}
 .profile-title .btn-add{margin:0 20px 0 0;line-height:26px;font-weight:bold;color:#fff;text-align:center;}
 .profile-title .app-tab-menu{border:0;overflow:hidden;}
 .profile-title .app-tab-menu a:link,.profile-title .app-tab-menu a:visited{margin:0;padding:0 40px;}
 .profile-title .person-info-t{margin:0;padding:0;}
 .profile-title .person-info-t dd{margin:0;}
-.profile-title .person-info-t .btn{position:absolute;bottom:10px;left:20px;*left:12px;}
+.profile-title .person-info-t .btn{position:absolute;bottom:12px;left:20px;*left:12px;}
 .profile-title .person-info-t .grade{height:16px;line-height:16px;margin:10px 0 0 0;overflow:hidden;}
 .profile-title .person-info-t .tag-lists{height:17px;overflow:hidden;white-space:normal;padding:0;}
 .profile-title .person-info-b{position:absolute;right:20px;top:20px;background:#fff}
