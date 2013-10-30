@@ -438,12 +438,13 @@ class ProfileAction extends Action {
 			$userGroupData = model ( 'UserGroupLink' )->getUserGroupData ( $uids );
 			$this->assign ( 'userGroupData', $userGroupData );
 			$this->_assignFollowState ( $uids );
-			//$this->_assignUserInfo ( $uids );
+			$this->_assignUserInfo ( $uids );
 			$this->_assignUserProfile ( $uids );
 			$this->_assignUserTag ( $uids );
 			$this->_assignUserCount ( $fids );
 			// 关注分组
 			($this->mid == $this->uid) && $this->_assignFollowGroup ( $fids );
+			
 			$this->assign ( 'following_list', $following_list );
 		} else {
 			$this->_assignUserInfo ( $this->uid );
@@ -493,7 +494,7 @@ class ProfileAction extends Action {
 			$userGroupData = model ( 'UserGroupLink' )->getUserGroupData ( $uids );
 			$this->assign ( 'userGroupData', $userGroupData );
 			$this->_assignFollowState ( $uids );
-			//$this->_assignUserInfo ( $uids );
+			$this->_assignUserInfo ( $uids );
 			$this->_assignUserProfile ( $uids );
 			$this->_assignUserTag ( $uids );
 			$this->_assignUserCount ( $fids );
@@ -580,10 +581,10 @@ class ProfileAction extends Action {
 	 * @param string|array $uids
 	 *        	用户ID
 	 */
-	private function _assignUserInfo($uids) {
+	private function _assignUserInfo($uids, $tplname='user_info') {
 		! is_array ( $uids ) && $uids = explode ( ',', $uids );
 		$user_info = model ( 'User' )->getUserInfoByUids ( $uids );
-		$this->assign ( 'user_info', $user_info );
+		$this->assign ( $tplname, $user_info );
 		// dump($user_info);exit;
 	}
 	
@@ -768,12 +769,28 @@ class ProfileAction extends Action {
 		$this->_assignUserTag ( array (
 				$this->uid 
 		) );
-		// 加载关注列表
-		$sidebar_following_list = model ( 'Follow' )->getFollowingList ( $this->uid, null, 12 );
+		// 加载好友列表
+		$sidebar_following_list = model ( 'Follow' )->getFriendList ( $this->uid, 12 );
+		$fids=array();
+		$i=0;
+		foreach($sidebar_following_list['data'] as $v => $vv)
+		{
+			$fids[$i]=$vv['fid'];
+			$i++;
+		}
+		$this->_assignUserInfo ( $fids, 'following_user_info' );		
 		$this->assign ( 'sidebar_following_list', $sidebar_following_list );
 		// dump($sidebar_following_list);exit;
-		// 加载粉丝列表
-		$sidebar_follower_list = model ( 'Follow' )->getFollowerList ( $this->uid, 12 );
+		// 加载共同关注列表
+		$sidebar_follower_list = model ( 'Follow' )->getCommonFollowingList ($this->mid, $this->uid, 12 );
+		$fids=array();
+		$i=0;
+		foreach($sidebar_follower_list['data'] as $v => $vv)
+		{
+			$fids[$i]=$vv['fid'];
+			$i++;
+		}
+		$this->_assignUserInfo ( $fids, 'follower_user_info' );
 		$this->assign ( 'sidebar_follower_list', $sidebar_follower_list );
 		// 加载用户信息
 		$uids = array (

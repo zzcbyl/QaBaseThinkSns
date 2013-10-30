@@ -138,7 +138,9 @@ class FeedListWidget extends Widget {
     				//关键字匹配 采用搜索引擎兼容函数搜索 后期可能会扩展为搜索引擎
     				$list = model('Feed')->searchFeed($var['feed_key'],'following',$var['loadId'],$this->limitnums);
     			}else{
-					$where =' (a.is_audit=1 OR a.is_audit=0 AND a.uid='.$GLOBALS['ts']['mid'].') AND a.is_del = 0 AND a.feed_questionid=0 ';
+					$current_uid=$GLOBALS['ts']['mid'];
+					if($var['uid']!=null&&$var['uid']!='0') $current_uid = $var['uid'];
+					$where =' (a.is_audit=1 OR a.is_audit=0 AND a.uid='.$current_uid.') AND a.is_del = 0 AND a.feed_questionid=0 ';
 					$LoadWhere = '';
     				if($var['loadId'] > 0){ //非第一次
     					//$where .=" AND a.feed_id < '".intval($var['loadId'])."'";
@@ -151,7 +153,7 @@ class FeedListWidget extends Widget {
     						$where .=" AND a.type = '".t($var['feed_type'])."'";
     					}
     				}
-					$list =  model('Feed')->getFollowingFeed($where,$this->limitnums,'',$var['fgid'],$LoadWhere);
+					$list =  model('Feed')->getFollowingFeed($where,$this->limitnums,$current_uid,$var['fgid'],$LoadWhere);
 					//print_r($list);
     			}
     			break;

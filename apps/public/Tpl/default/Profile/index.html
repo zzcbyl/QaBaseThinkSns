@@ -34,7 +34,7 @@
                             <!--feed list-->
                             <!-- 查看他人微博  用于伪静态 FeedList中靠$_REQUEST中的uid取得用户信息 没有$_REQUEST取自己 -->
                             <php>$_REQUEST['uid'] = $uid;</php>
-                            {:W('FeedList',array('type'=>'following','feedApp'=>t($_GET['feedApp']),'feed_type'=>$feed_type,'feed_key'=>$feed_key,'loadnew'=>0))}
+                            {:W('FeedList',array('type'=>'following','uid'=>$uid,'feedApp'=>t($_GET['feedApp']),'feed_type'=>$feed_type,'feed_key'=>$feed_key,'loadnew'=>0))}
                         </div>
                     </div>
                 <php>}else{</php>

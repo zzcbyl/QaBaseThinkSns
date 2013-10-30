@@ -382,6 +382,31 @@ class FollowModel extends Model {
 
 		return $list;
 	}
+	
+	/**
+	* 获取共同关注的列表
+	* @param integer $uid 用户ID
+	* @param integer $limit 结果集数目，默认为10
+	* @return array 指定用户的好友列表
+	*/
+	public function getCommonFollowingList($uid, $ouid, $limit = 10) {
+		$limit = intval($limit) > 0 ? $limit : 10;
+		// 好友列表
+		$list = $this->table("(SELECT a.* FROM (SELECT * FROM {$this->tablePrefix}{$this->tableName} WHERE `uid` = {$uid} ) a INNER JOIN (SELECT * FROM {$this->tablePrefix}{$this->tableName} WHERE `uid` = {$ouid}) b ON a.fid=b.fid) tab")
+			->order('follow_id DESC')
+			->findPage($limit);
+		//$list = $this->where("`fid`={$uid}")->order('`follow_id` DESC')->findPage($limit);
+		$fids = getSubByKey($list['data'], 'fid');
+		// 格式化数据
+		//foreach($list['data'] as $key => $value) {
+		//	$uid = $value['uid'];
+		//	$fid = $value['fid'];
+		//	$list['data'][$key]['uid'] = $fid;
+		//	$list['data'][$key]['fid'] = $uid;
+		//}
+
+		return $list;
+	}
 
 	/**
 	 * 获取用户uid与用户fid的关注状态，已uid为主

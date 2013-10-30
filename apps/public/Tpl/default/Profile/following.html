@@ -18,6 +18,7 @@
                         <!--搜索列表-->
                         <div class="sperson-feedlist<php> echo t($_GET['show']);</php> clearfix">
                             <volist name="following_list.data" id="_following">
+                            
                             <php> $img = !empty($_GET['show']) ? $user_info[$_following['fid']]['avatar_big']:$user_info[$_following['fid']]['avatar_middle']; </php>
                     	<dl model-node="following_list_item" class="feed_list">
                             <dt class="face"><a href="{$user_info[$_following['fid']]['space_url']}"><img src="{$img}" event-node='face_card' uid='{$_following['fid']}' width="50" height="50"></a></dt>
