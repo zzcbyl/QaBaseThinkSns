@@ -6,8 +6,8 @@
  */
 
 /*tab菜单*/
-.tab-menu{/*background:#fff;*/border-bottom:#ccc solid 1px;margin:0 0 10px;height:30px;_border:none 0;_background:url(../image/tab-menu-line.gif) repeat-x left bottom;}
-.tab-menu ul{float:left;height:30px;border-bottom:none 0;border-left:none 0;}
+.tab-menu{/*background:#fff;*/border-bottom:#ccc solid 1px;margin:0 0 10px;_border:none 0;_background:url(../image/tab-menu-line.gif) repeat-x left bottom;}
+.tab-menu ul{height:30px;border-bottom:none 0;border-left:none 0;}
 .tab-menu ul li{float:left;height:30px;margin:0 5px 0 0;line-height:30px;}
 .tab-menu ul li a:link,.tab-menu ul li a:visited{color:#666;display:block;float:left;line-height:30px;height:30px;padding:0 15px;text-align:center;background:#e9ecee;_height:16px;_line-height:16px;_padding:7px 15px;}
 .tab-menu ul li a:hover {text-decoration:none;}
@@ -51,3 +51,6 @@
 /*.tab-menu-profile .current{background:#0F8CA8;font-weight:bold;}*/
 .tab-menu-profile .current a:link,.tab-menu-profile .current a:visited{color:#fff;}
 
+
+.tab-count { padding:0 15px 5px 15px; height:30px; line-height:30px; margin:5px 0 10px 0; float:left; font-size:14px; border-bottom:1px solid #CCCCCC; width:659px; }
+.tab-count div { padding:0 10px; float:left; }

@@ -789,5 +789,16 @@ class ProfileAction extends Action {
 		$this->_assignUserInfo ( $uids );
 	}
 	
-
+	/**
+	 * 统计数据
+	 *
+	 * @return 
+	 *
+	 */	
+	public function _countdata()
+	{
+		// 获取用户统计信息
+		$userData = model ( 'UserData' )->getUserData ( $this->uid );
+		$this->assign ( 'userData', $userData );
+	}
 }

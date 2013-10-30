@@ -142,24 +142,24 @@ class CommentModel extends Model {
             $add['is_audit'] = 1;
         }
 
-        if($res = $this->add($add)) {
-            //添加楼层信息
-            $storeyCount = $this->where('row_id='.$data['row_id'].' and comment_id<'.$res)->count();
-            $this->where('comment_id='.$res)->setField('storey',$storeyCount+1);
-            if(!$add['is_audit']){
-                $touid = D('user_group_link')->where('user_group_id=1')->field('uid')->findAll();
-                foreach($touid as $k=>$v){
-                    model('Notify')->sendNotify($v['uid'], 'comment_audit');
-                }
-            }
-            // 获取排除@用户ID
-            $lessUids[] = intval($data['app_uid']);
-            !empty($data['to_uid']) && $lessUids[] = intval($data['to_uid']);
-            // 获取用户发送的内容，仅仅以//进行分割
-            $scream = explode('//', $data['content']);
-       		model('Atme')->setAppName('Public')->setAppTable('comment')->addAtme(trim($scream[0]), $res, null, $lessUids);
-        	// 被评论内容的“评论统计数”加1，同时可检测出app，table，row_id的有效性
-            $pk = D($add['table'])->getPk();
+		if($res = $this->add($add)) {
+			//添加楼层信息
+			$storeyCount = $this->where('row_id='.$data['row_id'].' and comment_id<'.$res)->count();
+			$this->where('comment_id='.$res)->setField('storey',$storeyCount+1);
+			if(!$add['is_audit']){
+				$touid = D('user_group_link')->where('user_group_id=1')->field('uid')->findAll();
+				foreach($touid as $k=>$v){
+					model('Notify')->sendNotify($v['uid'], 'comment_audit');
+				}
+			}
+			// 获取排除@用户ID
+			$lessUids[] = intval($data['app_uid']);
+			!empty($data['to_uid']) && $lessUids[] = intval($data['to_uid']);
+			// 获取用户发送的内容，仅仅以//进行分割
+			$scream = explode('//', $data['content']);
+			model('Atme')->setAppName('Public')->setAppTable('comment')->addAtme(trim($scream[0]), $res, null, $lessUids);
+			// 被评论内容的“评论统计数”加1，同时可检测出app，table，row_id的有效性
+			$pk = D($add['table'])->getPk();
 			if($add['comment_type']==0||$add['comment_type']==1)
 			{
 				D($add['table'])->setInc('comment_count', "`{$pk}`={$add['row_id']}", 1);
@@ -168,49 +168,57 @@ class CommentModel extends Model {
 			{
 				D($add['table'])->setInc('disapprove_count', "`{$pk}`={$add['row_id']}", 1);
 			}
-            //兼容旧版本app
-            D($add['table'])->setInc('commentCount', "`{$pk}`={$add['row_id']}", 1);
-            D($add['table'])->setInc('comment_all_count', "`{$pk}`={$add['row_id']}", 1);
-        	// 给应用UID添加一个未读的评论数 原作者
-        	if($GLOBALS['ts']['mid'] != $add['app_uid'] && $add['app_uid'] != '') {
-                !$notCount && model('UserData')->updateKey('unread_comment', 1, true, $add['app_uid']);
-        	}
-            // 回复发送提示信息
-            if(!empty($add['to_uid']) && $add['to_uid'] != $GLOBALS['ts']['mid']) {
-                !$notCount && model('UserData')->updateKey('unread_comment', 1, true, $add['to_uid']);
-            }
-        	// 加积分操作
-        	if($add['table'] =='feed'){
-        		model('Credit')->setUserCredit($GLOBALS['ts']['mid'], 'comment_weibo');
-                model('Credit')->setUserCredit($data['app_uid'], 'commented_weibo');
-                model('Feed')->cleanCache($add['row_id']);
-        	}
-        	// 发邮件
-     		if($add['to_uid'] != $GLOBALS['ts']['mid'] || $add['app_uid'] != $GLOBALS['ts']['mid'] && $add['app_uid'] != '') {
-                $author = model('User')->getUserInfo($GLOBALS['ts']['mid']);
-                $config['name'] = $author['uname'];
-                $config['space_url'] = $author['space_url']; 
-                $config['face'] = $author['avatar_small'];
-	        	$sourceInfo = model('Source')->getSourceInfo($add['table'], $add['row_id'], $forApi, $add['app']);
-                $config['content'] = parse_html($add['content']);
-                $config['ctime'] = date('Y-m-d H:i:s',time());
-                $config['sourceurl'] = $sourceInfo['source_url'];
-                $config['source_content'] = parse_html($sourceInfo['source_content']);
-                $config['source_ctime'] = date('Y-m-d H:i:s',$sourceInfo['ctime']);
-			    if(!empty($add['to_uid'])) {
-			    	// 回复
-                    $config['comment_type'] = '回复 我 的评论:';                     
-                    model('Notify')->sendNotify($add['to_uid'], 'comment', $config);
-                    
-                } else {
-			    	// 评论
-                    $config['comment_type'] = '评论 我 的微博:';
-                    if(!empty($add['app_uid'])) {
-                        model('Notify')->sendNotify($add['app_uid'], 'comment', $config);
-                    }
-			    }
-        	}
-        }
+			//兼容旧版本app
+			D($add['table'])->setInc('commentCount', "`{$pk}`={$add['row_id']}", 1);
+			D($add['table'])->setInc('comment_all_count', "`{$pk}`={$add['row_id']}", 1);
+			// 给应用UID添加一个未读的评论数 原作者
+			if($GLOBALS['ts']['mid'] != $add['app_uid'] && $add['app_uid'] != '') {
+				!$notCount && model('UserData')->updateKey('unread_comment', 1, true, $add['app_uid']);
+			}
+			// 回复发送提示信息
+			if(!empty($add['to_uid']) && $add['to_uid'] != $GLOBALS['ts']['mid']) {
+				!$notCount && model('UserData')->updateKey('unread_comment', 1, true, $add['to_uid']);
+			}
+			// 加积分操作
+			if($add['table'] =='feed'){
+				model('Credit')->setUserCredit($GLOBALS['ts']['mid'], 'comment_weibo');
+				model('Credit')->setUserCredit($data['app_uid'], 'commented_weibo');
+				model('Feed')->cleanCache($add['row_id']);
+			}
+			// 发邮件
+			if($add['to_uid'] != $GLOBALS['ts']['mid'] || $add['app_uid'] != $GLOBALS['ts']['mid'] && $add['app_uid'] != '') {
+				$author = model('User')->getUserInfo($GLOBALS['ts']['mid']);
+				$config['name'] = $author['uname'];
+				$config['space_url'] = $author['space_url']; 
+				$config['face'] = $author['avatar_small'];
+				$sourceInfo = model('Source')->getSourceInfo($add['table'], $add['row_id'], $forApi, $add['app']);
+				$config['content'] = parse_html($add['content']);
+				$config['ctime'] = date('Y-m-d H:i:s',time());
+				$config['sourceurl'] = $sourceInfo['source_url'];
+				$config['source_content'] = parse_html($sourceInfo['source_content']);
+				$config['source_ctime'] = date('Y-m-d H:i:s',$sourceInfo['ctime']);
+				if(!empty($add['to_uid'])) {
+					// 回复
+					$config['comment_type'] = '回复 我 的评论:';                     
+					model('Notify')->sendNotify($add['to_uid'], 'comment', $config);
+					
+				} else {
+					// 评论
+					$config['comment_type'] = '评论 我 的微博:';
+					if(!empty($add['app_uid'])) {
+						model('Notify')->sendNotify($add['app_uid'], 'comment', $config);
+					}
+				}
+			}
+			
+			//用户增加评论统计
+			if($add['comment_type']=='1') //赞同
+				model('UserData')->setUid($GLOBALS['ts']['mid'])->updateKey('comment_agree_count', 1);
+			else if($add['comment_type']=='2') //反对
+				model('UserData')->setUid($GLOBALS['ts']['mid'])->updateKey('comment_oppose_count', 1);
+			//总评论数
+			model('UserData')->setUid($GLOBALS['ts']['mid'])->updateKey('comment_count', 1);
+		}
 
         $this->error = $res ? L('PUBLIC_CONCENT_IS_OK') : L('PUBLIC_CONCENT_IS_ERROR');         // 评论成功，评论失败
 
