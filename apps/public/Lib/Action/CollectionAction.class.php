@@ -25,6 +25,7 @@ class CollectionAction extends Action {
 		$t = t($_GET['t']);
 		!empty($t) && $map['source_table_name'] = $t;
 		$list = model('Collection')->getCollectionList($map, 20);
+
 		$this->assign($list);
 		$this->setTitle(L('PUBLIC_COLLECTION_INDEX'));					// 我的收藏
 		// 是否有返回按钮

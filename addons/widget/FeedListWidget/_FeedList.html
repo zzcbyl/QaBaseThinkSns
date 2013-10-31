@@ -170,10 +170,10 @@ $admintaskrecom = CheckPermission('vtask_admin','vtask_recommend');
 	</eq>
 	<php>endif;</php>-->
 	
-	<!--<eq name='vl.actions.favor' value='true'>
+	<eq name='vl.actions.favor' value='true'>
 		{:W('Collection',array('type'=>$type,'sid'=>$vl['feed_id'],'stable'=>'feed','sapp'=>$vl['app']))}
 	</eq>
-    <i class="vline">|</i>-->
+    <i class="vline">|</i>
 
 	<php>if(in_array('comment',$weibo_premission)):</php>
 	<eq name='vl.actions.comment' value='true'>

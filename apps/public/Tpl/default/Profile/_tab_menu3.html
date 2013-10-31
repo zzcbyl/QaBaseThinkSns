@@ -1,0 +1,15 @@
+﻿<php> 
+      if(ACTION_NAME=='newanswerinfo'|| ACTION_NAME=='newcommentinfo' || ACTION_NAME=='newagreeinfo'|| ACTION_NAME=='newopposeinfo'|| ACTION_NAME=='newactivityinfo'){ $tabClass['new_answer'] = 'current'; }
+      elseif(ACTION_NAME=='newfollower'|| ACTION_NAME=='newfriend'){ $tabClass['public_newfollower'] = 'current'; }
+      elseif(ACTION_NAME=='invite'){ $tabClass['public_invite'] = 'current'; }
+      elseif(ACTION_NAME=='collection'){ $tabClass['public_collection'] = 'current'; }
+	  else{ $tabClass[$type] = 'current'; }
+</php>
+<div class="tab-menu clearfix">
+  <ul>
+    <li class="{$tabClass.new_answer}"><span><a href="{:U('public/Profile/newanswerinfo')}">消息</a></span></li>
+    <li class="{$tabClass.public_invite}"><span><a href="{:U('public/Profile/invite')}">邀请我的</a></span></li>
+    <li class="{$tabClass.public_newfollower}"><span><a href="{:U('public/Profile/newfollower')}">新增关系</a></span></li>
+    <li class="{$tabClass.public_collection}"><span><a href="{:U('public/Profile/collection')}">收藏</a></span></li>
+  </ul>
+</div>

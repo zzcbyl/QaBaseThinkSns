@@ -1,0 +1,22 @@
+﻿<php> 
+      $tabClass['new_answer'] = '';
+      $tabClass['new_comment'] = '';
+      $tabClass['new_agree'] = '';
+      $tabClass['new_oppose'] = '';
+      $tabClass['new_activity'] = '';
+      if(ACTION_NAME=='newanswerinfo'){ $tabClass['new_answer'] = 'current'; }
+      elseif(ACTION_NAME=='newcommentinfo'){ $tabClass['new_comment'] = 'current'; }
+      elseif(ACTION_NAME=='newagreeinfo'){ $tabClass['new_agree'] = 'current';  }
+      elseif(ACTION_NAME=='newopposeinfo'){ $tabClass['new_oppose'] = 'current';  }
+      elseif(ACTION_NAME=='newactivityinfo'){ $tabClass['new_activity'] = 'current';  }
+	  else{ $tabClass['new_answer'] = 'current'; }
+</php>
+<div class="tab-menu2 clearfix" style="margin-top:-15px;">
+  <ul>
+    <li class="{$tabClass.new_answer}"><span><a href="{:U('public/Profile/newanswerinfo')}">新答案</a></span></li>
+    <li class="{$tabClass.new_comment}"><span><a href="{:U('public/Profile/newcommentinfo')}">新评论</a></span></li>
+    <li class="{$tabClass.new_agree}"><span><a href="{:U('public/Profile/newagreeinfo')}">新赞同</a></span></li>
+    <li class="{$tabClass.new_oppose}"><span><a href="{:U('public/Profile/newopposeinfo')}">新反对</a></span></li>
+    <li class="{$tabClass.new_activity}"><span><a href="{:U('public/Profile/newactivityinfo')}">活动信息</a></span></li>
+  </ul>
+</div>

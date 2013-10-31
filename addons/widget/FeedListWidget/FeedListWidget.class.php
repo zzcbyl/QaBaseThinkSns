@@ -132,95 +132,95 @@ class FeedListWidget extends Widget {
     	$var['remarkHash'] = model('Follow')->getRemarkHash($GLOBALS['ts']['mid']);
     	$map = $list = array();
     	$type = $var['new'] ? 'new'.$var['type'] : $var['type'];	// 最新的微博与默认微博类型一一对应
-    	switch($type) {
-    		case 'following':// 我关注的
-    			if(!empty($var['feed_key'])){
-    				//关键字匹配 采用搜索引擎兼容函数搜索 后期可能会扩展为搜索引擎
-    				$list = model('Feed')->searchFeed($var['feed_key'],'following',$var['loadId'],$this->limitnums);
-    			}else{
+		switch($type) {
+			case 'following':// 我关注的
+				if(!empty($var['feed_key'])){
+					//关键字匹配 采用搜索引擎兼容函数搜索 后期可能会扩展为搜索引擎
+					$list = model('Feed')->searchFeed($var['feed_key'],'following',$var['loadId'],$this->limitnums);
+				}else{
 					$current_uid=$GLOBALS['ts']['mid'];
 					if($var['uid']!=null&&$var['uid']!='0') $current_uid = $var['uid'];
 					$where =' (a.is_audit=1 OR a.is_audit=0 AND a.uid='.$current_uid.') AND a.is_del = 0 AND a.feed_questionid=0 ';
 					$LoadWhere = '';
-    				if($var['loadId'] > 0){ //非第一次
-    					//$where .=" AND a.feed_id < '".intval($var['loadId'])."'";
+					if($var['loadId'] > 0){ //非第一次
+						//$where .=" AND a.feed_id < '".intval($var['loadId'])."'";
 						$LoadWhere = "feed_id < '".intval($var['loadId'])."'";
-    				}
-    				if(!empty($var['feed_type'])){
-    					if ( $var['feed_type'] == 'post' ){
-    						$where .=" AND a.is_repost = 0";
-    					} else {
-    						$where .=" AND a.type = '".t($var['feed_type'])."'";
-    					}
-    				}
+					}
+					if(!empty($var['feed_type'])){
+						if ( $var['feed_type'] == 'post' ){
+							$where .=" AND a.is_repost = 0";
+						} else {
+							$where .=" AND a.type = '".t($var['feed_type'])."'";
+						}
+					}
 					$list =  model('Feed')->getFollowingFeed($where,$this->limitnums,$current_uid,$var['fgid'],$LoadWhere);
 					//print_r($list);
-    			}
-    			break;
-    		case 'all'://所有的 --正在发生的
-    			if(!empty($var['feed_key'])){
-    				//关键字匹配 采用搜索引擎兼容函数搜索 后期可能会扩展为搜索引擎
-    				$list = model('Feed')->searchFeed($var['feed_key'],'all',$var['loadId'],$this->limitnums);
-    			}else{
+				}
+				break;
+			case 'all'://所有的 --正在发生的
+				if(!empty($var['feed_key'])){
+					//关键字匹配 采用搜索引擎兼容函数搜索 后期可能会扩展为搜索引擎
+					$list = model('Feed')->searchFeed($var['feed_key'],'all',$var['loadId'],$this->limitnums);
+				}else{
 					$where =' (is_audit=1 OR is_audit=0 AND uid='.$GLOBALS['ts']['mid'].') AND is_del = 0 AND feed_questionid=0 ';
-    				if($var['loadId'] > 0){ //非第一次
-    					$where .=" AND feed_id < '".intval($var['loadId'])."'";
-    				}
-    				if(!empty($var['feed_type'])){
-    					if ( $var['feed_type'] == 'post' ){
-    						$where .=" AND is_repost = 0";
-    					} else {
-    						$where .=" AND type = '".t($var['feed_type'])."'";
-    					}
-    				}
-    				$list = model('Feed')->getList($where,$this->limitnums);
-    			}
-    			break;
-    		case 'newfollowing'://关注的人的最新微博
+					if($var['loadId'] > 0){ //非第一次
+						$where .=" AND feed_id < '".intval($var['loadId'])."'";
+					}
+					if(!empty($var['feed_type'])){
+						if ( $var['feed_type'] == 'post' ){
+							$where .=" AND is_repost = 0";
+						} else {
+							$where .=" AND type = '".t($var['feed_type'])."'";
+						}
+					}
+					$list = model('Feed')->getList($where,$this->limitnums);
+				}
+				break;
+			case 'newfollowing'://关注的人的最新微博
 				$where = ' a.is_del = 0 and a.is_audit = 1 and a.uid != '.$GLOBALS['ts']['uid'].' and a.feed_questionid=0 ';
-    			if($var['maxId'] > 0){
-    				$where .=" AND a.feed_id > '".intval($var['maxId'])."'";
-    				$list = model('Feed')->getFollowingFeed($where);
-                    $content['count'] = $list['count'];
-    			}		
-    			break;
-    		case 'newall':	//所有人最新微博 -- 正在发生的
-    			if($var['maxId'] > 0){
+				if($var['maxId'] > 0){
+					$where .=" AND a.feed_id > '".intval($var['maxId'])."'";
+					$list = model('Feed')->getFollowingFeed($where);
+					$content['count'] = $list['count'];
+				}		
+				break;
+			case 'newall':	//所有人最新微博 -- 正在发生的
+				if($var['maxId'] > 0){
 					$map['feed_questionid'] = 0;
-    				$map['feed_id'] = array('gt',intval($var['maxId']));
-    				$map['is_del'] = 0;
-                    $map['is_audit'] = 1;
-                    $map['uid']   = array('neq',$GLOBALS['ts']['uid']);
-    				$list = model('Feed')->getList($map);    
-                    $content['count'] = $list['count'];
-    			}
-    			break;
-    		case 'space':	//用户个人空间
-    			if(!empty($var['feed_key'])){
-    				//关键字匹配 采用搜索引擎兼容函数搜索 后期可能会扩展为搜索引擎
-    				$list = model('Feed')->searchFeed($var['feed_key'],'space',$var['loadId'],$this->limitnums,'',$var['feed_type']);
-    			}else{
-	    			if($var['loadId']>0){
-	    				$map['feed_id'] = array('lt',intval($var['loadId']));
-	    			}
+					$map['feed_id'] = array('gt',intval($var['maxId']));
+					$map['is_del'] = 0;
+					$map['is_audit'] = 1;
+					$map['uid']   = array('neq',$GLOBALS['ts']['uid']);
+					$list = model('Feed')->getList($map);    
+					$content['count'] = $list['count'];
+				}
+				break;
+			case 'space':	//用户个人空间
+				if(!empty($var['feed_key'])){
+					//关键字匹配 采用搜索引擎兼容函数搜索 后期可能会扩展为搜索引擎
+					$list = model('Feed')->searchFeed($var['feed_key'],'space',$var['loadId'],$this->limitnums,'',$var['feed_type']);
+				}else{
+					if($var['loadId']>0){
+						$map['feed_id'] = array('lt',intval($var['loadId']));
+					}
 					$map['feed_questionid'] = 0;
-	    			$map['is_del'] = 0;
-                    if($GLOBALS['ts']['mid'] != $GLOBALS['ts']['uid']) $map['is_audit'] = 1;
-    				$list = model('Feed')->getUserList($map,$GLOBALS['ts']['uid'],  $var['feedApp'], $var['feed_type'],$this->limitnums);
+					$map['is_del'] = 0;
+					if($GLOBALS['ts']['mid'] != $GLOBALS['ts']['uid']) $map['is_audit'] = 1;
+					$list = model('Feed')->getUserList($map,$GLOBALS['ts']['uid'],  $var['feedApp'], $var['feed_type'],$this->limitnums);
 					//print_r($list);
-    			}
-    			break;
-            case 'channel':
+				}
+				break;
+			case 'channel':
 				$where = ' (c.is_audit=1 OR c.is_audit=0) AND c.is_del = 0 AND c.feed_questionid=0 ';
-                if($var['loadId'] > 0) { //非第一次
-                    $where .= " AND c.feed_id < '".intval($var['loadId'])."'";
-                }
-                if(!empty($var['feed_type'])) {
-                    $where .= " AND c.type = '".t($var['feed_type'])."'";
-                }
+				if($var['loadId'] > 0) { //非第一次
+					$where .= " AND c.feed_id < '".intval($var['loadId'])."'";
+				}
+				if(!empty($var['feed_type'])) {
+					$where .= " AND c.type = '".t($var['feed_type'])."'";
+				}
 
-                $list = D('ChannelFollow', 'channel')->getFollowingFeed($where, $this->limitnums, '' ,$var['fgid']);
-                break;
+				$list = D('ChannelFollow', 'channel')->getFollowingFeed($where, $this->limitnums, '' ,$var['fgid']);
+				break;
 			case 'question':// 我问题
 				if(!empty($var['feed_key'])){
 					//关键字匹配 采用搜索引擎兼容函数搜索 后期可能会扩展为搜索引擎
@@ -245,7 +245,20 @@ class FeedListWidget extends Widget {
 					//print_r($list);
 				}
 				break;
-    	}
+			case 'collection':	//个人收藏列表
+				$map['uid'] = $GLOBALS['ts']['uid'];
+				// 安全过滤
+				$t = t($_GET['t']);
+				!empty($t) && $map['source_table_name'] = $t;
+				$list = model('Collection')->getCollectionList1($map, $this->limitnums);
+				
+				/*$current_uid=$GLOBALS['ts']['mid'];
+				if($var['uid']!=null&&$var['uid']!='0') $current_uid = $var['uid'];
+				$where =' uid='.$current_uid.' AND is_del = 0 AND feed_questionid!=0 AND (is_audit=1 OR is_audit=0) ';
+				$list = model('Feed')->getAnswerList($where, $this->limitnums);*/
+				//print_r($list);
+				break;
+		}
     	// 分页的设置
         isset($list['html']) && $var['html'] = $list['html'];
     	if(!empty($list['data'])) {

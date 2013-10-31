@@ -554,7 +554,7 @@ class ProfileAction extends Action {
 			$userGroupData = model ( 'UserGroupLink' )->getUserGroupData ( $uids );
 			$this->assign ( 'userGroupData', $userGroupData );
 			$this->_assignFollowState ( $uids );
-			//$this->_assignUserInfo ( $uids );
+			$this->_assignUserInfo ( $uids );
 			$this->_assignUserProfile ( $uids );
 			$this->_assignUserTag ( $uids );
 			$this->_assignUserCount ( $fids );
@@ -809,7 +809,7 @@ class ProfileAction extends Action {
 	/**
 	 * 统计数据
 	 *
-	 * @return 
+	 * @return void
 	 *
 	 */	
 	public function _countdata()
@@ -817,5 +817,257 @@ class ProfileAction extends Action {
 		// 获取用户统计信息
 		$userData = model ( 'UserData' )->getUserData ( $this->uid );
 		$this->assign ( 'userData', $userData );
+	}
+	
+	/**
+	 * 收藏列表
+	 *
+	 * @return void
+	 *	
+	*/
+	public function collection()
+	{
+		// 获取用户信息
+		$user_info = model ( 'User' )->getUserInfo ( $this->uid );
+		// 用户为空，则跳转用户不存在
+		if (empty ( $user_info )) {
+			$this->error ( L ( 'PUBLIC_USER_NOEXIST' ) );
+		}
+		// 个人空间头部
+		$this->_top ();
+		
+		// 判断隐私设置
+		$userPrivacy = $this->privacy ( $this->uid );
+		if ($userPrivacy ['space'] !== 1) {
+			$this->_sidebar ();
+
+		} else {
+			$this->_assignUserInfo ( $this->uid );
+		}
+		$this->display ();
+	}
+	
+	/**
+	* 新答案列表
+	*
+	* @return void
+	*	
+	*/
+	public function newanswerinfo()
+	{
+		// 获取用户信息
+		$user_info = model ( 'User' )->getUserInfo ( $this->uid );
+		// 用户为空，则跳转用户不存在
+		if (empty ( $user_info )) {
+			$this->error ( L ( 'PUBLIC_USER_NOEXIST' ) );
+		}
+		// 个人空间头部
+		$this->_top ();
+		
+		// 判断隐私设置
+		$userPrivacy = $this->privacy ( $this->uid );
+		if ($userPrivacy ['space'] !== 1) {
+			$this->_sidebar ();
+
+		} else {
+			$this->_assignUserInfo ( $this->uid );
+		}
+		$this->display ();
+	}
+	
+	/**
+	* 新评论列表
+	*
+	* @return void
+	*	
+	*/
+	public function newcommentinfo()
+	{
+		// 获取用户信息
+		$user_info = model ( 'User' )->getUserInfo ( $this->uid );
+		// 用户为空，则跳转用户不存在
+		if (empty ( $user_info )) {
+			$this->error ( L ( 'PUBLIC_USER_NOEXIST' ) );
+		}
+		// 个人空间头部
+		$this->_top ();
+		
+		// 判断隐私设置
+		$userPrivacy = $this->privacy ( $this->uid );
+		if ($userPrivacy ['space'] !== 1) {
+			$this->_sidebar ();
+
+		} else {
+			$this->_assignUserInfo ( $this->uid );
+		}
+		$this->display ();
+	}
+	
+	
+	/**
+	* 新赞同列表
+	*
+	* @return void
+	*	
+	*/
+	public function newagreeinfo()
+	{
+		// 获取用户信息
+		$user_info = model ( 'User' )->getUserInfo ( $this->uid );
+		// 用户为空，则跳转用户不存在
+		if (empty ( $user_info )) {
+			$this->error ( L ( 'PUBLIC_USER_NOEXIST' ) );
+		}
+		// 个人空间头部
+		$this->_top ();
+		
+		// 判断隐私设置
+		$userPrivacy = $this->privacy ( $this->uid );
+		if ($userPrivacy ['space'] !== 1) {
+			$this->_sidebar ();
+
+		} else {
+			$this->_assignUserInfo ( $this->uid );
+		}
+		$this->display ();
+	}
+	
+	
+	/**
+	* 新反对列表
+	*
+	* @return void
+	*	
+	*/
+	public function newopposeinfo()
+	{
+		// 获取用户信息
+		$user_info = model ( 'User' )->getUserInfo ( $this->uid );
+		// 用户为空，则跳转用户不存在
+		if (empty ( $user_info )) {
+			$this->error ( L ( 'PUBLIC_USER_NOEXIST' ) );
+		}
+		// 个人空间头部
+		$this->_top ();
+		
+		// 判断隐私设置
+		$userPrivacy = $this->privacy ( $this->uid );
+		if ($userPrivacy ['space'] !== 1) {
+			$this->_sidebar ();
+
+		} else {
+			$this->_assignUserInfo ( $this->uid );
+		}
+		$this->display ();
+	}
+	
+	/**
+	* 活动信息列表
+	*
+	* @return void
+	*	
+	*/
+	public function newactivityinfo()
+	{
+		// 获取用户信息
+		$user_info = model ( 'User' )->getUserInfo ( $this->uid );
+		// 用户为空，则跳转用户不存在
+		if (empty ( $user_info )) {
+			$this->error ( L ( 'PUBLIC_USER_NOEXIST' ) );
+		}
+		// 个人空间头部
+		$this->_top ();
+		
+		// 判断隐私设置
+		$userPrivacy = $this->privacy ( $this->uid );
+		if ($userPrivacy ['space'] !== 1) {
+			$this->_sidebar ();
+
+		} else {
+			$this->_assignUserInfo ( $this->uid );
+		}
+		$this->display ();
+	}
+	/**
+	* 新增粉丝列表
+	*
+	* @return void
+	*	
+	*/
+	public function newfollower()
+	{
+		// 获取用户信息
+		$user_info = model ( 'User' )->getUserInfo ( $this->uid );
+		// 用户为空，则跳转用户不存在
+		if (empty ( $user_info )) {
+			$this->error ( L ( 'PUBLIC_USER_NOEXIST' ) );
+		}
+		// 个人空间头部
+		$this->_top ();
+		
+		// 判断隐私设置
+		$userPrivacy = $this->privacy ( $this->uid );
+		if ($userPrivacy ['space'] !== 1) {
+			$this->_sidebar ();
+
+		} else {
+			$this->_assignUserInfo ( $this->uid );
+		}
+		$this->display ();
+	}
+	/**
+	* 新增好友列表
+	*
+	* @return void
+	*	
+	*/
+	public function newfriend()
+	{
+		// 获取用户信息
+		$user_info = model ( 'User' )->getUserInfo ( $this->uid );
+		// 用户为空，则跳转用户不存在
+		if (empty ( $user_info )) {
+			$this->error ( L ( 'PUBLIC_USER_NOEXIST' ) );
+		}
+		// 个人空间头部
+		$this->_top ();
+		
+		// 判断隐私设置
+		$userPrivacy = $this->privacy ( $this->uid );
+		if ($userPrivacy ['space'] !== 1) {
+			$this->_sidebar ();
+
+		} else {
+			$this->_assignUserInfo ( $this->uid );
+		}
+		$this->display ();
+	}
+	
+	/**
+	* 邀请我的列表
+	*
+	* @return void
+	*	
+	*/
+	public function invite()
+	{
+		// 获取用户信息
+		$user_info = model ( 'User' )->getUserInfo ( $this->uid );
+		// 用户为空，则跳转用户不存在
+		if (empty ( $user_info )) {
+			$this->error ( L ( 'PUBLIC_USER_NOEXIST' ) );
+		}
+		// 个人空间头部
+		$this->_top ();
+		
+		// 判断隐私设置
+		$userPrivacy = $this->privacy ( $this->uid );
+		if ($userPrivacy ['space'] !== 1) {
+			$this->_sidebar ();
+
+		} else {
+			$this->_assignUserInfo ( $this->uid );
+		}
+		$this->display ();
 	}
 }

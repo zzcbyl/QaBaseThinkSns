@@ -417,6 +417,13 @@ class FeedModel extends Model {
 		
 		//print_r($feed_ids);
 
+		$result=$this->CreateA($feedlist,$feed_ids);
+		
+		return $result;
+	}
+	
+	public function CreateA($feedlist,$feed_ids)
+	{
 		//查询到的数据
 		$feedlist['data'] = $this->getFeeds($feed_ids);
 		
@@ -522,8 +529,6 @@ class FeedModel extends Model {
 				$feedlist["data"][$v]=$vv;
 				//print_r($vv);
 			}*/
-			
-			
 			
 		}
 		

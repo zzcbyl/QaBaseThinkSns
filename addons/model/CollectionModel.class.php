@@ -97,6 +97,21 @@ class CollectionModel extends Model {
 
 		return $list;
 	}
+	
+	/**
+	 * 获取个人收藏列表(返回A类问题框)
+	 *
+	 * @return 
+	 *
+	 */	
+	public function getCollectionList1($map, $limit = 20, $order = 'ctime DESC')
+	{
+		$list = $this->where($map)->order($order)->findPage($limit);
+		$feed_ids = getSubByKey($list['data'], 'source_id');
+		$result=model('Feed')->CreateA($list,$feed_ids);
+		
+		return $result;
+	}
 
 	/**
 	 * 获取收藏的种类，用于收藏的Tab
