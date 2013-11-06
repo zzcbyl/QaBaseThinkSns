@@ -1,3 +1,4 @@
+<div style="position:absolute; margin-left:-40px; margin-top:-5px; "><img src="__THEME__/image/answer_small.jpg"  /></div>
 <dt class="face">
 	<a title="{$user_info.uname}" href="{$user_info.space_url}"><img src="{$user_info.avatar_small}" /></a>
 </dt>
@@ -53,7 +54,7 @@
 		</span>
 		<span>
 			<a class="date" date="{:time()}" href="{:U('public/Profile/feed', array('feed_id'=>$feed_id, 'uid'=>$uid))}">刚刚</a>
-			<span>{$from}</span>
+			<!--<span>{$from}</span>-->
 			<php>if(CheckPermission('core_normal','feed_del')){</php>
 			<em class="hover">
 				<eq name='actions.delete' value='true'>

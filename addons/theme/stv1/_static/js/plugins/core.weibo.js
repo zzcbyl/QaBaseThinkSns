@@ -294,7 +294,7 @@ core.weibo = {
             if (questionid == undefined || questionid <= 0) { //提交问题
                 var before = $('#feed-lists div').eq(0);
 
-                $div = $("<div style=\"border:1px solid #ccc; margin-bottom:10px;\"><div style=\"position:absolute; padding:5px; \">问题</div><dl id=\"feed" + feedId + "\" model-node=\"feed_list\" class=\"feed_list\" style=\"border:0; padding:15px 5px 10px 40px;\">" + html + "</dl></div>");
+                $div = $("<div style=\"border:1px solid #ccc; margin-bottom:10px;\"><div style=\"position:absolute; \"><img src=\"" + THEME_URL + "/image/question_small.jpg\"  /></div><dl id=\"feed" + feedId + "\" model-node=\"feed_list\" class=\"feed_list\" style=\"border:0; padding:15px 5px 10px 40px;\">" + html + "</dl></div>");
 
                 if (before.length > 0) {
                     $div.insertBefore(before);
@@ -311,6 +311,7 @@ core.weibo = {
                 $dl = $('<dl></dl>');
                 $dl.attr('model-node', 'feed_list');
                 $dl.attr('id', 'feed' + feedId);
+                $dl.attr('style', 'padding-left:40px;');
                 $dl.addClass('feed_list');
                 $dl.html(html);
                 if (before.length > 0) {

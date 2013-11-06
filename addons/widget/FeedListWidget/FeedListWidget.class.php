@@ -50,6 +50,7 @@ class FeedListWidget extends Widget {
         	$var['firstId'] = $content['firstId'] ? $content['firstId'] : 0;
         	$var['pageHtml']	= $content['pageHtml'];
         }
+		//print($var['lastId']);
 	    $content['html'] = $this->renderFile(dirname(__FILE__)."/".$var['tpl'], $var); 
 		
 		self::$rand ++;
@@ -226,9 +227,13 @@ class FeedListWidget extends Widget {
 					//关键字匹配 采用搜索引擎兼容函数搜索 后期可能会扩展为搜索引擎
 					$list = model('Feed')->searchFeed($var['feed_key'],'question',$var['loadId'],$this->limitnums);
 				}else{
+					if($var['loadId'] > 0){ //非第一次
+						//$where .=" AND a.feed_id < '".intval($var['loadId'])."'";
+						$LoadWhere = "AND feed_id < '".intval($var['loadId'])."'";
+					}
 					$current_uid=$GLOBALS['ts']['mid'];
 					if($var['uid']!=null&&$var['uid']!='0') $current_uid = $var['uid'];
-					$where =' uid='.$current_uid.' AND is_del = 0 AND feed_questionid=0 AND (is_audit=1 OR is_audit=0) ';
+					$where =' uid='.$current_uid.' AND is_del = 0 AND feed_questionid=0 AND (is_audit=1 OR is_audit=0) '.$LoadWhere;
 					$list = model('Feed')->getQuestionList($where, $this->limitnums);
 					//print_r($list);
 				}
@@ -238,32 +243,59 @@ class FeedListWidget extends Widget {
 					//关键字匹配 采用搜索引擎兼容函数搜索 后期可能会扩展为搜索引擎
 					$list = model('Feed')->searchFeed($var['feed_key'],'answer',$var['loadId'],$this->limitnums,'',$var['feed_type']);
 				}else{
+					if($var['loadId'] > 0){ //非第一次
+						//$where .=" AND a.feed_id < '".intval($var['loadId'])."'";
+						$LoadWhere = "AND feed_id < '".intval($var['loadId'])."'";
+					}
 					$current_uid=$GLOBALS['ts']['mid'];
 					if($var['uid']!=null&&$var['uid']!='0') $current_uid = $var['uid'];
-					$where =' uid='.$current_uid.' AND is_del = 0 AND feed_questionid!=0 AND (is_audit=1 OR is_audit=0) ';
+					$where =' uid='.$current_uid.' AND is_del = 0 AND feed_questionid!=0 AND (is_audit=1 OR is_audit=0) '.$LoadWhere;
 					$list = model('Feed')->getAnswerList($where, $this->limitnums);
 					//print_r($list);
 				}
 				break;
 			case 'collection':	//个人收藏列表
+				if($var['loadId'] > 0){ //非第一次
+					//$where .=" AND a.feed_id < '".intval($var['loadId'])."'";
+					$LoadWhere = "feed_id < '".intval($var['loadId'])."'";
+					$map['source_id'] = array('lt',intval($var['loadId']));
+				}
 				$map['uid'] = $GLOBALS['ts']['uid'];
 				// 安全过滤
 				$t = t($_GET['t']);
 				!empty($t) && $map['source_table_name'] = $t;
-				$list = model('Collection')->getCollectionList1($map, $this->limitnums);
-				
+				$list = model('Collection')->getCollectionList1($map, $this->limitnums,'collection_id DESC');
+				//print_r($list);
 				/*$current_uid=$GLOBALS['ts']['mid'];
 				if($var['uid']!=null&&$var['uid']!='0') $current_uid = $var['uid'];
 				$where =' uid='.$current_uid.' AND is_del = 0 AND feed_questionid!=0 AND (is_audit=1 OR is_audit=0) ';
 				$list = model('Feed')->getAnswerList($where, $this->limitnums);*/
 				//print_r($list);
 				break;
+			case 'agree':	//个人赞同列表
+				if($var['loadId'] > 0){ //非第一次
+					$LoadWhere = "t.comment_count < '".intval($var['loadId'])."'";
+				}
+				$current_uid=$GLOBALS['ts']['mid'];
+				if($var['uid']!=null && $var['uid']!='0') $current_uid = $var['uid'];
+				$where =" `uid` = $current_uid AND `feed_questionid` != 0 and `comment_count` > 0";
+				$list = model('Feed')->getCommentFeedList($where, $this->limitnums,$LoadWhere);
+				//print_r($list);
+				break;
 		}
     	// 分页的设置
         isset($list['html']) && $var['html'] = $list['html'];
     	if(!empty($list['data'])) {
-    		$content['firstId'] = $var['firstId'] = $list['data'][0]['feed_id'];
-    		$content['lastId'] = $var['lastId'] = $list['data'][(count($list['data'])-1)]['feed_id'];
+			switch($type) {
+				case 'agree':
+					$content['firstId'] = $var['firstId'] = $list['data'][0]['comment_count'];
+					$content['lastId'] = $var['lastId'] = $list['data'][(count($list['data'])-1)]['comment_count'];
+					break;
+				default:
+					$content['firstId'] = $var['firstId'] = $list['data'][0]['feed_id'];
+					$content['lastId'] = $var['lastId'] = $list['data'][(count($list['data'])-1)]['feed_id'];
+					break;	
+			}
             $var['data'] = $list['data'];
 
             //赞功能

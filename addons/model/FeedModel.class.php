@@ -7,7 +7,7 @@
 class FeedModel extends Model {
 
 	protected $tableName = 'feed';
-	protected $fields = array('feed_id','uid','type','app','app_row_id','app_row_table','publish_time','is_del','from','comment_count','repost_count','comment_all_count','digg_count','is_repost','is_audit','feed_questionid','answer_count','disapprove_count','_pk'=>'feed_id');
+	protected $fields = array('feed_id','uid','type','app','app_row_id','app_row_table','publish_time','is_del','from','comment_count','repost_count','comment_all_count','digg_count','is_repost','is_audit','feed_questionid','answer_count','disapprove_count','feed_pv','_pk'=>'feed_id');
 
 	public $templateFile = '';			// 模板文件
 
@@ -422,7 +422,7 @@ class FeedModel extends Model {
 		return $result;
 	}
 	
-	public function CreateA($feedlist,$feed_ids)
+	public function CreateA($feedlist, $feed_ids)
 	{
 		//查询到的数据
 		$feedlist['data'] = $this->getFeeds($feed_ids);
@@ -459,11 +459,11 @@ class FeedModel extends Model {
 					$vv["answer"] = $AnswerFeedData;
 					
 					//对答案的评论
-					$CommentTable = '(SELECT max(comment_id) comment_id FROM `wb_comment` WHERE `row_id` = '.$aa['answer_id'].' and (uid='.$GLOBALS['ts']['mid'].' or uid in (SELECT `fid` FROM `'.$this->tablePrefix.'user_follow` WHERE `uid` = '.$GLOBALS['ts']['mid'].'))  group by uid) atab';
+					$CommentTable = '(SELECT max(comment_id) comment_id FROM `wb_comment` WHERE `row_id` = '.$aa['answer_id'].' and `is_del`= 0 and (uid='.$GLOBALS['ts']['mid'].' or uid in (SELECT `fid` FROM `'.$this->tablePrefix.'user_follow` WHERE `uid` = '.$GLOBALS['ts']['mid'].'))  group by uid) atab';
 					$CommentList = $this->table($CommentTable)->order('comment_id DESC')->select();
 					
 					//对问题的评论
-					$QCommentTable = '(SELECT comment_id FROM `wb_comment` WHERE `row_id` = '.$vv['feed_id'].' and (uid='.$GLOBALS['ts']['mid'].' or uid in (SELECT `fid` FROM `'.$this->tablePrefix.'user_follow` WHERE `uid` = '.$GLOBALS['ts']['mid'].'))  ) atab';
+					$QCommentTable = '(SELECT comment_id FROM `wb_comment` WHERE `row_id` = '.$vv['feed_id'].' and `is_del`= 0 and (uid='.$GLOBALS['ts']['mid'].' or uid in (SELECT `fid` FROM `'.$this->tablePrefix.'user_follow` WHERE `uid` = '.$GLOBALS['ts']['mid'].'))  ) atab';
 					$QCommentList = $this->table($QCommentTable)->order('comment_id DESC')->select();
 					
 					if(is_array($CommentList) && count($CommentList) > 0)
@@ -493,7 +493,7 @@ class FeedModel extends Model {
 			else
 			{
 				//对问题的评论
-				$CommentTable = '(SELECT comment_id FROM `wb_comment` WHERE `row_id` = '.$vv['feed_id'].' and (uid='.$GLOBALS['ts']['mid'].' or uid in (SELECT `fid` FROM `'.$this->tablePrefix.'user_follow` WHERE `uid` = '.$GLOBALS['ts']['mid'].')) ) atab';
+				$CommentTable = '(SELECT comment_id FROM `wb_comment` WHERE `row_id` = '.$vv['feed_id'].' and `is_del`= 0 and (uid='.$GLOBALS['ts']['mid'].' or uid in (SELECT `fid` FROM `'.$this->tablePrefix.'user_follow` WHERE `uid` = '.$GLOBALS['ts']['mid'].')) ) atab';
 				$CommentList = $this->table($CommentTable)->order('comment_id DESC')->select();
 				if(is_array($CommentList) && count($CommentList) > 0)
 				{
@@ -534,6 +534,80 @@ class FeedModel extends Model {
 		
 		return $result;
 	}
+	
+	/**
+	 * 获取评论答案的总列表(包含问题,答案,评论)
+	 *
+	 * @param mixed $where This is a description
+	 * @param mixed $limit This is a description
+	 * @param mixed $uid This is a description
+	 * @param mixed $LoadWhere This is a description
+	 * @return mixed This is the return value description
+	 *
+	 */	
+	public function getCommentFeedList($where = '', $limit = 10, $LoadWhere = '')
+	{
+		//加载更多的条件
+		$_LoadWhere = !empty($LoadWhere) ? "$LoadWhere" : "";
+		
+		$table = "(SELECT `feed_id`,`comment_count` FROM `wb_feed` WHERE $where ) t";
+		//print($table);
+		$feedlist = $this->table($table)->where($_LoadWhere)->order('t.comment_count DESC')->findPage($limit);
+		//print($this->getLastSql());
+		//增加答案块和问题块
+		if(is_array($feedlist["data"])&&count($feedlist["data"])>0)
+		{
+			foreach($feedlist["data"] as $v => $vv )
+			{	
+				//$Comment = model('Comment')->getCommentInfo($vv['comment_id']);
+				$Answer = $this->getFeeds(array($vv['feed_id']), false);
+				$Question = $this->getFeeds(array($Answer[0]['feed_questionid']), false);
+				$vv=$Question;
+				$vv[0]['answer']=$Answer;
+				//$vv[0]['comment']=$Comment;
+				$feedlist["data"][$v]=$vv[0];
+			}
+		}
+		/*print_r($feedlist);*/
+		return $feedlist;
+	}
+	
+	
+	/**
+	* 获取评论答案的问题列表(问题,答案)
+	*
+	* @param mixed $where This is a description
+	* @param mixed $limit This is a description
+	* @param mixed $uid This is a description
+	* @param mixed $LoadWhere This is a description
+	* @return mixed This is the return value description
+	*
+	*/	
+	public function getFeedListByComment($where = '', $limit = 10, $LoadWhere = '')
+	{
+		//加载更多的条件
+		$_LoadWhere = !empty($LoadWhere) ? "$LoadWhere" : "";
+		
+		$table = "(SELECT `feed_id`,`comment_count` FROM `wb_feed` WHERE $where ) t";
+		//print($table);
+		$feedlist = $this->table($table)->where($_LoadWhere)->order('t.comment_count DESC')->findPage($limit);
+		//print($this->getLastSql());
+		//print('<br /><br /><br /><br />');
+		//print_r($feedlist);
+		//增加问题块
+		foreach($feedlist["data"] as $v => $vv )
+		{	
+			$Answer = $this->getFeeds(array($vv['feed_id']), false);
+			$Question = $this->getFeeds(array($Answer[0]['feed_questionid']), false);
+			$vv=$Question;
+			$vv[0]['answer']=$Answer;
+			$feedlist["data"][$v]=$vv[0];
+		}
+		
+		/*print_r($feedlist);*/
+		return $feedlist;
+	}
+	
 
 	/**
 	 * 获取指定用户收藏的微博列表，默认为当前登录用户
@@ -1362,7 +1436,19 @@ class FeedModel extends Model {
 		return $feed['feed_id'];
 	}
 	
-
+	/**
+	 * 增加问题的浏览数
+	 * @param 问题ID
+	 * @return void
+	 */
+	public function UpdatePV($feedid)
+	{
+		$feed = model('Feed')->field('feed_pv')->where('feed_id='.$feedid)->select();
+		$updData['feed_pv']=$feed[0]['feed_pv'] + 1;
+		model('Feed')->where('feed_id='.$feedid)->save($updData);
+		$feedids=array($feedid);
+		$this->cleanCache($feedids);
+	}
 
 
 }

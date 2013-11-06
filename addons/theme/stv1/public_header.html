@@ -101,6 +101,7 @@
                                     <dd><a  href="{:U('public/Comment/index', array('type'=>'send'))}">发出的评论</a></dd>
                                     <dd><a  href="{:U('public/Message/index')}">我的私信</a></dd>
                                     <dd><a  href="{:U('public/Message/notify')}">系统消息</a></dd>
+                                    <dd><a  href="{:U('public/Profile/newanswerinfo')}">消息入口</a></dd>
                                     <!-- 消息菜单钩子 -->
                                     {:Addons::hook('header_message_dropmenu')}
                                 <php>if(CheckPermission('core_normal','send_message')){</php>
@@ -139,7 +140,8 @@
                 <php> if(MODULE_NAME !='Register'):</php>
                 <div id="message_container" class="layer-massage-box" style="display:none">
                 	<ul class="message_list_container" >
-                        <li rel="new_folower_count" style="display:none"><span></span>，<a href="{:U('public/Index/follower',array('uid'=>$mid))}">{:L('PUBLIC_FOLLOWERS_REMIND')}</a></li>
+                        <li rel="new_friend_count" style="display:none"><span></span>，<a href="{:U('public/Profile/newfriend',array('uid'=>$mid))}">{:L('PUBLIC_FRIENDS_REMIND')}</a></li>
+                        <li rel="new_folower_count" style="display:none"><span></span>，<a href="{:U('public/Profile/newfollower',array('uid'=>$mid))}">{:L('PUBLIC_FOLLOWERS_REMIND')}</a></li>
                 		<li rel="unread_comment" style="display:none"><span></span>，<a href="{:U('public/Comment/index',array('type'=>'receive'))}">{:L('PUBLIS_MESSAGE_REMIND')}</a></li>
                         <li rel="unread_message" style="display:none"><span></span>，<a href="{:U('public/Message')}" >{:L('PUBLIS_MESSAGE_REMIND')}</a></li>
  	                    <li rel="unread_atme" style="display:none"><span></span>，<a href="{:U('public/Mention')}">{:L('PUBLIS_MESSAGE_REMIND')}</a></li>

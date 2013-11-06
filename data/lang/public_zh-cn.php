@@ -1106,5 +1106,6 @@ return array(
 'DIGG_MESSAGE_CONTENT'=>'{user} 赞了你的微博:<br/>{content} <a href="{sourceurl}&digg=1" target=‘_blank‘>去看看>></a>',
 'DIGG_MESSAGE_TITLE'=>'{user} 赞了你的微博',
 'PUBLIC_FRIEND'=>'好友',
-'PUBLIC_ANSWER'=>'回答'
+'PUBLIC_ANSWER'=>'回答',
+'PUBLIC_FRIENDS_REMIND'=>'查看好友'
 );

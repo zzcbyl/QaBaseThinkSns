@@ -189,3 +189,4 @@ LANG['LEFT']='左';
 LANG['FORMATBLOCK']='格式';
 LANG['FONTNAME']='字體名稱';
 LANG['FONTSIZE']='字體大小';
+LANG['PUBLIC_SYSTEM_FRIEND']='位新好友';

@@ -83,6 +83,9 @@ class IndexAction extends Action {
 			$this->error ( L ( 'PUBLIC_INFO_ALREADY_DELETE_TIPS' ) );
 		}
 		
+		//增加浏览数
+		model ( 'Feed' )->UpdatePV($feed_id);
+		
 		//获取微博信息
 		$feedInfo = model ( 'Feed' )->get ( $feed_id );
 
@@ -103,7 +106,7 @@ class IndexAction extends Action {
 		
 		//判断用户是否已经回答过
 		$feedlist = model ( 'Feed' )->getAnswerList('feed_questionid='.$feed_id.' and uid='.$GLOBALS['ts']['mid'].' and is_del = 0 and (is_audit=1 OR is_audit=0)');
-		if(is_array($feedlist) && is_array($feedlist['data']) && count($feedlist['data'])>0)
+		if((is_array($feedlist) && is_array($feedlist['data']) && count($feedlist['data'])>0) || ($feedInfo['uid']==$this->mid))
 		{
 			$this->assign ( 'hasAnswer', '1' );
 		}
@@ -117,7 +120,8 @@ class IndexAction extends Action {
 		// 判断隐私设置
 		$userPrivacy = $this->privacy ( $this->uid );
 		if ($userPrivacy ['space'] !== 1) {
-			//$this->_sidebar ();		
+			//$this->_sidebar ();	
+				
 			$weiboSet = model ( 'Xdata' )->get ( 'admin_Config:feed' );
 			$a ['initNums'] = $weiboSet ['weibo_nums'];
 			$a ['weibo_type'] = $weiboSet ['weibo_type'];
@@ -347,7 +351,7 @@ class IndexAction extends Action {
 		// 清空新粉丝提醒数字
 		if($this->uid == $this->mid){
 			$udata = model('UserData')->getUserData($this->mid);
-			$udata['new_folower_count'] > 0 && model('UserData')->setKeyValue($this->mid,'new_folower_count',0);	
+			$udata['new_folower_count'] > 0 && model('UserData')->setKeyValue($this->mid,'new_friend_count',0);	
 		}
 		// 获取用户的粉丝列表
 		$followerList = model('Follow')->getFriendList($this->mid, 20);

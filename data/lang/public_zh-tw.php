@@ -1104,5 +1104,6 @@ return array(
 'DIGG_MESSAGE_CONTENT'=>'',
 'DIGG_MESSAGE_TITLE'=>'',
 'PUBLIC_FRIEND'=>'好友',
-'PUBLIC_ANSWER'=>'回答'
+'PUBLIC_ANSWER'=>'回答',
+'PUBLIC_FRIENDS_REMIND'=>'查看好友'
 );

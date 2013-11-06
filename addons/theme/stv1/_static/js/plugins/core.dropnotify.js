@@ -47,6 +47,7 @@ core.dropnotify = {
                 unread_comment: L('PUBLIC_SYSTEM_CONCENT'),
                 unread_message: L('PUBLIC_SYSTEM_PRIVATE_MAIL'),
                 new_folower_count: L('PUBLIC_SYSTEM_FOLLOWING'),
+                new_friend_count: L('PUBLIC_SYSTEM_FRIEND'),
                 unread_group_atme: '条群聊@提到我',
                 unread_group_comment: '条群组评论'
         };

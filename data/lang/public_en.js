@@ -189,3 +189,4 @@ LANG['LEFT']='Left';
 LANG['FORMATBLOCK']='Format';
 LANG['FONTNAME']='Font Name';
 LANG['FONTSIZE']='Font Size';
+LANG['PUBLIC_SYSTEM_FRIEND']='new friends';

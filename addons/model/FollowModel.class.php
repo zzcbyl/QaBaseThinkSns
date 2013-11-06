@@ -96,13 +96,16 @@ class FollowModel extends Model {
 					model('Mail')->send_email($userInfo['email'],'您增加了一个新粉丝','content');
 				}
 				$this->error = L('PUBLIC_ADD_FOLLOW_SUCCESS');			// 关注成功
-				$this->_updateFollowCount($uid, $fid, true);			// 更新统计
 				
 				//更新好友数(关系相同)
+				$isFriend=false; //是否是好友
 				if($this->getFollowState($uid, $fid) == $this->getFollowState($fid, $uid))
 				{
+					$isFriend=true;
 					$this->_updateFriendCount($uid, $fid, true);			// 更新统计
 				}
+				
+				$this->_updateFollowCount($uid, $fid, true, $isFriend);		// 更新统计
 
 				$follow_state['following'] = 1;
 				return $follow_state;
@@ -223,6 +226,11 @@ class FollowModel extends Model {
 		// 获取双方的关注关系
 		$follow_state = $this->getFollowState($uid, $fid);
 		if(1 == $follow_state['following']) {
+			$isFriend=false;
+			if($this->getFollowState($uid, $fid) == $this->getFollowState($fid, $uid))
+			{
+				$isFriend=true;
+			}
 			// 已关注
 			// 清除对该用户的分组，再删除关注
 			if((false !== D('UserFollowGroupLink')->where($map)->delete()) && $this->where($map)->delete()) {
@@ -230,7 +238,10 @@ class FollowModel extends Model {
 				$this->error = L('PUBLIC_ADMIN_OPRETING_SUCCESS');			// 操作成功
 				$this->_updateFollowCount($uid, $fid, false);				// 更新统计
 				//更新好友数
-				$this->_updateFriendCount($uid, $fid, false);			// 更新统计
+				if($isFriend)
+				{
+					$this->_updateFriendCount($uid, $fid, false);			// 更新统计
+				}
 				$follow_state['following'] = 0;
 				return $follow_state;
 			} else {
@@ -505,7 +516,7 @@ class FollowModel extends Model {
 	 * @param boolean $inc 是否为加数据，默认为true
 	 * @return void
 	 */
-	private function _updateFollowCount($uid, $fids, $inc = true) {
+	private function _updateFollowCount($uid, $fids, $inc = true, $isFriend) {
 		!is_array($fids) && $fids = explode(',', $fids);
 		$data_model = model('UserData');
 		// 添加关注数
@@ -513,7 +524,10 @@ class FollowModel extends Model {
 		foreach($fids as $f_v) {
 			// 添加粉丝数
 			$data_model->setUid($f_v)->updateKey('follower_count', 1, $inc);
-			$data_model->setUid($f_v)->updateKey('new_folower_count', 1, $inc);
+			if(!$isFriend)
+			{
+				$data_model->setUid($f_v)->updateKey('new_folower_count', 1, $inc);
+			}
 		}
 	}
 	

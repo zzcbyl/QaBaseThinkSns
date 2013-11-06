@@ -1,0 +1,4 @@
+1、语言配置-》添加配置： 语言KEY	        应用名称	文件类型	简体	         繁体		英文
+			PUBLIC_FRIENDS_REMIND	 PUBLIC	        PHP文件		查看好友	 查看好友	View	
+
+			PUBLIC_SYSTEM_FRIEND	 PUBLIC	 	JavaScript文件	 位新好友	 位新好友	 new friends

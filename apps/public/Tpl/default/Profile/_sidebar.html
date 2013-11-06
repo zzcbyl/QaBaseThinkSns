@@ -9,7 +9,7 @@
     {:W('MedalList',array('uid'=>$user_info[$uid]['uid']))}
     <php>if($sidebar_following_list['data']){</php>
         <div class="right-box mb20 clearfix border-b">
-            <h3><a href="{:U('public/Profile/following',array('uid'=>$user_info[$uid]['uid']))}" class="right f12">更多</a><php>if($user_info[$uid]['uid']==$mid){</php>我<php>}else{</php>TA<php>}</php>的好友({$userData.friend_count|default=0})</h3>
+            <h3><a href="{:U('public/Profile/friend',array('uid'=>$user_info[$uid]['uid']))}" class="right f12">更多</a><php>if($user_info[$uid]['uid']==$mid){</php>我<php>}else{</php>TA<php>}</php>的好友({$userData.friend_count|default=0})</h3>
             <ul>
                 <volist name="sidebar_following_list['data']" id="vo">
                     <li><a href="{:U('public/Profile/index',array('uid'=>$vo['fid']))}" class="face" uid="{$vo['fid']}" event-node="face_card"><img src="{$following_user_info[$vo['fid']]['avatar_small']}" /></a><a href="{:U('public/Profile/index',array('uid'=>$vo['fid']))}" class="face" uid="{$vo['fid']}" event-node="face_card"><span>{$following_user_info[$vo['fid']]['uname']|getShort=4}</span></a></li>
@@ -22,11 +22,30 @@
             <h3><a href="{:U('public/Profile/follower',array('uid'=>$user_info[$uid]['uid']))}" class="right f12">更多</a>共同关注(<php>echo count($sidebar_follower_list['data'])</php>)</h3>
             <ul>
                 <volist name="sidebar_follower_list['data']" id="vo"> 
-                    <li><!--<php>print_r($user_info);</php>--><a href="{:U('public/Profile/index',array('uid'=>$vo['fid']))}" class="face"><img src="{$follower_user_info[$vo['fid']]['avatar_small']}" uid="{$vo['fid']}" event-node="face_card" /></a><a href="{:U('public/Profile/index',array('uid'=>$vo['fid']))}" class="face" uid="{$vo['fid']}" event-node="face_card"><span>{$follower_user_info[$vo['fid']]['uname']|getShort=4}</span></a></li>
+                    <li><a href="{:U('public/Profile/index',array('uid'=>$vo['fid']))}" class="face"><img src="{$follower_user_info[$vo['fid']]['avatar_small']}" uid="{$vo['fid']}" event-node="face_card" /></a><a href="{:U('public/Profile/index',array('uid'=>$vo['fid']))}" class="face" uid="{$vo['fid']}" event-node="face_card"><span>{$follower_user_info[$vo['fid']]['uname']|getShort=4}</span></a></li>
                 </volist>
             </ul>
         </div>
     <php>}</php>
+
+
+        <div class="right-box mb20 clearfix border-b" style="font-size:14px;">
+            <h3><a href="{:U('public/Profile/index',array('uid'=>$user_info[$uid]['uid'], 'type'=>'agree'))}" class="right f12">更多</a><php>if($user_info[$uid]['uid']==$mid){</php>我<php>}else{</php>TA<php>}</php>的赞同</h3>
+            <ul>
+                <volist name="aggreelist['data']" id="alist"> 
+                <li style="margin:0 0 10px 0;">
+                    <div style="float:left; width:40px; text-align:center; height:20px; line-height:20px; overflow:hidden; background:url('__THEME__/image/zantong_small.png') no-repeat; background-position: 11px -1px;">
+                        {$alist['answer'][0]['comment_count']}</div>
+                    <div style="float:left; margin-left:5px;">
+                        <div style="width:185px; height:20px; line-height:20px; overflow:hidden;"><a href="{:U('public/Index/feed',array('feed_id'=>$vl['feed_id'],'uid'=>$vl['uid']))}"><span class="contents">{$alist['body']}</span></a></div>
+                        <div style="width:185px; height:20px; line-height:20px; overflow:hidden;">{$alist['answer'][0]['body']}</div>
+                    </div>
+                    <div style="clear:both;"></div>
+                </li>
+                </volist>
+            </ul>
+        </div>
+
     <!-- 主页右下广告 -->
     <div style="width:230px;overflow:hidden;">
     {:Addons::hook('show_ad_space', array('place'=>'profile_right'))}    

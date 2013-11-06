@@ -1107,5 +1107,6 @@ Label class does not exist',
 'DIGG_MESSAGE_CONTENT'=>'',
 'DIGG_MESSAGE_TITLE'=>'',
 'PUBLIC_FRIEND'=>'Friend',
-'PUBLIC_ANSWER'=>'Answer'
+'PUBLIC_ANSWER'=>'Answer',
+'PUBLIC_FRIENDS_REMIND'=>'View'
 );

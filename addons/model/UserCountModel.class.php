@@ -26,6 +26,8 @@ class UserCountModel extends Model {
 		$return['unread_message'] = (int)$msg_model->getUnreadMessageCount($uid, array(MessageModel::ONE_ON_ONE_CHAT, MessageModel::MULTIPLAYER_CHAT));
 		// 新的关注数目
 		$return['new_folower_count'] = intval($user_data['new_folower_count']);
+		// 新的好友数目
+		$return['new_friend_count'] = intval($user_data['new_friend_count']);
 		// 合计的未读数目
 		$return['unread_total']  = array_sum($return);
 		$group = model('App')->getAppByName('group');

@@ -36,6 +36,26 @@ class CommentWidget extends Widget
 		$_REQUEST['p'] = intval($_GET['p']) ? intval($_GET['p']) : intval($_POST['p']);
 		empty($data) && $data = $_POST;
 		is_array($data) && $var = array_merge($var,$data);
+
+		//对答案只能赞成或者反对一次
+		if($var['comment_type'] == 1 || $var['comment_type'] == 2)
+		{
+			$Commentwhere='`app`=\''.t($var['app_name']).'\' and `table`=\''.t($var['table']).'\' and `row_id`='.intval($var['row_id']).' and `uid`='.$this->mid.' and (`comment_type`=1 or `comment_type`=2)';
+			$hasComment=model('Comment')->hasComment($Commentwhere);
+			if($hasComment)
+			{
+				$return = array('status'=>2,'data'=>'<div id="commentlist_'.intval($var['row_id']).'"></div>');
+				return $var['isAjax'] == 1 ?  json_encode($return) : $return['data'];
+			}
+		}
+
+		//评论自己的内容
+		if($this->mid == $var['app_uid'])
+		{
+			$commentObj =  $var['comment_type'] == 1 ? '赞同自己的答案' : ($var['comment_type'] == 2 ? '反对自己的答案' : '评论自己的问题');
+			$return = array('status'=>0,'data'=>'您不能'.$commentObj);
+			return $var['isAjax'] == 1 ?  json_encode($return) : $return['data'];
+		}
 		
         if($var['table'] == 'feed' && $this->mid != $var['app_uid']){
             $userPrivacy =  model('UserPrivacy')->getPrivacy($this->mid,$var['app_uid']);
@@ -85,6 +105,7 @@ class CommentWidget extends Widget
 		self::$rand ++;
         $ajax = $var['isAjax'];
 		unset($var,$data);
+		
         //输出数据
         $return = array('status'=>1,'data'=>$content);
 

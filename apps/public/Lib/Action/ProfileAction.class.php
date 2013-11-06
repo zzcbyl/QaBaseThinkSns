@@ -56,6 +56,7 @@ class ProfileAction extends Action {
 			// 加载微博筛选信息
 			$d ['feed_type'] = t ( $_REQUEST ['feed_type'] ) ? t ( $_REQUEST ['feed_type'] ) : '';
 			$d ['feed_key'] = t ( $_REQUEST ['feed_key'] ) ? t ( $_REQUEST ['feed_key'] ) : '';
+			$d ['type'] = t ( $_REQUEST ['type'] ) ? t ( $_REQUEST ['type'] ) : 'following';
 			$this->assign ( $d );
 		} else {
 			$this->_assignUserInfo ( $this->uid );
@@ -804,6 +805,13 @@ class ProfileAction extends Action {
 		$followerfids && $uids = array_merge ( $uids, $followerfids );
 
 		$this->_assignUserInfo ( $uids );
+		
+		$where =" `uid` = ".$this->uid." AND `feed_questionid` != 0 and `comment_count` > 0";
+		$list = model('Feed')->getFeedListByComment($where, 10);
+		$this->assign ( 'aggreelist', $list );
+		/*print('<br /><br /><br /><br />');
+		print_r($list);*/
+		
 	}
 	
 	/**
@@ -1013,6 +1021,41 @@ class ProfileAction extends Action {
 		} else {
 			$this->_assignUserInfo ( $this->uid );
 		}
+		
+		
+		
+		
+		// 清空新粉丝提醒数字
+		if($this->uid == $this->mid){
+			$udata = model('UserData')->getUserData($this->mid);
+			$udata['new_folower_count'] > 0 && model('UserData')->setKeyValue($this->mid,'new_folower_count',0);	
+		}
+		// 获取用户的粉丝列表
+		$followerList = model('Follow')->getFollowerList($this->mid, 20);
+		$fids = getSubByKey($followerList['data'], 'fid');
+		// 获取用户信息
+		$followerUserInfo = model('User')->getUserInfoByUids($fids);
+		// 获取用户统计数目
+		$userData = model('UserData')->getUserDataByUids($fids);
+		// 获取用户标签
+		$this->_assignUserTag($fids);
+		// 获取用户用户组信息
+		$userGroupData = model('UserGroupLink')->getUserGroupData($fids);
+		$this->assign('userGroupData',$userGroupData);
+		// 获取用户的最后微博数据
+		//$lastFeedData = model('Feed')->getLastFeed($fids);
+		// 获取用户的关注信息状态
+		$followState = model('Follow')->getFollowStateByFids($this->mid, $fids);
+		// 组装数据
+		foreach($followerList['data'] as $key => $value) {
+			$followerList['data'][$key] = array_merge($followerList['data'][$key], $followerUserInfo[$value['fid']]);
+			$followerList['data'][$key] = array_merge($followerList['data'][$key], $userData[$value['fid']]);
+			$followerList['data'][$key] = array_merge($followerList['data'][$key], array('feedInfo'=>$lastFeedData[$value['fid']]));
+			$followerList['data'][$key] = array_merge($followerList['data'][$key], array('followState'=>$followState[$value['fid']]));
+		}
+		//print_r($followerList);
+		$this->assign($followerList);
+		
 		$this->display ();
 	}
 	/**
@@ -1040,6 +1083,38 @@ class ProfileAction extends Action {
 		} else {
 			$this->_assignUserInfo ( $this->uid );
 		}
+		
+		// 清空新好友提醒数字
+		if($this->uid == $this->mid){
+			$udata = model('UserData')->getUserData($this->mid);
+			$udata['new_friend_count'] > 0 && model('UserData')->setKeyValue($this->mid,'new_friend_count',0);	
+		}
+		// 获取用户的好友列表
+		$followerList = model('Follow')->getFriendList($this->mid, 20);
+		$fids = getSubByKey($followerList['data'], 'fid');
+		// 获取用户信息
+		$followerUserInfo = model('User')->getUserInfoByUids($fids);
+		// 获取用户统计数目
+		$userData = model('UserData')->getUserDataByUids($fids);
+		// 获取用户标签
+		$this->_assignUserTag($fids);
+		// 获取用户用户组信息
+		$userGroupData = model('UserGroupLink')->getUserGroupData($fids);
+		$this->assign('userGroupData',$userGroupData);
+		// 获取用户的最后微博数据
+		//$lastFeedData = model('Feed')->getLastFeed($fids);
+		// 获取用户的关注信息状态
+		$followState = model('Follow')->getFollowStateByFids($this->mid, $fids);
+		// 组装数据
+		foreach($followerList['data'] as $key => $value) {
+			$followerList['data'][$key] = array_merge($followerList['data'][$key], $followerUserInfo[$value['fid']]);
+			$followerList['data'][$key] = array_merge($followerList['data'][$key], $userData[$value['fid']]);
+			$followerList['data'][$key] = array_merge($followerList['data'][$key], array('feedInfo'=>$lastFeedData[$value['fid']]));
+			$followerList['data'][$key] = array_merge($followerList['data'][$key], array('followState'=>$followState[$value['fid']]));
+		}
+		$this->assign($followerList);
+		
+		
 		$this->display ();
 	}
 	

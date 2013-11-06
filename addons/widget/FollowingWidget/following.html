@@ -1,0 +1,10 @@
+﻿<div class="right-box mb20 clearfix border-b" style="margin-top:10px;">
+    <!--<h3>
+        <a href="{:U('public/Index/following')}" class="right f12">
+            更多</a>我的关注</h3>-->
+    <ul>
+        <volist name="data" id="vo">
+            <li><a href="{:U('public/Profile/index',array('uid'=>$vo['fid']))}" class="face" uid="{$vo['fid']}" event-node="face_card"><img src="{$vo['user_info']['avatar_small']}" /></a><a href="{:U('public/Profile/index',array('uid'=>$vo['fid']))}" class="face" uid="{$vo['fid']}" event-node="face_card"><span>{$vo['user_info']['uname']|getShort=4}</span></a></li>
+        </volist>
+    </ul>
+</div>

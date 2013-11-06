@@ -82,6 +82,26 @@ class CommentModel extends Model {
 		//print_r($data);
         return $data;
     }
+	
+	/**
+	 * 判断是否已经评论过
+	 *
+	 * @param array $map 条件
+	 * @return bool
+	 *
+	 */	
+	public function hasComment($map) {
+		$result=false;
+		$checkData = model('Comment')->where($map)->select();
+		//return $this->getLastSql();
+		
+		if(count($checkData)>0)
+		{
+			$result=true;
+		}
+		return $result;
+	}
+
     
     /**
      * 获取评论信息
@@ -127,7 +147,7 @@ class CommentModel extends Model {
         //$data['data']['storey'] = $this->getStorey($data['row_id'], $data['app'], $data['table']);
         // 检测数据安全性
         $add = $this->_escapeData($data);
-        if($add['content'] === '') {
+		if($add['comment_type'] == 0 && $add['content'] == '') {
             $this->error = L('PUBLIC_COMMENT_CONTENT_REQUIRED');        // 评论内容不可为空
             return false;
         }
@@ -213,11 +233,11 @@ class CommentModel extends Model {
 			
 			//用户增加评论统计
 			if($add['comment_type']=='1') //赞同
-				model('UserData')->setUid($GLOBALS['ts']['mid'])->updateKey('comment_agree_count', 1);
+				model('UserData')->setUid($add['app_uid'])->updateKey('comment_agree_count', 1);
 			else if($add['comment_type']=='2') //反对
-				model('UserData')->setUid($GLOBALS['ts']['mid'])->updateKey('comment_oppose_count', 1);
+				model('UserData')->setUid($add['app_uid'])->updateKey('comment_oppose_count', 1);
 			//总评论数
-			model('UserData')->setUid($GLOBALS['ts']['mid'])->updateKey('comment_count', 1);
+			model('UserData')->setUid($add['app_uid'])->updateKey('comment_count', 1);
 		}
 
         $this->error = $res ? L('PUBLIC_CONCENT_IS_OK') : L('PUBLIC_CONCENT_IS_ERROR');         // 评论成功，评论失败
