@@ -1,0 +1,200 @@
+﻿
+<div id="UserProfessionDiv" class="profile-datalist">
+    <h4>
+        <php>if($uid==$mid){</php><a href="javascript:void(0);" onclick="UpdProfessionUser(this);" class="right f12" style="font-weight: normal;">编辑</a><php>}</php>
+        职业信息</h4>
+    <div id="addButton" style="margin:20px 0 0 70px; font-size:12px; display:none;"><a href="javascript:void();" onclick="AddPrefession();">添加职业信息</a></div>
+    <div id="editProfession" style="padding-bottom:10px; display:none;">
+        <table>
+            <tr><td class="td_title"><span class="redSpan">*</span>单位名称：</td><td class="td_content"><input type="text" id="companyName" class="s-txt" onblur="checkName();" /><span id="errorName" style="margin-left:5px;"></span></td><td class="td_right"><select name="sel_qq" id="permissions"><option value="0">所有人可见</option><option value="1">我关注的人可见</option><option value="2">仅自己可见</option></select></td></tr>
+            <tr><td class="td_title">部门/职位：</td><td class="td_content"><input type="text" id="position" class="s-txt" /></td><td></td></tr>
+            <tr><td class="td_title">工作时间：</td><td class="td_content"><select id="sTime"><option value="">请选择</option><volist name="BeginYear" id="by"><option>{$by.val}</option></volist></select>－<select id="eTime"><option value="">请选择</option><volist name="BeginYear" id="by"><option>{$by.val}</option></volist></select></td><td></td></tr>
+            <tr><td class="td_title"><span class="redSpan">*</span>所在地：</td><td class="td_content" colspan="2">{:W('Area',array('curPro'=>0,'curCity'=>0,'area'=>0,'city_names'=>'','tpl'=>'selectAreaCopy'))}</td></tr>
+            <tr><td colspan="2"><a style="margin-left:80px;" onclick="SaveProfession()" href="javascript:void(0);">确定</a>　<a onclick="CancelProfession()" href="javascript:void(0);">取消</a></td></tr>
+            <tr><td colspan="3" style="height:10px; line-height:10px;">&nbsp;</td></tr>
+        </table>
+    </div>
+    <div style="margin:0px;">
+        <div style="float:left; padding:20px 0; color: #888888; font-size:12px; width:60px; text-align:right; margin-right:10px; line-height:22px;">公司</div>
+        <div style="float:left; margin-left:7px;">
+            <ul id="professionList" class="info">
+                <volist name="data" id="vl">
+                    <ul id="profession{$vl.id}" style="padding:0;">
+                        <li>
+                            <label class="info-r">{$vl.company}<php>if($vl['worktime']!='-') {</php>（{$vl.worktime}）<php>}</php><span style="margin-left:100px; float:right; display:none;" name="EditButtonOne"><a href="javascript:void(0);" onclick="editCompany({$vl.id});">编辑</a>　<a href="javascript:void(0);" onclick="DeleteProfession(this, {$vl.id});">删除</a></span></label>&nbsp;
+                        </li>
+                        <li>
+                            <label class="info-r">地区：{$vl.location}</label>&nbsp;</li>
+                        <php>if($vl['position']!="") {</php>
+                        <li>
+                            <label class="info-r">职位：{$vl.position}</label>&nbsp;</li><php>}</php>
+                        <li><div style="height:10px;">&nbsp;</div></li>
+                    </ul>
+                </volist>
+            </ul>
+        </div>
+        <div style="clear:both;"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function UpdProfessionUser(obj) {
+        if($(obj).html()=="编辑") {
+            $(obj).html("保存");
+            $("#addButton").show();
+            var spEidt = $("span[name=EditButtonOne]");
+            for(var i = 0; i < spEidt.length; i++) {
+                $(spEidt[i]).show();
+            }
+        }
+        else {
+            if($("#editProfession").css('display')!='none') {
+                ui.error("请保存编辑");
+                return;
+            }
+            else {
+                $(obj).html("编辑");
+                $("#addButton").hide();
+                var spEidt = $("span[name=EditButtonOne]");
+                for(var i = 0; i < spEidt.length; i++) {
+                    $(spEidt[i]).hide();
+                }
+            }
+        }
+    }
+
+    function AddPrefession() {
+        ClearInput();
+        $("#editProfession").show();
+        $("#addButton").hide();
+        dataid = 0;
+    }
+    function checkName() {
+        if ($("#companyName").val() == "") {
+            $("#errorName").attr("class", "");
+            $("#errorName").html("<b class=\"ico-error\"></b>请输入单位名称");
+            return false;
+        }
+        else {
+            $("#errorName").html("");
+            $("#errorName").attr("class", "ico-ok");
+            return true;
+        }
+    }
+    var dataid = 0;
+    //保存数据
+    function SaveProfession() {
+        if (!checkName())
+            return;
+        var url = U('public/Account/doSaveProfessionInfoNew');
+        $.post(url, { id: dataid, company: $("#companyName").val(), position: $("#position").val(), worktime: $("#sTime").val() + "-" + $("#eTime").val(), location: $("#c_current_name").val(), locationids: $('#c_current').val(), permissions: $("#permissions").val() }, function (msg) {
+            if (msg.status) {
+                ui.success("保存成功");
+                $("#editProfession").hide();
+                $("#addButton").show();
+
+                var currentid = dataid == 0 ? msg.data : dataid;
+                var worktimestr = $("#sTime").val() + "-" + $("#eTime").val();
+                worktimestr = worktimestr == "-" ? "" : "（" + $("#sTime").val() + "-" + $("#eTime").val() + "）";
+                var positionstr = $("#position").val() == "" ? "" : "<li><label class=\"info-r\">职位：" + $("#position").val() + "</label>&nbsp;</li>";
+                var liHtml = "<li><label class=\"info-r\">" + $("#companyName").val() + worktimestr + "<span style=\"margin-left:100px; float:right;\"><a href=\"javascript:void(0);\" onclick=\"editCompany1(" + currentid + ",'" + $("#companyName").val() + "','" + $("#position").val() + "','" + $("#sTime").val() + "-" + $("#eTime").val() + "','" + $("#c_current_name").val() + "','" + $('#c_current').val() + "','" + $("#permissions").val() + "');\">编辑</a>　<a href=\"javascript:void(0);\" onclick=\"DeleteProfession(this, " + currentid + ");\">删除</a></span></label>&nbsp;</li>" +
+                        "<li><label class=\"info-r\">地区：" + $("#c_current_name").val() + "</label>&nbsp;</li>" +
+                        positionstr + "<li><div style=\"height:10px;\">&nbsp;</div></li>";
+
+                if (dataid == 0) //添加
+                {
+                    var html = "<ul id=\"profession" + currentid + "\" style=\"padding:0;\">" + liHtml + "</ul>";
+                    $("#professionList").html(html + $("#professionList").html());
+                }
+                else { //修改
+                    $("#profession" + currentid).html("");
+                    $("#profession" + currentid).html(liHtml);
+                    dataid = 0;
+                }
+            }
+        }, 'json');
+    }
+
+    function CancelProfession() {
+        ClearInput();
+        $("#editProfession").hide();
+        $("#addButton").show();
+    }
+
+    function ClearInput() {
+        $("#companyName").val("");
+        $("#position").val("");
+        $("#sTime").val("");
+        $("#eTime").val("");
+        $("#c_current_name").val("");
+        $('#c_current').val("");
+        c_selected = $('#c_current').val();
+        $("#c_province").val("0");
+        $("#c_city").val("0");
+        $("#c_area").val("0");
+        $("#permissions").val("0");
+    }
+
+    var datalist = <php>echo json_encode($data);</php>;
+    //修改
+    function editCompany(pid) {
+        if($("#editProfession").css('display')!='none') {
+                ui.error("请保存编辑");
+                return;
+        }
+        //alert(pid);
+        for (var i = 0; i < datalist.length; i++) {
+            if (datalist[i].id == pid) {
+                dataid = pid;
+                $("#companyName").val(datalist[i].company);
+                $("#position").val(datalist[i].position);
+                if (datalist[i].worktime != "") {
+                    var wtime = datalist[i].worktime.split('-');
+                    $("#sTime").val(wtime[0]);
+                    $("#eTime").val(wtime[1]);
+                }
+                $("#c_current_name").val(datalist[i].location);
+                $('#c_current').val(datalist[i].province + "," + datalist[i].city + "," + datalist[i].area);
+                c_selected = $('#c_current').val();
+                c_init();
+                
+                $("#permissions").val(datalist[i].permissions);
+                $("#editProfession").show();
+                $("#addButton").hide();
+            }
+        }
+    }
+    function editCompany1(pid,company,position,worktime,location,locationids,permissions) {
+        dataid = pid;
+        $("#companyName").val(company);
+        $("#position").val(position);
+        if (worktime != "") {
+            var wtime = worktime.split('-');
+            $("#sTime").val(wtime[0]);
+            $("#eTime").val(wtime[1]);
+        }
+        $("#c_current_name").val(location);
+        $('#c_current').val(locationids);
+        c_selected = $('#c_current').val();
+        c_init();
+                
+        $("#permissions").val(permissions);
+        $("#editProfession").show();
+        $("#addButton").hide();
+    }
+
+    //删除职业信息
+    function DeleteProfession(obj, pid) {
+        var delInfo=function (){
+            var url = U('public/Account/doDeleteProfessionInfoNew');
+            $.post(url, { id: pid }, function (msg) {
+                if (msg.status) {
+                    ui.success("删除成功");
+                    $("#profession" + pid).hide();
+                }
+            }, 'json');
+        }
+
+        ui.confirm(obj, "确认要删除这条工作信息吗?", delInfo);
+    }
+</script>

@@ -149,6 +149,223 @@ class AccountAction extends Action
 		$result = $this->ajaxReturn(null, $this->_profile_model->getError(), $res);
 		return $this->ajaxReturn(null, $this->_profile_model->getError(), $res);
 	}
+	
+	/**
+	* 保存基本信息操作
+	* @return json 返回操作后的JSON信息数据
+	*/
+	public function doSaveProfileNew() {
+		$res = true;
+		// 保存用户表信息
+		if(!empty($_POST['sex'])) {
+			$save['sex']  = 1 == intval($_POST['sex']) ? 1 : 2;
+			//	$save['lang'] = t($_POST['lang']);
+			$save['intro'] = t($_POST['intro']);
+			$save['realname'] = t($_POST['realname']);
+			$save['birthday'] = t($_POST['birthday']);
+			//$save['bloodtype'] = t($_POST['bloodtype']);
+			// 添加地区信息
+			$save['location'] = t($_POST['city_names']);
+			$cityIds = t($_POST['city_ids']);
+			$cityIds = explode(',', $cityIds);
+			if(!$cityIds[0] || !$cityIds[1] || !$cityIds[2]) $this->error('请选择完整地区');
+			isset($cityIds[0]) && $save['province'] = intval($cityIds[0]);
+			isset($cityIds[1]) && $save['city'] = intval($cityIds[1]);
+			isset($cityIds[2]) && $save['area'] = intval($cityIds[2]);
+			// 修改用户昵称
+			$uname = t($_POST['uname']);
+			$oldName = t($_POST['old_name']);
+			$save['uname'] = filter_keyword($uname);
+			$res = model('Register')->isValidName($uname, $oldName);
+			if(!$res) {
+				$error = model('Register')->getLastError();
+				return $this->ajaxReturn(null, model('Register')->getLastError(), $res);		
+			}
+			//如果包含中文将中文翻译成拼音
+			if ( preg_match('/[\x7f-\xff]+/', $save['uname'] ) ){
+				//昵称和呢称拼音保存到搜索字段
+				$save['search_key'] = $save['uname'].' '.model('PinYin')->Pinyin( $save['uname'] );
+			} else {
+				$save['search_key'] = $save['uname'];
+			}
+			$res = model('User')->where("`uid`={$this->mid}")->save($save);
+			$res && model('User')->cleanCache($this->mid);	
+			$user_feeds = model('Feed')->where('uid='.$this->mid)->field('feed_id')->findAll();
+			if($user_feeds){
+				$feed_ids = getSubByKey($user_feeds, 'feed_id');
+				model('Feed')->cleanCache($feed_ids,$this->mid);
+			}
+			
+			$permissions['realname'] = t($_POST['sel_realname']);
+			$permissions['birthday'] = t($_POST['sel_birthday']);
+			
+			model('UserPermissions')->saveUserPermissions($this->mid,$permissions);
+			
+		}
+		// 保存用户资料配置字段
+		(false !== $res) && $res = $this->_profile_model->saveUserProfile($this->mid, $_POST);
+		// 保存用户标签信息
+		/*$tagIds = t($_REQUEST['user_tags']);
+		!empty($tagIds) && $tagIds = explode(',', $tagIds);
+		$rowId = intval($_REQUEST['user_row_id']);
+		if(!empty($rowId)) {
+			$registerConfig = model('Xdata')->get('admin_Config:register');
+			if(count($tagIds) > $registerConfig['tag_num']) {
+				return $this->ajaxReturn(null, '最多只能设置'.$registerConfig['tag_num'].'个标签', false);
+			}
+			model('Tag')->setAppName('public')->setAppTable('user')->updateTagData($rowId, $tagIds);
+		}*/
+		$result = $this->ajaxReturn(null, $this->_profile_model->getError(), $res);
+		return $this->ajaxReturn(null, $this->_profile_model->getError(), $res);
+	}
+	
+	/**
+	* 保存联系信息操作
+	* @return json 返回操作后的JSON信息数据
+	*/
+	public function doSaveLinkInfoNew() {
+		$res = true;
+		// 保存用户表信息
+
+		if(t($_POST['qq'])!='')
+		{
+			if(!preg_match("/^\d*$/",t($_POST['qq'])))
+			{
+				$this->error('QQ格式不正确');
+			}
+		}
+		$save['qq'] = t($_POST['qq']);
+		
+		$save['weixin'] = t($_POST['weixin']);
+		$save['tengxunVB'] = t($_POST['tengxuvb']);
+		$save['xinlangVB'] = t($_POST['xinlangvb']);
+		
+		// 修改email
+		/*$email = t($_POST['email']);
+		$oldemail = t($_POST['old_email']);
+		$save['email'] = $email;
+		$res = model('Register')->isValidEmail($email, $oldemail);
+		if(!$res) {
+			$error = model('Register')->getLastError();
+			return $this->ajaxReturn(null, model('Register')->getLastError(), $res);		
+		}*/
+
+		$res = model('User')->where("`uid`={$this->mid}")->save($save);
+		$res && model('User')->cleanCache($this->mid);	
+		$user_feeds = model('Feed')->where('uid='.$this->mid)->field('feed_id')->findAll();
+		if($user_feeds){
+			$feed_ids = getSubByKey($user_feeds, 'feed_id');
+			model('Feed')->cleanCache($feed_ids,$this->mid);
+		}
+		
+		$permissions['qq'] = t($_POST['sel_qq']);
+		$permissions['weixin'] = t($_POST['sel_weixin']);
+		$permissions['tengxunVB'] = t($_POST['sel_tengxunVB']);
+		$permissions['xinlangVB'] = t($_POST['sel_xinlangVB']);
+		model('UserPermissions')->saveUserPermissions($this->mid,$permissions);
+		
+		// 保存用户资料配置字段
+		(false !== $res) && $res = $this->_profile_model->saveUserProfile($this->mid, $_POST);
+
+		$result = $this->ajaxReturn(null, $this->_profile_model->getError(), $res);
+		return $this->ajaxReturn(null, $this->_profile_model->getError(), $res);
+	}
+	
+	/**
+	* 保存职业信息操作
+	* @return json 返回操作后的JSON信息数据
+	*/
+	public function doSaveProfessionInfoNew() {
+		$res = true;
+		
+		// 保存用户表信息
+		$save['uid'] = $this->mid;
+		$save['company'] = t($_POST['company']);
+		$save['position'] = t($_POST['position']);
+		$save['worktime'] = t($_POST['worktime']);
+		$save['location'] = t($_POST['location']);
+		$cityIds = t($_POST['locationids']);
+		$cityIds = explode(',', $cityIds);
+		if(!$cityIds[0] || !$cityIds[1] || !$cityIds[2]) $this->error('请选择完整地区');
+		isset($cityIds[0]) && $save['province'] = intval($cityIds[0]);
+		isset($cityIds[1]) && $save['city'] = intval($cityIds[1]);
+		isset($cityIds[2]) && $save['area'] = intval($cityIds[2]);
+		$save['permissions'] = t($_POST['permissions']);
+		
+		$result = 0;
+		if($_POST['id']!=null && $_POST['id']!="" && intval($_POST['id'])>0)
+			$result = model('UserProfession')->updUserProfession(intval($_POST['id']), $save);
+		else
+			$result = model('UserProfession')->addUserProfession($save);
+
+		// 保存用户资料配置字段
+		(false !== $res) && $res = $this->_profile_model->saveUserProfile($this->mid, $_POST);
+
+		//$result = $this->ajaxReturn(null, $this->_profile_model->getError(), $res);
+		return $this->ajaxReturn($result, $this->_profile_model->getError(), $res);
+	}
+	
+	/**
+	* 删除职业信息操作
+	* @return json 返回操作后的JSON信息数据
+	*/
+	public function doDeleteProfessionInfoNew() {
+		$res = true;
+		
+		if($_POST['id']!=null && $_POST['id']!="" && intval($_POST['id'])>0)
+			$res = model('UserProfession')->delUserProfession(intval($_POST['id']));
+
+		// 保存用户资料配置字段
+		(false !== $res) && $res = $this->_profile_model->saveUserProfile($this->mid, $_POST);
+
+		$result = $this->ajaxReturn(null, $this->_profile_model->getError(), $res);
+		return $this->ajaxReturn(null, $this->_profile_model->getError(), $res);
+	}
+	
+	/**
+	* 保存教育信息操作
+	* @return json 返回操作后的JSON信息数据
+	*/
+	public function doSaveEducationInfoNew() {
+		$res = true;
+		
+		// 保存用户表信息
+		$save['uid'] = $this->mid;
+		$save['schooltype'] = t($_POST['schooltype']);
+		$save['schoolname'] = t($_POST['schoolname']);
+		$save['entertime'] = t($_POST['entertime']);
+		$save['departments'] = t($_POST['department']);
+		$save['permissions'] = t($_POST['permissions']);
+		
+		$result = 0;
+		if($_POST['id']!=null && $_POST['id']!="" && intval($_POST['id'])>0)
+			$result = model('UserEducation')->updUserEducation(intval($_POST['id']), $save);
+		else
+			$result = model('UserEducation')->addUserEducation($save);
+
+		// 保存用户资料配置字段
+		(false !== $res) && $res = $this->_profile_model->saveUserProfile($this->mid, $_POST);
+
+		//$result = $this->ajaxReturn(null, $this->_profile_model->getError(), $res);
+		return $this->ajaxReturn($result, $this->_profile_model->getError(), $res);
+	}
+	
+	/**
+	* 删除职业信息操作
+	* @return json 返回操作后的JSON信息数据
+	*/
+	public function doDeleteEducationInfoNew() {
+		$res = true;
+		
+		if($_POST['id']!=null && $_POST['id']!="" && intval($_POST['id'])>0)
+			$res = model('UserEducation')->delUserEducation(intval($_POST['id']));
+
+		// 保存用户资料配置字段
+		(false !== $res) && $res = $this->_profile_model->saveUserProfile($this->mid, $_POST);
+
+		$result = $this->ajaxReturn(null, $this->_profile_model->getError(), $res);
+		return $this->ajaxReturn(null, $this->_profile_model->getError(), $res);
+	}
 
 	/**
 	 * 头像设置页面

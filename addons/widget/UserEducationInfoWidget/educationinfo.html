@@ -1,0 +1,172 @@
+﻿
+<div id="UserEducationDiv" class="profile-datalist">
+    <h4>
+        <php>if($uid==$mid){</php><a href="javascript:void(0);" onclick="UpdEducationUser(this);" class="right f12" style="font-weight: normal;">编辑</a><php>}</php>
+        教育信息</h4>
+    <div id="E_addButton" style="margin:20px 0 0 70px; font-size:12px; display:none;"><a href="javascript:void();" onclick="AddEducation();">添加教育信息</a></div>
+    <div id="editEducation" style="padding-bottom:10px; display:none;">
+        <table>
+            <tr><td class="td_title">学校类型：</td><td class="td_content"><select id="schoolType"><option>大学</option><option>高中</option><option>中专技校</option><option>初中</option><option>小学</option></select></td><td class="td_right"><select id="E_permissions"><option value="0">所有人可见</option><option value="1">我关注的人可见</option><option value="2">仅自己可见</option></select></td></tr>
+            <tr><td class="td_title"><span class="redSpan">*</span>学校名称：</td><td class="td_content"><input type="text" id="schoolName" class="s-txt" onblur="checkSchoolName();" /><span id="errorSchoolName" style="margin-left:5px;"></span></td><td></td></tr>
+            <tr><td class="td_title">入学时间：</td><td class="td_content"><select id="enterTime"><option value="">请选择</option><volist name="enterYear" id="by"><option>{$by.val}</option></volist></select></td><td></td></tr>
+            <tr><td class="td_title">院系：</td><td class="td_content" colspan="2"><input type="text" id="department" class="s-txt" /></td></tr>
+            <tr><td colspan="2"><a style="margin-left:80px;" onclick="SaveEducation()" href="javascript:void(0);">确定</a>　<a onclick="CancelEducation()" href="javascript:void(0);">取消</a></td></tr>
+            <tr><td colspan="3" style="height:10px; line-height:10px;">&nbsp;</td></tr>
+        </table>
+    </div>
+    <div style="margin:0px;">
+        <div style="float:left;">
+            <ul id="educationList" class="info">
+                <volist name="data" id="vl">
+                    <ul id="education{$vl.id}" style="padding:0;">
+                        <li>
+                            <label class="info-l" style="margin-right:18px; width:60px;">{$vl.schooltype}</label><label class="info-r">{$vl.schoolname}<php>if($vl['entertime']!='') {</php>（{$vl.entertime}年）<php>}</php><span style="margin-left:100px; float:right; display:none;" name="EditButtonOne"><a href="javascript:void(0);" onclick="editEducation({$vl.id});">编辑</a>　<a href="javascript:void(0);" onclick="DeleteEducation(this, {$vl.id});">删除</a></span></label>&nbsp;
+                        </li>
+                        <php>if($vl['departments']!="") {</php>
+                        <li>
+                            <label class="info-l" style="margin-right:18px; width:60px;">&nbsp;</label><label class="info-r">{$vl.departments}</label>&nbsp;</li><php>}</php>
+                        <li><div style="height:10px;">&nbsp;</div></li>
+                    </ul>
+                </volist>
+            </ul>
+        </div>
+        <div style="clear:both;"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function UpdEducationUser(obj) {
+        if($(obj).html()=="编辑") {
+            $(obj).html("保存");
+            $("#E_addButton").show();
+            var spEidt = $("span[name=EditButtonOne]");
+            for(var i = 0; i < spEidt.length; i++) {
+                $(spEidt[i]).show();
+            }
+        }
+        else {
+            if($("#editEducation").css('display')!='none') {
+                ui.error("请保存编辑");
+            }
+            else{
+                $(obj).html("编辑");
+                $("#E_addButton").hide();
+                var spEidt = $("span[name=EditButtonOne]");
+                for(var i = 0; i < spEidt.length; i++) {
+                    $(spEidt[i]).hide();
+                }
+            }
+        }
+    }
+
+    function AddEducation() {
+        ClearSchoolInput();
+        $("#editEducation").show();
+        $("#E_addButton").hide();
+        dataschoolid = 0;
+    }
+    function checkSchoolName() {
+        if ($("#schoolName").val() == "") {
+            $("#errorSchoolName").attr("class", "");
+            $("#errorSchoolName").html("<b class=\"ico-error\"></b>请输入学校名称");
+            return false;
+        }
+        else {
+            $("#errorSchoolName").html("");
+            $("#errorSchoolName").attr("class", "ico-ok");
+            return true;
+        }
+    }
+    var dataschoolid = 0;
+    //保存数据
+    function SaveEducation() {
+        if (!checkSchoolName())
+            return;
+        var url = U('public/Account/doSaveEducationInfoNew');
+        $.post(url, { id: dataschoolid, schooltype: $("#schoolType").val(), schoolname: $("#schoolName").val(), entertime: $("#enterTime").val(), department: $("#department").val(), permissions: $("#E_permissions").val() }, function (msg) {
+            if (msg.status) {
+                ui.success("保存成功");
+                $("#editEducation").hide();
+                $("#E_addButton").show();
+
+                var currentid = dataschoolid == 0 ? msg.data : dataschoolid;
+                var entertime = $("#enterTime").val() == "-" ? "" : "（" + $("#enterTime").val() + "）年";
+                var departmentstr = $("#department").val() == "" ? "" : "<li><label class=\"info-l\" style=\"margin-right:18px; width:60px;\">&nbsp;</label><label class=\"info-r\">" + $("#department").val() + "</label>&nbsp;</li>";
+                var liHtml = "<li><label class=\"info-l\" style=\"margin-right:18px; width:60px;\">" + $("#schoolType").val() + "</label><label class=\"info-r\">" + $("#schoolName").val() + entertime + "<span style=\"margin-left:100px; float:right;\" name=\"EditButtonOne\"><a href=\"javascript:void(0);\" onclick=\"editEducation1(" + currentid + ",'" + $("#schoolType").val() + "','" + $("#schoolName").val() + "','" + $("#enterTime").val() + "','" + $("#department").val() + "'," + $("#E_permissions").val() + ");\">编辑</a>　<a href=\"javascript:void(0);\" onclick=\"DeleteEducation(this, " + currentid + ");\">删除</a></span></label>&nbsp;</li>" +
+                        departmentstr + "<li><div style=\"height:10px;\">&nbsp;</div></li>";
+
+                if (dataschoolid == 0) //添加
+                {
+                    var html = "<ul id=\"education" + currentid + "\" style=\"padding:0;\">" + liHtml + "</ul>";
+                    $("#educationList").html(html + $("#educationList").html());
+                }
+                else { //修改
+                    $("#education" + currentid).html("");
+                    $("#education" + currentid).html(liHtml);
+                    dataschoolid = 0;
+                }
+            }
+        }, 'json');
+    }
+
+    function CancelEducation() {
+        ClearSchoolInput();
+        $("#editEducation").hide();
+        $("#E_addButton").show();
+    }
+
+    function ClearSchoolInput() {
+        $("#schoolType").val("大学");
+        $("#schoolName").val("");
+        $("#enterTime").val("");
+        $("#department").val("");
+        $("#E_permissions").val("0");
+    }
+
+    var educationdatalist = <php>echo json_encode($data);</php>;
+    //修改
+    function editEducation(pid) {
+        if($("#editEducation").css('display')!='none') {
+                ui.error("请保存编辑");
+                return;
+        }
+        //alert(pid);
+        for (var i = 0; i < educationdatalist.length; i++) {
+            if (educationdatalist[i].id == pid) {
+                dataschoolid = pid;
+                $("#schoolType").val(educationdatalist[i].schooltype);
+                $("#schoolName").val(educationdatalist[i].schoolname);
+                $("#enterTime").val(educationdatalist[i].entertime);
+                $('#department').val(educationdatalist[i].departments);
+                $("#E_permissions").val(educationdatalist[i].permissions);
+                $("#editEducation").show();
+                $("#E_addButton").hide();
+            }
+        }
+    }
+    function editEducation1(pid, schooltype, schoolname, entertime, departments, permissions) {
+        dataschoolid = pid;
+        $("#schoolType").val(schooltype);
+        $("#schoolName").val(schoolname);
+        $("#enterTime").val(entertime);
+        $('#department').val(departments);
+        $("#E_permissions").val(permissions);
+        $("#editEducation").show();
+        $("#E_addButton").hide();
+    }
+
+    //删除教育信息
+    function DeleteEducation(obj, pid) {
+        var delInfo=function (){
+            var url = U('public/Account/doDeleteEducationInfoNew');
+            $.post(url, { id: pid }, function (msg) {
+                if (msg.status) {
+                    ui.success("删除成功");
+                    $("#education" + pid).hide();
+                }
+            }, 'json');
+        }
+
+        ui.confirm(obj, "确认要删除这条教育信息吗?", delInfo);
+    }
+</script>

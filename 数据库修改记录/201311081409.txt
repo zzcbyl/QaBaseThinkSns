@@ -1,0 +1,2 @@
+1、增加表 wb_user_permissions
+2、增加表

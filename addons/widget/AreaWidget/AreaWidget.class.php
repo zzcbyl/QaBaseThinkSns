@@ -38,9 +38,21 @@ class AreaWidget extends Widget {
 			$list = model('CategoryTree')->setTable('area')->getNetworkList();
 			$data['list'] = json_encode($list);			
 		}
+		if($data['tpl'] == 'selectAreaCopy') {
+			$selectedArea = explode(',', t($_GET['selected']));
+			if(!empty($selectedArea[0])) {
+				$data['selectedarea'] = t($_GET['selected']);
+			}
+			
+			$list = model('CategoryTree')->setTable('area')->getNetworkList();
+			$data['listcopy'] = json_encode($list);			
+		}
+		
 		if($data['curPro'] && $data['curCity'] && $data['area']){
 			$data['selected'] = $data['curPro'].','.$data['curCity'].','.$data['area'];
 		}	
+		/*print('<br /><br /><br /><br /><br />');
+		print_r($data['curPro']);*/
 		$content = $this->renderFile (dirname(__FILE__)."/".$data['tpl'].'.html', $data );
 		return $content;
 	}

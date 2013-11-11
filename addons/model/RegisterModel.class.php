@@ -52,6 +52,11 @@ class RegisterModel extends Model {
 	 * @return boolean 是否验证成功
 	 */
 	public function isValidEmail($email, $old_email = null) {
+		if($email=='')
+		{
+			$this->_error = 'Email地址不能为空';
+			return;
+		}
 		$res = preg_match($this->_email_reg, $email, $matches) !== 0;
 		if(!$res) {
 			$this->_error = L('PUBLIC_EMAIL_TIPS');			// 无效的Email地址
@@ -79,12 +84,17 @@ class RegisterModel extends Model {
 		$protected_name = array('name', 'uname', 'admin', 'profile', 'space');
 		$site_config = model('Xdata')->get('admin_Config:site');
 		!empty($site_config['sys_nickname']) && $protected_name = array_merge($protected_name, explode(',', $site_config['sys_nickname']));
+		if($name=='')
+		{
+			$this->_error = '昵称不能为空';
+			return ;
+		}
 		$res = preg_match($this->_name_reg, $name) !== 0;
 		if($res) {
 			$length = get_str_length($name);
 			$res = ($length >= 2 && $length <= 10);
 		} else {
-			$this->_error = '仅支持中英文，数字，下划线';
+			$this->_error = '昵称仅支持中英文，数字，下划线';
 			$res = false;
 			return $res;
 		}

@@ -14,7 +14,7 @@
                     <div class="feed-nav mt10">
                     </div>
                     <div class="mod-data">
-                        <div class="profile-datalist">
+                        <!--<div class="profile-datalist">
                             <h4>
                                 <php>if($uid==$mid){</php>
                                 <a href="{:U('public/Account/index')}" class="right f12" style="font-weight: normal;">
@@ -34,7 +34,14 @@
                                     <label class="info-l">
                                         个人简介：</label><label class="info-r">{$user_info[$uid]['intro']}</label>&nbsp;</li><php>}</php>
                             </ul>
-                        </div>
+                        </div>-->
+
+                        {:W('UserBaseInfo',array('uid'=>$uid))}
+
+                        {:W('UserProfessionInfo',array('mid'=>$mid, 'uid'=>$uid))}
+
+                        {:W('UserEducationInfo',array('mid'=>$mid, 'uid'=>$uid))}
+
                         <volist name='ProfileType' id='vo'>
                             <div class="profile-datalist">
                                 <h4><php>if($uid==$mid){</php><a href="{:U('public/Account/'.$vo['field_key'])}" class="right f12" style="font-weight:normal;" >编辑</a><php>}</php>{$vo['field_name']}</h4>
@@ -76,5 +83,7 @@
         </div>
     </div>
 </div>
-<include file="__THEME__/public_footer" />
 <script src="__THEME__/js/module.weibo.js"></script>
+<script src="__THEME__/js/module.form.js"></script>
+<include file="__THEME__/public_footer" />
+

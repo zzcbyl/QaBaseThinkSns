@@ -91,6 +91,7 @@ M.addEventFns({
 	input_text: {
 		focus: function() {
 			this.className='s-txt-focus';
+            $(this).focus();
 			return false;
 		},
 		blur: function() {
@@ -143,7 +144,7 @@ M.addEventFns({
 
 			var dTips = (this.parentModel.childEvents[this.getAttribute( "name" ) + "_tips"] || [])[0];
 			var sValue = this.value;
-
+            
 			// 纯数字验证
 			var re = /^[0-9]*$/;
 			if(!re.test(sValue)) {
@@ -317,12 +318,28 @@ M.addEventFns({
 			var dEmail = this;
 			var sUrl = dEmail.getAttribute("checkurl");
 			var sValue = dEmail.value;
-
+            //alert(sValue);
 			if(!sUrl || (this.dSuggest && this.dSuggest.isEnter)) {
 				return false;
 			}
+            
+            if(sValue.length==0)
+            {
+                tips.error( dEmail, 'Email地址不能为空' );
+                return false;
+            }
 
+            var myReg = /^[-._A-Za-z0-9]+@([_A-Za-z0-9]+\.)+[A-Za-z0-9]{2,3}$/; 
+            if(!myReg.test(sValue))
+            {
+                tips.error( dEmail, '无效的Email地址' );
+                return false;
+            }
+            else
+                tips.clear( dEmail )
+            
 			$.post(sUrl, {email:sValue}, function(oTxt) {
+                //alert(oTxt);
 				var oArgs = M.getEventArgs(dEmail);
 				if(oTxt.status) {
 					"false" == oArgs.success ? tips.clear( dEmail ) : tips.success( dEmail );
@@ -562,6 +579,12 @@ M.addEventFns({
 
 			if(!sUrl || (this.dSuggest && this.dSuggest.isEnter)) return;
 
+            if(sValue.length==0)
+                tips.error( dUname, '昵称不能为空' );
+            else
+                tips.clear(dUname)
+            
+
 			$.post(sUrl, {uname:sValue, old_name:oValue}, function(oTxt) {
 				if(oTxt.status) {
 					'false' == oArgs.success ? tips.clear(dUname) : tips.success(dUname);
@@ -629,6 +652,7 @@ M.addEventFns({
 			if ( args.info && ! confirm( args.info )) {
 				return false;
 			}
+            
 			try{
 				(function( node ) {
 					var parent = node.parentNode;
@@ -677,14 +701,9 @@ var tips = {
 	 */
 	error: function(D, txt) {
 		this.init(D);
-		if($(D).val() == '' && isSubmit != 1) {
-			D.dError.style.display = "none";
-			D.dSuccess.style.display = "none";
-		} else {
-			D.dSuccess.style.display = "none";
-			D.dError.style.display = "";
-			D.dErrorText.nodeValue = txt;
-		}
+		D.dSuccess.style.display = "none";
+		D.dError.style.display = "";
+		D.dErrorText.nodeValue = txt;
 	},
 	/**
 	 * 调用成功接口
@@ -721,12 +740,13 @@ var tips = {
 			var dSpan = document.createElement("span");
 			var dDiv = document.createElement("div");
 			// 组装HTML结构 - DIV
-			D.dError = dFrag.appendChild(dDiv);
-			dDiv.className = "box-ver";
-			dDiv.style.display = "none";
+			D.dError = dFrag.appendChild(dSpan);
+//			dDiv.className = "box-ver-new";
+//			dDiv.style.display = "none";
 			// 组装HTML结构 - SPAN
-			dDiv.appendChild( dSpan );
+			//dDiv.appendChild( dSpan );
 			// 组装HTML结构 - B
+            dSpan.style.display = "none";
 			dSpan.appendChild( dB );
 			dB.className = "ico-error";
 			D.dErrorText = dSpan.appendChild(dText);

@@ -1,0 +1,94 @@
+﻿<select style="float:left;margin:0 10px 0 0;" name="c_province" id="c_province" onchange="changeArea(this)"></select>
+<select style="float:left;margin:0 10px 0 0;" name="c_city" id="c_city" onchange="changeArea(this)"></select>
+<select style="float:left;margin:0 10px 0 0;" name="c_area" id="c_area" onchange="changeArea(this)"></select>
+<input event-node="input_area" type="hidden" id="c_current" name="c_city_ids" value="{$selected}"/>
+<input type="hidden" id="c_current_name" name="c_city_names" value="{$city_names}" />
+
+<script type="text/javascript">
+var c_json = eval({$listcopy});			// 地区JSON数据
+var c_arrNodeChild = new Array();		// 子树数组
+var c_selected = '{$selected}';		// 默认选中的地区
+
+// 地区初始化
+var c_init = function() {
+	c_selected = c_selected == '' ? $('#c_current').val() : c_selected;
+	var arrSelect = c_selected.split(',');
+	// 获取树形结构的子树
+	var option1 = '<option value="0">请选择</option>';
+	var option2 = '<option value="0">请选择</option>';
+	var option3 = '<option value="0">请选择</option>';
+	$.each(c_json, function(i, n) {
+		var selected1 = (n.id == arrSelect[0]) ? 'selected="selected"' : '';
+		option1 += '<option value="' + n.id + '" ' + selected1 + '>' + n.title + '</option>'
+		c_arrNodeChild[i] = n.child;
+		if(n.child !== null) {
+			$.each(n.child, function(ii, nn) {
+				if(n.id == arrSelect[0]) {
+					var selected2 = (nn.id == arrSelect[1]) ? 'selected="selected"' : '';
+					option2 += '<option value="' + nn.id + '" ' + selected2 + '>' + nn.title + '</option>';
+				}
+				c_arrNodeChild[ii] = nn.child;
+				if(nn.child !== null) {
+					$.each(nn.child, function(iii, nnn) {
+						if(nn.id == arrSelect[1]) {
+							var selected3 = (nnn.id == arrSelect[2]) ? 'selected="selected"' : '';
+							option3 += '<option value="' + nnn.id + '" ' + selected3 + '>' + nnn.title + '</option>';
+						}
+						c_arrNodeChild[iii] = nnn.child;
+					});
+				}
+			});
+		}
+	});
+	$('#c_province').append(option1);
+	$('#c_city').append(option2);
+	$('#c_area').append(option3);
+};
+// 改变地区方法
+var changeArea = function(obj) {
+	var id = $(obj).attr('id');
+	var val = $(obj).val();
+	switch(id) {
+		case 'c_province':
+			if(c_arrNodeChild[val] !== null) {
+				if(val == 0) {
+					$('#c_city').html('<option value="0">请选择</option>');
+					$('#c_area').html('<option value="0">请选择</option>');
+					break;
+				}
+				var select = '<option value="0">请选择</option>';
+				$.each(c_arrNodeChild[val], function(i, n) {
+					select += '<option value="' + n.id + '">' + n.title + '</option>';
+				});
+				$('#c_city').html(select);
+				$('#c_area').html('<option value="0">请选择</option>');
+			}
+ 			break;
+		case 'c_city':
+			if(c_arrNodeChild[val] !== null) {
+				if(val == 0) {
+					$('#c_area').html('<option value="0">请选择</option>');
+					break;
+				}
+				var select = '<option value="0">请选择</option>';
+				$.each(c_arrNodeChild[val], function(i, n) {
+					select += '<option value="' + n.id + '">' + n.title + '</option>';
+				});
+				$('#c_area').html(select);
+			}
+			break;
+	}
+	var current = new Array();
+	typeof($('#c_province').val()) !== 'undefined' && current.push($('#c_province').val());
+	typeof($('#c_city').val()) !== 'undefined' && current.push($('#c_city').val());
+	typeof($('#c_area').val()) !== 'undefined' && current.push($('#c_area').val());
+	$('#c_current').val(current.join(','));
+	var currentName = new Array();
+	$('#c_province option:selected').html() != '请选择' && currentName.push($('#c_province option:selected').html());
+	$('#c_city option:selected').html() != '请选择' && currentName.push($('#c_city option:selected').html());
+	$('#c_area option:selected').html() != '请选择' && currentName.push($('#c_area option:selected').html());
+	$('#c_current_name').val(currentName.join(' '));
+} 
+
+c_init();
+</script>

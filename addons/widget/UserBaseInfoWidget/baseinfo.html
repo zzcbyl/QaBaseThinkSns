@@ -1,0 +1,167 @@
+﻿<div id="UserBaseDiv" class="profile-datalist">
+    <h4>
+        <php>if($uid==$mid){</php><a href="javascript:w_UpdUser();" class="right f12" style="font-weight: normal;">编辑</a><php>}</php>
+        基本信息</h4>
+    <ul class="info">
+        <php>if($uid==$mid){</php>
+        <li>
+            <label class="info-l">
+                登录名：</label><label class="info-r">{$login}&nbsp;&nbsp;<a href="javascript:void();">修改密码</a></label>&nbsp;
+       </li><php>}</php>
+        <li>
+            <label class="info-l">
+                昵称：</label><label class="info-r">{$uname}</label>&nbsp;<php>if(empty($uname) && $uid==$mid){</php><a href="javascript:w_UpdUser('uname');">马上填写</a><php>}</php></li>
+        <li>
+            <label class="info-l">
+                真实姓名：</label><label class="info-r">{$realname}</label>&nbsp;<php>if(empty($realname) && $uid==$mid){</php><a href="javascript:w_UpdUser('realname');">马上填写</a><php>}</php>
+        </li>
+        <li>
+            <label class="info-l">
+                所在地：</label><label class="info-r">{$location}</label>&nbsp;<php>if(empty($location) && $uid==$mid){</php><a href="javascript:w_UpdUser('');">马上填写</a><php>}</php></li>
+        <li>
+            <label class="info-l">
+                性别：</label><label class="info-r"><php>echo $sex == 1 ? 男 : 女;</php></label>&nbsp;</li>
+        <li>
+            <label class="info-l">
+                生日：</label><label class="info-r">{$birthday}</label>&nbsp;<php>if(empty($birthday) && $uid==$mid){</php><a href="javascript:w_UpdUser('birthday');">马上填写</a><php>}</php>
+        </li>
+        <!--<li>
+            <label class="info-l">
+                血型：</label><label class="info-r"><php>echo $bloodtype==1?'A型':($bloodtype==2?'B型':($bloodtype==3?'AB型':($bloodtype==4?'O型':''))); </php></label>&nbsp;<php>if(empty($bloodtype) && $uid==$mid){</php><a href="javascript:w_UpdUser('');">马上填写</a><php>}</php></li>-->
+        <li>
+            <label class="info-l">
+                个人简介：</label><label class="info-r">{$intro}</label>&nbsp;<php>if(empty($intro) && $uid==$mid){</php><a href="javascript:w_UpdUser('intro');">马上填写</a><php>}</php></li>
+    </ul>
+</div>
+<div id="UpdUserBaseDiv" class="profile-datalist" style="display:none">
+    <form action="{:U('public/Account/doSaveProfileNew')}" method="post" model-node='account_save'>
+    <h4>
+        <php>if($uid==$mid){</php><a event-node="submit_btn" href="#" class="right f12" style="font-weight: normal;">保存</a><php>}</php>
+        基本信息</h4>
+    <ul class="info">
+        <php>if($uid==$mid){</php>
+        <li>
+            <label class="info-l">
+                登录名：</label><div class="info-r">{$login}&nbsp;&nbsp;<a href="javascript:void();">修改密码</a></div>&nbsp;</li><php>}</php>
+        <li>
+            <label class="info-l">
+                <span class="redSpan">*</span>昵称：</label><div class="info-r"><input event-node="uname" even-args="old_name={$uname}" checkurl="{:U('public/Register/isUnameAvailable')}" autocomplete="off" type="text" id="uname" name="uname" value="{$uname}" maxlength="20" /></div>&nbsp;
+                <input type="hidden" name="old_name" value="{$uname}" /></li>
+        <li>
+            <label class="info-l">
+                真实姓名：</label><div class="info-r"><input type="text" id="realname" name="realname" value="{$realname}" maxlength="20" /></div>&nbsp;
+            <div class="info-rr"><select name="sel_realname"><option>所有人可见</option><option <if condition="1 eq $permissions['realname']">selected</if> value="1">我关注的人可见</option><option <if condition="2 eq $permissions['realname']">selected</if> value="2">仅自己可见</option></select></div>
+        </li>
+        <li>
+            <label class="info-l">
+                <span class="redSpan">*</span>所在地：</label><div class="info-r">
+                    {:W('Area',array('curPro'=>$province,'curCity'=>$city,'area'=>$area,'city_names'=>$location,'tpl'=>'selectArea'))}</div>&nbsp;</li>
+        <li>
+            <label class="info-l">
+                <span class="redSpan">*</span>性别：</label><div class="info-r">
+                    <label><input name="sex" type="radio" value="1" class="s-ck" <if condition="1 eq $sex">checked="checked"</if> />男</label>
+                    <label><input name="sex" type="radio" value="2" class="s-ck" <if condition="2 eq $sex">checked="checked"</if> />女</label>
+                </div>&nbsp;</li>
+        <li>
+            <label class="info-l">
+                生日：</label><div class="info-r">{:W('DateSelect',array('name'=>'birthday','class'=>'','id'=>'birthday','value'=>$birthday,'dtype'=>'date'))}</div>&nbsp;
+            <div class="info-rr"><select name="sel_birthday"><option>公开,完整显示</option><option <if condition="1 eq $permissions['birthday']">selected</if> value="1">只显示月日</option><option <if condition="2 eq $permissions['birthday']">selected</if> value="2">保密</option></select></div>
+        </li>
+        <!--<li>
+            <label class="info-l">
+                血型：</label><div class="info-r">
+                    <select name="bloodtype"><option <if condition="0 eq $bloodtype">selected</if> value="0">　</option>
+                            <option <if condition="1 eq $bloodtype">selected</if> value="1">A型</option>
+                            <option <if condition="2 eq $bloodtype">selected</if> value="2">B型</option>
+                            <option <if condition="3 eq $bloodtype">selected</if> value="3">AB型</option>
+                            <option <if condition="4 eq $bloodtype">selected</if> value="4">O型</option></select></div>&nbsp;</li>-->
+        <li>
+            <label class="info-l">
+                个人简介：</label><div class="info-r"><textarea name="intro" id="intro" maxlength="255">{$intro}</textarea></div>&nbsp;</li>
+    </ul>
+    </form>
+</div>
+
+<div id="UserLinkDiv" class="profile-datalist">
+    <h4>
+        <php>if($uid==$mid){</php><a href="javascript:w_UpdLinkUser();" class="right f12" style="font-weight: normal;">编辑</a><php>}</php>
+        联系信息</h4>
+    <ul class="info">
+        <!--<li>
+            <label class="info-l">
+                邮箱：</label><label class="info-r">{$email}</label>&nbsp;</li>-->
+        <li>
+            <label class="info-l">
+                QQ：</label><label class="info-r">{$qq}</label>&nbsp;<php>if(empty($qq) && $uid==$mid){</php><a href="javascript:w_UpdLinkUser('qq');">马上填写</a><php>}</php></li>
+        <li>
+            <label class="info-l">
+                微信号：</label><label class="info-r">{$weixin}</label>&nbsp;<php>if(empty($weixin) && $uid==$mid){</php><a href="javascript:w_UpdLinkUser('weixin');">马上填写</a><php>}</php></li>
+        <li>
+            <label class="info-l">
+                腾讯微博：</label><label class="info-r">{$tengxunVB}</label>&nbsp;<php>if(empty($tengxunVB) && $uid==$mid){</php><a href="javascript:w_UpdLinkUser('tengxuvb');">马上填写</a><php>}</php></li>
+        <li>
+            <label class="info-l">
+                新浪微博：</label><label class="info-r">{$xinlangVB}</label>&nbsp;<php>if(empty($xinlangVB) && $uid==$mid){</php><a href="javascript:w_UpdLinkUser('xinlangvb');">马上填写</a><php>}</php></li>
+    </ul>
+</div>
+<div id="UpdUserLinkDiv" class="profile-datalist" style="display:none;">
+    <form action="{:U('public/Account/doSaveLinkInfoNew')}" method="post" model-node='account_save'>
+    <h4>
+        <php>if($uid==$mid){</php><a event-node="submit_btn" href="#" class="right f12" style="font-weight: normal;">保存</a><php>}</php>
+        联系信息</h4>
+    <ul class="info">
+        <!--<li>
+            <label class="info-l"><php> echo $config['email_suffix'];</php>
+                <span class="redSpan">*</span>邮箱：</label><div class="info-r"><input event-node="email" event-args="suffix={$config['email_suffix']}" name="email" checkurl="{:U('public/Register/isEmailAvailable')}" autocomplete="off" type="text" id="email" name="email" value="{$email}" maxlength="100" />
+                </div>&nbsp;
+                <input type="hidden" name="old_email" value="{$email}" /></li>-->
+        <li>
+            <label class="info-l">
+                QQ：</label><div class="info-r"><input event-node="input_nums" event-args='max=15' type="text" id="qq" name="qq" value="{$qq}" maxlength="15" /></div>&nbsp;
+            <div class="info-rr"><select name="sel_qq"><option>所有人可见</option><option <if condition="1 eq $permissions['qq']">selected</if> value="1">我关注的人可见</option><option <if condition="2 eq $permissions['qq']">selected</if> value="2">仅自己可见</option></select></div>
+        </li>
+        <li>
+            <label class="info-l">
+                微信号：</label><div class="info-r"><input event-node="input_text" event-args='max=80' type="text" id="weixin" name="weixin" value="{$weixin}" maxlength="80" /></div>&nbsp;
+            <div class="info-rr"><select name="sel_weixin"><option>所有人可见</option><option <if condition="1 eq $permissions['weixin']">selected</if> value="1">我关注的人可见</option><option <if condition="2 eq $permissions['weixin']">selected</if> value="2">仅自己可见</option></select></div>
+        </li>
+        <li>
+            <label class="info-l">
+                腾讯微博：</label><div class="info-r"><input event-node="input_text" event-args='max=80' type="text" id="tengxuvb" name="tengxuvb" value="{$tengxunVB}" maxlength="80" /></div>&nbsp;
+            <div class="info-rr"><select name="sel_tengxunVB"><option>所有人可见</option><option <if condition="1 eq $permissions['tengxunVB']">selected</if> value="1">我关注的人可见</option><option <if condition="2 eq $permissions['tengxunVB']">selected</if> value="2">仅自己可见</option></select></div>
+        </li>
+        <li>
+            <label class="info-l">
+                新浪微博：</label><div class="info-r"><input event-node="input_text" event-args='max=80' type="text" id="xinlangvb" name="xinlangvb" value="{$xinlangVB}" maxlength="80" /></div>&nbsp;
+            <div class="info-rr"><select name="sel_xinlangVB"><option>所有人可见</option><option <if condition="1 eq $permissions['xinlangVB']">selected</if> value="1">我关注的人可见</option><option <if condition="2 eq $permissions['xinlangVB']">selected</if> value="2">仅自己可见</option></select></div>
+        </li>
+    </ul>
+    </form>
+</div>
+
+
+<script type="text/javascript">
+    function w_UpdUser(objID) {
+        $("#UpdUserBaseDiv").show();
+        $("#UserBaseDiv").hide();
+        if (objID != '')
+            $('#' + objID).focus();
+    }
+    function w_SaveUser() {
+        $("#UpdUserBaseDiv").hide();
+        $("#UserBaseDiv").show();
+    }
+
+    function w_UpdLinkUser(objID) {
+        $("#UpdUserLinkDiv").show();
+        $("#UserLinkDiv").hide();
+        if (objID != '')
+            $('#' + objID).focus();
+    }
+    function w_SaveLinkUser() {
+        $("#UpdUserLinkDiv").hide();
+        $("#UserLinkDiv").show();
+    }
+
+
+</script>
