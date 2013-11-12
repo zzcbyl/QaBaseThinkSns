@@ -1,9 +1,9 @@
 ﻿<div id="UserBaseDiv" class="profile-datalist">
     <h4>
-        <php>if($uid==$mid){</php><a href="javascript:w_UpdUser();" class="right f12" style="font-weight: normal;">编辑</a><php>}</php>
+        <php>if($followstate==1){</php><a href="javascript:w_UpdUser();" class="right f12" style="font-weight: normal;">编辑</a><php>}</php>
         基本信息</h4>
     <ul class="info">
-        <php>if($uid==$mid){</php>
+        <php>if($followstate==1){</php>
         <li>
             <label class="info-l">
                 登录名：</label><label class="info-r">{$login}&nbsp;&nbsp;<a href="javascript:void();">修改密码</a></label>&nbsp;
@@ -11,10 +11,12 @@
         <li>
             <label class="info-l">
                 昵称：</label><label class="info-r">{$uname}</label>&nbsp;<php>if(empty($uname) && $uid==$mid){</php><a href="javascript:w_UpdUser('uname');">马上填写</a><php>}</php></li>
+        <php>if(($followstate==1) || ($followstate==0 && $permissions['realname']==0) || ($followstate==2 && ($permissions['realname']==0 || $permissions['realname']==1))) {</php>
         <li>
             <label class="info-l">
                 真实姓名：</label><label class="info-r">{$realname}</label>&nbsp;<php>if(empty($realname) && $uid==$mid){</php><a href="javascript:w_UpdUser('realname');">马上填写</a><php>}</php>
         </li>
+        <php>}</php>
         <li>
             <label class="info-l">
                 所在地：</label><label class="info-r">{$location}</label>&nbsp;<php>if(empty($location) && $uid==$mid){</php><a href="javascript:w_UpdUser('');">马上填写</a><php>}</php></li>
@@ -23,7 +25,15 @@
                 性别：</label><label class="info-r"><php>echo $sex == 1 ? 男 : 女;</php></label>&nbsp;</li>
         <li>
             <label class="info-l">
-                生日：</label><label class="info-r">{$birthday}</label>&nbsp;<php>if(empty($birthday) && $uid==$mid){</php><a href="javascript:w_UpdUser('birthday');">马上填写</a><php>}</php>
+                生日：</label><label class="info-r">
+            <php>if($followstate==1 || $permissions['birthday']==0) {
+                echo $birthday;
+            } else if($permissions['birthday']==1) {
+               echo substr($birthday,strpos($birthday,'-')+1);
+            } else if($permissions['birthday']==2) {
+                echo '保密';
+            }</php>
+            </label>&nbsp;<php>if(empty($birthday) && $uid==$mid){</php><a href="javascript:w_UpdUser('birthday');">马上填写</a><php>}</php>
         </li>
         <!--<li>
             <label class="info-l">
@@ -36,10 +46,10 @@
 <div id="UpdUserBaseDiv" class="profile-datalist" style="display:none">
     <form action="{:U('public/Account/doSaveProfileNew')}" method="post" model-node='account_save'>
     <h4>
-        <php>if($uid==$mid){</php><a event-node="submit_btn" href="#" class="right f12" style="font-weight: normal;">保存</a><php>}</php>
+        <php>if($followstate==1){</php><a event-node="submit_btn" href="#" class="right f12" style="font-weight: normal;">保存</a><php>}</php>
         基本信息</h4>
     <ul class="info">
-        <php>if($uid==$mid){</php>
+        <php>if($followstate==1){</php>
         <li>
             <label class="info-l">
                 登录名：</label><div class="info-r">{$login}&nbsp;&nbsp;<a href="javascript:void();">修改密码</a></div>&nbsp;</li><php>}</php>
@@ -90,18 +100,26 @@
         <!--<li>
             <label class="info-l">
                 邮箱：</label><label class="info-r">{$email}</label>&nbsp;</li>-->
+        <php>if(($followstate==1) || ($followstate==0 && $permissions['qq']==0) || ($followstate==2 && ($permissions['qq']==0 || $permissions['qq']==1))) {</php>
         <li>
             <label class="info-l">
                 QQ：</label><label class="info-r">{$qq}</label>&nbsp;<php>if(empty($qq) && $uid==$mid){</php><a href="javascript:w_UpdLinkUser('qq');">马上填写</a><php>}</php></li>
+        <php>}</php>
+        <php>if(($followstate==1) || ($followstate==0 && $permissions['weixin']==0) || ($followstate==2 && ($permissions['weixin']==0 || $permissions['weixin']==1))) {</php>
         <li>
             <label class="info-l">
                 微信号：</label><label class="info-r">{$weixin}</label>&nbsp;<php>if(empty($weixin) && $uid==$mid){</php><a href="javascript:w_UpdLinkUser('weixin');">马上填写</a><php>}</php></li>
+        <php>}</php>
+        <php>if(($followstate==1) || ($followstate==0 && $permissions['tengxunVB']==0) || ($followstate==2 && ($permissions['tengxunVB']==0 || $permissions['tengxunVB']==1))) {</php>
         <li>
             <label class="info-l">
                 腾讯微博：</label><label class="info-r">{$tengxunVB}</label>&nbsp;<php>if(empty($tengxunVB) && $uid==$mid){</php><a href="javascript:w_UpdLinkUser('tengxuvb');">马上填写</a><php>}</php></li>
+        <php>}</php>
+        <php>if(($followstate==1) || ($followstate==0 && $permissions['xinlangVB']==0) || ($followstate==2 && ($permissions['xinlangVB']==0 || $permissions['xinlangVB']==1))) {</php>
         <li>
             <label class="info-l">
                 新浪微博：</label><label class="info-r">{$xinlangVB}</label>&nbsp;<php>if(empty($xinlangVB) && $uid==$mid){</php><a href="javascript:w_UpdLinkUser('xinlangvb');">马上填写</a><php>}</php></li>
+        <php>}</php>
     </ul>
 </div>
 <div id="UpdUserLinkDiv" class="profile-datalist" style="display:none;">

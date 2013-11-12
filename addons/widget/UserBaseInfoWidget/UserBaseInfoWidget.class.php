@@ -24,9 +24,10 @@ class UserBaseInfoWidget extends Widget {
 		$this->_config = model('Xdata')->get('admin_Config:register');
 		$var['config']=$this->_config;
 		
-		$data = model('UserPermissions')->getUserPermissions($uid);
-		$var['permissions'] = $data;
+		$userper = model('UserPermissions')->getUserPermissions($uid);
+		$var['permissions'] = $userper;
 		//print_r($data[0]);
+		$var['followstate'] = $data['followstate'];
 		
 		//print_r($var);
 		// 渲染模版

@@ -273,9 +273,23 @@ class ProfileAction extends Action {
 	 * @return void
 	 */
 	public function data() {
-		if (! CheckPermission ( 'core_normal', 'read_data' ) && $this->uid != $this->mid) {
+		/*if (! CheckPermission ( 'core_normal', 'read_data' ) && $this->uid != $this->mid) {
 			$this->error ( '对不起，您没有权限浏览该内容!' );
+		}*/
+		$followState = 0; //没关系
+		if($this->uid == $this->mid)
+		{
+			$followState=1; //自己
 		}
+		$state = model('Follow')->getFollowState($this->mid, $this->uid);
+		if($state['follower']==1)
+		{
+			$followState=2;//关注的人
+		}
+		/*print('<br /><br /><br /><br />');
+		print_r($state);*/
+		
+		$this->assign ( 'followstate', $followState );
 		// 获取用户信息
 		$user_info = model ( 'User' )->getUserInfo ( $this->uid );
 		// 用户为空，则跳转用户不存在

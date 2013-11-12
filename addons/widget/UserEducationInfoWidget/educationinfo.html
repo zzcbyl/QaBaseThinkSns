@@ -18,15 +18,17 @@
         <div style="float:left;">
             <ul id="educationList" class="info">
                 <volist name="data" id="vl">
-                    <ul id="education{$vl.id}" style="padding:0;">
-                        <li>
-                            <label class="info-l" style="margin-right:18px; width:60px;">{$vl.schooltype}</label><label class="info-r">{$vl.schoolname}<php>if($vl['entertime']!='') {</php>（{$vl.entertime}年）<php>}</php><span style="margin-left:100px; float:right; display:none;" name="EditButtonOne"><a href="javascript:void(0);" onclick="editEducation({$vl.id});">编辑</a>　<a href="javascript:void(0);" onclick="DeleteEducation(this, {$vl.id});">删除</a></span></label>&nbsp;
-                        </li>
-                        <php>if($vl['departments']!="") {</php>
-                        <li>
-                            <label class="info-l" style="margin-right:18px; width:60px;">&nbsp;</label><label class="info-r">{$vl.departments}</label>&nbsp;</li><php>}</php>
-                        <li><div style="height:10px;">&nbsp;</div></li>
-                    </ul>
+                    <php>if(($followstate==1) || ($followstate==0 && $vl['permissions']==0) || ($followstate==2 && ($vl['permissions']==0 || $vl['permissions']==1))) {</php>
+                        <ul id="education{$vl.id}" style="padding:0;">
+                            <li>
+                                <label class="info-l" style="margin-right:18px; width:60px;">{$vl.schooltype}</label><label class="info-r">{$vl.schoolname}<php>if($vl['entertime']!='') {</php>（{$vl.entertime}年）<php>}</php><span style="margin-left:100px; float:right; display:none;" name="E_EditButtonOne"><a href="javascript:void(0);" onclick="editEducation({$vl.id});">编辑</a>　<a href="javascript:void(0);" onclick="DeleteEducation(this, {$vl.id});">删除</a></span></label>&nbsp;
+                            </li>
+                            <php>if($vl['departments']!="") {</php>
+                            <li>
+                                <label class="info-l" style="margin-right:18px; width:60px;">&nbsp;</label><label class="info-r">{$vl.departments}</label>&nbsp;</li><php>}</php>
+                            <li><div style="height:10px;">&nbsp;</div></li>
+                        </ul>
+                    <php>}</php>
                 </volist>
             </ul>
         </div>
@@ -39,7 +41,7 @@
         if($(obj).html()=="编辑") {
             $(obj).html("保存");
             $("#E_addButton").show();
-            var spEidt = $("span[name=EditButtonOne]");
+            var spEidt = $("span[name=E_EditButtonOne]");
             for(var i = 0; i < spEidt.length; i++) {
                 $(spEidt[i]).show();
             }
@@ -51,7 +53,7 @@
             else{
                 $(obj).html("编辑");
                 $("#E_addButton").hide();
-                var spEidt = $("span[name=EditButtonOne]");
+                var spEidt = $("span[name=E_EditButtonOne]");
                 for(var i = 0; i < spEidt.length; i++) {
                     $(spEidt[i]).hide();
                 }
@@ -92,7 +94,7 @@
                 var currentid = dataschoolid == 0 ? msg.data : dataschoolid;
                 var entertime = $("#enterTime").val() == "-" ? "" : "（" + $("#enterTime").val() + "）年";
                 var departmentstr = $("#department").val() == "" ? "" : "<li><label class=\"info-l\" style=\"margin-right:18px; width:60px;\">&nbsp;</label><label class=\"info-r\">" + $("#department").val() + "</label>&nbsp;</li>";
-                var liHtml = "<li><label class=\"info-l\" style=\"margin-right:18px; width:60px;\">" + $("#schoolType").val() + "</label><label class=\"info-r\">" + $("#schoolName").val() + entertime + "<span style=\"margin-left:100px; float:right;\" name=\"EditButtonOne\"><a href=\"javascript:void(0);\" onclick=\"editEducation1(" + currentid + ",'" + $("#schoolType").val() + "','" + $("#schoolName").val() + "','" + $("#enterTime").val() + "','" + $("#department").val() + "'," + $("#E_permissions").val() + ");\">编辑</a>　<a href=\"javascript:void(0);\" onclick=\"DeleteEducation(this, " + currentid + ");\">删除</a></span></label>&nbsp;</li>" +
+                var liHtml = "<li><label class=\"info-l\" style=\"margin-right:18px; width:60px;\">" + $("#schoolType").val() + "</label><label class=\"info-r\">" + $("#schoolName").val() + entertime + "<span style=\"margin-left:100px; float:right;\" name=\"E_EditButtonOne\"><a href=\"javascript:void(0);\" onclick=\"editEducation1(" + currentid + ",'" + $("#schoolType").val() + "','" + $("#schoolName").val() + "','" + $("#enterTime").val() + "','" + $("#department").val() + "'," + $("#E_permissions").val() + ");\">编辑</a>　<a href=\"javascript:void(0);\" onclick=\"DeleteEducation(this, " + currentid + ");\">删除</a></span></label>&nbsp;</li>" +
                         departmentstr + "<li><div style=\"height:10px;\">&nbsp;</div></li>";
 
                 if (dataschoolid == 0) //添加

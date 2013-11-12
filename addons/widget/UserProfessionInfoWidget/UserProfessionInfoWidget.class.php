@@ -21,7 +21,7 @@ class UserProfessionInfoWidget extends Widget {
 		$ProfessionList = model('UserProfession')->getUserProfessionList($uid);
 		$ProfessionList['data']=$ProfessionList;
 		//print_r($ProfessionList);
-
+		$ProfessionList['followstate'] = $data['followstate'];
 		$year=array();
 		for ($i=60; $i>=0; $i--) {
 			if(intval(1990+$i)>intval(date("Y")))

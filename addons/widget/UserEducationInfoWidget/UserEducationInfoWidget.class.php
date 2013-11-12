@@ -21,6 +21,8 @@ class UserEducationInfoWidget extends Widget {
 		$ProfessionList = model('UserEducation')->getUserEducationList($uid);
 		$ProfessionList['data']=$ProfessionList;
 		
+		$ProfessionList['followstate'] = $data['followstate'];
+		
 		//print_r($ProfessionList);
 		$year=array();
 		for ($i=60; $i>=0; $i--) {
