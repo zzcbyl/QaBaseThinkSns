@@ -1,4 +1,4 @@
-﻿<include file="__THEME__/public_header" />
+<include file="__THEME__/public_header" />
     <div id="page-wrap">
         <div id="main-wrap" class="content-bg">
             <div id="col" class="st-grid boxShadow minh" style="float:left;">
@@ -30,7 +30,7 @@
 										        </div>
 									           <div class="info-left">
 										        <p class="hd">
-											        <span style="font-size:14px">{$vo.space_link}</span>
+											        <span style="font-size:14px">{$vo.space_link}　<php>if($vo['newCount']==1) echo 'new';</php></span>
 											        <volist name="userGroupData[$vo['uid']]" id="v1">
                                 			        <img style="width:auto;height:auto;display:inline;cursor:pointer;vertical-align:-3px" src="{$v1['user_group_icon_url']}" title="{$v1['user_group_name']}" />&nbsp;
                               			            </volist>

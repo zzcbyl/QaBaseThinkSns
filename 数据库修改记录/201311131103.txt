@@ -1,0 +1,2 @@
+1、增加表 wb_user_education
+2、在 wb_feed 中增加字段 feed_quid

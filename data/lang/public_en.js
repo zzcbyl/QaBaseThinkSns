@@ -190,3 +190,7 @@ LANG['FORMATBLOCK']='Format';
 LANG['FONTNAME']='Font Name';
 LANG['FONTSIZE']='Font Size';
 LANG['PUBLIC_SYSTEM_FRIEND']='new friends';
+LANG['PUBLIC_SYSTEM_NEWANSWER']='new answers';
+LANG['PUBLIC_SYSTEM_NEWCOMMENT']='new comments';
+LANG['PUBLIC_SYSTEM_NEWAGREECOMMENT']='new agree comments';
+LANG['PUBLIC_SYSTEM_NEWOPPOSECOMMENT']='new oppose comments';

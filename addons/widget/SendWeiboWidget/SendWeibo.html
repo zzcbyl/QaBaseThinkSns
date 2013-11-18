@@ -22,12 +22,12 @@
 				<div class="input_before mb5" model-node="mini_editor" model-args="prompt={$prompt}">
                     <table style="width:100%;" id="sendWeiboTab">
 				       <tr>
-				            <td><textarea id="inputor{$time}" wrap="off" name="at" class="input_tips" style="word-wrap:normal; overflow-x:hidden; padding-right:40px; height:18px; display:inline; color:#999; width:92.7%;" event-node="mini_editor_textarea" model-args='t=feed'>请用一句话描述您的困惑</textarea>
-                                <div style="position:absolute; margin:-21px 610px 0; color:#999; width:60px"><span id="numsLeft">{$initNums}</span>/{$initNums}</div>
+				            <td><textarea id="inputor{$time}" wrap="off" name="at" class="input_tips" style="word-wrap:normal; overflow-x:hidden; height:25px; line-height:25px; display:inline; color:#999; width:640px;" event-node="mini_editor_textarea" model-args='t=feed'>请用一句话描述您的困惑</textarea>
+                                <div style="position:absolute; margin:-21px 610px 0; color:#999; width:60px; font-size:12px;"><span id="numsLeft">{$initNums}</span>/{$initNums}</div>
                             </td>
 				        </tr>
 				        <tr>
-				            <td style="padding-top:5px;"><textarea style="width:98%; height:78px;  font-size: 14px; padding:5px; background: none repeat scroll 0 0 #FFFFFF; border: 1px solid #DDDDDD; box-shadow: 1px 1px 3px #DCDCDC inset;color:#999;" ><if condition="trim($topicHtml) neq ''">{$topicHtml} </if>您可以在这里继续补充问题细节</textarea></td>
+				            <td style="padding-top:5px;"><textarea style="width:640px; height:78px;  font-size: 14px; padding:5px; background: none repeat scroll 0 0 #FFFFFF; border: 1px solid #DDDDDD; box-shadow: 1px 1px 3px #DCDCDC inset;color:#999;" ><if condition="trim($topicHtml) neq ''">{$topicHtml} </if>您可以在这里继续补充问题细节</textarea></td>
 				        </tr>
 				    </table>					
                     <div model-node="post_ok" style="display:none;text-align:center;position:absolute;left:0;top:10px;width:100%"><i class="ico-ok"></i>{:L('PUBLIC_SHARE_SUCCESS')}</div>

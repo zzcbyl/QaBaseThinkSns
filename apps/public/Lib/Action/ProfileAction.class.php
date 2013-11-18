@@ -878,11 +878,19 @@ class ProfileAction extends Action {
 	public function newanswerinfo()
 	{
 		// 获取用户信息
-		$user_info = model ( 'User' )->getUserInfo ( $this->uid );
+		$user_info = model ( 'User' )->getUserInfo ( $this->mid );
 		// 用户为空，则跳转用户不存在
 		if (empty ( $user_info )) {
 			$this->error ( L ( 'PUBLIC_USER_NOEXIST' ) );
 		}
+		
+		// 清空新回答提醒数字
+		if($this->uid == $this->mid){
+			$udata = model('UserData')->getUserData($this->mid);
+			$this->assign ( 'new_answer_count', $udata['new_answer_count']);
+			$udata['new_answer_count'] > 0 && model('UserData')->setKeyValue($this->mid,'new_answer_count',0);	
+		}
+		
 		// 个人空间头部
 		$this->_top ();
 		
@@ -911,6 +919,14 @@ class ProfileAction extends Action {
 		if (empty ( $user_info )) {
 			$this->error ( L ( 'PUBLIC_USER_NOEXIST' ) );
 		}
+		
+		// 清空新评论提醒数字
+		if($this->uid == $this->mid){
+			$udata = model('UserData')->getUserData($this->mid);
+			$this->assign ( 'new_comment_count', $udata['new_comment_count']);
+			$udata['new_comment_count'] > 0 && model('UserData')->setKeyValue($this->mid,'new_comment_count',0);	
+		}
+		
 		// 个人空间头部
 		$this->_top ();
 		
@@ -940,6 +956,14 @@ class ProfileAction extends Action {
 		if (empty ( $user_info )) {
 			$this->error ( L ( 'PUBLIC_USER_NOEXIST' ) );
 		}
+		
+		// 清空新赞同提醒数字
+		if($this->uid == $this->mid){
+			$udata = model('UserData')->getUserData($this->mid);
+			$this->assign ( 'new_comment_agree_count', $udata['new_comment_agree_count']);
+			$udata['new_comment_agree_count'] > 0 && model('UserData')->setKeyValue($this->mid,'new_comment_agree_count',0);	
+		}
+		
 		// 个人空间头部
 		$this->_top ();
 		
@@ -969,6 +993,14 @@ class ProfileAction extends Action {
 		if (empty ( $user_info )) {
 			$this->error ( L ( 'PUBLIC_USER_NOEXIST' ) );
 		}
+		
+		// 清空新反对提醒数字
+		if($this->uid == $this->mid){
+			$udata = model('UserData')->getUserData($this->mid);
+			$this->assign ( 'new_comment_oppose_count', $udata['new_comment_oppose_count']);
+			$udata['new_comment_oppose_count'] > 0 && model('UserData')->setKeyValue($this->mid,'new_comment_oppose_count',0);	
+		}
+		
 		// 个人空间头部
 		$this->_top ();
 		
@@ -1036,12 +1068,11 @@ class ProfileAction extends Action {
 			$this->_assignUserInfo ( $this->uid );
 		}
 		
-		
-		
-		
 		// 清空新粉丝提醒数字
+		$newCount=0;
 		if($this->uid == $this->mid){
 			$udata = model('UserData')->getUserData($this->mid);
+			$newCount=$udata['new_folower_count'];
 			$udata['new_folower_count'] > 0 && model('UserData')->setKeyValue($this->mid,'new_folower_count',0);	
 		}
 		// 获取用户的粉丝列表
@@ -1061,11 +1092,17 @@ class ProfileAction extends Action {
 		// 获取用户的关注信息状态
 		$followState = model('Follow')->getFollowStateByFids($this->mid, $fids);
 		// 组装数据
+		$index=0;
 		foreach($followerList['data'] as $key => $value) {
 			$followerList['data'][$key] = array_merge($followerList['data'][$key], $followerUserInfo[$value['fid']]);
 			$followerList['data'][$key] = array_merge($followerList['data'][$key], $userData[$value['fid']]);
 			$followerList['data'][$key] = array_merge($followerList['data'][$key], array('feedInfo'=>$lastFeedData[$value['fid']]));
 			$followerList['data'][$key] = array_merge($followerList['data'][$key], array('followState'=>$followState[$value['fid']]));
+			if($index<$newCount)
+			{
+				$followerList['data'][$key] = array_merge($followerList['data'][$key], array('newCount'=>1));
+				$index++;
+			}
 		}
 		//print_r($followerList);
 		$this->assign($followerList);
@@ -1099,8 +1136,10 @@ class ProfileAction extends Action {
 		}
 		
 		// 清空新好友提醒数字
+		$newCount=0;
 		if($this->uid == $this->mid){
 			$udata = model('UserData')->getUserData($this->mid);
+			$newCount=$udata['new_friend_count'];
 			$udata['new_friend_count'] > 0 && model('UserData')->setKeyValue($this->mid,'new_friend_count',0);	
 		}
 		// 获取用户的好友列表
@@ -1120,11 +1159,17 @@ class ProfileAction extends Action {
 		// 获取用户的关注信息状态
 		$followState = model('Follow')->getFollowStateByFids($this->mid, $fids);
 		// 组装数据
+		$index=0;
 		foreach($followerList['data'] as $key => $value) {
 			$followerList['data'][$key] = array_merge($followerList['data'][$key], $followerUserInfo[$value['fid']]);
 			$followerList['data'][$key] = array_merge($followerList['data'][$key], $userData[$value['fid']]);
 			$followerList['data'][$key] = array_merge($followerList['data'][$key], array('feedInfo'=>$lastFeedData[$value['fid']]));
 			$followerList['data'][$key] = array_merge($followerList['data'][$key], array('followState'=>$followState[$value['fid']]));
+			if($index<$newCount)
+			{
+				$followerList['data'][$key] = array_merge($followerList['data'][$key], array('newCount'=>1));
+				$index++;
+			}
 		}
 		$this->assign($followerList);
 		

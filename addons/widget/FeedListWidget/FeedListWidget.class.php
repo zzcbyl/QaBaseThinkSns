@@ -124,6 +124,7 @@ class FeedListWidget extends Widget {
      */
     private function getData($var, $tpl = 'FeedList.html') {
     	$var['feed_key'] = t($var['feed_key']);
+		$var['newcount'] = t($var['newCount']);
         $var['cancomment'] = isset($var['cancomment']) ? $var['cancomment'] : 1;
         //$var['cancomment_old_type'] = array('post','repost','postimage','postfile');
         $var['cancomment_old_type'] = array('post','repost','postimage','postfile','weiba_post','weiba_repost');
@@ -243,6 +244,7 @@ class FeedListWidget extends Widget {
 					//关键字匹配 采用搜索引擎兼容函数搜索 后期可能会扩展为搜索引擎
 					$list = model('Feed')->searchFeed($var['feed_key'],'answer',$var['loadId'],$this->limitnums,'',$var['feed_type']);
 				}else{
+					$LoadWhere='';
 					if($var['loadId'] > 0){ //非第一次
 						//$where .=" AND a.feed_id < '".intval($var['loadId'])."'";
 						$LoadWhere = "AND feed_id < '".intval($var['loadId'])."'";
@@ -282,6 +284,46 @@ class FeedListWidget extends Widget {
 				$list = model('Feed')->getCommentFeedList($where, $this->limitnums,$LoadWhere);
 				//print_r($list);
 				break;
+			case 'newanswer':	//消息答案列表
+				$LoadWhere='';
+				if($var['loadId'] > 0){ //非第一次
+					$LoadWhere = "AND feed_id < '".intval($var['loadId'])."'";
+				}
+				$where ="(is_audit=1 OR is_audit=0) AND is_del = 0 AND feed_quid = ".$GLOBALS['ts']['mid']." AND feed_questionid != 0 ".$LoadWhere;
+				$list = model('Feed')->getAnswerList($where, $this->limitnums, 'feed_id DESC', $var['newcount']);
+				//print_r($list);
+				break;	
+			case 'newagreecomment':		//消息赞同列表
+				$map['app_uid']=$GLOBALS['ts']['mid'];
+				$map['comment_type']=1;
+				$map['is_del']=0;
+				if($var['loadId'] > 0){ //非第一次
+					$map['comment_id'] = array('lt', intval($var['loadId']));
+				}
+				$list = model('Feed')->getNewCommentFeedListByType($map, $this->limitnums, 'comment_id DESC', $var['newcount']);
+				//print_r($list);
+				break;	
+			case 'newopposecomment':		//消息反对列表
+				$map['app_uid']=$GLOBALS['ts']['mid'];
+				$map['comment_type']=2;
+				$map['is_del']=0;
+				if($var['loadId'] > 0){ //非第一次
+					$map['comment_id'] = array('lt', intval($var['loadId']));
+				}
+				$list = model('Feed')->getNewCommentFeedListByType($map, $this->limitnums, 'comment_id DESC', $var['newcount']);
+				//print_r($list);
+				break;	
+			case 'newcomment':		//消息评论列表
+				$map['app_uid']=$GLOBALS['ts']['mid'];
+				$map['comment_type']=0;
+				$map['is_del']=0;
+				if($var['loadId'] > 0){ //非第一次
+					$map['comment_id'] = array('lt', intval($var['loadId']));
+				}
+				$list = model('Feed')->getNewCommentFeedList($map, $this->limitnums, 'comment_id DESC', $var['newcount']);
+				//print_r($list);
+				break;	
+			
 		}
     	// 分页的设置
         isset($list['html']) && $var['html'] = $list['html'];
@@ -291,13 +333,19 @@ class FeedListWidget extends Widget {
 					$content['firstId'] = $var['firstId'] = $list['data'][0]['comment_count'];
 					$content['lastId'] = $var['lastId'] = $list['data'][(count($list['data'])-1)]['comment_count'];
 					break;
+				case 'newagreecomment':
+				case 'newopposecomment':
+				case 'newcomment':
+					$content['firstId'] = $var['firstId'] = $list['data'][0]['comment']['comment_id'];
+					$content['lastId'] = $var['lastId'] = $list['data'][(count($list['data'])-1)]['comment']['comment_id'];
+					break;
 				default:
 					$content['firstId'] = $var['firstId'] = $list['data'][0]['feed_id'];
 					$content['lastId'] = $var['lastId'] = $list['data'][(count($list['data'])-1)]['feed_id'];
 					break;	
 			}
             $var['data'] = $list['data'];
-
+			
             //赞功能
             $feed_ids = getSubByKey($var['data'],'feed_id');
             $var['diggArr'] = model('FeedDigg')->checkIsDigg($feed_ids, $GLOBALS['ts']['mid']);

@@ -7,7 +7,7 @@
 class FeedModel extends Model {
 
 	protected $tableName = 'feed';
-	protected $fields = array('feed_id','uid','type','app','app_row_id','app_row_table','publish_time','is_del','from','comment_count','repost_count','comment_all_count','digg_count','is_repost','is_audit','feed_questionid','answer_count','disapprove_count','feed_pv','_pk'=>'feed_id');
+	protected $fields = array('feed_id','uid','type','app','app_row_id','app_row_table','publish_time','is_del','from','comment_count','repost_count','comment_all_count','digg_count','is_repost','is_audit','feed_questionid','feed_quid','answer_count','disapprove_count','feed_pv','_pk'=>'feed_id');
 
 	public $templateFile = '';			// 模板文件
 
@@ -55,9 +55,15 @@ class FeedModel extends Model {
 		$data['from'] = isset($data['from']) ? intval($data['from']) : getVisitorClient();
 		$data['is_del'] = $data['comment_count'] = $data['repost_count'] = $data['disapprove_count'] = 0;
 		$data['is_repost'] = $is_repost;
-		if($data['questionid']==null)
+		if($data['questionid']==null){
 			$data['questionid']=0;
-		$data['feed_questionid'] = $data['questionid'];
+			$data['feed_quid']=0;
+		}
+		else{
+			$data['feed_questionid'] = $data['questionid'];
+			$QFeedData = $this->getFeeds(array($data['questionid']));
+			$data['feed_quid']  = $QFeedData[0]['uid'];
+		}
 		//判断是否先审后发
 		$weiboSet = model('Xdata')->get('admin_Config:feed');
         $weibo_premission = $weiboSet['weibo_premission'];
@@ -122,10 +128,17 @@ class FeedModel extends Model {
 		if($data['questionid']!=null && $data['questionid']!='0')
 		{
 			$feed_Qid=model('feed')->where('feed_id='.$feed_id)->getField('feed_questionid');
-			$updData['answer_count']=model('feed')->where('feed_questionid='.$feed_Qid)->count();
+			$updData['answer_count']=model('feed')->where('feed_questionid='.$feed_Qid.' and is_del=0')->count();
 			model('feed')->where('feed_id='.$feed_Qid)->save($updData);
 			$this->	cleanCache(array($feed_Qid));
 			$this->	updateFeedCache($feed_Qid,'update');
+			
+			// 添加新回答
+			$feedQData = model('feed')->getFeeds(array($feed_Qid));
+			if($feedQData[0]['uid']>0){
+				$data_model = model('UserData');
+				$data_model->setUid($feedQData[0]['uid'])->updateKey('new_answer_count', 1, true);
+			}
 		}
 		
 		if(!$data['is_audit']){
@@ -358,13 +371,14 @@ class FeedModel extends Model {
 		* $limit 结果集数目，默认为10
 		* @return array 微博列表数据
 	**/
-	public function getAnswerList($where, $limit=10, $order='feed_id DESC')
+	public function getAnswerList($where, $limit=10, $order='feed_id DESC', $newCount=0)
 	{
 		$feedlist = $this->field('feed_id')->where($where)->order($order)->findPage($limit); 
 		$feed_ids = getSubByKey($feedlist['data'], 'feed_id');
 		$feedlist['data'] = $this->getFeeds($feed_ids, false);
 		
 		//根据答案取问题,调换数组位置
+		$index=0;
 		foreach($feedlist["data"] as $v => $vv )
 		{
 			$questionID=Array($vv['feed_questionid']);
@@ -372,12 +386,17 @@ class FeedModel extends Model {
 			if(is_array($AnswerFeedData))
 			{
 				$AnswerFeedData[0]['answer'][0]=$vv;;
+				if($index<$newCount){
+					$AnswerFeedData[0]['newCount']='1';
+					$index++;
+				}
 				$feedlist["data"][$v]=$AnswerFeedData[0];
 			}
 		}
 	
 		return $feedlist;
 	}
+	
 
 	/**
 	 * 获取指定用户所关注人的所有微博，默认为当前登录用户
@@ -572,6 +591,54 @@ class FeedModel extends Model {
 		return $feedlist;
 	}
 	
+	
+	public function getNewCommentFeedListByType($map, $limit = 10, $order='', $newCount=0)
+	{
+		$commentList = model('Comment')->getCommentList($map, $order, $limit);
+		if(is_array($commentList["data"])&&count($commentList["data"])>0)
+		{
+			$index = 0;
+			foreach($commentList["data"] as $v => $vv )
+			{	
+				//$Comment = model('Comment')->getCommentInfo($vv['comment_id']);
+				$Answer = $this->getFeeds(array($vv['row_id']), false);
+				$Question = $this->getFeeds(array($Answer[0]['feed_questionid']), false);
+				$comment=$vv;
+				$vv=$Question;
+				$vv[0]['answer']=$Answer;
+				$vv[0]['comment']=$comment;
+				if($index<$newCount){
+					$vv[0]['newCommentCount']='1';
+					$index++;
+				}
+				//$vv[0]['comment']=$Comment;
+				$commentList["data"][$v]=$vv[0];
+			}
+		}
+		return $commentList;
+	}
+	
+	public function getNewCommentFeedList($map, $limit = 10, $order='', $newCount=0)
+	{
+		$commentList = model('Comment')->getCommentList($map, $order, $limit);
+		if(is_array($commentList["data"])&&count($commentList["data"])>0)
+		{
+			$index = 0;
+			foreach($commentList["data"] as $v => $vv )
+			{	
+				$Question = $this->getFeeds(array($vv['row_id']), false);
+				$comment=$vv;
+				$vv=$Question;
+				$vv[0]['comment']=$comment;
+				if($index<$newCount){
+					$vv[0]['newCommentCount']='1';
+					$index++;
+				}
+				$commentList["data"][$v]=$vv[0];
+			}
+		}
+		return $commentList;
+	}
 	
 	/**
 	* 获取评论答案的问题列表(问题,答案)
@@ -1056,6 +1123,21 @@ class FeedModel extends Model {
 				$sids = $this->where('app_row_id='.$feed_id)->getAsFieldArray('feed_id');
 				$this->cleanCache($sids);
 			}
+			
+			//如果是回答,减少问题的回答总数
+			$ids = !is_array($feed_id) ? array($feed_id) : $feed_id;
+			$feedList = $this->getFeeds($ids);
+			foreach($feedList as $v) {
+				if($v['feed_questionid']>0)
+				{
+					$feed_Qid = $v['feed_questionid'];
+					$updData['answer_count']=$this->where('feed_questionid='.$feed_Qid.' and is_del=0')->count();
+					$this->where('feed_id='.$feed_Qid)->save($updData);
+					$this->	cleanCache(array($feed_Qid));
+					$this->	updateFeedCache($feed_Qid,'update');
+				}
+			}
+			
 			// 删除评论信息
 			$cmap['app'] = 'Public';
 			$cmap['table'] = 'feed';

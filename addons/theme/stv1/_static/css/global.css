@@ -115,9 +115,9 @@ body{background:url(../image/body-b.jpg) repeat-x center 0 #e4f3f7;}
 
 /*导航-----------------------------------------------*/
 #header{background:#0f8ca8;height:42px;width:100%;/*color:#fff;*/left:0;top:0;z-index:999;position:fixed;_overflow:hidden;}
-#header .head-bd{margin: 0 auto;width: 960px;height:40px;position:relative;z-index:999}
+#header .head-bd{margin: 0 auto;width: 960px;height:40px;position:relative;z-index:999;}
 #header .header-wrap{height:40px}
-#header .head-bd .nav{float:left;height:40px;margin:0 0 0 140px;_margin:0 0 0 70px;}
+#header .head-bd .nav{float:left;height:40px;margin:0 0 0 140px;_margin:0 0 0 140px;}
 #header .head-bd .nav ul li{float:left;position:relative;}
 #header .head-bd .nav a{display:block;padding:11px 10px 13px;padding:12px 10px 12px \0;/*for Ie8*/height:16px;line-height:16px;font-size:14px;}
 *+html #header .head-bd .nav a{padding:12px 10px 12px;/*for Ie7*/}
@@ -196,7 +196,7 @@ body{background:url(../image/body-b.jpg) repeat-x center 0 #e4f3f7;}
 .head-bd #mod-search dd.more a{padding:5px 10px;height:18px;line-height:18px;}
 .head-bd #mod-search dd.more a:hover{background:#f3f3f3}
 
-.head-bd #mod-search .s-txt{border:none 0;height:16px;margin:0;color:#999;padding:4px 5px 5px;width:145px;background:transparent;outline:none}
+.head-bd #mod-search .s-txt{border:none 0;margin:0;color:#999;width:145px;background:transparent;outline:none}
 #header .head-bd .person .dropmenu #mod-search dt a{margin:0;padding:0;height:26px}
 #header .head-bd .person .dropmenu .ico-search-task:hover{background:url("../image/btn.png") no-repeat scroll 0 -86px transparent;}
 

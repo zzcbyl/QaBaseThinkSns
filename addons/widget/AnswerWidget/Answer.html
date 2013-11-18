@@ -21,7 +21,7 @@
 				<div class="input_before mb5" model-node="mini_editor" model-args="prompt={$prompt}">
                     <table width="100%" style="line-height:35px;">
 				       <tr>
-				            <td><textarea id="inputor{$time}" name="at" texttype="answer" class="input_tips" style="width:600px; height:57px; display:inline;" event-node="mini_editor_textarea" model-args='t=feed'><if condition="trim($topicHtml) neq ''">{$topicHtml} </if></textarea>
+				            <td><textarea id="inputor{$time}" name="at" texttype="answer" class="input_tips" style="width:600px; height:75px; display:inline; line-height:25px;" event-node="mini_editor_textarea" model-args='t=feed'><if condition="trim($topicHtml) neq ''">{$topicHtml} </if></textarea>
                                 <input id="hidden{$time}" name="hidType" type="hidden" event-node="mini_editor_hidden" value="{$feedID|getShort=###,32}" />
                             </td>
 				        </tr>

@@ -43,6 +43,7 @@ $admintaskrecom = CheckPermission('vtask_admin','vtask_recommend');
                 <php>} else {</php>
                     <img src="__THEME__/image/fandui_small.png"  />
                 <php>}</php>
+                <php>if($vl['newCommentCount']=='1') echo '<br />new'</php>
             </div>
 
 	        <dl class="feed_list"  id ='Dl2' model-node='feed_list' style="border-bottom:0;">
@@ -59,13 +60,13 @@ $admintaskrecom = CheckPermission('vtask_admin','vtask_recommend');
                             <php>
                                 if(strlen($vl['comment']['content'])>279) {
                             </php>
-                            <div id="commentSubData{$vl['comment'].comment_id}{$vl.feed_id}{$vl['answer'][0].feed_id}">
+                            <div id="commentSubData{$vl['comment'].comment_id}{$vl.feed_id}{$vl['answer'][0].feed_id}" style="width:535px; display:block;">
                                 <php>
-                                        print(utf_substr(str_replace('<br />',' ',$vl['comment']['content']),195).'... ');
+                                        print(utf_substr(str_replace('<br />',' ',$vl['comment']['content']),185).'... ');
                                 </php>
                                 <a style="font-size:12px; cursor:pointer;" onclick="showContentAll('comment','{$vl['comment'].comment_id}{$vl.feed_id}{$vl['answer'][0].feed_id}');">显示全部</a>
                             </div>
-                            <div id="commentAll{$vl['comment'].comment_id}{$vl.feed_id}{$vl['answer'][0].feed_id}" style="display:none;">
+                            <div id="commentAll{$vl['comment'].comment_id}{$vl.feed_id}{$vl['answer'][0].feed_id}" style="display:none; width:535px;">
                                 {$vl['comment'].content|format=true}
                                 <div style="float:right;"><a style="font-size:12px; cursor:pointer;" onclick="showContentAll('comment','{$vl['comment'].comment_id}{$vl.feed_id}{$vl['answer'][0].feed_id}');">收起</a></div>
                                 <div style="clear:both;"></div>
@@ -128,13 +129,13 @@ $admintaskrecom = CheckPermission('vtask_admin','vtask_recommend');
             <php>
                 if(strlen($vl['description'])>279) {
             </php>
-            <div id="feedSubData{$vl['comment'].comment_id}{$vl.feed_id}{$vl['answer'][0].feed_id}">
+            <div id="feedSubData{$vl['comment'].comment_id}{$vl.feed_id}{$vl['answer'][0].feed_id}" style="width:535px; display:block;">
                 <php>
-                        print(utf_substr(str_replace('<br />',' ',$vl['description']),195).'... ');
+                        print(utf_substr(str_replace('<br />',' ',$vl['description']),185).'... ');
                 </php>
                 <a style="font-size:12px; cursor:pointer;" onclick="showContentAll('feed','{$vl['comment'].comment_id}{$vl.feed_id}{$vl['answer'][0].feed_id}');">显示全部</a>
             </div>
-            <div id="feedAll{$vl['comment'].comment_id}{$vl.feed_id}{$vl['answer'][0].feed_id}" style="display:none;">
+            <div id="feedAll{$vl['comment'].comment_id}{$vl.feed_id}{$vl['answer'][0].feed_id}" style="display:none; width:535px;">
                 {$vl['description']|format=true}
                 <div style="float:right;"><a style="font-size:12px; cursor:pointer;" onclick="showContentAll('feed','{$vl['comment'].comment_id}{$vl.feed_id}{$vl['answer'][0].feed_id}');">收起</a></div>
                 <div style="clear:both;"></div>
@@ -188,9 +189,9 @@ $admintaskrecom = CheckPermission('vtask_admin','vtask_recommend');
     <php>if($vl['feed_pv']>0) {</php>
 	<a class="date" href="javascript:void(0);">浏览数({$vl.feed_pv})</a>
     <php>}</php>
-	<em class="hover">
+	<!--<em class="hover">
 	<eq name='vl.actions.delete' value='true'>
-	 <!--做普通删除权限 和 管理删除权限 判断 & 只有微博可以被删除  -->
+	 做普通删除权限 和 管理删除权限 判断 & 只有微博可以被删除  
 	<php>if(($vl['user_info']['uid'] == $GLOBALS['ts']['mid'] && $canfeeddel) || $adminfeeddel){</php>
 		<a href="javascript:void(0)" event-node ='delFeed' event-args='feed_id={$vl.feed_id}&uid={$vl.user_info.uid}'>{:L('PUBLIC_STREAM_DELETE')}</a>
 	<php>}</php>
@@ -200,7 +201,7 @@ $admintaskrecom = CheckPermission('vtask_admin','vtask_recommend');
 	<a href="javascript:void(0)" event-node='denounce' event-args='aid={$vl.feed_id}&type=feed&uid={$vl.user_info.uid}'>{:L('PUBLIC_STREAM_REPORT')}</a>
 	<php>}</php>
 	<php>}</php>
-	</em>
+	</em>-->
     </span>
 </p>
 	   <div model-node="comment_detail" class="repeat clearfix" style="display:none;"></div>
@@ -234,7 +235,10 @@ $admintaskrecom = CheckPermission('vtask_admin','vtask_recommend');
         if(is_array($vl['answer']) ) {
     </php>
         <div style="padding:5px 5px 0 40px; border-top:1px dotted #DFDFDF;">
-            <div style="position:absolute; margin-left:-40px; margin-top:-5px; "><img src="__THEME__/image/answer_small.jpg"  /></div>
+            <div style="position:absolute; margin-left:-40px; margin-top:-5px; ">
+                <img src="__THEME__/image/answer_small.jpg"  />
+                <php>if($vl['newCount']=='1') echo '<br />new'</php>
+            </div>
 
 
 	        <php>
@@ -323,9 +327,9 @@ $admintaskrecom = CheckPermission('vtask_admin','vtask_recommend');
 	        <a class="date" date="{$vl['answer'][0].publish_time}" href="{:U('public/Profile/feed',array('feed_id'=>$vl['answer'][0]['feed_id'],'uid'=>$vl['answer'][0]['uid']))}">{$vl['answer'][0].publish_time|friendlyDate}</a>
 	        <!--<span>{$vl['answer'][0]['from']}</span>-->
 	
-	        <em class="hover">
+	        <!--<em class="hover">
 	        <eq name='vl.actions.delete' value='true'>
-	        <!-- 做普通删除权限 和 管理删除权限 判断 & 只有微博可以被删除  -->
+	         做普通删除权限 和 管理删除权限 判断 & 只有微博可以被删除  
 	        <php>if(($vl['answer'][0]['user_info']['uid'] == $GLOBALS['ts']['mid'] && $canfeeddel) || $adminfeeddel){</php>
 		        <a href="javascript:void(0)" event-node ='delFeed' event-args="feed_id={$vl['answer'][0].feed_id}&uid={$vl['answer'][0].user_info.uid}">{:L('PUBLIC_STREAM_DELETE')}</a>
 	        <php>}</php>
@@ -335,7 +339,7 @@ $admintaskrecom = CheckPermission('vtask_admin','vtask_recommend');
 	        <a href="javascript:void(0)" event-node='denounce' event-args="aid={$vl['answer'][0].feed_id}&type=feed&uid={$vl['answer'][0].user_info.uid}">{:L('PUBLIC_STREAM_REPORT')}</a>
 	        <php>}</php>
 	        <php>}</php>
-	        </em>
+	        </em>-->
             </span>
         </p>
 	           <div model-node="comment_detail" class="repeat clearfix" style="display:none;"></div>

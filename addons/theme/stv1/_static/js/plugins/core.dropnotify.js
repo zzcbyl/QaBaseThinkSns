@@ -48,6 +48,10 @@ core.dropnotify = {
                 unread_message: L('PUBLIC_SYSTEM_PRIVATE_MAIL'),
                 new_folower_count: L('PUBLIC_SYSTEM_FOLLOWING'),
                 new_friend_count: L('PUBLIC_SYSTEM_FRIEND'),
+                new_answer_count: L('PUBLIC_SYSTEM_NEWANSWER'),
+                new_comment_count: L('PUBLIC_SYSTEM_NEWCOMMENT'),
+                new_comment_agree_count: L('PUBLIC_SYSTEM_NEWAGREECOMMENT'),
+                new_comment_oppose_count: L('PUBLIC_SYSTEM_NEWOPPOSECOMMENT'),
                 unread_group_atme: '条群聊@提到我',
                 unread_group_comment: '条群组评论'
         };

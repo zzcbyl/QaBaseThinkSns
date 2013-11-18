@@ -1,4 +1,4 @@
-﻿<php> 
+<php> 
       $tabClass['new_answer'] = '';
       $tabClass['new_comment'] = '';
       $tabClass['new_agree'] = '';
@@ -11,7 +11,7 @@
       elseif(ACTION_NAME=='newactivityinfo'){ $tabClass['new_activity'] = 'current';  }
 	  else{ $tabClass['new_answer'] = 'current'; }
 </php>
-<div class="tab-menu2 clearfix" style="margin-top:-15px;">
+<div class="tab-menu2 clearfix" >
   <ul>
     <li class="{$tabClass.new_answer}"><span><a href="{:U('public/Profile/newanswerinfo')}">新答案</a></span></li>
     <li class="{$tabClass.new_comment}"><span><a href="{:U('public/Profile/newcommentinfo')}">新评论</a></span></li>

@@ -14,7 +14,7 @@
         </volist>
         ：<em><php>if($vo['is_audit'] || $vo['uid'] == $GLOBALS['ts']['mid']){</php><!--{$vo.comment_id}-->{$vo.content}<php>}else{</php>内容正在审核<php>}</php><span class="time">({$vo.ctime|friendlyDate})</span></em>
     </p>            
-    <p class="info right"><span>
+    <!--<p class="info right"><span>
     <php>$isdel = 0;</php>
     <php>if(($vo['uid'] == $GLOBALS['ts']['mid'] && $iscommentdel ) || $iscommentadmindel){
     $isdel = 1;
@@ -29,7 +29,7 @@
     <a href="javascript:void(0)" event-args='row_id={$vo.row_id}&app_uid={$vo.app_uid}&to_comment_id={$vo.comment_id}&to_uid={$vo.uid}&to_comment_uname={$vo.user_info.uname}&app_name={$app_name}&table={$table}' 
         event-node="reply_comment">{:L('PUBLIC_STREAM_REPLY')}</a>
     </eq>
-    </span></p>
+    </span></p>-->
     </dd>
     <!--<span class="floor">{$vo.storey}楼</span>-->
     </dl>   

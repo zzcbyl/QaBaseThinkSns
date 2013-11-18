@@ -1,4 +1,4 @@
-﻿<include file="__THEME__/public_header" />
+<include file="__THEME__/public_header" />
     <div id="page-wrap">
         <div id="main-wrap" class="content-bg">
             <div id="col" class="st-grid boxShadow minh" style="float:left;">
@@ -15,7 +15,7 @@
                             <!--feed list-->
                             <!-- 查看他人微博  用于伪静态 FeedList中靠$_REQUEST中的uid取得用户信息 没有$_REQUEST取自己 -->
 
-
+                            {:W('FeedList',array('type'=>'newagreecomment','newCount'=>$new_comment_agree_count , 'feedApp'=>t($_GET['feedApp']),'feed_type'=>$feed_type,'feed_key'=>$feed_key,'loadnew'=>0))}
                         </div>
                     </div>
                 <php>}else{</php>

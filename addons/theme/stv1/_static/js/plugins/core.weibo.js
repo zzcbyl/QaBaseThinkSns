@@ -30,7 +30,7 @@ core.weibo = {
         } else {
             this.canLoading = false; // 当前是否允许加载
         }
-        this.startNewLoop();
+        //this.startNewLoop();
         //		if($('#feed-lists').length > 0 && this.canLoading){
         //			$('#feed-lists').append("<div class='loading' id='loadMore'>" + L('PUBLIC_LOADING') + "<img src='" + THEME_URL + "/image/load.gif' class='load'></div>");
         //			core.weibo.loadMoreFeed();

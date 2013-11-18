@@ -192,9 +192,9 @@ class CommentModel extends Model {
 			D($add['table'])->setInc('commentCount', "`{$pk}`={$add['row_id']}", 1);
 			D($add['table'])->setInc('comment_all_count', "`{$pk}`={$add['row_id']}", 1);
 			// 给应用UID添加一个未读的评论数 原作者
-			if($GLOBALS['ts']['mid'] != $add['app_uid'] && $add['app_uid'] != '') {
+			/*if($GLOBALS['ts']['mid'] != $add['app_uid'] && $add['app_uid'] != '') {
 				!$notCount && model('UserData')->updateKey('unread_comment', 1, true, $add['app_uid']);
-			}
+			}*/
 			// 回复发送提示信息
 			if(!empty($add['to_uid']) && $add['to_uid'] != $GLOBALS['ts']['mid']) {
 				!$notCount && model('UserData')->updateKey('unread_comment', 1, true, $add['to_uid']);
@@ -232,10 +232,21 @@ class CommentModel extends Model {
 			}
 			
 			//用户增加评论统计
-			if($add['comment_type']=='1') //赞同
-				model('UserData')->setUid($add['app_uid'])->updateKey('comment_agree_count', 1);
-			else if($add['comment_type']=='2') //反对
-				model('UserData')->setUid($add['app_uid'])->updateKey('comment_oppose_count', 1);
+			if($add['comment_type']=='1') {//赞同
+				if($GLOBALS['ts']['mid'] != $add['app_uid'] && $add['app_uid'] != '') {
+					model('UserData')->setUid($add['app_uid'])->updateKey('comment_agree_count', 1, true);
+					model('UserData')->setUid($add['app_uid'])->updateKey('new_comment_agree_count', 1, true);
+				}
+				
+			}
+			else if($add['comment_type']=='2') {//反对
+				model('UserData')->setUid($add['app_uid'])->updateKey('comment_oppose_count', 1, true);
+				model('UserData')->setUid($add['app_uid'])->updateKey('new_comment_oppose_count', 1, true);
+				
+			}
+			else {
+				model('UserData')->setUid($add['app_uid'])->updateKey('new_comment_count', 1, true);
+			}
 			//总评论数
 			model('UserData')->setUid($add['app_uid'])->updateKey('comment_count', 1);
 		}

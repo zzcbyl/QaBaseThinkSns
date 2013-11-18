@@ -1,0 +1,12 @@
+1、语言配置-》添加配置： 
+		
+	语言KEY	        		应用名称 	文件类型	 简体	         繁体		英文
+
+	PUBLIC_NEWANSWER_REMIND	 	 PUBLIC		PHP文件	 	 查看新回答	 查看新回答	 View	
+	PUBLIC_NEWCOMMENT_REMIND	 PUBLIC	 	PHP文件	 	 查看新评论	 查看新評論	 View	
+	PUBLIC_NEWAGREECOMMENT_REMIND	 PUBLIC	 	PHP文件	 	 查看新赞同	 查看新贊同	 View	
+	PUBLIC_NEWOPPOSECOMMENT_REMIND	 PUBLIC	 	PHP文件	 	 查看新反对	 查看新反對	 View	
+	PUBLIC_SYSTEM_NEWANSWER	 	 PUBLIC	 	JavaScript文件	 个新答案	 個新答案	 new answers
+	PUBLIC_SYSTEM_NEWCOMMENT	 PUBLIC		JavaScript文件	 个新评论	 個新評論	 new comments	
+	PUBLIC_SYSTEM_NEWAGREECOMMENT	 PUBLIC	 	JavaScript文件	 个新赞同评论	 個新贊同評論	 new agree comments	
+	PUBLIC_SYSTEM_NEWOPPOSECOMMENT	 PUBLIC	 	JavaScript文件	 个新反对评论	 個新反對評論	 new oppose comments	

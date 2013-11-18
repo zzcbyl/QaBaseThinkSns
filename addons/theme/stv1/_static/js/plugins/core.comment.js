@@ -64,7 +64,7 @@ core.comment = {
             commentListObj.innerHTML = '<img src="' + THEME_URL + '/image/load.gif" style="text-align:center;display:block;margin:0 auto;"/>';
             $.post(U('widget/Comment/render'), { app_uid: this.app_uid, row_id: this.row_id, app_row_id: this.app_row_id, app_row_table: this.app_row_table, isAjax: 1, showlist: 0,
                 cancomment: this.cancomment, cancomment_old: this.cancomment_old, app_name: this.app_name, table: this.table,
-                canrepost: this.canrepost, comment_type: this.comment_type
+                canrepost: this.canrepost, comment_type: this.comment_type, random: Math.random()
             }, function (html) {
                 if (html.status == '0') {
                     commentListObj.style.display = 'none';
@@ -73,7 +73,7 @@ core.comment = {
                     //已经赞同或者反对过一次
                     commentListObj.innerHTML = html.data;
                     $('#commentlist_' + rowid).html('<img src="' + THEME_URL + '/image/load.gif" style="text-align:center;display:block;margin:0 auto;"/>');
-                    $.post(U('widget/Comment/getCommentList'), { app_name: appname, table: table, row_id: rowid, cancomment: cancomment, comment_type: commenttype }, function (res) {
+                    $.post(U('widget/Comment/getCommentList'), { app_name: appname, table: table, row_id: rowid, cancomment: cancomment, comment_type: commenttype, random: Math.random() }, function (res) { 
                         $('#commentlist_' + rowid).html(res);
                         M($('#commentlist_' + rowid).get(0));
                     });
@@ -95,6 +95,7 @@ core.comment = {
             //}
         } else {
             commentListObj.style.display = 'none';
+            $(commentListObj).html("");
         }
     },
     // 初始化回复操作
@@ -179,6 +180,13 @@ core.comment = {
                     $(commentListObj).find('.comment_lists').eq(0).html(msg.data);
                 }
                 M(commentListObj);
+
+                //赞同或者反对成功隐藏回复框
+                if (msg.comment_type != 0) {
+                    var commenttextarea = commentListObj.childModels['comment_textarea'][0];
+                    $(commenttextarea).hide();
+                }
+
                 if (obj != undefined) {
                     obj.innerHTML = '回复';
                 }

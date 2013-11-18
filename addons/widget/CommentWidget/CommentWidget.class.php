@@ -52,8 +52,7 @@ class CommentWidget extends Widget
 		//评论自己的内容
 		if($this->mid == $var['app_uid'])
 		{
-			$commentObj =  $var['comment_type'] == 1 ? '赞同自己的答案' : ($var['comment_type'] == 2 ? '反对自己的答案' : '评论自己的问题');
-			$return = array('status'=>0,'data'=>'您不能'.$commentObj);
+			$return = array('status'=>2,'data'=>'<div id="commentlist_'.intval($var['row_id']).'"></div>');
 			return $var['isAjax'] == 1 ?  json_encode($return) : $return['data'];
 		}
 		
@@ -151,6 +150,8 @@ class CommentWidget extends Widget
     	$data['table'] = $data['table_name'];
         $data['content'] = h($data['content']);
 		$data['comment_type'] = $data['comment_type'];
+		//返回评论类型
+		$return['comment_type'] = $data['comment_type'];
 		
         // 判断资源是否被删除
         switch ($data['table']) {
