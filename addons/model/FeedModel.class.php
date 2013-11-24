@@ -118,7 +118,8 @@ class FeedModel extends Model {
         		$data['type'] = 'post';
         	}
         		
-        }	
+        }
+
 		// 添加微博信息
 		$feed_id =  $this->data($data)->add();
 		if(!$feed_id) return false;
