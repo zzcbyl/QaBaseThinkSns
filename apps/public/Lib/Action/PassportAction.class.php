@@ -21,6 +21,7 @@ class PassportAction extends Action
 	 * @return void
 	 */
 	public function index() {
+		
 		// 如果设置了登录前的默认应用
 		// U('welcome','',true);
 		// 如果没设置

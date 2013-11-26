@@ -55,7 +55,7 @@ class FeedModel extends Model {
 		$data['from'] = isset($data['from']) ? intval($data['from']) : getVisitorClient();
 		$data['is_del'] = $data['comment_count'] = $data['repost_count'] = $data['disapprove_count'] = 0;
 		$data['is_repost'] = $is_repost;
-		if($data['questionid']==null){
+		if($data['questionid']==null || $data['questionid'] == 0){
 			$data['questionid']=0;
 			$data['feed_quid']=0;
 		}
@@ -118,8 +118,7 @@ class FeedModel extends Model {
         		$data['type'] = 'post';
         	}
         		
-        }
-
+        }	
 		// 添加微博信息
 		$feed_id =  $this->data($data)->add();
 		if(!$feed_id) return false;
@@ -450,7 +449,6 @@ class FeedModel extends Model {
 		//存放结果
 		$result = $feedlist;
 		$result['data'] = Array();
-		
 		//增加答案块/评论块
 		foreach( $feedlist["data"] as $v => $vv )
 		{			

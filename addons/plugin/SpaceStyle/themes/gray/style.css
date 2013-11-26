@@ -31,6 +31,10 @@ body{background:url(body_bg1.jpg) repeat;width:100%;}
 .header .nav ul li.hover .dropmenu .app_list dd a:hover {background-color:#dbf2d0}
 .header .nav ul li a.fb14:hover,.header .person li a.fb14:hover{background-color:#89CB74;text-decoration:none;white-space:nowrap;display: block}
 
+.header_box .person li.hover .dropmenu{background-color: #fff;border: 1px solid #548454;border-top:none 0}
+.header_box .person li.hover .dropmenu a:hover{background-color: #dbf2d0;text-decoration: none;display:block}
+.header_box .person li a.fb14:hover{background-color:#89CB74;text-decoration:none;white-space:nowrap;display: block}
+
 .user_app .user_follow strong{color:#3366cc}
 .user_app .user_follow span{margin:0}
 .user_app .celerity_menu a:link,.user_app .celerity_menu a:visited {color:#3366cc}

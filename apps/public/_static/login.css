@@ -328,7 +328,7 @@ li{list-style-type:none}
 /*登录页面背景*/
 /*body{background:url(../image/login-bg.png) repeat;}*/
 /*body{background:url(../image/body-b.jpg) repeat-x center 0 #e4f3f7;}*/
-#login-bg{position:relative;height:100%;text-align:left}
+#login-bg{height:100%;text-align:left}
 .login-b{left:0;overflow:hidden;/*position:absolute;*/top:0;width:100%;z-index:-1;height:100%;position:absolute;}
 .s-row .input,.s-row .input1{background:url(image/login-input1.png) no-repeat;_background:url(image/login-input1.gif) no-repeat;border:0;}
 .s-login a:link,.s-login a:visited{outline: medium none; text-decoration: none;}
