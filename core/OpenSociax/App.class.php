@@ -118,7 +118,6 @@ class App
 		
         $module =   new $className();
 		
-
         //异常处理
         if(!$module) {
             // 模块不存在 抛出异常

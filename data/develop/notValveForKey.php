@@ -6,5 +6,7 @@ return array (
   'PUBLIC_ANSWER ' => '?app=public&mod=Index&act=following',
   'PUBLIC_REMOTE_APP' => '?app=widget&mod=UserCount&act=getUnreadCount',
   'PUBLIC_REGISTER' => '?app=public&mod=Register&act=waitForAudit',
+  'PUBLIC_FRIENDS_REMIND' => '?app=public&mod=Index&act=index',
+  'PUBLIC_ANSWER' => '?app=public&mod=Index&act=friend',
 );
 ?>
