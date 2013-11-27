@@ -1,5 +1,5 @@
 
 config/config.inc.php
 _runtime/*
-data/upload/avatar/*
-.idea/workspace.xml
+data/*
+.idea/*
