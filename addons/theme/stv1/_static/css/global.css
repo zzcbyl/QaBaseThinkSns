@@ -94,7 +94,7 @@ a.font-orange:link, a.font-orange:visited{color:#f60}
 #body_page{background:url(../image/body-bg.png) no-repeat center 0;min-height:980px;_background:url(../image/body-bg.gif) no-repeat center 0;_height:980px;}
 body{background:url(../image/body-b.jpg) repeat-x center 0 #e4f3f7;}
 #body-bg{padding:60px 0 0 0;_padding:0;}
-#page-wrap #main-wrap{margin:0 auto;text-align: left;width:960px;_margin:20px auto 0;}
+#page-wrap #main-wrap{margin:0 auto;text-align: left;_margin:20px auto 0;}
 #st-index-grid{zoom:1}
 #st-search-grid{margin:0 0 10px}
 #main-wrap .page-content:after{clear: both;content: ".";display: block;height: 0;visibility: hidden}
@@ -1424,7 +1424,7 @@ a.btn-account:hover{background-position:-164px 0;}
 
 
 /*开放式登录底部*/
-.footer{width:960px;margin:10px auto;overflow:hidden;*zoom:1;}
+.footer{width:980px;margin:0px auto;overflow:hidden;*zoom:1;}
 .login-footer{width:960px;margin:0 auto;}
 .login-footer .foot{padding:15px 0;background:#f8f8f8;}
 .login-footer .foot a,.login-footer .foot a:hover{color:#333;text-decoration:none;}

@@ -28,7 +28,7 @@ a{text-decoration:none;}
 .short_nav li a.a{background-position:-87px 0px;}
 .short_nav li a.p{background-position:-129px 0px;}
 .short_nav li a.s{background-position:-168px 0px;}
-.container{width:979px; margin:20px auto 10px; overflow:hidden; border-right:solid 1px #d4d4d4}
+.container{width:979px; margin:20px auto 0px; overflow:hidden; border-right:solid 1px #d4d4d4}
 .cont_left{width:670px; padding:20px; float:left; background:#fff; border-right:solid 1px #d4d4d4}
 .table_box {height:32px; background:url(../image/line.png) no-repeat bottom; position:relative}
 .table_box ul li{float:left; margin-right:1px;}
@@ -115,7 +115,7 @@ a{text-decoration:none;}
 .hd_btn a.gz{background-position:-71px -235px;}
 .hd_btn a.gz_ed{background-position:-71px -258px;display:inline-block; width:60px; height:22px;}
 .hd_btn a.qx{background-position:-71px -281px;}
-.footer{text-align:center; font-size:12px; color:#666; padding:10px 0px 30px}
+.footer{text-align:center; font-size:12px; color:#666; padding:10px 0px 30px; border-top:1px solid #D4D4D4;}
 .explain{font-size:12px; position:relative; color:#666; margin-bottom:10px;_width:227px}
 .explain a{position:absolute; right:0px; color:#666}
 .fList{height:100%; overflow:hidden}
