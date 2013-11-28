@@ -1,21 +1,21 @@
 <script type="text/javascript">
-var digglock = 0;
-function addDigg(feed_id){
-	if (digglock==1){
-		return;
-	}
-	digglock = 1;
-   $.post("{:U('public/Feed/addDigg')}", {feed_id:feed_id}, function(res){
-       if(res==1){
-	       var num = $('#digg'+feed_id).attr('rel');
-    	   num++;
-    	   $('#digg'+feed_id).html('已赞('+num+')');
-	   }else {
-	       ui.error('操作失败，如没有登录请先登录再操作');
-       }
-       digglock = 0;
-   });
-}
+    var digglock = 0;
+    function addDigg(feed_id) {
+        if (digglock == 1) {
+            return;
+        }
+        digglock = 1;
+        $.post("{:U('public/Feed/addDigg')}", { feed_id: feed_id }, function (res) {
+            if (res == 1) {
+                var num = $('#digg' + feed_id).attr('rel');
+                num++;
+                $('#digg' + feed_id).html('已赞(' + num + ')');
+            } else {
+                ui.error('操作失败，如没有登录请先登录再操作');
+            }
+            digglock = 0;
+        });
+    }
 </script>
 <php> 
 $cancomment = intval(CheckPermission('core_normal','feed_comment')); 
@@ -28,431 +28,453 @@ $admintaskrecom = CheckPermission('vtask_admin','vtask_recommend');
 
 
 </php>
-<volist name='data' id ='vl'>
-<div class="NullClassDiv" style="border:1px solid #ccc; margin-bottom:10px;">
-    <!--评论-->
-    <php>
-        if(is_array($vl['comment']) ) {
-    </php>
-        <div style="border-bottom:1px dotted #DFDFDF; padding:5px 0 0 40px;">
-            <div style="position:absolute; margin-left:-40px; margin-top:-5px;">
-                <php>if($vl['comment']['comment_type']=='0') {</php>
-                    <img src="__THEME__/image/ping_small.png"  />
-                <php>} else if($vl['comment']['comment_type']=='1') {</php>
-                    <img src="__THEME__/image/zantong_small.png"  />
-                <php>} else {</php>
-                    <img src="__THEME__/image/fandui_small.png"  />
-                <php>}</php>
-                <php>if($vl['newCommentCount']=='1') echo '<br />new'</php>
-            </div>
-
-	        <dl class="feed_list"  id ='Dl2' model-node='feed_list' style="border-bottom:0;">
-	        <dt class="face">
-	        <a href="{$vl['comment']['user_info']['space_url']}"><img src="{$vl['comment']['user_info']['avatar_small']}"  event-node="face_card" uid="{$vl['comment']['user_info']['uid']}"></a></dt>
-	        <dd class="content">
-            <span event-node="show_admin" event-args="feed_id={$vl['comment']['feed_id']}&uid={$vl['comment']['user_info']['uid']}&feed_del={$adminfeeddel}&channel_recommend={$adminchannelrecom}&vtask_recommend={$admintaskrecom}" href="javascript:;" class="right f12 f9 hover" style="display:none;cursor:pointer">管理</span>
-	        <eq name='vl.is_del' value='0'>
-	        <p class="hd">{$vl['comment']['user_info'].space_link}</p>
-            <table width="535px" style="line-height:22px;">
-	            <tr>
-	                <td style="width:535px; display:block;">
-                        <span class="contents"><!--{$vl['comment'].feed_id|format=true} {$vl['comment'].content|format=true}-->
-                            <php>
-                                if(strlen($vl['comment']['content'])>279) {
-                            </php>
-                            <div id="commentSubData{$vl['comment'].comment_id}{$vl.feed_id}{$vl['answer'][0].feed_id}" style="width:535px; display:block;">
-                                <php>
-                                        print(utf_substr(str_replace('<br />',' ',$vl['comment']['content']),185).'... ');
-                                </php>
-                                <a style="font-size:12px; cursor:pointer;" onclick="showContentAll('comment','{$vl['comment'].comment_id}{$vl.feed_id}{$vl['answer'][0].feed_id}');">显示全部</a>
-                            </div>
-                            <div id="commentAll{$vl['comment'].comment_id}{$vl.feed_id}{$vl['answer'][0].feed_id}" style="display:none; width:535px;">
-                                {$vl['comment'].content|format=true}
-                                <div style="float:right;"><a style="font-size:12px; cursor:pointer;" onclick="showContentAll('comment','{$vl['comment'].comment_id}{$vl.feed_id}{$vl['answer'][0].feed_id}');">收起</a></div>
-                                <div style="clear:both;"></div>
-                            </div>
-                            
-                            <php> } else {
-                                print($vl['comment']['content']);
-                                }
-                            </php>
-                        </span>
-                     </td>
-	            </tr>
-	        </table>
-	        <p class="info">
-                <span>
-	            <a class="date" date="{$vl['comment'].ctime}" >{$vl['comment'].ctime|friendlyDate}</a>
-	            <!--<span>{$vl['comment']['from']}</span>-->
-	
-                </span>
-            </p>
-	        </eq> 
-	        </dd>
-	        </dl>
-        </div>
-    <php>}</php>
-
-    <!--问题-->
-	<php>
-		$cancomment_old = empty($vl['app_row_id'])  ? 0 : 1;
-	</php>
-    <div style="position:absolute; padding:0 5px 5px 0; "><img src="__THEME__/image/question_small.jpg"  /></div>
-	<dl class="feed_list"  id ='feed{$vl.feed_id}' model-node='feed_list' style="border:0; padding:15px 5px 10px 40px">
-    
-	<dt class="face">
-	<a href="{$vl['user_info']['space_url']}"><img src="{$vl['user_info']['avatar_small']}"  event-node="face_card" uid='{$vl['user_info']['uid']}'></a></dt>
-	<dd class="content">
-    <span event-node="show_admin" event-args="feed_id={$vl['feed_id']}&uid={$vl['user_info']['uid']}&feed_del={$adminfeeddel}&channel_recommend={$adminchannelrecom}&vtask_recommend={$admintaskrecom}" href="javascript:;" class="right f12 f9 hover" style="display:none;cursor:pointer">管理</span>
-	<eq name='vl.is_del' value='0'>
-	<p class="hd">{$vl.title}
-	<volist name="vl['GroupData'][$vl['uid']]" id="v2">
-        <img style="width:auto;height:auto;display:inline;cursor:pointer;" src="{$v2['user_group_icon_url']}" title="{$v2['user_group_name']}" />&nbsp;
-    </volist>
-	<php> if(in_array($vl['user_info']['uid'],$followUids)){</php>
-	{:W('Remark',array('uid'=>$vl['user_info']['uid'],'remark'=>$remarkHash[$vl['user_info']['uid']],'showonly'=>1))}
-	<php>}</php>
-	<php>if(!empty($vl['body'])){</php><php>}</php>
-	</p>
-    <table width="535px" style="line-height:22px;">
-	    <tr>
-	        <td style="width:535px; display:block;">
-                <php>if($vl['type']=='repost') {</php>
-                <span class="contents"><!--{$vl.feed_id|format=true}-->{$vl.body|format=true}</span>
-                <php>} else {</php>
-                <a href="{:U('public/Index/feed',array('feed_id'=>$vl['feed_id'],'uid'=>$vl['uid']))}"><span class="contents"><!--{$vl.feed_id|format=true}-->{$vl.body|format=true}</span></a>
-                <php>}</php>
-            </td>
-	    </tr>
-	    <tr>
-	        <td style="width:535px; display:block;"><span class="contents"><!--({$vl.answer_count|format=true})-->
-            <php>
-                if(strlen($vl['description'])>279) {
-            </php>
-            <div id="feedSubData{$vl['comment'].comment_id}{$vl.feed_id}{$vl['answer'][0].feed_id}" style="width:535px; display:block;">
-                <php>
-                        print(utf_substr(str_replace('<br />',' ',$vl['description']),185).'... ');
-                </php>
-                <a style="font-size:12px; cursor:pointer;" onclick="showContentAll('feed','{$vl['comment'].comment_id}{$vl.feed_id}{$vl['answer'][0].feed_id}');">显示全部</a>
-            </div>
-            <div id="feedAll{$vl['comment'].comment_id}{$vl.feed_id}{$vl['answer'][0].feed_id}" style="display:none; width:535px;">
-                {$vl['description']|format=true}
-                <div style="float:right;"><a style="font-size:12px; cursor:pointer;" onclick="showContentAll('feed','{$vl['comment'].comment_id}{$vl.feed_id}{$vl['answer'][0].feed_id}');">收起</a></div>
-                <div style="clear:both;"></div>
-            </div>        
-            <php> } else {
-                print('<div>'.$vl['description'].'</div>');
-                }
-            </php>
-            <!--{$vl.description|format=true} --></span></td>
-	    </tr>
-	</table>
-	
-	<p class="info">
-	<span class="right">
-	<!--<span id='digg{$vl.feed_id}' rel='{$vl.digg_count}'>
-	<php>if(!isset($diggArr[$vl['feed_id']])) { </php>
-	   <a href="javascript:void(0)" onclick="addDigg({$vl.feed_id})" >赞<if condition='!empty($vl[digg_count])'>({$vl.digg_count})</if></a>
-	<php> } else { </php>
-	   已赞<if condition='!empty($vl[digg_count])'>({$vl.digg_count})</if>
-	<php> } </php>
-    </span>
-	<i class="vline">|</i>
-	<php>if(in_array('repost',$weibo_premission)):</php>
-	<eq name='vl.actions.repost' value='true'>
-	<php>if($canfeedshare){</php>
-	<php>
-		$sid = !empty($vl['app_row_id'])? $vl['app_row_id'] : $vl['feed_id'];
-		$cancomment_old = in_array($vl['type'],$cancomment_old_type) ? 1 : 0;
-	</php>
-	{:W('Share',array('sid'=>$sid,'stable'=>$vl['app_row_table'],'initHTML'=>'','current_table'=>'feed','current_id'=>$vl['feed_id'],'nums'=>$vl['repost_count'],'appname'=>$vl['app'],'cancomment'=>$cancomment_old,'feed_type'=>$vl['type'],'is_repost'=>$vl['is_repost']))}
-	<i class="vline">|</i>
-	<php>}</php>
-	</eq>
-	<php>endif;</php>-->
-	
-	<eq name='vl.actions.favor' value='true'>
-		{:W('Collection',array('type'=>$type,'sid'=>$vl['feed_id'],'stable'=>'feed','sapp'=>$vl['app']))}
-	</eq>
-    <i class="vline">|</i>
-
-	<php>if(in_array('comment',$weibo_premission)):</php>
-	<eq name='vl.actions.comment' value='true'>
-		<a event-node="comment" href="javascript:void(0)" event-args='row_id={$vl.feed_id}&app_uid={$vl.uid}&app_row_id={$vl.app_row_id}&app_row_table={$vl.app_row_table}&to_comment_id=0&to_uid=0&app_name={$vl.app}&table=feed&cancomment={$cancomment}&cancomment_old={$cancomment_old}&comment_type=0'>{:L('PUBLIC_STREAM_COMMENT')}<neq name='vl.comment_count' value='0'> ({$vl.comment_count}) </neq></a>
-	</eq>
-	<php>endif;</php>
-
-	</span>
-     <span>
-	<a class="date" date="{$vl.publish_time}" href="{:U('public/Profile/feed',array('feed_id'=>$vl['feed_id'],'uid'=>$vl['uid']))}">{$vl.publish_time|friendlyDate}</a>
-	<!--<span>{$vl['from']}</span>-->
-    <php>if($vl['feed_pv']>0) {</php>
-	<a class="date" href="javascript:void(0);">浏览数({$vl.feed_pv})</a>
-    <php>}</php>
-	<!--<em class="hover">
-	<eq name='vl.actions.delete' value='true'>
-	 做普通删除权限 和 管理删除权限 判断 & 只有微博可以被删除  
-	<php>if(($vl['user_info']['uid'] == $GLOBALS['ts']['mid'] && $canfeeddel) || $adminfeeddel){</php>
-		<a href="javascript:void(0)" event-node ='delFeed' event-args='feed_id={$vl.feed_id}&uid={$vl.user_info.uid}'>{:L('PUBLIC_STREAM_DELETE')}</a>
-	<php>}</php>
-	</eq>
-	<php>if($vl['user_info']['uid'] != $GLOBALS['ts']['mid']){</php>
-	<php>if($canfeedreport){</php>
-	<a href="javascript:void(0)" event-node='denounce' event-args='aid={$vl.feed_id}&type=feed&uid={$vl.user_info.uid}'>{:L('PUBLIC_STREAM_REPORT')}</a>
-	<php>}</php>
-	<php>}</php>
-	</em>-->
-    </span>
-</p>
-	   <div model-node="comment_detail" class="repeat clearfix" style="display:none;"></div>
-	   	<div class="praise-list clearfix" style="display:none;">
-	   		<i class="arrow arrow-t"></i>
-	   	  <ul>
-	   	  	  <li><a href=""><img src="{$vl['user_info']['avatar_small']}" width="30" height="30"/></a><a href="" class="ico-close1"></a></li>
-	   	  	  <li><a href=""><img src="{$vl['user_info']['avatar_small']}" width="30" height="30"/></a></li>
-	   	  	  <li><a href=""><img src="{$vl['user_info']['avatar_small']}" width="30" height="30"/></a></li>
-	   	  	  <li><a href=""><img src="{$vl['user_info']['avatar_small']}" width="30" height="30"/></a></li>
-	   	  	  <li><a href=""><i class="arrow-next-page"></i></a></li>
-	   	  </ul>
-        </div>
- 	
- 	<else />
-	
-	<p>{:L('PUBLIC_INFO_ALREADY_DELETE_TIPS')}</p>
-	<p class="info">
-		<eq name='vl.actions.favor' value='true'>
-		    {:W('Collection',array('type'=>$type,'sid'=>$vl['feed_id'],'stable'=>'feed','sapp'=>$vl['app']))}
-	    </eq>
-	</p>
-	</eq> 
-
-	</dd>
-	</dl>
-
-
-    <!--答案-->
-    <php>
-        if(is_array($vl['answer']) ) {
-    </php>
-        <div style="padding:5px 5px 0 40px; border-top:1px dotted #DFDFDF;">
-            <div style="position:absolute; margin-left:-40px; margin-top:-5px; ">
-                <img src="__THEME__/image/answer_small.jpg"  />
-                <php>if($vl['newCount']=='1') echo '<br />new'</php>
-            </div>
-
-
-	        <php>
-		        $cancomment_old_answer = empty($vl['answer'][0]['app_row_id'])  ? 0 : 1;
-	        </php>
-	        <dl class="feed_list"  id ='Dl1' model-node='feed_list' style="border-bottom:0;">
-	        <dt class="face">
-	        <a href="{$vl['answer'][0]['user_info']['space_url']}"><img src="{$vl['answer'][0]['user_info']['avatar_small']}"  event-node="face_card" uid='{$vl['answer'][0]['user_info']['uid']}'></a></dt>
-	        <dd class="content">
-            <span event-node="show_admin" event-args="feed_id={$vl['answer'][0]['feed_id']}&uid={$vl['answer'][0]['user_info']['uid']}&feed_del={$adminfeeddel}&channel_recommend={$adminchannelrecom}&vtask_recommend={$admintaskrecom}" href="javascript:;" class="right f12 f9 hover" style="display:none;cursor:pointer">管理</span>
-	        <eq name='vl.is_del' value='0'>
-	        <p class="hd">{$vl['answer'][0].title}
-	        <volist name="vl['GroupData'][$vl['answer'][0]['uid']]" id="v2">
-                <img style="width:auto;height:auto;display:inline;cursor:pointer;" src="{$v2['user_group_icon_url']}" title="{$v2['user_group_name']}" />&nbsp;
-            </volist>
-	        <php> if(in_array($vl['answer'][0]['user_info']['uid'],$followUids)){</php>
-	        {:W('Remark',array('uid'=>$vl['answer'][0]['user_info']['uid'],'remark'=>$remarkHash[$vl['answer'][0]['user_info']['uid']],'showonly'=>1))}
-	        <php>}</php>
-	        <php>if(!empty($vl['answer'][0]['body'])){</php><php>}</php>
-	        </p>
-            <table width="535px" style="line-height:22px;">
-	            <tr>
-	                <td style="width:535px; display:block;"><span class="contents"><!--{$vl['answer'][0].feed_id|format=true}{$vl['answer'][0].body|format=true}-->
+<volist name='data' id='vl'>
+     <div class="conts">
+        <!--评论(没有评论样式也不同)-->
+        <php>
+            if(is_array($vl['comment']) ) {
+        </php>
+      	    <div class="contTit">
+                <a href="{$vl['comment']['user_info']['space_url']}"><img class="thumb" src="__THEME__/image/lqwd/thumb_img.png"  event-node="face_card" uid="{$vl['comment']['user_info']['uid']}" /></a>
+                <eq name='vl.is_del' value='0'>
+                <h2>
+                    {$vl['comment']['user_info'].space_link}
+                    <!--<em><a class="date" date="{$vl['comment'].ctime}" >{$vl['comment'].ctime|friendlyDate}</a></em>-->
+                    <em>{$vl['comment'].ctime|friendlyDate}</em>
+                </h2>
+                <p>
+                    <php>
+                        if(strlen($vl['comment']['content'])>279) {
+                    </php>
+                    <div id="commentSubData{$vl['comment'].comment_id}{$vl.feed_id}{$vl['answer'][0].feed_id}" style="width:535px; display:block;">
                         <php>
-                            if(strlen($vl['answer'][0]['body'])>279) {
+                                print(utf_substr(str_replace('<br />',' ',$vl['comment']['content']),185).'... ');
                         </php>
-                        <div id="answerSubData{$vl['comment'].comment_id}{$vl.feed_id}{$vl['answer'][0].feed_id}">
-                            <php>
-                                    print(utf_substr(str_replace('<br />',' ',$vl['answer'][0]['body']),195).'... ');
-                            </php>
-                            <a style="font-size:12px; cursor:pointer;" onclick="showContentAll('answer','{$vl['comment'].comment_id}{$vl.feed_id}{$vl['answer'][0].feed_id}');">显示全部</a>
-                        </div>
-                        <div id="answerAll{$vl['comment'].comment_id}{$vl.feed_id}{$vl['answer'][0].feed_id}" style="display:none;">
-                            {$vl['answer'][0].body|format=true}
-                            <div style="float:right;"><a style="font-size:12px; cursor:pointer;" onclick="showContentAll('answer','{$vl['comment'].comment_id}{$vl.feed_id}{$vl['answer'][0].feed_id}');">收起</a></div>
-                            <div style="clear:both;"></div>
-                        </div>
+                        <a style="font-size:12px; cursor:pointer;" onclick="showContentAll('comment','{$vl['comment'].comment_id}{$vl.feed_id}{$vl['answer'][0].feed_id}');">显示全部</a>
+                    </div>
+                    <div id="commentAll{$vl['comment'].comment_id}{$vl.feed_id}{$vl['answer'][0].feed_id}" style="display:none; width:535px;">
+                        {$vl['comment'].content|format=true}
+                        <div style="float:right;"><a style="font-size:12px; cursor:pointer;" onclick="showContentAll('comment','{$vl['comment'].comment_id}{$vl.feed_id}{$vl['answer'][0].feed_id}');">收起</a></div>
+                        <div style="clear:both;"></div>
+                    </div>
                             
+                    <php> } else {
+                        print($vl['comment']['content']);
+                        }
+                    </php>
+                </p>
+                <p class="comm">
+            
+                </p>
+                </eq> 
+		    </div>
+            <!--问-->
+            <php>
+		        $cancomment_old = empty($vl['app_row_id'])  ? 0 : 1;
+	        </php>
+            <div class="comm_cont">
+        	    <div class="contTop"><p class="q"></p></div>
+                <div class="contCenter">
+            	    <div class="contTit" id ='feed{$vl.feed_id}' model-node='feed_list'>
+                        <a href="{$vl['user_info']['space_url']}"><img class="thumb" src="{$vl['user_info']['avatar_small']}"  event-node="face_card" uid='{$vl['user_info']['uid']}'></a>
+                        <eq name='vl.is_del' value='0'>
+                        <h2>
+                            {$vl.title}
+	                        <volist name="vl['GroupData'][$vl['uid']]" id="v2">
+                                <img style="width:auto;height:auto;display:inline;cursor:pointer;" src="{$v2['user_group_icon_url']}" title="{$v2['user_group_name']}" />&nbsp;
+                            </volist>
+	                        <php> if(in_array($vl['user_info']['uid'],$followUids)){</php>
+	                        {:W('Remark',array('uid'=>$vl['user_info']['uid'],'remark'=>$remarkHash[$vl['user_info']['uid']],'showonly'=>1))}
+	                        <php>}</php>
+	                        <php>if(!empty($vl['body'])){</php><php>}</php>
+                    
+                            <!--<em><a class="date" date="{$vl.publish_time}" href="{:U('public/Profile/feed',array('feed_id'=>$vl['feed_id'],'uid'=>$vl['uid']))}">{$vl.publish_time|friendlyDate}</a></em>-->
+                            <em>{$vl.publish_time|friendlyDate}</em>
+                        </h2>
+                 	    <p><a href="{:U('public/Index/feed',array('feed_id'=>$vl['feed_id'],'uid'=>$vl['uid']))}"><!--{$vl.feed_id|format=true}-->{$vl.body|format=true}</a></p>
+                    
+                        <php>
+                            if(strlen($vl['description'])>279) {
+                        </php>
+                        <div id="feedSubData{$vl['comment'].comment_id}{$vl.feed_id}{$vl['answer'][0].feed_id}" style="width:535px; display:block;">
+                            <p>
+                                <php>
+                                        print(utf_substr(str_replace('<br />',' ',$vl['description']),185).'... ');
+                                </php>
+                                <a style="font-size:12px; cursor:pointer;" onclick="showContentAll('feed','{$vl['comment'].comment_id}{$vl.feed_id}{$vl['answer'][0].feed_id}');">显示全部</a>
+                            </p>
+                        </div>
+                        <div id="feedAll{$vl['comment'].comment_id}{$vl.feed_id}{$vl['answer'][0].feed_id}" style="display:none; width:535px;">
+                            <p>
+                                {$vl['description']|format=true}
+                                <div style="float:right;"><a style="font-size:12px; cursor:pointer;" onclick="showContentAll('feed','{$vl['comment'].comment_id}{$vl.feed_id}{$vl['answer'][0].feed_id}');">收起</a></div>
+                                <div style="clear:both;"></div>
+                            </p>
+                        </div>        
                         <php> } else {
-                            print($vl['answer'][0]['body']);
+                            print('<p>'.$vl['description'].'</p>');
                             }
                         </php>
-                    </span></td>
-	            </tr>
-	        </table>
-	
-	        <p class="info">
-	        <span class="right">
-	        <!--<span id="digg{$vl['answer'][0].feed_id}" rel="{$vl['answer'][0].digg_count}">
-	        <php>if(!isset($diggArr[$vl['answer'][0]['feed_id']])) { </php>
-	           <a href="javascript:void(0)" onclick="addDigg({$vl['answer'][0].feed_id})" >赞<if condition="!empty($vl['answer'][0][digg_count])">({$vl['answer'][0].digg_count})</if></a>
-	        <php> } else { </php>
-	           已赞<if condition="!empty($vl['answer'][0][digg_count])">({$vl['answer'][0].digg_count})</if>
-	        <php> } </php>
-            </span>
-	        <i class="vline">|</i>
-	        <php>if(in_array('repost',$weibo_premission)):</php>
-	        <eq name='vl.actions.repost' value='true'>
-	        <php>if($canfeedshare){</php>
-	        <php>
-		        $sid_answer = !empty($vl['answer'][0]['app_row_id'])? $vl['answer'][0]['app_row_id'] : $vl['answer'][0]['feed_id'];
-		        $cancomment_old_answer = in_array($vl['answer'][0]['type'],$cancomment_old_type) ? 1 : 0;
-	        </php>
-	        {:W('Share',array('sid'=>$sid_answer,'stable'=>$vl['answer'][0]['app_row_table'],'initHTML'=>'','current_table'=>'feed','current_id'=>$vl['answer'][0]['feed_id'],'nums'=>$vl['answer'][0]['repost_count'],'appname'=>$vl['answer'][0]['app'],'cancomment'=>$cancomment_old_answer,'feed_type'=>$vl['answer'][0]['type'],'is_repost'=>$vl['answer'][0]['is_repost']))}
-	        <i class="vline">|</i>
-	        <php>}</php>
-	        </eq>
-	        <php>endif;</php>
-	
-	        <eq name='vl.actions.favor' value='true'>
-		        {:W('Collection',array('type'=>$type,'sid'=>$vl['answer'][0]['feed_id'],'stable'=>'feed','sapp'=>$vl['answer'][0]['app']))}
-	        </eq>
-            <i class="vline">|</i>
-            -->
-	        <php>if(in_array('comment',$weibo_premission)):</php>
-	        <eq name='vl.actions.comment' value='true'>
-		        <!--<a event-node="comment" href="javascript:void(0)" event-args="row_id={$vl['answer'][0].feed_id}&app_uid={$vl['answer'][0].uid}&app_row_id={$vl['answer'][0].app_row_id}&app_row_table={$vl['answer'][0].app_row_table}&to_comment_id=0&to_uid=0&app_name={$vl['answer'][0].app}&table=feed&cancomment={$cancomment}&cancomment_old={$cancomment_old_answer}">{:L('PUBLIC_STREAM_COMMENT')}<neq name='vl.comment_count' value='0'> ({$vl['answer'][0].comment_count}) </neq></a>-->
-                <a event-node="comment" href="javascript:void(0)" event-args="row_id={$vl['answer'][0].feed_id}&app_uid={$vl['answer'][0].uid}&app_row_id={$vl['answer'][0].app_row_id}&app_row_table={$vl['answer'][0].app_row_table}&to_comment_id=0&to_uid=0&app_name={$vl['answer'][0].app}&table=feed&cancomment={$cancomment}&cancomment_old={$cancomment_old_answer}&comment_type=1">赞同<neq name="vl['answer'][0].comment_count" value='0'> ({$vl['answer'][0].comment_count}) </neq></a>
-                <i class="vline">|</i>
-                <a event-node="comment" href="javascript:void(0)" event-args="row_id={$vl['answer'][0].feed_id}&app_uid={$vl['answer'][0].uid}&app_row_id={$vl['answer'][0].app_row_id}&app_row_table={$vl['answer'][0].app_row_table}&to_comment_id=0&to_uid=0&app_name={$vl['answer'][0].app}&table=feed&cancomment={$cancomment}&cancomment_old={$cancomment_old_answer}&comment_type=2">反对<neq name="vl['answer'][0].disapprove_count" value='0'> ({$vl['answer'][0].disapprove_count}) </neq></a>
-	        </eq>
-	        <php>endif;</php>
+                    
+                        <p class="comm">
+                            <eq name='vl.actions.favor' value='true'>
+		                        {:W('Collection',array('type'=>$type,'sid'=>$vl['feed_id'],'stable'=>'feed','sapp'=>$vl['app']))}
+	                        </eq>
 
-	        </span>
-            <span>
-	        <a class="date" date="{$vl['answer'][0].publish_time}" href="{:U('public/Profile/feed',array('feed_id'=>$vl['answer'][0]['feed_id'],'uid'=>$vl['answer'][0]['uid']))}">{$vl['answer'][0].publish_time|friendlyDate}</a>
-	        <!--<span>{$vl['answer'][0]['from']}</span>-->
-	
-	        <!--<em class="hover">
-	        <eq name='vl.actions.delete' value='true'>
-	         做普通删除权限 和 管理删除权限 判断 & 只有微博可以被删除  
-	        <php>if(($vl['answer'][0]['user_info']['uid'] == $GLOBALS['ts']['mid'] && $canfeeddel) || $adminfeeddel){</php>
-		        <a href="javascript:void(0)" event-node ='delFeed' event-args="feed_id={$vl['answer'][0].feed_id}&uid={$vl['answer'][0].user_info.uid}">{:L('PUBLIC_STREAM_DELETE')}</a>
-	        <php>}</php>
-	        </eq>
-	        <php>if($vl['answer'][0]['user_info']['uid'] != $GLOBALS['ts']['mid']){</php>
-	        <php>if($canfeedreport){</php>
-	        <a href="javascript:void(0)" event-node='denounce' event-args="aid={$vl['answer'][0].feed_id}&type=feed&uid={$vl['answer'][0].user_info.uid}">{:L('PUBLIC_STREAM_REPORT')}</a>
-	        <php>}</php>
-	        <php>}</php>
-	        </em>-->
-            </span>
-        </p>
-	           <div model-node="comment_detail" class="repeat clearfix" style="display:none;"></div>
-	   	        <div class="praise-list clearfix" style="display:none;">
-	   		        <i class="arrow arrow-t"></i>
-	   	          <ul>
-	   	  	          <li><a href=""><img src="{$vl['answer'][0]['user_info']['avatar_small']}" width="30" height="30"/></a><a href="" class="ico-close1"></a></li>
-	   	  	          <li><a href=""><img src="{$vl['answer'][0]['user_info']['avatar_small']}" width="30" height="30"/></a></li>
-	   	  	          <li><a href=""><img src="{$vl['answer'][0]['user_info']['avatar_small']}" width="30" height="30"/></a></li>
-	   	  	          <li><a href=""><img src="{$vl['answer'][0]['user_info']['avatar_small']}" width="30" height="30"/></a></li>
-	   	  	          <li><a href=""><i class="arrow-next-page"></i></a></li>
-	   	          </ul>
-                </div>
+                            <php>if(in_array('comment',$weibo_premission)):</php>
+	                            <eq name='vl.actions.comment' value='true'>
+		                            <a event-node="comment" href="javascript:void(0)" event-args='row_id={$vl.feed_id}&app_uid={$vl.uid}&app_row_id={$vl.app_row_id}&app_row_table={$vl.app_row_table}&to_comment_id=0&to_uid=0&app_name={$vl.app}&table=feed&cancomment={$cancomment}&cancomment_old={$cancomment_old}&comment_type=0'>{:L('PUBLIC_STREAM_COMMENT')}<neq name='vl.comment_count' value='0'> ({$vl.comment_count}) </neq></a>
+	                            </eq>
+	                        <php>endif;</php>
+                            <php>if($vl['feed_pv']>0) {</php>
+	                            <a class="date" href="javascript:void(0);">浏览数({$vl.feed_pv})</a>
+                            <php>}</php>
+                        </p>
+
+                        <div model-node="comment_detail" class="repeat clearfix" style="display:none;"></div>
+	   	                <div class="praise-list clearfix" style="display:none;">
+	   		                <i class="arrow arrow-t"></i>
+	   	                  <ul>
+	   	  	                  <li><a href=""><img src="{$vl['user_info']['avatar_small']}" width="30" height="30"/></a><a href="" class="ico-close1"></a></li>
+	   	  	                  <li><a href=""><img src="{$vl['user_info']['avatar_small']}" width="30" height="30"/></a></li>
+	   	  	                  <li><a href=""><img src="{$vl['user_info']['avatar_small']}" width="30" height="30"/></a></li>
+	   	  	                  <li><a href=""><img src="{$vl['user_info']['avatar_small']}" width="30" height="30"/></a></li>
+	   	  	                  <li><a href=""><i class="arrow-next-page"></i></a></li>
+	   	                  </ul>
+                        </div>
+ 	                    <else />
+	                    <p>{:L('PUBLIC_INFO_ALREADY_DELETE_TIPS')}</p>
+                        </eq>
+                    </div>
+                        <!--答-->
+                        <php>
+                            if(is_array($vl['answer']) ) {
+                        </php>
+                        <php>
+		                    $cancomment_old_answer = empty($vl['answer'][0]['app_row_id'])  ? 0 : 1;
+	                    </php>
+                        <div class="answer"  id ="feed{$vl['answer'][0].feed_id}" model-node='feed_list'>
+                            <div class="aTop"><p class="a"></p></div>
+                            <div class="aCenter">
+                                <div class="contTit">
+                                    <a href="{$vl['answer'][0]['user_info']['space_url']}"><img class="thumb" src="{$vl['answer'][0]['user_info']['avatar_small']}"  event-node="face_card" uid='{$vl['answer'][0]['user_info']['uid']}'></a>
+                                    <eq name='vl.is_del' value='0'>
+                                    <h2>
+                                        {$vl['answer'][0].title}
+	                                    <volist name="vl['GroupData'][$vl['answer'][0]['uid']]" id="v2">
+                                            <img style="width:auto;height:auto;display:inline;cursor:pointer;" src="{$v2['user_group_icon_url']}" title="{$v2['user_group_name']}" />&nbsp;
+                                        </volist>
+	                                    <php> if(in_array($vl['answer'][0]['user_info']['uid'],$followUids)){</php>
+	                                    {:W('Remark',array('uid'=>$vl['answer'][0]['user_info']['uid'],'remark'=>$remarkHash[$vl['answer'][0]['user_info']['uid']],'showonly'=>1))}
+	                                    <php>}</php>
+	                                    <php>if(!empty($vl['answer'][0]['body'])){</php><php>}</php>
+                                
+                                        <!--<em><a class="date" date="{$vl['answer'][0].publish_time}" href="{:U('public/Profile/feed',array('feed_id'=>$vl['answer'][0]['feed_id'],'uid'=>$vl['answer'][0]['uid']))}">{$vl['answer'][0].publish_time|friendlyDate}</a></em>-->
+                                        <em>{$vl['answer'][0].publish_time|friendlyDate}</em>
+                                    </h2>
+                                    <php>
+                                        if(strlen($vl['answer'][0]['body'])>279) {
+                                    </php>
+                                        <div id="answerSubData{$vl['comment'].comment_id}{$vl.feed_id}{$vl['answer'][0].feed_id}">
+                                            <p>
+                                            <php>
+                                                    print(utf_substr(str_replace('<br />',' ',$vl['answer'][0]['body']),195).'... ');
+                                            </php>
+                                            <a style="font-size:12px; cursor:pointer;" onclick="showContentAll('answer','{$vl['comment'].comment_id}{$vl.feed_id}{$vl['answer'][0].feed_id}');">显示全部</a>
+                                            </p>
+                                        </div>
+                                        <div id="answerAll{$vl['comment'].comment_id}{$vl.feed_id}{$vl['answer'][0].feed_id}" style="display:none;">
+                                            <p>
+                                            {$vl['answer'][0].body|format=true}
+                                            <div style="float:right;"><a style="font-size:12px; cursor:pointer;" onclick="showContentAll('answer','{$vl['comment'].comment_id}{$vl.feed_id}{$vl['answer'][0].feed_id}');">收起</a></div>
+                                            <div style="clear:both;"></div>
+                                            </p>
+                                        </div>
+                                    <php> } else {
+                                        print('<p>'.$vl['answer'][0]['body'].'</p>');
+                                        }
+                                    </php>
+                                    <p class="comm">
+                                        <php>if(in_array('comment',$weibo_premission)):</php>
+	                                        <eq name='vl.actions.comment' value='true'>
+		                                        <!--<a event-node="comment" href="javascript:void(0)" event-args="row_id={$vl['answer'][0].feed_id}&app_uid={$vl['answer'][0].uid}&app_row_id={$vl['answer'][0].app_row_id}&app_row_table={$vl['answer'][0].app_row_table}&to_comment_id=0&to_uid=0&app_name={$vl['answer'][0].app}&table=feed&cancomment={$cancomment}&cancomment_old={$cancomment_old_answer}">{:L('PUBLIC_STREAM_COMMENT')}<neq name='vl.comment_count' value='0'> ({$vl['answer'][0].comment_count}) </neq></a>-->
+                                                <a class="d" event-node="comment" href="javascript:void(0)" event-args="row_id={$vl['answer'][0].feed_id}&app_uid={$vl['answer'][0].uid}&app_row_id={$vl['answer'][0].app_row_id}&app_row_table={$vl['answer'][0].app_row_table}&to_comment_id=0&to_uid=0&app_name={$vl['answer'][0].app}&table=feed&cancomment={$cancomment}&cancomment_old={$cancomment_old_answer}&comment_type=1"><neq name="vl['answer'][0].comment_count" value='0'>{$vl['answer'][0].comment_count}</neq></a>
+                                                <a class="c" event-node="comment" href="javascript:void(0)" event-args="row_id={$vl['answer'][0].feed_id}&app_uid={$vl['answer'][0].uid}&app_row_id={$vl['answer'][0].app_row_id}&app_row_table={$vl['answer'][0].app_row_table}&to_comment_id=0&to_uid=0&app_name={$vl['answer'][0].app}&table=feed&cancomment={$cancomment}&cancomment_old={$cancomment_old_answer}&comment_type=2"><neq name="vl['answer'][0].disapprove_count" value='0'>{$vl['answer'][0].disapprove_count}</neq></a>
+	                                        </eq>
+	                                    <php>endif;</php>
+                                    </p>
+
+                                    <div model-node="comment_detail" class="repeat clearfix" style="display:none;"></div>
+	   	                            <div class="praise-list clearfix" style="display:none;">
+	   		                            <i class="arrow arrow-t"></i>
+	   	                                <ul>
+	   	  	                                <li><a href=""><img src="{$vl['answer'][0]['user_info']['avatar_small']}" width="30" height="30"/></a><a href="" class="ico-close1"></a></li>
+	   	  	                                <li><a href=""><img src="{$vl['answer'][0]['user_info']['avatar_small']}" width="30" height="30"/></a></li>
+	   	  	                                <li><a href=""><img src="{$vl['answer'][0]['user_info']['avatar_small']}" width="30" height="30"/></a></li>
+	   	  	                                <li><a href=""><img src="{$vl['answer'][0]['user_info']['avatar_small']}" width="30" height="30"/></a></li>
+	   	  	                                <li><a href=""><i class="arrow-next-page"></i></a></li>
+	   	                                </ul>
+                                    </div>
  	
- 	        <else />
-	
-	        <p>{:L('PUBLIC_INFO_ALREADY_DELETE_TIPS')}</p>
-	        <p class="info">
-		        <eq name='vl.actions.favor' value='true'>
-		        {:W('Collection',array('type'=>$type,'sid'=>$vl['answer'][0]['feed_id'],'stable'=>'feed','sapp'=>$vl['answer'][0]['app']))}
-	        </eq>
-	        </p>
-	        </eq> 
-	   
-	        </dd>
-	        </dl>
+ 	                                <else />
+                                        <p>{:L('PUBLIC_INFO_ALREADY_DELETE_TIPS')}</p>
+                                    </eq> 
+                                </div>
+                            </div>
+                        
+                        
 
+                            <div class="aBottom"></div>
+                        </div>
+                        <php> } </php>
+                        <!--//答-->
+                </div>
+                <div class="contBottom"></div>
+            </div>
+            <!--//问-->
+        <php>} else {</php>
+            
+            <!--问-->
+            <php>
+		        $cancomment_old = empty($vl['app_row_id'])  ? 0 : 1;
+	        </php>
+            <div class="comm_cont" style="margin-left:0;">
+        	    <div class="contTop" style="height:1px; border-bottom: 1px solid #E6E6E6; background:none;"><p class="q" style="top:1px;"></p></div>
+                <div class="contCenter" style=" width:636px; padding:16px;">
+            	    <div class="contTit" id ='feed{$vl.feed_id}' model-node='feed_list'>
+                        <a href="{$vl['user_info']['space_url']}"><img class="thumb" src="{$vl['user_info']['avatar_small']}"  event-node="face_card" uid='{$vl['user_info']['uid']}'></a>
+                        <eq name='vl.is_del' value='0'>
+                        <h2>
+                            {$vl.title}
+	                        <volist name="vl['GroupData'][$vl['uid']]" id="v2">
+                                <img style="width:auto;height:auto;display:inline;cursor:pointer;" src="{$v2['user_group_icon_url']}" title="{$v2['user_group_name']}" />&nbsp;
+                            </volist>
+	                        <php> if(in_array($vl['user_info']['uid'],$followUids)){</php>
+	                        {:W('Remark',array('uid'=>$vl['user_info']['uid'],'remark'=>$remarkHash[$vl['user_info']['uid']],'showonly'=>1))}
+	                        <php>}</php>
+	                        <php>if(!empty($vl['body'])){</php><php>}</php>
+                    
+                            <!--<em><a class="date" date="{$vl.publish_time}" href="{:U('public/Profile/feed',array('feed_id'=>$vl['feed_id'],'uid'=>$vl['uid']))}">{$vl.publish_time|friendlyDate}</a></em>-->
+                            <em>{$vl.publish_time|friendlyDate}</em>
+                        </h2>
+                 	    <p><a href="{:U('public/Index/feed',array('feed_id'=>$vl['feed_id'],'uid'=>$vl['uid']))}"><!--{$vl.feed_id|format=true}-->{$vl.body|format=true}</a></p>
+                    
+                        <php>
+                            if(strlen($vl['description'])>279) {
+                        </php>
+                        <div id="feedSubData{$vl['comment'].comment_id}{$vl.feed_id}{$vl['answer'][0].feed_id}" style="display:block;">
+                            <p>
+                                <php>
+                                        print(utf_substr(str_replace('<br />',' ',$vl['description']),185).'... ');
+                                </php>
+                                <a style="font-size:12px; cursor:pointer;" onclick="showContentAll('feed','{$vl['comment'].comment_id}{$vl.feed_id}{$vl['answer'][0].feed_id}');">显示全部</a>
+                            </p>
+                        </div>
+                        <div id="feedAll{$vl['comment'].comment_id}{$vl.feed_id}{$vl['answer'][0].feed_id}" style="display:none;">
+                            <p>
+                                {$vl['description']|format=true}
+                                <div style="float:right;"><a style="font-size:12px; cursor:pointer;" onclick="showContentAll('feed','{$vl['comment'].comment_id}{$vl.feed_id}{$vl['answer'][0].feed_id}');">收起</a></div>
+                                <div style="clear:both;"></div>
+                            </p>
+                        </div>        
+                        <php> } else {
+                            print('<p>'.$vl['description'].'</p>');
+                            }
+                        </php>
 
+                        <p class="comm">
+                            <eq name='vl.actions.favor' value='true'>
+		                        {:W('Collection',array('type'=>$type,'sid'=>$vl['feed_id'],'stable'=>'feed','sapp'=>$vl['app']))}
+	                        </eq>
 
+                            <php>if(in_array('comment',$weibo_premission)):</php>
+	                            <eq name='vl.actions.comment' value='true'>
+		                            <a event-node="comment" href="javascript:void(0)" event-args='row_id={$vl.feed_id}&app_uid={$vl.uid}&app_row_id={$vl.app_row_id}&app_row_table={$vl.app_row_table}&to_comment_id=0&to_uid=0&app_name={$vl.app}&table=feed&cancomment={$cancomment}&cancomment_old={$cancomment_old}&comment_type=0'>{:L('PUBLIC_STREAM_COMMENT')}<neq name='vl.comment_count' value='0'> ({$vl.comment_count}) </neq></a>
+	                            </eq>
+	                        <php>endif;</php>
+                            <php>if($vl['feed_pv']>0) {</php>
+	                            <a class="date" href="javascript:void(0);">浏览数({$vl.feed_pv})</a>
+                            <php>}</php>
+                        </p>
 
+                        <div model-node="comment_detail" class="repeat clearfix" style="display:none;"></div>
+	   	                <div class="praise-list clearfix" style="display:none;">
+	   		                <i class="arrow arrow-t"></i>
+	   	                  <ul>
+	   	  	                  <li><a href=""><img src="{$vl['user_info']['avatar_small']}" width="30" height="30"/></a><a href="" class="ico-close1"></a></li>
+	   	  	                  <li><a href=""><img src="{$vl['user_info']['avatar_small']}" width="30" height="30"/></a></li>
+	   	  	                  <li><a href=""><img src="{$vl['user_info']['avatar_small']}" width="30" height="30"/></a></li>
+	   	  	                  <li><a href=""><img src="{$vl['user_info']['avatar_small']}" width="30" height="30"/></a></li>
+	   	  	                  <li><a href=""><i class="arrow-next-page"></i></a></li>
+	   	                  </ul>
+                        </div>
+ 	                    <else />
+	                    <p>{:L('PUBLIC_INFO_ALREADY_DELETE_TIPS')}</p>
+                        </eq>
+                    </div>
+                        <!--答-->
+                        <php>
+                            if(is_array($vl['answer']) ) {
+                        </php>
+                        <php>
+		                    $cancomment_old_answer = empty($vl['answer'][0]['app_row_id'])  ? 0 : 1;
+	                    </php>
+                        <div class="answer" id ="feed{$vl['answer'][0].feed_id}" model-node='feed_list' style="margin-left:78px;">
+                            <div class="aTop"><p class="a"></p></div>
+                            <div class="aCenter">
+                                <div class="contTit">
+                                    <a href="{$vl['answer'][0]['user_info']['space_url']}"><img class="thumb" src="{$vl['answer'][0]['user_info']['avatar_small']}"  event-node="face_card" uid='{$vl['answer'][0]['user_info']['uid']}'></a>
+                                    <eq name='vl.is_del' value='0'>
+                                    <h2>
+                                        {$vl['answer'][0].title}
+	                                    <volist name="vl['GroupData'][$vl['answer'][0]['uid']]" id="v2">
+                                            <img style="width:auto;height:auto;display:inline;cursor:pointer;" src="{$v2['user_group_icon_url']}" title="{$v2['user_group_name']}" />&nbsp;
+                                        </volist>
+	                                    <php> if(in_array($vl['answer'][0]['user_info']['uid'],$followUids)){</php>
+	                                    {:W('Remark',array('uid'=>$vl['answer'][0]['user_info']['uid'],'remark'=>$remarkHash[$vl['answer'][0]['user_info']['uid']],'showonly'=>1))}
+	                                    <php>}</php>
+	                                    <php>if(!empty($vl['answer'][0]['body'])){</php><php>}</php>
+                                
+                                        <!--<em><a class="date" date="{$vl['answer'][0].publish_time}" href="{:U('public/Profile/feed',array('feed_id'=>$vl['answer'][0]['feed_id'],'uid'=>$vl['answer'][0]['uid']))}">{$vl['answer'][0].publish_time|friendlyDate}</a></em>-->
+                                        <em>{$vl['answer'][0].publish_time|friendlyDate}</em>
+                                    </h2>
+                                    <php>
+                                        if(strlen($vl['answer'][0]['body'])>279) {
+                                    </php>
+                                        <div id="answerSubData{$vl['comment'].comment_id}{$vl.feed_id}{$vl['answer'][0].feed_id}">
+                                            <p>
+                                            <php>
+                                                    print(utf_substr(str_replace('<br />',' ',$vl['answer'][0]['body']),195).'... ');
+                                            </php>
+                                            <a style="font-size:12px; cursor:pointer;" onclick="showContentAll('answer','{$vl['comment'].comment_id}{$vl.feed_id}{$vl['answer'][0].feed_id}');">显示全部</a>
+                                            </p>
+                                        </div>
+                                        <div id="answerAll{$vl['comment'].comment_id}{$vl.feed_id}{$vl['answer'][0].feed_id}" style="display:none;">
+                                            <p>
+                                            {$vl['answer'][0].body|format=true}
+                                            <div style="float:right;"><a style="font-size:12px; cursor:pointer;" onclick="showContentAll('answer','{$vl['comment'].comment_id}{$vl.feed_id}{$vl['answer'][0].feed_id}');">收起</a></div>
+                                            <div style="clear:both;"></div>
+                                            </p>
+                                        </div>
+                                    <php> } else {
+                                        print('<p>'.$vl['answer'][0]['body'].'</p>');
+                                        }
+                                    </php>
+                                    <p class="comm">
+                                        <php>if(in_array('comment',$weibo_premission)):</php>
+	                                        <eq name='vl.actions.comment' value='true'>
+		                                        <!--<a event-node="comment" href="javascript:void(0)" event-args="row_id={$vl['answer'][0].feed_id}&app_uid={$vl['answer'][0].uid}&app_row_id={$vl['answer'][0].app_row_id}&app_row_table={$vl['answer'][0].app_row_table}&to_comment_id=0&to_uid=0&app_name={$vl['answer'][0].app}&table=feed&cancomment={$cancomment}&cancomment_old={$cancomment_old_answer}">{:L('PUBLIC_STREAM_COMMENT')}<neq name='vl.comment_count' value='0'> ({$vl['answer'][0].comment_count}) </neq></a>-->
+                                                <a class="d" event-node="comment" href="javascript:void(0)" event-args="row_id={$vl['answer'][0].feed_id}&app_uid={$vl['answer'][0].uid}&app_row_id={$vl['answer'][0].app_row_id}&app_row_table={$vl['answer'][0].app_row_table}&to_comment_id=0&to_uid=0&app_name={$vl['answer'][0].app}&table=feed&cancomment={$cancomment}&cancomment_old={$cancomment_old_answer}&comment_type=1"><neq name="vl['answer'][0].comment_count" value='0'>{$vl['answer'][0].comment_count}</neq></a>
+                                                <a class="c" event-node="comment" href="javascript:void(0)" event-args="row_id={$vl['answer'][0].feed_id}&app_uid={$vl['answer'][0].uid}&app_row_id={$vl['answer'][0].app_row_id}&app_row_table={$vl['answer'][0].app_row_table}&to_comment_id=0&to_uid=0&app_name={$vl['answer'][0].app}&table=feed&cancomment={$cancomment}&cancomment_old={$cancomment_old_answer}&comment_type=2"><neq name="vl['answer'][0].disapprove_count" value='0'>{$vl['answer'][0].disapprove_count}</neq></a>
+	                                        </eq>
+	                                    <php>endif;</php>
+                                    </p>
 
-        </div>
-    <php>
-        }
-    </php>
+                                    <div model-node="comment_detail" class="repeat clearfix" style="display:none;"></div>
+	   	                            <div class="praise-list clearfix" style="display:none;">
+	   		                            <i class="arrow arrow-t"></i>
+	   	                                <ul>
+	   	  	                                <li><a href=""><img src="{$vl['answer'][0]['user_info']['avatar_small']}" width="30" height="30"/></a><a href="" class="ico-close1"></a></li>
+	   	  	                                <li><a href=""><img src="{$vl['answer'][0]['user_info']['avatar_small']}" width="30" height="30"/></a></li>
+	   	  	                                <li><a href=""><img src="{$vl['answer'][0]['user_info']['avatar_small']}" width="30" height="30"/></a></li>
+	   	  	                                <li><a href=""><img src="{$vl['answer'][0]['user_info']['avatar_small']}" width="30" height="30"/></a></li>
+	   	  	                                <li><a href=""><i class="arrow-next-page"></i></a></li>
+	   	                                </ul>
+                                    </div>
+ 	
+ 	                                <else />
+                                        <p>{:L('PUBLIC_INFO_ALREADY_DELETE_TIPS')}</p>
+                                    </eq> 
+                                </div>
+                            </div>
+                        
+                        
 
-</div>
+                            <div class="aBottom"></div>
+                        </div>
+                        <php> } </php>
+                        <!--//答-->
+                </div>
+                <div class="contBottom" style="height:1px; border-top: 1px solid #E6E6E6; background:none;"></div>
+            </div>
+            <!--//问-->
+
+        <php>}</php>
+      </div>
 </volist>
-
 <script>
-function doHighlight(a,b){
-    highlightStartTag="<span style='color:red'>";
-    highlightEndTag="</span>";
-    var c="";
-    var i=-1;
-    var d=b.toLowerCase();
-    var e=a.toLowerCase();
-    while(a.length>0){
-        i=e.indexOf(d,i+1);
-        if(i<0){
-            c+=a;
-            a="";
-        }else{
-            if(a.lastIndexOf(">",i)>=a.lastIndexOf("<",i)){
-                if(e.lastIndexOf("/script>",i)>=e.lastIndexOf("<script",i)){
-                    c+=a.substring(0,i)+highlightStartTag+a.substr(i,b.length)+highlightEndTag;
-                    a=a.substr(i+b.length);e=a.toLowerCase();
-                    i=-1;
+    function doHighlight(a, b) {
+        highlightStartTag = "<span style='color:red'>";
+        highlightEndTag = "</span>";
+        var c = "";
+        var i = -1;
+        var d = b.toLowerCase();
+        var e = a.toLowerCase();
+        while (a.length > 0) {
+            i = e.indexOf(d, i + 1);
+            if (i < 0) {
+                c += a;
+                a = "";
+            } else {
+                if (a.lastIndexOf(">", i) >= a.lastIndexOf("<", i)) {
+                    if (e.lastIndexOf("/script>", i) >= e.lastIndexOf("<script", i)) {
+                        c += a.substring(0, i) + highlightStartTag + a.substr(i, b.length) + highlightEndTag;
+                        a = a.substr(i + b.length); e = a.toLowerCase();
+                        i = -1;
+                    }
                 }
             }
         }
-    }
-    return c;
-};
+        return c;
+    };
 
-$.fn.highlight=function(z){
-    $(this).each(
-        function(){
-            $(this).html(doHighlight($(this).html(),z))
+    $.fn.highlight = function (z) {
+        $(this).each(
+        function () {
+            $(this).html(doHighlight($(this).html(), z))
         });
-    return this;
-}
-
-$(document).ready(function(){
-if(!'{$topic_id}' && '{$feed_key}'){
-	var key3 = '{$feed_key}';
-    //for(one in key3){
-        $('.contents').highlight(key3);
-        //$('.ask_title').highlight(key3[one]);
-    //}
-}
-});
-/**
- * 时间更新效果
- * return void
- */
-$(document).ready(function() {
-	var wTime = parseInt("{:time()}");
-	var updateTime = function()
-	{
-		$('.date').each(function(i, n) {
-			var date = $(this).attr('date');
-			if(typeof date !== 'undefined') {
-				$(this).html(core.weibo.friendlyDate(date, wTime));
-			}
-		});	
-	};
-	//updateTime();
-	setInterval(function() {
-		wTime += 10;
-		updateTime();
-	}, 10000);
-});
-
-
-function showContentAll(strid, feedid) {
-    if ($("#" + strid + "All" + feedid).css("display") == "none") {
-        $("#" + strid + "SubData" + feedid).hide();
-        $("#" + strid + "All" + feedid).show();
+        return this;
     }
-    else {
-        $("#" + strid + "SubData" + feedid).show();
-        $("#" + strid + "All" + feedid).hide();
+
+    $(document).ready(function () {
+        if (!'{$topic_id}' && '{$feed_key}') {
+            var key3 = '{$feed_key}';
+            //for(one in key3){
+            $('.contents').highlight(key3);
+            //$('.ask_title').highlight(key3[one]);
+            //}
+        }
+    });
+    /**
+    * 时间更新效果
+    * return void
+    */
+    $(document).ready(function () {
+        var wTime = parseInt("{:time()}");
+        var updateTime = function () {
+            $('.date').each(function (i, n) {
+                var date = $(this).attr('date');
+                if (typeof date !== 'undefined') {
+                    $(this).html(core.weibo.friendlyDate(date, wTime));
+                }
+            });
+        };
+        //updateTime();
+        setInterval(function () {
+            wTime += 10;
+            updateTime();
+        }, 10000);
+    });
+
+
+    function showContentAll(strid, feedid) {
+        if ($("#" + strid + "All" + feedid).css("display") == "none") {
+            $("#" + strid + "SubData" + feedid).hide();
+            $("#" + strid + "All" + feedid).show();
+        }
+        else {
+            $("#" + strid + "SubData" + feedid).show();
+            $("#" + strid + "All" + feedid).hide();
+        }
     }
-}
 </script>

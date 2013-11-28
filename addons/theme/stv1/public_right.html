@@ -1,5 +1,4 @@
-<div id="col3" class="st-index-right">
-	<div class="right-wrap">
+
 	<!-- 个人信息 -->
 	{:W('UserInformation', array('uid'=>$mid, 'tpl'=>'right', 'isReturn'=>$isReturn))}
     <!-- 广告位 
@@ -17,7 +16,9 @@
 	<!-- 首页右下广告位 
 	{:Addons::hook('show_ad_space', array('place'=>'home_right_bottom'))}-->
     <!--热门话题-->
+    
+
+<div class="right_conts">
     {:W('HotTopic')}
     {:W('Following', array('uid'=>$mid))}
-	</div>
 </div>

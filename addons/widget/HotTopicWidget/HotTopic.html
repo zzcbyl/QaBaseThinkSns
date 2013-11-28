@@ -1,10 +1,8 @@
-﻿<div style="padding:0 5px 10px 5px; line-height:25px; font-size:14px; border-bottom:1px solid #CCCCCC;">
-    <div style="float:left">今日热门问题</div>
-    <div style="clear:both;"></div>
-    <volist name="data" id="vl">
-        <a href="{:U('public/Index/feed',array('feed_id'=>$vl['feed_id'],'uid'=>$vl['uid']))}">
-        <div style="float: left; width: 180px; overflow: hidden; height: 25px;">{$vl.body|format=true}</div>
-        <div style="float:right; width:40px; overflow:hidden; height:25px; text-align:right;">{$vl.answer_count|format=true}</div></a>
-        <div style="clear:both;"></div>
-    </volist>
-</div>
+﻿<h1 class="hot">今日热门问题<span></span></h1>
+<ul class="contList mb20">
+<volist name="data" id="vl">
+    <li><a href="{:U('public/Index/feed',array('feed_id'=>$vl['feed_id'],'uid'=>$vl['uid']))}">{$vl.body|format=true}</a>
+        <span>{$vl.answer_count|format=true}</span>
+    </li>
+</volist>
+</ul>
