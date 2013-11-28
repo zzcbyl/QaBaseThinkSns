@@ -72,13 +72,15 @@ a{text-decoration:none;}
 .myimg{background:url(../image/thumb_bg.png) no-repeat; width:76px; height:78px; float:left; padding:9px 10px 10px;}
 .myimg img{width:75px; height:75px;}
 .myinfo{float:right;width:145px;}
-.myinfo h4{font-size:14px; color:#fff; margin-bottom:6px}
-.myinfo p{color:#ddd; font-size:12px; line-height:20px}
+.myinfo a{ color:#fff;}
+.myinfo a:hover{ color:#fff; text-decoration:underline;}
+.myinfo h4{font-size:14px; color:#fff; margin-bottom:6px; font-weight:bold;}
+.myinfo p{color:#ddd; font-size:12px; line-height:20px; height:60px; overflow:hidden;}
 .info{font-size:12px; padding:20px 0px 0px 10px}
-.info li{float:left; color:#999; text-align:center; padding:0px 13px; line-height:25px; border-right:solid 1px #cfe8e7;}
+.info li{float:left; color:#999; text-align:center; padding:0px 8px; line-height:25px; border-right:solid 1px #cfe8e7; width:34px;}
 .info li.nbor{border:none}
 .info li a{color:#3eb4da; text-decoration:none; font-family:Constantia; font-size:18px;}
-.right_conts{padding:15px 20px 15px;clear:both}
+.right_conts{padding:15px 20px 15px;}
 .right_conts a.gd{position:absolute; right:0px; top:15px; font-size:12px; color:#666;}
 .right_conts h1{color:#666; font-size:16px; padding:10px 0px; font-weight:normal; text-indent:1.5em; position:relative; clear:both;_width:227px}
 .right_conts h1.hot{background-position:0px -315px;}
@@ -95,7 +97,7 @@ a{text-decoration:none;}
 .guanzhu li{height:60px; margin-bottom:10px}
 .guanzhu li img{float:left; width:60px; height:60px; margin-right:10px;}
 .guanzhu li h2 a{font-size:14px; color:#4cc6f0;}
-.guanzhu li p{padding-left:70px; font-size:12px; color:#666; margin-top:5px}
+.guanzhu li p{font-size:12px; color:#666; margin-top:5px; line-height:20px; height:40px; overflow:hidden;}
 .profile{overflow:hidden; margin-bottom:20px;}
 .profile .pro_img{width:90px; height:90px; padding:5px; background:#e3e3e3; float:left; margin-right:15px}
 .profile .pro_img img{width:90px; height:90px}

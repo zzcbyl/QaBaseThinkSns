@@ -1,9 +1,29 @@
-<div class="person-info clearfix border-b mb20" style="margin-bottom:0px;">
+<div class="myinfo_box">
+    	<div class="myimg">
+            <a href="{$userInfo.space_url}"><img src="{$userInfo.avatar_big}" /></a>
+        </div>
+        <div class="myinfo">
+        	<a href="{$userInfo.space_url}"><h4>{$userInfo.uname}</h4></a>
+            <p>{$userInfo.intro}</p>
+        </div>
+    </div>
+    <ul class="info">
+        <li><a href="{:U('public/Index/following')}">{$userData.following_count|default=0}</a><br />关注</li>
+        <li><a href="{:U('public/Index/friend')}">{$userData.friend_count|default=0}</strong></a><br />好友</li>
+        <li><a href="{:U('public/Index/follower')}">{$userData.follower_count|default=0}</strong></a><br />粉丝</li>
+        <li><a href="{:U('public/Index/myFeed')}">{$userData.weibo_count|default=0}</strong></a><br />提问</li>
+        <li class="nbor"><a href="{:U('public/Index/myAnswer')}">{$userData.answer_count|default=0}</strong></a><br />回答</li>
+    </ul>
+    <div style="clear:both;"></div>
+
+
+
+<!--<div class="person-info clearfix border-b mb20" style="margin-bottom:0px;">
 	<dl class="person-info-t clearfix">
-		<dt><a href="{$userInfo.space_url}"><img src="{$userInfo.avatar_big}" /></a><a href="{:U('public/Account/avatar')}" class="face">更换头像</a></dt>
+		<dt></dt>
 		<dd>
 			<div class="name">
-				<strong><a href="{$userInfo.space_url}">{$userInfo.uname}</a></strong>
+				<strong></strong>
 				<span class="person-icon"><volist name="userGroupData" id="vo">
 					<img style="width:auto;height:auto;display:inline;cursor:pointer;vertical-align:-3px;" src="{$vo['user_group_icon_url']}" title="{$vo['user_group_name']}" />&nbsp;
 				</volist>
@@ -14,7 +34,7 @@
 			<div class="user-grade">
 			<!--<volist name='userCredit.credit' id='vo'>
 			<div class="grade f9" style="color:#666">{$vo.alias}：<span>{:intval($vo['value'])}点</span></div>
-			</volist>-->
+			</volist>
 			
 			<php>if($isReturn) {</php></div>
 			<div class="home"><i class="ico-home"></i><a href="{:U('public/Index/index')}" class="f3">返回我的首页</a></div>
@@ -23,16 +43,11 @@
 	</dl>
 
 	<ul class="person-info-b clearfix mb10">
-		<li><a href="{:U('public/Index/following')}" <eq name="current" value="following">class="current"</eq>><span>关注</span><strong event-node="following_count" event-args="uid={$GLOBALS['ts']['mid']}">{$userData.following_count|default=0}</strong></a></li>
-		<li><a href="{:U('public/Index/follower')}" <eq name="current" value="follower">class="current"</eq>><span>粉丝</span><strong event-node="follower_count" event-args="uid={$GLOBALS['ts']['mid']}">{$userData.follower_count|default=0}</strong></a></li>
-        <li><a href="{:U('public/Index/friend')}" <eq name="current" value="friend">class="current"</eq>><span>好友</span><strong event-node="friend_count" event-args="uid={$GLOBALS['ts']['mid']}">{$userData.friend_count|default=0}</strong></a></li>
-        <li><a href="{:U('public/Index/myFeed')}" <eq name="current" value="myfeed">class="current"</eq>><span>提问</span><strong event-node="weibo_count" event-args="uid={$GLOBALS['ts']['mid']}">{$userData.weibo_count|default=0}</strong></a></li>
-        <li><a href="{:U('public/Index/myAnswer')}" <eq name="current" value="myanswer">class="current"</eq>><span>回答</span><strong event-node="answer_count" event-args="uid={$GLOBALS['ts']['mid']}">{$userData.answer_count|default=0}</strong></a></li>
 		
-		<!--<li class="no-border "><a href="{:U('public/Collection/index')}" <eq name='current' value='collection'>class="current"</eq>><span>收藏</span><strong event-node="favorite_count" event-args="uid={$GLOBALS['ts']['mid']}">{$userData.favorite_count|default=0}</strong></a></li>-->
+		<!--<li class="no-border "><a href="{:U('public/Collection/index')}" <eq name='current' value='collection'>class="current"</eq>><span>收藏</span><strong event-node="favorite_count" event-args="uid={$GLOBALS['ts']['mid']}">{$userData.favorite_count|default=0}</strong></a></li>
 	</ul>
 	{:W('MedalList')}
-</div>
+</div>-->
 
 
 <script type="text/javascript">

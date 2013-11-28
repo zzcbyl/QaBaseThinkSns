@@ -14,7 +14,7 @@ class FollowingWidget extends Widget {
 		$var['uid'] = intval($data['uid']);
 
 		// 加载关注列表
-		$sidebar_following_list = model ( 'Follow' )->getFollowingList ( $var['uid'], null, 12);
+		$sidebar_following_list = model ( 'Follow' )->getFollowingList ( $var['uid'], null, 6);
 
 		foreach($sidebar_following_list['data'] as $v => $vv)
 		{

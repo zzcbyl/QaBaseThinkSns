@@ -1,4 +1,4 @@
-﻿<h1 class="hot">今日热门问题<span></span></h1>
+<h1 class="hot">今日热门问题<span></span></h1>
 <ul class="contList mb20">
 <volist name="data" id="vl">
     <li><a href="{:U('public/Index/feed',array('feed_id'=>$vl['feed_id'],'uid'=>$vl['uid']))}">{$vl.body|format=true}</a>
