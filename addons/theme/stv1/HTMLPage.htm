@@ -1,212 +1,265 @@
-﻿<div id="header" name="header">
-    	{* 未登录时 *}
-    	<nosession name="mid">
-		<div class="header-wrap">
-        	<div class="head-bd">
-                <!-- logo -->
-                <div class="reg">
-                    <a href="{:U('public/Register')}">{:L('PUBLIC_REGISTER')}</a>
-                    <i class="vline"> | </i>
-                    <a href="{:U('public/Passport/login')}">{:L('PUBLIC_LOGIN')}</a>
-                </div>
-                <div class="logo" <php>if(strpos($_SERVER['HTTP_USER_AGENT'],'MSIE 6.0') !== false):</php>style="_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='{$site.logo}', sizingMethod='crop');_background:none;"<php>else:</php>style="background:url({$site.logo}) no-repeat;"<php>endif;</php>><a href="{:SITE_URL}"></a></div>
-                <!-- logo -->
-            </div>
-		</div>
-		</nosession>
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>个人属性查询提问</title>
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+</head>
 
-		{* 登录后 *}
-		<session name="mid">
-        <div class="header-wrap">
-        	<div class="head-bd">
-                <!-- logo -->
-                <div class="logo" <php>if(strpos($_SERVER['HTTP_USER_AGENT'],'MSIE 6.0') !== false):</php>style="_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='{$site.logo}', sizingMethod='crop');_background:none;"<php>else:</php>style="background:url({$site.logo}) no-repeat;"<php>endif;</php>>
-                    <a href="{:SITE_URL}"></a>
-                </div>
-                <!-- logo -->
-                <php>if($user['is_init'] == 1):</php>
-                <div class="nav">
-                    <ul>
-                        <volist name='site_top_nav' id='st'>
-                          <li <php> if(APP_NAME == $st['app_name'] || $_GET['page'] == $st['app_name']):</php> class="current" <php>endif;</php> ><a href="{$st.url}" target="{$st.target}" class="app">{$st.navi_name}</a>
-                            <if condition="isset($st['child'])">
-                            <div model-node="drop_menu_list" class="dropmenu" style="width:100px;display:none;">
-                                <dl class="acc-list" >
-                                    <volist name="st.child" id="stc">
-                                    <dd><a href="{$stc.url}" target="{$stc.target}">{$stc.navi_name|getShort=6}</a></dd>
-                                    </volist>
-                                </dl>
-                            </div>
-                            </if>
-                          </li>                           
-                        </volist>
-                        <li style="*z-index:100;">
-                        <a href="###" class="app">应用</a>
-                        <div model-node="drop_menu_list" class="dropmenu" style="width:370px;left:-50px;display:none;z-index:100;">
-                            <ul class="acc-list app-list clearfix">
-                                <volist name="site_nav_apps" id="li">
-                                <li><a href="{:U($li['app_name'])}"><img src="<php>echo empty($li['icon_url_large']) ? APPS_URL.'/'.$li['app_name'].'/Appinfo/icon_app_large.png':$li['icon_url_large'];</php>" width="50" height="50" />{$li.app_alias|getShort=4}</a></li>
-                                </volist>
-                                <li><a href="{:U('public/App/addapp')}"><img src="__THEME__/image/more.png" width="50" height="50" />更多应用</a></li>
-                            </ul>
-                        </div>
-                        </li>
-                    </ul>
-                </div>
-                <php>endif;</php>
-                 <eq name='user.is_init' value='0'>
-                  <div class="person">
-                    <ul>
-                        <li model-node="person" class="dorp-right"><a href="javascript:void(0);" class="app name" style="cursor:default">欢迎，{$user['uname']}</a></li>
-                        <li class="dorp-right"><a href="{:U('public/Passport/logout')}" class="app name">退出</a></li>
-                    </ul>
-                  </div>
-                <else />
-                <div class="search">
-                    <div id="mod-search" model-node="drop_search">
-                    <form name="search_feed" id="search_feed" method="get" action="{:U('public/Search/index')}">
-                        <input name="app" value="public" type="hidden"/>
-                        <input name="mod" value="Search" type="hidden"/>
-                        <input type="hidden" name="t" value="2"/>
-                        <input type="hidden" name="a" value="public"/>
-                        <dl>
-                            <dt class="clearfix"><input id="search_input" style="height:25px; line-height:25px; padding-top:0px; padding-bottom:0;" class="s-txt left"  type="text" value="搜微博 / 昵称 / 标签" onfocus="this.value=''" onblur="setTimeout(function(){ $('#search-box').remove();} , 200);if(this.value=='') this.value='搜微博 / 昵称 / 标签';" event-node="searchKey" name='k'  autocomplete="off"><a href="javascript:void(0)" class="ico-search left" onclick="if(getLength($('#search_input').val()) && $('#search_input').val()!=='搜微博 / 昵称 / 标签'){ $('#search_feed').submit(); return false;}"></a>
-                            </dt>
-                        </dl>
-                    </form>
-                    </div>
-                </div> 
-                <div class="person">
-                    <ul>
-                        <li model-node="person" class="dorp-right">
-                            <a href="{$user['space_url']}" class="username">{$user['uname']|getShort=6}</a>
-                        </li>                       
-                        <li model-node="notice" class="dorp-right"><a href="javascript:void(0);" class="app">{:L('PUBLIC_MESSAGE')}</a>
-                            <div  class="dropmenu" model-node="drop_menu_list">
-                            	<ul class="message_list_container message_list_new"  style="display:none">
-                                    <li rel="new_folower_count" style="display:none">
-                                        <span></span>，<a href="{:U('public/Index/follower',array('uid'=>$mid))}">{:L('PUBLIC_FOLLOWERS_REMIND')}</a></li>
-                                    <li rel="unread_comment" style="display:none"><span></span>，<a href="{:U('public/Comment/index',array('type'=>'receive'))}">
-                                        {:L('PUBLIS_MESSAGE_REMIND')}</a></li>
-                                    <li rel="unread_message" style="display:none"><span></span>，<a href="{:U('public/Message')}" >{:L('PUBLIS_MESSAGE_REMIND')}</a></li>
-                                    <li rel="unread_atme" style="display:none"><span></span>，<a href="{:U('public/Mention')}">{:L('PUBLIS_MESSAGE_REMIND')}</a></li>
-                                    <li rel="unread_notify" style="display:none"><span></span>，<a href="{:U('public/Message/notify')}">{:L('PUBLIS_MESSAGE_REMIND')}</a></li>
-                                </ul>
-                                <dl class="acc-list W-message" >
-                                    <dd><a  href="{:U('public/Mention/index')}">@提到我的</a></dd>
-                                    <dd><a  href="{:U('public/Comment/index', array('type'=>'receive'))}">收到的评论</a></dd>
-                                    <dd><a  href="{:U('public/Comment/index', array('type'=>'send'))}">发出的评论</a></dd>
-                                    <dd><a  href="{:U('public/Message/index')}">我的私信</a></dd>
-                                    <dd><a  href="{:U('public/Message/notify')}">系统消息</a></dd>
-                                    <dd><a  href="{:U('public/Profile/newanswerinfo')}">消息入口</a></dd>
-                                    <!-- 消息菜单钩子 -->
-                                    {:Addons::hook('header_message_dropmenu')}
-                                <php>if(CheckPermission('core_normal','send_message')){</php>
-                                <dd class="border"><a event-node="postMsg" href="javascript:void(0)" onclick="ui.sendmessage()">{:L('PUBLIC_SEND_PRIVATE_MESSAGE')}&raquo;</a></dd>
-                                <php>}</php>
-                                </dl>
-                            </div>
-                        </li>
-                        <li model-node="account" class="dorp-right"><a href="javascript:void(0);" class="app">{:L('PUBLIC_ACCOUNT')}</a>
-                            <div model-node="drop_menu_list" class="dropmenu" style="width:100px">
-                                <dl class="acc-list">
-                                <dd><a href="{:U('public/Account/index')}">{:L('PUBLIC_SETTING')}</a></dd>
-                                
-                                <php>if(CheckTaskSwitch()):</php>
-                                <dd><a href="{:U('public/Task/index')}">任务中心</a></dd>
-                                <dd><a href="{:U('public/Medal/index')}">勋章馆</a></dd>
-                                <php>endif;</php>
-                                
-                                <dd><a href="{:U('public/Rank/weibo')}">排行榜</a></dd>
-                                <php>if(isInvite() && CheckPermission('core_normal','invite_user')):</php>
-                                <dd><a href="{:U('public/Invite/invite')}">{:L('PUBLIC_INVITE_COLLEAGUE')}</a></dd>
-                                <php>endif;</php>
-                                <!-- 个人设置菜单钩子 -->
-                                {:Addons::hook('header_account_dropmenu')}
-                                <php>if(CheckPermission('core_admin','admin_login')){</php>
-                                <dd><a href="{:U('admin')}">{:L('PUBLIC_SYSTEM_MANAGEMENT')}</a></dd>
-                                <php>}</php>
-
-                                <dd class="border"><a href="{:U('public/Passport/logout')}">{:L('PUBLIC_LOGOUT')}&raquo;</a></dd>
-                                <dd></dd>
-                                </dl>
-                            </div>
-                        </li>
-                    </ul>
-                </div>        
-                <php> if(MODULE_NAME !='Register'):</php>
-                <div id="message_container" class="layer-massage-box" style="display:none">
-                	<ul class="message_list_container" >
-                        <li rel="new_answer_count" style="display:none"><span></span>，<a href="{:U('public/Profile/newanswerinfo',array('uid'=>$mid))}">{:L('PUBLIC_NEWANSWER_REMIND')}</a></li>
-                        <li rel="new_comment_count" style="display:none"><span></span>，<a href="{:U('public/Profile/newcommentinfo',array('uid'=>$mid))}">{:L('PUBLIC_NEWCOMMENT_REMIND')}</a></li>
-                        <li rel="new_comment_agree_count" style="display:none"><span></span>，<a href="{:U('public/Profile/newagreeinfo',array('uid'=>$mid))}">{:L('PUBLIC_NEWAGREECOMMENT_REMIND')}</a></li>
-                        <li rel="new_comment_oppose_count" style="display:none"><span></span>，<a href="{:U('public/Profile/newopposeinfo',array('uid'=>$mid))}">{:L('PUBLIC_NEWOPPOSECOMMENT_REMIND')}</a></li>
-
-                        <li rel="new_friend_count" style="display:none"><span></span>，<a href="{:U('public/Profile/newfriend',array('uid'=>$mid))}">{:L('PUBLIC_FRIENDS_REMIND')}</a></li>
-                        <li rel="new_folower_count" style="display:none"><span></span>，<a href="{:U('public/Profile/newfollower',array('uid'=>$mid))}">{:L('PUBLIC_FOLLOWERS_REMIND')}</a></li>
-                		<li rel="unread_comment" style="display:none"><span></span>，<a href="{:U('public/Comment/index',array('type'=>'receive'))}">{:L('PUBLIS_MESSAGE_REMIND')}</a></li>
-                        <li rel="unread_message" style="display:none"><span></span>，<a href="{:U('public/Message')}" >{:L('PUBLIS_MESSAGE_REMIND')}</a></li>
- 	                    <li rel="unread_atme" style="display:none"><span></span>，<a href="{:U('public/Mention')}">{:L('PUBLIS_MESSAGE_REMIND')}</a></li>
-     	                <li rel="unread_notify" style="display:none"><span></span>，<a href="{:U('public/Message/notify')}">{:L('PUBLIS_MESSAGE_REMIND')}</a></li>
-     	                <li rel="unread_group_atme" style="display:none"><span></span>，<a href="{:U('group/SomeOne/index')}">{:L('PUBLIS_MESSAGE_REMIND')}</a></li>
-     	                <li rel="unread_group_comment" style="display:none"><span></span>，<a href="{:U('group/SomeOne/index')}">{:L('PUBLIS_MESSAGE_REMIND')}</a></li> 
-                	</ul>
-                <a href="javascript:void(0)" onclick="core.dropnotify.closeParentObj()" class="ico-close1"></a>
-                </div>
-                <php>endif;</php>
-                </eq>
-        	</div>
+<body> 
+<!--//header-->
+<div class="header_box">
+	<div class="header w980">
+    	<div class="h_logo"><a href="#">卢勤问答</a></div>
+        <ul class="menu">
+        	<li><a href="#" class="current">首页</a></li>
+            <li><a href="#">广场</a></li>
+            <li><a href="#">专家</a></li>
+            <li><a href="#">活动</a></li>
+        </ul>
+        <div class="search_box">
+        <form>
+        <input type="text" class="s_inp" value="搜索">
+        <input type="submit" class="s_btn" value="">
+        </form>
         </div>
-        <php>if(MODULE_NAME != 'Search'):</php>
-        <div id="search"  class="mod-at-wrap search_footer" model-node='search_footer' style="display:none;z-index:-1">
-            <div class="search-wrap">
-                <div class="input">
-                     <form id="search_form" action="{:U('public/Search/index')}" method="GET">
-                        <div class="search-menu" model-node='search_menu' model-args='a={$curApp}&t={$curType}'>
-                            <a href="javascript:;" id='search_cur_menu'>{$curTypeName|default="全站"}<i class="ico-more"></i></a>
-                        </div>
-                        <input name="app" value="public" type="hidden" />
-                        <input name="mod" value="Search" type="hidden" />
-                        <input name="a" value="{$curApp}" id='search_a' type="hidden"/>
-                        <input name="t" value="{$curType}" id='search_t' type="hidden"/>
-                        <input name="k" value="{$_GET['k']|t}" type="text" class="s-txt" onblur="this.className='s-txt'" onfocus="this.className='s-txt-focus'" autocomplete="off">
-                        <a class="btn-red left" href="javascript:void(0);" onclick="$('#search_form').submit();"><span class="ico-search"></span></a>
-                    </form>
-                </div>
-            </div>
-        </div>
-        <div class="mod-at-wrap" id="search_menu" ison='no' style="display:none" model-node="search_menu_ul">
-        <div class="mod-at">
-            <div class="mod-at-list">
-                <ul class="at-user-list">
-                    <li onclick="core.search.doShowCurMenu(this)" a='public' t='' typename='{:L('PUBLIC_ALL_WEBSITE')}'>{:L('PUBLIC_ALL_WEBSITE')}</li>
-                <volist name='menuList' id='m'>
-                    <php>
-                        if($m['app_name'] == $curApp && $m['type_id'] == $curType){
-                            $curTypeName = $m['type'];
-                        }
-                    </php>
-                    <li onclick="core.search.doShowCurMenu(this)" a='{$m.app_name}' t='{$m.type_id}' typename='{$m.type}'>{$m.type}</li>
-                </volist>   
-                </ul>
-            </div>
-        </div>
-        </div>
-       <php>endif;</php> 
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $("#mod-product dd").hover(function () {
-                $(this).addClass("hover");
-            }, function () {
-                $(this).removeClass("hover");
-            });
-            core.plugInit('search');
-        });
-        core.plugFunc('dropnotify', function () {
-            setTimeout(function () {
-                core.dropnotify.init('message_list_container', 'message_container');
-            }, 320);
-        });
-    </script>
-		</session>
+        <ul class="short_nav">
+        	<li><a href="#" class="h"></a></li>
+            <li><a href="#" class="v"></a></li>
+            <li><a href="#" class="a"></a></li>
+            <li><a href="#" class="p"></a></li>
+            <li><a href="#" class="s"></a></li>
+        </ul>
     </div>
+</div>
+<!--//header-->
+<div class="container">
+	<div class="cont_left">
+        <div class="profile">
+            <div class="pro_img"><img src="images/thumb_img.png" /></div>
+            <div class="pro_cont">
+                <h4>网申都</h4>
+                <p><strong>简介：</strong>高级编辑 ,中国少年儿童新闻出版总社首席教育专家,中国家庭教育学会常务理事，国关心下一代工作委员会专家委员会委员，曾获中国新闻工作者最"韬奋新闻奖"...</p>
+                <p><strong>地区：</strong>华北&nbsp;&nbsp;<strong>资料：</strong>清华大学</p>
+                <p class="xz">
+                <strong>勋章：</strong>
+                <a href="#" class="x1"></a>
+                <a href="#" class="x2"></a>
+                <a href="#" class="x3"></a>
+                <a href="#" class="x4"></a>
+                </p>
+            </div>
+            <p class="comm hd">
+            <strong>获得：</strong>
+            <a href="#" class="d">131</a>
+            <a href="#" class="hx">78</a>
+            <a href="#" class="c">26</a>
+            <a href="#" class="tel">49</a>
+            <span class="hd_btn">
+            <a href="#" class="gz">关注</a>
+            <a href="#" class="gz_ed">已关注</a>
+            <a href="#" class="qx">取消</a>
+            </span>
+            </p>
+        </div>
+        
+	  <div class="table_box">
+      	<ul>
+        	<li><a href="#" class="current">全部</a></li>
+            <li><a href="#">我/TA的提问12</a></li>
+            <li><a href="#">我/TA的回答12 </a></li>
+            <li><a href="#">好友/关注/粉丝</a></li>
+            <li><a href="#">个人资料</a></li>
+        </ul>
+      </div>
+	  <div class="title">
+      	<h1>四六级不过网申都过不了 四六级存废争议</h1>
+      	<em>46分钟前</em>
+      </div>
+      <!--内容列表-->
+      <div class="conts">
+      	<div class="contTit">
+            <img class="thumb" src="images/thumb_img.png" />
+            <h2><a href="#">Karima Natasha:</a></h2>
+            <p>全国大学英语四六级考试委员会规定，大学生必须在本校报名、参加四六级考试，不接受社会人员报考。西交利物浦不设立英语四六级考点，因此，该校想参加四六级考试的学生就没了考试的机会。</p>
+            <p class="comm">
+            <a href="#" class="d">131</a>
+            <a href="#" class="c">78</a>
+            <a href="#" class="x">26</a>
+            <a href="#" class="h">49</a>
+            </p>
+		</div>
+        <!--问-->
+        <div class="comm_cont">
+        	<div class="contTop"><p class="q"></p></div>
+            <div class="contCenter">
+            	<div class="contTit">
+                    <img class="thumb" src="images/thumb_img.png" />
+                    <h2><a href="#">Karima Natasha:</a><em>20分钟前</em></h2>
+                 	<p>全国大学英语四六级考试委员会规定，大学生必须在本校报名、参加四六级考试，不接受社会人员报考。西交利物浦不设立英语四六级考点，因此，该校想参加四六级考试的学生就没了考试的机会。</p>
+                    <P class="contImg">
+                    <img src="images/img.png" width="301" height="400" />
+                    </P>
+                    <p class="comm">
+                    <a href="#" class="d">131</a>
+                    <a href="#" class="c">78</a>
+                    <a href="#" class="x">26</a>
+                    <a href="#" class="h">49</a>
+                    </p>
+                </div>
+                    <!--答-->
+                    <div class="answer">
+                        <div class="aTop"><p class="a"></p></div>
+                        <div class="aCenter">
+                            <div class="contTit">
+                                <img class="thumb" src="images/thumb_img.png" />
+                                <h2><a href="#">Karima Natasha:</a><em>45分钟前</em></h2>
+                                <p>全国大学英语四六级考试委员会规定，大学生必须在本校报名、参加四六级考试，不接受社会人员报考。西交利物浦不设立英语四六级考点，因此，该校想参加四六级考试的学生就没了考试的机会。</p>
+                                <p class="comm">
+                                <a href="#" class="d">131</a>
+                                <a href="#" class="c">78</a>
+                                <a href="#" class="x">26</a>
+                                <a href="#" class="h">49</a>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="aBottom"></div>
+                    </div>
+                    <!--//答-->
+            </div>
+            <div class="contBottom"></div>
+        </div>
+        <!--//问-->
+      </div>
+      <!--//内容列表-->
+      <!--内容列表-->
+      <div class="conts">
+      	<div class="contTit">
+            <img class="thumb" src="images/thumb_img.png" />
+            <h2><a href="#">Karima Natasha:</a></h2>
+            <p>全国大学英语四六级考试委员会规定，大学生必须在本校报名、参加四六级考试，不接受社会人员报考。西交利物浦不设立英语四六级考点，因此，该校想参加四六级考试的学生就没了考试的机会。</p>
+            <p class="comm">
+            <a href="#" class="d">131</a>
+            <a href="#" class="c">78</a>
+            <a href="#" class="x">26</a>
+            <a href="#" class="h">49</a>
+            </p>
+		</div>
+      </div>
+      <!--//内容列表-->
+      <!--加载更多-->
+      <div class="more">加载更多……</div>
+      <!--//加载更多-->
+  </div>
+  <!--right-->
+  <div class="cont_right">
+    <div class="right_conts type">
+     <h1>我/TA的关系<span></span></h1>
+     <div class="explain">我/TA的好友108<a href="#">更多</a></div>
+     <ul class="fList mb10">
+         <li class="ml">
+         <img src="images/thumb_img.png" /><br /><a href="#">吴奇隆</a>
+         </li>
+         <li>
+         <img src="images/thumb_img.png" /><br /><a href="#">吴奇隆</a>
+         </li>
+         <li>
+         <img src="images/thumb_img.png" /><br /><a href="#">吴奇隆</a>
+         </li>
+         <li>
+         <img src="images/thumb_img.png" /><br /><a href="#">吴奇隆</a>
+         </li>
+     </ul>
+     <div class="explain">共同关注36<a href="#">更多</a></div>
+     <ul class="fList mb20">
+         <li class="ml">
+         <img src="images/thumb_img.png" /><br /><a href="#">吴奇隆</a>
+         </li>
+         <li>
+         <img src="images/thumb_img.png" /><br /><a href="#">吴奇隆</a>
+         </li>
+         <li>
+         <img src="images/thumb_img.png" /><br /><a href="#">吴奇隆</a>
+         </li>
+         <li>
+         <img src="images/thumb_img.png" /><br /><a href="#">吴奇隆</a>
+         </li>
+     </ul>
+        
+     <h1>我/TA的赞同<span></span><a href="#" class="gd">更多</a></h1>
+     <ul class="tList mb20">
+         <li class="no">
+         <div class="tu"><a href="#" class="zan">200</a></div>
+         <h2><a href="#">老师解答了问题:菡萏香销翠叶残 </a></h2>
+         <p>去年今日没有原创广播去年今日没有原创广播</p>
+         </li>
+         <li>
+         <div class="tu"><a href="#" class="zan">200</a></div>
+         <h2><a href="#">老师解答了问题:菡萏香销翠叶残 </a></h2>
+         <p>去年今日没有原创广播去年今日没有原创广播</p>
+         </li>
+         <li>
+         <div class="tu"><a href="#" class="zan">200</a></div>
+         <h2><a href="#">老师解答了问题:菡萏香销翠叶残 </a></h2>
+         <p>去年今日没有原创广播去年今日没有原创广播</p>
+         </li>
+     </ul>
+        
+     <h1>我/TA的感谢<span></span><a href="#" class="gd">更多</a></h1>
+     <ul class="tList mb20">
+         <li class="no">
+         <div class="tu"><a href="#" class="ganxie">200</a></div>
+         <h2><a href="#">老师解答了问题:菡萏香销翠叶残 </a></h2>
+         <p>去年今日没有原创广播去年今日没有原创广播</p>
+         </li>
+         <li>
+         <div class="tu"><a href="#" class="ganxie">200</a></div>
+         <h2><a href="#">老师解答了问题:菡萏香销翠叶残 </a></h2>
+         <p>去年今日没有原创广播去年今日没有原创广播</p>
+         </li>
+         <li>
+         <div class="tu"><a href="#" class="ganxie">200</a></div>
+         <h2><a href="#">老师解答了问题:菡萏香销翠叶残 </a></h2>
+         <p>去年今日没有原创广播去年今日没有原创广播</p>
+         </li>
+     </ul>
+     
+     <h1>我/TA关注的问题<span></span><a href="#" class="gd">更多</a></h1>
+     <ul class="tList mb20">
+         <li class="no">
+         <div class="tu"><a href="#" class="guanz">200</a></div>
+         <h2><a href="#">老师解答了问题:菡萏香销翠叶残 </a></h2>
+         <p>去年今日没有原创广播去年今日没有原创广播</p>
+         </li>
+         <li>
+         <div class="tu"><a href="#" class="guanz">200</a></div>
+         <h2><a href="#">老师解答了问题:菡萏香销翠叶残 </a></h2>
+         <p>去年今日没有原创广播去年今日没有原创广播</p>
+         </li>
+         <li>
+         <div class="tu"><a href="#" class="guanz">200</a></div>
+         <h2><a href="#">老师解答了问题:菡萏香销翠叶残 </a></h2>
+         <p>去年今日没有原创广播去年今日没有原创广播</p>
+         </li>
+     </ul>
+     
+     <h1>我/TA关注的标签<span></span></h1>
+     <ul class="tagList">
+         <li><a href="#" class="green">教育</a></li>
+         <li><a href="#" class="orange">高考</a></li>
+         <li><a href="#" class="blue">应试教育</a></li>
+         <li><a href="#" class="red">留学</a></li>
+         <li><a href="#">小升初</a></li>
+         <li><a href="#">私立学校</a></li>
+         <li><a href="#" class="green">MBA</a></li>
+     </ul>
+
+    </div>
+  </div>
+  <!--//right-->
+</div>
+<div class="footer w980">
+Copyright &copy;2013 Inc. All Rights Reserved. 激活网络科技有限公司　版权所有
+</div>
+</body>
+</html>
