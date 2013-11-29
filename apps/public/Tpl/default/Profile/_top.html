@@ -1,65 +1,43 @@
-<div class="person-info-face">
-    <a href="{:U('public/Profile/index', array('uid'=>$uid))}" title="{$user_info[$uid]['uname']}"><img src="{$user_info[$uid]['avatar_big']}" /></a>
-</div>
-<div class="person-info clearfix">
-    <dl class="person-info-t clearfix">
-        <dd>
-            <div class="name">
-                <strong><a href="{:U('public/Profile/index', array('uid'=>$uid))}">{$user_info[$uid]['uname']}</a></strong>
-                <div class="person-icon"><volist name="userGroupData[$user_info[$uid]['uid']]" id="vo">
-                <img style="width:auto;height:auto;display:inline;cursor:pointer;vertical-align:-2px;" src="{$vo['user_group_icon_url']}" title="{$vo['user_group_name']}" />&nbsp;
-                </volist>
-                <a href="{:U('public/Index/scoredetail')}" target="_blank"><img style="width:auto;height:auto;display:inline;cursor:pointer;vertical-align:0;" src="{$userCredit.level.src}" event-node='ico_level_right' /></a></div>
-
-            </div>
-            
-            <div class="grade"><if condition="$user_info[$uid]['sex'] eq 1"><i class="ico-male"></i><else /><i class="ico-female"></i></if>&nbsp;{$user_info[$uid]['location']}</div>
-            <php>if(!empty($user_info[$uid]['intro'])){</php>
-                <div class="grade">个人简介：{$user_info[$uid]['intro']|getShort=100}</div>
+<div class="profile">
+    <div class="pro_img">
+        <a href="{:U('public/Profile/index', array('uid'=>$uid))}" title="{$user_info[$uid]['uname']}"><img src="{$user_info[$uid]['avatar_big']}" /></a>
+    </div>
+    <div class="pro_cont">
+        <h4><a href="{:U('public/Profile/index', array('uid'=>$uid))}">{$user_info[$uid]['uname']}</a></h4>
+        <php>if(!empty($user_info[$uid]['intro'])){</php>
+        <p class="profile_intro"><strong>简介：</strong>{$user_info[$uid]['intro']|getShort=100}</p>
+        <php>}</php>
+        <p><strong>地区：</strong>{$user_info[$uid]['location']}&nbsp;&nbsp;<!--<strong>资料：</strong>清华大学--></p>
+        <p class="xz">
+        <strong>勋章：</strong>
+        <a href="#" class="x1"></a>
+        <a href="#" class="x2"></a>
+        <a href="#" class="x3"></a>
+        <a href="#" class="x4"></a>
+        </p>
+    </div>
+    <p class="comm hd">
+    <strong>获得：</strong>
+    <include file="_countdata"/>   
+    <span class="hd_btn">
+        <php>if($mid != $user_info[$uid]['uid'] && $mid){</php>
+            {:W('FollowBtn', array('fid'=>$user_info[$uid]['uid'], 'uname'=>$user_info[$uid]['uname'], 'follow_state'=>$follow_state[$user_info[$uid]['uid']], 'isrefresh'=>1))}
+            <php>if(CheckPermission('core_normal','send_message')){</php>
+            <eq name='userPrivacy.message' value='0'>
+            <a onclick="ui.sendmessage({$user_info[$uid]['uid']}, 0)" href="javascript:void(0)" event-node="postMsg" class="ml5 btn-cancel"><span>发私信</span></a>
+            </eq>&nbsp;
             <php>}</php>
-            <php>if($user_tag[$user_info[$uid]['uid']]){</php>
-                <div class="grade tag-lists">
-                        个人标签：
-                        <volist name="user_tag[$user_info[$uid]['uid']]" id="u_t_v">
-                            <a href="{:U('public/Search/index',array('t'=>3,'a'=>'public','k'=>$u_t_v))}">{$u_t_v}</a>&nbsp;&nbsp;
-                        </volist>
-                    
-                </div>
-            <php>}</php>
-            
-            <div class="btn"><p class="left">
-                <php>if($mid != $user_info[$uid]['uid'] && $mid){</php>
-                    {:W('FollowBtn', array('fid'=>$user_info[$uid]['uid'], 'uname'=>$user_info[$uid]['uname'], 'follow_state'=>$follow_state[$user_info[$uid]['uid']], 'isrefresh'=>1))}
-                    <php>if(CheckPermission('core_normal','send_message')){</php>
-                    <eq name='userPrivacy.message' value='0'>
-                    <a onclick="ui.sendmessage({$user_info[$uid]['uid']}, 0)" href="javascript:void(0)" event-node="postMsg" class="ml5 btn-cancel"><span>发私信</span></a>
-                    </eq>&nbsp;
-                    <php>}</php>
-                    <div class="more-box"><span class="ml5"><a href="javascript:;" event-node="more_operation" class="ml5">更多</a></span>
-                    <div id="more_operation" class="layer-list more-drop" style="display:none;">    
-                        <ul onmouseover="$('#more_operation').show();" onmouseout="$('#more_operation').hide()">
-                            <li id="blacklist">{:W('Blacklist',array('tpl'=>'btn', 'fid'=>$user_info[$uid]['uid'], 'isrefresh'=>1))}</li>
-                            <php>if($follow_state[$user_info[$uid]['uid']]['following'] == 1){</php>
-                                <li><a href="javascript:void(0)" onclick="setFollowGroup({$user_info[$uid]['uid']}, 1)">设置分组</a></li>
-                            <php>}</php>
-                        </ul>
-                    </div></div>
+        <php>}</php>
 
-                <php>}</php>
-            </p></div>
-            
-        </dd>
-        
-    </dl>
-    <ul class="person-info-b clearfix">
-        <li><a href="{:U('public/Profile/following',array('uid'=>$user_info[$uid]['uid']))}" <eq name="ACTION_NAME" value="following">class="current"</eq>><span>关注</span><strong event-node="<php>if($user_info[$uid]['uid']==$mid){</php>following<php>}</php>_count" event-args="uid={$user_info[$uid]['uid']}">{$userData.following_count|default=0}</a></strong></li>
-        <li><a href="{:U('public/Profile/follower',array('uid'=>$user_info[$uid]['uid']))}"<eq name="ACTION_NAME" value="follower">class="current"</eq>><span>粉丝</span><strong event-node="<php>if($user_info[$uid]['uid']!=$mid){</php>following<php>}</php>_count" event-args="uid={$user_info[$uid]['uid']}">{$userData.follower_count|default=0}</a></strong></li>
-        <li><a href="{:U('public/Profile/friend',array('uid'=>$user_info[$uid]['uid']))}" <eq name="ACTION_NAME" value="friend">class="current"</eq>><span>好友</span><strong event-node="friend_count" event-args="uid={$GLOBALS['ts']['mid']}">{$userData.friend_count|default=0}</strong></a></li>
-        <li><a href="{:U('public/Profile/question',array('type'=>$type,'feed_type'=>'','uid'=>$uid))}" <php>if(ACTION_NAME=='question'){</php>class="current"<php>}</php>><span>提问</span><strong event-node="weibo_count" event-args="uid={$user_info[$uid]['uid']}">{$userData.weibo_count|default=0}</strong></a></li>
-        <li class="no-border"><a href="{:U('public/Profile/answer',array('type'=>$type,'feed_type'=>'','uid'=>$uid))}" <php>if(ACTION_NAME=='answer'){</php>class="current"<php>}</php>><span>回答</span><strong event-node="answer_count" event-args="uid={$user_info[$uid]['uid']}">{$userData.answer_count|default=0}</strong></a></li>
-        <!-- <li class="no-border <eq name='current' value='collection'>current</eq>"><a href="{:U('public/Collection/index')}"><span>收藏</span>{$userData.favorite_count|default=0}</a></li> -->
-    </ul>
+        <!--<a href="#" class="gz">关注</a>
+        <a href="#" class="gz_ed">已关注</a>
+        <a href="#" class="qx">取消</a>-->
+    </span>
+    </p>
 </div>
+
+
+
 
 <script type="text/javascript">
 // 事件监听

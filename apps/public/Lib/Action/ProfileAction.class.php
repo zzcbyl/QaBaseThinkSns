@@ -785,7 +785,7 @@ class ProfileAction extends Action {
 				$this->uid 
 		) );
 		// 加载好友列表
-		$sidebar_following_list = model ( 'Follow' )->getFriendList ( $this->uid, 12 );
+		$sidebar_following_list = model ( 'Follow' )->getFriendList ( $this->uid, 4 );
 		$fids=array();
 		$i=0;
 		foreach($sidebar_following_list['data'] as $v => $vv)
@@ -797,7 +797,7 @@ class ProfileAction extends Action {
 		$this->assign ( 'sidebar_following_list', $sidebar_following_list );
 		// dump($sidebar_following_list);exit;
 		// 加载共同关注列表
-		$sidebar_follower_list = model ( 'Follow' )->getCommonFollowingList ($this->mid, $this->uid, 12 );
+		$sidebar_follower_list = model ( 'Follow' )->getCommonFollowingList ($this->mid, $this->uid, 4 );
 		$fids=array();
 		$i=0;
 		foreach($sidebar_follower_list['data'] as $v => $vv)
@@ -821,7 +821,7 @@ class ProfileAction extends Action {
 		$this->_assignUserInfo ( $uids );
 		
 		$where =" `uid` = ".$this->uid." AND `feed_questionid` != 0 and `comment_count` > 0";
-		$list = model('Feed')->getFeedListByComment($where, 10);
+		$list = model('Feed')->getFeedListByComment($where, 3);
 		$this->assign ( 'aggreelist', $list );
 		/*print('<br /><br /><br /><br />');
 		print_r($list);*/

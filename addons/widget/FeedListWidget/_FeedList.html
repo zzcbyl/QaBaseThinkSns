@@ -35,7 +35,7 @@ $admintaskrecom = CheckPermission('vtask_admin','vtask_recommend');
             if(is_array($vl['comment']) ) {
         </php>
       	    <div class="contTit">
-                <a href="{$vl['comment']['user_info']['space_url']}"><img class="thumb" src="__THEME__/image/lqwd/thumb_img.png"  event-node="face_card" uid="{$vl['comment']['user_info']['uid']}" /></a>
+                <a href="{$vl['comment']['user_info']['space_url']}"><img class="thumb" src="{$vl['comment']['user_info']['avatar_small']}"  event-node="face_card" uid="{$vl['comment']['user_info']['uid']}" /></a>
                 <eq name='vl.is_del' value='0'>
                 <h2>
                     {$vl['comment']['user_info'].space_link}

@@ -415,7 +415,7 @@ class FollowModel extends Model {
 		//	$list['data'][$key]['uid'] = $fid;
 		//	$list['data'][$key]['fid'] = $uid;
 		//}
-
+		//print_r($list);
 		return $list;
 	}
 

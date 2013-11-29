@@ -1,54 +1,95 @@
-<div id="col3" class="st-index-right">
-   <div class="right-wrap">
-    <php>if($verifyInfo){</php>
-        <div class="official-aut mb20 border-b">
-            <p class="aut-bg"><img src="__THEME__/image/authentication.png" /></p>
-            <p class="aut-info">{$verifyInfo}</p>
-        </div>
-    <php>}</php>
-    {:W('MedalList',array('uid'=>$user_info[$uid]['uid']))}
-    <php>if($sidebar_following_list['data']){</php>
-        <div class="right-box mb20 clearfix border-b">
-            <h3><a href="{:U('public/Profile/friend',array('uid'=>$user_info[$uid]['uid']))}" class="right f12">更多</a><php>if($user_info[$uid]['uid']==$mid){</php>我<php>}else{</php>TA<php>}</php>的好友({$userData.friend_count|default=0})</h3>
-            <ul>
-                <volist name="sidebar_following_list['data']" id="vo">
-                    <li><a href="{:U('public/Profile/index',array('uid'=>$vo['fid']))}" class="face" uid="{$vo['fid']}" event-node="face_card"><img src="{$following_user_info[$vo['fid']]['avatar_small']}" /></a><a href="{:U('public/Profile/index',array('uid'=>$vo['fid']))}" class="face" uid="{$vo['fid']}" event-node="face_card"><span>{$following_user_info[$vo['fid']]['uname']|getShort=4}</span></a></li>
-                </volist>
-            </ul>
-        </div>
-    <php>}</php>
-    <php>if($sidebar_follower_list['data']){</php>
-        <div class="right-box mb20 clearfix border-b">
-            <h3><a href="{:U('public/Profile/follower',array('uid'=>$user_info[$uid]['uid']))}" class="right f12">更多</a>共同关注(<php>echo count($sidebar_follower_list['data'])</php>)</h3>
-            <ul>
-                <volist name="sidebar_follower_list['data']" id="vo"> 
-                    <li><a href="{:U('public/Profile/index',array('uid'=>$vo['fid']))}" class="face"><img src="{$follower_user_info[$vo['fid']]['avatar_small']}" uid="{$vo['fid']}" event-node="face_card" /></a><a href="{:U('public/Profile/index',array('uid'=>$vo['fid']))}" class="face" uid="{$vo['fid']}" event-node="face_card"><span>{$follower_user_info[$vo['fid']]['uname']|getShort=4}</span></a></li>
-                </volist>
-            </ul>
-        </div>
-    <php>}</php>
-
-
-        <div class="right-box mb20 clearfix border-b" style="font-size:14px;">
-            <h3><a href="{:U('public/Profile/index',array('uid'=>$user_info[$uid]['uid'], 'type'=>'agree'))}" class="right f12">更多</a><php>if($user_info[$uid]['uid']==$mid){</php>我<php>}else{</php>TA<php>}</php>的赞同</h3>
-            <ul>
-                <volist name="aggreelist['data']" id="alist"> 
-                <li style="margin:0 0 10px 0;">
-                    <div style="float:left; width:40px; text-align:center; height:20px; line-height:20px; overflow:hidden; background:url('__THEME__/image/zantong_small.png') no-repeat; background-position: 11px -1px;">
-                        {$alist['answer'][0]['comment_count']}</div>
-                    <div style="float:left; margin-left:5px;">
-                        <div style="width:185px; height:20px; line-height:20px; overflow:hidden;"><a href="{:U('public/Index/feed',array('feed_id'=>$vl['feed_id'],'uid'=>$vl['uid']))}"><span class="contents">{$alist['body']}</span></a></div>
-                        <div style="width:185px; height:20px; line-height:20px; overflow:hidden;">{$alist['answer'][0]['body']}</div>
-                    </div>
-                    <div style="clear:both;"></div>
+<div class="right_conts type">
+     <php>if($sidebar_following_list['data'] || $sidebar_follower_list['data']){</php>
+        <h1>我/TA的关系<span></span></h1>
+     <php>}</php>
+     <php>if($sidebar_following_list['data']){</php>
+         <div class="explain"><php>if($user_info[$uid]['uid']==$mid){</php>我<php>}else{</php>TA<php>}</php>的好友({$userData.friend_count|default=0})
+            <a href="{:U('public/Profile/friend',array('uid'=>$user_info[$uid]['uid']))}" class="right f12">更多</a></div>  
+         <ul class="fList mb10">
+            <volist name="sidebar_following_list['data']" id="vo" key="k">
+                <li <eq name="k" value="1"> class="ml"</eq> >
+                    <a href="{:U('public/Profile/index',array('uid'=>$vo['fid']))}" uid="{$vo['fid']}" event-node="face_card">
+                        <img src="{$following_user_info[$vo['fid']]['avatar_small']}" /></a><br />
+                    <a style="width:50px; overflow:hidden; height:18px; display:block;" href="{:U('public/Profile/index',array('uid'=>$vo['fid']))}" uid="{$vo['fid']}" event-node="face_card">
+                        {$following_user_info[$vo['fid']]['uname']|getShort=4}</a>
                 </li>
-                </volist>
-            </ul>
-        </div>
+            </volist>
+         </ul>
+     <php>}</php>
 
-    <!-- 主页右下广告 -->
-    <div style="width:230px;overflow:hidden;">
-    {:Addons::hook('show_ad_space', array('place'=>'profile_right'))}    
-    </div>
-    </div>
+     <php>if($sidebar_follower_list['data']){</php>
+     <div class="explain">共同关注(<php>echo $sidebar_follower_list['count']</php>)<a href="{:U('public/Profile/follower',array('uid'=>$user_info[$uid]['uid']))}" class="right f12">更多</a></div>
+     <ul class="fList mb20">
+        <volist name="sidebar_follower_list['data']" id="vo" key="k"> 
+            <li  <eq name="k" value="1"> class="ml"</eq>>
+                <a href="{:U('public/Profile/index',array('uid'=>$vo['fid']))}">
+                <img src="{$follower_user_info[$vo['fid']]['avatar_small']}" uid="{$vo['fid']}" event-node="face_card" /></a><br />
+                <a style="width:50px; overflow:hidden; height:18px; display:block;" href="{:U('public/Profile/index',array('uid'=>$vo['fid']))}" uid="{$vo['fid']}" event-node="face_card">{$follower_user_info[$vo['fid']]['uname']|getShort=4}</a>
+            </li>
+        </volist>
+     </ul>
+     <php>}</php>
+
+     <php>if($aggreelist['data']){</php>
+     <h1><php>if($user_info[$uid]['uid']==$mid){</php>我<php>}else{</php>TA<php>}</php>的赞同<span></span><a href="{:U('public/Profile/index',array('uid'=>$user_info[$uid]['uid'], 'type'=>'agree'))}" class="right f12">更多</a></a></h1>
+     <ul class="tList mb20">
+        <volist name="aggreelist['data']" id="alist"> 
+            <li>
+            <div class="tu"><a class="zan">{$alist['answer'][0]['comment_count']}</a></div>
+            <h2><a href="{:U('public/Index/feed',array('feed_id'=>$alist['feed_id'],'uid'=>$alist['uid']))}">{$alist['body']}</a></h2>
+            <p>{$alist['answer'][0]['body']}</p>
+            </li>
+
+            
+        </volist>
+     </ul>
+     <php>}</php>
+     <!--<h1>我/TA的感谢<span></span><a href="#" class="gd">更多</a></h1>
+     <ul class="tList mb20">
+         <li class="no">
+         <div class="tu"><a href="#" class="ganxie">200</a></div>
+         <h2><a href="#">老师解答了问题:菡萏香销翠叶残 </a></h2>
+         <p>去年今日没有原创广播去年今日没有原创广播</p>
+         </li>
+         <li>
+         <div class="tu"><a href="#" class="ganxie">200</a></div>
+         <h2><a href="#">老师解答了问题:菡萏香销翠叶残 </a></h2>
+         <p>去年今日没有原创广播去年今日没有原创广播</p>
+         </li>
+         <li>
+         <div class="tu"><a href="#" class="ganxie">200</a></div>
+         <h2><a href="#">老师解答了问题:菡萏香销翠叶残 </a></h2>
+         <p>去年今日没有原创广播去年今日没有原创广播</p>
+         </li>
+     </ul>
+     
+     <h1>我/TA关注的问题<span></span><a href="#" class="gd">更多</a></h1>
+     <ul class="tList mb20">
+         <li class="no">
+         <div class="tu"><a href="#" class="guanz">200</a></div>
+         <h2><a href="#">老师解答了问题:菡萏香销翠叶残 </a></h2>
+         <p>去年今日没有原创广播去年今日没有原创广播</p>
+         </li>
+         <li>
+         <div class="tu"><a href="#" class="guanz">200</a></div>
+         <h2><a href="#">老师解答了问题:菡萏香销翠叶残 </a></h2>
+         <p>去年今日没有原创广播去年今日没有原创广播</p>
+         </li>
+         <li>
+         <div class="tu"><a href="#" class="guanz">200</a></div>
+         <h2><a href="#">老师解答了问题:菡萏香销翠叶残 </a></h2>
+         <p>去年今日没有原创广播去年今日没有原创广播</p>
+         </li>
+     </ul>
+     
+     <h1>我/TA关注的标签<span></span></h1>
+     <ul class="tagList">
+         <li><a href="#" class="green">教育</a></li>
+         <li><a href="#" class="orange">高考</a></li>
+         <li><a href="#" class="blue">应试教育</a></li>
+         <li><a href="#" class="red">留学</a></li>
+         <li><a href="#">小升初</a></li>
+         <li><a href="#">私立学校</a></li>
+         <li><a href="#" class="green">MBA</a></li>
+     </ul>-->
 </div>

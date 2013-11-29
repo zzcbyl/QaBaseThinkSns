@@ -6,15 +6,17 @@
       elseif(ACTION_NAME=='answer'){ $tabClass['public_answer'] = 'current'; }
 	  else{ $tabClass[$type] = 'current'; }
 </php>
-<div class="tab-menu clearfix">
+<div class="table_box">
   <ul>
-    <li class="{$tabClass.public}"><span><a href="{:U('public/Profile/index',array('feed_type'=>'','uid'=>$uid))}"><!--<php>$GLOBALS['ts']['mid']==$uid?print('我'):print('他')</php>的主页-->全部</a></span></li>
-    <li class="{$tabClass.public_question}"><span><a href="{:U('public/Profile/question',array('feed_type'=>'','uid'=>$uid))}"><php>$GLOBALS['ts']['mid']==$uid?print('我'):print('TA')</php>的提问</a></span></li>
-    <li class="{$tabClass.public_answer}"><span><a href="{:U('public/Profile/answer',array('feed_type'=>'','uid'=>$uid))}"><php>$GLOBALS['ts']['mid']==$uid?print('我'):print('TA')</php>的回答</a></span></li>
-    <li class="{$tabClass.public_friend}"><span><a href="{:U('public/Profile/friend',array('uid'=>$uid,'type'=>'friend'))}"><php>$GLOBALS['ts']['mid']==$uid?print('我的'):print('TA的')</php>好友/关注/粉丝</a></span></li>
-    <li class="{$tabClass.public_data}"><span><a href="{:U('public/Profile/data',array('uid'=>$uid))}"><php>$GLOBALS['ts']['mid']==$uid?print('我的'):print('TA的')</php>资料</a></span></li>
+    <li><a class="{$tabClass.public}" href="{:U('public/Profile/index',array('feed_type'=>'','uid'=>$uid))}"><!--<php>$GLOBALS['ts']['mid']==$uid?print('我'):print('他')</php>的主页-->全部</a></li>
+    <li><a class="{$tabClass.public_question}" href="{:U('public/Profile/question',array('feed_type'=>'','uid'=>$uid))}"><php>$GLOBALS['ts']['mid']==$uid?print('我'):print('TA')</php>的提问</a></li>
+    <li><a class="{$tabClass.public_answer}" href="{:U('public/Profile/answer',array('feed_type'=>'','uid'=>$uid))}"><php>$GLOBALS['ts']['mid']==$uid?print('我'):print('TA')</php>的回答</a></li>
+    <li><a class="{$tabClass.public_friend}" href="{:U('public/Profile/friend',array('uid'=>$uid,'type'=>'friend'))}"><php>$GLOBALS['ts']['mid']==$uid?print('我的'):print('TA的')</php>好友/关注/粉丝</a></li>
+    <li><a class="{$tabClass.public_data}" href="{:U('public/Profile/data',array('uid'=>$uid))}"><php>$GLOBALS['ts']['mid']==$uid?print('我的'):print('TA的')</php>资料</a></li>
 	<!--<volist name='appArr' id='vo'>
 	    <li class="{$tabClass[$key]}"><span><a href="{:U('public/Profile/appList',array('type'=>$key,'uid'=>$uid))}">{$vo}</a></span></li>
 	</volist>-->
   </ul>
 </div>
+
+
