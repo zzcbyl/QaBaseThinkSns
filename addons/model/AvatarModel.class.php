@@ -118,10 +118,14 @@ class AvatarModel {
         	$res = $cloud->writeFile($original_file_name,$imageAsString,true);
         }else{
         	$res = file_put_contents(UPLOAD_PATH.$original_file_name, $data['big']);
-			getThumbImage($original_file_name,200,200,true,true);
+			/*getThumbImage($original_file_name,200,200,true,true);
 			getThumbImage($original_file_name,100,100,true,true);
 			getThumbImage($original_file_name,50,50,true,true);
-			getThumbImage($original_file_name,30,30,true,true);
+			getThumbImage($original_file_name,30,30,true,true);*/
+			getThumbImage($original_file_name,90,90,true,true);
+			getThumbImage($original_file_name,75,75,true,true);
+			getThumbImage($original_file_name,60,60,true,true);
+			getThumbImage($original_file_name,50,50,true,true);
         }
 
         if(!$res){
@@ -257,10 +261,14 @@ class AvatarModel {
         	}
 			$thumb->save(UPLOAD_PATH.$original_file_name);
 			unset($return);
-			$return['data']['big'] 		= getImageUrl($original_file_name,200,200,true,true).'?v'.$filemtime;
+			/*$return['data']['big'] 		= getImageUrl($original_file_name,200,200,true,true).'?v'.$filemtime;
 			$return['data']['middle'] 	= getImageUrl($original_file_name,100,100,true,true).'?v'.$filemtime;
 			$return['data']['small'] 	= getImageUrl($original_file_name,50,50,true,true).'?v'.$filemtime;
-			$return['data']['tiny'] 	= getImageUrl($original_file_name,30,30,true,true).'?v'.$filemtime;
+			$return['data']['tiny'] 	= getImageUrl($original_file_name,30,30,true,true).'?v'.$filemtime;*/
+			$return['data']['big'] 		= getImageUrl($original_file_name,90,90,true,true).'?v'.$filemtime;
+			$return['data']['middle'] 	= getImageUrl($original_file_name,75,75,true,true).'?v'.$filemtime;
+			$return['data']['small'] 	= getImageUrl($original_file_name,60,60,true,true).'?v'.$filemtime;
+			$return['data']['tiny'] 	= getImageUrl($original_file_name,50,50,true,true).'?v'.$filemtime;
 		    $return['status'] = 1;
         }
         die(json_encode($return));
@@ -321,10 +329,14 @@ class AvatarModel {
 				return $return;
 			}
 
-			$return['data']['big'] 		= getImageUrl($original_file_name,200,200,true,true).'?v'.$filemtime;
+			/*$return['data']['big'] 		= getImageUrl($original_file_name,200,200,true,true).'?v'.$filemtime;
 			$return['data']['middle'] 	= getImageUrl($original_file_name,100,100,true,true).'?v'.$filemtime;
 			$return['data']['small'] 	= getImageUrl($original_file_name,50,50,true,true).'?v'.$filemtime;
-			$return['data']['tiny'] 	= getImageUrl($original_file_name,30,30,true,true).'?v'.$filemtime;
+			$return['data']['tiny'] 	= getImageUrl($original_file_name,30,30,true,true).'?v'.$filemtime;*/
+			$return['data']['big'] 		= getImageUrl($original_file_name,90,90,true,true).'?v'.$filemtime;
+			$return['data']['middle'] 	= getImageUrl($original_file_name,75,75,true,true).'?v'.$filemtime;
+			$return['data']['small'] 	= getImageUrl($original_file_name,60,60,true,true).'?v'.$filemtime;
+			$return['data']['tiny'] 	= getImageUrl($original_file_name,50,50,true,true).'?v'.$filemtime;
 		    $return['status'] = 1;
         }
         return $return;
