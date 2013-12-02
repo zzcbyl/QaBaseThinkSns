@@ -27,66 +27,65 @@
                 </div>
             </div>
         </div>
-        <div class="person">
+        <div class="person" style="float:right;">
             <ul class="short_nav">
-        	<li><a href="#" class="h"></a></li>
-            <li model-node="notice"><a href="javascript:void(0);" class="v"></a>
-                <div class="dropmenu" model-node="drop_menu_list">
-                    <ul class="message_list_container message_list_new"  style="display:none; width:100px;">
-                        <li rel="new_folower_count" style="display:none">
-                            <span></span>，<a href="{:U('public/Index/follower',array('uid'=>$mid))}">{:L('PUBLIC_FOLLOWERS_REMIND')}</a></li>
-                        <li rel="unread_comment" style="display:none"><span></span>，<a href="{:U('public/Comment/index',array('type'=>'receive'))}">
-                            {:L('PUBLIS_MESSAGE_REMIND')}</a></li>
-                        <li rel="unread_message" style="display:none"><span></span>，<a href="{:U('public/Message')}" >{:L('PUBLIS_MESSAGE_REMIND')}</a></li>
-                        <li rel="unread_atme" style="display:none"><span></span>，<a href="{:U('public/Mention')}">{:L('PUBLIS_MESSAGE_REMIND')}</a></li>
-                        <li rel="unread_notify" style="display:none"><span></span>，<a href="{:U('public/Message/notify')}">{:L('PUBLIS_MESSAGE_REMIND')}</a></li>
-                    </ul>
-                    <dl class="acc-list W-message" style="width:100px;" >
-                        <dd><a  href="{:U('public/Mention/index')}">@提到我的</a></dd>
-                        <dd><a  href="{:U('public/Comment/index', array('type'=>'receive'))}">收到的评论</a></dd>
-                        <dd><a  href="{:U('public/Comment/index', array('type'=>'send'))}">发出的评论</a></dd>
-                        <dd><a  href="{:U('public/Message/index')}">我的私信</a></dd>
-                        <dd><a  href="{:U('public/Message/notify')}">系统消息</a></dd>
-                        <dd><a  href="{:U('public/Profile/newanswerinfo')}">消息入口</a></dd>
-                        <!-- 消息菜单钩子 -->
-                        {:Addons::hook('header_message_dropmenu')}
-                    <php>if(CheckPermission('core_normal','send_message')){</php>
-                    <dd class="border"><a event-node="postMsg" href="javascript:void(0)" onclick="ui.sendmessage()">{:L('PUBLIC_SEND_PRIVATE_MESSAGE')}&raquo;</a></dd>
-                    <php>}</php>
-                    </dl>
-                </div>
+        	    <li><a href="#" class="h"></a></li>
+                <li model-node="notice"><a href="javascript:void(0);" class="v"></a>
+                    <div class="dropmenu" model-node="drop_menu_list" style="z-index:9999;">
+                        <dl class="acc-list W-message" style="width:100px;" >
+                            <dd><a  href="{:U('public/Mention/index')}">@提到我的</a></dd>
+                            <dd><a  href="{:U('public/Comment/index', array('type'=>'receive'))}">收到的评论</a></dd>
+                            <dd><a  href="{:U('public/Comment/index', array('type'=>'send'))}">发出的评论</a></dd>
+                            <dd><a  href="{:U('public/Message/index')}">我的私信</a></dd>
+                            <dd><a  href="{:U('public/Message/notify')}">系统消息</a></dd>
+                            <dd><a  href="{:U('public/Profile/newanswerinfo')}">消息入口</a></dd>
+                            <!-- 消息菜单钩子 -->
+                            {:Addons::hook('header_message_dropmenu')}
+                        <php>if(CheckPermission('core_normal','send_message')){</php>
+                        <dd class="border"><a event-node="postMsg" href="javascript:void(0)" onclick="ui.sendmessage()">{:L('PUBLIC_SEND_PRIVATE_MESSAGE')}&raquo;</a></dd>
+                        <php>}</php>
+                        </dl>
+                    </div>
             
-            </li>
+                </li>
 
-            <li><a href="#" class="a"></a></li>
-            <li model-node="account"><a href="javascript:void(0);" class="p"></a>
-                <div model-node="drop_menu_list" class="dropmenu" style="width:100px;">
-                    <dl class="acc-list">    
-                    <php>if(CheckTaskSwitch()):</php>
-                    <dd><a href="{:U('public/Task/index')}">任务中心</a></dd>
-                    <dd><a href="{:U('public/Medal/index')}">勋章馆</a></dd>
-                    <php>endif;</php>
+                <li><a href="#" class="a"></a></li>
+                <li model-node="account"><a href="javascript:void(0);" class="p"></a>
+                    <div model-node="drop_menu_list" class="dropmenu" style="width:100px; z-index:9999;">
+                        <dl class="acc-list">    
+                        <php>if(CheckTaskSwitch()):</php>
+                        <dd><a href="{:U('public/Task/index')}">任务中心</a></dd>
+                        <dd><a href="{:U('public/Medal/index')}">勋章馆</a></dd>
+                        <php>endif;</php>
                                 
-                    <dd><a href="{:U('public/Rank/weibo')}">排行榜</a></dd>
-                    <php>if(isInvite() && CheckPermission('core_normal','invite_user')):</php>
-                    <dd><a href="{:U('public/Invite/invite')}">{:L('PUBLIC_INVITE_COLLEAGUE')}</a></dd>
-                    <php>endif;</php>
-                    <!-- 个人设置菜单钩子 -->
-                    {:Addons::hook('header_account_dropmenu')}
-                    <php>if(CheckPermission('core_admin','admin_login')){</php>
-                    <dd><a href="{:U('admin')}">{:L('PUBLIC_SYSTEM_MANAGEMENT')}</a></dd>
-                    <php>}</php>
+                        <dd><a href="{:U('public/Rank/weibo')}">排行榜</a></dd>
+                        <php>if(isInvite() && CheckPermission('core_normal','invite_user')):</php>
+                        <dd><a href="{:U('public/Invite/invite')}">{:L('PUBLIC_INVITE_COLLEAGUE')}</a></dd>
+                        <php>endif;</php>
+                        <!-- 个人设置菜单钩子 -->
+                        {:Addons::hook('header_account_dropmenu')}
+                        <php>if(CheckPermission('core_admin','admin_login')){</php>
+                        <dd><a href="{:U('admin')}">{:L('PUBLIC_SYSTEM_MANAGEMENT')}</a></dd>
+                        <php>}</php>
 
-                    <dd class="border"><a href="{:U('public/Passport/logout')}">{:L('PUBLIC_LOGOUT')}&raquo;</a></dd>
-                    <dd></dd>
-                    </dl>
-                </div>
-            </li>
-            <li>
-                <a href="{:U('public/Account/index')}" class="s" ></a>
-            </li>
-        </ul>
+                        <dd class="border"><a href="{:U('public/Passport/logout')}">{:L('PUBLIC_LOGOUT')}&raquo;</a></dd>
+                        <dd></dd>
+                        </dl>
+                    </div>
+                </li>
+                <li>
+                    <a href="{:U('public/Account/index')}" class="s" ></a>
+                </li>
+            </ul>
+            <ul class="message_list_container message_list_new"  style="display:none;">
+                <li rel="new_folower_count" style="display:none"><span></span>，<a href="{:U('public/Index/follower',array('uid'=>$mid))}">{:L('PUBLIC_FOLLOWERS_REMIND')}</a></li>
+                <li rel="unread_comment" style="display:none"><span></span>，<a href="{:U('public/Comment/index',array('type'=>'receive'))}">{:L('PUBLIS_MESSAGE_REMIND')}</a></li>
+                <li rel="unread_message" style="display:none"><span></span>，<a href="{:U('public/Message')}" >{:L('PUBLIS_MESSAGE_REMIND')}</a></li>
+                <li rel="unread_atme" style="display:none"><span></span>，<a href="{:U('public/Mention')}">{:L('PUBLIS_MESSAGE_REMIND')}</a></li>
+                <li rel="unread_notify" style="display:none"><span></span>，<a href="{:U('public/Message/notify')}">{:L('PUBLIS_MESSAGE_REMIND')}</a></li>
+            </ul>
         </div>
+        
     </div>
 
 </div>

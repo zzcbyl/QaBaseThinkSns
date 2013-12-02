@@ -17,7 +17,7 @@
     <div style="margin:0px;">
         <div style="float:left; padding:20px 0; color: #888888; font-size:12px; width:60px; text-align:right; margin-right:10px; line-height:22px;">公司</div>
         <div style="float:left; margin-left:7px;">
-            <ul id="professionList" class="info">
+            <ul id="professionList" class="">
                 <volist name="data" id="vl">
                     <php>if(($followstate==1) || ($followstate==0 && $vl['permissions']==0) || ($followstate==2 && ($vl['permissions']==0 || $vl['permissions']==1))) {</php>
                         <ul id="profession{$vl.id}" style="padding:0;">

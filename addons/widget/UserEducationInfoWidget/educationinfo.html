@@ -16,7 +16,7 @@
     </div>
     <div style="margin:0px;">
         <div style="float:left;">
-            <ul id="educationList" class="info">
+            <ul id="educationList" class="">
                 <volist name="data" id="vl">
                     <php>if(($followstate==1) || ($followstate==0 && $vl['permissions']==0) || ($followstate==2 && ($vl['permissions']==0 || $vl['permissions']==1))) {</php>
                         <ul id="education{$vl.id}" style="padding:0;">

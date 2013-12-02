@@ -278,6 +278,7 @@ class FeedListWidget extends Widget {
 				if($var['loadId'] > 0){ //非第一次
 					$LoadWhere = "t.comment_count < '".intval($var['loadId'])."'";
 				}
+				//print(intval($var['loadId']));
 				$current_uid=$GLOBALS['ts']['mid'];
 				if($var['uid']!=null && $var['uid']!='0') $current_uid = $var['uid'];
 				$where =" `uid` = $current_uid AND `feed_questionid` != 0 and `comment_count` > 0";
@@ -323,15 +324,14 @@ class FeedListWidget extends Widget {
 				$list = model('Feed')->getNewCommentFeedList($map, $this->limitnums, 'comment_id DESC', $var['newcount']);
 				//print_r($list);
 				break;	
-			
 		}
     	// 分页的设置
         isset($list['html']) && $var['html'] = $list['html'];
     	if(!empty($list['data'])) {
 			switch($type) {
 				case 'agree':
-					$content['firstId'] = $var['firstId'] = $list['data'][0]['comment_count'];
-					$content['lastId'] = $var['lastId'] = $list['data'][(count($list['data'])-1)]['comment_count'];
+					$content['firstId'] = $var['firstId'] = $list['data'][0]['answer'][0]['comment_count'];
+					$content['lastId'] = $var['lastId'] = $list['data'][(count($list['data'])-1)]['answer'][0]['comment_count'];
 					break;
 				case 'newagreecomment':
 				case 'newopposecomment':

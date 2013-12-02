@@ -2,7 +2,7 @@
     <h4>
         <php>if($followstate==1){</php><a href="javascript:w_UpdUser();" class="right f12" style="font-weight: normal;">编辑</a><php>}</php>
         基本信息</h4>
-    <ul class="info">
+    <ul class="">
         <php>if($followstate==1){</php>
         <li>
             <label class="info-l">
@@ -48,7 +48,7 @@
     <h4>
         <php>if($followstate==1){</php><a event-node="submit_btn" href="#" class="right f12" style="font-weight: normal;">保存</a><php>}</php>
         基本信息</h4>
-    <ul class="info">
+    <ul class="">
         <php>if($followstate==1){</php>
         <li>
             <label class="info-l">
@@ -96,7 +96,7 @@
     <h4>
         <php>if($uid==$mid){</php><a href="javascript:w_UpdLinkUser();" class="right f12" style="font-weight: normal;">编辑</a><php>}</php>
         联系信息</h4>
-    <ul class="info">
+    <ul class="">
         <!--<li>
             <label class="info-l">
                 邮箱：</label><label class="info-r">{$email}</label>&nbsp;</li>-->
@@ -127,7 +127,7 @@
     <h4>
         <php>if($uid==$mid){</php><a event-node="submit_btn" href="#" class="right f12" style="font-weight: normal;">保存</a><php>}</php>
         联系信息</h4>
-    <ul class="info">
+    <ul class="">
         <!--<li>
             <label class="info-l"><php> echo $config['email_suffix'];</php>
                 <span class="redSpan">*</span>邮箱：</label><div class="info-r"><input event-node="email" event-args="suffix={$config['email_suffix']}" name="email" checkurl="{:U('public/Register/isEmailAvailable')}" autocomplete="off" type="text" id="email" name="email" value="{$email}" maxlength="100" />

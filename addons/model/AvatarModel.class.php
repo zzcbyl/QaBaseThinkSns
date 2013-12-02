@@ -87,10 +87,14 @@ class AvatarModel {
         }elseif(file_exists(UPLOAD_PATH.$original_file_name)){
     		$filemtime = @filemtime(UPLOAD_PATH.$original_file_name);
     		$avatar_url['avatar_original'] = getImageUrl($original_file_name);
-			$avatar_url['avatar_big'] = getImageUrl($original_file_name,200,200).'?v'.$filemtime;
+			/*$avatar_url['avatar_big'] = getImageUrl($original_file_name,200,200).'?v'.$filemtime;
 	    	$avatar_url['avatar_middle'] = getImageUrl($original_file_name,100,100).'?v'.$filemtime;
 	    	$avatar_url['avatar_small'] = getImageUrl($original_file_name,50,50).'?v'.$filemtime;
-	    	$avatar_url['avatar_tiny'] = getImageUrl($original_file_name,30,30).'?v'.$filemtime;
+	    	$avatar_url['avatar_tiny'] = getImageUrl($original_file_name,30,30).'?v'.$filemtime;*/
+			$avatar_url['avatar_big'] = getImageUrl($original_file_name,90,90).'?v'.$filemtime;
+			$avatar_url['avatar_middle'] = getImageUrl($original_file_name,75,75).'?v'.$filemtime;
+			$avatar_url['avatar_small'] = getImageUrl($original_file_name,60,60).'?v'.$filemtime;
+			$avatar_url['avatar_tiny'] = getImageUrl($original_file_name,50,50).'?v'.$filemtime;
     	}
 
 		return $avatar_url;

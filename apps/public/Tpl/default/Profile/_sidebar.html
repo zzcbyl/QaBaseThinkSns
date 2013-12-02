@@ -9,7 +9,7 @@
             <volist name="sidebar_following_list['data']" id="vo" key="k">
                 <li <eq name="k" value="1"> class="ml"</eq> >
                     <a href="{:U('public/Profile/index',array('uid'=>$vo['fid']))}" uid="{$vo['fid']}" event-node="face_card">
-                        <img src="{$following_user_info[$vo['fid']]['avatar_small']}" /></a><br />
+                        <img src="{$following_user_info[$vo['fid']]['avatar_tiny']}" /></a><br />
                     <a style="width:50px; overflow:hidden; height:18px; display:block;" href="{:U('public/Profile/index',array('uid'=>$vo['fid']))}" uid="{$vo['fid']}" event-node="face_card">
                         {$following_user_info[$vo['fid']]['uname']|getShort=4}</a>
                 </li>
@@ -23,7 +23,7 @@
         <volist name="sidebar_follower_list['data']" id="vo" key="k"> 
             <li  <eq name="k" value="1"> class="ml"</eq>>
                 <a href="{:U('public/Profile/index',array('uid'=>$vo['fid']))}">
-                <img src="{$follower_user_info[$vo['fid']]['avatar_small']}" uid="{$vo['fid']}" event-node="face_card" /></a><br />
+                <img src="{$follower_user_info[$vo['fid']]['avatar_tiny']}" uid="{$vo['fid']}" event-node="face_card" /></a><br />
                 <a style="width:50px; overflow:hidden; height:18px; display:block;" href="{:U('public/Profile/index',array('uid'=>$vo['fid']))}" uid="{$vo['fid']}" event-node="face_card">{$follower_user_info[$vo['fid']]['uname']|getShort=4}</a>
             </li>
         </volist>

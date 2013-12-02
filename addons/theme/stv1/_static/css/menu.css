@@ -6,10 +6,10 @@
  */
 
 /*tab菜单*/
-.tab-menu{/*background:#fff;*/border-bottom:#ccc solid 1px;margin:0 0 10px;_border:none 0;_background:url(../image/tab-menu-line.gif) repeat-x left bottom;}
+.tab-menu{/*background:#fff;border-bottom:#ccc solid 1px;*/margin:0 0 10px;_border:none 0;_background:url(../image/tab-menu-line.gif) repeat-x left bottom;}
 .tab-menu ul{height:30px;border-bottom:none 0;border-left:none 0;}
 .tab-menu ul li{float:left;height:30px;margin:0 5px 0 0;line-height:30px;}
-.tab-menu ul li a:link,.tab-menu ul li a:visited{color:#666;display:block;float:left;line-height:30px;height:30px;padding:0 15px;text-align:center;background:#e9ecee;_height:16px;_line-height:16px;_padding:7px 15px;}
+.tab-menu ul li a:link,.tab-menu ul li a:visited{color:#666;display:block;float:left;line-height:31px;height:31px;padding:0 15px;text-align:center;background:#e9ecee;_height:16px;_line-height:16px;_padding:7px 15px;}
 .tab-menu ul li a:hover {text-decoration:none;}
 .tab-menu .current a:link,.tab-menu .current a:visited{border:none 0;background:#fff;color:#333;line-height:30px;padding:0 15px;height:30px;border:1px solid #ccc;overflow:hidden;border-bottom:none;_height:16px;_line-height:16px;_padding:7px 15px;}
 /*.tab-menu .current a .current{background-position:0 -101px;width:8px;height:5px;margin:0 0 0 5px}*/

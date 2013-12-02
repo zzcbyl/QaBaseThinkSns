@@ -1,86 +1,74 @@
 <include file="__THEME__/public_header" />
-    <div id="page-wrap">
-        <div id="main-wrap" class="content-bg">
-            <div id="col" class="st-grid boxShadow minh" style="float:left;">
-                <div class="profile-title">
-                    <include file="_top"/>   
-                    <div style="height:5px;" class="boxShadow"> </div>
-                </div>
-                <php>if($userPrivacy['space'] != 1){</php>
-                    <div id="col5" class="st-index-main">
-                        <include file="_countdata"/>
-                        <div class="extend-foot">
-                            <include file="_tab_menu3"/>  
-                            <include file="_tab_menu5"/>  
-                            <!--feed list-->
-                            <!-- 查看他人微博  用于伪静态 FeedList中靠$_REQUEST中的uid取得用户信息 没有$_REQUEST取自己 -->
-
-
-						<div class="sperson-feedlist">
-						    <php>if($data){</php>
-							    <volist name="data" id="vo">
-								    <dl class="feed_list" id="follower_{$vo['uid']}">
-									    <dt class="face">
-										    <a href="{$vo.space_url}" title="{$vo.uname}"><img src="{$vo.avatar_small}" /></a>
-									    </dt>
-									    <dd class="person-info">
-										    <div class="info-right right">
-											    <p>{:W('FollowBtn', array('fid'=>$vo['uid'], 'uname'=>$vo['uname'], 'follow_state'=>$vo['followState']))}</p>
-											    <p><a rel="add" onclick="core.plugInit('blacklist',this,'btn',{$vo['uid']},'')" href="javascript:void(0)">加入黑名单</a></p>
-										    </div>
-									       <div class="info-left">
-										    <p class="hd">
-											    <span style="font-size:14px">{$vo.space_link}　<php>if($vo['newCount']==1) echo 'new';</php></span>
-											    <volist name="userGroupData[$vo['uid']]" id="v1">
-                                			    <img style="width:auto;height:auto;display:inline;cursor:pointer;vertical-align:-3px" src="{$v1['user_group_icon_url']}" title="{$v1['user_group_name']}" />&nbsp;
-                              			        </volist>
-										    </p>
-										    <p class="area"><span><if condition="$vo.sex eq 1"><i class="ico-male"></i><else /><i class="ico-female"></i></if>&nbsp;{$vo.location}</span>
-										    </p>
-										    <p class="action">											
-											    {:L('PUBLIC_FOLLOWING')}：<a href="{:U('public/Profile/following', array('uid'=>$vo['uid']))}">{$vo.following_count|default=0}</a>
-											    <i class="vline">|</i>
-											    {:L('PUBLIC_FOLLOWERS')}：<a href="{:U('public/Profile/follower', array('uid'=>$vo['uid']))}">{$vo.follower_count|default=0}</a>
-                                                <i class="vline">|</i>
-										        {:L('PUBLIC_FRIEND')}：<a href="{:U('public/Profile/friend', array('uid'=>$vo['uid']))}">{$vo.friend_count|default=0}</a>
-											    <i class="vline">|</i>
-											    {:L('PUBLIC_WEIBO')}：<a href="{:U('public/Profile/index', array('uid'=>$vo['uid']))}">{$vo.feed_count|default=0}</a>
-                                                <i class="vline">|</i>
-										        {:L('PUBLIC_ANSWER')}：<a href="{:U('public/Profile/answer', array('uid'=>$vo['uid']))}">{$vo.answer_count|default=0}</a>
-										    </p>
-										    <php>if($vo['intro']){</php>
-										    <p class="info">
-											    {:L('PUBLIC_PROFILESET_INTRO')}：{$vo.intro}
-										    </p>
-										    <php>}</php>
-										    <php>if($user_tag[$vo['uid']]){</php>
-										    <p class="info">
-											    {:L('PUBLIC_TAG')}：<volist name="user_tag[$vo['uid']]" id="u_t_v"><a href="{:U('public/Search/index',array('t'=>3,'a'=>'public','k'=>$u_t_v))}">{$u_t_v}</a>&nbsp;&nbsp;&nbsp;</volist>
-										    </p>
-										    <php>}</php>
-									       </div>	
-									    </dd>
-								    </dl>
-							    </volist>
-							    <div id="page" class="page">{$html}</div>
-						    <php>}else{</php>
-                                <div class="loading">暂时没有关注你的人</div>
-                            <php>}</php>
-						</div>
-
-
-
-                        </div>
-                    </div>
-                <php>}else{</php>
-                    <p class="extend">-_-。sorry！根据对方隐私设置，您无权查看TA的主页</p>
-                <php>}</php>
-            </div>
-            <div style="float:right;" >
-                <include file="_sidebar"/>
-            </div>
-            <div style="clear:both;"></div>
-        </div>
+<div class="cont_left">
+    <include file="_top"/>   
+    <div class="table_box">
+      	<include file="_tab_menu3"/>  
     </div>
+    <include file="_tab_menu5"/>
+    <php>if($userPrivacy['space'] != 1){</php>
+        
+
+        <div class="sperson-feedlist">
+			<php>if($data){</php>
+				<volist name="data" id="vo">
+					<dl class="feed_list" id="follower_{$vo['uid']}">
+						<dt class="face">
+							<a href="{$vo.space_url}" title="{$vo.uname}"><img src="{$vo.avatar_small}" /></a>
+						</dt>
+						<dd class="person-info">
+							<div class="info-right right">
+								<p>{:W('FollowBtn', array('fid'=>$vo['uid'], 'uname'=>$vo['uname'], 'follow_state'=>$vo['followState']))}</p>
+								<p><a rel="add" onclick="core.plugInit('blacklist',this,'btn',{$vo['uid']},'')" href="javascript:void(0)">加入黑名单</a></p>
+							</div>
+							<div class="info-left">
+							<p class="hd">
+								<span style="font-size:14px">{$vo.space_link}　<php>if($vo['newCount']==1) echo 'new';</php></span>
+								<volist name="userGroupData[$vo['uid']]" id="v1">
+                                <img style="width:auto;height:auto;display:inline;cursor:pointer;vertical-align:-3px" src="{$v1['user_group_icon_url']}" title="{$v1['user_group_name']}" />&nbsp;
+                              	</volist>
+							</p>
+							<p class="area"><span><if condition="$vo.sex eq 1"><i class="ico-male"></i><else /><i class="ico-female"></i></if>&nbsp;{$vo.location}</span>
+							</p>
+							<p class="action">											
+								{:L('PUBLIC_FOLLOWING')}：<a href="{:U('public/Profile/following', array('uid'=>$vo['uid']))}">{$vo.following_count|default=0}</a>
+								<i class="vline">|</i>
+								{:L('PUBLIC_FOLLOWERS')}：<a href="{:U('public/Profile/follower', array('uid'=>$vo['uid']))}">{$vo.follower_count|default=0}</a>
+                                <i class="vline">|</i>
+								{:L('PUBLIC_FRIEND')}：<a href="{:U('public/Profile/friend', array('uid'=>$vo['uid']))}">{$vo.friend_count|default=0}</a>
+								<i class="vline">|</i>
+								{:L('PUBLIC_WEIBO')}：<a href="{:U('public/Profile/index', array('uid'=>$vo['uid']))}">{$vo.feed_count|default=0}</a>
+                                <i class="vline">|</i>
+								{:L('PUBLIC_ANSWER')}：<a href="{:U('public/Profile/answer', array('uid'=>$vo['uid']))}">{$vo.answer_count|default=0}</a>
+							</p>
+							<php>if($vo['intro']){</php>
+							<p class="info">
+								{:L('PUBLIC_PROFILESET_INTRO')}：{$vo.intro}
+							</p>
+							<php>}</php>
+							<php>if($user_tag[$vo['uid']]){</php>
+							<p class="info">
+								{:L('PUBLIC_TAG')}：<volist name="user_tag[$vo['uid']]" id="u_t_v"><a href="{:U('public/Search/index',array('t'=>3,'a'=>'public','k'=>$u_t_v))}">{$u_t_v}</a>&nbsp;&nbsp;&nbsp;</volist>
+							</p>
+							<php>}</php>
+							</div>	
+						</dd>
+					</dl>
+				</volist>
+				<div id="page" class="page">{$html}</div>
+			<php>}else{</php>
+                <div class="loading">暂时没有关注你的人</div>
+            <php>}</php>
+		</div>
+
+
+    <php>}else{</php>
+        <p class="extend">-_-。sorry！根据对方隐私设置，您无权查看TA的主页</p>
+    <php>}</php>
+</div>
+<div class="cont_right">
+    <include file="_sidebar"/>
+</div>
+
+
 <include file="__THEME__/public_footer" />
 <script src="__THEME__/js/module.weibo.js"></script>
