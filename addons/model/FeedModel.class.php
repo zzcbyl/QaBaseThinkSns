@@ -7,7 +7,7 @@
 class FeedModel extends Model {
 
 	protected $tableName = 'feed';
-	protected $fields = array('feed_id','uid','type','app','app_row_id','app_row_table','publish_time','is_del','from','comment_count','repost_count','comment_all_count','digg_count','is_repost','is_audit','feed_questionid','feed_quid','answer_count','disapprove_count','feed_pv','_pk'=>'feed_id');
+	protected $fields = array('feed_id','uid','type','app','app_row_id','app_row_table','publish_time','is_del','from','comment_count','repost_count','comment_all_count','digg_count','is_repost','is_audit','feed_questionid','feed_quid','answer_count','disapprove_count','feed_pv','thank_count','_pk'=>'feed_id');
 
 	public $templateFile = '';			// 模板文件
 
@@ -422,9 +422,9 @@ class FeedModel extends Model {
 		//关注的人和自己的问题
 		$table .= "(select a.feed_id, a.publish_time from {$this->tablePrefix}feed AS a LEFT JOIN {$this->tablePrefix}user_follow AS b ON a.uid=b.fid AND b.uid = {$buid} where {$_where}) union ";
 		//关注的人和自己的回答
-		$table .= "(SELECT feed_questionid as feed_id, publish_time FROM {$this->tablePrefix}feed WHERE (`uid` ={$buid} or uid IN (SELECT `fid` FROM `{$this->tablePrefix}user_follow` WHERE `uid` ={$buid})) AND feed_questionid >0 GROUP BY feed_questionid) union ";
+		$table .= "(SELECT feed_questionid as feed_id, publish_time FROM {$this->tablePrefix}feed WHERE (`uid` ={$buid} or uid IN (SELECT `fid` FROM `{$this->tablePrefix}user_follow` WHERE `uid` ={$buid})) AND feed_questionid >0 GROUP BY feed_questionid) ";
 		//关注人的评论
-		$table .= "(select feed_id, ctime from (SELECT case b.feed_questionid when 0 then b.feed_id else b.feed_questionid end as feed_id,a.ctime FROM `{$this->tablePrefix}comment` a left join `{$this->tablePrefix}feed` b on a.row_id=b.feed_id WHERE a.app='public' and a.table='feed' and (a.uid = {$buid} or a.uid IN (SELECT `fid` FROM `{$this->tablePrefix}user_follow` WHERE `uid` = {$buid} ))) atab group by feed_id) ";
+		//$table .= " union (select feed_id, ctime from (SELECT case b.feed_questionid when 0 then b.feed_id else b.feed_questionid end as feed_id,a.ctime FROM `{$this->tablePrefix}comment` a left join `{$this->tablePrefix}feed` b on a.row_id=b.feed_id WHERE a.app='public' and a.table='feed' and (a.uid = {$buid} or a.uid IN (SELECT `fid` FROM `{$this->tablePrefix}user_follow` WHERE `uid` = {$buid} ))) atab group by feed_id) ";
 		
 		$table .= ") tt group by feed_id) tab";
 		//print($table);
@@ -476,7 +476,7 @@ class FeedModel extends Model {
 					$AnswerFeedData = $this->getFeeds($AnswerFeed_id);
 					$vv["answer"] = $AnswerFeedData;
 					
-					//对答案的评论
+					/*//对答案的评论
 					$CommentTable = '(SELECT max(comment_id) comment_id FROM `wb_comment` WHERE `row_id` = '.$aa['answer_id'].' and `is_del`= 0 and (uid='.$GLOBALS['ts']['mid'].' or uid in (SELECT `fid` FROM `'.$this->tablePrefix.'user_follow` WHERE `uid` = '.$GLOBALS['ts']['mid'].'))  group by uid) atab';
 					$CommentList = $this->table($CommentTable)->order('comment_id DESC')->select();
 					
@@ -505,12 +505,14 @@ class FeedModel extends Model {
 					else
 					{
 						$result["data"][count($result["data"])]=$vv;
-					}
+					}*/
+					
+					$result["data"][count($result["data"])]=$vv;
 				}
 			}
 			else
 			{
-				//对问题的评论
+				/*//对问题的评论
 				$CommentTable = '(SELECT comment_id FROM `wb_comment` WHERE `row_id` = '.$vv['feed_id'].' and `is_del`= 0 and (uid='.$GLOBALS['ts']['mid'].' or uid in (SELECT `fid` FROM `'.$this->tablePrefix.'user_follow` WHERE `uid` = '.$GLOBALS['ts']['mid'].')) ) atab';
 				$CommentList = $this->table($CommentTable)->order('comment_id DESC')->select();
 				if(is_array($CommentList) && count($CommentList) > 0)
@@ -525,7 +527,8 @@ class FeedModel extends Model {
 				else
 				{
 					$result["data"][count($result["data"])]=$vv;
-				}
+				}*/
+				$result["data"][count($result["data"])]=$vv;
 			}
 			
 			/*print_r($result["data"]);
@@ -1530,6 +1533,31 @@ class FeedModel extends Model {
 		$feedids=array($feedid);
 		$this->cleanCache($feedids);
 	}
-
-
+	
+	/**
+	 * 感谢答案(问题和用户添加感谢统计数)
+	 *
+	 * @return boolean 是否成功
+	 *
+	 */	
+	public function SetThankAnswer($feedid, $uid)
+	{
+		$feed = model('Feed')->where('feed_id='.$feedid)->select();
+		$updData['thank_count'] = 1;
+		$updResult = model('Feed')->where('feed_id='.$feedid)->save($updData);
+		if($updResult!=false)
+		{
+			$Qfeed = model('Feed')->field('thank_count')->where('feed_id='.$feed[0]['feed_questionid'])->select();
+			$QupdData['thank_count']=$Qfeed[0]['thank_count'] + 1;
+			$QupdResult = model('Feed')->where('feed_id='.$feed[0]['feed_questionid'])->save($QupdData);
+			if($QupdResult!=false)
+			{
+				model('UserData')->setUid($uid)->updateKey('tothanked_count', 1, true);
+				$feedids=array($feedid, $feed[0]['feed_questionid']);
+				$this->cleanCache($feedids);
+				return true;
+			}	
+		}
+		return false;
+	}
 }

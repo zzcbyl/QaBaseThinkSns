@@ -540,4 +540,24 @@ class IndexAction extends Action {
 		$this->assign( 'list' , $list );
 		$this->display();
 	}
+	/**
+	 * 感谢答案
+	 *
+	 * @return array 感谢状态和成功/错误提示 
+	 *
+	 */	
+	public function thankAnswer(){
+		$return  = array('status'=>0,'data'=>L('感谢失败'));
+		if(empty($_POST['feedid']) || empty($_POST['uid'])){
+			$return['data'] = L('参数错误');
+			echo json_encode($return);exit();
+		}
+		
+		if(model('feed')->SetThankAnswer($_POST['feedid'], $_POST['uid']))
+			$return = array('status'=>1,'data'=>'感谢成功');
+		else
+			$return = array('status'=>0,'data'=>'感谢失败');
+		
+		exit(json_encode($return));
+	}
 }

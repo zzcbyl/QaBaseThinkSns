@@ -68,7 +68,7 @@ a{text-decoration:none;}
 .aTop p.a{background-position:-375px 0px; top:17px; right:1px;}
 .more{text-align:center; padding:30px 30px 10px; color:#4cc6f0;}
 .cont_right{width:268px; float:right; height:100%;border-top:solid 1px #d4d4d4}
-.myinfo_box{background:#8f9294; padding:12px 10px 10px; overflow:hidden; height:100%}
+.myinfo_box{background:#8f9294; padding:12px 10px 10px; overflow:hidden; }
 .myimg{background:url(../image/thumb_bg.png) no-repeat; width:76px; height:78px; float:left; padding:9px 10px 10px;}
 .myimg img{width:75px; height:75px;}
 .myinfo{float:right;width:145px;}

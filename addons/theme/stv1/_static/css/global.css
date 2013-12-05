@@ -196,7 +196,7 @@ body{background:url(../image/body-b.jpg) repeat-x center 0 #e4f3f7;}
 
 .head-bd #mod-search{width:178px;height:25px;_width:180px;}
 .search-input #mod-search{width:240px;height:28px;}
-.search #mod-search .search-box{background:#fff;border:1px solid #797979;}
+.search #mod-search .search-box{background:#fff;border:1px solid #797979; position:relative; z-index:9999;}
 
 .search #mod-search dd,.search-input #mod-search dd{padding:5px 10px;line-height:18px;border-bottom:#eee solid 1px;color:#36c;cursor:pointer;display:block;}
 .search #mod-search dd.current,.search-input #mod-search dd.current{background:#f3f3f3;cursor:pointer;}

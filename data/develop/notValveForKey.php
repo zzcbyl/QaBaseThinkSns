@@ -8,5 +8,6 @@ return array (
   'PUBLIC_REGISTER' => '?app=public&mod=Register&act=waitForAudit',
   'PUBLIC_FRIENDS_REMIND' => '?app=public&mod=Index&act=index',
   'PUBLIC_ANSWER' => '?app=public&mod=Index&act=friend',
+  '感谢失败' => '?app=public&mod=Index&act=thankAnswer',
 );
 ?>

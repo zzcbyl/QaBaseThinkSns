@@ -6,8 +6,8 @@
 </php>
 <div class="tab-menu2 clearfix">
   <ul>
-    <li class="{$tabClass.public_friend}"><span><a href="{:U('public/Profile/friend',array('uid'=>$uid,'type'=>'friend'))}"><php>$GLOBALS['ts']['mid']==$uid?print('我的'):print('他的')</php>好友</a></span></li>
-    <li class="{$tabClass.public_following}"><span><a href="{:U('public/Profile/following',array('uid'=>$uid))}"><php>$GLOBALS['ts']['mid']==$uid?print('我'):print('他')</php>的关注</a></span></li>
-    <li class="{$tabClass.public_follower}"><span><a href="{:U('public/Profile/follower',array('uid'=>$uid))}"><php>$GLOBALS['ts']['mid']==$uid?print('我的'):print('他的')</php>粉丝</a></span></li>
+    <li class="{$tabClass.public_friend}"><span><a href="{:U('public/Profile/friend',array('uid'=>$uid,'type'=>'friend'))}"><php>$GLOBALS['ts']['mid']==$uid?print('我'):print('TA')</php>的好友</a></span></li>
+    <li class="{$tabClass.public_following}"><span><a href="{:U('public/Profile/following',array('uid'=>$uid))}"><php>$GLOBALS['ts']['mid']==$uid?print('我'):print('TA')</php>的关注</a></span></li>
+    <li class="{$tabClass.public_follower}"><span><a href="{:U('public/Profile/follower',array('uid'=>$uid))}"><php>$GLOBALS['ts']['mid']==$uid?print('我'):print('TA')</php>的粉丝</a></span></li>
   </ul>
 </div>
