@@ -826,8 +826,8 @@ class ProfileAction extends Action {
 		$this->assign ( 'aggreelist', $list );
 		
 		//我的感谢
-		$twhere =" `uid` = ".$this->uid." AND `feed_questionid` = 0 and `thank_count` > 0 ";
-		$tlist = model('Feed')->getQuestionList($twhere, 3);
+		$twhere =" `uid` = ".$this->uid." AND `feed_questionid` != 0 and `thank_count` > 0 ";
+		$tlist = model('Feed')->getAnswerList($twhere, 3);
 		$this->assign ( 'thanklist', $tlist );
 		
 		/*print('<br /><br /><br /><br />');

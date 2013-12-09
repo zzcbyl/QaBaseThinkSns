@@ -323,15 +323,13 @@ class FeedListWidget extends Widget {
 				//print_r($list);
 				break;	
 			case 'thank':	//感谢列表
-				if($var['loadId']>0){
-					$map['feed_id'] = array('lt',intval($var['loadId']));
-				}
 				$current_uid=$GLOBALS['ts']['mid'];
 				if($var['uid']!=null && $var['uid']!='0') $current_uid = $var['uid'];
-				$map['uid'] = $current_uid;
-				$map['feed_questionid'] = 0;
-				$map['thank_count'] = array('gt',0);
-				$list = model('Feed')->getList($map, $this->limitnums);
+				$where =" `uid` = ".$current_uid." AND `feed_questionid` != 0 and `thank_count` > 0 ";
+				if($var['loadId']>0){
+					$where = $where.'feed_id < '.intval($var['loadId']);
+				}
+				$list = model('Feed')->getAnswerList($where, $this->limitnums);
 				//print_r($list);
 				break;
 		}
