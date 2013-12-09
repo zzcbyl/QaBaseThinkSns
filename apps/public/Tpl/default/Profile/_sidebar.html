@@ -31,7 +31,7 @@
      <php>}</php>
 
      <php>if($aggreelist['data']){</php>
-     <h1><php>if($user_info[$uid]['uid']==$mid){</php>我<php>}else{</php>TA<php>}</php>的赞同<span></span><a href="{:U('public/Profile/index',array('uid'=>$user_info[$uid]['uid'], 'type'=>'agree'))}" class="right f12">更多</a></a></h1>
+     <h1><php>if($user_info[$uid]['uid']==$mid){</php>我<php>}else{</php>TA<php>}</php>的赞同<span></span><a href="{:U('public/Profile/index',array('uid'=>$user_info[$uid]['uid'], 'type'=>'agree'))}" class="gd">更多</a></a></h1>
      <ul class="tList mb20">
         <volist name="aggreelist['data']" id="alist"> 
             <li>
@@ -44,26 +44,21 @@
         </volist>
      </ul>
      <php>}</php>
-     <!--<h1>我/TA的感谢<span></span><a href="#" class="gd">更多</a></h1>
-     <ul class="tList mb20">
-         <li class="no">
-         <div class="tu"><a href="#" class="ganxie">200</a></div>
-         <h2><a href="#">老师解答了问题:菡萏香销翠叶残 </a></h2>
-         <p>去年今日没有原创广播去年今日没有原创广播</p>
-         </li>
-         <li>
-         <div class="tu"><a href="#" class="ganxie">200</a></div>
-         <h2><a href="#">老师解答了问题:菡萏香销翠叶残 </a></h2>
-         <p>去年今日没有原创广播去年今日没有原创广播</p>
-         </li>
-         <li>
-         <div class="tu"><a href="#" class="ganxie">200</a></div>
-         <h2><a href="#">老师解答了问题:菡萏香销翠叶残 </a></h2>
-         <p>去年今日没有原创广播去年今日没有原创广播</p>
-         </li>
-     </ul>
      
-     <h1>我/TA关注的问题<span></span><a href="#" class="gd">更多</a></h1>
+     <php>if($thanklist['data']){</php>
+     <h1><php>if($user_info[$uid]['uid']==$mid){</php>我<php>}else{</php>TA<php>}</php>的感谢<span></span><a href="{:U('public/Profile/index',array('uid'=>$user_info[$uid]['uid'], 'type'=>'thank'))}" class="gd">更多</a></h1>
+     <ul class="tList mb20">
+        <volist name="thanklist['data']" id="tlist"> 
+            <li>
+            <div class="tu"><a class="ganxie">{$tlist['thank_count']}</a></div>
+            <h2><a href="{:U('public/Index/feed',array('feed_id'=>$tlist['feed_id'],'uid'=>$alist['uid']))}">{$tlist['body']}</a></h2>
+            <p>{$tlist['description']}</p>
+            </li>
+        </volist>
+     </ul>
+     <php>}</php>
+     
+     <!--<h1>我/TA关注的问题<span></span><a href="#" class="gd">更多</a></h1>
      <ul class="tList mb20">
          <li class="no">
          <div class="tu"><a href="#" class="guanz">200</a></div>

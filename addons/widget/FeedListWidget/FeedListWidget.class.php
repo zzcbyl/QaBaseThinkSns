@@ -258,7 +258,6 @@ class FeedListWidget extends Widget {
 				break;
 			case 'collection':	//个人收藏列表
 				if($var['loadId'] > 0){ //非第一次
-					//$where .=" AND a.feed_id < '".intval($var['loadId'])."'";
 					$LoadWhere = "feed_id < '".intval($var['loadId'])."'";
 					$map['source_id'] = array('lt',intval($var['loadId']));
 				}
@@ -278,7 +277,6 @@ class FeedListWidget extends Widget {
 				if($var['loadId'] > 0){ //非第一次
 					$LoadWhere = "t.comment_count < '".intval($var['loadId'])."'";
 				}
-				//print(intval($var['loadId']));
 				$current_uid=$GLOBALS['ts']['mid'];
 				if($var['uid']!=null && $var['uid']!='0') $current_uid = $var['uid'];
 				$where =" `uid` = $current_uid AND `feed_questionid` != 0 and `comment_count` > 0";
@@ -324,6 +322,18 @@ class FeedListWidget extends Widget {
 				$list = model('Feed')->getNewCommentFeedList($map, $this->limitnums, 'comment_id DESC', $var['newcount']);
 				//print_r($list);
 				break;	
+			case 'thank':	//感谢列表
+				if($var['loadId']>0){
+					$map['feed_id'] = array('lt',intval($var['loadId']));
+				}
+				$current_uid=$GLOBALS['ts']['mid'];
+				if($var['uid']!=null && $var['uid']!='0') $current_uid = $var['uid'];
+				$map['uid'] = $current_uid;
+				$map['feed_questionid'] = 0;
+				$map['thank_count'] = array('gt',0);
+				$list = model('Feed')->getList($map, $this->limitnums);
+				//print_r($list);
+				break;
 		}
     	// 分页的设置
         isset($list['html']) && $var['html'] = $list['html'];

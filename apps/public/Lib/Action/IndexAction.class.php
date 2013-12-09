@@ -552,11 +552,7 @@ class IndexAction extends Action {
 			$return['data'] = L('参数错误');
 			echo json_encode($return);exit();
 		}
-		
-		if(model('feed')->SetThankAnswer($_POST['feedid'], $_POST['uid']))
-			$return = array('status'=>1,'data'=>'感谢成功');
-		else
-			$return = array('status'=>0,'data'=>'感谢失败');
+		$return = model('feed')->SetThankAnswer($_POST['feedid'], $_POST['uid']);
 		
 		exit(json_encode($return));
 	}

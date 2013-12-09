@@ -1537,27 +1537,40 @@ class FeedModel extends Model {
 	/**
 	 * 感谢答案(问题和用户添加感谢统计数)
 	 *
-	 * @return boolean 是否成功
+	 * @return array 是否成功,失败原因
 	 *
 	 */	
 	public function SetThankAnswer($feedid, $uid)
 	{
+		$return=array('status'=>0,'data'=>'感谢失败');
 		$feed = model('Feed')->where('feed_id='.$feedid)->select();
-		$updData['thank_count'] = 1;
-		$updResult = model('Feed')->where('feed_id='.$feedid)->save($updData);
-		if($updResult!=false)
+		$Qfeed = model('Feed')->field('thank_count')->where('feed_id='.$feed[0]['feed_questionid'])->select();
+		if($Qfeed[0]['thank_count'] <= 0)
 		{
-			$Qfeed = model('Feed')->field('thank_count')->where('feed_id='.$feed[0]['feed_questionid'])->select();
-			$QupdData['thank_count']=$Qfeed[0]['thank_count'] + 1;
-			$QupdResult = model('Feed')->where('feed_id='.$feed[0]['feed_questionid'])->save($QupdData);
-			if($QupdResult!=false)
+			$updData['thank_count'] = 1;
+			$updResult = model('Feed')->where('feed_id='.$feedid)->save($updData);
+			if($updResult!=false)
 			{
-				model('UserData')->setUid($uid)->updateKey('tothanked_count', 1, true);
-				$feedids=array($feedid, $feed[0]['feed_questionid']);
-				$this->cleanCache($feedids);
-				return true;
-			}	
+				$QupdData['thank_count']=$Qfeed[0]['thank_count'] + 1;
+				$QupdResult = model('Feed')->where('feed_id='.$feed[0]['feed_questionid'])->save($QupdData);
+				if($QupdResult!=false)
+				{
+					model('UserData')->setUid($uid)->updateKey('tothanked_count', 1, true);
+					$feedids=array($feedid, $feed[0]['feed_questionid']);
+					$this->cleanCache($feedids);
+					$return['status'] = 1;
+					$return['data']="感谢成功";
+				}	
+			}
 		}
-		return false;
+		else
+		{
+			$return['status']=0;
+			$return['data']="每个提问只能感谢一次";
+		}
+		return $return;
 	}
+	
+	
+	
 }

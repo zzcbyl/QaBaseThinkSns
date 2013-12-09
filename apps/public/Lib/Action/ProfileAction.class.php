@@ -820,9 +820,16 @@ class ProfileAction extends Action {
 
 		$this->_assignUserInfo ( $uids );
 		
+		//我的赞同
 		$where =" `uid` = ".$this->uid." AND `feed_questionid` != 0 and `comment_count` > 0";
 		$list = model('Feed')->getFeedListByComment($where, 3);
 		$this->assign ( 'aggreelist', $list );
+		
+		//我的感谢
+		$twhere =" `uid` = ".$this->uid." AND `feed_questionid` = 0 and `thank_count` > 0 ";
+		$tlist = model('Feed')->getQuestionList($twhere, 3);
+		$this->assign ( 'thanklist', $tlist );
+		
 		/*print('<br /><br /><br /><br />');
 		print_r($list);*/
 		
