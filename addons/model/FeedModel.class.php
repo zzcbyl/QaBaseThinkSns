@@ -7,7 +7,7 @@
 class FeedModel extends Model {
 
 	protected $tableName = 'feed';
-	protected $fields = array('feed_id','uid','type','app','app_row_id','app_row_table','publish_time','is_del','from','comment_count','repost_count','comment_all_count','digg_count','is_repost','is_audit','feed_questionid','feed_quid','answer_count','disapprove_count','feed_pv','thank_count','_pk'=>'feed_id');
+	protected $fields = array('feed_id','uid','type','app','app_row_id','app_row_table','publish_time','is_del','from','comment_count','repost_count','comment_all_count','digg_count','is_repost','is_audit','feed_questionid','feed_quid','answer_count','disapprove_count','feed_pv','thank_count','add_feedid','_pk'=>'feed_id');
 
 	public $templateFile = '';			// 模板文件
 
@@ -55,14 +55,21 @@ class FeedModel extends Model {
 		$data['from'] = isset($data['from']) ? intval($data['from']) : getVisitorClient();
 		$data['is_del'] = $data['comment_count'] = $data['repost_count'] = $data['disapprove_count'] = 0;
 		$data['is_repost'] = $is_repost;
-		if($data['questionid']==null || $data['questionid'] == 0){
-			$data['questionid']=0;
-			$data['feed_quid']=0;
+		if($data['isadd']=="0")
+		{
+			if($data['questionid']==null || $data['questionid'] == 0){
+				$data['questionid']=0;
+				$data['feed_quid']=0;
+			}
+			else{
+				$data['feed_questionid'] = $data['questionid'];
+				$QFeedData = $this->getFeeds(array($data['questionid']));
+				$data['feed_quid']  = $QFeedData[0]['uid'];
+			}
 		}
-		else{
-			$data['feed_questionid'] = $data['questionid'];
-			$QFeedData = $this->getFeeds(array($data['questionid']));
-			$data['feed_quid']  = $QFeedData[0]['uid'];
+		else
+		{
+			$data['add_feedid'] = $data['questionid'];
 		}
 		//判断是否先审后发
 		$weiboSet = model('Xdata')->get('admin_Config:feed');
@@ -125,7 +132,7 @@ class FeedModel extends Model {
 		
 		$data['answer_count']=0;
 		//如果是回答,增加问题的回答数量
-		if($data['questionid']!=null && $data['questionid']!='0')
+		if($data['isadd']=="0" && $data['questionid']!=null && $data['questionid']!='0')
 		{
 			$feed_Qid=model('feed')->where('feed_id='.$feed_id)->getField('feed_questionid');
 			$updData['answer_count']=model('feed')->where('feed_questionid='.$feed_Qid.' and is_del=0')->count();

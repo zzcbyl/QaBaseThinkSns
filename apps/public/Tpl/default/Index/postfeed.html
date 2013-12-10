@@ -1,0 +1,25 @@
+﻿<include file="__THEME__/public_header" />
+<div class="cont_left">
+    <!--发布框-->
+    {:W('SendWeibo',array('title'=>$title, 'topicHtml'=>$initHtml))}
+</div>
+<!--right-->
+<div class="cont_right">
+    <include file="__THEME__/public_right" />
+</div>
+
+<include file="__THEME__/public_footer" />
+</div>
+<script>
+
+    $('ul.feed_file_list').each(function () {
+
+        $(this).find('li').each(function (i) {
+            if (i % 2 == 0) {
+                $(this).css("background", "#fafafa");
+            }
+        });
+    });
+</script>
+<script type="text/javascript" src="__THEME__/js/home/module.home.js"></script>
+<script type="text/javascript" src="__THEME__/js/module.weibo.js"></script>

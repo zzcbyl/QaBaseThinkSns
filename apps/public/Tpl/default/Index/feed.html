@@ -36,6 +36,14 @@
                             <tr>
                                 <td style="width: 550px; display: block;">
                                     <span class="contents">{$feedInfo.description|format=true}</span>
+                                    <div style="margin-top:10px;">
+                                       <div style="font-weight:bold;">追问 :</div>
+                                        <volist name='addquestionlist' id ='add'>
+                                            <div style="float:left;">{$add['title']}</div>
+                                            <div style="float:left; margin-left:30px;">{$add['content']}</div>
+                                            <div style="clear:both;"></div>
+                                        </volist>
+                                    </div>
                                 </td>
                             </tr>
                         </table>
@@ -59,6 +67,8 @@
                             </eq>-->
                             <!--<a href="#">回答</a>
                             <i class="vline">|</i> -->
+                            <a href="javascript:void(0);" onclick="if($('#AddQuestionDiv').css('display')=='none')  $('#AddQuestionDiv').show();  else  $('#AddQuestionDiv').hide(); ">追问</a>
+                            <i class="vline">|</i>
                             <eq name='feedInfo.actions.favor' value='true'>
                                 {:W('Collection',array('type'=>'btn','sid'=>$feedInfo['feed_id'],'stable'=>'feed','sapp'=>$feedInfo['app']))}
                             </eq>
@@ -128,11 +138,22 @@
                             <a href="">< </a><a href="">> </a>
                         </div>
                     </div>
-                                
                 </dd>
                             
             </dl>
         </div>
+
+
+        <div id="AddQuestionDiv" class="feed_lists-1" style="margin-top:10px; display:none;">
+            <dl class="feed_list feed_comment">
+                <dd class="content">
+                    <div class="repeat clearfix pading" style="padding: 5px 15px;">
+                        {:W('AddAsk',array('title'=>'追问', 'feedID'=>$feedInfo['feed_id']))}
+                    </div>
+                </dd>
+            </dl>
+        </div>
+
         <div id="commentBlock" class="feed_lists" style="display: none;">
             <p class="border" style="margin:10px 0; border-bottom:0px;"></p>
             <dl class="feed_list feed_comment">

@@ -82,6 +82,8 @@ class FeedAction extends Action {
 		$d['description'] = filter_keyword($_POST['description']);		
 		// 问题ID
 		$d['questionid'] = filter_keyword($_POST['questionid']);		
+		// 是否追问
+		$d['isadd'] = filter_keyword($_POST['addask']);	
 	
 		// 安全过滤
 		foreach($_POST as $key => $val) {

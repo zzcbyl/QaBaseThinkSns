@@ -251,18 +251,13 @@ core.weibo = {
         M(document.getElementById('feed-lists'));
     },
     // 发布微博之后操作
-    afterPost: function (obj, textarea, topicHtml, description_editor, description, close, questionid) {
+    afterPost: function (obj, textarea, topicHtml, description_editor, description, close, questionid, int_isadd) {
         if (topicHtml == '') {
             textarea.value = '';
             if (description != undefined)
                 description.value = ''; ;
         } else {
             textarea.value = topicHtml;
-        }
-
-        //回答完成隐藏回答框
-        if (questionid > 0) {
-            $('#AnswerQuestionDiv').hide();
         }
 
         //obj.parentModel.parentModel.childModels['numsLeft'][0].innerHTML = L('PUBLIC_INPUT_TIPES', { 'sum': '<span>' + initNums + '</span>' });
@@ -272,6 +267,16 @@ core.weibo = {
                 description.ready = null;
         };
         $(obj.childModels['post_ok'][0]).fadeOut(500, fadeOutObj);
+
+        //追问
+        if (int_isadd == 1) {
+            $('#AddQuestionDiv').hide();
+            return;
+        }
+        //回答完成隐藏回答框
+        if (questionid > 0) {
+            $('#AnswerQuestionDiv').hide();
+        }
         // 修改微博数目
         if ("undefined" == typeof (close) || !close) {
             updateUserData('weibo_count', 1);
@@ -446,7 +451,7 @@ core.weibo = {
         }
     },
     // 发布微博
-    post_feed: function (_this, mini_editor, textarea, description_editor, description, questionid, isbox, url) {
+    post_feed: function (_this, mini_editor, textarea, description_editor, description, questionid, isbox, url, isAdd) {
         var obj = this;
         // 避免重复发送
         if ("undefined" == typeof (obj.isposting)) {
@@ -534,9 +539,12 @@ core.weibo = {
         var Qid = 0;
         if (questionid != null && questionid != undefined)
             Qid = questionid.value;
+        var int_isadd = 0;
+        if (isAdd)
+            int_isadd = 1;
 
         // 发布微博
-        $.post(url, { body: data, type: type, app_name: app_name, content: '', attach_id: attach_id, videourl: videourl, channel_id: channel_id, source_url: attrs.source_url, gid: attrs.gid, description: txtVal, questionid: Qid }, function (msg) {
+        $.post(url, { body: data, type: type, app_name: app_name, content: '', attach_id: attach_id, videourl: videourl, channel_id: channel_id, source_url: attrs.source_url, gid: attrs.gid, description: txtVal, questionid: Qid, addask: int_isadd }, function (msg) {
             obj.isposting = false;
             _this.className = 'btn-grey-white';
             $(_this).html('<span>' + L('PUBLIC_SHARE_BUTTON') + '</span>');
@@ -546,7 +554,7 @@ core.weibo = {
                 }
                 var postOk = mini_editor.childModels['post_ok'][0];
                 $(postOk).fadeIn('fast');
-                core.weibo.afterPost(mini_editor, textarea, attrs.topicHtml, description_editor, description, false, Qid);
+                core.weibo.afterPost(mini_editor, textarea, attrs.topicHtml, description_editor, description, false, Qid, int_isadd);
                 if (!isbox) {
                     core.weibo.insertToList(msg.data, msg.feedId, questionid);
                 } else {

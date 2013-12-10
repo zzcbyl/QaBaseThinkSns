@@ -160,6 +160,12 @@ class IndexAction extends Action {
 		$diggArr = model ( 'FeedDigg' )->checkIsDigg ( $feed_id, $this->mid );
 		$this->assign ( 'diggArr', $diggArr );
 		
+		//追问
+		$addwhere = 'add_feedid = '.$feed_id;
+		$addfeedlist = model('Feed')->getQuestionList( $addwhere, 20 );
+		
+		$this->assign ( 'addquestionlist', $addfeedlist['data'] );
+		
 		$this->display ();
 	}
 	

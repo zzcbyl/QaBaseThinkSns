@@ -138,6 +138,31 @@ M.addEventFns({
             core.weibo.post_feed(_this, mini_editor, textarea, description_editor, description, questionid);
         }
     },
+    post_addask: {	//发布普通|图片微博 
+        click: function () {
+            if (feedbtnlock == 0) {
+                feedbtnlock = 1;
+                setTimeout(function () {
+                    feedbtnlock = 0;
+                }, 1500);
+            } else {
+                ui.error('正在发布请勿重复点击！');
+                return false;
+            }
+            if ($('.upload_tips').length > 0) {
+                ui.error(L('PUBLIC_ATTACH_UPLOADING_NOSENT'));
+                return false;
+            }
+            var _this = this;
+            var mini_editor = this.parentModel.parentModel.childModels['mini_editor'][0];
+            var textarea = $(mini_editor).find('textarea').get(0);
+
+            var questionid_editor = this.parentModel.parentModel.childModels['mini_editor'][0];
+            var questionid = $(mini_editor).find('input').get(0);
+
+            core.weibo.post_feed(_this, mini_editor, textarea, null, null, questionid, false, "", true);
+        }
+    },
     post_feed_box: {
         click: function () {
             if (feedbtnlock == 0) {
