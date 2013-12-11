@@ -22,7 +22,7 @@
                    <li class="vline">|</li>
                    <li><a href="{:U('public/Profile/friend', array('uid'=>$uid))}" target="_blank">{:L('PUBLIC_FRIEND')}</a> {$count_info.friend_count|default=0}</li>
                    <li class="vline">|</li>
-                   <li><a href="{:U('public/Profile/index', array('uid'=>$uid))}" target="_blank">{:L('PUBLIC_WEIBO')}</a> {$count_info.feed_count|default=0}</li>
+                   <li><a href="{:U('public/Profile/index', array('uid'=>$uid))}" target="_blank">{:L('PUBLIC_WEIBO')}</a> {$count_info.weibo_count|default=0}</li>
                    <li class="vline">|</li>
                    <li><a href="{:U('public/Profile/answer', array('uid'=>$uid))}" target="_blank">{:L('PUBLIC_ANSWER')}</a> {$count_info.answer_count|default=0}</li>
                </ul>

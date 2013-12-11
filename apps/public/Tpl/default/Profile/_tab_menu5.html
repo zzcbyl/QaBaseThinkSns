@@ -4,9 +4,9 @@
       elseif(ACTION_NAME=='newfriend'){ $tabClass['public_newfollower'] = 'current'; }
 	  else{ $tabClass['public_newfriend'] = 'current';  }
 </php>
-<div class="tab-menu2 clearfix" >
-  <ul>
-    <li class="{$tabClass.public_newfriend}"><span><a href="{:U('public/Profile/newfollower')}">新增粉丝</a></span></li>
+<div class="gzList">
+    <ul>
+        <li class="{$tabClass.public_newfriend}"><span><a href="{:U('public/Profile/newfollower')}">新增粉丝</a></span></li>
     <li class="{$tabClass.public_newfollower}"><span><a href="{:U('public/Profile/newfriend')}">新增好友</a></span></li>
-  </ul>
+    </ul>
 </div>

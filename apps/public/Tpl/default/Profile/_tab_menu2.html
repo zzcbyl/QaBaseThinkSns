@@ -4,10 +4,12 @@
       elseif(ACTION_NAME=='follower'){ $tabClass['public_follower'] = 'current'; $tabClass['public_following'] = ''; $tabClass['public_friend'] = ''; }
 	  else{ $tabClass['public_friend'] = 'current'; $tabClass['public_following'] = ''; $tabClass['public_follower'] = ''; }
 </php>
-<div class="tab-menu2 clearfix">
-  <ul>
-    <li class="{$tabClass.public_friend}"><span><a href="{:U('public/Profile/friend',array('uid'=>$uid,'type'=>'friend'))}"><php>$GLOBALS['ts']['mid']==$uid?print('我'):print('TA')</php>的好友</a></span></li>
-    <li class="{$tabClass.public_following}"><span><a href="{:U('public/Profile/following',array('uid'=>$uid))}"><php>$GLOBALS['ts']['mid']==$uid?print('我'):print('TA')</php>的关注</a></span></li>
-    <li class="{$tabClass.public_follower}"><span><a href="{:U('public/Profile/follower',array('uid'=>$uid))}"><php>$GLOBALS['ts']['mid']==$uid?print('我'):print('TA')</php>的粉丝</a></span></li>
-  </ul>
+
+<div class="gzList">
+    <ul>
+        <!--<li class="current"><a href="#">我/TA的好友<span>12</span></a></li>-->
+        <li class="{$tabClass.public_friend}"><span><a href="{:U('public/Profile/friend',array('uid'=>$uid,'type'=>'friend'))}"><php>$GLOBALS['ts']['mid']==$uid?print('我'):print('TA')</php>的好友</a></span></li>
+        <li class="{$tabClass.public_following}"><span><a href="{:U('public/Profile/following',array('uid'=>$uid))}"><php>$GLOBALS['ts']['mid']==$uid?print('我'):print('TA')</php>的关注</a></span></li>
+        <li class="{$tabClass.public_follower}"><span><a href="{:U('public/Profile/follower',array('uid'=>$uid))}"><php>$GLOBALS['ts']['mid']==$uid?print('我'):print('TA')</php>的粉丝</a></span></li>
+    </ul>
 </div>

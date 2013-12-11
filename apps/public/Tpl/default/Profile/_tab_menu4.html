@@ -11,12 +11,12 @@
       elseif(ACTION_NAME=='newactivityinfo'){ $tabClass['new_activity'] = 'current';  }
 	  else{ $tabClass['new_answer'] = 'current'; }
 </php>
-<div class="tab-menu2 clearfix" >
-  <ul>
-    <li class="{$tabClass.new_answer}"><span><a href="{:U('public/Profile/newanswerinfo')}">新答案</a></span></li>
-    <li class="{$tabClass.new_comment}"><span><a href="{:U('public/Profile/newcommentinfo')}">新评论</a></span></li>
-    <li class="{$tabClass.new_agree}"><span><a href="{:U('public/Profile/newagreeinfo')}">新赞同</a></span></li>
-    <li class="{$tabClass.new_oppose}"><span><a href="{:U('public/Profile/newopposeinfo')}">新反对</a></span></li>
-    <li class="{$tabClass.new_activity}"><span><a href="{:U('public/Profile/newactivityinfo')}">活动信息</a></span></li>
-  </ul>
+<div class="gzList">
+    <ul>
+        <li class="{$tabClass.new_answer}"><span><a href="{:U('public/Profile/newanswerinfo')}">新答案</a></span></li>
+        <li class="{$tabClass.new_comment}"><span><a href="{:U('public/Profile/newcommentinfo')}">新评论</a></span></li>
+        <li class="{$tabClass.new_agree}"><span><a href="{:U('public/Profile/newagreeinfo')}">新赞同</a></span></li>
+        <li class="{$tabClass.new_oppose}"><span><a href="{:U('public/Profile/newopposeinfo')}">新反对</a></span></li>
+        <li class="{$tabClass.new_activity}"><span><a href="{:U('public/Profile/newactivityinfo')}">活动信息</a></span></li>
+    </ul>
 </div>

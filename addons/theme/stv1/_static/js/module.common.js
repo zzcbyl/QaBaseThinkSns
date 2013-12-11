@@ -481,10 +481,10 @@ var share=function(sid,stable,initHTML,curid,curtable,appname,cancomment,is_repo
 var follow = {
     // 按钮样式
     btnClass: {
-        doFollow: "btn-cancel",
-        unFollow: "btn-att-white",
-        haveFollow: "btn-att-white",
-        eachFollow: "btn-att-white"
+        doFollow: "gz",
+        unFollow: "gz_ed",
+        haveFollow: "gz_ed",
+        eachFollow: "gz_ed"
     },
     // 按钮图标
     flagClass: {

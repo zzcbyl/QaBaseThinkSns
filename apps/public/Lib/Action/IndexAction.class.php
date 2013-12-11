@@ -163,7 +163,7 @@ class IndexAction extends Action {
 		//追问
 		$addwhere = 'add_feedid = '.$feed_id;
 		$addfeedlist = model('Feed')->getQuestionList( $addwhere, 20 );
-		
+		//print_r($addfeedlist);
 		$this->assign ( 'addquestionlist', $addfeedlist['data'] );
 		
 		$this->display ();
@@ -438,7 +438,7 @@ class IndexAction extends Action {
 		
 		$count = model('UserData')->getUserData($uid);
 		if(empty($count)) {
-			$count = array('following_count'=>0,'follower_count'=>0,'feed_count'=>0,'favorite_count'=>0,'unread_atme'=>0,'weibo_count'=>0);
+			$count = array('following_count'=>0,'follower_count'=>0,'friend_count'=>0,'feed_count'=>0,'answer_count'=>0,'favorite_count'=>0,'unread_atme'=>0,'weibo_count'=>0);
 		}
 		$data['count_info'] = $count;
 		
