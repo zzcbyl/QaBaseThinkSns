@@ -21,7 +21,7 @@
      <div class="explain">共同关注(<php>echo $sidebar_follower_list['count']</php>)<a href="{:U('public/Profile/follower',array('uid'=>$user_info[$uid]['uid']))}" class="right f12">更多</a></div>
      <ul class="fList mb20">
         <volist name="sidebar_follower_list['data']" id="vo" key="k"> 
-            <li  <eq name="k" value="1"> class="ml"</eq>>
+            <li <eq name="k" value="1"> class="ml"</eq>>
                 <a href="{:U('public/Profile/index',array('uid'=>$vo['fid']))}">
                 <img src="{$follower_user_info[$vo['fid']]['avatar_tiny']}" uid="{$vo['fid']}" event-node="face_card" /></a><br />
                 <a style="width:50px; overflow:hidden; height:18px; display:block;" href="{:U('public/Profile/index',array('uid'=>$vo['fid']))}" uid="{$vo['fid']}" event-node="face_card">{$follower_user_info[$vo['fid']]['uname']|getShort=4}</a>
@@ -31,16 +31,14 @@
      <php>}</php>
 
      <php>if($aggreelist['data']){</php>
-     <h1><php>if($user_info[$uid]['uid']==$mid){</php>我<php>}else{</php>TA<php>}</php>的赞同<span></span><a href="{:U('public/Profile/index',array('uid'=>$user_info[$uid]['uid'], 'type'=>'agree'))}" class="gd">更多</a></a></h1>
+     <h1><php>if($user_info[$uid]['uid']==$mid){</php>我<php>}else{</php>TA<php>}</php>的赞同<span></span><a href="{:U('public/Profile/index',array('uid'=>$user_info[$uid]['uid'], 'type'=>'agree'))}" class="gd">更多</a></h1>
      <ul class="tList mb20">
-        <volist name="aggreelist['data']" id="alist"> 
-            <li>
+        <volist name="aggreelist['data']" id="alist" key="k"> 
+            <li <eq name="k" value="1"> class="no"</eq>>
             <div class="tu"><a class="zan">{$alist['answer'][0]['comment_count']}</a></div>
             <h2><a href="{:U('public/Index/feed',array('feed_id'=>$alist['feed_id'],'uid'=>$alist['uid']))}">{$alist['body']}</a></h2>
             <p>{$alist['answer'][0]['body']}</p>
             </li>
-
-            
         </volist>
      </ul>
      <php>}</php>
@@ -48,36 +46,30 @@
      <php>if($thanklist['data']){</php>
      <h1><php>if($user_info[$uid]['uid']==$mid){</php>我<php>}else{</php>TA<php>}</php>的感谢<span></span><a href="{:U('public/Profile/index',array('uid'=>$user_info[$uid]['uid'], 'type'=>'thank'))}" class="gd">更多</a></h1>
      <ul class="tList mb20">
-        <volist name="thanklist['data']" id="tlist"> 
-            <li>
+        <volist name="thanklist['data']" id="tlist" key="k"> 
+            <li <eq name="k" value="1">class="no"</eq>>
             <div class="tu"><a class="ganxie">{$tlist['thank_count']}</a></div>
-            <h2><a href="{:U('public/Index/feed',array('feed_id'=>$tlist['feed_id'],'uid'=>$alist['uid']))}">{$tlist['body']}</a></h2>
+            <h2><a href="{:U('public/Index/feed',array('feed_id'=>$tlist['feed_id'],'uid'=>$tlist['uid']))}">{$tlist['body']}</a></h2>
             <p>{$tlist['description']}</p>
             </li>
         </volist>
      </ul>
      <php>}</php>
      
-     <!--<h1>我/TA关注的问题<span></span><a href="#" class="gd">更多</a></h1>
+     <php>if($feedfollowinglist['data']){</php>
+     <h1><php>if($user_info[$uid]['uid']==$mid){</php>我<php>}else{</php>TA<php>}</php>关注的问题<span></span><a href="{:U('public/Profile/index',array('uid'=>$user_info[$uid]['uid'], 'type'=>'feedfollowing'))}" class="gd">更多</a></h1>
      <ul class="tList mb20">
-         <li class="no">
-         <div class="tu"><a href="#" class="guanz">200</a></div>
-         <h2><a href="#">老师解答了问题:菡萏香销翠叶残 </a></h2>
-         <p>去年今日没有原创广播去年今日没有原创广播</p>
-         </li>
-         <li>
-         <div class="tu"><a href="#" class="guanz">200</a></div>
-         <h2><a href="#">老师解答了问题:菡萏香销翠叶残 </a></h2>
-         <p>去年今日没有原创广播去年今日没有原创广播</p>
-         </li>
-         <li>
-         <div class="tu"><a href="#" class="guanz">200</a></div>
-         <h2><a href="#">老师解答了问题:菡萏香销翠叶残 </a></h2>
-         <p>去年今日没有原创广播去年今日没有原创广播</p>
-         </li>
+        <volist name="feedfollowinglist['data']" id="flist" key="k"> 
+            <li <eq name="k" value="1">class="no"</eq>>
+            <div class="tu"><a class="guanz">{$flist['following_count']}</a></div>
+            <h2><a href="{:U('public/Index/feed',array('feed_id'=>$flist['feed_id'],'uid'=>$flist['uid']))}">{$flist['body']}</a></h2>
+            <p>{$flist['description']}</p>
+            </li>
+        </volist>
      </ul>
+     <php>}</php>
      
-     <h1>我/TA关注的标签<span></span></h1>
+     <!--<h1>我/TA关注的标签<span></span></h1>
      <ul class="tagList">
          <li><a href="#" class="green">教育</a></li>
          <li><a href="#" class="orange">高考</a></li>

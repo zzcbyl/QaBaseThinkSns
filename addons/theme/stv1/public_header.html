@@ -4,8 +4,12 @@
 	<div class="header w980">
     	<div class="h_logo">
             <a href="{:SITE_URL}" <php>if(strpos($_SERVER['HTTP_USER_AGENT'],'MSIE 6.0') !== false):</php>style="_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='{$site.logo}', sizingMethod='crop');_background:none;"<php>else:</php>style="background:url({$site.logo}) no-repeat;"<php>endif;</php>>卢勤问答</a></div>
+        <php> 
+              if(ACTION_NAME=='square'){ $tabClass['square'] = 'current'; $tabClass['index'] = '';  }
+	          else{ $tabClass['index'] = 'current'; $tabClass['square'] = '';  }
+        </php>
         <ul class="menu">
-        	<li><a href="{:SITE_URL}" class="current">首页</a></li>
+        	<li><a class="{$tabClass.index}" href="{:SITE_URL}">首页</a></li>
             <li><a href="#">广场</a></li>
             <li><a href="#">专家</a></li>
             <li><a href="#">活动</a></li>

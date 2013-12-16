@@ -6,8 +6,8 @@
     <div id="addButton" style="margin:20px 0 0 70px; font-size:12px; display:none;"><a href="javascript:void();" onclick="AddPrefession();">添加职业信息</a></div>
     <div id="editProfession" style="padding-bottom:10px; display:none;">
         <table>
-            <tr><td class="td_title"><span class="redSpan">*</span>单位名称：</td><td class="td_content"><input type="text" id="companyName" class="s-txt" onblur="checkName();" /><span id="errorName" style="margin-left:5px;"></span></td><td class="td_right"><select name="sel_qq" id="permissions"><option value="0">所有人可见</option><option value="1">我关注的人可见</option><option value="2">仅自己可见</option></select></td></tr>
-            <tr><td class="td_title">部门/职位：</td><td class="td_content"><input type="text" id="position" class="s-txt" /></td><td></td></tr>
+            <tr><td class="td_title"><span class="redSpan">*</span>单位名称：</td><td class="td_content"><input type="text" id="companyName" event-node="companyname" class="s-txt" onblur="checkName();" /><span id="errorName" style="margin-left:5px;"></span></td><td class="td_right"><select name="sel_qq" id="permissions"><option value="0">所有人可见</option><option value="1">我关注的人可见</option><option value="2">仅自己可见</option></select></td></tr>
+            <tr><td class="td_title">部门/职位：</td><td class="td_content"><input type="text" event-node="position" id="position" class="s-txt" /></td><td></td></tr>
             <tr><td class="td_title">工作时间：</td><td class="td_content"><select id="sTime"><option value="">请选择</option><volist name="BeginYear" id="by"><option>{$by.val}</option></volist></select>－<select id="eTime"><option value="">请选择</option><volist name="BeginYear" id="by"><option>{$by.val}</option></volist></select></td><td></td></tr>
             <tr><td class="td_title"><span class="redSpan">*</span>所在地：</td><td class="td_content" colspan="2">{:W('Area',array('curPro'=>0,'curCity'=>0,'area'=>0,'city_names'=>'','tpl'=>'selectAreaCopy'))}</td></tr>
             <tr><td colspan="2"><a style="margin-left:80px;" onclick="SaveProfession()" href="javascript:void(0);">确定</a>　<a onclick="CancelProfession()" href="javascript:void(0);">取消</a></td></tr>

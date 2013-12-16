@@ -1,0 +1,1 @@
+在wb_feed中添加字段following_count, 问题被关注数量

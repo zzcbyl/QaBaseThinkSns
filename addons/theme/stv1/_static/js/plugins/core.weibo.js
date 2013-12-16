@@ -86,10 +86,9 @@ core.weibo = {
                     var $lastDl = $('<div></div>');
                     $lastDl.html(msg.html);
                     //alert(msg.html);
-                    msg.html = $lastDl.find('div').filter('.NullClassDiv').slice(30);
+                    msg.html = $lastDl.find('div').filter('.conts').slice(30);
                     //alert(msg.html.html());
                 }
-
                 $('#feed-lists').append(msg.html);
                 _this.canLoading = true;
                 _this.loadId = msg.loadId;

@@ -830,6 +830,11 @@ class ProfileAction extends Action {
 		$tlist = model('Feed')->getAnswerList($twhere, 3);
 		$this->assign ( 'thanklist', $tlist );
 		
+		//我的关注
+		$fwhere =" `uid` = ".$this->uid;
+		$flist = model('FeedFollowing')->getFeedFollowingList1($fwhere, 3);
+		$this->assign ( 'feedfollowinglist', $flist );
+		
 		/*print('<br /><br /><br /><br />');
 		print_r($list);*/
 		

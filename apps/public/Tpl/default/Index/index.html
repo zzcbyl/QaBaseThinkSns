@@ -3,36 +3,36 @@
     <div class="table_box">
         <ul>
             <switch name="type">
-                <case value="following">
+                <case value="all">
                 <li><span><a class="current" href="javascript:void(0);" title="全部">全部</a></span></li> 
-                <li><span><a href="{:U('public/Index/index',array('type'=>'question'))}" title="你的问题">你的问题</a></span></li>
-                <li><span><a href="{:U('public/Index/index',array('type'=>'answer'))}" title="你的答案">你的答案</a></span></li>
-                <li><span><a href="#">邀请你的</a></span></li>
+                <li><span><a href="{:U('public/Index/index',array('type'=>'question'))}" title="我的问题">我的问题</a></span></li>
+                <li><span><a href="{:U('public/Index/index',array('type'=>'answer'))}" title="我的答案">我的答案</a></span></li>
+                <li><span><a href="{:U('public/Index/index',array('type'=>'following'))}" title="我的关注">我的关注</a></span></li>
+                <li><span><a href="#">邀请我的</a></span></li>
                 <!--<li><span><a href="{:U('public/Index/index')}">你的话题</a></span></li>-->
                 </case>
-                <!--<case value="all">
-                <li><span><a href="{:U('public/Index/index')}" title="全部">全部</a></span></li> 
-                <li><span><a href="{:U('public/Index/index',array('type'=>'question'))}" title="你的问题">你的问题</a></span></li>
-                <li><span><a href="{:U('public/Index/index',array('type'=>'answer'))}" title="你的答案">你的答案</a></span></li>
-                <li><span><a href="#">邀请你的</a></span></li>
-                <li><span><a href="{:U('public/Index/index')}">你的话题</a></span></li>
-                <li><span><a href="{:U('public/Index/index')}">邀请你的</a></span></li>
-                <li><span><a href="{:U('public/Index/index')}">{:L('PUBLIC_ACTIVITY_STREAM')}<i class="arrow-down"></i></a></span></li>
-                <li class="current"><span><a href="{:U('public/Index/index',array('type'=>'all'))}">{:L('PUBLIC_ACTIVITY')}</a></span></li>
-                <eq name="isChannelOpen" value="true"><li><span><a href="{:U('public/Index/index',array('type'=>'channel'))}">我关注的频道<i class="arrow-down"></i></a></span></li></eq>
-                </case>-->
                 <case value="question">
                 <li><span><a href="{:U('public/Index/index')}" title="全部">全部</a></span></li> 
-                <li><span><a class="current" href="{:U('public/Index/index',array('type'=>'question'))}" title="你的问题">你的问题</a></span></li>
-                <li><span><a href="{:U('public/Index/index',array('type'=>'answer'))}" title="你的答案">你的答案</a></span></li>
-                <li><span><a href="#">邀请你的</a></span></li>
+                <li><span><a class="current" href="{:U('public/Index/index',array('type'=>'question'))}" title="我的问题">我的问题</a></span></li>
+                <li><span><a href="{:U('public/Index/index',array('type'=>'answer'))}" title="我的答案">我的答案</a></span></li>
+                <li><span><a href="{:U('public/Index/index',array('type'=>'following'))}" title="我的关注">我的关注</a></span></li>
+                <li><span><a href="#">邀请我的</a></span></li>
                 <!--<li><span><a href="{:U('public/Index/index')}">你的话题</a></span></li>-->
                 </case>
                 <case value="answer">
                 <li><span><a href="{:U('public/Index/index')}" title="全部">全部</a></span></li> 
-                <li><span><a href="{:U('public/Index/index',array('type'=>'question'))}" title="你的问题">你的问题</a></span></li>
-                <li><span><a class="current" href="{:U('public/Index/index',array('type'=>'answer'))}" title="你的答案">你的答案</a></span></li>
-                <li><span><a href="#">邀请你的</a></span></li>
+                <li><span><a href="{:U('public/Index/index',array('type'=>'question'))}" title="我的问题">我的问题</a></span></li>
+                <li><span><a class="current" href="{:U('public/Index/index',array('type'=>'answer'))}" title="我的答案">我的答案</a></span></li>
+                <li><span><a href="{:U('public/Index/index',array('type'=>'following'))}" title="我的关注">我的关注</a></span></li>
+                <li><span><a href="#">邀请我的</a></span></li>
+                <!--<li><span><a href="{:U('public/Index/index')}">你的话题</a></span></li>-->
+                </case>
+                <case value="following">
+                <li><span><a href="{:U('public/Index/index')}" title="全部">全部</a></span></li> 
+                <li><span><a href="{:U('public/Index/index',array('type'=>'question'))}" title="我的问题">我的问题</a></span></li>
+                <li><span><a href="{:U('public/Index/index',array('type'=>'answer'))}" title="我的答案">我的答案</a></span></li>
+                <li><span><a class="current" href="{:U('public/Index/index',array('type'=>'following'))}" title="我的关注">我的关注</a></span></li>
+                <li><span><a href="#">邀请我的</a></span></li>
                 <!--<li><span><a href="{:U('public/Index/index')}">你的话题</a></span></li>-->
                 </case>
             </switch>

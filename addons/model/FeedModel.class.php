@@ -7,7 +7,7 @@
 class FeedModel extends Model {
 
 	protected $tableName = 'feed';
-	protected $fields = array('feed_id','uid','type','app','app_row_id','app_row_table','publish_time','is_del','from','comment_count','repost_count','comment_all_count','digg_count','is_repost','is_audit','feed_questionid','feed_quid','answer_count','disapprove_count','feed_pv','thank_count','add_feedid','_pk'=>'feed_id');
+	protected $fields = array('feed_id','uid','type','app','app_row_id','app_row_table','publish_time','is_del','from','comment_count','repost_count','comment_all_count','digg_count','is_repost','is_audit','feed_questionid','feed_quid','answer_count','disapprove_count','feed_pv','thank_count','add_feedid','following_count','_pk'=>'feed_id');
 
 	public $templateFile = '';			// 模板文件
 
@@ -357,6 +357,36 @@ class FeedModel extends Model {
 		
 		return $feedlist;
 	}
+	
+	/**
+	 * 获取问题和答案列表
+	 * @param array $map 查询条件
+	 * @param integer $limit 结果集数目，默认为10
+	 * @return array 微博列表数据
+	 */
+	public function getQuestionAndAnswer($map, $limit = 10 , $order = 'feed_id DESC') {
+		$feedlist = $this->field('feed_id')->where($map)->order($order)->findPage($limit); 
+		$feed_ids = getSubByKey($feedlist['data'], 'feed_id');
+		$feedlist['data'] = $this->getFeeds($feed_ids);
+		
+		//增加答案块
+		foreach( $feedlist["data"] as $v => $vv )
+		{
+			$AnswerWhere='feed_questionid='.$vv['feed_id'];
+			$AnswerFeed = $this->field('feed_id')->where($AnswerWhere)->order("feed_id DESC")->findPage(1);				
+			$AnswerFeed_id = getSubByKey($AnswerFeed['data'], 'feed_id');
+			$AnswerFeedData = $this->getFeeds($AnswerFeed_id);
+			
+			$vv["answer"] = $AnswerFeedData;
+			$feedlist["data"][$v]=$vv;
+			
+			/*print_r($vv);
+			print('<br /><br /><br /><br />');*/
+		}
+		
+		return $feedlist;
+	}
+	
 	/**
 	* 获取问题列表
 	* $where 查询条件
@@ -432,6 +462,8 @@ class FeedModel extends Model {
 		$table .= "(SELECT feed_questionid as feed_id, publish_time FROM {$this->tablePrefix}feed WHERE (`uid` ={$buid} or uid IN (SELECT `fid` FROM `{$this->tablePrefix}user_follow` WHERE `uid` ={$buid})) AND feed_questionid >0 GROUP BY feed_questionid) ";
 		//关注人的评论
 		//$table .= " union (select feed_id, ctime from (SELECT case b.feed_questionid when 0 then b.feed_id else b.feed_questionid end as feed_id,a.ctime FROM `{$this->tablePrefix}comment` a left join `{$this->tablePrefix}feed` b on a.row_id=b.feed_id WHERE a.app='public' and a.table='feed' and (a.uid = {$buid} or a.uid IN (SELECT `fid` FROM `{$this->tablePrefix}user_follow` WHERE `uid` = {$buid} ))) atab group by feed_id) ";
+		//关注的问题
+		$table .= " union (SELECT feedid, ctime FROM `wb_feed_following` WHERE `uid` ={$buid} )";
 		
 		$table .= ") tt group by feed_id) tab";
 		//print($table);
@@ -472,14 +504,15 @@ class FeedModel extends Model {
 			$vv["answer"] = $AnswerFeedData;
 			$feedlist["data"][$v]=$vv;*/
 			
-			$AnswerTable = '(SELECT max(feed_id) answer_id FROM `wb_feed` WHERE `feed_questionid` = '.$vv['feed_id'].' and (uid='.$GLOBALS['ts']['mid'].' or uid in (SELECT `fid` FROM `'.$this->tablePrefix.'user_follow` WHERE `uid` = '.$GLOBALS['ts']['mid'].')) group by uid) tt';
-			$AnswerList = $this->table($AnswerTable)->order('answer_id DESC')->select();
+			//$AnswerTable = '(SELECT max(feed_id) answer_id FROM `wb_feed` WHERE `feed_questionid` = '.$vv['feed_id'].' and (uid='.$GLOBALS['ts']['mid'].' or uid in (SELECT `fid` FROM `'.$this->tablePrefix.'user_follow` WHERE `uid` = '.$GLOBALS['ts']['mid'].')) group by uid) tt';
+			$AnswerTable = '(SELECT feed_id FROM `wb_feed` WHERE `feed_questionid` = '.$vv['feed_id'].' order by feed_id desc limit 1) tt';
+			$AnswerList = $this->table($AnswerTable)->order('feed_id DESC')->select();
 			if(is_array($AnswerList)&&count($AnswerList)>0)
 			{
 				foreach( $AnswerList as $a => $aa )
 				{
 					//答案
-					$AnswerFeed_id = Array($aa['answer_id']);
+					$AnswerFeed_id = Array($aa['feed_id']);
 					$AnswerFeedData = $this->getFeeds($AnswerFeed_id);
 					$vv["answer"] = $AnswerFeedData;
 					

@@ -175,7 +175,8 @@ class FeedListWidget extends Widget {
 							$where .=" AND type = '".t($var['feed_type'])."'";
 						}
 					}
-					$list = model('Feed')->getList($where,$this->limitnums);
+					$list = model('Feed')->getQuestionAndAnswer($where,$this->limitnums);
+					//print_r($list);
 				}
 				break;
 			case 'newfollowing'://关注的人的最新微博
@@ -237,7 +238,7 @@ class FeedListWidget extends Widget {
 					$current_uid=$GLOBALS['ts']['mid'];
 					if($var['uid']!=null&&$var['uid']!='0') $current_uid = $var['uid'];
 					$where =' uid='.$current_uid.' AND is_del = 0 AND feed_questionid=0 AND add_feedid=0 AND (is_audit=1 OR is_audit=0) '.$LoadWhere;
-					$list = model('Feed')->getQuestionList($where, $this->limitnums);
+					$list = model('Feed')->getQuestionAndAnswer($where, $this->limitnums);
 					//print_r($list);
 				}
 				break;
@@ -334,9 +335,20 @@ class FeedListWidget extends Widget {
 				$list = model('Feed')->getAnswerList($where, $this->limitnums);
 				//print_r($list);
 				break;
+			case 'feedfollowing':	//感谢列表
+				$current_uid=$GLOBALS['ts']['mid'];
+				if($var['uid']!=null && $var['uid']!='0') $current_uid = $var['uid'];
+				$where =" `uid` = ".$current_uid;
+				if($var['loadId']>0){
+					$where = $where.' and ctime < '.intval($var['loadId']);
+				}
+				$list = model('FeedFollowing')->getFeedFollowingList($where, $this->limitnums);
+				//print_r($list);
+				break;
 		}
     	// 分页的设置
         isset($list['html']) && $var['html'] = $list['html'];
+		$feedlist = array();
     	if(!empty($list['data'])) {
 			switch($type) {
 				case 'agree':
@@ -349,12 +361,26 @@ class FeedListWidget extends Widget {
 					$content['firstId'] = $var['firstId'] = $list['data'][0]['comment']['comment_id'];
 					$content['lastId'] = $var['lastId'] = $list['data'][(count($list['data'])-1)]['comment']['comment_id'];
 					break;
+				case 'feedfollowing':
+					$content['firstId'] = $var['firstId'] = $list['data'][0]['ctime'];
+					$content['lastId'] = $var['lastId'] = $list['data'][(count($list['data'])-1)]['ctime'];
+					$index = 0;
+					foreach($list['data'] as $k => $v)
+					{
+						$feedlist['data'][$index]=$v['feed_data']['data'][0];
+						$index++;
+					}
+					break;
 				default:
 					$content['firstId'] = $var['firstId'] = $list['data'][0]['feed_id'];
 					$content['lastId'] = $var['lastId'] = $list['data'][(count($list['data'])-1)]['feed_id'];
 					break;	
 			}
-            $var['data'] = $list['data'];
+			
+			if(count($feedlist) > 0) //关注问题的数据
+				$var['data']= $feedlist['data'];
+			else
+				$var['data'] = $list['data'];
 			
             //赞功能
             $feed_ids = getSubByKey($var['data'],'feed_id');

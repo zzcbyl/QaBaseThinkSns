@@ -562,6 +562,19 @@ M.addEventFns({
 			this.className='s-txt';
 		}
 	},
+    // 真实姓名验证
+	realname: {
+		focus: function() {
+			this.className='s-txt-focus';
+			return false;
+		},
+		blur: function() {
+			this.className='s-txt';
+        },
+        load: function() {
+			this.className='s-txt';
+		}
+    },
 	// 昵称验证
 	uname: {
 		focus: function() {
@@ -678,7 +691,59 @@ M.addEventFns({
 			var parent = this.parentModel;
 			return false;
 		}
-	}
+	},
+    // 单位名称
+	companyname: {
+		focus: function() {
+			this.className='s-txt-focus';
+			return false;
+		},
+		blur: function() {
+			this.className='s-txt';
+        },
+        load: function() {
+			this.className='s-txt';
+		}
+    },
+    // 部门/职位
+	position: {
+		focus: function() {
+			this.className='s-txt-focus';
+			return false;
+		},
+		blur: function() {
+			this.className='s-txt';
+        },
+        load: function() {
+			this.className='s-txt';
+		}
+    },
+    // 学校名称
+	schoolname: {
+		focus: function() {
+			this.className='s-txt-focus';
+			return false;
+		},
+		blur: function() {
+			this.className='s-txt';
+        },
+        load: function() {
+			this.className='s-txt';
+		}
+    },
+    // 院系
+	department: {
+		focus: function() {
+			this.className='s-txt-focus';
+			return false;
+		},
+		blur: function() {
+			this.className='s-txt';
+        },
+        load: function() {
+			this.className='s-txt';
+		}
+    }
 });
 /**
  * 提示语Js对象

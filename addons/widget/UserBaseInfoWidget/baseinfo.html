@@ -59,7 +59,7 @@
                 <input type="hidden" name="old_name" value="{$uname}" /></li>
         <li>
             <label class="info-l">
-                真实姓名：</label><div class="info-r"><input type="text" id="realname" name="realname" value="{$realname}" maxlength="20" /></div>&nbsp;
+                真实姓名：</label><div class="info-r"><input event-node="realname" type="text" id="realname" name="realname" value="{$realname}" maxlength="20" /></div>&nbsp;
             <div class="info-rr"><select name="sel_realname"><option>所有人可见</option><option <if condition="1 eq $permissions['realname']">selected</if> value="1">我关注的人可见</option><option <if condition="2 eq $permissions['realname']">selected</if> value="2">仅自己可见</option></select></div>
         </li>
         <li>

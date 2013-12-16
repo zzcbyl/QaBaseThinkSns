@@ -12,7 +12,7 @@ class IndexAction extends Action {
 	 */
 	public function index(){
 		// 安全过滤
-		$d['type'] = t($_GET['type']) ? t($_GET['type']) : 'following';
+		$d['type'] = t($_GET['type']) ? t($_GET['type']) : 'all';
 		$d['feed_type'] = t($_GET['feed_type']) ? t($_GET['feed_type']) : '';
 		$d['feed_key'] = t($_GET['feed_key']) ? t($_GET['feed_key']) : '';
 		// 关注的人
@@ -53,10 +53,19 @@ class IndexAction extends Action {
 		$this->assign('title', $title);
 		// 设置标题与关键字信息
 		switch($d['type']) {
-			case 'all':
-				$this->setTitle('全站动态');
-				$this->setKeywords('全站动态');
+			case 'question':
+				$this->setTitle('我的问题');
+				$this->setKeywords('我的问题');
 				break;
+			case 'answer':
+				$this->setTitle('我的答案');
+				$this->setKeywords('我的答案');
+				break;
+			case 'following':
+				$this->setTitle('我的关注');
+				$this->setKeywords('我的关注');
+				break;
+				
 			case 'channel':
 				$this->setTitle('我关注的频道');
 				$this->setKeywords('我关注的频道');

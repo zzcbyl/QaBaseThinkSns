@@ -551,6 +551,7 @@ class LoginHooks extends Hooks {
         foreach ( $data[$type] as $v ) {
             $check [] = ! empty ( $platform_options [$v] );
         }
+				
         if (count ( array_filter ( $check ) ) == count ( $data[$type] ) && in_array($type,$platform_options['open'])) {
             $this->_loadTypeLogin($type);
             $object = new $type ();
