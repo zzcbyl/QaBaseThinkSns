@@ -249,9 +249,9 @@ $admintaskrecom = CheckPermission('vtask_admin','vtask_recommend');
                         <eq name='vl.is_del' value='0'>
                         <h2>
                             {$vl.title}
-	                        <volist name="vl['GroupData'][$vl['uid']]" id="v2">
+	                        <!--<volist name="vl['GroupData'][$vl['uid']]" id="v2">
                                 <img style="width:auto;height:auto;display:inline;cursor:pointer;" src="{$v2['user_group_icon_url']}" title="{$v2['user_group_name']}" />&nbsp;
-                            </volist>
+                            </volist>-->
 	                        <php> if(in_array($vl['user_info']['uid'],$followUids)){</php>
 	                        {:W('Remark',array('uid'=>$vl['user_info']['uid'],'remark'=>$remarkHash[$vl['user_info']['uid']],'showonly'=>1))}
 	                        <php>}</php>

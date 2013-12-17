@@ -271,5 +271,77 @@ class PassportAction extends Action
 	private function _isEmailString($email) {
 		return preg_match("/[_a-zA-Z\d\-\.]+@[_a-zA-Z\d\-]+(\.[_a-zA-Z\d\-]+)+$/i", $email) !== 0;
 	}
+	
+	
+	
+	/**
+	* 广场
+	* @return void
+	*/
+	public function square(){
+		//热门问题
+		$where =' (`is_audit`=1 OR `is_audit`=0) AND `is_del` = 0 AND `feed_questionid`=0 AND `add_feedid` = 0  ';
+		$list = model('Feed')->getList($where,10,'answer_count desc, feed_id desc');
+		$HotTopicList = $list['data'];
+		$this->assign('HotTopicList', $HotTopicList);
+		
+		//热心用户
+		$map['key'] = 'answer_count';
+		$list = model('UserData')->getlist($map,' `value` desc,`uid` desc ');
+		$userinfo=array();
+		foreach($list as $k => $v)
+		{
+			$user = model('user')->getUserInfo($v['uid']);
+			$user['userdata'] = $v;
+			$userinfo[$k] = $user;
+		}
+		$this->assign('HotUserList', $userinfo);
+		//print_r($userinfo);
+		
+		//最新问题
+		$NewQuestion = model('Feed')->getQuestionList($where, 10);
+		$this->assign('NewQuestion', $NewQuestion['data']);
+		//print_r($NewQuestion['data']);
+		
+		//今日十大关注问题
+		$FQWhere = ' (`is_audit`=1 OR `is_audit`=0) AND `is_del` = 0 AND `feed_questionid`=0 AND `add_feedid` = 0  ';
+		$FollowingQuestion = model('Feed')->getQuestionList($where, 10, '`publish_time` desc, `feed_pv` desc, `feed_id` desc');
+		$this->assign('FollowingQuestion', $FollowingQuestion['data']);
+		//print_r($FollowingQuestion['data']);
+		
+		//最新用户
+		$NewUserList = model('User')->getList(array(),6,'uid');
+		$uids = getSubByKey($NewUserList, 'uid');
+		$NewUserInfoList = model('User')->getUserInfoByUids($uids);
+		$this->assign('NewUserList', $NewUserInfoList);
+		//print_r($NewUserInfoList);
+		
+		//得到赞同最多的用户
+		$map['key'] = 'comment_agree_count';
+		$AgreeUserList = model('UserData')->getlist($map,' `value` desc', 10);
+		$AgreeUserInfoList=array();
+		foreach($AgreeUserList as $k=>$v)
+		{
+			$v['userinfo'] =model('User')->getUserInfoByUids($v['uid']);
+			$AgreeUserInfoList[$k] = $v;
+		}
+		$this->assign('AgreeUserInfoList', $AgreeUserInfoList);
+		//print_r($AgreeUserInfoList);
+		
+		//得到感谢最多的用户
+		$Thankmap['key'] = 'tothanked_count';
+		$ThankUserList = model('UserData')->getlist($Thankmap,' `value` desc', 10);
+		$ThankUserInfoList=array();
+		foreach($ThankUserList as $k=>$v)
+		{
+			$v['userinfo'] =model('User')->getUserInfoByUids($v['uid']);
+			$ThankUserInfoList[$k] = $v;
+		}
+		$this->assign('ThankUserInfoList', $ThankUserInfoList);
+		//print_r($ThankUserInfoList);
+		
+		
+		$this->display();
+	}
 }
 ?>

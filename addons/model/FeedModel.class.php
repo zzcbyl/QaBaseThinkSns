@@ -393,7 +393,7 @@ class FeedModel extends Model {
 	* $limit 结果集数目，默认为10
 	* @return array 微博列表数据
 	**/
-	public function getQuestionList($where, $limit=10, $order='feed_id DESC')
+	public function getQuestionList($where, $limit=10, $order=' `feed_id` DESC ')
 	{
 		$feedlist = $this->field('feed_id')->where($where)->order($order)->findPage($limit); 
 		$feed_ids = getSubByKey($feedlist['data'], 'feed_id');
@@ -994,7 +994,7 @@ class FeedModel extends Model {
 		$s = simplexml_load_string($feed_xml_content);
 		if(!$s){
 			return false;
-		}
+		}		
 		$result = $s->xpath("//feed[@type='".t($_data['type'])."']");
 		$actions = (array) $result[0]->feedAttr;
 		//输出模版解析后信息

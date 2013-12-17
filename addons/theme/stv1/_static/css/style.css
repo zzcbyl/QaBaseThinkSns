@@ -11,7 +11,7 @@ img{border:none}
 .header .search_box input{float:left}
 .header .search_box .s_inp{background:#fff; border:none; width:220px; height:25px; line-height:25px;padding:0px 10px; color:#999; font-size:12px;font-style:italic; outline:none}
 .short_nav li a,.tiwen,.comm a.d,.comm a.c,.comm a.x,.comm a.h,.contTop,.contBottom,.contTop p.q,.aTop,.aCenter,.aBottom,.aTop p.a,.right_conts h1.hot,.right_conts h1.gz,.right_conts h1.hd,.right_conts h1 span,.hd_btn a.gz,.hd_btn a.qx,.hd_btn a.gz_ed,.xz a.x1,.xz a.x2,.xz a.x3,.xz a.x4,.comm a.hx,.comm a.a,.comm a.t,.comm a.tel,.tu a.zan,.tu a.ganxie,.tu a.guanz{background:url(../image/sprite.png) no-repeat;}
-.tiwen,.h_logo a,.hd_btn a.gz,.hd_btn a.gz_ed,.hd_btn a.qx{text-indent:-999px;}
+.tiwen,.h_logo a,.hd_btn a.gz,.hd_btn a.gz_ed,.hd_btn a.qx{}
 .header .search_box .s_btn{background:url(../image/icon_search.png) no-repeat #fff center; border:none; width:30px; height:25px; cursor:pointer}
 .w980{width:980px; margin:0 auto;}
 a{text-decoration:none;}
@@ -22,6 +22,7 @@ a{text-decoration:none;}
 .h_logo a{ display:block; height:33px;}
 .short_nav{width:195px; float:right}
 .short_nav li{float:left;height: 60px; text-align: center; width: 39px; cursor:pointer;}
+.short_nav li:hover{ color:#fff; text-decoration:none; background:#941d1d;}
 .short_nav li a{display:inline-block; width:16px; height:16px; margin-top: 22px;}
 .short_nav li a.h{background-position:0px 0px;}
 .short_nav li a.v{background-position:-43px 0px;}
@@ -188,28 +189,28 @@ a{text-decoration:none;}
 .hyList p.hd strong{font-size:12px; font-weight:normal}
 .hyList p.hd .hd_btn{position:absolute; right:0px; top:-30px;}
 .g_adimg{height:90px;}
-.g_paihang{margin-top:20px; overflow:hidden; height:100%;}
+.g_paihang{margin-top:20px; overflow:hidden;}
 .g_wtpaihang{width:325px; float:left; overflow:hidden}
 .g_yhpaihang{width:325px; float:right; overflow:hidden;}
 .g_wtpaihang h1,.g_yhpaihang h1{font-size:20px; background:#be2727; color:#fff; text-indent:.5em; height:30px; line-height:30px}
-.g_cont{border:solid 1px #d9d9d9; padding:12px;height:395px;}
+.g_cont{border:solid 1px #d9d9d9; padding:12px;}
 
 .g_wtpaihang dl{_width:285px; }
 .g_wtpaihang dl dt{background:url(../image/dot_r.png) no-repeat 0px 14px;position:relative; padding:0px 0px 0px 10px; height:33px; line-height:33px;overflow:hidden;}
-.g_wtpaihang dl dt a{font-size:12px; color:#333;}
+.g_wtpaihang dl dt a{font-size:12px; color:#333; width: 220px; display: block; height: 33px; overflow: hidden;}
 .g_wtpaihang dl dt span{position:absolute; right:0; top:0px; color:#ccc; font-size:12px;}
-.g_wtpaihang dl dd{font-size:12px; color:#999; overflow:hidden; padding-left:10px; line-height:1.5;}
+.g_wtpaihang dl dd{font-size:12px; color:#999; overflow:hidden; padding-left:10px; line-height:18px; height: 36px; overflow:hidden;}
 
 .g_yhpaihang ul li img{float:left; width:35px; height:35px; margin-right:10px;}
 .g_yhpaihang ul li{height:35px; padding-bottom:5px;*padding-bottom:1px; position:relative; }
-.g_yhpaihang ul li h5{font-size:12px; font-weight:normal;}
+.g_yhpaihang ul li h5{font-size:12px; font-weight:normal; line-height:20px;}
 .g_yhpaihang ul li p{ background:url(../image/dot_h.png) no-repeat left; margin-left:45px; text-indent:.6em; font-size:12px; color:#ccc;}
 .g_yhpaihang ul li div.xz{position:absolute; right:0px;top:6px}
 .g_new_wt{overflow:hidden; margin-top:20px;}
-.g_new_wt .g_cont{height:320px}
+.g_new_wt .g_cont{ }
 .g_new_wt h1{font-size:20px; background:#dd8d26; color:#fff; text-indent:.5em; height:30px; line-height:30px}
 .g_new_wt ul li{ background:url(../image/dot_r.png) no-repeat left; text-indent:.5em; line-height:30px; position:relative;}
-.g_new_wt ul li a{font-size:12px; color:#333; }
+.g_new_wt ul li a{font-size:12px; color:#333; display: block; height: 30px; width: 470px; overflow: hidden;}
 .g_new_wt ul li span{position:absolute; font-size:12px; color:#ccc; text-align:left; top:0px}
 .g_new_wt ul li span.g_com{right:90px; width:70px;}
 .g_new_wt ul li span.g_nic{color:#666; right:0px; width:90px}
@@ -227,7 +228,7 @@ a{text-decoration:none;}
 .g_user2 h1{ background:#3190ce;}
 .g_user3 h1{ background:#6ab63d;}
 .g_new_dp{margin-top:20px; overflow:hidden;}
-.g_new_dp .g_cont{height:100%; overflow:hidden}
+.g_new_dp .g_cont{ overflow:hidden}
 .g_new_dp h1{font-size:20px; background:#be2727; color:#fff; text-indent:.5em; height:30px; line-height:30px}
 .g_new_dp ul li{margin-bottom:30px; _width:645px; clear:left; overflow:hidden;}
 .g_new_dp ul li img{float:left; width:60px; height:60px;}
@@ -239,10 +240,10 @@ a{text-decoration:none;}
 .g_new_dp ul li div p.name span{position:absolute; right:0; top:10px; font-size:12px; color:#999}
 .g_new_dp ul li div p.cont{line-height:24px; color:#666; font-size:14px}
 .g_list li{line-height:20px; margin-bottom:10px;}
-.g_list li h2 a{font-size:12px; color:#666;}
+.g_list li h2 a{font-size:12px; color:#666; display: block; float: left;height: 20px;margin-left: 5px;overflow: hidden;width: 180px;}
 .g_list li h2 span{ display:inline-block; background:url(../image/icon_num.png) no-repeat right bottom; width:18px; text-align:left; font-size:10px; color:#666;}
-.g_list li h2 span.top{background:url(../image/icon_num_top.png) no-repeat right bottom; color:#c02929}
-.g_list li p{font-size:12px; color:#999;}
+.g_list li h2 span.top{background:url(../image/icon_num_top.png) no-repeat right bottom; color:#c02929; float:left;}
+.g_list li p{font-size:12px; color:#999; max-height:40px; overflow:hidden;}
 .g_yh{margin-top:5px}
 .g_yh li{height:80px; width:60px; float:left; text-align:center; margin:0px 8px 15px;}
 .g_yh li img{width:60px; height:60px;}

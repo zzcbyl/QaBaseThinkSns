@@ -482,7 +482,7 @@ var follow = {
     // 按钮样式
     btnClass: {
         doFollow: "gz",
-        unFollow: "gz_ed",
+        unFollow: "qx",
         haveFollow: "gz_ed",
         eachFollow: "gz_ed"
     },
@@ -495,10 +495,14 @@ var follow = {
     },
     // 按钮文字
     btnText: {
-        doFollow: '关注',
-        unFollow: L('PUBLIC_ERROR_FOLLOWING'),
-        haveFollow: '已关注',
-        eachFollow: '相互关注'
+        //        doFollow: '关注',
+        //        unFollow: L('PUBLIC_ERROR_FOLLOWING'),
+        //        haveFollow: '已关注',
+        //        eachFollow: '相互关注'
+        doFollow: '',
+        unFollow: '',
+        haveFollow: '',
+        eachFollow: ''
     },
     /**
     * 创建关注按钮
@@ -512,7 +516,8 @@ var follow = {
         var btnClass = this.btnClass[btnType];
         var flagClass = this.flagClass[btnType];
         var btnText = this.btnText[btnType];
-        var btnHTML = ['<span><b class="', flagClass, '"></b>', btnText, '</span>'].join("");
+        //var btnHTML = ['<span><b class="', flagClass, '"></b>', btnText, '</span>'].join("");
+        var btnHTML = ['<span>', btnText, '</span>'].join("");
         // 按钮节点添加HTML与样式
         node.innerHTML = btnHTML;
         node.className = btnClass;
@@ -522,18 +527,21 @@ var follow = {
             case "eachFollow":
                 $(node).bind({
                     mouseover: function () {
-                        var b = this.getElementsByTagName("b")[0];
-                        var text = b.nextSibling;
+                        //var b = this.getElementsByTagName("b")[0];
+
+                        //var text = b.nextSibling;
+
                         this.className = follow.btnClass.unFollow;
-                        b.className = follow.flagClass.unFollow;
-                        text.nodeValue = follow.btnText.unFollow;
+                        //alert(this.className);
+                        //b.className = follow.flagClass.unFollow;
+                        //text.nodeValue = follow.btnText.unFollow;
                     },
                     mouseout: function () {
-                        var b = this.getElementsByTagName("b")[0];
-                        var text = b.nextSibling;
+                        //var b = this.getElementsByTagName("b")[0];
+                        //var text = b.nextSibling;
                         this.className = btnClass;
-                        b.className = flagClass;
-                        text.nodeValue = btnText;
+                        //b.className = flagClass;
+                        //text.nodeValue = btnText;
                     }
                 });
                 break;

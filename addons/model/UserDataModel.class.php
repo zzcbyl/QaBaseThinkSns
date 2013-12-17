@@ -206,7 +206,18 @@ class UserDataModel extends Model {
 			// 清掉该用户的缓存
 			model('Cache')->rm('UserData_'.$uid);			
 		}
-		
-	
 	}	
+	
+	/**
+	 * 获取用户数据list
+	 *
+	 * @param array $map 条件
+	 * @param string $order 排序
+	 * @return array
+	 *
+	 */	
+	public function getlist( $map, $order='', $limit = 10){
+		$list = $this->where($map)->order($order)->findPage($limit);
+		return $list['data'];
+	}
 }

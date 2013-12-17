@@ -1,15 +1,20 @@
 <div class="profile">
+    <!--<php>print_r($user_info);</php>-->
     <div class="pro_img">
         <a href="{:U('public/Profile/index', array('uid'=>$uid))}" title="{$user_info[$uid]['uname']}"><img src="{$user_info[$uid]['avatar_big']}" /></a>
     </div>
     <div class="pro_cont">
         <h4><a href="{:U('public/Profile/index', array('uid'=>$uid))}">{$user_info[$uid]['uname']}</a></h4>
+        
         <php>if(!empty($user_info[$uid]['intro'])){</php>
         <p class="profile_intro"><strong>简介：</strong>{$user_info[$uid]['intro']|getShort=100}</p>
         <php>}</php>
         <p><strong>地区：</strong>{$user_info[$uid]['location']}&nbsp;&nbsp;<!--<strong>资料：</strong>清华大学--></p>
         <p class="xz">
         <strong>勋章：</strong>
+        <volist name="user_info[$uid]['user_group']" id="ui2">
+            <img style="width:auto;height:auto;display:inline;cursor:pointer;" src="{$ui2['user_group_icon_url']}" title="{$ui2['user_group_name']}" />&nbsp;
+        </volist>
         <a href="#" class="x1"></a>
         <a href="#" class="x2"></a>
         <a href="#" class="x3"></a>

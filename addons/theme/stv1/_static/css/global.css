@@ -1065,7 +1065,7 @@ a.btn-register:link,a.btn-register:visited,a.btn-register:hover,.btn-register sp
 
 /*个人资料*/
 .profile-datalist{color:#333;font-size:14px;}
-.profile-datalist h4{font-weight:bold;padding:0 0 10px 0;border-bottom:1px solid #ddd;}
+.profile-datalist h4{font-weight:bold;padding:0 0 10px 0;border-bottom:1px solid #ddd; font-size:16px; color:#666;}
 .profile-datalist ul{padding:20px 0 15px 0;font-size:12px;}
 .profile-datalist li{padding:0 0 10px 0;overflow:hidden;*zoom:1;}
 .profile-datalist li .info-l{width:70px;float:left;text-align:right;color:#888;margin:0 5px 0 0; line-height:22px;}

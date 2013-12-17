@@ -7,160 +7,33 @@
         <div class="g_wtpaihang">
             <h1>热门问题排行</h1>
             <div class="g_cont">
-   
+                <volist name="HotTopicList" id="htl" key="k" >
                     <dl>
-                        <dt><a href="#">中国青少年健康问答青春期谁知道?</a><span>800个回答</span></dt>
-                        <dd>全国大学英语四六级考试委员会规定，大学生必须在本校报名。级考试委员会规。</dd>
+                        <dt><a href="{:U('public/Index/feed',array('feed_id'=>$htl['feed_id'],'uid'=>$htl['uid']))}" target="_blank">{$htl.body}</a><span>{$htl.answer_count}个回答</span></dt>
+                        <php>if($k < 3) {</php>
+                        <dd>{$htl.description}</dd>
+                        <php>}</php>
                     </dl>
-   
-                    <dl>
-                        <dt><a href="#">四六级不过网申都过不了存废争议??</a><span>678个回答</span></dt>
-                        <dd>全国大学英语四六级考试委员会规定，大学生必须在本校报名。级考试委员会规。</dd>
-                    </dl>
-         
-                    <dl>
-                        <dt><a href="#">化学平衡在什么条件下向什么方向移？</a><span>555个回答</span></dt>
-                    </dl>
-          
-                    <dl>
-                        <dt><a href="#">这道题的解题过程是下面一些形象性</a><span>333个回答</span></dt>
-                    </dl>
-          
-                    <dl>
-                        <dt><a href="#">中国青少年健康问答青春期谁知道</a><span>8个回答</span></dt>
-                    </dl>
-         
-                    <dl>
-                        <dt><a href="#">化学平衡在什么条件下向什么方向移？</a><span>456个回答</span></dt>
-                    </dl>
-
-                    <dl>
-                        <dt><a href="#">中国青少年健康问答青春期谁知道？</a><span>555个回答</span></dt>
-                    </dl>
-
-                    <dl>
-                        <dt><a href="#">化学平衡在什么条件下向什么方向移？</a><span>11个回答</span></dt>
-                    </dl>
-
-                    <dl>
-                        <dt><a href="#">这道题的解题过程是下面一些形象性？</a><span>2222个回答</span></dt>
-                    </dl>
-
-                    <dl>
-                        <dt><a href="#">化学平衡在什么条件下向什么方向移？</a><span>45个回答</span></dt>
-                    </dl>
-
+                </volist>
             </div>
         </div>
         <div class="g_yhpaihang">
         <h1>热心用户排行</h1>
         <div class="g_cont">
             <ul>
-                <li>
-                    <img src="images/thumb_img.png" width="35" height="35" />
-                    <h5>四叶草</h5>
-                    <p>127个回答</p>
-                    <div class="xz">
-                    <a href="#" class="x1"></a>
-                    <a href="#" class="x2"></a>
-                    <a href="#" class="x3"></a>
-                    <a href="#" class="x4"></a>
-                    </div>
-                </li>
-                <li>
-                    <img src="images/thumb_img.png" width="35" height="35" />
-                    <h5>四叶草</h5>
-                    <p>127个回答</p>
-                    <div class="xz">
-                    <a href="#" class="x1"></a>
-                    <a href="#" class="x3"></a>
-                    <a href="#" class="x4"></a>
-                    </div>
-                </li>
-                <li>
-                    <img src="images/thumb_img.png" width="35" height="35" />
-                    <h5>四叶草</h5>
-                    <p>127个回答</p>
-                    <div class="xz">
-                    <a href="#" class="x1"></a>
-                    <a href="#" class="x2"></a>
-                    <a href="#" class="x3"></a>
-                    <a href="#" class="x4"></a>
-                    </div>
-                </li>
-                <li>
-                    <img src="images/thumb_img.png" width="35" height="35" />
-                    <h5>四叶草</h5>
-                    <p>127个回答</p>
-                    <div class="xz">
-                    <a href="#" class="x1"></a>
-                    <a href="#" class="x3"></a>
-                    <a href="#" class="x4"></a>
-                    </div>
-                </li>
-                <li>
-                    <img src="images/thumb_img.png" width="35" height="35" />
-                    <h5>四叶草</h5>
-                    <p>127个回答</p>
-                    <div class="xz">
-                    <a href="#" class="x1"></a>
-                    <a href="#" class="x2"></a>
-                    <a href="#" class="x3"></a>
-                    <a href="#" class="x4"></a>
-                    </div>
-                </li>
-                <li>
-                    <img src="images/thumb_img.png" width="35" height="35" />
-                    <h5>四叶草</h5>
-                    <p>127个回答</p>
-                    <div class="xz">
-                    <a href="#" class="x1"></a>
-                    <a href="#" class="x3"></a>
-                    <a href="#" class="x4"></a>
-                    </div>
-                </li>
-                <li>
-                    <img src="images/thumb_img.png" width="35" height="35" />
-                    <h5>四叶草</h5>
-                    <p>127个回答</p>
-                    <div class="xz">
-                    <a href="#" class="x1"></a>
-                    <a href="#" class="x2"></a>
-                    <a href="#" class="x3"></a>
-                    <a href="#" class="x4"></a>
-                    </div>
-                </li>
-                <li>
-                    <img src="images/thumb_img.png" width="35" height="35" />
-                    <h5>四叶草</h5>
-                    <p>127个回答</p>
-                    <div class="xz">
-                    <a href="#" class="x1"></a>
-                    <a href="#" class="x3"></a>
-                    <a href="#" class="x4"></a>
-                    </div>
-                </li>
-                <li>
-                    <img src="images/thumb_img.png" width="35" height="35" />
-                    <h5>四叶草</h5>
-                    <p>127个回答</p>
-                    <div class="xz">
-                    <a href="#" class="x1"></a>
-                    <a href="#" class="x2"></a>
-                    <a href="#" class="x3"></a>
-                    <a href="#" class="x4"></a>
-                    </div>
-                </li>
-                <li>
-                    <img src="images/thumb_img.png" width="35" height="35" />
-                    <h5>四叶草</h5>
-                    <p>127个回答</p>
-                    <div class="xz">
-                    <a href="#" class="x1"></a>
-                    <a href="#" class="x3"></a>
-                    <a href="#" class="x4"></a>
-                    </div>
-                </li>
+                <volist name="HotUserList" id="hul">
+                    <li>
+                        <a href="{$hul['space_url']}" target="_blank"><img class="thumb" src="{$hul['avatar_small']}" width="35" height="35" event-node="face_card" uid="{$hul['uid']}" /></a>
+                        <h5>{$hul['space_link']}</h5>
+                        <p>{$hul['userdata']['value']}个回答</p>
+                        <!--<div class="xz">
+                            <a href="#" class="x1"></a>
+                            <a href="#" class="x2"></a>
+                            <a href="#" class="x3"></a>
+                            <a href="#" class="x4"></a>
+                        </div>-->
+                    </li>
+                </volist>
             </ul>
         </div>
         </div>
@@ -171,56 +44,13 @@
     <h1>最新问题</h1>
     <div class="g_cont">
         <ul>
-            <li>
-            <a href="#">四六级不过网申都过不了 四六级存废争议? </a>
-            <span class="g_com">679个回答</span>
-            <span class="g_nic">四叶草</span>
-            </li>
-            <li>
-            <a href="#">中国青少年健康问答：青春爱知道</a>
-            <span class="g_com">679个回答</span>
-            <span class="g_nic">五好学生</span>
-            </li>
-            <li>
-            <a href="#">化学平衡移动在什么条件下向什么方向移？正逆方向是什么? </a>
-            <span class="g_com">679个回答</span>
-            <span class="g_nic">phoenix.s</span>
-            </li>
-            <li>
-            <a href="#">这道题的解题过程是？下面是一些形象性表意</a>
-            <span class="g_com">69个回答</span>
-            <span class="g_nic">四叶草</span>
-            </li>
-            <li>
-            <a href="#">四六级不过网申都过不了 四六级存废争议? </a>
-            <span class="g_com">67个回答</span>
-            <span class="g_nic">四叶草</span>
-            </li>
-            <li>
-            <a href="#">中国青少年健康问答：青春爱知道</a>
-            <span class="g_com">79个回答</span>
-            <span class="g_nic">五好学生</span>
-            </li>
-            <li>
-            <a href="#">化学平衡移动在什么条件下向什么方向移？正逆方向是什么? </a>
-            <span class="g_com">679个回答</span>
-            <span class="g_nic">phoenix.s</span>
-            </li>
-            <li>
-            <a href="#">这道题的解题过程是？下面是一些形象性表意</a>
-            <span class="g_com">679个回答</span>
-            <span class="g_nic">四叶草</span>
-            </li>
+            <volist name="NewQuestion" id="nq">
                 <li>
-            <a href="#">化学平衡移动在什么条件下向什么方向移？正逆方向是什么? </a>
-            <span class="g_com">679个回答</span>
-            <span class="g_nic">phoenix.s</span>
-            </li>
-            <li>
-            <a href="#">这道题的解题过程是？下面是一些形象性表意</a>
-            <span class="g_com">679个回答</span>
-            <span class="g_nic">四叶草</span>
-            </li>
+                    <a href="{:U('public/Index/feed',array('feed_id'=>$nq['feed_id'],'uid'=>$nq['uid']))}" target="_blank">{$nq.body}</a>
+                    <span class="g_com">{$nq.answer_count}个回答</span>
+                    <span class="g_nic">{$nq['user_info']['space_link']}</span>
+                </li>
+            </volist>
         </ul>
     </div>
     </div>
@@ -229,7 +59,7 @@
     <div class="g_user">
         <div class="g_user1">
             <h1>得到邀请最多的用户</h1>
-            <div class="g_cont">
+            <div class="g_cont" style="height:400px;">
             <ul>
                 <li>
                     <img src="images/thumb_img.png" width="35" height="35" />
@@ -285,116 +115,30 @@
             </div>
         </div>
         <div class="g_user2">
-            <h1>得到邀请最多的用户</h1>
-            <div class="g_cont">
-            <ul>
-                <li>
-                    <img src="images/thumb_img.png" width="35" height="35" />
-                    <h5>四叶草</h5>
-                    <p>678</p>
-                </li>
-                <li>
-                    <img src="images/thumb_img.png" width="35" height="35" />
-                    <h5>四叶草</h5>
-                    <p>678</p>
-                </li>
-                <li>
-                    <img src="images/thumb_img.png" width="35" height="35" />
-                    <h5>四叶草</h5>
-                    <p>678</p>
-                </li>
-                <li>
-                    <img src="images/thumb_img.png" width="35" height="35" />
-                    <h5>四叶草</h5>
-                    <p>678</p>
-                </li>
-                <li>
-                    <img src="images/thumb_img.png" width="35" height="35" />
-                    <h5>四叶草</h5>
-                    <p>678</p>
-                </li>
-                <li>
-                    <img src="images/thumb_img.png" width="35" height="35" />
-                    <h5>四叶草</h5>
-                    <p>678</p>
-                </li>
-                <li>
-                    <img src="images/thumb_img.png" width="35" height="35" />
-                    <h5>四叶草</h5>
-                    <p>678</p>
-                </li>
-                <li>
-                    <img src="images/thumb_img.png" width="35" height="35" />
-                    <h5>四叶草</h5>
-                    <p>678</p>
-                </li>
-                <li>
-                    <img src="images/thumb_img.png" width="35" height="35" />
-                    <h5>四叶草</h5>
-                    <p>678</p>
-                </li>
-                <li>
-                    <img src="images/thumb_img.png" width="35" height="35" />
-                    <h5>四叶草</h5>
-                    <p>678</p>
-                </li>
+            <h1>得到赞同最多的用户</h1>
+            <div class="g_cont" style="height:400px;">
+                <ul>
+                    <volist name="AgreeUserInfoList" id="auil">
+                        <li>
+                            <a href="{$auil['userinfo'][$auil['uid']]['space_url']}" target="_blank"><img class="thumb" src="{$auil['userinfo'][$auil['uid']]['avatar_small']}" width="35" height="35" event-node="face_card" uid="{$auil['uid']}" /></a>
+                            <h5>{$auil['userinfo'][$auil['uid']]['space_link']}</h5>
+                            <p>{$auil['value']}</p>
+                        </li>
+                    </volist>
                 </ul>
             </div>
         </div>
         <div class="g_user3">
-            <h1>得到邀请最多的用户</h1>
-            <div class="g_cont">
-            <ul>
-                <li>
-                    <img src="images/thumb_img.png" width="35" height="35" />
-                    <h5>四叶草</h5>
-                    <p>678</p>
-                </li>
-                <li>
-                    <img src="images/thumb_img.png" width="35" height="35" />
-                    <h5>四叶草</h5>
-                    <p>678</p>
-                </li>
-                <li>
-                    <img src="images/thumb_img.png" width="35" height="35" />
-                    <h5>四叶草</h5>
-                    <p>678</p>
-                </li>
-                <li>
-                    <img src="images/thumb_img.png" width="35" height="35" />
-                    <h5>四叶草</h5>
-                    <p>678</p>
-                </li>
-                <li>
-                    <img src="images/thumb_img.png" width="35" height="35" />
-                    <h5>四叶草</h5>
-                    <p>678</p>
-                </li>
-                <li>
-                    <img src="images/thumb_img.png" width="35" height="35" />
-                    <h5>四叶草</h5>
-                    <p>678</p>
-                </li>
-                <li>
-                    <img src="images/thumb_img.png" width="35" height="35" />
-                    <h5>四叶草</h5>
-                    <p>678</p>
-                </li>
-                <li>
-                    <img src="images/thumb_img.png" width="35" height="35" />
-                    <h5>四叶草</h5>
-                    <p>678</p>
-                </li>
-                <li>
-                    <img src="images/thumb_img.png" width="35" height="35" />
-                    <h5>四叶草</h5>
-                    <p>678</p>
-                </li>
-                <li>
-                    <img src="images/thumb_img.png" width="35" height="35" />
-                    <h5>四叶草</h5>
-                    <p>678</p>
-                </li>
+            <h1>得到感谢最多的用户</h1>
+            <div class="g_cont" style="height:400px;">
+                <ul>
+                    <volist name="ThankUserInfoList" id="tuil">
+                        <li>
+                            <a href="{$tuil['userinfo'][$tuil['uid']]['space_url']}" target="_blank"><img class="thumb" src="{$tuil['userinfo'][$tuil['uid']]['avatar_small']}" width="35" height="35" event-node="face_card" uid="{$tuil['uid']}" /></a>
+                            <h5>{$tuil['userinfo'][$tuil['uid']]['space_link']}</h5>
+                            <p>{$tuil['value']}</p>
+                        </li>
+                    </volist>
                 </ul>
             </div>
         </div>
@@ -455,74 +199,23 @@
     <div class="right_conts">
         <h1 class="hot">今日十大关注问题<span></span></h1>
         <ul class="g_list mb20">
+            <volist name="FollowingQuestion" id="fq" key="k">
             <li>
-            <h2><span class="top">1</span><a href="#">菡萏香销翠叶残西风愁起绿波间</a></h2>
-            <p>全国大学英语四六级考试委员会规定大学生必须在本校报名参加四六级考试。</p>
+            <h2><span class="top">{$k}</span><a href="{:U('public/Index/feed',array('feed_id'=>$fq['feed_id'],'uid'=>$fq['uid']))}" target="_blank">{$fq.body}</a><div style="clear:both;"></div></h2>
+            <p>{$fq.description}</p>
             </li>
-            <li>
-            <h2><span class="top">2</span><a href="#">菡萏香销翠叶残西风愁起绿波间</a></h2>
-            <p>全国大学英语四六级考试委员会规定大学生必须在本校报名参加四六级考试。</p>
-            </li>
-            <li>
-            <h2><span class="top">3</span><a href="#">菡萏香销翠叶残西风愁起绿波间</a></h2>
-            <p>全国大学英语四六级考试委员会规定大学生必须在本校报名参加四六级考试。</p>
-            </li>
-            <li>
-            <h2><span>4</span><a href="#">菡萏香销翠叶残西风愁起绿波间</a></h2>
-            <p>全国大学英语四六级考试委员会规定大学生必须在本校报名参加四六级考试。</p>
-            </li>
-            <li>
-            <h2><span>5</span><a href="#">菡萏香销翠叶残西风愁起绿波间</a></h2>
-            <p>全国大学英语四六级考试委员会规定大学生必须在本校报名参加四六级考试。</p>
-            </li>
-            <li>
-            <h2><span>6</span><a href="#">菡萏香销翠叶残西风愁起绿波间</a></h2>
-            <p>全国大学英语四六级考试委员会规定大学生必须在本校报名参加四六级考试。</p>
-            </li>
-            <li>
-            <h2><span>7</span><a href="#">菡萏香销翠叶残西风愁起绿波间</a></h2>
-            <p>全国大学英语四六级考试委员会规定大学生必须在本校报名参加四六级考试。</p>
-            </li>
-            <li>
-            <h2><span>8</span><a href="#">菡萏香销翠叶残西风愁起绿波间</a></h2>
-            <p>全国大学英语四六级考试委员会规定大学生必须在本校报名参加四六级考试。</p>
-            </li>
-            <li>
-            <h2><span>9</span><a href="#">菡萏香销翠叶残西风愁起绿波间</a></h2>
-            <p>全国大学英语四六级考试委员会规定大学生必须在本校报名参加四六级考试。</p>
-            </li>
-            <li>
-            <h2><span>10</span><a href="#">菡萏香销翠叶残西风愁起绿波间</a></h2>
-            <p>全国大学英语四六级考试委员会规定大学生必须在本校报名参加四六级考试。</p>
-            </li>
+            </volist>
         </ul>
         
         <h1 class="gz">最新用户<span></span></h1>
         <ul class="g_yh mb20">
-            <li>
-            <a href="#"><img src="images/thumb_img.png"/></a><br />
-            <a href="#">森姐哥</a>
-            </li>
-            <li>
-            <img src="images/thumb_img.png"/><br />
-            <a href="#">王丽</a>
-            </li>
-            <li>
-            <img src="images/thumb_img.png"/><br />
-            <a href="#">苏轼</a>
-            </li>
-            <li>
-        <img src="images/thumb_img.png"/><br />
-            <a href="#">森姐哥</a>
-            </li>
-            <li>
-        <img src="images/thumb_img.png"/><br />
-            <a href="#">森姐哥</a>
-            </li>
-            <li>
-        <img src="images/thumb_img.png"/><br />
-            <a href="#">森姐哥</a>
-            </li>
+            <volist name="NewUserList" id="nul">
+                <li>
+                    <a href="{$nul['space_url']}"><img class="thumb" src="{$nul['avatar_small']}" width="35" height="35" event-node="face_card" uid="{$nul['uid']}" /></a>
+                    <br />
+                    {$nul['space_link']}
+                </li>
+            </volist>
         </ul>
         
         <h1 class="hd">最新活动<span></span></h1>
