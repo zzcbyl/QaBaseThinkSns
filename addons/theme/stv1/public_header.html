@@ -15,6 +15,29 @@
                 <li><a href="#">专家</a></li>
                 <li><a href="#">活动</a></li>
             </ul>
+
+
+            <div id="wb_connect_btn"></div>
+            <script type="text/javascript" >
+
+                WB2.anyWhere(function(W){
+                    W.widget.connectButton({
+                        id: "wb_connect_btn",
+                        type: '3,2',
+                        callback : {
+                            login:function(o){
+                                alert(o.screen_name+"，欢迎和知心姐姐交流。")
+                            },
+                            logout:function(){
+                                alert('再见');
+                            }
+                        }
+                    });
+                });
+
+            </script>
+
+
             <div class="person" style="float:right;">
                 <ul class="short_nav">
         	        <li><a href="#" class="h"></a></li>
