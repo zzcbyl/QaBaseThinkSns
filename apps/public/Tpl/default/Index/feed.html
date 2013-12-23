@@ -1,4 +1,4 @@
-﻿<include file="__THEME__/public_header" />
+<include file="__THEME__/public_header" />
 <div class="cont_left">
     <div class="extend minh">
         <!--feed list-->
@@ -36,16 +36,6 @@
                             <tr>
                                 <td style="width: 550px; display: block;">
                                     <span class="contents">{$feedInfo.description|format=true}</span>
-                                    <php>if(count($addquestionlist)>0) {</php>
-                                        <div style="margin-top:10px;">
-                                            <div style="font-weight:bold;">追问 :</div>
-                                            <volist name='addquestionlist' id ='add'>
-                                                <div style="float:left;">{$add['title']}</div>
-                                                <div style="float:left; margin-left:30px;">{$add['body']}</div>
-                                                <div style="clear:both;"></div>
-                                            </volist>
-                                        </div>
-                                    <php>}</php>
                                 </td>
                             </tr>
                         </table>
@@ -152,6 +142,15 @@
                     <div class="repeat clearfix pading" style="padding: 5px 15px;">
                         {:W('AddAsk',array('title'=>'追问', 'feedID'=>$feedInfo['feed_id']))}
                     </div>
+                     <php>if(count($addquestionlist)>0) {</php>
+                        <div id="QuestionAddAskList" style="margin-top:10px;">
+                            <volist name='addquestionlist' id ='add'>
+                                <div style="float:left;">{$add['title']}</div>
+                                <div style="float:left; margin-left:30px;">{$add['body']}</div>
+                                <div style="clear:both;"></div>
+                            </volist>
+                        </div>
+                    <php>}</php>
                 </dd>
             </dl>
         </div>

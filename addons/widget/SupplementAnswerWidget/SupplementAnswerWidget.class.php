@@ -1,11 +1,11 @@
 ﻿<?php
 /**
  * 微博发布框
- * @example {:W('AddAsk',array('title'=>'追问', 'feedID'=>$feedID))}
+ * @example {:W('SupplementAnswer',array('title'=>'要求补充', 'feedID'=>$feedID))}
  * @author jason
  * @version TS3.0
  */
-class AddAskWidget extends Widget {
+class SupplementAnswerWidget extends Widget {
 	
 	private static $rand = 1;
 	
@@ -23,8 +23,7 @@ class AddAskWidget extends Widget {
 	public function render($data) {
 		$var = array();
 		//频道id
-		$var['channelID'] = $data['channelID'];
-		
+		$var['channelID'] = $data['channelID'];		
 		$var['initHtml'] = '';
 		$var['post_event'] ='post_feed';
 		$var['cancomment'] = 0;
@@ -47,7 +46,7 @@ class AddAskWidget extends Widget {
 			!isset($var['actions'][$value]) && $var['actions'][$value] = true; 
 		}
 		// 渲染模版
-		$content = $this->renderFile(dirname(__FILE__)."/addask.html", $var);
+		$content = $this->renderFile(dirname(__FILE__)."/default.html", $var);
 		
 		self::$rand++;
 		unset($var, $data);

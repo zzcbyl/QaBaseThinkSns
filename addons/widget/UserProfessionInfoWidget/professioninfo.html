@@ -10,7 +10,7 @@
             <tr><td class="td_title">部门/职位：</td><td class="td_content"><input type="text" event-node="position" id="position" class="s-txt" /></td><td></td></tr>
             <tr><td class="td_title">工作时间：</td><td class="td_content"><select id="sTime"><option value="">请选择</option><volist name="BeginYear" id="by"><option>{$by.val}</option></volist></select>－<select id="eTime"><option value="">请选择</option><volist name="BeginYear" id="by"><option>{$by.val}</option></volist></select></td><td></td></tr>
             <tr><td class="td_title"><span class="redSpan">*</span>所在地：</td><td class="td_content" colspan="2">{:W('Area',array('curPro'=>0,'curCity'=>0,'area'=>0,'city_names'=>'','tpl'=>'selectAreaCopy'))}</td></tr>
-            <tr><td colspan="2"><a style="margin-left:80px;" onclick="SaveProfession()" href="javascript:void(0);">确定</a>　<a onclick="CancelProfession()" href="javascript:void(0);">取消</a></td></tr>
+            <tr><td colspan="2"><a class="inputbtn-red" style="margin-left:80px;" onclick="SaveProfession()" href="javascript:void(0);">确定</a>　<a class="inputbtn-gray" onclick="CancelProfession()" href="javascript:void(0);">取消</a></td></tr>
             <tr><td colspan="3" style="height:10px; line-height:10px;">&nbsp;</td></tr>
         </table>
     </div>

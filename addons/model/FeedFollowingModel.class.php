@@ -76,7 +76,7 @@ class FeedFollowingModel extends Model {
 		$list = $this->where($map)->order($order)->findPage($limit);
 		$feed_ids = getSubByKey($list['data'], 'feedid');
 		$result=model('Feed')->CreateA($list,$feed_ids);
-		
+		//print_r($result);
 		return $result;
 	}
 

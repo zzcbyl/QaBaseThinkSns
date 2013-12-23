@@ -171,7 +171,7 @@ class IndexAction extends Action {
 		
 		//追问
 		$addwhere = 'add_feedid = '.$feed_id;
-		$addfeedlist = model('Feed')->getQuestionList( $addwhere, 20 );
+		$addfeedlist = model('Feed')->getQuestionList( $addwhere, 100 );
 		//print_r($addfeedlist);
 		$this->assign ( 'addquestionlist', $addfeedlist['data'] );
 		
@@ -254,6 +254,7 @@ class IndexAction extends Action {
 				$followGroupList = model('FollowGroup')->getUsersByGroupPage($this->mid, $gid);
 		}
 		$fids = getSubByKey($followGroupList['data'], 'fid');
+		//print_r(model('Follow')->getLastSql());
 		// 获取用户信息
 		$followUserInfo = model('User')->getUserInfoByUids($fids);
 		// 获取用户的统计数目

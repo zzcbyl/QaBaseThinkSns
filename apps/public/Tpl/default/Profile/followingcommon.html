@@ -1,0 +1,75 @@
+<include file="__THEME__/public_header" />
+<div class="cont_left">
+    <include file="_top"/>   
+    <div class="table_box">
+      	<include file="_tab_menu"/>  
+    </div>
+    <include file="_tab_menu2"/>
+    <php>if($userPrivacy['space'] != 1){</php>
+        
+        <div class="search-main clearfix">
+            <php>if($common_following_list['data']){</php>
+            <!--搜索列表-->
+            <div class="sperson-feedlist<php> echo t($_GET['show']);</php> clearfix">
+                <volist name="common_following_list.data" id="common_following">            
+                    <php> $img = !empty($_GET['show']) ? $user_info[$common_following['fid']]['avatar_big']:$user_info[$common_following['fid']]['avatar_small']; </php>
+
+                    <div class="profile hyList">
+                        <div class="pro_img"><a href="{$user_info[$common_following['fid']]['space_url']}"><img src="{$img}" event-node='face_card' uid='{$common_following['fid']}' ></a></div>
+                        <div class="pro_cont">
+                            <h4><a href="{$user_info[$common_following['fid']]['space_url']}" event-node='face_card' uid='{$common_following['fid']}' style="font-size:14px">{$user_info[$common_following['fid']]['uname']}</a>
+                                <i>{$user_info[$common_following['fid']]['location']}</i></h4>
+                            <p class="hy_jianjie"><strong>简介：</strong>{$user_info[$common_following['fid']]['intro']}</p>
+                            <p class="xz">
+                            <strong>勋章：</strong>
+                            <a href="#" class="x1"></a>
+                            <a href="#" class="x2"></a>
+                            <a href="#" class="x3"></a>
+                            <a href="#" class="x4"></a>
+                            </p>
+                        </div>
+                        <p class="comm hd">
+                        <strong>粉丝：<a href="{:U('public/Profile/follower', array('uid'=>$common_following['fid']))}">{:(int)$user_count[$common_following['fid']]['follower_count']}</a></strong>
+                        <a class="a" href="{$user_info[$common_following['fid']]['space_url']}">{:(int)$user_count[$common_following['fid']]['weibo_count']}</a>
+                        <a class="t" href="{:U('public/Profile/answer', array('uid'=>$common_following['fid']))}">{:(int)$user_count[$common_following['fid']]['answer_count']}</a>
+
+                        <a href="#" class="d">{:(int)$user_count[$common_following['fid']]['comment_agree_count']}</a>
+                        <a href="#" class="hx">{:(int)$user_count[$common_following['fid']]['tothanked_count']}</a>
+
+                        <span class="hd_btn">
+                            <!--<a href="#" class="gz">关注</a>
+                            <if condition="$mid && $mid eq $uid">
+                                {:W('FollowGroup', array('uid'=>$common_following['uid'], 'fid'=>$common_following['fid'], 'follow_group_status' => $follow_group_status[$common_following['fid']], 'tpl'=>'btn'))}
+                            </if>-->
+                            <php>if($mid){</php>
+                                <if condition="$mid neq $common_following['fid']">
+                                    {:W('FollowBtn', array('fid'=>$common_following['fid'], 'uname'=>$user_info[$common_following['fid']]['uname'], 'refer'=> $uid == $mid ? 'following_list' : '', 'follow_state'=>$follow_state[$common_following['fid']], 'type'=>'normal'))}
+                                </if>
+                            <php>}</php>
+                        </span>
+                        </p>
+                 </div>
+
+            </volist>
+            </div>
+            <!--搜索列表/end-->
+            <!--页码-->
+            <div id="page" class="page">
+                {$common_following_list.html}</div>
+            <!--页码/end-->
+            <php>}else{</php>
+            <p style="margin-top:20px;">
+                TA还没有关注任何人，也没有任何人关注TA</p>
+            <php>}</php>
+        </div>
+
+
+    <php>}else{</php>
+        <p class="extend">-_-。sorry！根据对方隐私设置，您无权查看TA的主页</p>
+    <php>}</php>
+</div>
+<div class="cont_right">
+    <include file="_sidebar"/>
+</div>
+
+<include file="__THEME__/public_footer" />

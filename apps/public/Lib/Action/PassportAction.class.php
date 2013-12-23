@@ -316,6 +316,7 @@ class PassportAction extends Action
 		$this->assign('NewUserList', $NewUserInfoList);
 		//print_r($NewUserInfoList);
 		
+		
 		//得到赞同最多的用户
 		$map['key'] = 'comment_agree_count';
 		$AgreeUserList = model('UserData')->getlist($map,' `value` desc', 10);

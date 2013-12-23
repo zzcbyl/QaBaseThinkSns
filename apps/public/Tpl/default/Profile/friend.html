@@ -10,10 +10,10 @@
         <!--搜索列表-->
         <div class="sperson-feedlist<php> echo t($_GET['show']);</php> clearfix">
             <volist name="following_list.data" id="_following">
-                <php> $img = !empty($_GET['show']) ? $user_info[$_following['fid']]['avatar_big']:$user_info[$_following['fid']]['avatar_tiny']; </php>
+                <php> $img = !empty($_GET['show']) ? $user_info[$_following['fid']]['avatar_big']:$user_info[$_following['fid']]['avatar_small']; </php>
 
                 <div class="profile hyList">
-                    <div class="pro_img"><a href="{$user_info[$_following['fid']]['space_url']}"><img src="{$img}" event-node='face_card' uid='{$_following['fid']}' width="50" height="50"></a></div>
+                    <div class="pro_img"><a href="{$user_info[$_following['fid']]['space_url']}"><img src="{$img}" event-node='face_card' uid='{$_following['fid']}' ></a></div>
                     <div class="pro_cont">
                         <h4><a href="{$user_info[$_following['fid']]['space_url']}" event-node='face_card' uid='{$_following['fid']}' style="font-size:14px">{$user_info[$_following['fid']]['uname']}</a>
                             <i>{$user_info[$_following['fid']]['location']}</i></h4>
@@ -56,8 +56,8 @@
             {$following_list.html}</div>
         <!--页码/end-->
         <php>}else{</php>
-        <p>
-            TA还没有关注任何人</p>
+        <p style="margin-top:20px;">
+            TA还没有任何好友</p>
         <php>}</php>
     </div>
 </div>

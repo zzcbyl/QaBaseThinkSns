@@ -3,8 +3,8 @@
 <ul class="guanzhu mb20">
     <volist name="data" id="vo">
     <li>
-        <a href="{:U('public/Profile/index',array('uid'=>$vo['fid']))}" uid="{$vo['fid']}" event-node="face_card">
-            <img src="{$vo['user_info']['avatar_small']}" /></a>
+        <a href="{:U('public/Profile/index',array('uid'=>$vo['fid']))}" >
+            <img src="{$vo['user_info']['avatar_small']}" uid="{$vo['fid']}" event-node="face_card" /></a>
         <h2>
             <a href="{:U('public/Profile/index',array('uid'=>$vo['fid']))}" uid="{$vo['fid']}" event-node="face_card">{$vo['user_info']['uname']|getShort=4}</a></h2>
         <p>

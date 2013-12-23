@@ -3,29 +3,33 @@
  * @param object form 表单DOM对象
  * @return void
  */
-var ajaxSubmit = function(form) {
-	var args = M.getModelArgs(form);
-	M.getJS(THEME_URL + '/js/jquery.form.js', function() {
+var ajaxSubmit = function (form) {
+    var args = M.getModelArgs(form);
+    M.getJS(THEME_URL + '/js/jquery.form.js', function () {
         var options = {
-        	dataType: "json",
-            success: function(txt) {
-        		if(1 == txt.status) {
-        			if("function" ===  typeof form.callback) {
-        				form.callback(txt);
-        			} else {
-        				if("string" == typeof(args.callback)) {
-        					eval(args.callback+'()');
-        				} else {
-        					ui.success(txt.info);
-        				}
-        			}
-        		} else {
-        			ui.error(txt.info);
-        		}
+            dataType: "json",
+            success: function (txt) {
+                if (1 == txt.status) {
+                    if ("function" === typeof form.callback) {
+                        form.callback(txt);
+                    } else {
+                        if ("string" == typeof (args.callback)) {
+                            eval(args.callback + '()');
+                        } else {
+                            ui.success(txt.info);
+                            //修改密码
+                            if ($("#UpdUserPwd").html().indexOf('修改密码') > 0) {
+                                hideupdpwd();
+                            }
+                        }
+                    }
+                } else {
+                    ui.error(txt.info);
+                }
             }
         };
         $(form).ajaxSubmit(options);
-	});
+    });
 };
 
 (function(){

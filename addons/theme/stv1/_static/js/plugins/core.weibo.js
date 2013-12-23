@@ -266,16 +266,16 @@ core.weibo = {
                 description.ready = null;
         };
         $(obj.childModels['post_ok'][0]).fadeOut(500, fadeOutObj);
-
-        //追问
+        //追问或者要求补充
         if (int_isadd == 1) {
-            $('#AddQuestionDiv').hide();
+            //$('#AddQuestionDiv').hide();
+            //$('#SupplementAnswer_' + questionid).hide();
             return;
         }
         //回答完成隐藏回答框
-        if (questionid > 0) {
-            $('#AnswerQuestionDiv').hide();
-        }
+        //if (questionid > 0) {
+        //    $('#AnswerQuestionDiv').hide();
+        //}
         // 修改微博数目
         if ("undefined" == typeof (close) || !close) {
             updateUserData('weibo_count', 1);
@@ -288,7 +288,7 @@ core.weibo = {
         }
     },
     // 将json数据插入到feed-lists中
-    insertToList: function (html, feedId, questionid) {
+    insertToList: function (html, feedId, questionid, int_isadd) {
         //alert(html);exit;
         if ("undefined" == typeof (html) || html == '') {
             return false;
@@ -310,7 +310,14 @@ core.weibo = {
                     }
                 }
             }
-            else {  //提交回答
+            else {
+                //追问或者要求补充
+                if (int_isadd == 1) {
+
+
+                    return;
+                }
+                //提交回答
                 var before = $('#feed-lists dl').eq(0);
                 $dl = $('<dl></dl>');
                 $dl.attr('model-node', 'feed_list');
@@ -555,7 +562,7 @@ core.weibo = {
                 $(postOk).fadeIn('fast');
                 core.weibo.afterPost(mini_editor, textarea, attrs.topicHtml, description_editor, description, false, Qid, int_isadd);
                 if (!isbox) {
-                    core.weibo.insertToList(msg.data, msg.feedId, questionid);
+                    core.weibo.insertToList(msg.data, msg.feedId, questionid, int_isadd);
                 } else {
                     ui.box.close();
                     var mini = M.getModelArgs(mini_editor);

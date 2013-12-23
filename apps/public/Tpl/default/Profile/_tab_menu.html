@@ -1,7 +1,7 @@
 <php> 
       if(ACTION_NAME=='index'){ $tabClass['public'] = 'current'; }
       elseif(ACTION_NAME=='data'){ $tabClass['public_data'] = 'current'; }
-      elseif(ACTION_NAME=='friend' || ACTION_NAME=='following' || ACTION_NAME=='follower'){ $tabClass['public_friend'] = 'current'; }
+      elseif(ACTION_NAME=='friend' || ACTION_NAME=='following' || ACTION_NAME=='follower' || ACTION_NAME=='followingcommon'){ $tabClass['public_friend'] = 'current'; }
       elseif(ACTION_NAME=='question'){ $tabClass['public_question'] = 'current'; }
       elseif(ACTION_NAME=='answer'){ $tabClass['public_answer'] = 'current'; }
 	  else{ $tabClass[$type] = 'current'; }

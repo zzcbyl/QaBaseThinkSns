@@ -358,6 +358,31 @@ class FeedModel extends Model {
 		return $feedlist;
 	}
 	
+	
+	/**
+	 * 获取答案和答案的补充列表
+	 * @param array $map 查询条件
+	 * @param integer $limit 结果集数目，默认为10
+	 * @return array 微博列表数据
+	 */
+	public function getAnswerAndSupplementList($map, $limit = 10 , $order = 'feed_id DESC') {
+		$feedlist = $this->getList($map, $limit, $order);
+		//print_r($feedlist);
+		//增加要求补充的列表
+		if(!empty($feedlist['data'])) {
+			foreach	($feedlist['data'] as $k=>$v)
+			{
+				$supplementwhere = 'add_feedid = '.$v['feed_id'];
+				$supplementlist = $this->getQuestionList( $supplementwhere, 100 );
+				$v['supplementList'] = $supplementlist['data'];
+				$feedlist['data'][$k] = $v;
+			}
+		}
+		
+		return $feedlist;
+	}
+	
+	
 	/**
 	 * 获取问题和答案列表
 	 * @param array $map 查询条件

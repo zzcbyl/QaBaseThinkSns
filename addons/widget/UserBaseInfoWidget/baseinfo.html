@@ -6,7 +6,7 @@
         <php>if($followstate==1){</php>
         <li>
             <label class="info-l">
-                登录名：</label><label class="info-r">{$login}&nbsp;&nbsp;<a href="javascript:void();">修改密码</a></label>&nbsp;
+                登录名：</label><label class="info-r">{$login}&nbsp;&nbsp;<a href="javascript:updpwd();">修改密码</a></label>&nbsp;
        </li><php>}</php>
         <li>
             <label class="info-l">
@@ -52,7 +52,7 @@
         <php>if($followstate==1){</php>
         <li>
             <label class="info-l">
-                登录名：</label><div class="info-r">{$login}&nbsp;&nbsp;<a href="javascript:void();">修改密码</a></div>&nbsp;</li><php>}</php>
+                登录名：</label><div class="info-r">{$login}&nbsp;&nbsp;<a href="javascript:updpwd();">修改密码</a></div>&nbsp;</li><php>}</php>
         <li>
             <label class="info-l">
                 <span class="redSpan">*</span>昵称：</label><div class="info-r"><input event-node="uname" even-args="old_name={$uname}" checkurl="{:U('public/Register/isUnameAvailable')}" autocomplete="off" type="text" id="uname" name="uname" value="{$uname}" maxlength="20" /></div>&nbsp;
@@ -88,6 +88,41 @@
         <li>
             <label class="info-l">
                 个人简介：</label><div class="info-r"><textarea name="intro" id="intro" maxlength="255">{$intro}</textarea></div>&nbsp;</li>
+    </ul>
+    </form>
+</div>
+
+<div id="UpdUserPwd" class="profile-datalist" style="display:none">
+    <form action="{:U('public/Account/doModifyPassword')}" method="post">
+    <h4>修改密码</h4>
+    <ul class="">
+        <li>
+            <label class="info-l">
+                <span class="redSpan">*</span>{:L('PUBLIC_ORIGINAL_PASSWORD')}：
+            </label>
+            <div class="info-r">
+                <input event-node="input_text" name="oldpassword" type="password" autocomplete = 'off'  />
+            </div>
+        </li>
+        <li>
+            <label class="info-l">
+                <span class="redSpan">*</span>{:L('PUBLIC_NEW_PASSWORD')}：
+            </label>
+            <div class="info-r">
+                <input event-node="input_text" name="password" type="password" />
+            </div>
+        </li>
+        <li>
+            <label class="info-l">
+                <span class="redSpan">*</span>{:L('PUBLIC_CONFIRM_PASSWORD')}：
+            </label>
+            <div class="info-r">
+                <input event-node="input_text" name="repassword" type="password" />
+            </div>
+        </li>
+        <li>
+            <div style="margin-left:85px;"><a event-node="submit_btn" href="#" class="inputbtn-red">{:L('PUBLIC_SAVE')}</a>　<a href="javascript:hideupdpwd();" class="inputbtn-gray" >取消</a></div>
+        </li>
     </ul>
     </form>
 </div>
@@ -181,5 +216,19 @@
         $("#UserLinkDiv").show();
     }
 
+    function updpwd() {
+        var pwdmodel = $("input[type=password]");
+        for (var i = 0; i < pwdmodel.length; i++) {
+            $(pwdmodel[i]).val("");
+        }
+        $("#UpdUserPwd").show();
+        $("#UpdUserBaseDiv").hide();
+        $("#UserBaseDiv").hide();
+    }
+    function hideupdpwd() {
+        $("#UpdUserPwd").hide();
+        $("#UpdUserBaseDiv").hide();
+        $("#UserBaseDiv").show();
+    }
 
 </script>

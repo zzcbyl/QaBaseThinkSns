@@ -1,4 +1,4 @@
-﻿<include file="__THEME__/public_header" />
+<include file="__THEME__/public_header" />
 
 <div class="cont_left">
     <div class="g_adimg"><img src="__THEME__/image/adimg.png" /></div>
@@ -23,7 +23,7 @@
             <ul>
                 <volist name="HotUserList" id="hul">
                     <li>
-                        <a href="{$hul['space_url']}" target="_blank"><img class="thumb" src="{$hul['avatar_small']}" width="35" height="35" event-node="face_card" uid="{$hul['uid']}" /></a>
+                        <a href="{$hul['space_url']}" target="_blank"><img class="thumb" src="{$hul['avatar_tiny']}" width="35" height="35" event-node="face_card" uid="{$hul['uid']}" /></a>
                         <h5>{$hul['space_link']}</h5>
                         <p>{$hul['userdata']['value']}个回答</p>
                         <!--<div class="xz">
@@ -120,7 +120,7 @@
                 <ul>
                     <volist name="AgreeUserInfoList" id="auil">
                         <li>
-                            <a href="{$auil['userinfo'][$auil['uid']]['space_url']}" target="_blank"><img class="thumb" src="{$auil['userinfo'][$auil['uid']]['avatar_small']}" width="35" height="35" event-node="face_card" uid="{$auil['uid']}" /></a>
+                            <a href="{$auil['userinfo'][$auil['uid']]['space_url']}" target="_blank"><img class="thumb" src="{$auil['userinfo'][$auil['uid']]['avatar_tiny']}" width="35" height="35" event-node="face_card" uid="{$auil['uid']}" /></a>
                             <h5>{$auil['userinfo'][$auil['uid']]['space_link']}</h5>
                             <p>{$auil['value']}</p>
                         </li>
@@ -134,7 +134,7 @@
                 <ul>
                     <volist name="ThankUserInfoList" id="tuil">
                         <li>
-                            <a href="{$tuil['userinfo'][$tuil['uid']]['space_url']}" target="_blank"><img class="thumb" src="{$tuil['userinfo'][$tuil['uid']]['avatar_small']}" width="35" height="35" event-node="face_card" uid="{$tuil['uid']}" /></a>
+                            <a href="{$tuil['userinfo'][$tuil['uid']]['space_url']}" target="_blank"><img class="thumb" src="{$tuil['userinfo'][$tuil['uid']]['avatar_tiny']}" width="35" height="35" event-node="face_card" uid="{$tuil['uid']}" /></a>
                             <h5>{$tuil['userinfo'][$tuil['uid']]['space_link']}</h5>
                             <p>{$tuil['value']}</p>
                         </li>

@@ -351,10 +351,10 @@ class FollowModel extends Model {
 	 * @param integer $limit 结果集数目，默认为10
 	 * @return array 指定用户的粉丝列表
 	 */
-	public function getFollowerList($uid, $limit = 10) {
-		$limit = intval($limit) > 0 ? $limit : 10;
+	public function getFollowerList($uid) {
+		//$limit = intval($limit) > 0 ? $limit : 10;
 		// 粉丝列表
-		$list = $this->where("`fid`={$uid}")->order('`follow_id` DESC')->findPage($limit);
+		$list = $this->where("`fid`={$uid}")->order('`follow_id` DESC')->findPage();
 		$fids = getSubByKey($list['data'], 'uid');
 		// 格式化数据
 		foreach($list['data'] as $key => $value) {
@@ -407,7 +407,7 @@ class FollowModel extends Model {
 			->order('follow_id DESC')
 			->findPage($limit);
 		//$list = $this->where("`fid`={$uid}")->order('`follow_id` DESC')->findPage($limit);
-		$fids = getSubByKey($list['data'], 'fid');
+		//$fids = getSubByKey($list['data'], 'fid');
 		// 格式化数据
 		//foreach($list['data'] as $key => $value) {
 		//	$uid = $value['uid'];
