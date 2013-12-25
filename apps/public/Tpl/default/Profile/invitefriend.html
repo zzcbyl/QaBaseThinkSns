@@ -1,0 +1,106 @@
+﻿<include file="__THEME__/_header" />
+<div id="InviteResult" style="padding:10px;">
+    <ul id="inviteList"></ul>
+    <div style="clear:both;"></div>
+    <div style="text-align:left; margin-top:10px;"><a>更多>></a></div>
+    <div style="text-align:right;"><input type="button" value="邀请" onclick="ShowInvite();" /></div>
+</div>
+
+
+<div id="InviteDeal" class="Invited_Block" style="display:none;">
+    <ul>
+        <volist name="friendList['data']" id="vo">
+            <li id="UserLi_{$vo['fid']}" onclick="changeLi({$vo['fid']});">
+                <img src="{$user_info[$vo['fid']]['avatar_small']}" /><br />
+                {$user_info[$vo['fid']]['uname']|getShort=4}
+            </li>
+        </volist>
+    </ul>
+    <div style="clear:both;"></div>
+    <div style="text-align:right;"><input type="button" value="邀请" onclick="invite();" /></div>
+    <!--页码-->
+    <div id="page" class="page">
+        {$friendList.html}</div>
+    <!--页码/end-->
+</div>
+<script type="text/javascript">
+    var changeID = "";
+    var quesionID = 0;
+    $(document).ready(function () {
+        $("#topcontrol").hide();
+        quesionID = $("#feed_questionid", parent.document).val();
+        getList();
+        if (getQueryString('p') != null) {
+            ShowInvite();
+        }
+    });
+
+    function ShowInvite() {
+        $("#InviteResult").hide();
+        $("#InviteDeal").show();
+    }
+    function ShowInviteResult() {
+        $("#InviteResult").show();
+        $("#InviteDeal").hide();
+    }
+
+    //选人
+    function changeLi(id) {
+        //alert($("#UserLi_" + id).attr("class"));
+        if ($("#UserLi_" + id).attr("class") == undefined) {
+            $("#UserLi_" + id).attr("class", "currentli");
+            if (changeID != "" && changeID.substring(changeID.length - 1) != ",")
+                changeID += ",";
+            changeID += id + ",";
+        }
+        else {
+            $("#UserLi_" + id).removeAttr("class");
+            changeID = changeID.replace(id + ",", "");
+        }
+    }
+    //邀请
+    function invite() {
+        if (changeID != "")
+            changeID = changeID.substring(0, changeID.length - 1);
+        else
+            ui.error('请选择你的好友');
+        var url = U('public/profile/invitefriendanswer');
+        $.post(url, { InviteUids: changeID, QuestionID: quesionID }, function (msg) {
+            if (msg.status == 0) {
+                ui.showMessage(msg.data, 2, 3);
+                $("#ui_messageContent").css("text-align", "left");
+            } else {
+                ui.success("邀请成功");
+            }
+        }, 'json');
+
+    }
+
+    //获取邀请列表
+    function getList() {
+        var url = U('public/profile/getInviteAnswerList');
+        $.post(url, { QuestionID: quesionID }, function (msg) {
+            if (msg.status == 0) {
+                ui.error(msg.data);
+            } else {
+                //alert(msg);
+                var lihtml = '';
+                var josn = eval(msg);
+                if (josn.length > 0) {
+                    for (var i = 0; i < josn.length; i++) {
+                        //alert(josn[i].inviteuserinfo.uname);
+                        lihtml += '<li>“' + josn[i].userinfo.uname + '”邀请了“' + josn[i].inviteuserinfo.uname + '”</li>';
+                    }
+                    $("#inviteList").html(lihtml);
+                }
+                else {
+                    ShowInvite();
+                }
+            }
+        }, 'json');
+
+    }
+</script>
+
+</body>
+</html>

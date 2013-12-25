@@ -1514,3 +1514,8 @@ a.btn-account:hover{background-position:-164px 0;}
 .inputbtn-red:hover{ color:#fff; }
 .inputbtn-gray{ background:#EAEAEA; height:21px; line-height:22px; width:50px; text-align:center; font-size:12px; color:#999999; border:none; display:inline-block;}
 .inputbtn-gray:hover{ color:#999999; }
+
+.Invited_Block { margin-left:40px; width:450px;}
+.Invited_Block li { float:left; width:50px; height:70px; margin:5px; border:1px solid #ccc; cursor:pointer; }
+.Invited_Block li:hover, .Invited_Block .currentli { border:1px solid #ff0000; }
+.Invited_Block li img { width:50px; height:50px;}

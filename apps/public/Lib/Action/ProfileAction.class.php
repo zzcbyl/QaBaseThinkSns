@@ -1278,4 +1278,78 @@ class ProfileAction extends Action {
 		}
 		$this->display ();
 	}
+	
+	/**
+	* 
+	*好友(弹框)
+	* 
+	* @return array
+	*/
+	public function invitefriend()
+	{
+		$friendList = model('Follow')->getFriendList($GLOBALS['ts']['mid']);	
+		$fids = getSubByKey ( $friendList ['data'], 'fid' );
+		$this->_assignUserInfo ( $fids );
+		$this->assign('friendList',$friendList);
+		
+		$this->display ();
+	}
+	
+	public function invitefriendanswer()
+	{
+		$return  = array('status'=>0,'data'=>L('邀请失败'));
+		if(empty($_POST['InviteUids']) || empty($_POST['QuestionID'])){
+			$return['data'] = L('参数错误');
+			echo json_encode($return);exit();
+		} 
+		$InviteUids = $_POST ['InviteUids'];
+		$QuestionID = intval ( $_POST ['QuestionID'] );
+		$uids = explode(",", $InviteUids); 
+		$InviteResult = '<br />';
+		foreach	($uids as $k => $v)
+		{
+			$user_info = model ( 'User' )->getUserInfo ($v);
+			$index = 0;
+			$map['uid'] = $this->uid;
+			$map['invite_uid'] = $v;
+			$map['questionid'] = $QuestionID;
+			$datalist = model('InviteAnswer')->getInviteAnswerList($map);
+			if($datalist['count'] != 0)
+			{
+				$index = 1;
+				$InviteResult .= "已经邀请过“".$user_info['uname']."”<br />";
+				continue;	
+			}
+			
+			$result = model('InviteAnswer')->addInvite($this->uid, $v, $QuestionID);
+			if(!$result)
+			{
+				$index = 1;
+				$InviteResult .= "邀请“".$user_info['uname']."”失败<br />";
+				continue;
+			}
+			if($index == 0)
+			{
+				$InviteResult .= "邀请“".$user_info['uname']."”成功<br />";
+			}
+		}
+
+		$return  = array('status'=>0,'data'=>L($InviteResult));
+		echo json_encode($return);exit();	
+		
+	}
+	
+	public function getInviteAnswerList()
+	{
+		$return  = array('status'=>0,'data'=>L('邀请失败'));
+		if(empty($_POST['QuestionID'])){
+			$return['data'] = L('参数错误');
+			echo json_encode($return);exit();
+		} 
+		$questionid = intval($_POST['QuestionID']);
+		$datalist = model('InviteAnswer')->getInviteAnswerModel($questionid);
+		$josnList = json_encode($datalist['data']);
+		echo json_encode($josnList);exit();	
+	}
+	
 }

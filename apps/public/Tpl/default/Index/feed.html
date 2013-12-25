@@ -1,4 +1,5 @@
 <include file="__THEME__/public_header" />
+
 <div class="cont_left">
     <div class="extend minh">
         <!--feed list-->
@@ -59,6 +60,8 @@
                             </eq>-->
                             <!--<a href="#">回答</a>
                             <i class="vline">|</i> -->
+                            <a href="javascript:void(0);" onclick="if($('#InvitedAnswer').css('display')=='none')  $('#InvitedAnswer').show();  else  $('#InvitedAnswer').hide(); $('#mainIframe')[0].contentWindow.ShowInviteResult();">邀请回答</a>
+                            <i class="vline">|</i>
                             <a href="javascript:void(0);" onclick="if($('#AddQuestionDiv').css('display')=='none')  $('#AddQuestionDiv').show();  else  $('#AddQuestionDiv').hide(); ">追问</a>
                             <i class="vline">|</i>
                             <eq name='feedInfo.actions.favor' value='true'>
@@ -136,6 +139,12 @@
         </div>
 
 
+        <div id="InvitedAnswer" class="feed_lists-1" style=" border:1px solid #666; margin-top:10px; display:none; top:40%; left:40%; position:absolute; background:#fff; z-index:999; width:500px; height:300px;">
+            <div style="width:480px; text-align:right; padding:5px 10px;"><a href="javascript:void(0);" onclick="CloseInviteDiv();">X</a></div>
+            <iframe id="mainIframe" src="{:U('public/Profile/invitefriend',array('questionid'=>$feedInfo['feed_id']))}" style="border:0; width:100%; height:250px; background:#fff;"></iframe>
+        </div>
+
+
         <div id="AddQuestionDiv" class="feed_lists-1" style="margin-top:10px; display:none;">
             <dl class="feed_list feed_comment">
                 <dd class="content">
@@ -182,7 +191,7 @@
         <!--feed list-->
         {:W('AnswerList',array('type'=>'answer','feed_id'=>t($_GET['feed_id']),'uid'=>t($_GET['uid']),'feed_type'=>'','feed_key'=>'','fgid'=>t($_GET['fgid'])))}
     </div>
-
+    <input type="hidden" id="feed_questionid" value="{$feedInfo['feed_id']}" />
 </div>
 <div class="cont_right">
     <include file="__THEME__/public_right" />
@@ -230,6 +239,10 @@
             }
         });
     });
+
+    function CloseInviteDiv() {
+        $('#InvitedAnswer').hide();
+    }
 </script>
 <script type="text/javascript" src="__THEME__/js/home/module.home.js"></script>
 <script type="text/javascript" src="__THEME__/js/module.weibo.js"></script>
