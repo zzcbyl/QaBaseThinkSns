@@ -922,7 +922,7 @@ return array(
 'PUBLIC_PROFILESET_WORK_POSITION'=>'職務',
 'PUBLIC_PROFILESET_WORK_EXPERIENCE'=>'工作經曆',
 'PUBLIC_USERTITLESHEARE'=>'用戶名片分享',
-'PUBLIC_NICKNAME_LIMIT'=>'暱稱長度必須在{nums}個漢字之間',
+'PUBLIC_NICKNAME_LIMIT'=>'暱稱長度必須在{nums}個字符或{nums1}个漢字之間',
 'PUBLIC_SEARCH_PAGE'=>'[搜索配置]',
 'PUBLIC_HEIDDEN_TIPS'=>'是否隱藏',
 'PUBLIC_CLICK_TIPES'=>'點擊事件',

@@ -110,4 +110,17 @@ class UserGroupLinkModel extends Model {
 		}
 		return $userGroupData;
 	}
+	
+	
+	/**
+	 * 获取某个分组的用户UID列表
+	 * @param int $groupid 分组ID
+	 * @return array 用户UID列表
+	 */
+	public function getUserByGroupID($groupid, $limit){
+		$map['user_group_id'] = $groupid;
+		$list = $this->where($map)->findPage($limit);
+		$uids = getSubByKey($list['data'], 'uid');
+		return $uids;
+	}
 }

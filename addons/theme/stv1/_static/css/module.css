@@ -30,7 +30,7 @@ a:hover .contribute{background-position:0 -207px;}
 
 
 /*微博加载*/
-.feed_lists .loading{/*background:#F5F6F7;border-top:#ebebeb solid 1px*/height:16px;line-height:16px;padding:6px 0;text-align:center;color:#999;}
+.feed_lists .loading{/*background:#F5F6F7;border-top:#ebebeb solid 1px*/height:16px;line-height:16px;padding:6px 0;text-align:center;color:#999; font-size:14px;}
 .feed_lists .loading img{vertical-align:middle;margin:0 0 0 5px}
 
 /*feed-lists*/
@@ -769,7 +769,7 @@ a:hover .contribute{background-position:0 -207px;}
 .title{font-size: 22px;font-weight: 300;color: #333}
 
 /*页码*/
-.page{padding:10px 0;text-align:right}
+.page{padding:10px 0;text-align:right; font-size:12px;}
 .page a{
 	display: inline-block;*display: inline;/* IE7 inline-block hack */*zoom: 1;padding: 4px 10px 4px;margin: 0 0 0 5px;line-height: 14px;color: #999;
 	text-align: center;

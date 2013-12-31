@@ -924,7 +924,7 @@ return array(
 'PUBLIC_PROFILESET_WORK_POSITION'=>'职务',
 'PUBLIC_PROFILESET_WORK_EXPERIENCE'=>'工作经历',
 'PUBLIC_USERTITLESHEARE'=>'用户名片分享',
-'PUBLIC_NICKNAME_LIMIT'=>'昵称长度必须在{nums}个汉字之间',
+'PUBLIC_NICKNAME_LIMIT'=>'昵称长度必须在{nums}个字符或{nums1}个汉字之间',
 'PUBLIC_SEARCH_PAGE'=>'[搜索配置]',
 'PUBLIC_HEIDDEN_TIPS'=>'是否隐藏',
 'PUBLIC_CLICK_TIPES'=>'点击事件',

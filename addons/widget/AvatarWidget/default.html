@@ -1,20 +1,14 @@
-<div id="selectUploadType" class="chanage">
-请选择个人正面大照片作为头像，照片不能小于300px*300px</a>
-</div>
-
+<p>上传你的照片，让更多好友找到你</p>
 <form id='noflashUpload' model-node="avatar_upload_form" enctype="multipart/form-data" action="{:U('public/Account/doSaveAvatar', array('step'=>'upload'))}" method="post">
-    <dl class="form-avatar">
-        <dd>
-            <input event-node="select_file" type="file" name="Filedata" class="" />
-            <span event-node="loading" style="display:none;"><img src="__THEME__/image/load.gif" />加载中...</span>
-            <p>支持JPG,JPGE,PNG格式，大小限制{$attach_max_size|default=0}M以内</p>
-        </dd>
-        <dd>
-            <div model-node="avatar_scan" class="mod-avatar">
-                <div class="cut-1"><img event-node="avatar_big" src="{$avatar.avatar_big}" width="200" /><p>200*200</p></div>
-            </div>
-        </dd>
-    </dl>
+    <div class="picbg">
+        <div model-node="avatar_scan" class="mod-avatar">
+            <div class="cut-1"><img event-node="avatar_big" src="{$avatar.avatar_big}" width="200" /></div>
+        </div>
+        <p><input event-node="select_file" type="file" name="Filedata" class="" />
+           <span event-node="loading" style="display:none;"><img src="__THEME__/image/load.gif" />加载中...</span></p>
+
+        <p>支持JPG,JPGE,PNG格式，大小限制{$attach_max_size|default=0}M以内</p>
+    </div>
 </form>
 <form model-node="avatar_setting_form" enctype="multipart/form-data" action="{:U('public/Account/doSaveAvatar', array('step'=>'save'))}" method="post" style="display:none;">
     <dl class="form-avatar">
@@ -58,7 +52,7 @@ var avatar_success = function(msg){
             eval(upload_callback+'()');
         },2000);
     }else{
-        ui.success('头像保存成功，请按 ctrl + R 刷新头像。');
+        ui.success('头像保存成功。');
     }
 };
 

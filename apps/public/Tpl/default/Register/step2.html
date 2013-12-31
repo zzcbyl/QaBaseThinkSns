@@ -1,37 +1,49 @@
-<include file="__THEME__/public_header" />
-<link href="__APP__/login.css" rel="stylesheet" type="text/css" />
-    <div id="page-wrap">
-		<div class="reg-wrap">
-			<!--<div class="title">{:L('PUBLIC_UPLOAD_IMAGE')}</div>-->
-			<div class="reg-main">
-				<!--注册步骤-->
-				<div class="article article-avatar boxShadow">
-					<div class="item-step2">
-						<div class="step">
-							<span class="step1 step1-current"></span><span class="step2"></span><span class="step3"></span>
-						</div>
-					 {:W('Avatar',array('avatar'=>$user_info,'defaultImg'=>$user_info['avatar_big'],'callback'=>'nextStep'))}
-                     <php>if(!$need_photo){</php><a class="btn-green-small" href="javascript:void(0);" onclick="nextStep();">{:L('PUBLIC_BACKUP')}</a><php>}</php>
-				</div>
-                
-				</div>
-				<!--//注册步骤-->
-			</div>
-		</div>
+﻿<include file="__THEME__/public_header" />
+
+<div class="container regContent">
+	<div class="reg_bz">
+    	<div class="reg_num2"></div>
+        <div class="reg_numTit">
+        	<ul>
+            	<li>输入激活码</li>
+                <li>填写注册信息</li>
+                <li>邮箱激活</li>
+                <li>完善个人资料</li>
+                <li>关注朋友</li>
+            </ul>
+        </div>
     </div>
-<script type="text/javascript">
-    var nextStep = function(){
-    	var tag_open = '{$tag_open}';
-    	var interester_open = '{$interester_open}';
-    	if((tag_open==0) && (interester_open==0)){
-    			location.href = "<php>echo U('public/Register/doStep4')</php>";
-    	}else{
-    		if(tag_open==1){
-    			location.href = "<php>echo U('public/Register/step3');</php>";
-    		}else{
-    			location.href = "<php>echo U('public/Register/step4');</php>";
-    		}
-    	}  
-    };
-</script>
+	<div class="reg_info">
+    	<div class="reg_info_top"></div>
+        <div class="reg_info_center">
+        	<div class="regTit">
+            	<h2>填写注册信息</h2>
+            </div>
+            <div class="regCont">
+                <php>$code = $_GET['code']; </php>
+                <form action="{:U('public/Register/doStep2', array('code'=>$code))}" method="post" model-node='normal_form' name="ajax_register_form" id="ajax_register_form">
+             	    <div class="regbox">
+                    	<div><label>邮箱账号</label><input type="text" event-node="email" name="email" checkurl="{:U('public/Register/isEmailAvailable')}" value="" style="width:180px;" maxlength="150" />
+                        </div>
+                        <div><label>昵称</label><input type="text" event-node="uname" checkurl="{:U('public/Register/isUnameAvailable')}" name="uname" value="" maxlength="30" style="width:180px;" />
+                        </div>
+                        <div><label>密码</label><input type="password"  event-node="password_new" name="password_new" value="" maxlength="30" style="width:180px;" />
+                        </div>
+                        <div><label>确认密码</label><input type="password" event-node="repassword_new" name="repassword_new" value="" maxlength="30" style="width:180px;" />
+                        </div>
+                        <div><label>性别</label>
+                        男 <input name="sex" type="radio" checked="checked" value="1" style="float:none;" />&nbsp;&nbsp;
+                        女 <input name="sex" type="radio" value="2" style="float:none;" />
+                        </div>
+                     </div>
+                     <div class="tybox">
+                     <span><input event-node="readRules" name="readRules" type="checkbox" value="" checked="checked" /> 我已阅读并同意相关服务条款<br /></span>
+                     </div>
+                     <div class="btn_reg"><input type="submit" value="立即注册" /></div>
+                 </form>
+            </div>
+        </div>
+        <div class="reg_info_bottom"></div>
+    </div>
+<script src="__THEME__/js/module.form.js"></script>
 <include file="__THEME__/public_footer" />

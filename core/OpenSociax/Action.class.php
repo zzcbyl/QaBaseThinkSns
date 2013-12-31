@@ -184,22 +184,23 @@ abstract class Action
       		$GLOBALS['ts']['_user'] = $GLOBALS['ts']['user'];
       	}
 			
+		
 		// 未初始化
 		$module_arr= array('Register'=>1,'Passport'=>1,'Account'=>1);
 		if (0 < $this->mid && 0 == $this->user ['is_init'] && APP_NAME != 'admin' && ! isset ( $module_arr [MODULE_NAME] )) {
 			// 注册完成后就开启此功能
 			if ($this->user ['is_active'] == '0') {
-				U ( 'public/Register/waitForActivation', 'uid=' . $this->mid, true );
+				U ( 'public/Register/step3', array('uid'=>$this->user ['uid'], 'code'=>$this->user ['invite_code']), true );
 			} else {
 				$init_config = model ( 'Xdata' )->get ( 'admin_Config:register' );
 				if ($init_config ['photo_open']) {
-					U ( 'public/Register/step2', '', true );
+					U ( 'public/Register/step4', array('uid'=>$this->user ['uid'], 'code'=>$this->user ['invite_code']), true );
 				}
-				if ($init_config ['tag_open']) {
+				/*if ($init_config ['tag_open']) {
 					U ( 'public/Register/step3', '', true );
-				}
+				}*/
 				if ($init_config ['interester_open']) {
-					U ( 'public/Register/step4', '', true );
+					U ( 'public/Register/step5', array('uid'=>$this->user ['uid'], 'code'=>$this->user ['invite_code']), true );
 				}
 				model ( 'Register' )->overUserInit ( $GLOBALS ['ts'] ['mid'] );
 				U ( 'public/Register/index', '', true );
@@ -527,8 +528,8 @@ abstract class Action
 			//$this->display(C('TMPL_ACTION_SUCCESS'));
 			$this->display(THEME_PATH.'/success.html');
 		}else{
-            //发生错误时候默认停留3秒
-            if(!$this->get('waitSecond'))    $this->assign('waitSecond',"5");
+            //发生错误时候默认停留1秒
+			if(!$this->get('waitSecond'))    $this->assign('waitSecond',"1");
             // 默认发生错误的话自动返回上页
             if(!$this->get('jumpUrl')) $this->assign('jumpUrl',"javascript:history.back(-1);");
 			//sociax:2010-1-21

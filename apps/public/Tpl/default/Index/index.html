@@ -1,4 +1,5 @@
 <include file="__THEME__/public_header" />
+<div class="container">
 <div class="cont_left">
     <div class="table_box">
         <ul>
@@ -45,13 +46,14 @@
     {:W('FeedList',array('type'=>$type,'feed_type'=>$feed_type,'feed_key'=>$feed_key,'fgid'=>t($_GET['fgid'])))}
     <!--//内容列表-->
 </div>
+
 <!--right-->
 <div class="cont_right">
     <include file="__THEME__/public_right" />
 </div>
-
-<include file="__THEME__/public_footer" />
 </div>
+<include file="__THEME__/public_footer" />
+
 <script>
 
     $('ul.feed_file_list').each(function () {

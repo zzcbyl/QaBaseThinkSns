@@ -159,7 +159,7 @@ class NotifyModel extends Model {
 	public function sendNotify($toUid, $node, $config, $from) {
 		empty($config) && $config = array();
 		$config = array_merge($this->_config,$config);
-
+		
 		$nodeInfo = $this->getNode($node);
 		if(!$nodeInfo) {
 			return false;
@@ -172,10 +172,12 @@ class NotifyModel extends Model {
 		$data['appname'] = $nodeInfo['appname'];
 		$data['title'] = L($nodeInfo['title_key'], $config);
 		$data['body'] = L($nodeInfo['content_key'], $config);
+		
 		foreach($userInfo as $v) {
 			$data['uid'] = $v['uid'];
 			!empty($nodeInfo['send_message']) && $this->sendMessage($data);
 			$data['email'] = $v['email'];
+			
 			if(!empty($nodeInfo['send_email'])){
 				if(in_array($node,array('atme','comment','new_message'))){
 					$map['key'] = $node.'_email';
@@ -229,6 +231,7 @@ class NotifyModel extends Model {
 			// TODO:邮箱格式验证
 			return false;
 		} 
+
 		// TODO:用户隐私设置判断
 		$s['uid'] = intval($data['uid']);
 		$s['node'] = t($data['node']);
@@ -247,6 +250,7 @@ class NotifyModel extends Model {
 			            <div style="line-height:18px;text-align:center"><p style="color:#999;font-size:12px">'.$site['site_footer'].'</p></div>
 			        </div></div>';
 		$s['ctime'] = time();
+		
 		model('Mail')->send_email($s['email'],$s['title'],$s['body']);
 		return D('')->table($this->tablePrefix.'notify_email')->add($s);
 	}

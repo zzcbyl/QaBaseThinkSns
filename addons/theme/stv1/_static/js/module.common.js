@@ -481,10 +481,10 @@ var share=function(sid,stable,initHTML,curid,curtable,appname,cancomment,is_repo
 var follow = {
     // 按钮样式
     btnClass: {
-        doFollow: "gz",
-        unFollow: "qx",
-        haveFollow: "gz_ed",
-        eachFollow: "gz_ed"
+        doFollow: "tgz",
+        unFollow: "cgz",
+        haveFollow: "tgzed",
+        eachFollow: "hgz"
     },
     // 按钮图标
     flagClass: {
@@ -620,9 +620,10 @@ var follow = {
                     core.facecard.deleteUser(args.uid);
                 }
                 if ("following_list" == args.refer) {
-                    var item = node.parentModel;
+                    //var item = node.parentModel;
                     // 移除
-                    item.parentNode.removeChild(item);
+                    //item.parentNode.removeChild(item);
+                    $(node).parent().parent().parent().remove();
                 } else {
                     node.setAttribute("event-node", "doFollow");
                     node.setAttribute("href", [U('public/Follow/doFollow'), '&fid=', args.uid].join(""));
@@ -749,3 +750,4 @@ var setFollowGroupTab = function(gid)
 	gid = gid ? '&gid='+gid : '';
 	ui.box.load(U('public/FollowGroup/setGroupTab') + gid, title);
 };
+

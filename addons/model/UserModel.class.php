@@ -45,6 +45,8 @@ class UserModel extends Model {
 		34 => 'xinlangVB',
 		35 => 'birthday',
 		36 => 'bloodtype',
+		37 => 'idcard',
+		38 => 'linknumber',
 		'_autoinc' => true,
 		'_pk' => 'uid' 
 		);
@@ -410,7 +412,7 @@ class UserModel extends Model {
 		$result = $this->add ( $user );
 		if (! $result) {
 			$this->error = L ( 'PUBLIC_ADD_USER_FAIL' ); // 添加用户失败
-			return false;
+			return 0;
 		} else {
 			// 添加部门关联信息
 			model ( 'Department' )->updateUserDepartById ( $result, intval ( $_POST ['department_id'] ) );
@@ -422,7 +424,7 @@ class UserModel extends Model {
 			if (! empty ( $_POST ['user_category'] )) {
 				model ( 'UserCategory' )->updateRelateUser ( $result, $_POST ['user_category'] );
 			}
-			return true;
+			return $result;
 		}
 	}
 	

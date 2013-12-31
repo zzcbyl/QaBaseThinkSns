@@ -1,106 +1,64 @@
-<include file="__THEME__/public_header" />
+﻿<include file="__THEME__/public_header" />
+<link href="__APP__/account.css" rel="stylesheet" type="text/css" />
 
-<div id="page-wrap">
-	<div class="reg-wrap">
-		<!--<div class="title">{:L('PUBLIC_FOLLOW_THE_PEOPLE_INTERESTED')}</div>-->
-		<div class="reg-main">
-			<!--注册步骤-->
-			<div class="article article-avatar boxShadow">
-				<div class="item-step4">
-					<div class="step">
-						<span class="step1"></span><span class="step2"></span><span class="step3 step3-current"></span>
-					</div>
-				<!-- 推荐关注用户 -->
-				<php>if($related_recommend_user){</php>
-				<div class="tab-menu">
-					<php>if(count($related_recommend_user)==8){</php>
-                		<a event-node="change_related_user" keywords="recommend" type="5" href="{:U('public/Register/getRelatedUser')}" class="right mt5">{:L('PUBLIC_CHANGE_USERS')}</a>	
-                	<php>}</php>				
-					<ul>
-						<li class="current"><a href="javascript:;">推荐关注用户</a></li>
-					</ul>
-				</div>
-				<div class="face_name_list">
-					<ul id="recommend"  model-node="related_user_list">
-					<volist name="related_recommend_user" id="v1">	
-						<li><div style="position:relative;width:80px;height:80px">
-								<div class="selected"><i class="ico-empty"></i></div>
-						  		<a event-node="bulkDoFollowData" value="{$v1.userInfo.uid}" class="face_part_recommend face_part" href="javascript:void(0);">
-						  			<img src="{$v1.userInfo.avatar_big}" />
-						  		</a>
-					  		</div>
-					  		<span class="name">{$v1.userInfo.uname}</span>
-						</li>
-					</volist>
-					</ul>
-					<p class="face_att"><label for="select_all_follow"><input id="select_recommend_follow" event-node="selectAllFollow" keyword="recommend" type="checkbox" class="s-ck" />{:L('PUBLIC_SELECT_ALL')}</label></p>
-				</div>
-				<php>}</php>
+<div class="container regContent">
+	<div class="reg_bz">
+    	<div class="reg_num4"></div>
+        <div class="reg_numTit">
+        	<ul>
+            	<li>输入激活码</li>
+                <li>填写注册信息</li>
+                <li>邮箱激活</li>
+                <li>完善个人资料</li>
+                <li>关注朋友</li>
+            </ul>
+        </div>
+    </div>
+	<div class="reg_info">
+    	<div class="reg_info_top"></div>
+        <div class="reg_info_center">
+        	<div class="regTit">
+            	<h2>{$User['uname']} 欢迎你！ 完善你的资料让更多的朋友找到你</h2>
+            </div>
+            <div class="reg_myinfo">
+                    <h4>个人信息</h4>
+                        {:W('Avatar',array('avatar'=>$User,'defaultImg'=>$User['avatar_big']))}
 
-				<!-- TA们跟你拥有相同的标签 -->
-				<php>if($related_tag_user){</php>
-				<div class="tab-menu">
-					<php>if(count($related_tag_user)==8){</php>
-                		<a event-node="change_related_user" keywords="tag" type="4" href="{:U('public/Register/getRelatedUser')}" class="right">{:L('PUBLIC_CHANGE_USERS')}</a>	
-                	<php>}</php>					
-					<ul>
-						<li class="current"><a href="javascript:;">TA们跟你拥有相同的标签</a></li>
-					</ul>
-				</div>
-				<div class="face_name_list">
-					<ul id="tag" model-node="related_user_list">
-					<volist name="related_tag_user" id="v2">	
-						<li><div style="position:relative;width:80px;height:80px">
-								<div class="selected"><i class="ico-empty"></i></div>
-						  		<a event-node="bulkDoFollowData" value="{$v2.userInfo.uid}" class="face_part_tag face_part" href="javascript:void(0);">
-						  			<img src="{$v2.userInfo.avatar_big}" />
-						  		</a>
-					  		</div>
-					  		<span class="name">{$v2.userInfo.uname}</span>
-						</li>
-					</volist>
-					</ul>
-					<p class="face_att"><label for="select_all_follow"><input id="select_tag_follow" event-node="selectAllFollow" keyword="tag" type="checkbox" class="s-ck" />{:L('PUBLIC_SELECT_ALL')}</label></p>
-				</div>
-				<php>}</php>
+                </div>
+            <div class="regCont">    
+                
+                <form action="{:U('public/Register/doStep4', array('uid'=>$User['uid'], 'code'=>$User['invite_code']))}" method="post" model-node='normal_form' name="ajax_register_form" id="ajax_register_form">
+             	<div class="regbox">
+                    <div><label>真实姓名</label><input type="text" event-node="realname" id="realname" name="realname" maxlength="20" value="" />
+                    </div>
+                    <div><label>身份证号</label><input type="text" value="" event-node="idcard" event-args='max=20' id="idcard" name="idcard" maxlength="20" style="width:180px;" />
+                    </div>
+                    <div class="reg_select"><label style="float:left;">所在地</label>
+                        <div style="padding-top:5px;">{:W('Area',array('curPro'=>$province,'curCity'=>$city,'area'=>$area,'city_names'=>$location,'tpl'=>'selectArea'))}</div>
+                 	</div>
+                    <div class="reg_textarea"><label style="vertical-align:top">个人简介</label><textarea name="intro" cols="" rows=""></textarea>
+                    </div>
+                 </div>
+                 <div class="tybox"> </div>
+                 <div class="regbox">
+            		<div><label>联系电话</label><input type="text" event-node="input_text" event-args='max=15' id="phone" name="phone" value="" maxlength="15" style="width:180px;" />
+                    </div>
+                    <div><label>QQ号</label><input type="text" event-node="input_nums" event-args='max=15' id="qq" name="qq" value="" maxlength="15" style="width:180px;" />
+                    </div>
+                    <div><label>微信号</label><input type="text" event-node="input_text" event-args='max=80' id="weixin" name="weixin" value="" maxlength="80" style="width:180px;" />
+                    </div>
+                    <div><label>新浪微博</label><input type="text" event-node="input_text" event-args='max=80' id="tengxuvb" name="tengxuvb" value="" maxlength="80" style="width:180px;" />
+                    </div>
+                    <div><label>腾讯微博</label><input type="text" event-node="input_text" event-args='max=80' id="xinlangvb" name="xinlangvb" value="" maxlength="80" style="width:180px;" />
+                    </div>
+                 </div>
+                 <div class="btn_reg"><input type="submit" value="下一步"></div>
+                 </form>
+            </div>
+            
+        </div>
+        <div class="reg_info_bottom"></div>
+    </div>
 
-				<!-- TA们跟你在同一个地区 -->
-				<php>if($related_city_user){</php>
-				<div class="tab-menu">
-					<php>if(count($related_city_user)==8){</php>
-                		<a event-node="change_related_user" keywords="city" type="3" href="{:U('public/Register/getRelatedUser')}" class="right">{:L('PUBLIC_CHANGE_USERS')}</a>	
-                	<php>}</php>					
-					<ul>
-						<li class="current"><a href="javascript:;">TA们跟你在同一个地区：{$location}</a></li>
-					</ul>
-				</div>
-				<div class="face_name_list">
-					<ul id="city" model-node="related_user_list">
-					<volist name="related_city_user" id="v3">	
-						<li><div style="position:relative;width:80px;height:80px">
-								<div class="selected"><i class="ico-empty"></i></div>
-						  		<a event-node="bulkDoFollowData" value="{$v3.userInfo.uid}" class="face_part_city face_part" href="javascript:void(0);">
-						  			<img src="{$v3.userInfo.avatar_big}" />
-						  		</a>
-					  		</div>
-					  		<span class="name">{$v3.userInfo.uname}</span>
-						</li>
-					</volist>
-					</ul>
-					<p class="face_att"><label for="select_all_follow"><input id="select_city_follow" event-node="selectAllFollow" keyword="city" type="checkbox" class="s-ck" />{:L('PUBLIC_SELECT_ALL')}</label></p>
-				</div>
-				<php>}</php>
-				
-				<div class="actionBtn mt15 clearfix">
-					<a class="btn-register left mr15" event-node="saveFollow" href="{:U('public/Register/bulkDoFollow')}">{:L('PUBLIC_SAVE')}</a>
-					<a href="{:U('public/Register/doStep4')}" class="left mt15"><span>{:L('PUBLIC_BACKUP')}&raquo;</span></a>
-				</div>
-				</div>
-			</div>
-			<!--//注册步骤-->
-		</div>
-	</div>
-</div>
 
-<script src="__THEME__/js/account/module.register.js"></script>
 <include file="__THEME__/public_footer" />

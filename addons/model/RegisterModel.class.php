@@ -105,7 +105,7 @@ class RegisterModel extends Model {
 			return $res;
 		}
 		if(!$res) {
-			$this->_error = L('PUBLIC_NICKNAME_LIMIT', array('nums'=>'2-10'));			// 昵称长度必须在2-10个汉字之间
+			$this->_error = L('PUBLIC_NICKNAME_LIMIT', array('nums'=>'4-20','nums1'=>'2-10'));			// 昵称长度必须在2-10个汉字之间
 			return $res;
 		}
 		if(($name != $old_name) && $this->_user_model->where('`uname`="'.mysql_escape_string($name).'"')->find()) {
@@ -186,7 +186,7 @@ class RegisterModel extends Model {
 	public function sendActivationEmail($uid, $node ='register_active') {
 		$map['uid'] = $uid;
 		$user_info = $this->_user_model->where($map)->find();
-
+		
 		if(!$user_info) {
 			$this->_error = L('PUBLI_USER_NOTEXSIT');			// 用户不存在
 			return false;
@@ -195,9 +195,12 @@ class RegisterModel extends Model {
 				$config['activeurl'] = $GLOBALS['ts']['site']['home_url'];
 			}else{
 				$code = $this->getActivationCode($user_info);
+				//$config['activeurl'] = U('public/Register/activate', array('uid'=>$uid, 'code'=>$code));
 				$config['activeurl'] = U('public/Register/activate', array('uid'=>$uid, 'code'=>$code));
 			}
+			
 			$config['name'] = $user_info['uname']; 	
+			
 			model('Notify')->sendNotify($uid, $node, $config);
 			$this->_error = '发送成功';		// 系统已将一封激活邮件发送至您的邮箱，请立即查收邮件激活帐号
 			return true;
@@ -303,14 +306,14 @@ class RegisterModel extends Model {
 		$res = (boolean)$res;
 		if($res) {
 			// 获取用户信息
-			$receiverInfo = model('User')->getUserInfo($uid);
+			//$receiverInfo = model('User')->getUserInfo($uid);
 			// 获取发起邀请用户ID
-			$inviteUid = model('Invite')->where("code='{$receiverInfo['invite_code']}'")->getField('inviter_uid');
+			//$inviteUid = model('Invite')->where("code='{$receiverInfo['invite_code']}'")->getField('inviter_uid');
 			// 邀请人积分操作
-            model('Credit')->setUserCredit($inviteUid, 'invite_friend');
+            //model('Credit')->setUserCredit($inviteUid, 'invite_friend');
 			// 相互关注操作
-			model('Follow')->doFollow($uid, intval($inviteUid));
-			model('Follow')->doFollow(intval($inviteUid), $uid);
+			//model('Follow')->doFollow($uid, intval($inviteUid));
+			//model('Follow')->doFollow(intval($inviteUid), $uid);
 		    // 清除用户缓存
 		    $this->_user_model->cleanCache($uid);
 			// 发送通知

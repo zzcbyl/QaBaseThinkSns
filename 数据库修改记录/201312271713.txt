@@ -1,0 +1,2 @@
+在wb_user中增加字段idcard,身份证号
+		   linknumber, 联系方式

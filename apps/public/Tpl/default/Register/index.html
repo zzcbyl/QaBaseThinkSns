@@ -1,101 +1,59 @@
-<include file="__THEME__/public_header" />
-	<div id="page-wrap">
-		<div class="reg-wrap">	
-			<div class="reg-main">
-				<neq name='config.register_type' value='closed'>
-				<!--注册步骤-->
-				<form model-node="normal_form" method="POST" action="{:U('public/Register/doStep1')}" name="ajax_register_form" id="ajax_register_form">
-				<input type="hidden" name="invate" value="{$is_invite}" />
-				<input type="hidden" name="invate_key" value="{$invite_code}" />
-				<div class="article boxShadow">
-					<div class="title">{:L('PUBLIC_REGISTER_ACCOUNT')}</div>
-					<php>if($is_invite):</php>
-					<div class="user-info">
-						<img src="{$inviteInfo.avatar_small}" width="30" height="30"/>Hi，我是{$inviteInfo.uname}，邀请你加入这里，随时分享我的最新动态。
-					</div>
-					<php>endif;</php>
-					<dl class="item">
-						<dd>
-							<div class="form-tt"><i class="text-required">*</i>{:L('PUBLIC_LOGIN_EMAIL')}：</div>
-							<div class="form-row" style="z-index:99">
-								<input event-node="email" event-args="suffix={$config['email_suffix']}" name="email" checkurl="{:U('public/Register/isEmailAvailable')}" autocomplete="off" type="text" value="" />
-							</div>
-						</dd>
-						<dd>
-							<div class="form-tt"><i class="text-required">*</i>{:L('PUBLIC_LOGIN_PASSWORD')}：</div>
-							<div class="form-row psd">
-                            	<div style="overflow:hidden;*zoom:1">
-                                    <input event-node="password" name="password" type="password" value=""/>
-                                    <div model-node="password_weight" class="psw-state-empty">
-                                        <div class="progress progress-green-transition"><div class="bar"></div></div>
-                                        <div class="txt"><span>{:L('PUBLIC_PASSWORD_WEAK')}</span><span>{:L('PUBLIC_PASSWORD_MIDDLE')}</span><span>{:L('PUBLIC_PASSWORD_STRONG')}</span></div>
-                                    </div>
-                                </div>
-                                <div class="txt-info">密码由字母，数字，符号组成，6-15个字符，区分大小写</div>
-							</div>
-						</dd>
-						<dd>
-							<div class="form-tt"><i class="text-required">*</i>{:L('PUBLIC_CONFIRM_PASSWORD')}：</div>
-							<div class="form-row">
-								<input event-node="repassword" name="repassword" type="password" />
-							</div>
-						</dd>
-						<dd>
-							<div class="form-tt"><i class="text-required">*</i>{:L('PUBLIC_NICKNAME')}：</div>
-							<div class="form-row">
-								<div style="overflow:hidden;*zoom:1">
-                                <input event-node="uname" name="uname" checkurl="{:U('public/Register/isUnameAvailable')}" autocomplete="off" type="text" value="" />
-                                </div>
-								<div event-node="uname_tips" class="txt-info">{:L('PUBLIC_NICKNAME_TIPS', array('nums'=>'2-10'))}</div>
-							</div>
-						</dd>
-						<dd>
-							<div class="form-tt"><i class="text-required">*</i>{:L('PUBLIC_GENDER')}：</div>
-							<div class="form-row">
-								<label><input name="sex" type="radio" class="s-radio" value="1" checked="checked" event-node="radio" event-args="error={:L('PUBLIC_CHOOSE_GENDER')}" />{:L('PUBLIC_MALE')}</label>
-								<label><input event-node="radio" type="radio" name="sex" value="2" class="s-radio"  />{:L('PUBLIC_FEMALE')}</label>
-							</div>
-						</dd>
-						<dd>
-							<div class="form-tt"><i class="text-required">*</i>地区：</div>
-							<div class="form-row">
-								<div style="padding:3px 0 0 0;*height:30px;overflow:hidden;*zoom:1;">
-								{:W('Area',array('curPro'=>0,'curCity'=>0,'area'=>0,'tpl'=>'selectArea'))}
-								</div>
-							</div>
-						</dd>
-													<dd>
-							<div class="form-tt"><i class="text-required">*</i>验证码：</div>
-							<div class="form-row">
-								<div style="padding:3px 0 0 0;*height:30px;overflow:hidden;*zoom:1;">
-								<input name="verify" type="text" class="s-txt" style="width:70px" id="verCode"/>
-			  <img src="__ROOT__/public/captcha.php" id="verifyimg" class="alM" onclick="change_verify()"/>
-              <a href="###" onclick="change_verify()" alt="换一张">看不清楚，换一个</a>
-								</div>
-							</div>
-						</dd>
-						<dd class="mt15">
-							<div class="form-tt"></div>
-							<div class="form-row actionBtn">
-								<a class="btn-register" href="javascript:;" onclick="$('#ajax_register_form').submit();return false;">{:L('PUBLIC_REGISTER_NOW')}</a>
-							</div>
-						</dd>
-					</dl>
-				</div>
-				</form>
-				<else />
-				 <div class="item-find-psd"><neq name='config.register_close' value=''>{$config.register_close}</neq></div>
-				</neq>
-			</div>
-		</div>
+﻿<include file="__THEME__/public_header" />
+<div class="container regContent">
+<div class="reg_bz">
+    <div class="reg_num1"></div>
+    <div class="reg_numTit">
+        <ul>
+            <li>输入激活码</li>
+            <li>填写注册信息</li>
+            <li>邮箱激活</li>
+            <li>完善个人资料</li>
+            <li>关注朋友</li>
+        </ul>
     </div>
-    <script>
-    function change_verify(){
-    	var date = new Date();
-    	var ttime = date.getTime();
-    	var url = SITE_URL+'/public/captcha.php';
-    	$('#verifyimg').attr('src',url+'?'+ttime);
-    }
-    </script>
-<script src="__THEME__/js/module.form.js"></script>
+</div>
+<div class="reg_info">
+    <div class="reg_info_top"></div>
+    <div class="reg_info_center">
+        <div class="regTit">
+            <h2>注册新用户</h2>
+        </div>
+        <div class="regCont">
+            <h5>请输入邀请码：</h5>
+            <h6>邀请码其实相当于一个请帖，这个请帖上有一个秘密ID，你去注册的时候，会要求你输入这个秘密ID，如果发现有这个秘密ID。</h6>
+            <div class="reg_form">
+                <input type="text" class="inputStyle w330" id="inviteCode">
+                <input type="button" class="btn_tj" onclick="submitCode();" value="提交">
+                <script type="text/javascript">
+                    function submitCode() {
+                        var url = "{:U('public/Register/doStep1')}";
+                        var code = $("#inviteCode").val().Trim();
+                        if (code != "") {
+                            $.post(url, { Code: code }, function (msg) {
+                                if (msg.status == 0) {
+                                    ui.error(msg.data);
+                                } else {
+                                    location.href = "{:U('public/Register/step2', array('code'=>'" + code + "'))}";
+                                }
+                            }, 'json');
+                        }
+                        else {
+                            ui.error("请输入邀请码");
+                        }
+                    }
+                </script>
+            </div>
+            <div class="ps">
+                <h5>邀请获得方式</h5>
+                <div>
+                1.打电话、发短信、发邮件、发传真，或者直接当面邀请。<br />
+                2.自动生成二维码，微信里扫一扫，即能打开请柬。<br />
+                3.方便发送，点击微信右上角...N多方式任亲选。<br />
+				</div>
+            </div>
+        </div>
+    </div>
+    <div class="reg_info_bottom"></div>
+</div>
+
 <include file="__THEME__/public_footer" />

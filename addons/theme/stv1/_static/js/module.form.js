@@ -61,7 +61,7 @@ M.addModelFns({
 			var nL = oCollection.length;
 			var bValid = true;
 			var dFirstError;
-
+            
 			for(var i = 0; i < nL; i++) {
 				var dInput = oCollection[i];
 				var sName = dInput.name;
@@ -329,21 +329,20 @@ M.addEventFns({
             
             if(sValue.length==0)
             {
-                tips.error( dEmail, 'Email地址不能为空' );
+                tips.error( dEmail, '邮箱地址不能为空' );
                 return false;
             }
 
             var myReg = /^[-._A-Za-z0-9]+@([_A-Za-z0-9]+\.)+[A-Za-z0-9]{2,3}$/; 
             if(!myReg.test(sValue))
             {
-                tips.error( dEmail, '无效的Email地址' );
+                tips.error( dEmail, '无效的邮箱地址' );
                 return false;
             }
             else
                 tips.clear( dEmail )
-            
+
 			$.post(sUrl, {email:sValue}, function(oTxt) {
-                //alert(oTxt);
 				var oArgs = M.getEventArgs(dEmail);
 				if(oTxt.status) {
 					"false" == oArgs.success ? tips.clear( dEmail ) : tips.success( dEmail );
@@ -470,7 +469,6 @@ M.addEventFns({
 			this.className = 's-txt-focus';
 		},
 		blur: function() {
-			this.className = 's-txt';
 			var dWeight = this.parentModel.childModels["password_weight"][0];
 			var sValue = this.value + "";
 			var nL = sValue.length;
@@ -566,6 +564,75 @@ M.addEventFns({
 			this.className='s-txt';
 		}
 	},
+    // 密码验证
+	password_new: {
+		focus: function() {
+			this.className = 's-txt-focus';
+		},
+		blur: function() {
+            this.className='s-txt';
+			var sValue = this.value + "";
+			var nL = sValue.length;
+			var min = 6
+			var max = 16;
+			if ( nL < min || nL > max ) {
+				tips.error( this, L('PUBLIC_PASSWORD_TIPES'));
+				this.bIsValid = false;
+            } else {
+                tips.success( this );
+				this.bIsValid = true;
+			}
+		},
+		keyup:function(){
+			this.value = this.value.replace(/^\s+|\s+$/g,""); 
+		},
+		load: function() {
+			this.value = '';
+			this.className='s-txt';
+		}
+	},
+	repassword_new: {
+		focus: function() {
+			this.className='s-txt-focus';
+		},
+		keyup:function(){
+			this.value = this.value.replace(/^\s+|\s+$/g,""); 
+		},
+		blur: function() {
+			this.className='s-txt';
+            //alert('123123');
+			var sPwd = this.parentModel.childEvents["password_new"][0].value;
+	        var sRePwd = this.value;
+            //alert(sPwd);
+            //alert(sRePwd);
+			if ( ! sRePwd ) {
+				tips.error( this, L('PUBLIC_PLEASE_PASSWORD_ON') );
+				this.bIsValid = false;
+			} else if ( sPwd !== sRePwd ) {
+				tips.error( this, L('PUBLIC_PASSWORD_ISDUBLE_NOT') );
+				this.bIsValid = false;
+			} else {
+				tips.clear( this );
+				this.bIsValid = true;
+			}
+		},
+		load: function() {
+			this.value = '';
+			this.className='s-txt';
+		}
+	},
+    //阅读服务条款
+    readRules: {
+		blur: function() {
+			if ( !this.checked ) {
+                tips.error( this, '请阅读并同意相关服务条款' );
+				this.bIsValid = false;
+            } else {
+                tips.clear( this );
+				this.bIsValid = true;
+			}
+		}
+	},
     // 真实姓名验证
 	realname: {
 		focus: function() {
@@ -574,6 +641,41 @@ M.addEventFns({
 		},
 		blur: function() {
 			this.className='s-txt';
+            this.bIsValid = true;
+        },
+        load: function() {
+			this.className='s-txt';
+		}
+    },
+    // 身份证
+	idcard: {
+		focus: function() {
+			this.className='s-txt-focus';
+			return false;
+		},
+		blur: function() {
+			this.className='s-txt';
+            
+			var idCardVal = this.value;
+            if(idCardVal != '')
+            {
+                var result = isIdCardNo(idCardVal);
+                if(result != '')
+                {
+                    tips.error( this, L(result) );
+				    this.bIsValid = false;
+                }
+                else
+                {
+                    tips.success( this );
+				    this.bIsValid = true;
+                }
+            }
+            else
+            {
+                tips.clear( this );
+                this.bIsValid = true;
+            }
         },
         load: function() {
 			this.className='s-txt';
@@ -586,6 +688,7 @@ M.addEventFns({
 			return false;
 		},
 		blur: function() {
+            
 			this.className='s-txt';
 
 			var dUname = this;
@@ -817,7 +920,8 @@ var tips = {
 			// 组装HTML结构 - B
             dSpan.style.display = "none";
 			dSpan.appendChild( dB );
-			dB.className = "ico-error";
+            dSpan.className = "regboxErrorSpan";
+			dB.className = "errorspan";
 			D.dErrorText = dSpan.appendChild(dText);
 			// 插入HTML
 			var dParent = D.parentNode;
@@ -858,3 +962,80 @@ var tips = {
 // 定义Window属性
 window.tips = tips;
 })();
+
+
+//这个可以验证15位和18位的身份证，并且包含生日和校验位的验证。   
+//如果有兴趣，还可以加上身份证所在地的验证，就是前6位有些数字合法有些数字不合法。
+function isIdCardNo(num) {
+    var result = "";
+    num = num.toUpperCase();
+    //身份证号码为15位或者18位，15位时全为数字，18位前17位为数字，最后一位是校验位，可能为数字或字符X。
+    var myReg15 = /^(\/d{15})|(\/d{17}([0-9]|X))$/;
+    if (!(myReg15.test(num)))   
+    { 
+        result = '输入的身份证号格式不正确！'; 
+    } 
+    //校验位按照ISO 7064:1983.MOD 11-2的规定生成，X可以认为是数字10。 
+    //下面分别分析出生日期和校验位 
+    var len, re;
+    len = num.length;
+    if (len == 15) {
+        re = new RegExp(/^(\/d{6})(\/d{2})(\/d{2})(\/d{2})(\/d{3})$/); 
+        var arrSplit = num.match(re);
+
+        //检查生日日期是否正确 
+        var dtmBirth = new Date('19' + arrSplit[2] + '/' + arrSplit[3] + '/' + arrSplit[4]);
+        var bGoodDay;
+        bGoodDay = (dtmBirth.getYear() == Number(arrSplit[2])) && ((dtmBirth.getMonth() + 1) == Number(arrSplit[3])) && (dtmBirth.getDate() == Number(arrSplit[4]));
+        if (!bGoodDay) {
+            result = '输入的身份证号里出生日期不对！';
+        }
+        else {
+            //将15位身份证转成18位 
+            //校验位按照ISO 7064:1983.MOD 11-2的规定生成，X可以认为是数字10。 
+            var arrInt = new Array(7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2);
+            var arrCh = new Array('1', '0', 'X', '9', '8', '7', '6', '5', '4', '3', '2');
+            var nTemp = 0, i;
+            num = num.substr(0, 6) + '19' + num.substr(6, num.length - 6);
+            for (i = 0; i < 17; i++) {
+                nTemp += num.substr(i, 1) * arrInt[i];
+            }
+            num += arrCh[nTemp % 11];
+            result = "";
+        }
+    }
+    if (len == 18) {
+        //re = new RegExp(/^(\/d{6})(\/d{4})(\/d{2})(\/d{2})(\/d{3})([0-9]|X)$/);
+        re = new RegExp(/^(\d{6})(\d{4})(\d{2})(\d{2})(\d{3})([0-9]|X)$/);
+        var arrSplit = num.match(re);
+
+        //检查生日日期是否正确 
+        var dtmBirth = new Date(arrSplit[2] + "/" + arrSplit[3] + "/" + arrSplit[4]);
+        var bGoodDay;
+        bGoodDay = (dtmBirth.getFullYear() == Number(arrSplit[2])) && ((dtmBirth.getMonth() + 1) == Number(arrSplit[3])) && (dtmBirth.getDate() == Number(arrSplit[4]));
+        if (!bGoodDay) {
+            //alert(dtmBirth.getYear());
+            //alert(arrSplit[2]);
+            result = '输入的身份证号里出生日期不对！';
+        }
+        else {
+            //检验18位身份证的校验码是否正确。 
+            //校验位按照ISO 7064:1983.MOD 11-2的规定生成，X可以认为是数字10。 
+            var valnum;
+            var arrInt = new Array(7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2);
+            var arrCh = new Array('1', '0', 'X', '9', '8', '7', '6', '5', '4', '3', '2');
+            var nTemp = 0, i;
+            for (i = 0; i < 17; i++) {
+                nTemp += num.substr(i, 1) * arrInt[i];
+            }
+            valnum = arrCh[nTemp % 11];
+            if (valnum != num.substr(17, 1)) {
+                //result = '18位身份证的校验码不正确！应该为：' + valnum;
+                result = '输入的身份证号格式不正确';
+            }
+            else
+                result = '';
+        }
+    }
+    return result;
+}

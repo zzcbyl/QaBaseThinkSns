@@ -1,0 +1,8 @@
+1、语言配置-》修改配置： 
+		
+语言KEY			应用名称	文件类型	简体							繁体							英文	
+PUBLIC_NICKNAME_LIMIT	 PUBLIC		PHP文件	 昵称长度必须在{nums}个汉字之间			 暱稱長度必須在{nums}個漢字之間			 The nickname length must be in the {nums} characters	
+
+改成
+
+PUBLIC_NICKNAME_LIMIT	 PUBLIC		PHP文件	 昵称长度必须在{nums}个字符或{nums1}个汉字之间	 暱稱長度必須在{nums}個字符或{nums1}个漢字之間	 The nickname length must be in the {nums} characters or {nums1} Chinese characters

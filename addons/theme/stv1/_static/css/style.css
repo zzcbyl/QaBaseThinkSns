@@ -1,6 +1,7 @@
 body,ul,li,p,h1,h2,h3,h4,h5,h6,dl,dt,dd,form,input,textarea,select{margin:0; padding:0; list-style-type:none;}
-body{background:#f3f3f3; font-family:"微软雅黑";}
+body{background:#f3f3f3; font-family:微软雅黑;}
 img{border:none}
+input,textarea{outline:none}
 .header_box{background:#c22b2b; height:60px;}
 .header{overflow:hidden; height:60px;}
 .header .menu{float:left;width:280px; margin-left:20px}
@@ -46,6 +47,7 @@ a{text-decoration:none;}
 .contTit h2 a{font-size:14px; color:#46addb;}
 .contTit h2 em{position:absolute; font-size:12px; font-weight:normal; color:#c5c5c5; right:30px;_right:140px; top:0px;}
 .contTit p{padding-left:80px; font-size:14px; color:#999; line-height:23px}
+.contTit .feed_img_lists{ padding-left:80px;}
 .comm,.comm a{font-size:12px; color:#999;}
 .comm{text-align:right; padding:10px 30px 0px;}
 .contTit p.contImg{padding:15px 0px; text-align:center}
@@ -71,7 +73,7 @@ a{text-decoration:none;}
 .aTop p.a{background-position:-375px 0px; top:17px; right:1px;}
 .more{text-align:center; padding:30px 30px 10px; color:#4cc6f0;}
 .cont_right{width:268px; float:right; border-top:solid 1px #d4d4d4}
-.myinfo_box{background:#8f9294; padding:12px 10px 10px;_width:248px; overflow:hidden; height:100%}
+.myinfo_box{background:#8f9294; padding:12px 10px 10px;_width:248px; overflow:hidden; }
 .myimg{background:#fff; width:80px; height:80px; float:left; padding:5px;}
 .myimg img{width:80px; height:80px;}
 .myinfo{float:right;width:145px;}
@@ -128,8 +130,6 @@ a{text-decoration:none;}
 .fList li img{width:50px; height:50px}
 .fList li a{font-size:12px; color:#666;}
 .tList,.tList a{font-size:12px; color:#666;}
-.tList a{ font-weight:bold; height:18px; line-height:18px; overflow:hidden; display:block;}
-.tList p{ height:30px; overflow:hidden; line-height:15px; }
 .tList li{border-top:solid 1px #d8d8d8; padding:8px 0px; height:50px; _line-height:16px; overflow:hidden}
 .tList li.no{border:none}
 .tu{float:left; width:40px; height:50px}
@@ -137,7 +137,7 @@ a{text-decoration:none;}
 .tu a.zan{background-position:0px -550px;_background-position:0px -545px; color:#46addb}
 .tu a.ganxie{background-position:0px -600px;_background-position:0px -595px; color:#f20000}
 .tu a.guanz{background-position:0px -650px;color:#1ba542}
-.tList li h2{font-size:14px; margin-bottom:3px}
+.tList li h2{font-size:14px; margin-bottom:3px; height:18px; overflow:hidden;}
 .tagList li{background:#fff; padding:2px 6px; border:solid 1px #ddd; float:left; font-size:16px; margin:0px 5px 5px 0px;}
 .tagList li a{color:#333;}
 .tagList li a.green{color:#43b463;}
@@ -248,3 +248,108 @@ a{text-decoration:none;}
 .g_yh li{height:80px; width:60px; float:left; text-align:center; margin:0px 8px 15px;}
 .g_yh li img{width:60px; height:60px;}
 .g_yh li a{font-size:14px; color:#4cc6f0;}
+
+/*注册页*/
+.body_reg{background:#fff;}
+.regContent{background:#ececec; padding:30px 15px 10px; border:none; width:955px}
+.reg_bz{height:80px; width:898px; margin:0 auto}
+.reg_num1,.reg_num2,.reg_num3,.reg_num4,.reg_num5{ background:url(../image/sprite_reg_icon.png) no-repeat; height:50px}
+.reg_num1{ background-position:0px 0px;}
+.reg_num2{ background-position:0px -62px;}
+.reg_num3{ background-position:0px -122px;}
+.reg_num4{ background-position:0px -183px;}
+.reg_num5{ background-position:0px -245px;}
+.reg_numTit{width:800px; margin-left:55px; height:30px; line-height:30px}
+.reg_numTit ul li{width:158px; text-align:center; font-size:16px; color:#666; float:left}
+.reg_info{overflow:hidden;  width:954px; margin:40px auto 30px;}
+.reg_info_top,.reg_info_bottom,.btn_tj,.btn_reg input,.reg_myinfo .picbg p a.pc,.reg_myinfo .picbg p a.camera,.tgz,.tgzed,.tgzed1,.cgz,.hgz,.youguan a.zj_prev,.youguan a.zj_next,.youguan a.zj_prev_sel,.youguan a.zj_next_sel{background:url(../image/sprite_reg.png) no-repeat; overflow:hidden}
+.reg_info_top{background-position:0px 0px; height:19px;}
+.reg_info_bottom{background-position:0px -20px; height:14px;}
+.reg_info_center{ background:#fff; padding:20px 30px;}
+.regTit{background:url(../image/regtit_bg.png) repeat-x; height:27px; line-height:27px; text-align:center;}
+.regTit h2{font-size:22px; color:#bf292a; background:#fff; display:inline; padding:0px 10px}
+.regCont{clear:both;width:520px; margin:0 auto; padding:20px 0px; }
+.regCont h5{font-size:14px; color:#666; padding:10px 0px;}
+.regCont h6{font-size:12px; color:#999; font-weight:normal}
+.reg_form{padding:20px 0px 30px;}
+.reg_form input{}
+.inputStyle{height:30px; background:#ececec; border-left:solid 2px #aeaeae; border-top:solid 2px #aeaeae; padding:0px 5px;}
+.w330{width:330px;}
+.btn_tj{background-position:0px -38px; height:33px; vertical-align:top; margin-left:10px; width:69px; text-align:center; font-size:12px; color:#fff; border:none; cursor:pointer; font-family:"微软雅黑";}
+.btn_tj:hover{background-position:0px -78px;}
+.ps{clear:both; color:#999; font-size:12px}
+.ps h5{font-size:12px; background:url(../image/reg_icon.png) no-repeat left center; text-indent:1.6em }
+.ps div{padding-left:1.6em; line-height:20px}
+.inputStyle2{height:25px; line-height:25px; background:#ececec; border-left:solid 2px #aeaeae; border-top:solid 2px #aeaeae; padding:0px 5px;}
+.w240{width:240px;}
+.w115{width:115px;}
+.regbox{font-size:14px; color:#666; overflow:hidden; }
+.regbox .ico-ok { margin-top:5px;}
+.regbox label{width:80px; text-align:right; display:inline-block; padding:0px 10px; float:left;}
+.regbox input { float:left;}
+.regbox div{height:27px; line-height:27px; margin-top:20px;}
+.regbox div span{font-size:12px; color:#f4c475; float:left;}
+.regboxErrorSpan { color: #F4C475; display: block; float: right; font-size: 12px; line-height: 18px; padding-top: 5px; width:220px;}
+.errorspan{font-size:12px; color:#f4c475; background:url(../image/error_icon.png) no-repeat left center; padding-left:1.5em}
+.tybox{ background:url(../image/tybg.png) repeat-x; height:13px; font-size:12px; color:#999; text-align:center; line-height:13px; padding-top:30px}
+.tybox span{ background:#fff; padding:0px 10px;}
+.btn_reg{ text-align:center; padding:20px 0px 0px}
+.btn_reg input{background-position:0px -124px; font-size:18px; color:#fff; border:none; width:135px; height:35px; font-family:"微软雅黑"; cursor:pointer;}
+.reg_myinfo{width:650px; overflow:hidden;  line-height:23px; margin-bottom:10px; margin:30px auto 0;}
+.reg_myinfo h4{font-size:14px; color:#333;}
+.reg_myinfo p{font-size:12px; color:#999;}
+.reg_myinfo .picbg{padding:20px 30px; margin-top:10px; background:#fcf5e2; border-radius:3px; overflow:hidden; }
+.reg_myinfo .picbg img{width:90px; height:90px; background:#fff; padding:5px; float:left; margin-right:20px;}
+.reg_myinfo .picbg p {margin-bottom:5px; padding-left:120px;}
+.reg_myinfo .picbg p a.pc,.reg_myinfo .picbg p a.camera{ height:30px; width:90px; display:block}
+.reg_myinfo .picbg p a.pc{background-position:0px -176px;}
+.reg_myinfo .picbg p a.camera{background-position:0px -210px;}
+.email{line-height:25px; padding-left:150px; background:url(../image/email.png) no-repeat 50px 20px; }
+.email h1{color:#bf292a; font-size:24px; padding-bottom:20px; font-weight:normal}
+.email .jihuo{font-size:14px; color:#666; font-weight:bold}
+.email .jihuo span{color:#bf292a; text-decoration:underline; }
+.email .jihuops{font-size:12px; color:#999;}
+.jhps h5{font-size:16px; background:none; text-indent:0; font-weight:normal; margin-top:50px}
+.jhps div{ padding:0;}
+.jhps div a{color:#bf292a; font-size:12px; text-decoration:underline}
+.reg_select select{ border:solid 1px #aeaeae; }
+.reg_select .ico-ok { margin-top:0;}
+.reg_select .regboxErrorSpan { width:auto; padding-top:0;}
+.regbox .reg_textarea{ float:left; height:70px;}
+.regbox .reg_textarea textarea{border:1px solid #CCCCCC;background:#fff;width:276px; font-size: 12px; line-height: 16px; padding:5px; padding-right:0; }
+.reg_five{width:620px; margin:0 auto; padding-top:35px;}
+.reg_five h2{font-size:14px; color:#333; padding:10px 0px}
+.reg_five .profile{padding:20px 30px; background:#fcf5e2;}
+.reg_five .profile .pro_img{width:90px; height:110px; padding:0; background:none; text-align:center}
+.reg_five .profile .pro_img img{width:90px; height:90px}
+.tgz,.reg_five .profile .pro_img a.hover,.tgzed,.tgzed1,.cgz,.hgz{background-position:0px -282px;width:62px; height:25px; display:inline-block; margin-top:2px}
+.tgz:hover{background-position:0px -311px;}
+.tgzed1{background-position:0px -250px;}
+.tgzed{background-position:0px -250px;}
+.cgz,.tgzed1:hover{background-position:-104px -250px;}
+.hgz{background-position:-104px -282px;}
+.reg_five .profile .pro_cont{width:440px}
+.profile .pro_cont p{}
+.profile .pro_cont ul.info{padding:0px;}
+.profile .pro_cont ul.info li{line-height:normal; border-color:#ddd;}
+.profile .pro_cont ul.info li.pd0{padding-left:0;}
+.profile .pro_cont ul.info li a{color:#999;}
+.reg_five_rz{background:#f6f6f6; border:solid 1px #eee; height:228px}
+.reg_five_rz div.zjList {padding:23px 17px 5px;  float:left; width:275px}
+.reg_five_rz div.zjList:hover{background:#fae7c7;}
+.reg_five_rz div.zjList .profile{padding:0px; background:none; margin:0px;}
+.reg_five_rz div.zjList .profile .pro_cont{width:190px}
+.reg_five_rz div.zjList .profile .pro_img{width:60px; height:86px;}
+.reg_five_rz div.zjList .profile .pro_img img{width:60px; height:60px;}
+.youguan{overflow:hidden; padding-left:20px;_padding-left:0px; position:relative}
+.youguan ul li{width:60px; height:115px; text-align:center; float:left; font-size:12px; margin-right:20px;_margin-right:19px; line-height:12px;}
+.youguan ul li img{width:60px; height:60px;}
+.youguan ul li span { height:15px; line-height:15px; overflow:hidden; display:inline-block;}
+.youguan a.zj_prev,.youguan a.zj_next,.youguan a.zj_prev_sel,.youguan a.zj_next_sel{width:22px; height:22px; position:absolute}
+.youguan a.zj_prev{ background-position:0px -355px; left:0px; top:32px}
+.youguan a.zj_next{ background-position:-28px -355px; right:0px; top:32px}
+.youguan a.zj_next_sel { background-position:-28px -380px; right:0px; top:32px; }
+.youguan a.zj_prev_sel { background-position:-0px -380px; left:0px; top:32px; }
+.join{ text-align:center; padding:10px 0px}
+.join a{font-size:14px; color:#fff; background:url(../image/sprite_reg.png) no-repeat;background-position:0px -38px; height:33px; width:69px; display:inline-block; line-height:30px}
+.join a:hover {color:#fff; text-decoration:none; }

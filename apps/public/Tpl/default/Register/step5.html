@@ -1,0 +1,225 @@
+﻿<include file="__THEME__/public_header" />
+
+<div class="container regContent">
+	<div class="reg_bz">
+    	<div class="reg_num5"></div>
+        <div class="reg_numTit">
+        	<ul>
+            	<li>输入激活码</li>
+                <li>填写注册信息</li>
+                <li>邮箱激活</li>
+                <li>完善个人资料</li>
+                <li>关注朋友</li>
+            </ul>
+        </div>
+    </div>
+	<div class="reg_info">
+    	<div class="reg_info_top"></div>
+        <div class="reg_info_center">
+        	<div class="regTit">
+            	<h2>邀请你的朋友来回答问题</h2>
+            </div>
+            <form action="{:U('public/Register/doStep5', array('uid'=>$uid, 'code'=>$code))}" method="post" id="following_form">
+            <div class="reg_five">
+                <!--顶级专家-->
+                <h2>顶级专家</h2>
+                <div class="profile">
+                    <div class="pro_img">
+                        <img src="{$TopExpert['avatar_big']}" /><br />
+                        <a class="tgzed"></a>
+                    </div>
+                    <div class="pro_cont">
+                        <h4>{$TopExpert['uname']}</h4>
+                        <p><strong>简介：</strong>{$TopExpert['intro']}</p>
+                        <ul class="info">
+                            <li class="pd0"><a><php>if(empty($TopExpert_UserCount[$TopExpert['uid']]['weibo_count'])) echo '0'; else echo $TopExpert_UserCount[$TopExpert['uid']]['weibo_count'];</php></a><br />问题</li>
+                            <li><a><php>if(empty($TopExpert_UserCount[$TopExpert['uid']]['answer_count'])) echo '0'; else echo $TopExpert_UserCount[$TopExpert['uid']]['answer_count'];</php></a><br />回答</li>
+                            <li class="nbor"><a><php>if(empty($TopExpert_UserCount[$TopExpert['uid']]['tothanked_count'])) echo '0'; else echo $TopExpert_UserCount[$TopExpert['uid']]['tothanked_count'];</php></a><br />感谢</li>
+            	        </ul>
+                        <p class="xz">
+                            <strong>勋章：</strong>
+                            <a href="#" class="x1"></a>
+                            <a href="#" class="x2"></a>
+                            <a href="#" class="x3"></a>
+                            <a href="#" class="x4"></a>
+                        </p>
+                        <input type="hidden" name="FollowUser" value="{$TopExpert['uid']}" />
+                    </div>
+           
+                </div>
+                <!--顶级专家--> 
+            
+                <!--认证专家-->
+                <h2>认证专家</h2>
+                <div class="reg_five_rz">
+                    <volist name="authenticateExpert" id="expert">
+            	        <div class="zjList">
+                            <div class="profile">
+                                <div class="pro_img">
+                                    <img src="{$expert['avatar_small']}" /><br />
+                                    <a class="tgzed"></a>
+                                </div>
+                                <div class="pro_cont">
+                                    <h4>{$expert['uname']}</h4>
+                                    <ul class="info">
+                                        <li class="pd0"><a><php>if(empty($authenticateExpert_UserCount[$expert['uid']]['weibo_count'])) echo '0'; else echo $authenticateExpert_UserCount[$expert['uid']]['weibo_count'];</php></a><br />问题</li>
+                                        <li><a><php>if(empty($authenticateExpert_UserCount[$expert['uid']]['answer_count'])) echo '0'; else echo $authenticateExpert_UserCount[$expert['uid']]['answer_count'];</php></a><br />回答</li>
+                                        <li class="nbor"><a><php>if(empty($authenticateExpert_UserCount[$expert['uid']]['tothanked_count'])) echo '0'; else echo $authenticateExpert_UserCount[$expert['uid']]['tothanked_count'];</php></a><br />感谢</li>
+                                    </ul>
+                                    <p class="xz">
+                                        <a href="#" class="x1"></a>
+                                        <a href="#" class="x2"></a>
+                                        <a href="#" class="x3"></a>
+                                    </p>
+                                    <input type="hidden" name="FollowUser" value="{$expert['uid']}" />
+                                </div>
+            		        </div>
+                        </div>
+                    </volist>
+                </div>
+                <!--认证专家--> 
+            
+                <!--跟你有关的-->
+                <h2 class="mt10">跟你有关的</h2>
+                <div class="youguan">
+                    <div style="width:560px;height:115px; overflow:hidden; margin-left:20px;">
+                        <div id="youguanlist" style="height:115px; overflow:hidden; ">
+                            <ul>
+                                <volist name="userList" id="list">
+                                    <li>
+                                        <img src="{$list['avatar_small']}" /><br />
+                                        <a href="javascript:void(0);" onclick="cancelFollow(this,{$list['uid']});" class="tgzed1"></a><br />
+                                        <span>{$list['uname']}</span>
+                                        <input id="follow_{$list['uid']}" type="hidden" name="FollowUser" value="{$list['uid']}" />
+                                    </li>
+                                </volist>
+                            </ul>
+                        </div>
+                    </div>
+                    <a id="youguan_prev" href="javascript:void(0);" onclick="prev_youguan();" class="zj_prev"></a>
+                    <a id="youguan_next" href="javascript:void(0);" onclick="next_youguan();" class="zj_next"></a>
+                </div>
+                <!--跟你有关的-->
+                <!--推荐用户-->
+                <h2 class="mt10">推荐用户</h2>
+                <div class="youguan">
+                    <div style="width:560px;height:115px; overflow:hidden; margin-left:20px;">
+                        <div id="tuijianlist" style="height:115px; overflow:hidden; ">
+                            <ul>
+                                <volist name="recommendUserList" id="rlist">
+                                    <li>
+                                        <img src="{$rlist['avatar_small']}" /><br />
+                                        <a href="javascript:void(0);" onclick="cancelFollow(this,{$rlist['uid']});" class="tgzed1"></a><br />
+                                        <span>{$rlist['uname']}</span>
+                                        <input id="follow_{$rlist['uid']}" type="hidden" name="FollowUser" value="{$rlist['uid']}" />
+                                    </li>   
+                                </volist>
+                            </ul>
+                        </div>
+                    </div>
+                    <a id="tuijian_prev" href="javascript:void(0);" onclick="prev_tuijian();" class="zj_prev"></a>
+                    <a id="tuijian_next" href="javascript:void(0);" onclick="next_tuijian();" class="zj_next"></a>
+                </div>
+                <!--推荐用户-->
+                <input type="hidden" id="FollowingList" name="FollowingList" value="" />
+                <div class="join"> <a href="javascript:Following();">进入</a></div>
+           </div>
+            </form>
+        </div>
+    </div>
+    <script type="text/javascript">
+        var youguanPage = {$youguanCount}%7==0?{$youguanCount}/7:Math.floor({$youguanCount}/7)+1;
+        var currentPage = 1;
+        var tuijianPage = {$tuijianCount}%7==0?{$tuijianCount}/7:Math.floor({$tuijianCount}/7)+1;
+        var currentPageTJ = 1;
+        $(document).ready(function(){
+            showyouguan();
+            showtuijian();
+        });
+        //与你有关的上一页
+        function prev_youguan() {
+            if (currentPage != 1) {
+                currentPage--;
+                var marginVal = 0 - (currentPage - 1) * 560;
+                $('#youguanlist').css('margin-left', marginVal);
+            }
+            showyouguan();
+        }
+        //与你有关的下一页
+        function next_youguan() {
+            if (youguanPage > currentPage) {
+                currentPage++;
+                var marginVal = 0 - (currentPage - 1) * 560;
+                $('#youguanlist').css('margin-left', marginVal);
+            }
+            showyouguan();
+        }
+        function showyouguan() {
+
+            if (youguanPage > currentPage)
+                $('#youguan_next').attr('class', 'zj_next_sel');
+            else
+                $('#youguan_next').attr('class', 'zj_next');
+            if (currentPage != 1) {
+                $('#youguan_prev').attr('class', 'zj_prev_sel');
+            }
+            else
+                $('#youguan_prev').attr('class', 'zj_prev');
+        }
+
+        //推荐用户的上一页
+        function prev_tuijian() {
+            if (currentPageTJ != 1) {
+                currentPageTJ--;
+                var marginVal = 0 - (currentPageTJ - 1) * 560;
+                $('#tuijianlist').css('margin-left', marginVal);
+            }
+            showtuijian();
+        }
+        //推荐用户下一页
+        function next_tuijian() {
+            if (tuijianPage > currentPageTJ) {
+                currentPageTJ++;
+                var marginVal = 0 - (currentPageTJ - 1) * 560;
+                $('#tuijianlist').css('margin-left', marginVal);
+            }
+            showtuijian();
+        }
+        function showtuijian() {
+            if (tuijianPage > currentPageTJ)
+                $('#tuijian_next').attr('class', 'zj_next_sel');
+            else
+                $('#tuijian_next').attr('class', 'zj_next');
+            if (currentPageTJ != 1) {
+                $('#tuijian_prev').attr('class', 'zj_prev_sel');
+            }
+            else
+                $('#tuijian_prev').attr('class', 'zj_prev');
+        }
+        //关注/取消关注
+        function cancelFollow(obj, uid) {
+            if ($('#follow_' + uid).val() != '') {
+                $('#follow_' + uid).val('');
+                $(obj).attr('class','tgz');
+            }
+            else {
+                $('#follow_' + uid).val(uid);
+                $(obj).attr('class', 'tgzed1');
+            }
+        }
+
+        //关注并进入
+        function Following() {
+            var hidUid = $('input[type=hidden]')
+            var uidlist = '';
+            for(var i = 0; i < hidUid.length; i++) {
+                if($(hidUid[i]).val() != '')
+                    uidlist += $(hidUid[i]).val() + ',';
+            }
+            $('#FollowingList').val(uidlist.substring(0,uidlist.length-1));
+
+            $('#following_form').submit();
+        }
+    </script>
+
+<include file="__THEME__/public_footer" />

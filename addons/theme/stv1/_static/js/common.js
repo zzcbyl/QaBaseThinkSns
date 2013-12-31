@@ -1063,3 +1063,15 @@ function getQueryString(name) {
     var r = window.location.search.substr(1).match(reg);
     if (r != null) return unescape(r[2]); return null;
 }
+
+String.prototype.Trim = function () {
+    return this.replace(/(^\s*)|(\s*$)/g, "");
+}
+String.prototype.LTrim = function () {
+    return this.replace(/(^\s*)/g, "");
+}
+String.prototype.RTrim = function () {
+    return this.replace(/(\s*$)/g, "");
+} 
+
+
