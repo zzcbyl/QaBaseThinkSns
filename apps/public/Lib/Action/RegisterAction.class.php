@@ -501,4 +501,13 @@ class RegisterAction extends Action
 	public function doAuditUser(){
 		
 	}
+
+
+    /*weibo的想关处理*/
+
+    public function weibologin() {
+        echo "aaaaa";
+    }
+
+
 }
