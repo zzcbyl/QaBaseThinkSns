@@ -506,7 +506,7 @@ class RegisterAction extends Action
     /*weibo的想关处理*/
 
     public function weibologin() {
-        echo "aaaaa";
+        //echo "aaaaa";
     }
 
 
