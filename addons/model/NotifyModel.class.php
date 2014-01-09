@@ -246,7 +246,7 @@ class NotifyModel extends Model {
 					<div style="background:#fff;padding:20px;min-height:300px;position:relative">		<div style="font-size:14px;">			
 						            	<p style="padding:0 0 20px;margin:0;font-size:12px">'.$body.'</p>
 						            </div></div><div style="background:#fff;">
-			            <div style="text-align:center;height:18px;line-height:18px;color:#999;padding:6px 0;font-size:12px">若不想再收到此类邮件，请点击<a href="'.U('public/Account/notify').'" style="text-decoration:none;color:#3366cc">设置</a></div>
+			            <div style="text-align:center;height:18px;line-height:18px;color:#999;padding:6px 0;font-size:12px">若不想再收到此类邮件，请点击<a href="'.U('public/Account/notify').'" style="text-decoration:none;color:#46ADDB">设置</a></div>
 			            <div style="line-height:18px;text-align:center"><p style="color:#999;font-size:12px">'.$site['site_footer'].'</p></div>
 			        </div></div>';
 		$s['ctime'] = time();

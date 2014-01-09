@@ -237,8 +237,6 @@ class ProfileAction extends Action {
 				$this->uid
 		) );
 		$this->setDescription ( t ( $user_category . $user_info ['location'] . ',' . implode ( ',', $user_tag [$this->uid] ) . ',' . $user_info ['intro'] ) );
-		
-		
 		$this->display ();
 	}
 	
@@ -286,8 +284,6 @@ class ProfileAction extends Action {
 		{
 			$followState=2;//关注的人
 		}
-		/*print('<br /><br /><br /><br />');
-		print_r($state);*/
 		
 		$this->assign ( 'followstate', $followState );
 		// 获取用户信息
@@ -892,11 +888,7 @@ class ProfileAction extends Action {
 		//我的关注
 		$feedwhere =" `uid` = ".$this->uid;
 		$feedfollowinglist = model('FeedFollowing')->getFeedFollowingList1($feedwhere, 3);
-		$this->assign ( 'feed_followinglist', $feedfollowinglist );
-		
-		/*print('<br /><br /><br /><br />');
-		print_r($list);*/
-		
+		$this->assign ( 'feed_followinglist', $feedfollowinglist );		
 	}
 	
 	/**
@@ -1243,11 +1235,7 @@ class ProfileAction extends Action {
 
 		} else {
 			$this->_assignUserInfo ( $this->uid );
-		}
-		
-		
-		
-		
+		}		
 		$this->display ();
 	}
 	
@@ -1295,6 +1283,12 @@ class ProfileAction extends Action {
 		$this->display ();
 	}
 	
+	/**
+	 * 邀请回答
+	 *
+	 * @return array
+	 *
+	 */	
 	public function invitefriendanswer()
 	{
 		$return  = array('status'=>0,'data'=>L('邀请失败'));
@@ -1308,35 +1302,37 @@ class ProfileAction extends Action {
 		$InviteResult = '<br />';
 		foreach	($uids as $k => $v)
 		{
-			$user_info = model ( 'User' )->getUserInfo ($v);
-			$index = 0;
-			$map['uid'] = $this->uid;
-			$map['invite_uid'] = $v;
-			$map['questionid'] = $QuestionID;
-			$datalist = model('InviteAnswer')->getInviteAnswerList($map);
-			if($datalist['count'] != 0)
+			if($v != '')
 			{
-				$index = 1;
-				$InviteResult .= "已经邀请过“".$user_info['uname']."”<br />";
-				continue;	
-			}
-			
-			$result = model('InviteAnswer')->addInvite($this->uid, $v, $QuestionID);
-			if(!$result)
-			{
-				$index = 1;
-				$InviteResult .= "邀请“".$user_info['uname']."”失败<br />";
-				continue;
-			}
-			if($index == 0)
-			{
-				$InviteResult .= "邀请“".$user_info['uname']."”成功<br />";
+				$user_info = model ( 'User' )->getUserInfo ($v);
+				$index = 0;
+				$map['uid'] = $this->uid;
+				$map['invite_uid'] = $v;
+				$map['questionid'] = $QuestionID;
+				$datalist = model('InviteAnswer')->getInviteAnswerList($map);
+				if($datalist['count'] != 0)
+				{
+					$index = 1;
+					$InviteResult .= "已经邀请过“".$user_info['uname']."”<br />";
+					continue;	
+				}
+				
+				$result = model('InviteAnswer')->addInvite($this->mid, $v, $QuestionID);
+				if(!$result)
+				{
+					$index = 1;
+					$InviteResult .= "邀请“".$user_info['uname']."”失败<br />";
+					continue;
+				}
+				if($index == 0)
+				{
+					$InviteResult .= "邀请“".$user_info['uname']."”成功<br />";
+				}
 			}
 		}
 
 		$return  = array('status'=>0,'data'=>L($InviteResult));
-		echo json_encode($return);exit();	
-		
+		echo json_encode($return);exit();
 	}
 	
 	public function getInviteAnswerList()

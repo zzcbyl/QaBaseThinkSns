@@ -1575,10 +1575,10 @@ class FeedModel extends Model {
 		$d['content'] = '';
 		$d['body'] = $content.'&nbsp;';
 		$d['from'] = 0; //TODO
-		if($attach_ids){
+		if($attach_ids) {
 			$type = 'postimage';
 			$d['attach_id'] = $attach_ids;
-		}else{
+		} else {
 			$type = 'post';
 		}
 		$feed = model('Feed')->put($uid, 'public', $type, $d, '', 'feed');
@@ -1636,6 +1636,20 @@ class FeedModel extends Model {
 		return $return;
 	}
 	
-	
+	public function getInviteList($uid, $limit = 10, $LoadWhere)
+	{
+		$where = 'invite_uid = '.$uid;
+		if(!empty($LoadWhere))
+			$where .= ' and '.$LoadWhere;
+		$inviteResult = model('InviteAnswer')->getInviteAnswerList($where, $limit, 'invite_answer_id desc');
+		foreach($inviteResult['data'] as $k => $v)
+		{
+			$feed = $this->getFeeds(array(intval($v['questionid'])));
+			$feed[0]['invite'] = $v;
+			$inviteResult['data'][$k] = $feed[0];
+		}
+		
+		return $inviteResult;
+	}
 	
 }

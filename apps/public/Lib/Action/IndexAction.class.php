@@ -78,6 +78,27 @@ class IndexAction extends Action {
 		$this->display();
 	}
 	
+	/**
+	 * 邀请我的
+	 *
+	 * @return void
+	 *
+	 */	
+	public function inviteme()
+	{
+		// 安全过滤
+		$d['type'] = 'invite';
+		$d['feed_type'] = t($_GET['feed_type']) ? t($_GET['feed_type']) : '';
+		$d['feed_key'] = t($_GET['feed_key']) ? t($_GET['feed_key']) : '';
+		$this->assign($d);
+		
+		// 设置标题与关键字信息
+		$this->setTitle('邀请我的');
+		$this->setKeywords('邀请我的');
+
+		$this->display();	
+	}
+	
 	
 	/**
 	* 获取指定用户的某条动态

@@ -345,6 +345,14 @@ class FeedListWidget extends Widget {
 				$list = model('FeedFollowing')->getFeedFollowingList($where, $this->limitnums);
 				//print_r($list);
 				break;
+			case 'invite':	//邀请我的
+				$current_uid=$GLOBALS['ts']['mid'];
+				if($var['loadId'] > 0){ //非第一次
+					$LoadWhere = "invite_answer_id < '".intval($var['loadId'])."'";
+				}
+				$list =  model('Feed')->getInviteList($current_uid, $this->limitnums, $LoadWhere);
+				//print_r($list);
+				break;
 		}
     	// 分页的设置
         isset($list['html']) && $var['html'] = $list['html'];
@@ -370,6 +378,10 @@ class FeedListWidget extends Widget {
 						$feedlist['data'][$index]=$v['feed_data']['data'][0];
 						$index++;
 					}
+					break;
+				case 'invite':	//邀请我的
+					$content['firstId'] = $var['firstId'] = $list['data'][0]['invite']['invite_answer_id'];
+					$content['lastId'] = $var['lastId'] = $list['data'][(count($list['data'])-1)]['invite']['invite_answer_id'];
 					break;
 				default:
 					$content['firstId'] = $var['firstId'] = $list['data'][0]['feed_id'];

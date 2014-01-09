@@ -265,7 +265,7 @@ core.weibo = {
             if (description != undefined)
                 description.ready = null;
         };
-        $(obj.childModels['post_ok'][0]).fadeOut(500, fadeOutObj);
+        $(obj.childModels['post_ok'][0]).fadeOut(1000, fadeOutObj);
         //追问或者要求补充
         if (int_isadd == 1) {
             //$('#AddQuestionDiv').hide();
@@ -284,7 +284,7 @@ core.weibo = {
             core.uploadFile.removeParentDiv();
         }
         if ("undefined" != typeof (core.contribute)) {
-            core.contribute.resetBtn();
+            //core.contribute.resetBtn();
         }
     },
     // 将json数据插入到feed-lists中
@@ -399,12 +399,12 @@ core.weibo = {
                 $(obj).removeClass('fb');
                 if (leftNums == initNums && $(obj).find('img').size() == 0) {
                     if (typeof (objInput) == 'object') {
-                        objInput[0].className = 'btn-grey-white';
+                        //objInput[0].className = 'btn-grey-white';
                     }
                     return false; // 没有输入内容
                 }
                 if (typeof (objInput) == 'object') {
-                    objInput[0].className = 'btn-green-big';
+                    //objInput[0].className = 'btn-green-big';
                 }
                 return true;
             } else {
@@ -415,7 +415,7 @@ core.weibo = {
                 $("#numsLeft").html(html);
                 //obj.parentModel.parentModel.parentModel.childModels['numsLeft'][0].innerHTML = html;
                 if (typeof (objInput) == 'object') {
-                    objInput[0].className = 'btn-grey-white';
+                    //objInput[0].className = 'btn-grey-white';
                 }
                 return false;
             }
@@ -437,12 +437,12 @@ core.weibo = {
                 $(obj).removeClass('fb');
                 if (leftNums == initNums && $(obj).find('img').size() == 0) {
                     if (typeof (objInput) == 'object') {
-                        objInput[0].className = 'btn-grey-white';
+                        //objInput[0].className = 'btn-grey-white';
                     }
                     return false; // 没有输入内容
                 }
                 if (typeof (objInput) == 'object') {
-                    objInput[0].className = 'btn-green-big';
+                    //objInput[0].className = 'btn-green-big';
                 }
                 return true;
             } else {
@@ -450,14 +450,25 @@ core.weibo = {
                 $(obj).addClass('fb');
                 obj.parentModel.parentModel.parentModel.childModels['numsLeft'][0].innerHTML = html;
                 if (typeof (objInput) == 'object') {
-                    objInput[0].className = 'btn-grey-white';
+                    //objInput[0].className = 'btn-grey-white';
                 }
                 return false;
             }
         }
     },
+    //邀请回答某个问题
+    Invite: function (feedID, inviteList) {
+        var url = U('public/profile/invitefriendanswer');
+        inviteList = inviteList.substring(0, inviteList.length - 1);
+        alert(url);
+        alert(inviteList);
+        $.post(url, { QuestionID: feedID, InviteUids: inviteList }, function (msg) {
+            ui.showMessage(msg.data, 2, 3);
+        }, 'json');
+
+    },
     // 发布微博
-    post_feed: function (_this, mini_editor, textarea, description_editor, description, questionid, isbox, url, isAdd) {
+    post_feed: function (_this, mini_editor, textarea, description_editor, description, questionid, isbox, url, isAdd, inviteList) {
         var obj = this;
         // 避免重复发送
         if ("undefined" == typeof (obj.isposting)) {
@@ -535,12 +546,9 @@ core.weibo = {
 
         txtVal = txtVal.replace(/\n/g, "<br />")
 
-        if (!url) {
+        if (!url || url == "") {
             url = U('public/Feed/PostFeed');
         }
-
-        //        alert(data);
-        //        return;
 
         var Qid = 0;
         if (questionid != null && questionid != undefined)
@@ -552,8 +560,8 @@ core.weibo = {
         // 发布微博
         $.post(url, { body: data, type: type, app_name: app_name, content: '', attach_id: attach_id, videourl: videourl, channel_id: channel_id, source_url: attrs.source_url, gid: attrs.gid, description: txtVal, questionid: Qid, addask: int_isadd }, function (msg) {
             obj.isposting = false;
-            _this.className = 'btn-grey-white';
-            $(_this).html('<span>' + L('PUBLIC_SHARE_BUTTON') + '</span>');
+            //_this.className = 'btn-grey-white';
+            //$(_this).html('<span>' + L('PUBLIC_SHARE_BUTTON') + '</span>');
             if (msg.status == 1) {
                 if ("undefined" != typeof (core.uploadFile)) {
                     core.uploadFile.clean();
@@ -573,6 +581,12 @@ core.weibo = {
                         }, 1500);
                     }
                 }
+
+                //邀请回答
+                if ("undefined" != typeof (inviteList) && inviteList.value != "") {
+                    core.weibo.Invite(msg.feedId, inviteList.value);
+                }
+
                 M.setArgs(_this, setargs);
             } else {
                 ui.error(msg.data);

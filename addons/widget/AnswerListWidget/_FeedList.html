@@ -84,9 +84,9 @@ $admintaskrecom = CheckPermission('vtask_admin','vtask_recommend');
 	    </eq>
         <i class="vline">|</i>
         -->
-        <a href="javascript:void(0);" onclick="ShowSupplementDiv('SupplementAnswer_{$vl.feed_id}');">要求补充</a>
-        <i class="vline">|</i>
         <php>if($GLOBALS['ts']['mid'] == $vl['feed_quid']) {</php>
+            <a href="javascript:void(0);" onclick="ShowSupplementDiv('SupplementAnswer_{$vl.feed_id}');">要求补充</a>
+            <i class="vline">|</i>
             <a href="javascript:void(0)" onclick="core.plugInit('thank',this,'{$vl.feed_id}','{$vl.uid}');" <eq name='vl.thank_count' value='0'>rel="yes"</eq> ><php>if($vl['thank_count']==0) { print('感谢'); } else { print('已感谢'); } </php></a>
 		    <i class="vline">|</i>
             <php>} else {</php>

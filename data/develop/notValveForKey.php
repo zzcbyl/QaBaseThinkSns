@@ -51,5 +51,12 @@ return array (
   'PUBLIC_GET_INFORMATION_FAIL' => '?app=public&mod=Passport&act=login',
   'NOTIFY_REGISTER_ACTIVE_CONTENT' => '?app=public&mod=Register&act=doStep2',
   '_OPERATION_SUCCESS_' => '?app=public&mod=Passport&act=logout',
+  '<BR />邀请“困兽”成功<BR />邀请“嫣然”成功<BR />' => '?app=public&mod=profile&act=invitefriendanswer',
+  '<BR />邀请“淡趋心底的呐份悲殇”成功<BR />邀请“困兽”成功<BR />邀请“嫣然”成功<BR />邀请“薄凉先森”成功<BR />' => '?app=public&mod=Profile&act=invitefriendanswer',
+  '<BR />邀请“淡趋心底的呐份悲殇”成功<BR />邀请“冥冥之中”成功<BR />邀请“困兽”成功<BR />邀请“嫣然”成功<BR />' => '?app=public&mod=profile&act=invitefriendanswer',
+  '<BR />邀请“淡趋心底的呐份悲殇”成功<BR />邀请“冥冥之中”成功<BR />邀请“困兽”成功<BR />' => '?app=public&mod=profile&act=invitefriendanswer',
+  '<BR />邀请“薄凉先森”成功<BR />' => '?app=public&mod=profile&act=invitefriendanswer',
+  '<BR />邀请“心已亡”成功<BR />邀请“痴男怨女”成功<BR />邀请“无处安放的青春”成功<BR />邀请“奋斗”成功<BR />邀请“坚强坚强”成功<BR />邀请“简单不难”成功<BR />' => '?app=public&mod=profile&act=invitefriendanswer',
+  '<BR />邀请“冥冥之中”成功<BR />邀请“困兽”成功<BR />邀请“嫣然”成功<BR />' => '?app=public&mod=profile&act=invitefriendanswer',
 );
 ?>

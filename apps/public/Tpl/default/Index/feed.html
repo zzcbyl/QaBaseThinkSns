@@ -1,6 +1,6 @@
 <include file="__THEME__/public_header" />
 <div class="container">
-<div class="cont_left">
+<div class="cont_left pd17">
     <div class="extend minh">
         <!--feed list-->
         <div class="feed_lists">
@@ -30,7 +30,7 @@
                         <table width="550px" style="line-height: 22px;">
                             <tr>
                                 <td style="width: 550px; display: block;">
-                                    <a href="{:U('public/Profile/feed',array('feed_id'=>$vl['feed_id'],'uid'=>$vl['uid']))}">
+                                    <a>
                                         {$feedInfo.body|format=true}</a>
                                 </td>
                             </tr>
@@ -60,7 +60,7 @@
                             </eq>-->
                             <!--<a href="#">回答</a>
                             <i class="vline">|</i> -->
-                            <a href="javascript:void(0);" onclick="if($('#InvitedAnswer').css('display')=='none')  $('#InvitedAnswer').show();  else  $('#InvitedAnswer').hide(); $('#mainIframe')[0].contentWindow.ShowInviteResult();">邀请回答</a>
+                            <a href="javascript:void(0);" onclick="showInviteAnswerDiv();">邀请回答</a>
                             <i class="vline">|</i>
                             <a href="javascript:void(0);" onclick="if($('#AddQuestionDiv').css('display')=='none')  $('#AddQuestionDiv').show();  else  $('#AddQuestionDiv').hide(); ">追问</a>
                             <i class="vline">|</i>
@@ -242,6 +242,19 @@
 
     function CloseInviteDiv() {
         $('#InvitedAnswer').hide();
+    }
+
+    var showfirst = 1;
+    function showInviteAnswerDiv() {
+        if ($('#InvitedAnswer').css('display') == 'none') {
+            $('#InvitedAnswer').show();
+            $('#mainIframe')[0].contentWindow.ShowInviteResult();
+            if (showfirst == 0) {
+                $('#mainIframe')[0].contentWindow.ShowInvite();
+            }
+        }
+        else
+            $('#InvitedAnswer').hide();
     }
 </script>
 <script type="text/javascript" src="__THEME__/js/home/module.home.js"></script>

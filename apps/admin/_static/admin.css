@@ -287,7 +287,7 @@ a:active { color:#3b5999 }
 .feed_list a.ico-details:link,.feed_list a.ico-details:visited{color:#fff;}
 /*.triangle-l{width:0;height:0;border-color:transparent #414448 transparent transparent;border-width:4px 4px 4px 0;border-style:solid;position:absolute;left:-3px;top:4px;line-height:0;font-size:0;_border-top-color:#fff;_border-bottom-color:#fff;_filter: chroma( color =#fff);_border-width:3px 3px 3px 0;}*/
 .feed_list .comment .face{width:20px;height:20px;margin:0 10px 0 0}
-.feed_list .comment .info a{color:#3366CC;font-size:12px;font-weight:bold;}
+.feed_list .comment .info a{color:#46ADDB;font-size:12px;font-weight:bold;}
 .feed_list .comment .info span span{color:#999;}
 .feed_list .content p.info{font-size: 12px;color:#999;padding:5px 0 0;overflow:hidden;*zoom:1;*margin:0 -7px 0 0;}
 .feed_list .content p.border{border:none 0;border-bottom:#ccc solid 1px;height:10px;overflow:hidden;margin:0 0 8px}

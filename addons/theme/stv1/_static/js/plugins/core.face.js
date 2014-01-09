@@ -91,7 +91,7 @@ core.face = {
         //				this.textarea.focus();
         //			}
 
-        
+
         return false;
     }
 };

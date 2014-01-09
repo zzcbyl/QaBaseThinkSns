@@ -75,9 +75,9 @@ class InviteAnswerModel extends Model {
 	 * @return void array
 	 *
 	 */	
-	public function getInviteAnswerModel($questionid, $limit = 10)
+	public function getInviteAnswerModel($questionid, $limit = 10, $order = 'invite_answer_id desc')
 	{
-		$InviteList = $this->where("`questionid` = $questionid")->findPage($limit);
+		$InviteList = $this->where("`questionid` = $questionid")->order($order)->findPage($limit);
 		foreach( $InviteList['data'] as $k=>$v)
 		{
 			$UserInfo = model('user')->getUserInfo($v['uid']);
@@ -97,9 +97,9 @@ class InviteAnswerModel extends Model {
 	* @return void array
 	*
 	*/	
-	public function getInviteAnswer($questionid, $limit = 10)
+	public function getInviteAnswer($questionid, $limit = 10, $order = 'invite_answer_id desc')
 	{
-		$InviteList = $this->where("`questionid` = $questionid")->findPage($limit);
+		$InviteList = $this->where("`questionid` = $questionid")->order($order)->findPage($limit);
 		
 		return $InviteList;
 	}
@@ -111,9 +111,9 @@ class InviteAnswerModel extends Model {
 	* @return void array
 		*
 	*/	
-	public function getInviteAnswerList($map, $limit = 10)
+	public function getInviteAnswerList($map, $limit = 10, $order = 'invite_answer_id desc')
 	{
-		$InviteList = $this->where($map)->findPage($limit);
+		$InviteList = $this->where($map)->order($order)->findPage($limit);
 		
 		return $InviteList;
 	}

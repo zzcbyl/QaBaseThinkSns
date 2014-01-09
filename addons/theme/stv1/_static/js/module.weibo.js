@@ -135,7 +135,10 @@ M.addEventFns({
             var questionid_editor = this.parentModel.parentModel.childModels['mini_editor'][0];
             var questionid = $(mini_editor).find('input').get(0);
 
-            core.weibo.post_feed(_this, mini_editor, textarea, description_editor, description, questionid);
+            var inviteObj = this.parentModel;
+            var inviteList = $(inviteObj).find('input').get(2);
+
+            core.weibo.post_feed(_this, mini_editor, textarea, description_editor, description, questionid, false, '', 0, inviteList);
         }
     },
     post_addask: {	//追问

@@ -106,7 +106,7 @@ a:hover .contribute{background-position:0 -207px;}
 .feed_list a.ico-details:link,.feed_list a.ico-details:visited{color:#fff;}
 /*.triangle-l{width:0;height:0;border-color:transparent #414448 transparent transparent;border-width:4px 4px 4px 0;border-style:solid;position:absolute;left:-3px;top:4px;line-height:0;font-size:0;_border-top-color:#fff;_border-bottom-color:#fff;_filter: chroma( color =#fff);_border-width:3px 3px 3px 0;}*/
 .feed_list .comment .face{width:20px;height:20px;margin:0 10px 0 0}
-.feed_list .comment .info a{color:#3366CC;font-size:12px;font-weight:bold;}
+.feed_list .comment .info a{color:#46ADDB;font-size:12px;font-weight:bold;}
 .feed_list .content p.info{font-size: 12px;color:#999;padding:5px 0 0;overflow:hidden;*zoom:1;}
 .feed_list .content p.border{border:none 0;border-bottom:#ccc solid 1px;height:10px;overflow:hidden;margin:0 0 8px}
 .feed_list .content p.border .arrow-t{margin:3px 0 0 85px;position:absolute;}
@@ -269,9 +269,9 @@ a:hover .contribute{background-position:0 -207px;}
 .send_weibo .input .action{position:relative;*zoom:1}
 .send_weibo .input .btn-disable, .send_weibo .input .btn-send,.send_weibo .input .btn-gray, .send_weibo .input .release{float: right;}
 .send_weibo .input .release{width:auto;font-size:12px;}
-.send_weibo .input-content{overflow:hidden;*zoom:1;}
-.send_weibo .input-content .image-list{margin:10px 0 0 0;overflow: hidden;border-left:#eee solid 1px;*zoom:1;}
-.send_weibo .input-content .image-list li{background:#fff;border: 1px solid #eee;border-left:none 0;float: left;text-align: center;width: 126px;padding:13px 0 5px;_width:125px}
+.twbq_box .input-content{overflow:hidden;*zoom:1;}
+.twbq_box .input-content .image-list{margin:-1px 0 0 0;overflow: hidden;border-left:#eee solid 1px;*zoom:1;}
+.twbq_box .input-content .image-list li{background:#fff;border: 1px solid #eee;border-left:none 0;float: left;text-align: center;width: 126px;padding:13px 0 5px;_width:125px; height:auto;}
 .image-list .loading{padding:0}
 .image-list li .loads{width: 126px;height:102px;position:relative}
 .image-list li .loads img{position:absolute;left:55px;top:50px}
@@ -622,7 +622,7 @@ a:hover .contribute{background-position:0 -207px;}
 .layer-mini-info .action .btn-cancel span,.layer-content .btn-cancel span,.layer-follow-list .btn-cancel span,.weiba-manage .btn-cancel span,.form-avatar .btn-cancel span,.tipoff-manage .btn-cancel span{padding:5px 12px;_margin:-1px 0 0 0;_height:15px;}
 
 /*layer card*/
-.name-card{color:#535353;width:400px;}
+.name-card{color:#535353;}
 .name-card .name{padding:15px 15px 10px;_padding-bottom:0;}
 .name-card .name dt, .name-card .name dd, .name-card .info dt{float:left;}
 .name-card .name dt img{display:block;width:50px;height:50px;}
