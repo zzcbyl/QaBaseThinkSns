@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 include_once( 'third-party-api/weibo/config.php' );
 include_once( 'third-party-api/weibo/saetv2.ex.class.php' );
 
@@ -507,6 +507,16 @@ class RegisterAction extends Action
 
     public function weibologin() {
         //echo "aaaaa";
+
+        $o = new SaeTOAuthV2( WB_AKEY , WB_SKEY );
+
+        $code_url = $o->getAuthorizeURL( WB_CALLBACK_URL );
+
+        $this->code_url = $code_url;
+
+        //$this->redirect($code_url);
+
+        $this->display();
     }
 
 
