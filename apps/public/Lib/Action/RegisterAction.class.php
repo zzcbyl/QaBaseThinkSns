@@ -561,8 +561,8 @@ class RegisterAction extends Action
             $uid_get = $c->get_uid();
             $uid = $uid_get['uid'];
             $user_message = $c->show_user_by_id( $uid);
-            if (judge_weibo_user_status($user_message)=="unreg"){
-                $user["login"] = $user_message["id"];
+            if ($this->judge_weibo_user_status($user_message)=="unreg"){
+                $user["login"] = $uid;
                 $user["uname"] = $user_message["screen_name"];
                 $user["password"] = $user_message["screen_name"];
                 $user["email"] = $user_message["screen_name"]+"@sina.weibo.com";
@@ -573,9 +573,7 @@ class RegisterAction extends Action
 
                 $uid = $this->_user_model->addUser($user);
 
-                echo $uid;
 
-                return;
 
                 if($uid)
                 {
@@ -610,9 +608,9 @@ class RegisterAction extends Action
     }
 
     public function judge_weibo_user_status($user_message) {
-        echo "111";
+        //echo "111";
         return "unreg";
-        echo "222";
+        //echo "222";
     }
 
 
