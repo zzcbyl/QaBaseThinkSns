@@ -529,12 +529,17 @@ class RegisterAction extends Action
             $keys['redirect_uri'] = WB_CALLBACK_URL;
             try {
                 $token = $o->getAccessToken( 'code', $keys ) ;
+                $_SESSION["token"] = $token;
             } catch (OAuthException $e) {
             }
         }
 
         if ($token) {
-            echo "finish";
+            $c = new SaeTClientV2( WB_AKEY , WB_SKEY , $_SESSION['token']['access_token'] );
+            $uid_get = $c->get_uid();
+            $uid = $uid_get['uid'];
+            $user_message = $c->show_user_by_id( $uid);
+            echo $user_message;
         }
         else{
             echo "fail";
