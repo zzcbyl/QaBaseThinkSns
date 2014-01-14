@@ -40,21 +40,25 @@ class CommentWidget extends Widget
 		//对答案只能赞成或者反对一次
 		if($var['comment_type'] == 1 || $var['comment_type'] == 2)
 		{
-			$Commentwhere='`app`=\''.t($var['app_name']).'\' and `table`=\''.t($var['table']).'\' and `row_id`='.intval($var['row_id']).' and `uid`='.$this->mid.' and (`comment_type`=1 or `comment_type`=2)';
+			$Commentwhere='`app`=\''.t($var['app_name']).'\' and `table`=\''.t($var['table']).'\' and `row_id`='.intval($var['row_id']).' and `uid`='.$this->mid.' and `is_del` = 0 and (`comment_type`=1 or `comment_type`=2)';
 			$hasComment=model('Comment')->hasComment($Commentwhere);
 			if($hasComment)
 			{
-				$return = array('status'=>2,'data'=>'<div id="commentlist_'.intval($var['row_id']).'"></div>');
+				$returnData = '<div class="answer2"><div class="aTop511"><p class="icon2" style="right:85px"></p></div><div class="aCenter2" style="width: 478px;"><div id="commentlist_'.intval($var['row_id']).'"></div></div><div class="aBottom511"></div></div>';
+				if($var['comment_type'] == 2)
+					$returnData = '<div class="answer2"><div class="aTop511"><p class="icon2" style="right:45px"></p></div><div class="aCenter2" style="width: 478px;"><div id="commentlist_'.intval($var['row_id']).'"></div></div><div class="aBottom511"></div></div>';	
+				
+				$return = array('status'=>2,'data'=>$returnData);
 				return $var['isAjax'] == 1 ?  json_encode($return) : $return['data'];
 			}
 		}
-
+		
 		//评论自己的内容
-		if($this->mid == $var['app_uid'])
+		/*if($this->mid == $var['app_uid'])
 		{
-			$return = array('status'=>2,'data'=>'<div id="commentlist_'.intval($var['row_id']).'"></div>');
+			$return = array('status'=>2,'data'=>'<div class="answer2"><div class="aTop2"><p class="icon2"></p></div><div class="aCenter2"><div id="commentlist_'.intval($var['row_id']).'"><div style="text-align:center; color: #999999;">暂无评论</div></div></div><div class="aBottom2"></div></div>');
 			return $var['isAjax'] == 1 ?  json_encode($return) : $return['data'];
-		}
+		}*/
 		
         if($var['table'] == 'feed' && $this->mid != $var['app_uid']){
             $userPrivacy =  model('UserPrivacy')->getPrivacy($this->mid,$var['app_uid']);
@@ -100,6 +104,7 @@ class CommentWidget extends Widget
         if ( !CheckPermission('core_normal','feed_share') || !in_array( 'repost' , $weiboSet['weibo_premission'] ) ){
         	$var['canrepost'] = 0;
         }
+		//print_r($var);
 	    $content = $this->renderFile(dirname(__FILE__)."/".$var['tpl'].'.html',$var);
 		self::$rand ++;
         $ajax = $var['isAjax'];
@@ -119,6 +124,7 @@ class CommentWidget extends Widget
 		$map['comment_type']	= t($_POST['comment_type']);
     	if(!empty($map['row_id'])){
     		//分页形式数据
+			$var['comment_type'] = t($_POST['comment_type']);
     		$var['limit'] 	 = 10;
     		$var['order']	 = 'DESC';
     		$var['cancomment'] = $_POST['cancomment'];
@@ -324,7 +330,10 @@ class CommentWidget extends Widget
         }
 
     	if(!empty($comment_id)) {
-    		return model('Comment')->deleteComment($comment_id,$this->mid);
+			$result = model('Comment')->deleteComment($comment_id,$this->mid);
+			model('Feed')->cleanCache(array(intval($comment['row_id'])));
+			
+			return $result;
     	}
     	return false;
     }

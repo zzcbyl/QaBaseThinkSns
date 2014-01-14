@@ -403,12 +403,12 @@ M.addEventFns({
             if (this.noreply == 1) {
                 return;
             }
+
             var attrs = M.getEventArgs(this);
             attrs.to_comment_id = $(this).attr('to_comment_id');
             attrs.to_uid = $(this).attr('to_uid');
             attrs.to_comment_uname = $(this).attr('to_comment_uname');
             attrs.addToEnd = $(this).attr('addtoend');
-
             var comment_list = this.parentModel.parentModel;
             core.comment.init(attrs, comment_list);
 
@@ -417,10 +417,7 @@ M.addEventFns({
                 $(_this).attr('to_uid', '0');
                 $(_this).attr('to_comment_id', '0');
                 $(_this).attr('to_comment_uname', '');
-                if (attrs.closeBox == 1) {
-                    ui.box.close();
-                    ui.success(L('PUBLIC_CENTSUCCESS'));
-                }
+                ui.success(L('PUBLIC_CENTSUCCESS'));
             }
             core.comment.addComment(after, this);
             this.noreply = 1;

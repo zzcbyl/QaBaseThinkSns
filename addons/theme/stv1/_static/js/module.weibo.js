@@ -162,7 +162,6 @@ M.addEventFns({
 
             var questionid_editor = this.parentModel.parentModel.childModels['mini_editor'][0];
             var questionid = $(mini_editor).find('input').get(0);
-
             core.weibo.post_feed(_this, mini_editor, textarea, null, null, questionid, false, "", true);
         }
     },
@@ -187,7 +186,8 @@ M.addEventFns({
 
             var questionid_editor = this.parentModel.parentModel.childModels['mini_editor'][0];
             var questionid = $(mini_editor).find('input').get(0);
-
+//            alert(textarea.value);
+//            alert(questionid.value);
             core.weibo.post_feed(_this, mini_editor, textarea, null, null, questionid, false, "", true);
         }
     },

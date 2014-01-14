@@ -80,6 +80,7 @@ class InviteAnswerModel extends Model {
 		$InviteList = $this->where("`questionid` = $questionid")->order($order)->findPage($limit);
 		foreach( $InviteList['data'] as $k=>$v)
 		{
+			$v['ctime'] = friendlyDate($v['ctime']);
 			$UserInfo = model('user')->getUserInfo($v['uid']);
 			$inviteUserInfo = model('user')->getUserInfo($v['invite_uid']);
 			$v['userinfo'] = $UserInfo;

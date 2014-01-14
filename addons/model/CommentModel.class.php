@@ -283,7 +283,7 @@ class CommentModel extends Model {
         $ids = is_array($ids) ? $ids : explode(',', $ids);
         $map = array();
     	$map['comment_id'] = array('IN', $ids);
-        $comments = $this->field('comment_id, app,`table`, row_id, app_uid, uid')->where($map)->findAll();
+		$comments = $this->field('comment_id, app,`table`, row_id, app_uid, uid, comment_type')->where($map)->findAll();
         if(empty($comments)) {
 		    return false;
         }
@@ -318,7 +318,32 @@ class CommentModel extends Model {
         $res = $this->where($map)->save($data);
 
         if($res) {
-           	// 更新统计数目
+			foreach($comments as $c_k => $c_v) {
+				
+				$pk = D($c_v['table'])->getPk();
+				if($c_v['comment_type']==0||$c_v['comment_type']==1)
+				{
+					D($c_v['table'])->setInc('comment_count', "`{$pk}`={$c_v['row_id']}", -1);
+				}
+				else
+				{
+					D($c_v['table'])->setInc('disapprove_count', "`{$pk}`={$c_v['row_id']}", -1);
+				}
+				
+				//用户增加评论统计
+				if($c_v['comment_type']=='1') {//赞同
+					model('UserData')->setUid($c_v['app_uid'])->updateKey('comment_agree_count', 1, false);
+				}
+				else if($c_v['comment_type']=='2') {//反对
+					model('UserData')->setUid($c_v['app_uid'])->updateKey('comment_oppose_count', 1, false);
+				}
+
+				//总评论数
+				model('UserData')->setUid($c_v['app_uid'])->updateKey('comment_count', 1, false);
+				
+			}
+			
+           	/*// 更新统计数目
            	foreach($_comments as $_c_k => $_c_v) {
                 foreach($_c_v as $_c_v_k => $_c_v_v) {
                     // 应用表格“评论统计”统一使用comment_count字段名
@@ -334,7 +359,7 @@ class CommentModel extends Model {
                         model($_c_k)->cleanCache($_c_v_k);
                     }
                 }
-            }
+            }*/
 
             //添加积分
             if($app_name == 'weiba'){

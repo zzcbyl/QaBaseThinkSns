@@ -195,6 +195,7 @@ class IndexAction extends Action {
 		$addfeedlist = model('Feed')->getQuestionList( $addwhere, 100 );
 		//print_r($addfeedlist);
 		$this->assign ( 'addquestionlist', $addfeedlist['data'] );
+	
 		
 		$this->display ();
 	}

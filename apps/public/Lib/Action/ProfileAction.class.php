@@ -1275,7 +1275,7 @@ class ProfileAction extends Action {
 	*/
 	public function invitefriend()
 	{
-		$friendList = model('Follow')->getFriendList($GLOBALS['ts']['mid']);	
+		$friendList = model('Follow')->getFriendList($GLOBALS['ts']['mid'], 18);	
 		$fids = getSubByKey ( $friendList ['data'], 'fid' );
 		$this->_assignUserInfo ( $fids );
 		$this->assign('friendList',$friendList);

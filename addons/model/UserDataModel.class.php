@@ -220,4 +220,17 @@ class UserDataModel extends Model {
 		$list = $this->where($map)->order($order)->findPage($limit);
 		return $list['data'];
 	}
+	
+	/**
+	 * 清除缓存
+	 *
+	 * @param int $uid 用户Id
+	 * @return void
+	 *
+	 */	
+	public function clearCache($uid)
+	{
+		// 清掉该用户的缓存
+		model('Cache')->rm('UserData_'.$uid);	
+	}
 }

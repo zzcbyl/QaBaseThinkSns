@@ -58,5 +58,17 @@ return array (
   '<BR />邀请“薄凉先森”成功<BR />' => '?app=public&mod=profile&act=invitefriendanswer',
   '<BR />邀请“心已亡”成功<BR />邀请“痴男怨女”成功<BR />邀请“无处安放的青春”成功<BR />邀请“奋斗”成功<BR />邀请“坚强坚强”成功<BR />邀请“简单不难”成功<BR />' => '?app=public&mod=profile&act=invitefriendanswer',
   '<BR />邀请“冥冥之中”成功<BR />邀请“困兽”成功<BR />邀请“嫣然”成功<BR />' => '?app=public&mod=profile&act=invitefriendanswer',
+  '<BR />已经邀请过“困兽”<BR />邀请“嫣然”成功<BR />' => '?app=public&mod=profile&act=invitefriendanswer',
+  '<BR />已经邀请过“冥冥之中”<BR />已经邀请过“困兽”<BR />已经邀请过“嫣然”<BR />' => '?app=public&mod=profile&act=invitefriendanswer',
+  '<BR />已经邀请过“莪们的誓言”<BR />已经邀请过“作茧自缚”<BR />' => '?app=public&mod=profile&act=invitefriendanswer',
+  '<BR />已经邀请过“莪们的誓言”<BR />已经邀请过“作茧自缚”<BR />邀请“蓝眸”成功<BR />' => '?app=public&mod=profile&act=invitefriendanswer',
+  '<BR />邀请“郑达坚1991”成功<BR />邀请“简单不难”成功<BR />' => '?app=public&mod=profile&act=invitefriendanswer',
+  '<BR />已经邀请过“郑达坚1991”<BR />已经邀请过“简单不难”<BR />' => '?app=public&mod=profile&act=invitefriendanswer',
+  '<BR />邀请“安雅沫”成功<BR />' => '?app=public&mod=profile&act=invitefriendanswer',
+  '<BR />邀请“南边的城市”成功<BR />' => '?app=public&mod=profile&act=invitefriendanswer',
+  '<BR />邀请“苦情人”成功<BR />邀请“升幸福”成功<BR />邀请“伤依旧”成功<BR />' => '?app=public&mod=profile&act=invitefriendanswer',
+  '<BR />邀请“坚强坚强”成功<BR />邀请“奋斗”成功<BR />' => '?app=public&mod=profile&act=invitefriendanswer',
+  '<BR />已经邀请过“坚强坚强”<BR />已经邀请过“奋斗”<BR />邀请“南边的城市”成功<BR />' => '?app=public&mod=profile&act=invitefriendanswer',
+  '<BR />已经邀请过“坚强坚强”<BR />已经邀请过“奋斗”<BR />已经邀请过“南边的城市”<BR />邀请“农夫山泉优点悬”成功<BR />邀请“作茧自缚”成功<BR />' => '?app=public&mod=profile&act=invitefriendanswer',
 );
 ?>

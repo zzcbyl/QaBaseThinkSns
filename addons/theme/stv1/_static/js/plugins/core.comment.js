@@ -73,7 +73,7 @@ core.comment = {
                     //已经赞同或者反对过一次
                     commentListObj.innerHTML = html.data;
                     $('#commentlist_' + rowid).html('<img src="' + THEME_URL + '/image/load.gif" style="text-align:center;display:block;margin:0 auto;"/>');
-                    $.post(U('widget/Comment/getCommentList'), { app_name: appname, table: table, row_id: rowid, cancomment: cancomment, comment_type: commenttype, random: Math.random() }, function (res) { 
+                    $.post(U('widget/Comment/getCommentList'), { app_name: appname, table: table, row_id: rowid, cancomment: cancomment, comment_type: commenttype, random: Math.random() }, function (res) {
                         $('#commentlist_' + rowid).html(res);
                         M($('#commentlist_' + rowid).get(0));
                     });
@@ -122,16 +122,17 @@ core.comment = {
         //        }
 
         // 如果转发到自己的微博
-        if (this.canrepost == 1) {
-            var ischecked = $(this.comment_textarea).find("input[name='shareFeed']").get(0).checked;
-            if (ischecked == true) {
-                var ifShareFeed = 1;
-            } else {
-                var ifShareFeed = 0;
-            }
-        } else {
-            var ifShareFeed = 0;
-        }
+        var ifShareFeed = 0;
+        //        if (this.canrepost == 1) {
+        //            var ischecked = $(this.comment_textarea).find("input[name='shareFeed']").get(0).checked;
+        //            if (ischecked == true) {
+        //                var ifShareFeed = 1;
+        //            } else {
+        //                var ifShareFeed = 0;
+        //            }
+        //        } else {
+        //            var ifShareFeed = 0;
+        //        }
         var isold = $(this.comment_textarea).find("input[name='comment']");
         var comment_old = 0;
         if (isold.get(0) != undefined) {
@@ -150,7 +151,7 @@ core.comment = {
         var addToEnd = this.addToEnd;
         //alert(this.comment_type);
         var _this = this;
-        obj.innerHTML = '回复中..';
+        //obj.innerHTML = '回复中..';
         $.post(U('widget/Comment/addcomment'), {
             app_name: this.app_name,
             table_name: this.table,
@@ -167,17 +168,18 @@ core.comment = {
         }, function (msg) {
             //alert(msg);return false;
             if (msg.status == "0") {
-                obj.innerHTML = '回复';
+                //obj.innerHTML = '回复';
                 ui.error(msg.data);
             } else {
+                //alert(msg.data);
                 if ("undefined" != typeof (commentListObj.childModels['comment_list'])) {
                     if (addToEnd == 1) {
-                        $(commentListObj).find(' .comment_lists').eq(0).prepend(msg.data);
+                        $(commentListObj).find(' .nomeaningclass').eq(0).prepend(msg.data);
                     } else {
                         $(msg.data).insertBefore($(commentListObj.childModels['comment_list'][0]));
                     }
                 } else {
-                    $(commentListObj).find('.comment_lists').eq(0).html(msg.data);
+                    $(commentListObj).find('.nomeaningclass').eq(0).html(msg.data);
                 }
                 M(commentListObj);
 
@@ -187,9 +189,9 @@ core.comment = {
                     $(commenttextarea).hide();
                 }
 
-                if (obj != undefined) {
-                    obj.innerHTML = '回复';
-                }
+                //                if (obj != undefined) {
+                //                    obj.innerHTML = '回复';
+                //                }
                 //重置
                 _textarea.value = '';
                 _this.to_comment_id = 0;
