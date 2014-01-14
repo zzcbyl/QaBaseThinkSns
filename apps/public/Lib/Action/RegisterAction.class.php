@@ -561,17 +561,22 @@ class RegisterAction extends Action
             $uid_get = $c->get_uid();
             $uid = $uid_get['uid'];
             $user_message = $c->show_user_by_id( $uid);
-            if (judge_weibo_user_status($user_message)){
-                $user["login"] = $user_message["screen_name"];
+            if (judge_weibo_user_status($user_message)=="unreg"){
+                $user["login"] = $user_message["id"];
                 $user["uname"] = $user_message["screen_name"];
                 $user["password"] = $user_message["screen_name"];
-                $user["email"] = $user_message["screen_name"];
+                $user["email"] = $user_message["screen_name"]+"@sina.weibo.com";
                 $user["sex"] = $user_message["gender"]=="m"? 1 : 2 ;
                 $user["invite_code"] = $_SESSION["invite_code"];
                 $user["is_active"] = 1;
                 $user["is_audit"] = 1;
 
                 $uid = $this->_user_model->addUser($user);
+
+                echo $uid;
+
+                return;
+
                 if($uid)
                 {
                     // 添加积分
@@ -605,7 +610,9 @@ class RegisterAction extends Action
     }
 
     public function judge_weibo_user_status($user_message) {
+        echo "111";
         return "unreg";
+        echo "222";
     }
 
 
