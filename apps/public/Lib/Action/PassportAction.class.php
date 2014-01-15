@@ -341,7 +341,8 @@ class PassportAction extends Action
 		$this->assign('ThankUserInfoList', $ThankUserInfoList);
 		//print_r($ThankUserInfoList);
 		
-		
+		$this->setTitle ('广场' );
+		$this->setKeywords ('广场');
 		$this->display();
 	}
 }

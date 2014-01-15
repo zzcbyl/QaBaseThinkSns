@@ -123,6 +123,13 @@ class FeedAction extends Action {
 			$return ['data'] = $this->fetch();
 		}
 		
+		//填充邀请回答表中的答案ID字段
+		if(intval($_POST['inviteid']) > 0)
+		{
+			$InviteMap['answerid'] = $data ['feed_id'];
+			model('InviteAnswer')->where('invite_answer_id = '.$_POST['inviteid'])->save($InviteMap);
+		}
+		
 		// 微博ID
 		$return ['feedId'] = $data ['feed_id'];
 		$return ['is_audit'] = $data ['is_audit'];

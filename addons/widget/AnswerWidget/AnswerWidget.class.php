@@ -28,6 +28,7 @@ class AnswerWidget extends Widget {
 		$var['initHtml'] = '';
 		$var['post_event'] ='post_feed';
 		$var['cancomment'] = 0;
+		$var['inviteid'] = $data['inviteid'];
 		is_array($data) && $var = array_merge($var,$data);
 		!$var['send_type'] && $var['send_type'] = 'send_weibo';
 		$weiboSet = model('Xdata')->get('admin_Config:feed');

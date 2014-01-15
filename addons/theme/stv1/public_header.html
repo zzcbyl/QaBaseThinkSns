@@ -118,6 +118,7 @@
                 </ul>
 
                 <ul class="message_list_container message_list_new"  style="display:none;">
+                    <li rel="new_invite_count" style="display:none"><span></span>，<a href="{:U('public/Profile/invite',array('uid'=>$mid))}">{:L('PUBLIC_NEWINVITECOUNT_REMIND')}</a></li>
                     <li rel="new_answer_count" style="display:none"><span></span>，<a href="{:U('public/Profile/newanswerinfo',array('uid'=>$mid))}">{:L('PUBLIC_NEWANSWER_REMIND')}</a></li>
                     <li rel="new_comment_count" style="display:none"><span></span>，<a href="{:U('public/Profile/newcommentinfo',array('uid'=>$mid))}">{:L('PUBLIC_NEWCOMMENT_REMIND')}</a></li>
                     <li rel="new_comment_agree_count" style="display:none"><span></span>，<a href="{:U('public/Profile/newagreeinfo',array('uid'=>$mid))}">{:L('PUBLIC_NEWAGREECOMMENT_REMIND')}</a></li>

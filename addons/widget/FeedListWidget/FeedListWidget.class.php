@@ -350,7 +350,7 @@ class FeedListWidget extends Widget {
 				if($var['loadId'] > 0){ //非第一次
 					$LoadWhere = "invite_answer_id < '".intval($var['loadId'])."'";
 				}
-				$list =  model('Feed')->getInviteList($current_uid, $this->limitnums, $LoadWhere);
+				$list =  model('Feed')->getInviteList($current_uid, $this->limitnums, $LoadWhere, $var['newcount']);
 				//print_r($list);
 				break;
 		}

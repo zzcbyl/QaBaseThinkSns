@@ -357,7 +357,6 @@ M.addEventFns({
         click: function () {	//点击评论的时候
             var attrs = M.getEventArgs(this);
             var comment_list = this.parentModel.childModels['comment_detail'][0];
-
             //			if("undefined" == typeof(core.comment)){
             //				core.plugInit('comment',attrs,comment_list);
             //				core.setTimeout("core.comment.display()",150);
@@ -423,7 +422,7 @@ M.addEventFns({
             this.noreply = 1;
             setTimeout(function () {
                 _this.noreply = 0;
-            }, 5000);
+            }, 3000);
         },
         load: function () {
             var attrs = M.getEventArgs(this);
@@ -569,21 +568,22 @@ var follow = {
                 _this.updateFollowCount(1);
                 _this.updateFriendCount(1);
                 updateUserData('follower_count', 1, args.uid);
-                if ("following_right" == args.refer) {
-                    var item = node.parentModel;
-                    // item.parentNode.removeChild(item);
-                    $(item).slideUp('normal', function () {
-                        $(this).remove();
-                    });
-                    $.post(U('widget/RelatedUser/changeRelate'), { uid: args.uid, limit: 1 }, function (msg) {
-                        var _model = M.getModels("related_list");
-                        $(_model[0]).append(msg);
-                        M(_model[0]);
-                    }, 'json');
-                    ui.success("关注成功");
-                } else {
-                    followGroupSelectorBox(args.uid, args.isrefresh);
-                }
+                ui.success("关注成功");
+//                if ("following_right" == args.refer) {
+//                    var item = node.parentModel;
+//                    // item.parentNode.removeChild(item);
+//                    $(item).slideUp('normal', function () {
+//                        $(this).remove();
+//                    });
+//                    $.post(U('widget/RelatedUser/changeRelate'), { uid: args.uid, limit: 1 }, function (msg) {
+//                        var _model = M.getModels("related_list");
+//                        $(_model[0]).append(msg);
+//                        M(_model[0]);
+//                    }, 'json');
+//                    ui.success("关注成功");
+//                } else {
+//                    followGroupSelectorBox(args.uid, args.isrefresh);
+//                }
             } else {
                 ui.error(txt.info);
             }

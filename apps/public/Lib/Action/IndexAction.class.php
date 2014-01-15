@@ -71,8 +71,8 @@ class IndexAction extends Action {
 				$this->setKeywords('我关注的频道');
 				break;
 			default:
-				$this->setTitle(L('PUBLIC_INDEX_INDEX'));
-				$this->setKeywords(L('PUBLIC_INDEX_INDEX'));
+				$this->setTitle('我的首页');
+				$this->setKeywords('我的首页');
 		}
 
 		$this->display();
@@ -109,12 +109,15 @@ class IndexAction extends Action {
 		
 		$feed_id = intval ( $_GET ['feed_id'] );
 		
-		if (empty ( $feed_id )) {
-			$this->error ( L ( 'PUBLIC_INFO_ALREADY_DELETE_TIPS' ) );
+		if (empty($feed_id)) {
+			$this->error( L ( 'PUBLIC_INFO_ALREADY_DELETE_TIPS' ) );
 		}
 		
+		$invite_id = intval($_GET['invite_id']);
+		$this->assign('inviteid', $invite_id);
+		
 		//增加浏览数
-		model ( 'Feed' )->UpdatePV($feed_id);
+		model ('Feed')->UpdatePV($feed_id);
 		
 		//获取微博信息
 		$feedInfo = model ( 'Feed' )->get ( $feed_id );
@@ -172,7 +175,7 @@ class IndexAction extends Action {
 		}
 		// seo
 		$feedContent = unserialize ( $feedInfo ['feed_data'] );
-		$seo = model ( 'Xdata' )->get ( "admin_Config:seo_feed_detail" );
+		/*$seo = model ( 'Xdata' )->get ( "admin_Config:seo_feed_detail" );
 		$replace ['content'] = $feedContent ['content'];
 		$replace ['uname'] = $feedInfo ['user_info'] ['uname'];
 		$replaces = array_keys ( $replace );
@@ -184,7 +187,7 @@ class IndexAction extends Action {
 		$seo ['des'] = str_replace ( $replaces, $replace, $seo ['des'] );
 		! empty ( $seo ['title'] ) && $this->setTitle ( $seo ['title'] );
 		! empty ( $seo ['keywords'] ) && $this->setKeywords ( $seo ['keywords'] );
-		! empty ( $seo ['des'] ) && $this->setDescription ( $seo ['des'] );
+		! empty ( $seo ['des'] ) && $this->setDescription ( $seo ['des'] );*/
 		$this->assign ( 'userPrivacy', $userPrivacy );
 		// 赞功能
 		$diggArr = model ( 'FeedDigg' )->checkIsDigg ( $feed_id, $this->mid );
@@ -196,6 +199,8 @@ class IndexAction extends Action {
 		//print_r($addfeedlist);
 		$this->assign ( 'addquestionlist', $addfeedlist['data'] );
 	
+		$this->setTitle($feedInfo['body']);
+		$this->setKeywords($feedInfo['body']);
 		
 		$this->display ();
 	}

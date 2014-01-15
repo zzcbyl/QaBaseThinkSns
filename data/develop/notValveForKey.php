@@ -70,5 +70,12 @@ return array (
   '<BR />邀请“坚强坚强”成功<BR />邀请“奋斗”成功<BR />' => '?app=public&mod=profile&act=invitefriendanswer',
   '<BR />已经邀请过“坚强坚强”<BR />已经邀请过“奋斗”<BR />邀请“南边的城市”成功<BR />' => '?app=public&mod=profile&act=invitefriendanswer',
   '<BR />已经邀请过“坚强坚强”<BR />已经邀请过“奋斗”<BR />已经邀请过“南边的城市”<BR />邀请“农夫山泉优点悬”成功<BR />邀请“作茧自缚”成功<BR />' => '?app=public&mod=profile&act=invitefriendanswer',
+  '<BR />已经邀请过“南边的城市”<BR />' => '?app=public&mod=profile&act=invitefriendanswer',
+  '<BR />已经邀请过“南边的城市”<BR />已经邀请过“蓝眸”<BR />邀请“心已亡”成功<BR />邀请“痴男怨女”成功<BR />邀请“无处安放的青春”成功<BR />邀请“奋斗”成功<BR />邀请“坚强坚强”成功<BR />已经邀请过“简单不难”<BR />已经邀请过“郑达坚1991”<BR />' => '?app=public&mod=profile&act=invitefriendanswer',
+  '<BR />邀请“幸福永远都缺货”成功<BR />邀请“吃的是下锅的米”成功<BR />' => '?app=public&mod=profile&act=invitefriendanswer',
+  '好友' => '?app=public&mod=Profile&act=friend',
+  '{USER}的好友' => '?app=public&mod=Profile&act=friend',
+  'USER的好友' => '?app=public&mod=Profile&act=friend',
+  '<BR />邀请“XUEWG”成功<BR />' => '?app=public&mod=profile&act=invitefriendanswer',
 );
 ?>

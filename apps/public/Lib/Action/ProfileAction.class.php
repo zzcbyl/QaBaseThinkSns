@@ -67,7 +67,7 @@ class ProfileAction extends Action {
 		
 		$this->assign ( 'userPrivacy', $userPrivacy );
 		// seo
-		$seo = model ( 'Xdata' )->get ( "admin_Config:seo_user_profile" );
+		/*$seo = model ( 'Xdata' )->get ( "admin_Config:seo_user_profile" );
 		$replace ['uname'] = $user_info ['uname'];
 		if ($feed_id = model ( 'Feed' )->where ( 'uid=' . $this->uid )->order ( 'publish_time desc' )->limit ( 1 )->getField ( 'feed_id' )) {
 			$replace ['lastFeed'] = D ( 'feed_data' )->where ( 'feed_id=' . $feed_id )->getField ( 'feed_content' );
@@ -81,7 +81,28 @@ class ProfileAction extends Action {
 		$seo ['des'] = str_replace ( $replaces, $replace, $seo ['des'] );
 		! empty ( $seo ['title'] ) && $this->setTitle ( $seo ['title'] );
 		! empty ( $seo ['keywords'] ) && $this->setKeywords ( $seo ['keywords'] );
-		! empty ( $seo ['des'] ) && $this->setDescription ( $seo ['des'] );
+		! empty ( $seo ['des'] ) && $this->setDescription ( $seo ['des'] );*/
+		
+		if($_GET['type'] == 'thank')
+		{
+			$this->setTitle ( $user_info ['uname'] . '的感谢' );
+			$this->setKeywords ( $user_info ['uname'] . '的感谢' );
+		}
+		else if($_GET['type'] == 'feedfollowing')
+		{
+			$this->setTitle ( $user_info ['uname'] . '关注的问题' );
+			$this->setKeywords ( $user_info ['uname'] . '关注的问题' );
+		}
+		else if($_GET['type'] == 'agree')
+		{
+			$this->setTitle ( $user_info ['uname'] . '的赞同' );
+			$this->setKeywords ( $user_info ['uname'] . '的赞同' );
+		}
+		else
+		{
+			$this->setTitle ( $user_info ['uname'] . '的主页' );
+			$this->setKeywords ( $user_info ['uname'] . '的主页' );
+		}
 		$this->display ();
 	}
 	
@@ -117,7 +138,7 @@ class ProfileAction extends Action {
 		
 		$this->assign ( 'userPrivacy', $userPrivacy );
 		// seo
-		$seo = model ( 'Xdata' )->get ( "admin_Config:seo_user_profile" );
+		/*$seo = model ( 'Xdata' )->get ( "admin_Config:seo_user_profile" );
 		$replace ['uname'] = $user_info ['uname'];
 		if ($feed_id = model ( 'Feed' )->where ( 'uid=' . $this->uid )->order ( 'publish_time desc' )->limit ( 1 )->getField ( 'feed_id' )) {
 			$replace ['lastFeed'] = D ( 'feed_data' )->where ( 'feed_id=' . $feed_id )->getField ( 'feed_content' );
@@ -131,7 +152,9 @@ class ProfileAction extends Action {
 		$seo ['des'] = str_replace ( $replaces, $replace, $seo ['des'] );
 		! empty ( $seo ['title'] ) && $this->setTitle ( $seo ['title'] );
 		! empty ( $seo ['keywords'] ) && $this->setKeywords ( $seo ['keywords'] );
-		! empty ( $seo ['des'] ) && $this->setDescription ( $seo ['des'] );
+		! empty ( $seo ['des'] ) && $this->setDescription ( $seo ['des'] );*/
+		$this->setTitle ( $user_info ['uname'] . '的回答' );
+		$this->setKeywords ( $user_info ['uname'] . '的回答' );
 		$this->display ();
 	}
 	
@@ -168,7 +191,7 @@ class ProfileAction extends Action {
 		
 		$this->assign ( 'userPrivacy', $userPrivacy );
 		// seo
-		$seo = model ( 'Xdata' )->get ( "admin_Config:seo_user_profile" );
+		/*$seo = model ( 'Xdata' )->get ( "admin_Config:seo_user_profile" );
 		$replace ['uname'] = $user_info ['uname'];
 		if ($feed_id = model ( 'Feed' )->where ( 'uid=' . $this->uid )->order ( 'publish_time desc' )->limit ( 1 )->getField ( 'feed_id' )) {
 			$replace ['lastFeed'] = D ( 'feed_data' )->where ( 'feed_id=' . $feed_id )->getField ( 'feed_content' );
@@ -182,7 +205,9 @@ class ProfileAction extends Action {
 		$seo ['des'] = str_replace ( $replaces, $replace, $seo ['des'] );
 		! empty ( $seo ['title'] ) && $this->setTitle ( $seo ['title'] );
 		! empty ( $seo ['keywords'] ) && $this->setKeywords ( $seo ['keywords'] );
-		! empty ( $seo ['des'] ) && $this->setDescription ( $seo ['des'] );
+		! empty ( $seo ['des'] ) && $this->setDescription ( $seo ['des'] );*/
+		$this->setTitle ( $user_info ['uname'] . '的提问' );
+		$this->setKeywords ( $user_info ['uname'] . '的提问' );
 		$this->display ();
 	}
 	
@@ -463,12 +488,8 @@ class ProfileAction extends Action {
 		}
 		$this->assign ( 'userPrivacy', $userPrivacy );
 		
-		$this->setTitle ( L ( 'PUBLIC_TA_FOLLOWING', array (
-				'user' => $GLOBALS ['ts'] ['_user'] ['uname'] 
-		) ) );
-		$this->setKeywords ( L ( 'PUBLIC_TA_FOLLOWING', array (
-				'user' => $GLOBALS ['ts'] ['_user'] ['uname'] 
-		) ) );
+		$this->setTitle ( $user_info['uname'].'的关注' );
+		$this->setKeywords ($user_info['uname'].'的关注');
 		$this->display ();
 	}
 	
@@ -520,12 +541,8 @@ class ProfileAction extends Action {
 		}
 		$this->assign ( 'userPrivacy', $userPrivacy );
 		
-		$this->setTitle ( L ( 'PUBLIC_TA_FOLLWER', array (
-				'user' => $GLOBALS ['ts'] ['_user'] ['uname'] 
-		) ) );
-		$this->setKeywords ( L ( 'PUBLIC_TA_FOLLWER', array (
-				'user' => $GLOBALS ['ts'] ['_user'] ['uname'] 
-		) ) );
+		$this->setTitle ( $user_info['uname'].'的粉丝' );
+		$this->setKeywords ($user_info['uname'].'的粉丝');
 		$this->display ();
 	}
 	
@@ -577,12 +594,8 @@ class ProfileAction extends Action {
 		}
 		$this->assign ( 'userPrivacy', $userPrivacy );
 		
-		$this->setTitle ( L ( 'PUBLIC_TA_FOLLOWING', array (
-			'user' => $GLOBALS ['ts'] ['_user'] ['uname'] 
-			) ) );
-		$this->setKeywords ( L ( 'PUBLIC_TA_FOLLOWING', array (
-			'user' => $GLOBALS ['ts'] ['_user'] ['uname'] 
-			) ) );
+		$this->setTitle ( $user_info['uname'].'的好友' );
+		$this->setKeywords ($user_info['uname'].'的好友');
 		$this->display ();
 	}
 	
@@ -634,12 +647,8 @@ class ProfileAction extends Action {
 		}
 		$this->assign ( 'userPrivacy', $userPrivacy );
 		
-		$this->setTitle ( L ( 'PUBLIC_TA_FOLLOWING', array (
-			'user' => $GLOBALS ['ts'] ['_user'] ['uname'] 
-			) ) );
-		$this->setKeywords ( L ( 'PUBLIC_TA_FOLLOWING', array (
-			'user' => $GLOBALS ['ts'] ['_user'] ['uname'] 
-			) ) );
+		$this->setTitle ( '我和'.$user_info['uname'].'的共同关注' );
+		$this->setKeywords ( '我和'.$user_info['uname'].'的共同关注');
 		$this->display ();
 	}
 	
@@ -929,6 +938,8 @@ class ProfileAction extends Action {
 		} else {
 			$this->_assignUserInfo ( $this->uid );
 		}
+		$this->setTitle ( $user_info['uname'].'的收藏' );
+		$this->setKeywords ($user_info['uname'].'的收藏');
 		$this->display ();
 	}
 	
@@ -965,6 +976,9 @@ class ProfileAction extends Action {
 		} else {
 			$this->_assignUserInfo ( $this->uid );
 		}
+		
+		$this->setTitle ( $user_info['uname'].'的新答案' );
+		$this->setKeywords ($user_info['uname'].'的新答案');
 		$this->display ();
 	}
 	
@@ -1001,6 +1015,8 @@ class ProfileAction extends Action {
 		} else {
 			$this->_assignUserInfo ( $this->uid );
 		}
+		$this->setTitle ( $user_info['uname'].'的新评论' );
+		$this->setKeywords ($user_info['uname'].'的新评论');
 		$this->display ();
 	}
 	
@@ -1038,6 +1054,8 @@ class ProfileAction extends Action {
 		} else {
 			$this->_assignUserInfo ( $this->uid );
 		}
+		$this->setTitle ( $user_info['uname'].'的新赞同评论' );
+		$this->setKeywords ($user_info['uname'].'的新赞同评论');
 		$this->display ();
 	}
 	
@@ -1075,6 +1093,8 @@ class ProfileAction extends Action {
 		} else {
 			$this->_assignUserInfo ( $this->uid );
 		}
+		$this->setTitle ( $user_info['uname'].'的新反对评论' );
+		$this->setKeywords ($user_info['uname'].'的新反对评论');
 		$this->display ();
 	}
 	
@@ -1103,6 +1123,8 @@ class ProfileAction extends Action {
 		} else {
 			$this->_assignUserInfo ( $this->uid );
 		}
+		$this->setTitle ( $user_info['uname'].'的活动信息' );
+		$this->setKeywords ($user_info['uname'].'的活动信息');
 		$this->display ();
 	}
 	/**
@@ -1170,6 +1192,8 @@ class ProfileAction extends Action {
 		} else {
 			$this->_assignUserInfo ( $this->uid );
 		}
+		$this->setTitle ( $user_info['uname'].'的新增粉丝' );
+		$this->setKeywords ($user_info['uname'].'的新增粉丝');
 		$this->display ();
 	}
 	/**
@@ -1236,6 +1260,8 @@ class ProfileAction extends Action {
 		} else {
 			$this->_assignUserInfo ( $this->uid );
 		}		
+		$this->setTitle ( $user_info['uname'].'的新增好友' );
+		$this->setKeywords ($user_info['uname'].'的新增好友');
 		$this->display ();
 	}
 	
@@ -1253,6 +1279,14 @@ class ProfileAction extends Action {
 		if (empty ( $user_info )) {
 			$this->error ( L ( 'PUBLIC_USER_NOEXIST' ) );
 		}
+		
+		// 清空新回答提醒数字
+		if($this->uid == $this->mid){
+			$udata = model('UserData')->getUserData($this->mid);
+			$this->assign ( 'new_invite_count', $udata['new_invite_count']);
+			$udata['new_invite_count'] > 0 && model('UserData')->setKeyValue($this->mid,'new_invite_count',0);	
+		}
+		
 		// 个人空间头部
 		$this->_top ();
 		
@@ -1264,6 +1298,8 @@ class ProfileAction extends Action {
 		} else {
 			$this->_assignUserInfo ( $this->uid );
 		}
+		$this->setTitle ( $user_info['uname'].'收到的邀请' );
+		$this->setKeywords ( $user_info['uname'].'收到的邀请');
 		$this->display ();
 	}
 	
@@ -1300,6 +1336,7 @@ class ProfileAction extends Action {
 		$QuestionID = intval ( $_POST ['QuestionID'] );
 		$uids = explode(",", $InviteUids); 
 		$InviteResult = '<br />';
+		$successCount = 0;
 		foreach	($uids as $k => $v)
 		{
 			if($v != '')
@@ -1327,8 +1364,16 @@ class ProfileAction extends Action {
 				if($index == 0)
 				{
 					$InviteResult .= "邀请“".$user_info['uname']."”成功<br />";
+					$successCount++;
+					model('UserData')->setUid($v)->updateKey('invite_count', 1, true);
+					model('UserData')->setUid($v)->updateKey('new_invite_count', 1, true);
 				}
 			}
+		}
+		//给问题增加邀请回答的数量
+		if($successCount > 0)
+		{
+			model('feed')->UpdateInviteCount($QuestionID, $successCount);
 		}
 
 		$return  = array('status'=>0,'data'=>L($InviteResult));

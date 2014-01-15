@@ -5,6 +5,7 @@
     </div>
     <div class="aCenter2" style="width: 478px;">
         <!--提问框-->
+        <php>if($GLOBALS['ts']['mid'] != $app_uid) {</php>
         <eq name='cancomment' value = "1">
             <div class="tiwenK" model-node="comment_textarea">
                 <div class="tiwen_area" model-node="mini_editor">
@@ -25,6 +26,7 @@
         <else />
             {:L('PUBLIC_CONCENT_ISNULL')}
         </eq>
+        <php>}</php>
         <!--提问框-->
         
         <div id="commentlist_{$row_id}" style="width:480px;">

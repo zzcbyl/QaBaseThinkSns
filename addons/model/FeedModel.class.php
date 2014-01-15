@@ -7,7 +7,7 @@
 class FeedModel extends Model {
 
 	protected $tableName = 'feed';
-	protected $fields = array('feed_id','uid','type','app','app_row_id','app_row_table','publish_time','is_del','from','comment_count','repost_count','comment_all_count','digg_count','is_repost','is_audit','feed_questionid','feed_quid','answer_count','disapprove_count','feed_pv','thank_count','add_feedid','following_count','_pk'=>'feed_id');
+	protected $fields = array('feed_id','uid','type','app','app_row_id','app_row_table','publish_time','is_del','from','comment_count','repost_count','comment_all_count','digg_count','is_repost','is_audit','feed_questionid','feed_quid','answer_count','disapprove_count','feed_pv','thank_count','add_feedid','following_count','invite_count','_pk'=>'feed_id');
 
 	public $templateFile = '';			// 模板文件
 
@@ -449,7 +449,7 @@ class FeedModel extends Model {
 			{
 				$AnswerFeedData[0]['answer'][0]=$vv;;
 				if($index<$newCount){
-					$AnswerFeedData[0]['newCount']='1';
+					$AnswerFeedData[0]['newcount']='1';
 					$index++;
 				}
 				$feedlist["data"][$v]=$AnswerFeedData[0];
@@ -1600,6 +1600,21 @@ class FeedModel extends Model {
 	}
 	
 	/**
+	 * 修改邀请回答数
+	 * $feedid 问题ID
+	 * $addcount 增加的邀请数(默认1)
+	 * @return void
+	 */
+	public function UpdateInviteCount($feedid, $addcount = 1)
+	{
+		$feed = model('Feed')->field('invite_count')->where('feed_id='.$feedid)->select();
+		$updData['invite_count']=$feed[0]['invite_count'] + $addcount;
+		model('Feed')->where('feed_id='.$feedid)->save($updData);
+		$feedids=array($feedid);
+		$this->cleanCache($feedids);
+	}
+	
+	/**
 	 * 感谢答案(问题和用户添加感谢统计数)
 	 *
 	 * @return array 是否成功,失败原因
@@ -1636,16 +1651,21 @@ class FeedModel extends Model {
 		return $return;
 	}
 	
-	public function getInviteList($uid, $limit = 10, $LoadWhere)
+	public function getInviteList($uid, $limit = 10, $LoadWhere, $newCount = 0)
 	{
 		$where = 'invite_uid = '.$uid;
 		if(!empty($LoadWhere))
 			$where .= ' and '.$LoadWhere;
 		$inviteResult = model('InviteAnswer')->getInviteAnswerList($where, $limit, 'invite_answer_id desc');
+		$index = 0;
 		foreach($inviteResult['data'] as $k => $v)
 		{
 			$feed = $this->getFeeds(array(intval($v['questionid'])));
 			$feed[0]['invite'] = $v;
+			if($index<$newCount){
+				$feed[0]['newcount']='1';
+				$index++;
+			}
 			$inviteResult['data'][$k] = $feed[0];
 		}
 		

@@ -66,13 +66,13 @@
 		                    </php>
 		                    <a href="javascript:void(0);" event-node="comment_del" event-args="comment_id={$vo.comment_id}" <php>if($vo['user_info']['uid'] != $GLOBALS['ts']['mid'] && CheckPermission('core_admin','comment_del')){</php>style="color:red;"<php>}</php>>{:L('PUBLIC_STREAM_DELETE')}</a>
 		                    <php>}</php>
-		                    <php>if( $isdel && $cancomment){</php>
+		                    <!--<php>if( $isdel && $cancomment){</php>
     		                    <i class="vline">|</i>
     		                <php>}</php>
                             <eq name='cancomment' value="1">
 		                        <a href="javascript:void(0)" event-args='row_id={$vo.row_id}&app_uid={$vo.app_uid}&to_comment_id={$vo.comment_id}&to_uid={$vo.uid}&to_comment_uname={$vo.user_info.uname}&app_name={$app_name}&table={$table}' 
 			                        event-node="reply_comment">{:L('PUBLIC_STREAM_REPLY')}</a>
-                            </eq>
+                            </eq>-->
                         </p>
 
                     </div>
@@ -87,7 +87,7 @@
             </neq>
             <!--页码/end-->
         </eq>
-        <eq name='list.data' value=''><div style="text-align:center; color: #999999;">暂无评论</div></eq>
+        <eq name='list.data' value=''><div class="nomeaningclass"><div style="text-align:center; color: #999999;">暂无评论</div></div></eq>
     </div>
     <div class="aBottom2">
     </div>

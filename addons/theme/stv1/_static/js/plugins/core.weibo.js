@@ -17,6 +17,7 @@ core.weibo = {
         this.firstId = args.firstId;
         this.topic_id = args.topic_id; 	// 是否为话题
         this.gid = args.gid;
+        this.inviteid = args.inviteid;
         //alert(agrs.feedid);
         this.answerid = agrs.answerid;
 
@@ -273,9 +274,9 @@ core.weibo = {
             return;
         }
         //回答完成隐藏回答框
-        //if (questionid > 0) {
-        //    $('#AnswerQuestionDiv').hide();
-        //}
+        if (questionid > 0) {
+            $('#AnswerQuestionDiv').remove();
+        }
         // 修改微博数目
         if ("undefined" == typeof (close) || !close) {
             updateUserData('weibo_count', 1);
@@ -313,29 +314,22 @@ core.weibo = {
             else {
                 //追问或者要求补充
                 if (int_isadd == 1) {
-
-
                     return;
                 }
                 //提交回答
-                var before = $('#feed-lists dl').eq(0);
-                $dl = $('<dl></dl>');
-                $dl.attr('model-node', 'feed_list');
-                $dl.attr('id', 'feed' + feedId);
-                $dl.attr('style', 'padding-left:40px;');
-                $dl.addClass('feed_list');
-                $dl.html(html);
+                var before = $('#feed-lists div').eq(0);
+                $div = $('<div>' + html + '</div>');
                 if (before.length > 0) {
-                    $dl.insertBefore(before);
+                    $div.insertBefore(before);
                 } else {
-                    if ($('#feed-lists').find('dl').size() > 0) {
-                        $('#feed-lists').append($dl);
+                    if ($('#feed-lists').find('div').size() > 0) {
+                        $('#feed-lists').append($div);
                     } else {
-                        $('#feed-lists').html($dl);
+                        $('#feed-lists').html($div);
                     }
                 }
             }
-            M($dl[0]);
+            //M($dl[0]);
         }
         //DIY专用
         if ($('#feed-lists-d').length > 0) {
@@ -482,6 +476,7 @@ core.weibo = {
         if ("undefined" == typeof (isbox)) {
             isbox = false;
         }
+
         // 微博类型在此区分
         var args = $(_this).attr('event-args');
         var setargs = args.replace('type=postvideo', 'type=post');
@@ -495,6 +490,11 @@ core.weibo = {
             var attach_id = '';
             var type = attrs.type;
         }
+        //邀请回答的表主键ID
+        var inviteid = 0;
+        if (typeof(attrs.inviteid) != 'undefined')
+            inviteid = attrs.inviteid;
+
         var videourl = $('#postvideourl').val();
         var app_name = attrs.app_name;
 
@@ -558,7 +558,7 @@ core.weibo = {
             int_isadd = 1;
 
         // 发布微博
-        $.post(url, { body: data, type: type, app_name: app_name, content: '', attach_id: attach_id, videourl: videourl, channel_id: channel_id, source_url: attrs.source_url, gid: attrs.gid, description: txtVal, questionid: Qid, addask: int_isadd }, function (msg) {
+        $.post(url, { body: data, type: type, app_name: app_name, content: '', attach_id: attach_id, videourl: videourl, channel_id: channel_id, source_url: attrs.source_url, gid: attrs.gid, description: txtVal, questionid: Qid, addask: int_isadd, inviteid: inviteid }, function (msg) {
             obj.isposting = false;
             //_this.className = 'btn-grey-white';
             //$(_this).html('<span>' + L('PUBLIC_SHARE_BUTTON') + '</span>');

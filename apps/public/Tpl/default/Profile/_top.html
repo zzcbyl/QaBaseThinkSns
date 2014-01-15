@@ -26,11 +26,11 @@
     <span class="hd_btn">
         <php>if($mid != $user_info[$uid]['uid'] && $mid){</php>
             {:W('FollowBtn', array('fid'=>$user_info[$uid]['uid'], 'uname'=>$user_info[$uid]['uname'], 'follow_state'=>$follow_state[$user_info[$uid]['uid']], 'isrefresh'=>1))}
-            <php>if(CheckPermission('core_normal','send_message')){</php>
+            <!--<php>if(CheckPermission('core_normal','send_message')){</php>
             <eq name='userPrivacy.message' value='0'>
             <a onclick="ui.sendmessage({$user_info[$uid]['uid']}, 0)" href="javascript:void(0)" event-node="postMsg" class="ml5 btn-cancel"><span>发私信</span></a>
             </eq>&nbsp;
-            <php>}</php>
+            <php>}</php>-->
         <php>}</php>
 
         <!--<a href="#" class="gz">关注</a>

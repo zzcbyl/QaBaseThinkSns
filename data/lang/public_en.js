@@ -195,3 +195,4 @@ LANG['PUBLIC_SYSTEM_NEWCOMMENT']='new comments';
 LANG['PUBLIC_SYSTEM_NEWAGREECOMMENT']='new agree comments';
 LANG['PUBLIC_SYSTEM_NEWOPPOSECOMMENT']='new oppose comments';
 LANG['PUBLIC_PASSWORD_TIPES']='Please enter the 6-16 Numbers, letters or symbols, commonly used letters are case sensitive';
+LANG['PUBLIC_SYSTEM_NEWINVITECOUNT']='new invites';

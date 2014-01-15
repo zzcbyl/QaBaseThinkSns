@@ -313,29 +313,39 @@ class CommentWidget extends Widget
         $comment = model('Comment')->getCommentInfo($comment_id);
         // 不存在时
         if(!$comment){
-            return false;
+			$return['status'] = 0;
+			$return['data'] = '评论不存在';
+			exit(json_encode($return));
         }
+		$return['comment_type'] = $comment['comment_type'];
         // 非作者时
         if($comment['uid']!=$this->mid){
             // 没有管理权限不可以删除
             if(!CheckPermission('core_admin','comment_del')){
-                return false;
+				$return['status'] = 0;
+				$return['data'] = '删除失败';
+				exit(json_encode($return));
             }
         // 是作者时
         }else{
             // 没有前台权限不可以删除
             if(!CheckPermission('core_normal','comment_del')){
-                return false;
+				$return['status'] = 0;
+				$return['data'] = '删除失败';
+				exit(json_encode($return));
             }
         }
-
     	if(!empty($comment_id)) {
 			$result = model('Comment')->deleteComment($comment_id,$this->mid);
 			model('Feed')->cleanCache(array(intval($comment['row_id'])));
 			
-			return $result;
+			$return['status'] = 1;
+			$return['data'] = '删除成功';
+			exit(json_encode($return));
     	}
-    	return false;
+		$return['status'] = 0;
+		$return['data'] = '删除失败';
+		exit(json_encode($return));
     }
     
     /**

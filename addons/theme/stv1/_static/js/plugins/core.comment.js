@@ -145,6 +145,7 @@ core.comment = {
             ui.error(L('PUBLIC_CONCENT_TIPES'));
         }
         if ("undefined" != typeof (this.addComment) && (this.addComment == true)) {
+            ui.error('不要重复评论');
             return false; //不要重复评论
         }
         var addcomment = this.addComment;
@@ -174,19 +175,44 @@ core.comment = {
                 //alert(msg.data);
                 if ("undefined" != typeof (commentListObj.childModels['comment_list'])) {
                     if (addToEnd == 1) {
-                        $(commentListObj).find(' .nomeaningclass').eq(0).prepend(msg.data);
+                        $(commentListObj).find('.nomeaningclass').eq(0).prepend(msg.data);
                     } else {
                         $(msg.data).insertBefore($(commentListObj.childModels['comment_list'][0]));
                     }
                 } else {
                     $(commentListObj).find('.nomeaningclass').eq(0).html(msg.data);
                 }
-                M(commentListObj);
+                //M(commentListObj);
 
-                //赞同或者反对成功隐藏回复框
-                if (msg.comment_type != 0) {
+                //改变评论数字
+                if (msg.comment_type == 0) {
+                    var commentStr = $(commentListObj.parentModel).find('a[nodeName="comment"]').html();
+                    var commentNum = 1;
+                    if (commentStr.Trim() != '评论')
+                        commentNum = parseInt(commentStr.replace('评论', '').replace('(', '').replace(')', '')) + 1;
+                    $(commentListObj.parentModel).find('a[nodeName="comment"]').html('评论(' + commentNum.toString() + ')');
+                }
+                else {
+                    //赞同或者反对成功隐藏回复框
                     var commenttextarea = commentListObj.childModels['comment_textarea'][0];
-                    $(commenttextarea).hide();
+                    $(commenttextarea).remove();
+
+                    //改变赞同数字
+                    if (msg.comment_type == 1) {
+                        var commentStr = $(commentListObj.parentModel).find('a[nodeName="agreecomment"]').html();
+                        var commentNum = 1;
+                        if (commentStr.Trim() != '&nbsp;')
+                            commentNum = parseInt(commentStr.replace('&nbsp;', '')) + 1;
+                        $(commentListObj.parentModel).find('a[nodeName="agreecomment"]').html(commentNum.toString());
+                    }
+                    //改变反对数字
+                    else if (msg.comment_type == 2) {
+                        var commentStr = $(commentListObj.parentModel).find('a[nodeName="disapprovecomment"]').html();
+                        var commentNum = 1;
+                        if (commentStr.Trim() != '&nbsp;')
+                            commentNum = parseInt(commentStr.replace('&nbsp;', '')) + 1;
+                        $(commentListObj.parentModel).find('a[nodeName="disapprovecomment"]').html(commentNum.toString());
+                    }
                 }
 
                 //                if (obj != undefined) {
@@ -205,8 +231,43 @@ core.comment = {
         }, 'json');
     },
     delComment: function (comment_id) {
+        var commentListObj = this.commentListObj;
         $.post(U('widget/Comment/delcomment'), { comment_id: comment_id }, function (msg) {
             //什么也不做吧
-        });
+
+            //改变评论数字
+            if (msg.comment_type == 0) {
+                var commentStr = $(commentListObj.parentModel).find('a[nodeName="comment"]').html();
+                var commentNumStr = '';
+                if (commentStr.Trim() != '评论(1)')
+                    commentNumStr = '(' + (parseInt(commentStr.replace('评论', '').replace('(', '').replace(')', '')) - 1).toString() + ')';
+                $(commentListObj.parentModel).find('a[nodeName="comment"]').html('评论' + commentNumStr);
+            }
+            else {
+                //赞同或者反对删除成功重新加载输入框
+                
+
+                //改变赞同数字
+                if (msg.comment_type == 1) {
+                    var commentStr = $(commentListObj.parentModel).find('a[nodeName="agreecomment"]').html();
+                    var commentNumStr = '&nbsp;';
+                    if (commentStr.Trim() != '1')
+                        commentNumStr = (parseInt(commentStr) - 1).toString();
+                    $(commentListObj.parentModel).find('a[nodeName="agreecomment"]').html(commentNumStr);
+                    //$(commentListObj.parentModel).find('a[nodeName="agreecomment"]').click();
+                    //$(commentListObj.parentModel).find('a[nodeName="agreecomment"]').click();
+                }
+                //改变反对数字
+                else if (msg.comment_type == 2) {
+                    var commentStr = $(commentListObj.parentModel).find('a[nodeName="disapprovecomment"]').html();
+                    var commentNumStr = '&nbsp;';
+                    if (commentStr.Trim() != '1')
+                        commentNumStr = (parseInt(commentStr) - 1).toString();
+                    $(commentListObj.parentModel).find('a[nodeName="disapprovecomment"]').html(commentNumStr);
+                    //$(commentListObj.parentModel).find('a[nodeName="disapprovecomment"]').click();
+                    //$(commentListObj.parentModel).find('a[nodeName="disapprovecomment"]').click();
+                }
+            }
+        }, 'json');
     }
 };
