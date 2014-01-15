@@ -561,6 +561,7 @@ class RegisterAction extends Action
             $uid_get = $c->get_uid();
             $uid = $uid_get['uid'];
             $user_message = $c->show_user_by_id( $uid);
+            $weibo_uid = $uid;
             if ($this->judge_weibo_user_status($user_message)=="unreg"){
                 $user["login"] = $uid;
                 $user["uname"] = $user_message["screen_name"];
@@ -573,6 +574,9 @@ class RegisterAction extends Action
 
                 $uid = $this->_user_model->addUser($user);
 
+                $map['login'] = $weibo_uid;
+
+                $this->_user_model->where( " `uid` = ".$uid)->save($map);
 
 
                 if($uid)
@@ -609,6 +613,7 @@ class RegisterAction extends Action
 
     public function judge_weibo_user_status($user_message) {
         //echo "111";
+        //is_init
         return "unreg";
         //echo "222";
     }

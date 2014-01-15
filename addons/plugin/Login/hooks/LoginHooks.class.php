@@ -480,6 +480,10 @@ class LoginHooks extends Hooks {
     //取得第三方账号授权token后，第一步先跳转到这里
     public function no_register_display($param) {
         // Session::start();
+
+        echo "no_register_display...";
+        return;
+
         S('user_login_'.$this->mid,null);
         $type = strtolower($param['type']);
         $result = &$param['res'];
