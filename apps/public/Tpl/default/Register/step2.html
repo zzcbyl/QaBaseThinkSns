@@ -27,15 +27,15 @@
              	    <div class="regbox">
                     	<div><label>邮箱账号</label><input type="text" event-node="email" name="email" checkurl="{:U('public/Register/isEmailAvailable')}" value="" style="width:180px;" maxlength="150" />
                         </div>
-                        <div><label>昵称</label><input type="text" event-node="uname" checkurl="{:U('public/Register/isUnameAvailable')}" name="uname" value="" maxlength="30" style="width:180px;" />
+                        <div><label>昵称</label><input type="text" event-node="uname" checkurl="{:U('public/Register/isUnameAvailable')}" id="txt_uname" name="uname" value="" maxlength="30" style="width:180px;" />
                         </div>
-                        <div><label>密码</label><input type="password"  event-node="password_new" name="password_new" value="" maxlength="30" style="width:180px;" />
+                        <div><label>密码</label><input type="password"  event-node="password_new" name="password_new" value="" id="txt_pwd" maxlength="30" style="width:180px;" />
                         </div>
-                        <div><label>确认密码</label><input type="password" event-node="repassword_new" name="repassword_new" value="" maxlength="30" style="width:180px;" />
+                        <div><label>确认密码</label><input type="password" event-node="repassword_new" name="repassword_new" id="txt_repwd" value="" maxlength="30" style="width:180px;" />
                         </div>
                         <div><label>性别</label>
-                        男 <input name="sex" type="radio" checked="checked" value="1" style="float:none;" />&nbsp;&nbsp;
-                        女 <input name="sex" type="radio" value="2" style="float:none;" />
+                        男 <input name="sex" id="rdo_male" type="radio" checked="checked" value="1" style="float:none;" />&nbsp;&nbsp;
+                        女 <input name="sex" id="rdo_female" type="radio" value="2" style="float:none;" />
                         </div>
                      </div>
                      <div class="tybox">
@@ -52,4 +52,26 @@
 <include file="__THEME__/public_footer" />
 <script type="text/javascript" >
     var from = "{$from}";
+    if (from=="sina") {
+
+        document.getElementById("txt_uname").value = "{$nick}";
+        document.getElementById("txt_pwd").value = "{$pwd}";
+        document.getElementById("txt_pwd").disabled = true;
+        document.getElementById("txt_repwd").value = "{$pwd}";
+        document.getElementById("txt_repwd").disabled = true;
+        var gender = "{$gender}";
+        if (gender == "1") {
+
+            document.getElementById("rdo_male").checked = true;
+            document.getElementById("rdo_female").checked = false;
+
+        } else {
+
+            document.getElementById("rdo_male").checked = false;
+            document.getElementById("rdo_female").checked = true;
+
+        }
+
+
+    }
 </script>
