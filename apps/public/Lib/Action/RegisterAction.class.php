@@ -78,7 +78,7 @@ class RegisterAction extends Action
         if (isset($_SESSION["sina"])) {
 
             $this->assign("from","sina");
-            $c = new SaeTClientV2( WB_AKEY , WB_SKEY , $_SESSION['token']['access_token'] );
+            $c = new SaeTClientV2( WB_AKEY , WB_SKEY , $_SESSION['sina']['access_token']['oauth_token'] );
             $user_message = $c->show_user_by_id($_SESSION["sina"]["uid"]);
             $this->assign("pwd","**********");
             $this->assign("nick",$user_message["screen_name"]);
