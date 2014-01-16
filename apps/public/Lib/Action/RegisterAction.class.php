@@ -110,7 +110,7 @@ class RegisterAction extends Action
 
         if (isset($_SESSION['sina'])) {
 
-            if(empty($_POST['email']) || empty($_POST['uname']) || empty($_POST['password_new']) ){
+            if(empty($_POST['email']) || empty($_POST['uname']) ){
                 $this->error('参数错误');
             }
 
@@ -146,6 +146,7 @@ class RegisterAction extends Action
         $user["is_audit"] = 1;
 
         $uid = $this->_user_model->addUser($user);
+
         if($uid)
         {
             // 添加积分
