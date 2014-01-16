@@ -29,10 +29,10 @@
                         </div>
                         <div><label>昵称</label><input type="text" event-node="uname" checkurl="{:U('public/Register/isUnameAvailable')}" id="txt_uname" name="uname" value="" maxlength="30" style="width:180px;" />
                         </div>
-                        <div><label>密码</label><input type="password"  event-node="password_new" name="password_new" value="" id="txt_pwd" maxlength="30" style="width:180px;" />
+                        <div id="div_pwd" ><div><label>密码</label><input type="password"  event-node="password_new" name="password_new" value="" id="txt_pwd" maxlength="30" style="width:180px;" />
                         </div>
                         <div><label>确认密码</label><input type="password" event-node="repassword_new" name="repassword_new" id="txt_repwd" value="" maxlength="30" style="width:180px;" />
-                        </div>
+                        </div></div>
                         <div><label>性别</label>
                         男 <input name="sex" id="rdo_male" type="radio" checked="checked" value="1" style="float:none;" />&nbsp;&nbsp;
                         女 <input name="sex" id="rdo_female" type="radio" value="2" style="float:none;" />
@@ -55,10 +55,13 @@
     if (from=="sina") {
 
         document.getElementById("txt_uname").value = "{$nick}";
+        document.getElementById("div_pwd").style.display = "none"
+
         document.getElementById("txt_pwd").value = "{$pwd}";
-        document.getElementById("txt_pwd").disabled = true;
+        //document.getElementById("txt_pwd").disabled = true;
         document.getElementById("txt_repwd").value = "{$pwd}";
-        document.getElementById("txt_repwd").disabled = true;
+        //document.getElementById("txt_repwd").disabled = true;
+
         var gender = "{$gender}";
         if (gender == "1") {
 
