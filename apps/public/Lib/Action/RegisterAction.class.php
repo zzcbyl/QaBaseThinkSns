@@ -61,6 +61,41 @@ class RegisterAction extends Action
 
 		
 	}
+
+    public function index() {
+
+        $this->display();
+
+    }
+
+    public function step2() {
+
+        $this->assign("gender",0);
+        $this->assign("pwd","");
+        $this->assign("nick","");
+        $this->assign("from","");
+
+        if (isset($_SESSION["sina"])) {
+
+            $this->assign("from","sina");
+            $c = new SaeTClientV2( WB_AKEY , WB_SKEY , $_SESSION['token']['access_token'] );
+            $user_message = $c->show_user_by_id($_SESSION["sina"]["uid"]);
+            $this->assign("pwd","**********");
+            $this->assign("nick",$user_message["screen_name"]);
+            if ($user_message["gender"]=="m") {
+
+                $this->assign("gender","1");
+
+            } else {
+
+                $this->assign("gender","2");
+
+            }
+        }
+
+        $this->display();
+
+    }
 	
 	public function step3()
 	{

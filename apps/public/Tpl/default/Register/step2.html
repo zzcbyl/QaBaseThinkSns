@@ -1,6 +1,7 @@
 ﻿<include file="__THEME__/public_header" />
 
 <div class="container regContent">
+
 	<div class="reg_bz">
     	<div class="reg_num2"></div>
         <div class="reg_numTit">
@@ -13,6 +14,7 @@
             </ul>
         </div>
     </div>
+
 	<div class="reg_info">
     	<div class="reg_info_top"></div>
         <div class="reg_info_center">
@@ -42,13 +44,12 @@
                      <div class="btn_reg"><input type="submit" value="立即注册" /></div>
                  </form>
             </div>
-            <div class="regCont" >
-                <a href="{:U('public/Register/weibologin', array())}" >
-                    <img src="__THEME__/image/weibo_login.png"  border="0" />
-                </a>
-            </div>
         </div>
         <div class="reg_info_bottom"></div>
     </div>
+</div>
 <script src="__THEME__/js/module.form.js"></script>
 <include file="__THEME__/public_footer" />
+<script type="text/javascript" >
+    var from = "{$from}";
+</script>
