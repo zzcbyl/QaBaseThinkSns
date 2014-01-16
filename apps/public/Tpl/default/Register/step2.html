@@ -55,14 +55,16 @@
     if (from=="sina") {
 
         document.getElementById("txt_uname").value = "{$nick}";
-        //document.getElementById("div_pwd").style.display = "none"
-
-        document.getElementById("txt_pwd").value = "{$pwd}";
-        //document.getElementById("txt_pwd").disabled = true;
-        document.getElementById("txt_repwd").value = "{$pwd}";
-        //document.getElementById("txt_repwd").disabled = true;
-
+        var elem_pwd = document.getElementById("txt_pwd");
+        elem_pwd.value = "{$pwd}";
+        elem_pwd.disabled = true;
+        elem_pwd.attributes[1].value = "";
+        var elem_repwd = document.getElementById("txt_repwd");
+        elem_repwd.value = "{$pwd}";
+        elem_repwd.disabled = true;
+        elem_repwd.attributes[1].value = "";
         var gender = "{$gender}";
+
         if (gender == "1") {
 
             document.getElementById("rdo_male").checked = true;

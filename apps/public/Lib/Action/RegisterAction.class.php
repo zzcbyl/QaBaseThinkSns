@@ -100,8 +100,79 @@ class RegisterAction extends Action
         $this->display();
 
     }
-	
-	public function step3()
+
+
+    /**
+     * 注册流程 - 执行第二步骤
+     * 填写注册信息
+     */
+    public function doStep2() {
+
+        if (isset($_SESSION['sina'])) {
+
+            if(empty($_POST['email']) || empty($_POST['uname']) || empty($_POST['password_new']) ){
+                $this->error('参数错误');
+            }
+
+        }
+        else {
+
+            if(empty($_POST['email']) || empty($_POST['uname']) || empty($_POST['password_new']) || empty($_POST['repassword_new'])){
+                $this->error('参数错误');
+            }
+
+        }
+
+        $result=$this->CheckInviteCode($_GET['code']);
+
+        if($result==0)
+            $this->error('邀请码不存在');
+        else if($result==2)
+            $this->error('邀请码已被使用');
+        else if($result==3)
+            $this->error('邀请码限定次数已用完');
+
+        //echo "aaaa";
+
+        //check_invite_code($_GET["code"]);
+
+        $user["login"] = t($_POST['email']);
+        $user["uname"] = t($_POST['uname']);
+        $user["password"] = t($_POST['password_new']);
+        $user["email"] = t($_POST['email']);
+        $user["sex"] = intval($_POST['sex']);
+        $user["invite_code"] = t($_GET['code']);
+        $user["is_active"] = 0;
+        $user["is_audit"] = 1;
+
+        $uid = $this->_user_model->addUser($user);
+        if($uid)
+        {
+            // 添加积分
+            model('Credit')->setUserCredit($uid,'init_default');
+
+            // 添加至默认的用户组
+            $userGroup = model('Xdata')->get('admin_Config:register');
+            $userGroup = empty($userGroup['default_user_group']) ? C('DEFAULT_GROUP_ID') : $userGroup['default_user_group'];
+            model('UserGroupLink')->domoveUsergroup($uid, implode(',', $userGroup));
+
+            //发送验证邮件
+            $this->_register_model->sendActivationEmail($uid);
+
+            $this->redirect('public/Register/step3', array('uid'=>$uid,'code'=>$_GET['code']));
+        }
+        else
+        {
+            $this->error(L('PUBLIC_REGISTER_FAIL'));			// 注册失败
+        }
+    }
+
+
+
+
+
+
+    public function step3()
 	{
 		if(empty($_GET['uid']) || empty($_GET['code'])){
 			$this->error('参数错误');
@@ -215,59 +286,6 @@ class RegisterAction extends Action
 
         echo json_encode($return);exit();
 	}
-
-    /**
-     * 注册流程 - 执行第二步骤
-     * 填写注册信息
-     */
-    public function doStep2() {
-        if(empty($_POST['email']) || empty($_POST['uname']) || empty($_POST['password_new']) || empty($_POST['repassword_new'])){
-            $this->error('参数错误');
-        }
-
-        $result=$this->CheckInviteCode($_GET['code']);
-
-        if($result==0)
-            $this->error('邀请码不存在');
-        else if($result==2)
-            $this->error('邀请码已被使用');
-        else if($result==3)
-            $this->error('邀请码限定次数已用完');
-
-        //echo "aaaa";
-
-        //check_invite_code($_GET["code"]);
-
-        $user["login"] = t($_POST['email']);
-        $user["uname"] = t($_POST['uname']);
-        $user["password"] = t($_POST['password_new']);
-        $user["email"] = t($_POST['email']);
-        $user["sex"] = intval($_POST['sex']);
-        $user["invite_code"] = t($_GET['code']);
-        $user["is_active"] = 0;
-        $user["is_audit"] = 1;
-
-        $uid = $this->_user_model->addUser($user);
-        if($uid)
-        {
-            // 添加积分
-            model('Credit')->setUserCredit($uid,'init_default');
-
-            // 添加至默认的用户组
-            $userGroup = model('Xdata')->get('admin_Config:register');
-            $userGroup = empty($userGroup['default_user_group']) ? C('DEFAULT_GROUP_ID') : $userGroup['default_user_group'];
-            model('UserGroupLink')->domoveUsergroup($uid, implode(',', $userGroup));
-
-            //发送验证邮件
-            $this->_register_model->sendActivationEmail($uid);
-
-            $this->redirect('public/Register/step3', array('uid'=>$uid,'code'=>$_GET['code']));
-        }
-        else
-        {
-            $this->error(L('PUBLIC_REGISTER_FAIL'));			// 注册失败
-        }
-    }
 
 
 
