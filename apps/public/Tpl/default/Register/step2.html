@@ -67,8 +67,17 @@
 
         } else {
 
-            document.getElementById("rdo_male").checked = false;
-            document.getElementById("rdo_female").checked = true;
+            if (gender=="2") {
+
+                document.getElementById("rdo_female").checked = true;
+                document.getElementById("rdo_male").checked = false;
+
+            } else {
+
+                document.getElementById("rdo_female").checked = false;
+                document.getElementById("rdo_male").checked = false;
+
+            }
 
         }
 

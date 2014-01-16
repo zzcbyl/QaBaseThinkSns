@@ -88,7 +88,11 @@ class RegisterAction extends Action
 
             } else {
 
-                $this->assign("gender","2");
+                if ($user_message["gender"]=="f") {
+
+                    $this->assign("gender","2");
+
+                }
 
             }
         }
