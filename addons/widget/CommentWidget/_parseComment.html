@@ -18,7 +18,7 @@
             <i>{:L('PUBLIC_JUST')}</i></p>
         <p class="comm">
             <php>if($iscommentdel){</php>
-		        <a href="javascript:void(0);" event-node="comment_del" event-args="comment_id={$comment_id}">{:L('PUBLIC_STREAM_DELETE')}</a>
+		        <a href="javascript:void(0);" onclick="delComment(this);" event-node="comment_del" event-args="comment_id={$comment_id}">{:L('PUBLIC_STREAM_DELETE')}</a>
 		        <!--<i class="vline">|</i>-->
 		    <php>}</php>
 		    <!--<a href="javascript:void(0);" event-args='row_id={$row_id}&app_uid={$app_uid}&to_comment_id={$comment_id}&to_uid={$userInfo.uid}&to_comment_uname={$userInfo.uname}' 
@@ -28,5 +28,23 @@
     </div>
 
 </div>
+<script type="text/javascript">
+    function delComment(obj) {
+        var attrs = M.getEventArgs(obj);
+
+        //var comment_list = $(obj).parent().parent().parent().parent().parent().parent().parent().parent().find('div[model-node=comment_detail]');
+        //alert($(obj));
+        //return;
+        //core.comment.init(attrs, comment_list);
+        $(obj).parent().parent().parent().fadeOut();
+        if ("undefined" == typeof (core.comment)) {
+            core.plugFunc('comment', function () {
+                core.comment.delComment(attrs.comment_id);
+            });
+        } else {
+            core.comment.delComment(attrs.comment_id);
+        }
+    }
+</script>
 
 

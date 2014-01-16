@@ -37,6 +37,7 @@ class CommentWidget extends Widget
 		empty($data) && $data = $_POST;
 		is_array($data) && $var = array_merge($var,$data);
 
+		$var['hasAnswerComment'] = '0';
 		//对答案只能赞成或者反对一次
 		if($var['comment_type'] == 1 || $var['comment_type'] == 2)
 		{
@@ -44,12 +45,13 @@ class CommentWidget extends Widget
 			$hasComment=model('Comment')->hasComment($Commentwhere);
 			if($hasComment)
 			{
-				$returnData = '<div class="answer2"><div class="aTop511"><p class="icon2" style="right:85px"></p></div><div class="aCenter2" style="width: 478px;"><div id="commentlist_'.intval($var['row_id']).'"></div></div><div class="aBottom511"></div></div>';
+				$var['hasAnswerComment'] = '1';
+				/*$returnData = '<div class="answer2"><div class="aTop511"><p class="icon2" style="right:85px"></p></div><div class="aCenter2" style="width: 478px;"><div id="commentlist_'.intval($var['row_id']).'"></div></div><div class="aBottom511"></div></div>';
 				if($var['comment_type'] == 2)
 					$returnData = '<div class="answer2"><div class="aTop511"><p class="icon2" style="right:45px"></p></div><div class="aCenter2" style="width: 478px;"><div id="commentlist_'.intval($var['row_id']).'"></div></div><div class="aBottom511"></div></div>';	
 				
 				$return = array('status'=>2,'data'=>$returnData);
-				return $var['isAjax'] == 1 ?  json_encode($return) : $return['data'];
+				return $var['isAjax'] == 1 ?  json_encode($return) : $return['data'];*/
 			}
 		}
 		
@@ -199,6 +201,19 @@ class CommentWidget extends Widget
             $return['data'] = '内容已被删除，评论失败';
             exit(json_encode($return));
         }
+		
+		//对答案只能赞成或者反对一次
+		if($data['comment_type'] == 1 || $data['comment_type'] == 2)
+		{
+			$Commentwhere='`app`=\''.t($data['app_name']).'\' and `table`=\''.t($data['table']).'\' and `row_id`='.intval($data['row_id']).' and `uid`='.$this->mid.' and `is_del` = 0 and (`comment_type`=1 or `comment_type`=2)';
+			$hasComment=model('Comment')->hasComment($Commentwhere);
+			if($hasComment)
+			{
+				$return['status'] = 0;
+				$return['data'] = '每个答案每人只能赞同或者反对一次';
+				exit(json_encode($return));
+			}
+		}
     	// 添加评论操作
         // dump($data['comment_id'] = model('Comment')->addComment($data));
         // dump(model('Comment')->getlastsql());exit;

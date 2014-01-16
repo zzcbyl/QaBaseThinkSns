@@ -1,23 +1,22 @@
 <!--列表-->
 <div class="answer2">
-    <div class="aTop2">
+    <div class="aTop511">
         <p class="icon2">
         </p>
     </div>
-    <div class="aCenter2">
+    <div class="aCenter2" style="width: 478px;">
         <!--提问框-->
         <php>if($GLOBALS['ts']['mid'] != $app_uid) {</php>
         <eq name='cancomment' value="1">
         <div class="tiwenK" model-node="comment_textarea">
             <div class="tiwen_area" model-node="mini_editor">
-                <textarea class="input_tips" texttype="comment" id="comment_inputor" event-node="mini_editor_textarea" hidefocus="true"  model-args='t=comment'></textarea>
+                <textarea class="input_tips" style="width: 415px;" texttype="comment" id="comment_inputor" event-node="mini_editor_textarea" hidefocus="true"  model-args='t=comment'></textarea>
             </div>
             <div class="tiwenB">
                 <ul>
                     <li><a href="javascript:;" class="biaoqing" event-node="comment_insert_face"></a></li>
                     <li><!--<a href="#" class="tupian"></a>--></li>
                     <li><!--<a href="#" class="shipin"></a>--></li>
-                    <li></li>
                     <li>
                         <a class="tijiao" href="javascript:void(0);"  event-node="do_comment"  event-args='row_id={$row_id}&app_uid={$app_uid}&app_row_id={$app_row_id}&app_name={$app_name}&table={$table}&canrepost={$canrepost}&comment_type={$comment_type}' to_comment_id="0" to_uid="0" to_comment_uname="" addtoend='0' > </a>
                     </li>
@@ -89,7 +88,7 @@
         </eq>
         <eq name='list.data' value=''><div class="nomeaningclass"><div style="text-align:center; color: #999999;">暂无评论</div></div></eq>
     </div>
-    <div class="aBottom2">
+    <div class="aBottom511">
     </div>
 </div>
 <!--列表-->

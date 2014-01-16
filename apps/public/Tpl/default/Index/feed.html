@@ -215,7 +215,7 @@
                 <!--追问-->
                 
                 <!--评论-->
-                <div id="commentBlock" style="display: none; " model-node="comment_detail">
+                <div id="commentBlock" style="display: none; padding-left:80px; " model-node="comment_detail">
                     <php> $cancomment = CheckPermission('core_normal','feed_comment') && in_array('comment',$weibo_premission) ? 1: 0;</php>
                     {:W('Comment',array('tpl'=>'detail','app_row_id'=>$feedInfo['app_row_id'],'app_uid'=>$feedInfo['uid'],'row_id'=>$feedInfo['feed_id'],'pageHtml'=>1,'limit'=>'20','order'=>'DESC','cancomment'=>$cancomment,'cancomment_old'=>0,'app_name'=>$feedInfo['app']))}
                 </div>

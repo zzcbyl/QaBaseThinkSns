@@ -357,6 +357,16 @@ M.addEventFns({
         click: function () {	//点击评论的时候
             var attrs = M.getEventArgs(this);
             var comment_list = this.parentModel.childModels['comment_detail'][0];
+            if (attrs.comment_type == 2 && $("div[commenttype=1]").length > 0) {
+                $(this.parentModel).find('div[commenttype=1]').hide();
+            }
+            else if (attrs.comment_type == 1 && $("div[commenttype=2]").length > 0) {
+                $(this.parentModel).find('div[commenttype=2]').hide();
+            }
+            $(comment_list).attr("commenttype", attrs.comment_type);
+
+            //alert(comment_list.style.display);
+
             //			if("undefined" == typeof(core.comment)){
             //				core.plugInit('comment',attrs,comment_list);
             //				core.setTimeout("core.comment.display()",150);
@@ -387,6 +397,10 @@ M.addEventFns({
     comment_del: {
         click: function () {
             var attrs = M.getEventArgs(this);
+            var comment_list = this.parentModel.parentModel.parentModel.childModels['comment_detail'][0];
+            core.comment.init(attrs, comment_list);
+            //alert($(comment_list).html())
+            //return;
             $(this.parentModel).fadeOut();
             if ("undefined" == typeof (core.comment)) {
                 core.plugFunc('comment', function () {

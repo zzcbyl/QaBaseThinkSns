@@ -45,58 +45,67 @@ core.comment = {
         }
     },
     // 显示回复块
-    display: function () {
+    display: function (isshow) {
         var commentListObj = this.commentListObj;
         if ("undefined" == typeof this.table) {
             this.table = 'feed';
         }
-        if (commentListObj.style.display == 'none') {
-            //            if (commentListObj.innerHTML != '') {
-            //                commentListObj.style.display = 'block';
-            //            } else {
-            var rowid = this.row_id;
-            var appname = this.app_name;
-            var table = this.table;
-            var cancomment = this.cancomment;
-            var commenttype = this.comment_type;
-            //alert(commenttype);
-            commentListObj.style.display = 'block';
-            commentListObj.innerHTML = '<img src="' + THEME_URL + '/image/load.gif" style="text-align:center;display:block;margin:0 auto;"/>';
-            $.post(U('widget/Comment/render'), { app_uid: this.app_uid, row_id: this.row_id, app_row_id: this.app_row_id, app_row_table: this.app_row_table, isAjax: 1, showlist: 0,
-                cancomment: this.cancomment, cancomment_old: this.cancomment_old, app_name: this.app_name, table: this.table,
-                canrepost: this.canrepost, comment_type: this.comment_type, random: Math.random()
-            }, function (html) {
-                if (html.status == '0') {
-                    commentListObj.style.display = 'none';
-                    ui.error(html.data)
-                } else if (html.status == '2') {
-                    //已经赞同或者反对过一次
-                    commentListObj.innerHTML = html.data;
-                    $('#commentlist_' + rowid).html('<img src="' + THEME_URL + '/image/load.gif" style="text-align:center;display:block;margin:0 auto;"/>');
-                    $.post(U('widget/Comment/getCommentList'), { app_name: appname, table: table, row_id: rowid, cancomment: cancomment, comment_type: commenttype, random: Math.random() }, function (res) {
-                        $('#commentlist_' + rowid).html(res);
-                        M($('#commentlist_' + rowid).get(0));
-                    });
-                    M(commentListObj);
-
-                } else {
-                    commentListObj.innerHTML = html.data;
-                    $('#commentlist_' + rowid).html('<img src="' + THEME_URL + '/image/load.gif" style="text-align:center;display:block;margin:0 auto;"/>');
-                    $.post(U('widget/Comment/getCommentList'), { app_name: appname, table: table, row_id: rowid, cancomment: cancomment, comment_type: commenttype }, function (res) {
-                        $('#commentlist_' + rowid).html(res);
-                        M($('#commentlist_' + rowid).get(0));
-                    });
-                    M(commentListObj);
-                    //@评论框
-                    atWho($(commentListObj).find('textarea'));
-                    $(commentListObj).find('textarea').focus();
-                }
-            }, 'json');
-            //}
-        } else {
-            commentListObj.style.display = 'none';
-            $(commentListObj).html("");
+        //是否重新加载
+        if ("undefined" == typeof (isshow)) {
+            if (commentListObj.style.display == 'none') {
+                commentListObj.style.display = 'block';
+            }
+            else {
+                commentListObj.style.display = 'none';
+                $(commentListObj).html("");
+                return;
+            }
         }
+
+        //            if (commentListObj.innerHTML != '') {
+        //                commentListObj.style.display = 'block';
+        //            } else {
+        var rowid = this.row_id;
+        var appname = this.app_name;
+        var table = this.table;
+        var cancomment = this.cancomment;
+        var commenttype = this.comment_type;
+        //alert(commenttype);
+
+        commentListObj.innerHTML = '<img src="' + THEME_URL + '/image/load.gif" style="text-align:center;display:block;margin:0 auto;"/>';
+        $.post(U('widget/Comment/render'), { app_uid: this.app_uid, row_id: this.row_id, app_row_id: this.app_row_id, app_row_table: this.app_row_table, isAjax: 1, showlist: 0,
+            cancomment: this.cancomment, cancomment_old: this.cancomment_old, app_name: this.app_name, table: this.table,
+            canrepost: this.canrepost, comment_type: this.comment_type, random: Math.random()
+        }, function (html) {
+            //alert(html.data);
+            if (html.status == '0') {
+                commentListObj.style.display = 'none';
+                ui.error(html.data)
+            } else if (html.status == '2') {
+                //已经赞同或者反对过一次
+                commentListObj.innerHTML = html.data;
+                $('#commentlist_' + rowid).html('<img src="' + THEME_URL + '/image/load.gif" style="text-align:center;display:block;margin:0 auto;"/>');
+                $.post(U('widget/Comment/getCommentList'), { app_name: appname, table: table, row_id: rowid, cancomment: cancomment, comment_type: commenttype, random: Math.random() }, function (res) {
+                    $('#commentlist_' + rowid).html(res);
+                    M($('#commentlist_' + rowid).get(0));
+                });
+                M(commentListObj);
+
+            } else {
+                commentListObj.innerHTML = html.data;
+                $('#commentlist_' + rowid).html('<img src="' + THEME_URL + '/image/load.gif" style="text-align:center;display:block;margin:0 auto;"/>');
+                $.post(U('widget/Comment/getCommentList'), { app_name: appname, table: table, row_id: rowid, cancomment: cancomment, comment_type: commenttype }, function (res) {
+                    $('#commentlist_' + rowid).html(res);
+                    M($('#commentlist_' + rowid).get(0));
+                });
+                M(commentListObj);
+                //@评论框
+                atWho($(commentListObj).find('textarea'));
+                $(commentListObj).find('textarea').focus();
+            }
+        }, 'json');
+        //}
+
     },
     // 初始化回复操作
     initReply: function () {
@@ -172,6 +181,8 @@ core.comment = {
                 //obj.innerHTML = '回复';
                 ui.error(msg.data);
             } else {
+                //core.comment.display(1);
+
                 //alert(msg.data);
                 if ("undefined" != typeof (commentListObj.childModels['comment_list'])) {
                     if (addToEnd == 1) {
@@ -195,7 +206,7 @@ core.comment = {
                 else {
                     //赞同或者反对成功隐藏回复框
                     var commenttextarea = commentListObj.childModels['comment_textarea'][0];
-                    $(commenttextarea).remove();
+                    $(commenttextarea).hide();
 
                     //改变赞同数字
                     if (msg.comment_type == 1) {
@@ -245,7 +256,7 @@ core.comment = {
             }
             else {
                 //赞同或者反对删除成功重新加载输入框
-                
+                $(commentListObj.childModels['comment_textarea'][0]).show();
 
                 //改变赞同数字
                 if (msg.comment_type == 1) {

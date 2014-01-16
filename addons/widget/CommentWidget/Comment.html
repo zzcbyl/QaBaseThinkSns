@@ -7,7 +7,8 @@
         <!--提问框-->
         <php>if($GLOBALS['ts']['mid'] != $app_uid) {</php>
         <eq name='cancomment' value = "1">
-            <div class="tiwenK" model-node="comment_textarea">
+            
+            <div class="tiwenK" model-node="comment_textarea" style="<php>if($hasAnswerComment == '1') { echo 'display:none;'; } else { echo 'display:block;'; }</php>">
                 <div class="tiwen_area" model-node="mini_editor">
                     <textarea class="input_tips" style="width: 415px;" texttype="comment" id="comment_inputor" event-node="mini_editor_textarea" hidefocus="true" model-args='t=comment'></textarea>
                 </div>
