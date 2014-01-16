@@ -80,7 +80,7 @@ class RegisterAction extends Action
             $this->assign("from","sina");
             $c = new SaeTClientV2( WB_AKEY , WB_SKEY , $_SESSION['sina']['access_token']['oauth_token'] );
             $user_message = $c->show_user_by_id($_SESSION["sina"]["uid"]);
-            $this->assign("pwd","**********");
+            $this->assign("pwd","lqqa123456");
             $this->assign("nick",$user_message["screen_name"]);
             if ($user_message["gender"]=="m") {
 
@@ -96,9 +96,6 @@ class RegisterAction extends Action
 
             }
         }
-
-        echo $_SESSION["sina"]["uid"]."&".$user_message["screen_name"]."$".$user_message["gender"];
-        return;
 
         $this->display();
 
