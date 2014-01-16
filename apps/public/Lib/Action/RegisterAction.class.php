@@ -97,6 +97,9 @@ class RegisterAction extends Action
             }
         }
 
+        echo $_SESSION["sina"]["uid"]."&".$user_message["screen_name"]."$".$user_message["gender"];
+        return;
+
         $this->display();
 
     }
