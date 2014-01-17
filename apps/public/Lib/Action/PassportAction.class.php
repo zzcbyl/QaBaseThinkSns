@@ -345,5 +345,37 @@ class PassportAction extends Action
 		$this->setKeywords ('广场');
 		$this->display();
 	}
+	
+	/**
+	 * 专家页面
+	 *
+	 * @return 
+	 *
+	 */	
+	public function expert()
+	{
+		//顶级专家
+		$TopExpert = model('user')->getUserInfo(3);
+		$user_count = model ( 'UserData' )->getUserDataByUids ( array(3) );
+		$this->assign ( 'TopExpert_UserCount', $user_count );
+		$this->assign('TopExpert',$TopExpert);
+		
+		//认证专家
+		$uids = model('UserGroupLink')->getUserByGroupID(8, 6);
+		$user_count = model ( 'UserData' )->getUserDataByUids ($uids);
+		$authenticateExpert = model('user')->getUserInfoByUids($uids);
+		//print_r($authenticateExpert);
+		$this->assign ( 'authenticateExpert_UserCount', $user_count );
+		$this->assign('authenticateExpert',$authenticateExpert);
+		
+		$struid = implode(',',$uids);
+		$answerWhere =' is_del = 0 AND feed_questionid!=0 AND add_feedid=0 AND (is_audit=1 OR is_audit=0) AND uid in ('.$struid.')';
+		$answerList = model('Feed')->getAnswerList($answerWhere, 8);
+		$this->assign('answerList',$answerList);
+		
+		$this->setTitle ('专家' );
+		$this->setKeywords ('专家');
+		$this->display();
+	}
 }
 ?>

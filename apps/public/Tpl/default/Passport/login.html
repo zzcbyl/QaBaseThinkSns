@@ -1,5 +1,6 @@
 <include file="__THEME__/_header" />
-<div id="login-bg">
+<body style="background:#fff;">
+<!--<div id="login-bg">
     <div class="login-b" style="opacity:1;">
         <img id="login_bg" src="{$login_bg}" style="display:block;width:100%;height:auto;margin-left:0;opacity:1;visibility:visible;" />
      </div>
@@ -8,50 +9,34 @@
           <div class="logo" <php>if(strpos($_SERVER['HTTP_USER_AGENT'],'MSIE 6.0') !== false):</php>style="_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='{$site.logo}', sizingMethod='crop');_background:none;"<php>else:</php>style="background:url({$site.logo}) no-repeat;"<php>endif;</php>></div>
           <div class="login-guide"><p>{$site.site_slogan}</p></div>
           <div class="s-login">
-                <form id="ajax_login_form" method="POST" action="{:U('public/Passport/doLogin')}">
+                
                 <div class="login-bd">
                     <ul class="clearfix" model-node="login_input">
                         <li class="s-row" style="z-index:100">
                           <div class="input">
                              <label class="l-login">{:L('PUBLIC_ACCOUNT')}</label>
                              <div>
-                                 <input id="account_input" name="login_email" type="text" class="s-txt1" autocomplete="off" />
-                                 <div class="txt-list on-changes" style="z-index:999">
-                                   <p>请选择或继续输入...</p>
-                                   <ul>
-                                      <li email="" rel="show"></li>
-                                      <volist name="emailSuffix" id="vo">
-                                        <li email="{$vo}" rel="show"></li>
-                                      </volist>
-                                    </ul>
-                                  </div>
+                                 
                               </div>
                            </div>
                         </li>
                         <li class="s-row">
                           <div class="input">
                             <label class="l-login">{:L('PUBLIC_PASSWORD')}</label>
-                            <php>if(strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE') !== false):</php>
-                            <input id="pwd_input" name="login_password" type="password" class="s-txt1" autocomplete="off" />
-                            <php>else:</php>
-                            <input id="pwd_input" name="login_password" type="text" class="s-txt1" autocomplete="off" />
-                            <php>endif;</php>
+                            
                           </div>
                         </li>
-                        <li class="actionBtn"><a href="javascript:;" onclick="$('#ajax_login_form').submit();" class="btn-login">登录</a></li>
+                        <li class="actionBtn"></li>
                         <li class="s-row1">
-                          <php>if($register_type == 'open'):</php>
-                          <a onclick="javascript:window.open('{:U('public/Register')}','_self')">注册帐号</a>
-                          <php>endif;</php>
+                          
                         </li>
                         <li class="s-row1">
-                            <a class="s-f-psd" href="{:U('public/Passport/findPassword')}">{:L('FORGET_PASSWORD')}?</a>
-                            <a class="auto left" event-node="login_remember" href="javascript:;"><span class="check-ok"><input type="hidden" name="login_remember" value="1" /></span>{:L('PUBLIC_LOGIN_AUTOMATICALLY')}</a>
+                            
                         </li>
                     </ul>
                 </div>
                 </form>
-                <div id="js_login_input" style="display:none" class="error-box"></div>
+                
                 <php>if(Addons::requireHooks('login_input_footer') && Addons::hook('login_input_footer')):</php>
                 <div class="login-ft" style="">
                     <span>其它帐号登录：</span>{:Addons::hook('login_input_footer')}
@@ -73,5 +58,130 @@
     <script src="{:SITE_URL}/online_check.php?uid={$mid}&uname={$user.uname}&mod={:MODULE_NAME}&app={:APP_NAME}&act={:ACTION_NAME}&action=trace"></script>
 </eq>
 <script src="__APP__/login.js" type="text/javascript"></script>
+</body>
+</html>-->
+
+
+
+
+
+
+ 
+<div class="bannerWrap">
+    <form id="ajax_login_form" method="POST" action="{:U('public/Passport/doLogin')}">
+	<div class="loginWrap">
+    	<div class="loginBox">
+        	<div>
+                <input id="account_input" name="login_email" type="text" class="lInput" autocomplete="off" value="用户名" />
+                <!--<div class="txt-list on-changes" style="z-index:999; position:relative; top:0;">
+                    <p>请选择或继续输入...</p>
+                    <ul>
+                        <li email="" rel="show"></li>
+                        <volist name="emailSuffix" id="vo">
+                        <li email="{$vo}" rel="show"></li>
+                        </volist>
+                    </ul>
+                </div>-->
+            </div>
+            <div class="passInput">
+                <input id="pwd_input" name="login_password" type="password" class="lInput" autocomplete="off" value="******" />
+
+                <input type="submit" value="" class="lBtn" onclick="$('#ajax_login_form').submit();" />
+
+                <!--<php>if($register_type == 'open'):</php>
+                    <a onclick="javascript:window.open('{:U('public/Register')}','_self')">注册帐号</a>
+                <php>endif;</php>-->
+            </div>
+            
+            
+            <div class="RemPass">
+                <!--<label><input name="" type="checkbox" value="" />&nbsp;&nbsp;记住密码</label>-->
+                <a class="auto left" event-node="login_remember" href="javascript:;"><span class="check-ok"><input type="hidden" name="login_remember" value="1" /></span>{:L('PUBLIC_LOGIN_AUTOMATICALLY')}</a>
+            </div>
+            <div class="regBtn">
+                <a href="javascript:void(0);" onclick="javascript:window.open('{:U('public/Register')}','_self')" class="btn"></a> 
+                <a class="forget" href="{:U('public/Passport/findPassword')}">忘记密码?</a>
+            </div>
+        </div>
+    </div>
+    </form>
+    <div id="js_login_input" style="display:none" class="error-box"></div>
+</div>
+<div class="lineBg"></div>
+<div class="homeCont">
+	<div class="newAsk">
+    <h1>最新问题</h1>
+    <div class="newAsk_cont">
+    	<ul>
+        	<li>
+            	<img src="images/thumb_img.png">
+                <h5>小学三年级可以开始学习英语语法了吗？</h5>
+                <p>教学是教师的教和学生的学所组成的一种人类特有的人才培养活动。是学生在教师有目的、有计划、有组织的指导下。</p>
+            </li>
+            <li>
+            	<img src="images/thumb_img.png">
+                <h5>为什么说当前推进改革要有更大的勇气和智慧</h5>
+                <p>教学是教师的教和学生的学所组成的一种人类特有的人才</p>
+            </li>
+            <li>
+            	<img src="images/thumb_img.png">
+                <h5>动感英语第二集最后一部播放的电影是什么</h5>
+                <p>教学是教师的教和学生的学所组成的一种人类特有的人才培养活动。是学生在教师有目的、有计划、有组织的指导下。</p>
+            </li>
+        </ul>
+    </div>
+    </div>
+    <div class="newUser">
+    <h1>最新用户</h1>
+    <div class="newUser_cont">
+    <ul>
+         <li>
+         <img src="images/thumb_img.png" /><br /><a href="javascript:void(0);">吴奇隆</a>
+         </li>
+         <li>
+         <img src="images/thumb_img.png" /><br /><a href="javascript:void(0);">吴奇隆</a>
+         </li>
+         <li>
+         <img src="images/thumb_img.png" /><br /><a href="javascript:void(0);">吴奇隆</a>
+         </li>
+         <li>
+         <img src="images/thumb_img.png" /><br /><a href="javascript:void(0);">吴奇隆</a>
+         </li>
+         <li>
+         <img src="images/thumb_img.png" /><br /><a href="javascript:void(0);">吴奇隆</a>
+         </li>
+         <li>
+         <img src="images/thumb_img.png" /><br /><a href="javascript:void(0);">吴奇隆</a>
+         </li>
+         <li>
+         <img src="images/thumb_img.png" /><br /><a href="javascript:void(0);">吴奇隆</a>
+         </li>
+         <li>
+         <img src="images/thumb_img.png" /><br /><a href="javascript:void(0);">吴奇隆</a>
+         </li>
+     </ul>
+    </div>
+    </div>
+</div>
+<div class="copyRight">Copyright 2013 Inc. All Rights Reserved. 激活网络科技有限公司　版权所有</div>
+<script src="__APP__/login.js" type="text/javascript"></script>
+<script type="text/javascript">
+    $('#account_input').focus(function () {
+        if ($(this).val() == '用户名')
+            $(this).val('');
+    });
+    $('#account_input').blur(function () {
+        if ($(this).val() == '')
+            $(this).val('用户名');
+    });
+    $('#pwd_input').focus(function () {
+        if ($(this).val() == '******')
+            $(this).val('');
+    });
+    $('#pwd_input').blur(function () {
+        if ($(this).val() == '')
+            $(this).val('******');
+    });
+</script>
 </body>
 </html>

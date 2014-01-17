@@ -1,0 +1,194 @@
+<include file="__THEME__/public_header" />
+<script type="text/javascript" src="__THEME__/js/ScrollPic.js"></script>
+<div class="container experts">
+<!--顶级专家-->
+	<div class="dj_experts">
+    	<h1 class="jz1">顶级专家</h1>
+        <div class="zhuanjia_left">
+        	<div class="profile">
+            <div class="pro_img">
+                <a href="{$TopExpert['space_url']}"><img src="{$TopExpert['avatar_big']}" event-node="face_card" uid="{$TopExpert['uid']}" /></a>
+            </div>
+            <div class="pro_cont" style="width:555px;">
+                <h4><a href="{$TopExpert['space_url']}" event-node="face_card" uid="{$TopExpert['uid']}">{$TopExpert['uname']}</a></h4>
+                <p><strong>简介：</strong>{$TopExpert['intro']}</p>
+                <p class="comm hd pt0">
+                    <strong>获得：</strong>
+                    <a title="赞同数" href="javascript:void(0);" class="d"><php>if(empty($TopExpert_UserCount[$TopExpert['uid']]['comment_agree_count'])) echo '0'; else echo $TopExpert_UserCount[$TopExpert['uid']]['comment_agree_count'];</php></a>
+                    <a title="感谢数" href="javascript:void(0);" class="hx"><php>if(empty($TopExpert_UserCount[$TopExpert['uid']]['tothanked_count'])) echo '0'; else echo $TopExpert_UserCount[$TopExpert['uid']]['tothanked_count'];</php></a>
+                    <a title="反对数" href="javascript:void(0);" class="c"><php>if(empty($TopExpert_UserCount[$TopExpert['uid']]['comment_oppose_count'])) echo '0'; else echo $TopExpert_UserCount[$TopExpert['uid']]['comment_oppose_count'];</php></a>
+                    <a title="邀请数" href="javascript:void(0);" class="tel"><php>if(empty($TopExpert_UserCount[$TopExpert['uid']]['be_invited_count'])) echo '0'; else echo $TopExpert_UserCount[$TopExpert['uid']]['be_invited_count'];</php></a>
+                </p>
+                <p class="xz">
+                <strong>勋章：</strong>
+                <a href="javascript:void(0);" class="x1"></a>
+                <a href="javascript:void(0);" class="x2"></a>
+                <a href="javascript:void(0);" class="x3"></a>
+                <a href="javascript:void(0);" class="x4"></a>
+                </p>
+            </div>
+            
+        </div>
+        <!--主要作品-->
+        <div class="zuopin">
+        	<h3>主要作品</h3>
+            <script>
+                function ddd(obj, sType) {
+                    var oDiv = document.getElementById(obj);
+                    if (sType == 'show') { oDiv.style.display = 'block'; }
+                    if (sType == 'hide') { oDiv.style.display = 'none'; }
+                } 
+			</script> 
+            <ul>
+            	<li onmouseover="ddd('aa', 'show');" onmouseout="ddd('aa', 'hide');" id="tab_t1"><a href="javascript:void(0);">《四六级不过网申都过不了 四六级存废争议》</a>
+                <div class="jianjieBox" id="aa" style="display:none">
+                中国青少年健康问答：青春爱知道化学平衡下向什么方向移？正逆方向是什么国青少年爱知道化学平春爱知道化学平衡...
+                </div>
+                </li>
+                <li><a href="javascript:void(0);">《四六级不过网申都过不了 四六级存废争议》</a></li>
+                <li><a href="javascript:void(0);">《四六级不过网申都过不了 四六级存废争议》</a></li>
+                <li><a href="javascript:void(0);">《四六级不过网申都过不了 四六级存废争议》</a></li>
+                <li><a href="javascript:void(0);">《四六级不过网申都过不了 四六级存废争议》</a></li>
+                <li><a href="javascript:void(0);">《四六级不过网申都过不了 四六级存废争议》</a></li>
+                <li><a href="javascript:void(0);">《四六级不过网申都过不了 四六级存废争议》</a></li>
+                <li><a href="javascript:void(0);">《四六级不过网申都过不了 四六级存废争议》</a></li>
+                <li><a href="javascript:void(0);">《四六级不过网申都过不了 四六级存废争议》</a></li>
+                <li><a href="javascript:void(0);">《四六级不过网申都过不了 四六级存废争议》</a></li>
+            </ul>
+        </div>
+        <!--主要作品-->
+        </div>
+        <div class="zhuanjia_right">
+        	<div class="shipin">
+            
+            <embed src="http://player.youku.com/player.php/Type/Folder/Fid/21710675/Ob/1/sid/XNjYyMjAwMDE2/v.swf" quality="high" width="200" height="150" align="middle" allowScriptAccess="always" allowFullScreen="true" mode="transparent" type="application/x-shockwave-flash"></embed>
+            
+            </div>
+            <div class="newsList">
+            <h3>相关新闻</h3>
+            <ul>
+            	<li><a href="javascript:void(0);">四六级不过网申都过不级存废争议? </a></li>
+                <li><a href="javascript:void(0);">四六级不过网申都过不级存废争议? </a></li>
+                <li><a href="javascript:void(0);">四六级不过网申都过不级存废争议? </a></li>
+                <li><a href="javascript:void(0);">四六级不过网申都过不级存废争议? </a></li>
+            </ul>
+            </div>
+        </div>
+    </div>
+<!--顶级专家-->
+<!--卢勤精彩问答-->
+<div class="jincai">
+	<h1 class="jz2">卢勤精彩问答</h1>
+    <div class="jincaiList">
+    <a href="javascript:;" class="jcPrev" id="LeftArr"></a>
+    <a href="javascript:;" class="jcNext" id="RightArr"></a>
+    	<ul id="ISL_Cont_1">
+        	<li>
+            	<dl>
+                	<dt>
+                    <img src="images/img.jpg" />
+                    <a href="javascript:void(0);">该让谁来教育我们的孩子?</a>
+                    </dt>
+                    <dd>
+                    我们之所以没有听到有学生或家长这样说是因为大部分在圣母大学工作的教师确实都很出色。我们并不依靠学生来评判自己教师的基本功，当然，学生常常会在教学方法的调整上面给出很有用的建议（也能让人们注意到教师明显的玩忽...
+                    </dd>
+                </dl>
+            </li>
+            <li>
+            	<dl>
+                	<dt>
+                    <img src="images/img.jpg" />
+                    <a href="javascript:void(0);">该让谁来教育我们的孩子?</a>
+                    </dt>
+                    <dd>
+                    我们之所以没有听到有学生或家长这样说是因为大部分在圣母大学工作的教师确实都很出色。我们并不依靠学生来评判自己教师的基本功，当然，学生常常会在教学方法的调整上面给出很有用的建议（也能让人们注意到教师明显的玩忽...
+                    </dd>
+                </dl>
+            </li>
+            <li>
+            	<dl>
+                	<dt>
+                    <img src="images/img.jpg" />
+                    <a href="javascript:void(0);">该让谁来教育我们的孩子?</a>
+                    </dt>
+                    <dd>
+                    我们之所以没有听到有学生或家长这样说是因为大部分在圣母大学工作的教师确实都很出色。我们并不依靠学生来评判自己教师的基本功，当然，学生常常会在教学方法的调整上面给出很有用的建议（也能让人们注意到教师明显的玩忽...
+                    </dd>
+                </dl>
+            </li>
+        </ul>
+        <script language=javascript type=text/javascript>
+			<!--            //--><![CDATA[//><!--
+            var scrollPic = new ScrollPic();
+            scrollPic.scrollContId = "ISL_Cont_1"; //内容容器ID
+            scrollPic.arrLeftId = "LeftArr"; //左箭头ID
+            scrollPic.arrRightId = "RightArr"; //右箭头ID
+
+            scrollPic.frameWidth = 935; //显示框宽度
+            scrollPic.pageWidth = 312; //翻页宽度
+
+            scrollPic.speed = 3; //移动速度(单位毫秒，越小越快)
+            scrollPic.space = 10; //每次移动像素(单位px，越大越快)
+            scrollPic.autoPlay = true; //自动播放
+            scrollPic.autoPlayTime = 5; //自动播放间隔时间(秒)
+
+            scrollPic.initialize(); //初始化
+
+            //--><!]]>
+			</script>
+    </div>
+</div>
+<!--卢勤精彩问答-->
+<!--专家顾问团-->
+<div class="guwen">
+	<h1 class="jz3">专家顾问团</h1>
+    <div class="tuwenList">
+        
+    	<ul>
+            <volist name="authenticateExpert" id="expert">
+        	<li>
+                <div class="profile">
+                <div class="pro_img">
+                    <a href="{$expert['space_url']}"><img src="{$expert['avatar_big']}" event-node="face_card" uid="{$expert['uid']}" /></a>
+                </div>
+                <div class="pro_cont">
+                    <h4><a href="{$expert['space_url']}" event-node="face_card" uid="{$expert['uid']}">{$expert['uname']}</a><a href="javascript:void(0);" class="zjrz"></a></h4>
+                    <p style="height:36px; overflow:hidden;"><strong>简介：</strong>{$expert['intro']}</p>
+                    <p class="comm hd pt0">
+                    <a title="赞同数" href="javascript:void(0);" class="d"><php>if(empty($authenticateExpert_UserCount[$expert['uid']]['comment_agree_count'])) echo '0'; else echo $authenticateExpert_UserCount[$expert['uid']]['comment_agree_count'];</php></a>
+                    <a title="感谢数" href="javascript:void(0);" class="hx"><php>if(empty($authenticateExpert_UserCount[$expert['uid']]['tothanked_count'])) echo '0'; else echo $authenticateExpert_UserCount[$expert['uid']]['tothanked_count'];</php></a>
+                    <a title="反对数" href="javascript:void(0);" class="c"><php>if(empty($authenticateExpert_UserCount[$expert['uid']]['comment_oppose_count'])) echo '0'; else echo $authenticateExpert_UserCount[$expert['uid']]['comment_oppose_count'];</php></a>
+                    <a title="邀请数" href="javascript:void(0);" class="tel"><php>if(empty($authenticateExpert_UserCount[$expert['uid']]['be_invited_count'])) echo '0'; else echo $authenticateExpert_UserCount[$expert['uid']]['be_invited_count'];</php></a>
+                    </p>
+                </div>
+                </div>
+            </li>
+            </volist>
+        </ul>
+    </div>
+</div>
+<!--专家顾问团-->
+<!--专家回答-->
+<div class="zjHuida">
+	<h1 class="jz4">专家回答</h1>
+    <div class="zjHuida_cont">
+        <!--<php>print_r($answerList['data']);</php>-->
+        <ul>
+            <volist name="answerList.data" id="feed">
+            <li>
+                <div>
+                    <h2 class="tit"><a href="{:U('public/Index/feed',array('feed_id'=>$feed['feed_id'],'uid'=>$feed['uid']))}" target="_blank">{$feed.body}</a></h2>
+                    <p class="name">{$feed['answer'][0]['title']}<a class="dp">点评</a><span>{$feed['answer'][0]['publish_time']|friendlyDate}</span></p>
+                    <p class="cont">
+                        <!--{$feed.description}-->{$feed['answer'][0]['body']}
+                    </p>
+                </div>
+            </li>
+            </volist>
+        </ul>
+    </div>
+</div>
+<!--专家回答-->
+
+
+<include file="__THEME__/public_footer" />

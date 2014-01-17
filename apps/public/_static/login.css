@@ -344,12 +344,12 @@ li{list-style-type:none}
 .l-login {cursor: text;padding-left: 5px;}
 .on-changes {display: none;}
 .txt-list ul li.current {display:block;background:#2E3236;line-height: 26px;font-family: "微软雅黑";color:#fff;width:250px;padding:0 10px;font-size:14px;cursor:pointer;}
-.s-login .login-bd .check,.s-login .login-bd .check-ok{background:url(image/checkbox2.png) no-repeat;_background:url(image/checkbox2.gif) no-repeat;}
-.s-login .login-bd .check{background-position:0 0;width:18px;height:17px;display:inline-block;margin:0 5px 0 0;vertical-align:middle;}
-.s-login .login-bd .check-ok{background-position:-26px 0;width:18px;height:17px;display:inline-block;margin:0 5px 0 0;vertical-align:middle;}
+.RemPass .check,.RemPass .check-ok{background:url(image/checkbox2.png) no-repeat;_background:url(image/checkbox2.gif) no-repeat;}
+.RemPass .check{background-position:0 0;width:18px;height:17px;display:inline-block;margin:0 5px 0 0;vertical-align:middle;}
+.RemPass .check-ok{background-position:-26px 0;width:18px;height:17px;display:inline-block;margin:0 5px 0 0;vertical-align:middle;}
 
 /*错误提示框*/
-.error-box{width:300px;height:40px;line-height:40px;text-align:center;background:#25282b;position:absolute;left:150px;top:120px;opacity: 0.8}
+.error-box{width:300px;height:40px;line-height:40px;text-align:center;background:#25282b;position:absolute;right:313px;top:370px;opacity: 0.8}
 .error-box p{color:#fff;}
 
 /*注册上传头像*/

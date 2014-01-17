@@ -1,4 +1,5 @@
 <include file="__THEME__/_header" />
+<body style="background:#f3f3f3;">
 {* 未登录时 *}
 <nosession name="mid">
     <div class="header_box">
@@ -6,13 +7,14 @@
     	    <div class="h_logo">
                 <a href="{:SITE_URL}" <php>if(strpos($_SERVER['HTTP_USER_AGENT'],'MSIE 6.0') !== false):</php>style="_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='{$site.logo}', sizingMethod='crop');_background:none;"<php>else:</php>style="background:url({$site.logo}) no-repeat;"<php>endif;</php>> </a></div>
             <php> 
-                  if(ACTION_NAME=='square'){ $tabClass['square'] = 'current'; $tabClass['index'] = '';  }
-	              else{ $tabClass['index'] = 'current'; $tabClass['square'] = '';  }
+                  if(ACTION_NAME=='square'){ $tabClass['square'] = 'current'; $tabClass['index'] = '';$tabClass['expert'] = '';  }
+	              else if(ACTION_NAME=='expert') { $tabClass['expert'] = 'current'; $tabClass['square'] = ''; $tabClass['index'] = ''; }
+                  else{ $tabClass['index'] = 'current'; $tabClass['square'] = ''; $tabClass['expert'] = ''; }
             </php>
             <ul class="menu">
         	    <li><a class="{$tabClass.index}" href="{:SITE_URL}">首页</a></li>
                 <li><a class="{$tabClass.square}" href="{:U('public/Passport/square')}">广场</a></li>
-                <li><a href="#">专家</a></li>
+                <li><a class="{$tabClass.expert}" href="{:U('public/Passport/expert')}">专家</a></li>
                 <li><a href="#">活动</a></li>
             </ul>
             <div class="person" style="float:right;">
@@ -42,13 +44,14 @@
     	    <div class="h_logo">
                 <a href="{:SITE_URL}" <php>if(strpos($_SERVER['HTTP_USER_AGENT'],'MSIE 6.0') !== false):</php>style="_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='{$site.logo}', sizingMethod='crop');_background:none;"<php>else:</php>style="background:url({$site.logo}) no-repeat;"<php>endif;</php>> </a></div>
             <php> 
-                  if(ACTION_NAME=='square'){ $tabClass['square'] = 'current'; $tabClass['index'] = '';  }
-	              else{ $tabClass['index'] = 'current'; $tabClass['square'] = '';  }
+                  if(ACTION_NAME=='square'){ $tabClass['square'] = 'current'; $tabClass['index'] = '';$tabClass['expert'] = '';  }
+	              else if(ACTION_NAME=='expert') { $tabClass['expert'] = 'current'; $tabClass['square'] = ''; $tabClass['index'] = ''; }
+                  else{ $tabClass['index'] = 'current'; $tabClass['square'] = ''; $tabClass['expert'] = ''; }
             </php>
             <ul class="menu">
         	    <li><a class="{$tabClass.index}" href="{:SITE_URL}">首页</a></li>
                 <li><a class="{$tabClass.square}" href="{:U('public/Passport/square')}">广场</a></li>
-                <li><a href="#">专家</a></li>
+                <li><a class="{$tabClass.expert}" href="{:U('public/Passport/expert')}">专家</a></li>
                 <li><a href="#">活动</a></li>
             </ul>
             <div class="search_box">

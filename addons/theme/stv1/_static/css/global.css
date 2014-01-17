@@ -181,7 +181,7 @@ body{background:url(../image/body-b.jpg) repeat-x center 0 #e4f3f7;}
 #header .head-bd .reg a:hover{text-decoration:underline}
 #header .head-bd .reg .vline{font-style:normal;margin:0 5px;color:#fff;}
 
-.header_box .message_list_new {border: 1px solid #ddd;overflow: hidden;width:193px; background:#fff; position:absolute; top:60px; z-index:99999 }
+.header_box .message_list_new {border: 1px solid #ddd;overflow: hidden;width:193px; background:#fff; position:absolute; top:60px; z-index:999 }
 .header_box .message_list_new li{ float: none;padding: 5px 10px;height:18px;line-height:18px}
 .header_box .message_list_new li a{display: inline;padding: 0 7px;}
 .header_box .message_list_new a:hover{background:none;text-decoration:underline}
