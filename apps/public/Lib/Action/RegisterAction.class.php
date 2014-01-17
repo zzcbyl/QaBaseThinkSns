@@ -1,4 +1,8 @@
 <?php
+session_start();
+include_once( 'third-party-api/weibo/config.php' );
+include_once( 'third-party-api/weibo/saetv2.ex.class.php' );
+
 /**
  * RegisterAction 注册模块
  * @author  zhangzc
@@ -57,8 +61,132 @@ class RegisterAction extends Action
 
 		
 	}
-	
-	public function step3()
+
+    public function index() {
+
+        $this->display();
+
+    }
+
+    public function step2() {
+
+        $this->assign("gender",0);
+        $this->assign("pwd","");
+        $this->assign("nick","");
+        $this->assign("from","");
+
+        if (isset($_SESSION["sina"])) {
+
+            $this->assign("from","sina");
+            $c = new SaeTClientV2( WB_AKEY , WB_SKEY , $_SESSION['sina']['access_token']['oauth_token'] );
+            $user_message = $c->show_user_by_id($_SESSION["sina"]["uid"]);
+            $this->assign("pwd","lqqa123456");
+            $this->assign("nick",$user_message["screen_name"]);
+            if ($user_message["gender"]=="m") {
+
+                $this->assign("gender","1");
+
+            } else {
+
+                if ($user_message["gender"]=="f") {
+
+                    $this->assign("gender","2");
+
+                }
+
+            }
+        }
+
+        $this->display();
+
+    }
+
+
+    /**
+     * 注册流程 - 执行第二步骤
+     * 填写注册信息
+     */
+    public function doStep2() {
+
+        if (isset($_SESSION['sina'])) {
+
+            if(empty($_POST['email']) || empty($_POST['uname']) ){
+                $this->error('参数错误');
+            }
+
+        }
+        else {
+
+            if(empty($_POST['email']) || empty($_POST['uname']) || empty($_POST['password_new']) || empty($_POST['repassword_new'])){
+                $this->error('参数错误');
+            }
+
+        }
+
+        $result=$this->CheckInviteCode($_GET['code']);
+
+        if($result==0)
+            $this->error('邀请码不存在');
+        else if($result==2)
+            $this->error('邀请码已被使用');
+        else if($result==3)
+            $this->error('邀请码限定次数已用完');
+
+        //echo "aaaa";
+
+        //check_invite_code($_GET["code"]);
+
+        $user["login"] = t($_POST['email']);
+        $user["uname"] = t($_POST['uname']);
+        $user["password"] = t($_POST['password_new']);
+        $user["email"] = t($_POST['email']);
+        $user["sex"] = intval($_POST['sex']);
+        $user["invite_code"] = t($_GET['code']);
+        $user["is_active"] = 0;
+        $user["is_audit"] = 1;
+
+        $uid = $this->_user_model->addUser($user);
+
+        if($uid)
+        {
+            $syncdata['uid'] = $uid;
+            $syncdata['type_uid'] = $_SESSION["sina"]["uid"];
+            $syncdata['type'] = 'sina';
+            $syncdata['oauth_token'] = $_SESSION ['sina'] ['access_token'] ['oauth_token'];
+            $syncdata['oauth_token_secret'] = $_SESSION ['sina'] ['access_token'] ['oauth_token_secret'];
+            if ($info = M ( 'login' )->where ( "type_uid={$userinfo['id']} AND type='" . $type . "'" )->find ()) {
+                // 该新浪用户已在本站存在, 将其与当前用户关联(即原用户ID失效)
+                M ( 'login' )->where ( "`login_id`={$info['login_id']}" )->save ( $syncdata );
+            } else {
+                // 添加同步信息
+                M ( 'login' )->add ( $syncdata );
+            }
+
+            // 添加积分
+            model('Credit')->setUserCredit($uid,'init_default');
+
+            // 添加至默认的用户组
+            $userGroup = model('Xdata')->get('admin_Config:register');
+            $userGroup = empty($userGroup['default_user_group']) ? C('DEFAULT_GROUP_ID') : $userGroup['default_user_group'];
+            model('UserGroupLink')->domoveUsergroup($uid, implode(',', $userGroup));
+
+            //发送验证邮件
+            $this->_register_model->sendActivationEmail($uid);
+
+            $this->redirect('public/Register/step3', array('uid'=>$uid,'code'=>$_GET['code']));
+        }
+        else
+        {
+            $this->error(L('PUBLIC_REGISTER_FAIL'));			// 注册失败
+        }
+    }
+
+
+
+
+
+
+    public function step3()
 	{
 		if(empty($_GET['uid']) || empty($_GET['code'])){
 			$this->error('参数错误');
@@ -154,20 +282,36 @@ class RegisterAction extends Action
 			$return['data'] = L('参数错误');
 			echo json_encode($return);exit();
 		}
-		
-		$result=$this->CheckInviteCode($_POST['Code']);
-		
-		if($result==0)
-			$return  = array('status'=>0,'data'=>L('邀请码不存在'));
+
+        $result=$this->CheckInviteCode($_POST['Code']);
+
+        if($result==0)
+            $return  = array('status'=>0,'data'=>L('邀请码不存在'));
 		else if($result==1)
-			$return  = array('status'=>1,'data'=>L('邀请码验证成功'));
+            $return  = array('status'=>1,'data'=>L('邀请码验证成功'));
 		else if($result==2)
-			$return  = array('status'=>0,'data'=>L('邀请码已被使用'));
+            $return  = array('status'=>0,'data'=>L('邀请码已被使用'));
 		else if($result==3)
-			$return  = array('status'=>0,'data'=>L('邀请码限定次数已用完'));
-		
+            $return  = array('status'=>0,'data'=>L('邀请码限定次数已用完'));
+
+        $_SESSION["invite_code"]=$_POST['Code'];
+
 		echo json_encode($return);exit();
+
+        echo json_encode($return);exit();
 	}
+
+
+
+
+    /**
+     * 注册流程 - 执行第三步骤
+     * 添加标签
+     */
+    public function doStep3() {
+
+    }
+
 	
 	/**
 	 * 注册流程 - 第四步补充资料
@@ -278,54 +422,7 @@ class RegisterAction extends Action
 		return $result;
 	}
 	
-	/**
-	* 注册流程 - 执行第二步骤
-	* 填写注册信息
-	*/
-	public function doStep2() {
-		if(empty($_POST['email']) || empty($_POST['uname']) || empty($_POST['password_new']) || empty($_POST['repassword_new'])){
-			$this->error('参数错误');
-		}
 
-		$result=$this->CheckInviteCode($_GET['code']);
-		
-		if($result==0)
-			$this->error('邀请码不存在');
-		else if($result==2)
-			$this->error('邀请码已被使用');
-		else if($result==3)
-			$this->error('邀请码限定次数已用完');
-		
-		$user["login"] = t($_POST['email']);
-		$user["uname"] = t($_POST['uname']);
-		$user["password"] = t($_POST['password_new']);
-		$user["email"] = t($_POST['email']);
-		$user["sex"] = intval($_POST['sex']);
-		$user["invite_code"] = t($_GET['code']);
-		$user["is_active"] = 0;
-		$user["is_audit"] = 1;
-		
-		$uid = $this->_user_model->addUser($user);
-		if($uid)
-		{
-			// 添加积分
-			model('Credit')->setUserCredit($uid,'init_default');
-
-			// 添加至默认的用户组
-			$userGroup = model('Xdata')->get('admin_Config:register');
-			$userGroup = empty($userGroup['default_user_group']) ? C('DEFAULT_GROUP_ID') : $userGroup['default_user_group'];
-			model('UserGroupLink')->domoveUsergroup($uid, implode(',', $userGroup));
-			
-			//发送验证邮件
-			$this->_register_model->sendActivationEmail($uid);
-				
-			$this->redirect('public/Register/step3', array('uid'=>$uid,'code'=>$_GET['code']));
-		}
-		else
-		{
-			$this->error(L('PUBLIC_REGISTER_FAIL'));			// 注册失败
-		}
-	}
 
 	/**
 	 * 等待审核页面
@@ -440,13 +537,7 @@ class RegisterAction extends Action
 
 
 
-	/**
-	 * 注册流程 - 执行第三步骤
-	 * 添加标签
-	 */
-	public function doStep3() {
-		
-	}
+
 
 
 	/**
@@ -497,4 +588,110 @@ class RegisterAction extends Action
 	public function doAuditUser(){
 		
 	}
+
+
+    /*weibo的想关处理*/
+
+    public function weibologin() {
+        //echo "aaaaa";
+
+        //check_invite_code($_GET["code"]);
+
+        //$_SESSION["invite_code"] = $_GET["code"];
+
+        $o = new SaeTOAuthV2( WB_AKEY , WB_SKEY );
+
+        $code_url = $o->getAuthorizeURL( WB_CALLBACK_URL );
+
+        $this->code_url = $code_url;
+
+        //$this->redirect($code_url);
+
+        $this->display();
+    }
+
+    public function weibologincallback(){
+
+
+
+        $o = new SaeTOAuthV2( WB_AKEY , WB_SKEY );
+
+        if (isset($_REQUEST['code'])) {
+            $keys = array();
+            $keys['code'] = $_REQUEST['code'];
+            $keys['redirect_uri'] = WB_CALLBACK_URL;
+            try {
+                $token = $o->getAccessToken( 'code', $keys ) ;
+                $_SESSION["token"] = $token;
+            } catch (OAuthException $e) {
+            }
+        }
+
+        if ($token) {
+            $c = new SaeTClientV2( WB_AKEY , WB_SKEY , $_SESSION['token']['access_token'] );
+            $uid_get = $c->get_uid();
+            $uid = $uid_get['uid'];
+            $user_message = $c->show_user_by_id( $uid);
+            $weibo_uid = $uid;
+            if ($this->judge_weibo_user_status($user_message)=="unreg"){
+                $user["login"] = $uid;
+                $user["uname"] = $user_message["screen_name"];
+                $user["password"] = $user_message["screen_name"];
+                $user["email"] = $user_message["screen_name"]+"@sina.weibo.com";
+                $user["sex"] = $user_message["gender"]=="m"? 1 : 2 ;
+                $user["invite_code"] = $_SESSION["invite_code"];
+                $user["is_active"] = 1;
+                $user["is_audit"] = 1;
+
+                $uid = $this->_user_model->addUser($user);
+
+                $map['login'] = $weibo_uid;
+
+                $this->_user_model->where( " `uid` = ".$uid)->save($map);
+
+
+                if($uid)
+                {
+                    // 添加积分
+                    model('Credit')->setUserCredit($uid,'init_default');
+
+                    // 添加至默认的用户组
+                    $userGroup = model('Xdata')->get('admin_Config:register');
+                    $userGroup = empty($userGroup['default_user_group']) ? C('DEFAULT_GROUP_ID') : $userGroup['default_user_group'];
+                    model('UserGroupLink')->domoveUsergroup($uid, implode(',', $userGroup));
+
+                    //发送验证邮件
+                    $this->_register_model->sendActivationEmail($uid);
+
+                    $this->redirect('public/Register/step3', array('uid'=>$uid,'code'=>$_SESSION["invite_code"]));
+                }
+                else
+                {
+                    $this->error(L('PUBLIC_REGISTER_FAIL'));			// 注册失败
+                }
+            }
+
+
+
+            //echo $user_message;
+        }
+        else{
+            echo "fail";
+
+        }
+
+    }
+
+    public function judge_weibo_user_status($user_message) {
+        //echo "111";
+        //is_init
+        return "unreg";
+        //echo "222";
+    }
+
+
+
+
+
+
 }
