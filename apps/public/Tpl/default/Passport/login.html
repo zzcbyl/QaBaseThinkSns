@@ -37,11 +37,7 @@
                 </div>
                 </form>
                 
-                <php>if(Addons::requireHooks('login_input_footer') && Addons::hook('login_input_footer')):</php>
-                <div class="login-ft" style="">
-                    <span>其它帐号登录：</span>{:Addons::hook('login_input_footer')}
-                </div>
-                <php>endif;</php>
+                
           </div>         
         </div>
       </div>
@@ -92,8 +88,7 @@
                     <a onclick="javascript:window.open('{:U('public/Register')}','_self')">注册帐号</a>
                 <php>endif;</php>-->
             </div>
-            
-            
+
             <div class="RemPass">
                 <!--<label><input name="" type="checkbox" value="" />&nbsp;&nbsp;记住密码</label>-->
                 <a class="auto left" event-node="login_remember" href="javascript:;"><span class="check-ok"><input type="hidden" name="login_remember" value="1" /></span>{:L('PUBLIC_LOGIN_AUTOMATICALLY')}</a>
@@ -101,6 +96,13 @@
             <div class="regBtn">
                 <a href="javascript:void(0);" onclick="javascript:window.open('{:U('public/Register')}','_self')" class="btn"></a> 
                 <a class="forget" href="{:U('public/Passport/findPassword')}">忘记密码?</a>
+            </div>
+            <div style="margin:40px 0 0 -20px;">
+                <php>if(Addons::requireHooks('login_input_footer') && Addons::hook('login_input_footer')):</php>
+                <div class="login-ft" style="">
+                    <span>其它帐号登录：</span>{:Addons::hook('login_input_footer')}
+                </div>
+                <php>endif;</php>
             </div>
         </div>
     </div>
