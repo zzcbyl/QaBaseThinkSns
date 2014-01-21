@@ -56,13 +56,13 @@ class LoginHooks extends Hooks {
         }
         if($login){
             $this->_loadTypeLogin('sina');
-            $sina = new sina();
+            /*$sina = new sina();
             $return = $sina->getTokenInfo($login['oauth_token']);
             if(isset($return['create_at']) && isset($return['expire_in']) && ($return['create_at'] + $return['expire_in']) < time()){
                 $url = $sina->getUrl();
                 $text = '<dl class="pop_sync"><dt></dt>您绑定的' . $type . '帐号已过期，请<dd><a class="btn-att-green" href="' . $url . '">重新绑定</a></dd></dl>';
                 echo "<script>ui.box.show({$text}, '绑定帐号')</script>";
-            }
+            }*/
         }
     }
 
@@ -1086,8 +1086,13 @@ class LoginHooks extends Hooks {
                 }
                 !defined(strtoupper($value)) && define(strtoupper($value),$config[$value]);
             }
-            //include_once $this->path . "/lib/{$type}.class.php";
-            include_once "D:\Webs\luqinwenda\addons\plugin\Login\lib\{$type}.class.php";
+			//$filePath_ = $this->path."/lib/{$type}.class.php";
+			//$filePath_ = str_replace('/','\\',$filePath_);
+			//var_dump($filePath_);
+            //include_once $filePath_;
+   			
+			include_once "D:\Webs\luqinwenda\addons\plugin\Login\lib\{$type}.class.php";
+			
         }
     }
 }
