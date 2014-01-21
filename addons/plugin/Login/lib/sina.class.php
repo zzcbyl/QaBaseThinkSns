@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 //使用V2版本的客户端,支持Oauth2.0
 include_once( 'sina/saetv2.ex.class.php');
 class sina{
@@ -9,11 +9,9 @@ class sina{
 	private $_oauth;
 
 	public function __construct() {
-
 		$this->_sina_akey = SINA_WB_AKEY;
 		$this->_sina_skey = SINA_WB_SKEY;
 		$this->_oauth = new SaeTOAuthV2( $this->_sina_akey , $this->_sina_skey );
-
 	}
 
     public function getUrl($call_back = null) {
