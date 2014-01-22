@@ -1,8 +1,5 @@
 <?php
 session_start();
-//include_once( 'third-party-api/weibo/config.php' );
-//include_once( 'third-party-api/weibo/saetv2.ex.class.php' );
-
 /**
  * RegisterAction 注册模块
  * @author  zhangzc
@@ -76,29 +73,22 @@ class RegisterAction extends Action
         $this->assign("from","");
 
         if (isset($_SESSION["sina"])) {
-
+            include_once( 'third-party-api/weibo/config.php' );
+            include_once( 'third-party-api/weibo/saetv2.ex.class.php' );
             $this->assign("from","sina");
             $c = new SaeTClientV2( WB_AKEY , WB_SKEY , $_SESSION['sina']['access_token']['oauth_token'] );
             $user_message = $c->show_user_by_id($_SESSION["sina"]["uid"]);
             $this->assign("pwd","lqqa123456");
             $this->assign("nick",$user_message["screen_name"]);
             if ($user_message["gender"]=="m") {
-
                 $this->assign("gender","1");
-
             } else {
-
                 if ($user_message["gender"]=="f") {
-
                     $this->assign("gender","2");
-
                 }
-
             }
         }
-
         $this->display();
-
     }
 
 
