@@ -1086,8 +1086,7 @@ class LoginHooks extends Hooks {
                 }
                 !defined(strtoupper($value)) && define(strtoupper($value),$config[$value]);
             }
-            //include_once $this->path . "/lib/{$type}.class.php";
-            include_once "D:\Webs\luqinwenda\addons\plugin\Login\lib\{$type}.class.php";
+            include_once $this->path . "/lib/{$type}.class.php";
         }
     }
 }

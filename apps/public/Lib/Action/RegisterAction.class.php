@@ -1,7 +1,7 @@
 <?php
 session_start();
-include_once( 'third-party-api/weibo/config.php' );
-include_once( 'third-party-api/weibo/saetv2.ex.class.php' );
+//include_once( 'third-party-api/weibo/config.php' );
+//include_once( 'third-party-api/weibo/saetv2.ex.class.php' );
 
 /**
  * RegisterAction 注册模块
