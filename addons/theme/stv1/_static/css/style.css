@@ -49,6 +49,7 @@ a{text-decoration:none;}
 .contTit p{padding-left:80px; font-size:14px; color:#999; line-height:23px}
 .contTit .feed_img_lists{ padding-left:80px;}
 .comm,.comm a{font-size:12px; color:#999; display:inline-block; text-align:center; }
+.comm a { margin-left:10px;}
 .comm{text-align:right; padding:10px 30px 0px;}
 .contTit p.contImg{padding:15px 0px; text-align:center}
 .comm a.d,.comm a.c,.comm a.x,.comm a.h,.comm a.hx,.comm a.tel,.comm a.a,.comm a.t{display:inline-block; text-indent:1.5em; height:18px; line-height:18px; margin-left:10px;}
@@ -474,7 +475,7 @@ a{text-decoration:none;}
 .msg_yq_top {height:44px; background:url(../image/sprite_tiwen.png) no-repeat #c12d2e 0px -237px ; position:relative}
 .msg_yq_top .close{background-position:0px -304px; width:24px; height:24px; position:absolute; right:15px; top:10px;}
 .msg_yq_cont{ background:#fff;}
-.pengyou{overflow:hidden;  background:#f3f3f3; padding:20px 0px 0px 20px;}
+.pengyou{overflow:hidden;  background:#f3f3f3; padding:20px 0px 0px 20px; height:220px;}
 .pengyou ul li{width:50px; text-align:center; float:left; font-size:12px; margin:0px 12px 10px 0px; _margin:0px 13px 20px 0px;line-height:16px;border:solid 1px #f6f6f6; cursor:pointer;}
 .pengyou ul li img{width:50px; height:50px;}
 .pengyou ul li a{color:#333;}
@@ -532,14 +533,14 @@ a{text-decoration:none;}
 .newAsk_cont ul li{height:55px; overflow:hidden; margin-bottom:15px;}
 .newAsk_cont ul li img{float:left; width:35px; height:35px; margin:3px 15px 0px 0px}
 .newAsk_cont ul li h5{padding-left:50px; color:#333;}
-.newAsk_cont ul li p{padding-left:50px; font-size:12px; color:#999;}
+.newAsk_cont ul li p{ font-size:12px; color:#999; height:35px; overflow:hidden;}
 .newUser_cont{padding:45px 20px 20px 28px;}
 .newUser_cont li{float:left; margin:0px 15px 20px 0px;}
-.newUser_cont li a{font-size:14px; color:#666;}
+.newUser_cont li a{font-size:14px; color:#666; width:50px; overflow:hidden; height:20px; display:block;}
 .newUser_cont ul li img{width:50px; height:50px;}
 .copyRight{ text-align:center; font-size:12px; color:#999; padding:30px 0px 50px;}
 .experts{background:#fff; border:none; padding:20px; width:939px; overflow:hidden}
-.dj_experts{ background:#fafafa; padding:20px 0px; overflow:hidden}
+.dj_experts{ background:#fafafa; padding:20px 0px; }
 .zhuanjia_left{width:670px; float:left; padding-left: 20px;}
 .profile p.pt0{padding-top:0px;}
 .jz1,.jz2,.jz3,.jz4,.zjrz{background:url(../image/sprite_tiwen.png) no-repeat; height:45px; line-height:99em; overflow:hidden; margin-bottom:10px}
@@ -552,14 +553,14 @@ a{text-decoration:none;}
 .zuopin h3{font-size:14px; padding:0px 0px 10px}
 .zuopin ul li{ background:url(../image/dot_r.png) no-repeat left center; text-indent:.6em; float:left; width:330px; height:25px; line-height:25px; position:relative;}
 .jianjieBox{ background:url(../image/jianjie_bg.png) no-repeat; height:71px; width:235px; z-index:9999; position:absolute; top:15px; font-size:12px; padding:30px 10px 10px; line-height:22px; color:#666}
-.zuopin ul li a{font-size:12px; color:#333;}
+.zuopin ul li a{font-size:12px; color:#333; display:block; height:25px; overflow:hidden;}
 .zuopin ul li a:hover{color:#d32020}
 .zhuanjia_right{width:200px; float:right; overflow:hidden; padding-right:20px;}
 .shipin{height:150px;}
 .newsList{}
 .newsList h3{font-size:14px; padding:10px 0px}
 .newsList ul li{ background:url(../image/dot_r.png) no-repeat left center; text-indent:.6em; height:25px; line-height:25px}
-.newsList ul li a{font-size:12px; color:#666;}
+.newsList ul li a{font-size:12px; color:#666; display: block; overflow: hidden; height:25px; }
 .newsList ul li a:hover{color:#d32020}
 .jincai{padding:20px 0px; height:100%;}
 .jincaiList{ overflow:hidden; position:relative}
@@ -571,7 +572,7 @@ a{text-decoration:none;}
 .jincaiList ul li{width:290px; padding:5px; background:#eee; float:left; margin-right:12px}
 .jincaiList ul li dl dt{height:140px; position:relative}
 .jincaiList ul li dl dt a{position:absolute; width:260px; height:35px; line-height:35px; padding:0px 15px; background:#000; color:#fff; z-index:200; bottom:0px;filter:alpha(Opacity=80);-moz-opacity:0.80;opacity: 0.80;}
-.jincaiList ul li dl dd{font-size:14px; color:#666; line-height:23px; background:#fff; padding:10px;}
+.jincaiList ul li dl dd{font-size:14px; color:#666; line-height:23px; background:#fff; padding:10px; height:130px; overflow:hidden;}
 .guwen{overflow:hidden;}
 .tuwenList{}
 .tuwenList ul li{width:310px; float:left;border-bottom:solid 1px #ccc; padding:10px 0px;}

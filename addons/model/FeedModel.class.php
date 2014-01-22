@@ -459,6 +459,32 @@ class FeedModel extends Model {
 		return $feedlist;
 	}
 	
+	/**
+		* 根据回答ID获取问题和回答块
+		* $where 查询条件
+		* $limit 结果集数目，默认为10
+		* @return array 微博列表数据
+	**/
+	public function getAnswerModel($answer_ID)
+	{
+		$feedlist = $this->field('feed_id')->where('feed_id='.$answer_ID)->select(); 
+		$feed_ids = getSubByKey($feedlist, 'feed_id');
+		$feedlist = $this->getFeeds($feed_ids, false);
+		
+		
+		//根据答案取问题,调换数组位置
+		$index=0;
+		
+		$questionID=Array($feedlist[0]['feed_questionid']);
+		$AnswerFeedData = $this->getFeeds($questionID);
+		if(is_array($AnswerFeedData))
+		{
+			$AnswerFeedData[0]['answer'][0]=$feedlist[0];;
+			$feedlist[0]=$AnswerFeedData[0];
+		}		
+		return $feedlist[0];
+	}
+	
 
 	/**
 	 * 获取指定用户所关注人的所有微博，默认为当前登录用户

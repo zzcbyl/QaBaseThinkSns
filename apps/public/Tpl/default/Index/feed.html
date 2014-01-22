@@ -34,9 +34,9 @@
                                 {:W('Collection',array('type'=>'btn','sid'=>$feedInfo['feed_id'],'stable'=>'feed','sapp'=>$feedInfo['app']))}
                             </eq>
                             <a href="javascript:void(0);" onclick="showInviteAnswerDiv();">邀请回答</a> 
-                            <a href="javascript:void(0);" onclick="if($('#AddQuestionDiv').css('display')=='none')  $('#AddQuestionDiv').show();  else  $('#AddQuestionDiv').hide(); ">追问</a> 
+                            <!--<a href="javascript:void(0);" onclick="if($('#AddQuestionDiv').css('display')=='none')  $('#AddQuestionDiv').show();  else  $('#AddQuestionDiv').hide(); ">追问</a> -->
                             <php>if(in_array('comment',$weibo_premission)):</php>
-                                <a nodeName='comment' href="javascript:void(0)" style="min-width:50px; text-align:left;" onclick="if($('#commentBlock').css('display')=='none') $('#commentBlock').show(); else  $('#commentBlock').hide();">{:L('PUBLIC_STREAM_COMMENT')}<neq name='feedInfo.comment_count' value='0'>({$feedInfo['comment_count']})</neq></a>
+                                <a nodeAName='comment' nodeName='comment' href="javascript:void(0)" style="min-width:50px; text-align:left;" onclick="if($('#commentBlock').css('display')=='none') $('#commentBlock').show(); else  $('#commentBlock').hide();">{:L('PUBLIC_STREAM_COMMENT')}<neq name='feedInfo.comment_count' value='0'>({$feedInfo['comment_count']})</neq></a>
                             <php> endif; </php>
                         </p>
                     </div>
@@ -45,13 +45,13 @@
                 <!--邀请回答-->
                 <!--邀请列表--> 
                 <div class="yqList_box"  id="InvitedAnswer" style="display:none;">
-                   	<p class="icon3" style="right:120px;"></p>
+                   	<p class="icon3" style="right:90px;"></p>
                    	<div class="yqList">
                     	<ul id="inviteList">
                         </ul>
                     </div>
                     <div class="yqBtn">
-                        <a href="javascript:void(0);">更多>></a>
+                        <a id="inviteMore" style="display:none;" target="_blank" href="{:U('public/Index/invitelist')}&feed_id=<php>echo $_GET["feed_id"];</php>&uid=<php>echo $_GET["uid"];</php>&Type=invite">更多>></a>&nbsp;
                         <a href="javascript:void(0);" data-reveal-id="myModal" data-animation="fade" class="yq"></a>
                     </div>
                 </div>
@@ -217,7 +217,7 @@
                 <!--评论-->
                 <div id="commentBlock" style="display: none; padding-left:80px; " model-node="comment_detail">
                     <php> $cancomment = CheckPermission('core_normal','feed_comment') && in_array('comment',$weibo_premission) ? 1: 0;</php>
-                    {:W('Comment',array('tpl'=>'detail','app_row_id'=>$feedInfo['app_row_id'],'app_uid'=>$feedInfo['uid'],'row_id'=>$feedInfo['feed_id'],'pageHtml'=>1,'limit'=>'20','order'=>'DESC','cancomment'=>$cancomment,'cancomment_old'=>0,'app_name'=>$feedInfo['app']))}
+                    {:W('Comment',array('tpl'=>'detail','app_row_id'=>$feedInfo['app_row_id'],'app_uid'=>$feedInfo['uid'],'row_id'=>$feedInfo['feed_id'],'pageHtml'=>1,'limit'=>'10','order'=>'DESC','cancomment'=>$cancomment,'cancomment_old'=>0,'app_name'=>$feedInfo['app'],'PageHtml'=>'0'))}
                 </div>
                 <!--评论-->              
 
@@ -281,6 +281,8 @@
                         var maxCount = 5;
                         if(josn.length <= maxCount)
                             maxCount = josn.length;
+                        else
+                            $('#inviteMore').show();
                         for (var i = 0; i < maxCount; i++) {
                             //alert(josn[i].inviteuserinfo.uname);
                             lihtml += '<li><div class="yqcont"><a target="_blank" href="' + josn[i].userinfo.space_url + '"><img class="thumb" event-node="face_card" uid="' + josn[i].userinfo.uid + '" src="' + josn[i].userinfo.avatar_tiny + '" /></a>' + josn[i].userinfo.space_link + '<h5>邀请了</h5></div>' +

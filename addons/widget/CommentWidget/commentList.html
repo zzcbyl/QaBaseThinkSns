@@ -48,7 +48,11 @@
 
     <php> if($list['count']>10){</php>
         <!--<span class="info clearfix"><a class="fw" href="{:U('public/Profile/feed',array('feed_id'=>$vo['row_id'],'uid'=>$vo['app_uid']))}">{:L('PUBLIC_SEE_MORE')}</a></span>-->
-    <php>}</php>
+        <php>if($comment_type==1 || $comment_type==2) {</php>
+            <div style="padding-top:10px; text-align:right;">更多评论　<a target="_blank" href="{:U('public/Index/answercomment')}&feed_id=<php>echo $vo["row_id"];</php>&uid=<php>echo $vo["uid"];</php>&commentType={$comment_type}">点击查看>></a></div>
+        <php>} else {</php>
+            <div style="padding-top:10px; text-align:right;">更多评论　<a target="_blank" href="{:U('public/Index/invitelist')}&feed_id=<php>echo $vo["row_id"];</php>&uid=<php>echo $vo["uid"];</php>&Type=comment">点击查看>></a></div>    
+    <php>} }</php>
 </neq>
 <eq name='list.data' value=''><div style="text-align:center; color: #999999;">暂无<php>if($comment_type==1) echo '赞同'; else if($comment_type==2) echo '反对';</php>评论</div></eq>
 </div>

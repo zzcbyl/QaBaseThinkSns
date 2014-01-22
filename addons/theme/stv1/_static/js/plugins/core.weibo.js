@@ -266,7 +266,7 @@ core.weibo = {
             if (description != undefined)
                 description.ready = null;
         };
-        $(obj.childModels['post_ok'][0]).fadeOut(1000, fadeOutObj);
+        $(obj.childModels['post_ok'][0]).fadeOut(3000, fadeOutObj);
         //追问或者要求补充
         if (int_isadd == 1) {
             //$('#AddQuestionDiv').hide();

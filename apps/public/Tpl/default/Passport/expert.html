@@ -40,20 +40,14 @@
                 } 
 			</script> 
             <ul>
-            	<li onmouseover="ddd('aa', 'show');" onmouseout="ddd('aa', 'hide');" id="tab_t1"><a href="javascript:void(0);">《四六级不过网申都过不了 四六级存废争议》</a>
-                <div class="jianjieBox" id="aa" style="display:none">
-                中国青少年健康问答：青春爱知道化学平衡下向什么方向移？正逆方向是什么国青少年爱知道化学平春爱知道化学平衡...
-                </div>
-                </li>
-                <li><a href="javascript:void(0);">《四六级不过网申都过不了 四六级存废争议》</a></li>
-                <li><a href="javascript:void(0);">《四六级不过网申都过不了 四六级存废争议》</a></li>
-                <li><a href="javascript:void(0);">《四六级不过网申都过不了 四六级存废争议》</a></li>
-                <li><a href="javascript:void(0);">《四六级不过网申都过不了 四六级存废争议》</a></li>
-                <li><a href="javascript:void(0);">《四六级不过网申都过不了 四六级存废争议》</a></li>
-                <li><a href="javascript:void(0);">《四六级不过网申都过不了 四六级存废争议》</a></li>
-                <li><a href="javascript:void(0);">《四六级不过网申都过不了 四六级存废争议》</a></li>
-                <li><a href="javascript:void(0);">《四六级不过网申都过不了 四六级存废争议》</a></li>
-                <li><a href="javascript:void(0);">《四六级不过网申都过不了 四六级存废争议》</a></li>
+                <volist name="WorksList.data" id="wl">
+            	    <li onmouseover="ddd('works_{$i}', 'show');" onmouseout="ddd('works_{$i}', 'hide');">
+                        <a href="javascript:void(0);">{$wl.title}</a>
+                        <div class="jianjieBox" id="works_{$i}" style="display:none">
+                            {$wl.description}
+                        </div>
+                    </li>
+                </volist>
             </ul>
         </div>
         <!--主要作品-->
@@ -67,55 +61,33 @@
             <div class="newsList">
             <h3>相关新闻</h3>
             <ul>
-            	<li><a href="javascript:void(0);">四六级不过网申都过不级存废争议? </a></li>
-                <li><a href="javascript:void(0);">四六级不过网申都过不级存废争议? </a></li>
-                <li><a href="javascript:void(0);">四六级不过网申都过不级存废争议? </a></li>
-                <li><a href="javascript:void(0);">四六级不过网申都过不级存废争议? </a></li>
+                <volist name="NewsList.data" id="nl">
+            	    <li><a href="javascript:void(0);">{$nl.title}</a></li>
+                </volist>
             </ul>
             </div>
         </div>
+        <div style="clear:both;"></div>
     </div>
 <!--顶级专家-->
 <!--卢勤精彩问答-->
-<div class="jincai">
+<div class="jincai" style="clear:both;">
 	<h1 class="jz2">卢勤精彩问答</h1>
     <div class="jincaiList">
     <a href="javascript:;" class="jcPrev" id="LeftArr"></a>
     <a href="javascript:;" class="jcNext" id="RightArr"></a>
     	<ul id="ISL_Cont_1">
+            <volist name="ExpertQA.data" id="eqa">
         	<li>
             	<dl>
                 	<dt>
-                    <img src="images/img.jpg" />
-                    <a href="javascript:void(0);">该让谁来教育我们的孩子?</a>
+                        <img src="images/img.jpg" />
+                        <a href="{:U('public/Index/feed',array('feed_id'=>$eqa['feed_id'],'uid'=>$eqa['uid']))}" target="_blank">{$eqa.body}</a>
                     </dt>
-                    <dd>
-                    我们之所以没有听到有学生或家长这样说是因为大部分在圣母大学工作的教师确实都很出色。我们并不依靠学生来评判自己教师的基本功，当然，学生常常会在教学方法的调整上面给出很有用的建议（也能让人们注意到教师明显的玩忽...
-                    </dd>
+                    <dd>{$eqa.description}</dd>
                 </dl>
             </li>
-            <li>
-            	<dl>
-                	<dt>
-                    <img src="images/img.jpg" />
-                    <a href="javascript:void(0);">该让谁来教育我们的孩子?</a>
-                    </dt>
-                    <dd>
-                    我们之所以没有听到有学生或家长这样说是因为大部分在圣母大学工作的教师确实都很出色。我们并不依靠学生来评判自己教师的基本功，当然，学生常常会在教学方法的调整上面给出很有用的建议（也能让人们注意到教师明显的玩忽...
-                    </dd>
-                </dl>
-            </li>
-            <li>
-            	<dl>
-                	<dt>
-                    <img src="images/img.jpg" />
-                    <a href="javascript:void(0);">该让谁来教育我们的孩子?</a>
-                    </dt>
-                    <dd>
-                    我们之所以没有听到有学生或家长这样说是因为大部分在圣母大学工作的教师确实都很出色。我们并不依靠学生来评判自己教师的基本功，当然，学生常常会在教学方法的调整上面给出很有用的建议（也能让人们注意到教师明显的玩忽...
-                    </dd>
-                </dl>
-            </li>
+            </volist>
         </ul>
         <script language=javascript type=text/javascript>
 			<!--            //--><![CDATA[//><!--

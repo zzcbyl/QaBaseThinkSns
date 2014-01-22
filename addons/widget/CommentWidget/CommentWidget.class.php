@@ -36,7 +36,6 @@ class CommentWidget extends Widget
 		$_REQUEST['p'] = intval($_GET['p']) ? intval($_GET['p']) : intval($_POST['p']);
 		empty($data) && $data = $_POST;
 		is_array($data) && $var = array_merge($var,$data);
-
 		$var['hasAnswerComment'] = '0';
 		//对答案只能赞成或者反对一次
 		if($var['comment_type'] == 1 || $var['comment_type'] == 2)
@@ -79,6 +78,7 @@ class CommentWidget extends Widget
 			if(!empty($map['row_id'])){	
 				//分页形式数据
 				$var['list'] = model('Comment')->getCommentList($map,'comment_id '.$var['order'],$var['limit']);
+				//print_r($map);
 			}
 		}//渲染模版
         // 获取源资源作者用户信息

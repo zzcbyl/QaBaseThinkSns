@@ -53,6 +53,18 @@ class PassportAction extends Action
 			$login_bg = APP_PUBLIC_URL . '/image/body-bg2.jpg';
         
         $this->assign('login_bg', $login_bg);
+		
+		//最新问题
+		$Qwhere=' is_del = 0 AND feed_questionid=0 AND add_feedid=0 AND (is_audit=1 OR is_audit=0) ';
+		$newfeedList = model('feed')->getQuestionList($Qwhere,3);
+		//print_r($newfeedList);
+		$this->assign('newfeedList', $newfeedList);
+		
+		//最新用户
+		$NewUserList = model('User')->getList(array(),12,'uid');
+		$uids = getSubByKey($NewUserList, 'uid');
+		$NewUserInfoList = model('User')->getUserInfoByUids($uids);
+		$this->assign('NewUserList', $NewUserInfoList);
         
 		$this->display('login');
 	}
@@ -355,10 +367,27 @@ class PassportAction extends Action
 	public function expert()
 	{
 		//顶级专家
-		$TopExpert = model('user')->getUserInfo(3);
-		$user_count = model ( 'UserData' )->getUserDataByUids ( array(3) );
+		$expertUid = 3;
+		$TopExpert = model('user')->getUserInfo($expertUid);
+		$user_count = model ( 'UserData' )->getUserDataByUids ( array($expertUid) );
 		$this->assign ( 'TopExpert_UserCount', $user_count );
 		$this->assign('TopExpert',$TopExpert);
+		
+		//主要作品(顶级专家)
+		$worksWhere = '`uid` ='.$expertUid.' and `type`=1';
+		$WorksList = model('NewsData')->getNewDataList($worksWhere, 10);
+		$this->assign('WorksList',$WorksList);
+		
+		//相关新闻
+		$newsWhere = '`type`=2';
+		$NewsList = model('NewsData')->getNewDataList($newsWhere, 4);
+		$this->assign('NewsList',$NewsList);
+		
+		//专家问答
+		$ExpertWhere = '(is_audit=1 OR is_audit=0) AND uid='.$expertUid.' AND is_del = 0 AND feed_questionid=0 AND add_feedid=0 ';
+		$QAList = model('feed')->getQuestionList($ExpertWhere, 10);
+		//print_r($QAList['data']);
+		$this->assign('ExpertQA',$QAList);
 		
 		//认证专家
 		$uids = model('UserGroupLink')->getUserByGroupID(8, 6);

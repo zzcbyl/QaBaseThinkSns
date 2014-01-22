@@ -78,13 +78,17 @@
 
                 </div>
             </volist> 
-            <!--页码-->
-            <neq name='list.html' value=''>
-            <div id="page" class="page">
-                {$list.html}
-            </div>
-            </neq>
-            <!--页码/end-->
+            <php>if($PageHtml>0) {</php>
+                <!--页码-->
+                <neq name='list.html' value=''>
+                <div id="page" class="page">
+                    {$list.html}
+                </div>
+                </neq>
+                <!--页码/end-->
+            <php>} else {</php>
+                <div style="padding-top:10px; text-align:right; <php>if($list['html']=='') { echo 'display:none;'; }</php>">更多评论　<a target="_blank" href="{:U('public/Index/invitelist')}&feed_id=<php>echo $_GET["feed_id"];</php>&uid=<php>echo $_GET["uid"];</php>&Type=comment">点击查看>></a></div>
+            <php>}</php>
         </eq>
         <eq name='list.data' value=''><div class="nomeaningclass"><div style="text-align:center; color: #999999;">暂无评论</div></div></eq>
     </div>

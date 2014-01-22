@@ -188,6 +188,7 @@ core.comment = {
                     if (addToEnd == 1) {
                         $(commentListObj).find('.nomeaningclass').eq(0).prepend(msg.data);
                     } else {
+                        //alert($(commentListObj.childModels['comment_list'][0]).html());
                         $(msg.data).insertBefore($(commentListObj.childModels['comment_list'][0]));
                     }
                 } else {

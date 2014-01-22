@@ -164,7 +164,7 @@ class FeedListWidget extends Widget {
 					//关键字匹配 采用搜索引擎兼容函数搜索 后期可能会扩展为搜索引擎
 					$list = model('Feed')->searchFeed($var['feed_key'],'all',$var['loadId'],$this->limitnums);
 				}else{
-					$where =' (is_audit=1 OR is_audit=0 AND uid='.$GLOBALS['ts']['mid'].') AND is_del = 0 AND feed_questionid=0 AND add_feedid=0 ';
+					$where =' (is_audit=1 OR is_audit=0) AND is_del = 0 AND feed_questionid=0 AND add_feedid=0 ';
 					if($var['loadId'] > 0){ //非第一次
 						$where .=" AND feed_id < '".intval($var['loadId'])."'";
 					}
