@@ -2,7 +2,7 @@ config/config.inc.php
 _runtime/*
 data/*
 .idea/*
-
+data/
 data/database/131125_c77222690c_1.php
 
 .idea/workspace.xml

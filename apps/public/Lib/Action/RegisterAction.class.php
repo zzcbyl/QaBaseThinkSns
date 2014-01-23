@@ -80,6 +80,7 @@ class RegisterAction extends Action
             $user_message = $c->show_user_by_id($_SESSION["sina"]["uid"]);
             $this->assign("pwd","lqqa123456");
             $this->assign("nick",$user_message["screen_name"]);
+            $_SESSION['user_message'] = $user_message;
             if ($user_message["gender"]=="m") {
                 $this->assign("gender","1");
             } else {
@@ -163,6 +164,11 @@ class RegisterAction extends Action
             //发送验证邮件
             $this->_register_model->sendActivationEmail($uid);
 
+            if (isset($_SESSION['sina'])) {
+                $user_message = $_SESSION["user_message"];
+                $avatar = new AvatarModel($uid);
+                $avatar->saveRemoteAvatar($user_message['avatar_large'],$uid);
+            }
             $this->redirect('public/Register/step3', array('uid'=>$uid,'code'=>$_GET['code']));
         }
         else
@@ -209,7 +215,11 @@ class RegisterAction extends Action
 		//$this->_register_model->sendActivationEmail($uid);
 		$this->assign('Code',$_GET['code']);
 		$this->assign('User',$user);
-		$this->display();	
+        if (isset($_SESSION['user_message'])) {
+            $user_message = $_SESSION['user_message'];
+            $this->assign('Weibo','http://weibo.com/u/'.$user_message['id']);
+        }
+		$this->display();
 	}
 	
 	public function step5()
