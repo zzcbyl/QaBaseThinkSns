@@ -292,7 +292,7 @@ class FeedListWidget extends Widget {
 					$LoadWhere = "AND feed_id < '".intval($var['loadId'])."'";
 				}
 				$where ="(is_audit=1 OR is_audit=0) AND is_del = 0 AND feed_quid = ".$GLOBALS['ts']['mid']." AND feed_questionid != 0 AND add_feedid=0 ".$LoadWhere;
-				$list = model('Feed')->getAnswerList($where, $this->limitnums, 'feed_id DESC', $var['newcount']);
+				$list = model('Feed')->getAnswerList($where, $this->limitnums, 'publish_time desc', $var['newcount']);
 				//print_r($list);
 				break;	
 			case 'newagreecomment':		//消息赞同列表

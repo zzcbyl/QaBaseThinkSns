@@ -335,7 +335,7 @@ class FeedModel extends Model {
 	 * @param integer $limit 结果集数目，默认为10
 	 * @return array 微博列表数据
 	 */
-	public function getList($map, $limit = 10 , $order = 'feed_id DESC') {
+	public function getList($map, $limit = 10 , $order = 'publish_time desc') {
 		$feedlist = $this->field('feed_id')->where($map)->order($order)->findPage($limit); 
 		$feed_ids = getSubByKey($feedlist['data'], 'feed_id');
 		$feedlist['data'] = $this->getFeeds($feed_ids);
@@ -344,7 +344,7 @@ class FeedModel extends Model {
 		foreach( $feedlist["data"] as $v => $vv )
 		{
 			$AnswerWhere='feed_questionid='.$vv['feed_id'].' and uid!='.$vv['uid'].' and (uid='.$GLOBALS['ts']['mid'].' or uid in (SELECT `fid` FROM `wb_user_follow` WHERE `uid` = '.$GLOBALS['ts']['mid'].'))';
-			$AnswerFeed = $this->field('feed_id')->where($AnswerWhere)->order("feed_id DESC")->findPage(1);				
+			$AnswerFeed = $this->field('feed_id')->where($AnswerWhere)->order("publish_time desc")->findPage(1);				
 			$AnswerFeed_id = getSubByKey($AnswerFeed['data'], 'feed_id');
 			$AnswerFeedData = $this->getFeeds($AnswerFeed_id);
 			
@@ -365,7 +365,7 @@ class FeedModel extends Model {
 	 * @param integer $limit 结果集数目，默认为10
 	 * @return array 微博列表数据
 	 */
-	public function getAnswerAndSupplementList($map, $limit = 10 , $order = 'feed_id DESC') {
+	public function getAnswerAndSupplementList($map, $limit = 10 , $order = 'publish_time desc') {
 		$feedlist = $this->getList($map, $limit, $order);
 		//print_r($feedlist);
 		//增加要求补充的列表
@@ -389,7 +389,7 @@ class FeedModel extends Model {
 	 * @param integer $limit 结果集数目，默认为10
 	 * @return array 微博列表数据
 	 */
-	public function getQuestionAndAnswer($map, $limit = 10 , $order = 'feed_id DESC') {
+	public function getQuestionAndAnswer($map, $limit = 10 , $order = 'publish_time desc') {
 		$feedlist = $this->field('feed_id')->where($map)->order($order)->findPage($limit); 
 		$feed_ids = getSubByKey($feedlist['data'], 'feed_id');
 		$feedlist['data'] = $this->getFeeds($feed_ids);
@@ -398,7 +398,7 @@ class FeedModel extends Model {
 		foreach( $feedlist["data"] as $v => $vv )
 		{
 			$AnswerWhere='feed_questionid='.$vv['feed_id'];
-			$AnswerFeed = $this->field('feed_id')->where($AnswerWhere)->order("feed_id DESC")->findPage(1);				
+			$AnswerFeed = $this->field('feed_id')->where($AnswerWhere)->order("publish_time desc")->findPage(1);				
 			$AnswerFeed_id = getSubByKey($AnswerFeed['data'], 'feed_id');
 			$AnswerFeedData = $this->getFeeds($AnswerFeed_id);
 			
@@ -433,7 +433,7 @@ class FeedModel extends Model {
 		* $limit 结果集数目，默认为10
 		* @return array 微博列表数据
 	**/
-	public function getAnswerList($where, $limit=10, $order='feed_id DESC', $newCount=0)
+	public function getAnswerList($where, $limit=10, $order='publish_time desc', $newCount=0)
 	{
 		$feedlist = $this->field('feed_id')->where($where)->order($order)->findPage($limit); 
 		$feed_ids = getSubByKey($feedlist['data'], 'feed_id');
@@ -519,7 +519,7 @@ class FeedModel extends Model {
 		$table .= ") tt group by feed_id) tab";
 		//print($table);
 		//$feedlist = $this->table($table)->where($_where)->field('a.feed_id')->order('a.publish_time DESC')->findPage($limit);
-		$feedlist = $this->table($table)->where($_LoadWhere)->order('tab.feed_id DESC')->findPage($limit);
+		$feedlist = $this->table($table)->where($_LoadWhere)->order('tab.publish_time desc')->findPage($limit);
 		//print($this->getLastSql());
 		//print_r($feedlist);
 		$feed_ids = getSubByKey($feedlist['data'], 'feed_id');
@@ -548,7 +548,7 @@ class FeedModel extends Model {
 			$AnswerFeed_id=Array();
 			$AnswerFeedData=Array();
 			$AnswerWhere='feed_questionid='.$vv['feed_id'].' and (uid='.$GLOBALS['ts']['mid'].' or uid in (SELECT `fid` FROM `'.$this->tablePrefix.'user_follow` WHERE `uid` = '.$GLOBALS['ts']['mid'].'))';
-			$AnswerFeed = $this->field('feed_id')->where($AnswerWhere)->order("feed_id DESC")->findPage(1);				
+			$AnswerFeed = $this->field('feed_id')->where($AnswerWhere)->order("publish_time desc")->findPage(1);				
 			$AnswerFeed_id = getSubByKey($AnswerFeed['data'], 'feed_id');
 			$AnswerFeedData = $this->getFeeds($AnswerFeed_id);
 						
@@ -556,8 +556,8 @@ class FeedModel extends Model {
 			$feedlist["data"][$v]=$vv;*/
 			
 			//$AnswerTable = '(SELECT max(feed_id) answer_id FROM `wb_feed` WHERE `feed_questionid` = '.$vv['feed_id'].' and (uid='.$GLOBALS['ts']['mid'].' or uid in (SELECT `fid` FROM `'.$this->tablePrefix.'user_follow` WHERE `uid` = '.$GLOBALS['ts']['mid'].')) group by uid) tt';
-			$AnswerTable = '(SELECT feed_id FROM `wb_feed` WHERE `feed_questionid` = '.$vv['feed_id'].' order by feed_id desc limit 1) tt';
-			$AnswerList = $this->table($AnswerTable)->order('feed_id DESC')->select();
+			$AnswerTable = '(SELECT feed_id FROM `wb_feed` WHERE `feed_questionid` = '.$vv['feed_id'].' order by publish_time desc limit 1) tt';
+			$AnswerList = $this->table($AnswerTable)->order('publish_time desc')->select();
 			if(is_array($AnswerList)&&count($AnswerList)>0)
 			{
 				foreach( $AnswerList as $a => $aa )
@@ -1435,7 +1435,7 @@ class FeedModel extends Model {
 		}
 		$start = ($page - 1) * $limit;
 		$end = $limit;
-		$feed_ids = $this->where($where)->field('feed_id')->limit("{$start},{$end}")->order('feed_id DESC')->getAsFieldArray('feed_id');
+		$feed_ids = $this->where($where)->field('feed_id')->limit("{$start},{$end}")->order('publish_time desc')->getAsFieldArray('feed_id');
 		return $this->formatFeed($feed_ids,true);
 	}
 
@@ -1468,7 +1468,7 @@ class FeedModel extends Model {
 		$table = "{$this->tablePrefix}feed AS a LEFT JOIN {$this->tablePrefix}user_follow AS b ON a.uid=b.fid AND b.uid = {$mid}";
 		// 加上自己的信息，若不需要此数据，请屏蔽下面语句
 		$where = "(a.uid = '{$mid}' OR b.uid = '{$mid}') AND ($where)";
-		$feed_ids = $this->where($where)->table($table)->field('a.feed_id')->limit("{$start},{$end}")->order('a.feed_id DESC')->getAsFieldArray('feed_id');
+		$feed_ids = $this->where($where)->table($table)->field('a.feed_id')->limit("{$start},{$end}")->order('a.publish_time desc')->getAsFieldArray('feed_id');
 		
 		return $this->formatFeed($feed_ids, true);
 	}
@@ -1543,7 +1543,7 @@ class FeedModel extends Model {
 		}
 		$start = ($page - 1) * $limit;
 		$end = $limit;
-		$feed_ids = $this->where($where)->field('feed_id')->limit("{$start},{$end}")->order('feed_id DESC')->getAsFieldArray('feed_id');
+		$feed_ids = $this->where($where)->field('feed_id')->limit("{$start},{$end}")->order('publish_time desc')->getAsFieldArray('feed_id');
 		return $this->formatFeed($feed_ids,true);
 	}
 

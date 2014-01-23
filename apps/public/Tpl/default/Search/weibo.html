@@ -34,7 +34,7 @@ function addDigg(feed_id){
 			<php>}</php>
 			<php>if(!empty($vl['body'])){</php><php>}</php>
 			</p>
-			<p class="contents">{$vl.body|format=true}</p>
+			<p class="contents"><a target="_blank" href="{:U('public/Index/feed',array('feed_id'=>$vl['feed_id'],'uid'=>$vl['uid']))}">{$vl.body|format=true}</a></p>
 			
 			<p class="info">
 			<span class="right">

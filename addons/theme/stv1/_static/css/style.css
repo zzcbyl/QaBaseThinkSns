@@ -215,7 +215,7 @@ a{text-decoration:none;}
 .g_new_wt ul li a{font-size:12px; color:#333; display: block; height: 30px; width: 470px; overflow: hidden;}
 .g_new_wt ul li span{position:absolute; font-size:12px; color:#ccc; text-align:left; top:0px}
 .g_new_wt ul li span.g_com{right:90px; width:70px;}
-.g_new_wt ul li span.g_nic{color:#666; right:0px; width:90px}
+.g_new_wt ul li span.g_nic{color:#666; right:0px; width:90px; overflow:hidden;}
 .g_user{overflow:hidden; margin-top:20px;}
 .g_user ul li{position:relative; overflow:hidden; margin-bottom:5px; *margin-bottom:1px; _width:180px;}
 .g_user ul li img{float:left;margin-right:10px; width:35px; height:35px;}
@@ -357,7 +357,7 @@ a{text-decoration:none;}
 .join a:hover {color:#fff; text-decoration:none; }
 /*2014*/
 .pd17{padding:17px; width:676px;}
-.contsNum{padding:0px 0px 30px 2px; border-bottom:solid 1px #d9d9d9; border:none; margin-top:-20px;}
+.contsNum{padding:0px 0px 30px 2px; border-bottom:solid 1px #d9d9d9; border:none; }
 .contTwo{margin-left:0px;}
 .pt0{padding-top:0px;}
 .contTop2,.contBottom2,.aTop2,.aBottom2,.gxBtn,.jxzw,.wenzi,.biaoqing,.tupian,.shipin,.caina,.twbq,.twtp,.twsp,.twyqhd,.msg_yq_top .close{ background:url(../image/sprite_tiwen.png) no-repeat;}

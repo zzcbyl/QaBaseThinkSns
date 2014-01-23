@@ -17,7 +17,7 @@ class HotTopicWidget extends Widget {
 	private function getHotTopicData()
 	{
 		$where =' (is_audit=1 OR is_audit=0) AND is_del = 0 AND feed_questionid=0 ';
-		$list = model('Feed')->getList($where,$this->limitnums,'answer_count desc, feed_id desc');
+		$list = model('Feed')->getList($where,$this->limitnums,'answer_count desc, publish_time desc');
 		$var['data'] = $list['data'];
 		
 		//print_r($var['data']);

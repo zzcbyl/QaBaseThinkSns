@@ -1,6 +1,6 @@
 <include file="__THEME__/_header" />
 <body style="background:#f3f3f3;">
-{* 未登录时 *}
+<!--未登录时-->
 <nosession name="mid">
     <div class="header_box">
 	    <div class="header w980">
@@ -31,13 +31,10 @@
                     </li>
                 </ul>
             </div>
-        
         </div>
-
     </div>
-
 </nosession>
-{* 登录后 *}
+<!--登录后-->
 <session name="mid">
     <div class="header_box">
 	    <div class="header w980">
@@ -157,23 +154,3 @@
         });
     </script>
 </session>
-<php>
-//出现注册提示的页面
-$show_register_tips = array('public/Profile','public/Topic','weiba/Index');
-if(!$mid && in_array(APP_NAME.'/'.MODULE_NAME,$show_register_tips)){
-</php>
-<php>$registerConf = model('Xdata')->get('admin_Config:register');</php>
-<!--未登录前-->
-<div class="login-no-bg">
-    <div class="login-no-box boxShadow clearfix">
-        <div class="login-reg right">
-            <php>if($registerConf['register_type'] == 'open'){</php>
-            <a href="{:U('public/Register/index')}" class="btn-reg">立即注册</a>
-            <php>}</php>
-            <span>已有帐号？<a href="javascript:quickLogin()">立即登录</a></span>
-        </div>
-        <p class="left">
-            <span>欢迎来到{$site.site_name}</span>赶紧注册与朋友们分享快乐点滴吧！</p>
-    </div>
-</div>
-<php>}</php>

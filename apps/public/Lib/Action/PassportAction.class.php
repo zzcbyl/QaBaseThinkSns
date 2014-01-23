@@ -293,7 +293,7 @@ class PassportAction extends Action
 	public function square(){
 		//热门问题
 		$where =' (`is_audit`=1 OR `is_audit`=0) AND `is_del` = 0 AND `feed_questionid`=0 AND `add_feedid` = 0  ';
-		$list = model('Feed')->getList($where,10,'answer_count desc, feed_id desc');
+		$list = model('Feed')->getList($where,10,'answer_count desc, publish_time desc');
 		$HotTopicList = $list['data'];
 		$this->assign('HotTopicList', $HotTopicList);
 		
@@ -322,12 +322,24 @@ class PassportAction extends Action
 		//print_r($FollowingQuestion['data']);
 		
 		//最新用户
-		$NewUserList = model('User')->getList(array(),6,'uid');
+		$userwhere='is_del = 0 and is_audit = 1 and is_active = 1 and is_init = 1';
+		$NewUserList = model('User')->getList($userwhere,6,'uid');
 		$uids = getSubByKey($NewUserList, 'uid');
 		$NewUserInfoList = model('User')->getUserInfoByUids($uids);
 		$this->assign('NewUserList', $NewUserInfoList);
 		//print_r($NewUserInfoList);
 		
+		//得到邀请最多的用户
+		$invitemap['key'] = 'be_invited_count';
+		$InviteUserList = model('UserData')->getlist($invitemap,' `value` desc', 10);
+		$InviteUserInfoList=array();
+		foreach($InviteUserList as $k=>$v)
+		{
+			$v['userinfo'] =model('User')->getUserInfoByUids($v['uid']);
+			$InviteUserInfoList[$k] = $v;
+		}
+		$this->assign('InviteUserInfoList', $InviteUserInfoList);
+		//print_r($InviteUserInfoList);
 		
 		//得到赞同最多的用户
 		$map['key'] = 'comment_agree_count';
@@ -352,6 +364,14 @@ class PassportAction extends Action
 		}
 		$this->assign('ThankUserInfoList', $ThankUserInfoList);
 		//print_r($ThankUserInfoList);
+		
+		//最新专家点评
+		$Euids = model('UserGroupLink')->getUserByGroupID(8, 6);
+		$struid = implode(',',$Euids);
+		$answerWhere =' is_del = 0 AND feed_questionid!=0 AND add_feedid=0 AND (is_audit=1 OR is_audit=0) AND uid in ('.$struid.')';
+		$answerList = model('Feed')->getAnswerList($answerWhere, 4,' publish_time desc');
+		$this->assign('answerList',$answerList);
+		//print_r($answerList);
 		
 		$this->setTitle ('广场' );
 		$this->setKeywords ('广场');

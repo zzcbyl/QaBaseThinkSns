@@ -61,7 +61,7 @@ class ChannelApiModel
         }
         $start = ($page - 1) * $count;
         $end = $count;
-        $feedIds = D('channel')->where($where)->limit("$start, $end")->order('feed_id DESC')->field('feed_id')->getAsFieldArray('feed_id');
+        $feedIds = D('channel')->where($where)->limit("$start, $end")->order('publish_time desc')->field('feed_id')->getAsFieldArray('feed_id');
         $data = model('Feed')->formatFeed($feedIds, true);
         
         return $data;
