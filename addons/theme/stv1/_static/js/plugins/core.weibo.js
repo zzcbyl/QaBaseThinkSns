@@ -193,6 +193,7 @@ core.weibo = {
         obj.canLoading = false;
         $('#feed-lists').html("<div class='loading' id='loadMore'>" + L('PUBLIC_LOADING') + "<img src='" + THEME_URL + "/image/load.gif' class='load'></div>");
         scrolltotop.scrollup();
+        //alert(href);
         $.get(href, {}, function (msg) {
             if (msg.status == "0" || msg.status == "-1") {
                 $('#feed-lists').append("<div class='load' id='loadMore'>'+L('PUBLIC_ISNULL')+'</div>");
@@ -492,7 +493,7 @@ core.weibo = {
         }
         //邀请回答的表主键ID
         var inviteid = 0;
-        if (typeof(attrs.inviteid) != 'undefined')
+        if (typeof (attrs.inviteid) != 'undefined')
             inviteid = attrs.inviteid;
 
         var videourl = $('#postvideourl').val();

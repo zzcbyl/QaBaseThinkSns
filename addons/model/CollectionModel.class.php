@@ -104,12 +104,19 @@ class CollectionModel extends Model {
 	 * @return 
 	 *
 	 */	
-	public function getCollectionList1($map, $limit = 20, $order = 'ctime DESC')
+	public function getCollectionList1($map, $limit = 20, $order = 'collection_id DESC')
 	{
 		$list = $this->where($map)->order($order)->findPage($limit);
 		$feed_ids = getSubByKey($list['data'], 'source_id');
 		$result=model('Feed')->CreateA($list,$feed_ids);
-		
+		$i = 0 ;
+		foreach( $result["data"] as $v => $vv )
+		{	
+			$vv['collection'] = $list['data'][$i];
+			$result["data"][$v]=$vv;
+			$i++;
+		}
+		//print_r($result);
 		return $result;
 	}
 

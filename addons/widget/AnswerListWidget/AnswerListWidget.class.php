@@ -136,7 +136,7 @@ class AnswerListWidget extends Widget {
 			case 'answer'://所有的 --正在发生的
 				$where =' (is_audit=1 OR is_audit=0) AND is_del = 0 And feed_questionid='.$var['feed_id'];
 				if($var['loadId'] > 0){ //非第一次
-					$where .=" AND feed_id < '".intval($var['loadId'])."'";
+					$where .=" AND publish_time < '".intval($var['loadId'])."'";
 				}
 				if(!empty($var['feed_type'])){
 					if ( $var['feed_type'] == 'post' ){
@@ -152,8 +152,8 @@ class AnswerListWidget extends Widget {
     	// 分页的设置
         isset($list['html']) && $var['html'] = $list['html'];
     	if(!empty($list['data'])) {
-    		$content['firstId'] = $var['firstId'] = $list['data'][0]['feed_id'];
-    		$content['lastId'] = $var['lastId'] = $list['data'][(count($list['data'])-1)]['feed_id'];
+			$content['firstId'] = $var['firstId'] = $list['data'][0]['publish_time'];
+			$content['lastId'] = $var['lastId'] = $list['data'][(count($list['data'])-1)]['publish_time'];
             $var['data'] = $list['data'];
 
             //赞功能

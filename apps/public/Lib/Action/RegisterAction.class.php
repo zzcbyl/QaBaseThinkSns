@@ -219,6 +219,14 @@ class RegisterAction extends Action
             $user_message = $_SESSION['user_message'];
             $this->assign('Weibo','http://weibo.com/u/'.$user_message['id']);
         }
+		/*$province = 610000;
+		$city = 610600;
+		$area = 610602;
+		$location = '陕西省 延安市 宝塔区';
+		$this->assign('province',$province);
+		$this->assign('city',$city);
+		$this->assign('area',$area);
+		$this->assign('location',$location);*/
 		$this->display();
 	}
 	

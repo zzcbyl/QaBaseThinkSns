@@ -67,9 +67,7 @@
         </a><a href="#" class="s_rr_ed"></a><a href="#" class="s_sn_ed"></a><a href="#" class="s_bd_ed">
         </a><a href="#">更多</a>
     </div>
-    <div id="InvitedFriend" class="pengyou">
-        
-    </div>
+    <div id="InvitedFriend" class="pengyou" style="display:none;"></div>
 </div>
 
 <!--//提问-->
@@ -254,12 +252,14 @@ function Invite() {
     if ($('#LSInviteUid').val() == '') {
         ui.error('请选择你的好友');
         $("#InvitedFriend").html('');
+        $("#InvitedFriend").hide();
         return;
     }
 
     $('#InviteUid').val($('#LSInviteUid').val());
     $('#InviteUidLi').val($('#LSInviteUidLi').val());
     $("#InvitedFriend").html('<div style="margin:10px 0;">已邀请：</div><ul>' + $('#InviteUidLi').val() + '</ul>');
+    $("#InvitedFriend").show();
     $('.reveal-modal').css({ 'visibility': 'hidden' });
     $('.reveal-modal-bg').css({ 'display': 'none' });
 }
@@ -268,7 +268,9 @@ function cancelInvite(LiID) {
     $('#InviteUid').val($('#InviteUid').val().replace(LiID + ',', ""));
     $('#LSInviteUid').val($('#LSInviteUid').val().replace(LiID + ',', ""));
     $("#UserLi_" + LiID).remove();
-    if ($('#InviteUid').val() == "")
+    if ($('#InviteUid').val() == "") {
         $("#InvitedFriend").html('');
+        $("#InvitedFriend").hide();
+    }
 }
 </script>

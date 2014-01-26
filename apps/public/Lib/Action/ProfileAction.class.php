@@ -458,7 +458,7 @@ class ProfileAction extends Action {
 		$userPrivacy = $this->privacy ( $this->uid );
 		if ($userPrivacy ['space'] !== 1) {			
 			$following_list = model ( 'Follow' )->getFollowingList ( $this->uid, t ( $_GET ['gid'] ), 20 );
-			//print(model ( 'Follow' )->getLastSql());
+			print(model ( 'Follow' )->getLastSql());
 			$this->_sidebar ();
 			
 			$fids = getSubByKey ( $following_list ['data'], 'fid' );

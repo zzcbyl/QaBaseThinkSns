@@ -28,6 +28,7 @@ class UserBaseInfoWidget extends Widget {
 		$var['permissions'] = $userper;
 		//print_r($data[0]);
 		$var['followstate'] = $data['followstate'];
+		//print_r($var);
 		
 		//print_r($var);
 		// 渲染模版
