@@ -35,7 +35,7 @@ if(!$result) {
 
 $result = array();
 // 模拟数据
-$result['info'] = 'ThinkSNS V3 预览版于2013年1月21日发布，<a href="http://demo.thinksns.com/t3/">查看详情</a>';
+$result['info'] = '卢勤问答 预览版于2013年1月21日发布，<a href="http://demo.thinksns.com/t3/">查看详情</a>';
 
 // 输出结果
 switch(strtolower($_REQUEST['output_format'])) {
@@ -94,7 +94,7 @@ function getLastestVersionInfo($app, $current_version, $lastest_version)
 				'current_version_number'	=> $current_version,
 				'lastest_version_number'	=> $lastest_version,
 				'download_url'				=> $$var_download_url);
-	// 版本名称 (核心升级时必须, 如: ThinkSNS 2.1 Build 10992)
+	// 版本名称 (核心升级时必须, 如: 卢勤问答 2.1 Build 10992)
 	if ($app == 'core') {
 		$var_core_version = 'core_version_' . $lastest_version;
 		global $$var_core_version;

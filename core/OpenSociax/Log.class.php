@@ -1,6 +1,6 @@
 <?php
 /**
- * ThinkSNS 日志处理类
+ * 卢勤问答 日志处理类
  * @author    liu21st <liu21st@gmail.com>
  * @version   $Id: Log.class.php 2425 2011-12-17 07:57:00Z liu21st $
  */

@@ -119,9 +119,13 @@ M.addEventFns({
 				tips.error(this, oArgs.error);
 				this.bIsValid = false;
 			} else {
-				tips.success(this);
-				dTips && (dTips.style.display = "");
-				this.bIsValid = true;
+                if(sValue != '')
+                {
+				    tips.success(this);
+				    dTips && (dTips.style.display = "");
+				    
+                }
+                this.bIsValid = true;
 			}
 			return false;
 		},
@@ -166,9 +170,16 @@ M.addEventFns({
 				tips.error(this, oArgs.error);
 				this.bIsValid = false;
 			} else {
-				tips.success(this);
-				dTips && (dTips.style.display = "");
-				this.bIsValid = true;
+                if(sValue != '')
+                {
+				    tips.success(this);
+				    dTips && (dTips.style.display = "");
+                }
+                else
+                {
+                    tips.clear(this);
+                }
+                this.bIsValid = true;
 			}
 
 			return false;
@@ -673,8 +684,8 @@ M.addEventFns({
             }
             else
             {
-                tips.clear( this );
-                this.bIsValid = true;
+                tips.error( this, '请输入您的身份证号');
+				    this.bIsValid = false;
             }
         },
         load: function() {

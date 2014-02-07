@@ -169,6 +169,10 @@ class RegisterAction extends Action
                 $avatar = new AvatarModel($uid);
                 $avatar->saveRemoteAvatar($user_message['avatar_large'],$uid);
             }
+			
+			//减邀请码剩余次数
+			
+			
             $this->redirect('public/Register/step3', array('uid'=>$uid,'code'=>$_GET['code']));
         }
         else
@@ -261,7 +265,7 @@ class RegisterAction extends Action
 		$this->assign('authenticateExpert',$authenticateExpert);
 		
 		//跟你有关的
-		$where = " (`invite_code` = $code and `uid` != $uid) or (`area` = ".$user['area'].") ";
+		$where = " is_del= 0 and is_audit = 1 and is_active = 1 and is_init = 1 and ((`invite_code` = $code and `uid` != $uid) or (`area` = ".$user['area'].")) ";
 		$uidList = model('user')->field('uid')->where($where)->order('`uid` desc')->findAll();
 		$uids = getSubByKey($uidList, 'uid');
 		$userList = model('user')->getUserInfoByUids($uids);

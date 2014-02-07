@@ -77,5 +77,6 @@ return array (
   '{USER}的好友' => '?app=public&mod=Profile&act=friend',
   'USER的好友' => '?app=public&mod=Profile&act=friend',
   '<BR />邀请“XUEWG”成功<BR />' => '?app=public&mod=profile&act=invitefriendanswer',
+  '<BR />邀请“CN36305”成功<BR />' => '?app=public&mod=profile&act=invitefriendanswer',
 );
 ?>

@@ -10,13 +10,13 @@
                 <li <eq name="k" value="1"> class="ml"</eq> >
                     <a href="{:U('public/Profile/index',array('uid'=>$vo['fid']))}" uid="{$vo['fid']}" event-node="face_card">
                         <img src="{$following_user_info[$vo['fid']]['avatar_small']}" /></a><br />
-                    <a style="width:50px; overflow:hidden; height:18px; display:block;" href="{:U('public/Profile/index',array('uid'=>$vo['fid']))}" uid="{$vo['fid']}" event-node="face_card">
+                    <a title="{$following_user_info[$vo['fid']]['uname']}" style="width:50px; overflow:hidden; height:18px; display:block;" href="{:U('public/Profile/index',array('uid'=>$vo['fid']))}" uid="{$vo['fid']}" event-node="face_card">
                         {$following_user_info[$vo['fid']]['uname']|getShort=4}</a>
                 </li>
             </volist>
          </ul>
      <php>}</php>
-
+     <php>if($user_info[$uid]['uid']!=$mid){</php>
      <php>if($sidebar_follower_list['data']){</php>
      <div class="explain">共同关注(<php>echo $sidebar_follower_list['count']</php>)<a href="{:U('public/Profile/followingcommon',array('uid'=>$user_info[$uid]['uid']))}" class="right f12">更多</a></div>
      <ul class="fList mb20">
@@ -24,11 +24,11 @@
             <li <eq name="k" value="1"> class="ml"</eq>>
                 <a href="{:U('public/Profile/index',array('uid'=>$vo['fid']))}">
                     <img src="{$follower_user_info[$vo['fid']]['avatar_small']}" uid="{$vo['fid']}" event-node="face_card" /></a><br />
-                <a style="width:50px; overflow:hidden; height:18px; display:block;" href="{:U('public/Profile/index',array('uid'=>$vo['fid']))}" uid="{$vo['fid']}" event-node="face_card">{$follower_user_info[$vo['fid']]['uname']|getShort=4}</a>
+                <a title="{$follower_user_info[$vo['fid']]['uname']}" style="width:50px; overflow:hidden; height:18px; display:block;" href="{:U('public/Profile/index',array('uid'=>$vo['fid']))}" uid="{$vo['fid']}" event-node="face_card">{$follower_user_info[$vo['fid']]['uname']|getShort=4}</a>
             </li>
         </volist>
      </ul>
-     <php>}</php>
+     <php>} }</php>
 
      <php>if($aggreelist['data']){</php>
      <h1><php>if($user_info[$uid]['uid']==$mid){</php>我<php>}else{</php>TA<php>}</php>的赞同<span></span><a href="{:U('public/Profile/index',array('uid'=>$user_info[$uid]['uid'], 'type'=>'agree'))}" class="gd">更多</a></h1>

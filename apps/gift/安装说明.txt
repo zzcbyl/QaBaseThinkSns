@@ -1,5 +1,5 @@
 #
-# ThinkSNS - Gift 安装说明.txt
+# 卢勤问答 - Gift 安装说明.txt
 #
 
 1. 上传gift文件夹至/apps/目录

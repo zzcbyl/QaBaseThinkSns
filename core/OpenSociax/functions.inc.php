@@ -548,7 +548,7 @@ function h($text, $type = 'html'){
 
 /** 
  * U函数用于生成URL地址
- * @param string $url ThinkSNS特有URL标识符
+ * @param string $url 卢勤问答特有URL标识符
  * @param array $params URL附加参数
  * @param bool $redirect 是否自动跳转到生成的URL
  * @return string 输出URL
@@ -628,7 +628,7 @@ function U($url,$params=false,$redirect=false) {
 
 /** 
  * URL跳转函数
- * @param string $url ThinkSNS特有URL标识符
+ * @param string $url 卢勤问答特有URL标识符
  * @param integer $time 跳转延时(秒)
  * @param string $msg 提示语
  * @return void

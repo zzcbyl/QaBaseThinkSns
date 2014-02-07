@@ -1,6 +1,6 @@
 <?php
 /**
- * ThinkSNS Action控制器基类
+ * 卢勤问答 Action控制器基类
  * @author  liuxiaoqing <liuxiaoqing@zhishisoft.com>
  * @version TS3.0
  */

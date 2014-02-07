@@ -7,11 +7,11 @@ error_reporting(E_ALL);
 set_time_limit(0);
 **/
 
-//安装检查开始：如果您已安装过ThinkSNS，可以删除本段代码
+//安装检查开始：如果您已安装过卢勤问答，可以删除本段代码
 if(is_dir('install') && !file_exists('install/install.lock')){
 	header("Content-type: text/html; charset=utf-8");
 	die ("<div style='border:2px solid green; background:#f1f1f1; padding:20px;margin:20px;width:800px;font-weight:bold;color:green;text-align:center;'>"
-		."<h1>您尚未安装ThinkSNS系统，<a href='install/install.php'>请点击进入安装页面</a></h1>"
+		."<h1>您尚未安装卢勤问答系统，<a href='install/install.php'>请点击进入安装页面</a></h1>"
 		."</div> <br /><br />");
 }
 //安装检查结束

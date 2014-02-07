@@ -455,8 +455,8 @@ core.weibo = {
     Invite: function (feedID, inviteList) {
         var url = U('public/profile/invitefriendanswer');
         inviteList = inviteList.substring(0, inviteList.length - 1);
-        alert(url);
-        alert(inviteList);
+        //alert(url);
+        //alert(inviteList);
         $.post(url, { QuestionID: feedID, InviteUids: inviteList }, function (msg) {
             ui.showMessage(msg.data, 2, 3);
         }, 'json');

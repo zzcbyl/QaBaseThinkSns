@@ -21,7 +21,7 @@
             </div>
             <div class="regCont email">
             	<h1>帐号已创建！请激活帐号！</h1>
-                <div class="jihuo">激活邮件已发送至 <span>{$User['login']}</span>,请进入邮箱完成激活</div>
+                <div class="jihuo">激活邮件已发送至 <a id="mailA" target="_blank"  >{$User['login']}</a>,请进入邮箱完成激活</div>
 				<p class="jihuops">( 请在24小时内点击邮件里的确认连接，激活你的帐号 )</p>
                 
                 <div class="ps jhps">
@@ -47,6 +47,29 @@
                     ui.success('发送成功');
                 }
             }, 'json');
+        }
+        $(document).ready(function(){
+            jumpMail();
+        });
+
+        var mailUrl = '|126.com|163.com|sina.com.cn|qq.com|sohu.com|';
+        var wwwUrl = '|hotmail.com|gmail.com|';
+        function jumpMail()
+        {
+            var mail = $('#mailA').html();
+            var url = mail.substring(mail.indexOf('@')+1);
+            var jumpUrl = '';
+            if(url.indexOf('vip.') == 0) {
+                url = url.replace('vip.','');
+            }
+            if(mailUrl.indexOf('|' + url + '|') > -1) {
+                jumpUrl = "http://mail." + url;
+            }
+            if(wwwUrl.indexOf('|' + url + '|') > -1) {
+                jumpUrl = "http://www." + url;
+            }
+
+            $('#mailA').attr('href',jumpUrl);
         }
     </script>
 

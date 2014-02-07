@@ -436,8 +436,10 @@ class FeedModel extends Model {
 	public function getAnswerList($where, $limit=10, $order='publish_time desc', $newCount=0)
 	{
 		$feedlist = $this->field('feed_id')->where($where)->order($order)->findPage($limit); 
-		
+		//print($this->getLastSql());
 		$feed_ids = getSubByKey($feedlist['data'], 'feed_id');
+		
+		//print_r($feed_ids);
 		$feedlist['data'] = $this->getFeeds($feed_ids, false);
 		
 		//根据答案取问题,调换数组位置
@@ -536,18 +538,19 @@ class FeedModel extends Model {
 	{
 		//查询到的数据
 		$feedlist['data'] = $this->getFeeds($feed_ids);
-
+		
+		
 		//存放结果
 		$result = $feedlist;
 		
 		$result['data'] = Array();
 		//增加答案块/评论块
 		foreach( $feedlist["data"] as $v => $vv )
-		{			
-			
+		{
 			//$AnswerTable = '(SELECT max(feed_id) answer_id FROM `wb_feed` WHERE `feed_questionid` = '.$vv['feed_id'].' and (uid='.$GLOBALS['ts']['mid'].' or uid in (SELECT `fid` FROM `'.$this->tablePrefix.'user_follow` WHERE `uid` = '.$GLOBALS['ts']['mid'].')) group by uid) tt';
 			$AnswerTable = '(SELECT feed_id FROM `wb_feed` WHERE `feed_questionid` = '.$vv['feed_id'].' order by publish_time desc limit 1) tt';
-			$AnswerList = $this->table($AnswerTable)->order('publish_time desc')->select();
+			$AnswerList = $this->table($AnswerTable)->order('feed_id desc')->select();
+			
 			if(is_array($AnswerList)&&count($AnswerList)>0)
 			{
 				foreach( $AnswerList as $a => $aa )

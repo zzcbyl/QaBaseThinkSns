@@ -31,9 +31,9 @@
              	<div class="regbox">
                     <div><label>真实姓名</label><input type="text" event-node="realname" id="realname" name="realname" maxlength="20" value="" />
                     </div>
-                    <div><label>身份证号</label><input type="text" value="" event-node="idcard" event-args='max=20' id="idcard" name="idcard" maxlength="20" style="width:180px;" />
+                    <div><label><i class="RedStar">*</i>身份证号</label><input type="text" value="" event-node="idcard" event-args='max=20' id="idcard" name="idcard" maxlength="20" style="width:180px;" />
                     </div>
-                    <div class="reg_select"><label style="float:left;">所在地</label>
+                    <div class="reg_select"><label style="float:left;"><i class="RedStar">*</i>所在地</label>
                         <div style="padding-top:5px;">{:W('Area',array('curPro'=>$province,'curCity'=>$city,'area'=>$area,'city_names'=>$location,'tpl'=>'selectArea'))}</div>
                  	</div>
                     <div class="reg_textarea"><label style="vertical-align:top">个人简介</label><textarea name="intro" cols="" rows=""></textarea>

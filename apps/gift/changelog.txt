@@ -1,5 +1,5 @@
 #
-# ThinkSNS - Gift changelog.txt
+# 卢勤问答 - Gift changelog.txt
 #
 ****** Gift Build 25367 ******
 + 优化模版（ThinkSNS2.5的核心必须升级，其他版本不要升级）

@@ -92,7 +92,7 @@
                     <li model-node="account"><a href="javascript:void(0);" class="p"></a>
                         <div model-node="drop_menu_list" class="dropmenu" style="width:100px; z-index:9999;">
                             <dl class="acc-list">    
-                            <php>if(CheckTaskSwitch()):</php>
+                            <!--<php>if(CheckTaskSwitch()):</php>
                             <dd><a href="{:U('public/Task/index')}">任务中心</a></dd>
                             <dd><a href="{:U('public/Medal/index')}">勋章馆</a></dd>
                             <php>endif;</php>
@@ -101,8 +101,8 @@
                             <php>if(isInvite() && CheckPermission('core_normal','invite_user')):</php>
                             <dd><a href="{:U('public/Invite/invite')}">{:L('PUBLIC_INVITE_COLLEAGUE')}</a></dd>
                             <php>endif;</php>
-                            <!-- 个人设置菜单钩子 -->
-                            {:Addons::hook('header_account_dropmenu')}
+                            <!-- 个人设置菜单钩子 
+                            {:Addons::hook('header_account_dropmenu')}-->
                             <php>if(CheckPermission('core_admin','admin_login')){</php>
                             <dd><a href="{:U('admin')}">{:L('PUBLIC_SYSTEM_MANAGEMENT')}</a></dd>
                             <php>}</php>
@@ -112,9 +112,9 @@
                             </dl>
                         </div>
                     </li>
-                    <li>
+                    <!--<li>
                         <a href="{:U('public/Account/index')}" class="s" ></a>
-                    </li>
+                    </li>-->
                 </ul>
 
                 <ul class="message_list_container message_list_new"  style="display:none;">

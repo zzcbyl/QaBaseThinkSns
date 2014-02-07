@@ -1,5 +1,5 @@
 /**
- * ThinkSNS核心Js对象
+ * 卢勤问答核心Js对象
  * @author jason <yangjs17@yeah.net>
  * @version TS3.0
  */

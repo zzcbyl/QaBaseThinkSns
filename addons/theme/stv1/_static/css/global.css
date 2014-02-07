@@ -1519,3 +1519,5 @@ a.btn-account:hover{background-position:-164px 0;}
 .Invited_Block li { float:left; width:50px; height:70px; margin:5px; border:1px solid #ccc; cursor:pointer; }
 .Invited_Block li:hover, .Invited_Block .currentli { border:1px solid #ff0000; }
 .Invited_Block li img { width:50px; height:50px;}
+
+.RedStar { color:Red; line-height:27px; font-style:normal; padding-right:5px;  font-family:"SimSun";}

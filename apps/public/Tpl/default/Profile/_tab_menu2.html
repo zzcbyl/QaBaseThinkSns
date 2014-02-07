@@ -12,6 +12,8 @@
         <li class="{$tabClass.public_friend}"><span><a href="{:U('public/Profile/friend',array('uid'=>$uid,'type'=>'friend'))}"><php>$GLOBALS['ts']['mid']==$uid?print('我'):print('TA')</php>的好友</a></span></li>
         <li class="{$tabClass.public_following}"><span><a href="{:U('public/Profile/following',array('uid'=>$uid))}"><php>$GLOBALS['ts']['mid']==$uid?print('我'):print('TA')</php>的关注</a></span></li>
         <li class="{$tabClass.public_follower}"><span><a href="{:U('public/Profile/follower',array('uid'=>$uid))}"><php>$GLOBALS['ts']['mid']==$uid?print('我'):print('TA')</php>的粉丝</a></span></li>
-        <li class="{$tabClass.public_followingcommon}"><span><a href="{:U('public/Profile/followingcommon',array('uid'=>$uid))}">共同关注</a></span></li>
+        <php>if($GLOBALS['ts']['mid']!=$uid){</php>
+            <li class="{$tabClass.public_followingcommon}"><span><a href="{:U('public/Profile/followingcommon',array('uid'=>$uid))}">共同关注</a></span></li>
+        <php>}</php>
     </ul>
 </div>

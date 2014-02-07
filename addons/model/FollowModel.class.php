@@ -354,7 +354,7 @@ class FollowModel extends Model {
 	public function getFollowerList($uid) {
 		//$limit = intval($limit) > 0 ? $limit : 10;
 		// 粉丝列表
-		$list = $this->where("`fid`={$uid}")->order('`follow_id` DESC')->findPage();
+		$list = $this->where("`fid`={$uid} and `uid` in (SELECT `uid` FROM `wb_user` WHERE `is_active` = 1 and `is_init` = 1 and `is_del` = 0)")->order('`follow_id` DESC')->findPage();
 		$fids = getSubByKey($list['data'], 'uid');
 		// 格式化数据
 		foreach($list['data'] as $key => $value) {

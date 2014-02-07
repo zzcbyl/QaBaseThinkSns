@@ -322,7 +322,7 @@ class PublicAction extends Action{
 
 		if($result) {
 			if(UC_SYNC && $result['reg_from_ucenter']){
-				//从UCenter导入ThinkSNS，跳转至帐号修改页
+				//从UCenter导入卢勤问答，跳转至帐号修改页
 				$refer_url = U('home/Public/userinfo');
 			}elseif ( $_SESSION['refer_url'] != '' ) {
 				//跳转至登录前输入的url
