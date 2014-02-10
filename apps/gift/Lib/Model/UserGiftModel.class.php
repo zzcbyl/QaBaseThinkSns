@@ -134,7 +134,7 @@ class UserGiftModel extends Model{
 				$data['img']         = realityImage($giftInfo['img'],$giftInfo['name']);
 				//附加消息，用文本过滤t函数过滤危险代码
 				$sendInfo['sendInfo'] && $data['content'] = '并对TA说“'.t($sendInfo['sendInfo']).'”';
-				//赠送的对象名称 用于公开赠送微博
+				//赠送的对象名称 用于公开赠送提问
 				$toUserName = NULL;
                //根据赠送方式组装数据
 				foreach ($toUser as $fid){

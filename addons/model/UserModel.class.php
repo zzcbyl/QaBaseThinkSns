@@ -881,7 +881,7 @@ class UserModel extends Model {
 		}
 		// 添加用户信息
 		foreach ( $list ['data'] as &$v ) {
-			$v = $this->getUserInfoForSearch ( $v ['uid'], 'uid,uname,sex,location,domain,search_key' );
+			$v = $this->getUserInfoForSearch ( $v ['uid'], 'uid,uname,intro,sex,location,domain,search_key' );
 		}
 		
 		return $list;
@@ -918,7 +918,7 @@ class UserModel extends Model {
 		return $this->error;
 	}
 	/**
-	 * 假删除用户微博数据
+	 * 假删除用户提问数据
 	 *
 	 * @param int $uid
 	 *        	用户UID
@@ -932,7 +932,7 @@ class UserModel extends Model {
 		$map ['is_del'] = 0;
 		$feed_id_list = model ( 'Feed' )->where ( $map )->field ( 'feed_id' )->findAll ();
 		if (empty ( $feed_id_list ))
-			return true; // 如果没有可删除的微博，直接返回
+			return true; // 如果没有可删除的提问，直接返回
 		
 		$idArr = getSubByKey ( $feed_id_list, 'feed_id' );
 		$return = model ( 'Feed' )->doEditFeed ( $idArr, 'delFeed', L ( 'PUBLIC_STREAM_DELETE' ) );
@@ -940,7 +940,7 @@ class UserModel extends Model {
 	}
 	
 	/**
-	 * 恢复用户的微博数据
+	 * 恢复用户的提问数据
 	 *
 	 * @param int $uid
 	 *        	用户UID
@@ -954,7 +954,7 @@ class UserModel extends Model {
 		$map ['is_del'] = 1;
 		$feed_id_list = model ( 'Feed' )->where ( $map )->field ( 'feed_id' )->findAll ();
 		if (empty ( $feed_id_list ))
-			return true; // 如果没有可恢复的微博，直接返回
+			return true; // 如果没有可恢复的提问，直接返回
 		
 		$idArr = getSubByKey ( $feed_id_list, 'feed_id' );
 		$return = model ( 'Feed' )->doEditFeed ( $idArr, 'feedRecover', L ( 'PUBLIC_RECOVER' ) );
@@ -962,7 +962,7 @@ class UserModel extends Model {
 	}
 	
 	/**
-	 * 彻底删除用户的微博数据
+	 * 彻底删除用户的提问数据
 	 *
 	 * @param int $uid
 	 *        	用户UID
@@ -974,7 +974,7 @@ class UserModel extends Model {
 				$uid_array 
 		);
 		
-		//删除微博
+		//删除提问
 		$feed_id_list = model ( 'Feed' )->where ( $map )->field ( 'feed_id' )->findAll ();
 		if (!empty ( $feed_id_list )){
 			$idArr = getSubByKey ( $feed_id_list, 'feed_id' );

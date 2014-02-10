@@ -81,7 +81,7 @@ class renren{
 		}
 	}
 
-	//发布一条微博
+	//发布一条提问
 	public function update($text,$opt){
 		require_once 'renren/HttpRequestService.class.php';
 		require_once 'renren/RenrenRestApiService.class.php';
@@ -113,7 +113,7 @@ class renren{
 						'image'=>$opt["pic_url"],
 						'action_name'=>$GLOBALS['ts']['site']['site_name'],
 						'action_link'=>$opt["feed_url"],
-						'message'=> '我在'.$GLOBALS['ts']['site']['site_name'].'发了一条微博',
+						'message'=> '我在'.$GLOBALS['ts']['site']['site_name'].'发了一条提问',
 						'access_token'=>$access_token);
 
 		$res = $rrObj->rr_post_curl('feed.publishFeed', $params);
@@ -121,13 +121,13 @@ class renren{
 		return true;
 	}
 
-	//上传一个照片，并发布一条微博
+	//上传一个照片，并发布一条提问
 	public function upload($text,$opt,$pic){
 		$this->update($text,$opt);
 		return true;
 	}
 
-	//转发一条微博
+	//转发一条提问
     public function transpond($transpondId,$reId,$content='',$opt=null){
 		return true;
 	}

@@ -36,7 +36,7 @@ class TopicListWidget extends Widget {
 		return $content;
 	}
 	/**
-	 * 搜索话题 用于发布微博发表框
+	 * 搜索话题 用于发布提问发表框
 	 */
 	public function searchTopic(){
 		$key = trim ( t ( $_REQUEST['key'] ) );

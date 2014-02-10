@@ -224,7 +224,7 @@ class CommentModel extends Model {
 					
 				} else {
 					// 评论
-					$config['comment_type'] = '评论 我 的微博:';
+					$config['comment_type'] = '评论 我 的提问:';
 					if(!empty($add['app_uid'])) {
 						model('Notify')->sendNotify($add['app_uid'], 'comment', $config);
 					}
@@ -421,7 +421,7 @@ class CommentModel extends Model {
         $save['is_del'] = 0;
         if($this->where($map)->save($save)) {
             D($comment['table'])->setInc('comment_count', "`".$comment['table']."_id`=".$comment['row_id']);
-            // 删除微博缓存
+            // 删除提问缓存
             switch($comment['table']) {
                 case 'feed':
                     $feedIds = $this->where($map)->getAsFieldArray('row_id');

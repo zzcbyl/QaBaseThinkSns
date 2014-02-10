@@ -109,9 +109,9 @@
                                 <volist name="recommendUserList" id="rlist">
                                     <li>
                                         <img src="{$rlist['avatar_small']}" /><br />
-                                        <a href="javascript:void(0);" onclick="cancelFollow(this,{$rlist['uid']});" class="tgzed1"></a><br />
+                                        <a href="javascript:void(0);" onclick="cancelFollow(this,{$rlist['uid']});" class="tgz"></a><br />
                                         <span>{$rlist['uname']}</span>
-                                        <input id="follow_{$rlist['uid']}" type="hidden" name="FollowUser" value="{$rlist['uid']}" />
+                                        <input id="follow_{$rlist['uid']}" type="hidden" name="FollowUser" value="" />
                                     </li>   
                                 </volist>
                             </ul>

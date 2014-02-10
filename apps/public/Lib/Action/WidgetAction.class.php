@@ -42,7 +42,7 @@ class WidgetAction extends Action
         }
 	}
 
-	// 发微博
+	// 发提问
 	public function weibo()
 	{
 		// 解析参数
@@ -55,7 +55,7 @@ class WidgetAction extends Action
 		// 解析模板(统一使用模板的body字段)
 		$_REQUEST['data'] = unserialize(urldecode($_REQUEST['data']));
 		$content = model('Template')->parseTemplate(t($_REQUEST['tpl_name']), array($active_field=>$_REQUEST['data']));
-		// 设置微博发布框的权限
+		// 设置提问发布框的权限
 		$type = array('at', 'image', 'video', 'file', 'contribute');
 		$actions = array();
 		foreach($type as $value) {

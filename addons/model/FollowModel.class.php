@@ -84,7 +84,7 @@ class FollowModel extends Model {
 			$map['fid']  = $fid;
 			$map['ctime'] = time();
 			$result = $this->add($map);
-			// 通知和微博
+			// 通知和提问
 			/*			model('Notify')->send($fid, 'user_follow', '', $uid);
 						model('Feed')->put('user_follow', array('fid'=>$fid), $uid);*/
 			if($result) {
@@ -130,7 +130,7 @@ class FollowModel extends Model {
 				$data[]  = "({$uid}, {$f_s_k},".time().")";
 				$_fids[] = $f_s_k;
 				$follow_states[$f_s_k]['following'] = 1;
-				// 通知和微博
+				// 通知和提问
 /*				model('Notify')->send($fid, 'user_follow', '', $uid);
 				model('Feed')->put('user_follow', array('fid'=>$fid), $uid);*/
 			} else {

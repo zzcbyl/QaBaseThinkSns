@@ -11,14 +11,11 @@
         <div class="sperson-feedlist">
         <php>if($data){</php>
 			<volist name="data" id="vo">
-
-
-
-
                 <div class="profile hyList">
+                    <div style="position:relative;"><eq name='vo.newCount' value='1'><p class="FloatNew"></p></eq></div>
                     <div class="pro_img"><a href="{$vo.space_url}" title="{$vo.uname}"><img event-node='face_card' uid='{$vo['uid']}' src="{$vo.avatar_small}" /></a></div>
                     <div class="pro_cont">
-                        <h4>{$vo.space_link}　<php>if($vo['newCount']==1) echo 'new';</php>
+                        <h4>{$vo.space_link}
                             <i>{$vo.location}</i></h4>
                         <p class="hy_jianjie"><strong>简介：</strong>{$vo.intro}</p>
                         <p class="xz">
@@ -30,8 +27,8 @@
                         </p>
                     </div>
                     <p class="comm hd">
-                        <strong>粉丝：<a href="{:U('public/Profile/follower', array('uid'=>$vo['uid']))}">{$vo.follower_count|default=0}</a></strong>
-                        <a class="a" href="{:U('public/Profile/index', array('uid'=>$vo['uid']))}">{$vo.weibo_count|default=0}</a>
+                        <strong><a href="{:U('public/Profile/follower', array('uid'=>$vo['uid']))}">粉丝：{$vo.follower_count|default=0}</a></strong>
+                        <a class="a" href="{:U('public/Profile/question', array('uid'=>$vo['uid']))}">{$vo.weibo_count|default=0}</a>
                         <a class="t" href="{:U('public/Profile/answer', array('uid'=>$vo['uid']))}">{$vo.answer_count|default=0}</a>
 
                             

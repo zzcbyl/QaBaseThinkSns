@@ -38,13 +38,13 @@ class ChannelApiModel
 	}
 
 	/**
-	 * 获取指定分类下的微博数据
+	 * 获取指定分类下的提问数据
 	 * @param integer $cid 分类ID
 	 * @param integer $sinceId 起始资源ID
 	 * @param integer $maxId 最大资源ID
 	 * @param integer $count 每页数目
 	 * @param integer $page 分页数目
-	 * @return array 指定分类下的微博数据
+	 * @return array 指定分类下的提问数据
 	 */
 	public function getChannelFeed($cid, $sinceId, $maxId, $count, $page)
 	{

@@ -114,7 +114,7 @@ var core = new _core();
  * 核心的插件列表
  */
 
-//微博加载文件，支持回调函数 调用方式core.loadFile(url,callback)
+//提问加载文件，支持回调函数 调用方式core.loadFile(url,callback)
 core.loadFile = core._coreLoadFile();
 core.loadCss = core._loadCss();
 
@@ -517,7 +517,7 @@ var ui = {
 		this.box.load(U('public/Mention/at')+'&touid='+touid, '@TA');
 	},
 	/**
-	 * 弹窗发布微博
+	 * 弹窗发布提问
 	 * @param string title 弹窗标题
 	 * @param string initHTML 插入内容
 	 * @return void

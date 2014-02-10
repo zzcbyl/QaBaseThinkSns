@@ -17,9 +17,9 @@ class LoginHooks extends Hooks {
     private static $validPublish = array('sina', 'qq', 'qzone', 'renren');
     //应用名称
     private static $validAlias   = array(
-            'sina'      => '新浪微博', 
+            'sina'      => '新浪提问', 
             'qzone'     => "QQ互联",
-            'qq'        => '腾讯微博',
+            'qq'        => '腾讯提问',
             'renren'    => "人人网",
             'douban'    => "豆瓣",
             'baidu'     => "百度",
@@ -47,7 +47,7 @@ class LoginHooks extends Hooks {
     	echo '<script>function after_publish_weibo(feed_id){
     	$.post(U("public/Widget/addonsRequest",["addon=Login","hook=ajax_after_publish_weibo"]),{feed_id:feed_id},function(){})
     }</script>';
-        //判断新浪微博绑定是否过期,每天一次
+        //判断新浪提问绑定是否过期,每天一次
                 
         $uid = $_SESSION['mid'];
         if(!$login = S('user_login_'.$mid)){
@@ -345,7 +345,7 @@ class LoginHooks extends Hooks {
         }
     }
 
-    //发布微博后的操作 - 同步发布信息到社交网站
+    //发布提问后的操作 - 同步发布信息到社交网站
     public function ajax_after_publish_weibo() {
     	set_time_limit(0);
     	ignore_user_abort(1);
@@ -416,7 +416,7 @@ class LoginHooks extends Hooks {
                     $syncData = $platform->update ( $content.' '.$feed_url, $v );
                     return;
                 }
-                //记录发的新微博到数据库
+                //记录发的新提问到数据库
                 if(empty($result)){
                     $result = $platform->saveData($syncData);
                 }else{
@@ -431,7 +431,7 @@ class LoginHooks extends Hooks {
         //}
     }
 
-    //转发微博后的操作 - 同步发布信息到社交网站
+    //转发提问后的操作 - 同步发布信息到社交网站
     public function weibo_transpond_after($param){
         // Session::start();
         $id   = $param['weibo_id'];
@@ -441,7 +441,7 @@ class LoginHooks extends Hooks {
 
         $opt = M('login')->where("uid=".intval($data['uid'])." and is_sync=1")->findAll();
         
-        //检查该微博数据
+        //检查该提问数据
         $map['weiboId'] = $post['transpond_id'];
 
         $data = M('login_weibo')->field("qqId,sinaId")->where($map)->find();
@@ -459,7 +459,7 @@ class LoginHooks extends Hooks {
                 $post['content'] = $post['content']." ".U('home/space/detail',array('id'=>$post['transpond_id']))." ";
                 $syncData = $platform->update ( $post['content'], $value );
             }
-            //记录发的新微博到数据库
+            //记录发的新提问到数据库
             if(empty($result)){
                 $result = $platform->saveData($syncData);
             }else{
@@ -641,7 +641,7 @@ class LoginHooks extends Hooks {
         if( D('login')->where($sync)->count()){
             $result ['status'] = 0;
             $result ['jumpUrl'] = SITE_URL;
-            $result ['info'] = "该帐号已经绑定了其他新浪微博帐号";
+            $result ['info'] = "该帐号已经绑定了其他新浪提问帐号";
             return;
         }
 
@@ -903,7 +903,7 @@ class LoginHooks extends Hooks {
         $data['is_active']    = 1;
         $data['is_init']      = 1;
         $data['ctime']      = time();
-        $data['is_synchronizing']  = ($type == 'sina') ? '1' : '0'; // 是否同步新浪微博. 目前仅能同步新浪微博
+        $data['is_synchronizing']  = ($type == 'sina') ? '1' : '0'; // 是否同步新浪提问. 目前仅能同步新浪提问
 
         if ( $id = M('user')->add($data) ) {
             // 记录至同步登录表

@@ -72,7 +72,7 @@ a.font-orange:link, a.font-orange:visited{color:#f60}
 #col2{width:220px}
 #col3{width:270px;}
 #col4{width:160px;}
-#col5{width:689px;}
+#col5{width:676px;}
 #col6{width:622px}
 #col7{width:800px}
 #co18{width:660px;}
@@ -351,7 +351,7 @@ body{background:url(../image/body-b.jpg) repeat-x center 0 #e4f3f7;}
 .search-main .feed_list {margin-left:0;margin-right:0}
 .search-main .feed_lists a.notes {margin-left:0;margin-right:0}
 .search-main .more{margin:0 -15px 15px;padding:0 15px 10px 0}
-a.face{width:50px;text-align:center;display:block;}
+a.face{width:62px;text-align:center;display:block;}
 .search-main  .attention .btn-cancel{margin:5px 0 0 0;}
 
 
@@ -431,7 +431,7 @@ a.face{width:50px;text-align:center;display:block;}
 /*#footer .footer-wrap{margin:0 auto;padding:15px 0;width:960px;line-height:1.8;background:url(../image/line-double.gif) repeat-x left top;text-align:center}*/
 #footer .footer-wrap p{/*color:#f0f0f0;text-shadow:1px 1px white*/text-align:center}
 
-/*首页下微博列表*/
+/*首页下提问列表*/
 
 .st-index-main .big-comment-lists{margin:0 15px 10px}
 .note{padding:10px;text-align:center;height:600px;}
@@ -938,7 +938,7 @@ a.top_stick:hover{background-position:-51px 0;text-decoration:none}
 .extend{padding:20px}
 .extend-landr{padding:10px 0 0 10px}
 .extend-head{padding:10px 0 0}
-.extend-foot{padding:10px 20px}
+.extend-foot{padding:10px 0px}
 .extend-left{padding:0 0 0 10px}
 
 /*treemenu*/
@@ -983,7 +983,7 @@ a.top_stick:hover{background-position:-51px 0;text-decoration:none}
 
 
 .right-box h3,.hot-topic h3,.tag-lists h3,.weather h3,.right-list h3{padding-bottom:15px;font-size:14px;font-weight:bold;}
-.right-box li{float:left;display:block;margin:0 26px 15px 0;padding:0;_margin:0 19px 15px 0;}
+.right-box li{float:left;display:block;margin:0 10px 15px;padding:0;_margin:0 19px 15px 0;}
 .right-box ul{*padding:0 0 15px 0;*zoom:1;}
 .right-box dl{margin:0 0 15px 0;overflow:hidden;*zoom:1;}
 .right-box dt{float:left;}
@@ -1178,7 +1178,7 @@ a.btn-register:link,a.btn-register:visited,a.btn-register:hover,.btn-register sp
 .search-tab li{float:left;margin:0 10px 0 0;}
 .search-tab li a,.search-tab li a:hover{color:#333;line-height:30px;display:block;font-size:12px;}
 .search-tab li.current{font-weight:bold;}
-.search-input input{padding:6px 0;line-height:16px;border:0;width:438px;outline:none;margin:0 5px;*padding:6px 0 5px 0;}
+.search-input input{padding:6px 0;line-height:16px;border:0;width:390px;outline:none;margin:0 5px;*padding:6px 0 5px 0;}
 .search-input .ico-search{position:absolute;top:5px;left:5px;}
 
 .search-input .btn-search span{text-align:center;color:#fff;display:block;line-height:28px;font-size:14px;font-weight:bold;}
@@ -1486,7 +1486,7 @@ a.btn-account:hover{background-position:-164px 0;}
 .app-tab-menu li a.current{background:#0F8CA8;color:#fff;font-weight:bold;position: relative;}
 .triangle{border-color: #0F8CA8 transparent transparent transparent;border-style: solid;border-width: 6px 6px 0px 6px;width: 0;height: 0;position:absolute;left:40%;bottom:-6px;line-height:0;font-size:0;_border-left-color:#f8f8f8;_border-right-color:#f8f8f8;_filter: chroma( color =#f8f8f8);}
 
-.search-input{border:1px solid #0F8CA8;background:#fff;position:relative;;width:528px;float:left;}
+.search-input{border:1px solid #0F8CA8;background:#fff;position:relative;width:480px;float:left;}
 .search-input #mod-search .search-box{background:#fff;border:1px solid #0F8CA8;_border:none;_border-top:1px solid #0F8CA8;}
 .search-input .btn-search{background:#0F8CA8;width:80px;height:28px;position:absolute;right:0;}
 .search-content p{font-size:20px;margin:3px 20px 0 0;font-family:"微软雅黑";color:#0F8CA8;}

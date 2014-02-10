@@ -110,7 +110,7 @@ class ContentAction extends AdministratorAction
 		echo json_encode($return);exit();
 		
 	}
-	//微博通过审核
+	//提问通过审核
 	public function auditFeed(){
 
 		$return =  model('Feed')->doAuditFeed($_POST['id']);

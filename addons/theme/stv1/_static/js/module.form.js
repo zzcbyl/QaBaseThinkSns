@@ -95,7 +95,7 @@ M.addEventFns({
 	input_text: {
 		focus: function() {
 			this.className='s-txt-focus';
-            $(this).focus();
+            this.focus();
 			return false;
 		},
 		blur: function() {
@@ -137,6 +137,7 @@ M.addEventFns({
 	input_nums: {
 		focus: function() {
 			this.className = 's-txt-focus';
+            this.focus();
 			return false;
 		},
 		blur: function() {
@@ -648,6 +649,7 @@ M.addEventFns({
 	realname: {
 		focus: function() {
 			this.className='s-txt-focus';
+            this.focus();
 			return false;
 		},
 		blur: function() {

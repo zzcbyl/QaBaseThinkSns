@@ -72,7 +72,7 @@ a.add_atn,a.add_atn:visited{color:#fff}
 .nav-left dd a:hover{background:#CCB085;color:#fff;}
 .person-info .person-info-t .area span{color:#a60;}
 
-/*粉丝、微博*/
+/*粉丝、提问*/
 /*.person-info .person-info-b li a:hover{background:#CCB085;text-decoration:none;padding:9px 0 10px 0;text-align:center;_width:74px;_padding:9px 0 8px 0;}
 .person-info .person-info-b li.current{background:#CCB085;text-decoration:none;display:block;width:74px;}*/
 
@@ -87,7 +87,7 @@ a.add_atn,a.add_atn:visited{color:#fff}
 .club-type a.current:link,.club-type a.current:visited{margin:0 10px 10px 0;color:#CCB085;}
 
 /*搜索页面*/
-.search-input{border:1px solid #CCB085;background:#fff;position:relative;;width:528px;float:left;}
+.search-input{border:1px solid #CCB085;background:#fff;position:relative;width:480px;float:left;}
 .search-input #mod-search .search-box{background:#fff;border:1px solid #CCB085;_border:none;_border-top:1px solid #CCB085;}
 .search-input .btn-search{background:#CCB085;width:80px;height:28px;position:absolute;right:0;}
 .search-content p{font-size:20px;margin:3px 20px 0 0;font-family:"微软雅黑";color:#CCB085;}
@@ -98,7 +98,7 @@ a.add_atn,a.add_atn:visited{color:#fff}
 /*推荐频道弹窗*/
 /*.channel-layer .content a.current{background:#CCB085;}*/
 
-/*微博新消息*/
+/*提问新消息*/
 .feed_lists a.notes{height:18px;line-height:18px;display:block;padding:5px 0;margin:10px 0 5px 0;text-align:center;background-color:#f3f3f3;color:#a60;border:1px solid #e5e5e5;}
 
 /*微吧、任务、勋章头部导航*/

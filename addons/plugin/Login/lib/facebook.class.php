@@ -50,17 +50,17 @@ class facebook{
 		// }
 	}
 
-	//发布一条微博
+	//发布一条提问
 	public function update($text,$opt){
 		return true;
 	}
 
-	//上传一个照片，并发布一条微博
+	//上传一个照片，并发布一条提问
 	public function upload($text,$opt,$pic){
 		return true;
 	}
 
-	//转发一条微博
+	//转发一条提问
     public function transpond($transpondId,$reId,$content='',$opt=null){
 		return true;
 	}

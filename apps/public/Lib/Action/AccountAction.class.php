@@ -160,7 +160,8 @@ class AccountAction extends Action
 		if(!empty($_POST['sex'])) {
 			$save['sex']  = 1 == intval($_POST['sex']) ? 1 : 2;
 			//	$save['lang'] = t($_POST['lang']);
-			$save['intro'] = t($_POST['intro']);
+			$save['intro'] = str_replace("\n","<br />",$_POST['intro']);
+			//str_replace(chr(13),'<br />',$_POST['intro']);
 			$save['realname'] = t($_POST['realname']);
 			$save['birthday'] = t($_POST['birthday']);
 			//$save['bloodtype'] = t($_POST['bloodtype']);

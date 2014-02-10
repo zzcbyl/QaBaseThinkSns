@@ -1,16 +1,16 @@
-// 微博核心Js操作
+// 提问核心Js操作
 core.weibo = {
     _init: function () {
         return true;
     },
-    // 微博初始化
+    // 提问初始化
     init: function (agrs) {
-        this.initNums = agrs.initNums; 	// 微博字数
-        this.maxId = args.maxId, 		// 最大微博ID
-		this.loadId = args.loadId, 		// 载入的微博ID
-		this.feedType = args.feedType, 	// 微博类型
+        this.initNums = agrs.initNums; 	// 提问字数
+        this.maxId = args.maxId, 		// 最大提问ID
+		this.loadId = args.loadId, 		// 载入的提问ID
+		this.feedType = args.feedType, 	// 提问类型
 		this.loadmore = args.loadmore, 	// 是否载入更多
-		this.uid = args.uid, 			// 当前微博列表对应的UID
+		this.uid = args.uid, 			// 当前提问列表对应的UID
 		this.loadnew = args.loadnew; 	// 是否载入最新
         this.feed_type = args.feed_type;
         this.feed_key = args.feed_key;
@@ -37,11 +37,11 @@ core.weibo = {
         //			core.weibo.loadMoreFeed();
         //		}
     },
-    // 页底加载微博
+    // 页底加载提问
     bindScroll: function () {
         var _this = this;
         $(window).bind('scroll resize', function () {
-            // 加载3次后，将不能自动加载微博
+            // 加载3次后，将不能自动加载提问
             if (_this.loadCount >= 4 || _this.canLoading == false) {
                 return false;
             }
@@ -62,11 +62,11 @@ core.weibo = {
             }
         });
     },
-    // 加载更多微博
+    // 加载更多提问
     loadMoreFeed: function () {
         var _this = this;
         _this.canLoading = false;
-        // 获取微博数据
+        // 获取提问数据
         $.get(U('widget/FeedList/loadMore'), { 'loadId': _this.loadId, 'type': _this.feedType, 'uid': _this.uid, 'feed_type': _this.feed_type, 'feed_key': _this.feed_key, 'fgid': fgid, 'topic_id': _this.topic_id, 'load_count': _this.loadCount, 'gid': _this.gid }, function (msg) {
             // 加载失败
             if (msg.status == "0" || msg.status == "-1") {
@@ -130,7 +130,7 @@ core.weibo = {
     loadMoreAnswer: function (answerid) {
         var _this = this;
         _this.canLoading = false;
-        // 获取微博数据
+        // 获取提问数据
         $.get(U('widget/AnswerList/loadMore'), { 'feed_id': answerid, 'loadId': _this.loadId, 'type': _this.feedType, 'uid': _this.uid, 'feed_type': _this.feed_type, 'feed_key': _this.feed_key, 'fgid': fgid, 'topic_id': _this.topic_id, 'load_count': _this.loadCount, 'gid': _this.gid }, function (msg) {
             // 加载失败
             if (msg.status == "0" || msg.status == "-1") {
@@ -216,7 +216,7 @@ core.weibo = {
         }, 'json');
         return false;
     },
-    // 加载最新微博
+    // 加载最新提问
     startNewLoop: function () {
         var _this = this;
         var searchNew = function () {
@@ -232,10 +232,10 @@ core.weibo = {
                 }
             }, 'json');
         };
-        // 每2分钟查找一次最新微博
+        // 每2分钟查找一次最新提问
         var loop = setInterval(searchNew, 120000);
     },
-    // 提示有多少新微博数据
+    // 提示有多少新提问数据
     showNew: function (nums) {
         if ($('#feed-lists').find('.notes').length > 0) {
             $('#feed-lists').find('.notes').html(L('PUBLIC_WEIBO_NUM', { 'sum': nums }));
@@ -251,7 +251,7 @@ core.weibo = {
         this.tempHtml = '';
         M(document.getElementById('feed-lists'));
     },
-    // 发布微博之后操作
+    // 发布提问之后操作
     afterPost: function (obj, textarea, topicHtml, description_editor, description, close, questionid, int_isadd) {
         if (topicHtml == '') {
             textarea.value = '';
@@ -274,11 +274,18 @@ core.weibo = {
             //$('#SupplementAnswer_' + questionid).hide();
             return;
         }
+        //提问增加提问数
+        if (parseInt($('#twCount a').html()) >= 0) {
+            $('#twCount a').html(parseInt($('#twCount a').html()) + 1);
+        }
         //回答完成隐藏回答框
         if (questionid > 0) {
+            if (parseInt($('#hdCount a').html()) >= 0) {
+                $('#hdCount a').html(parseInt($('#hdCount a').html()) + 1);
+            }
             $('#AnswerQuestionDiv').remove();
         }
-        // 修改微博数目
+        // 修改提问数目
         if ("undefined" == typeof (close) || !close) {
             updateUserData('weibo_count', 1);
         }
@@ -355,7 +362,7 @@ core.weibo = {
             after_publish_weibo(feedId);
         }
     },
-    // 检验微博内容，obj = 要验证的表单对象，post = 表示是否发布
+    // 检验提问内容，obj = 要验证的表单对象，post = 表示是否发布
     checkNums: function (obj, post) {
         //        if ("undefined" == typeof (obj.parentModel.parentModel.parentModel.childModels['numsLeft'])) {
         //            return true;
@@ -462,7 +469,7 @@ core.weibo = {
         }, 'json');
 
     },
-    // 发布微博
+    // 发布提问
     post_feed: function (_this, mini_editor, textarea, description_editor, description, questionid, isbox, url, isAdd, inviteList) {
         var obj = this;
         // 避免重复发送
@@ -478,7 +485,7 @@ core.weibo = {
             isbox = false;
         }
 
-        // 微博类型在此区分
+        // 提问类型在此区分
         var args = $(_this).attr('event-args');
         var setargs = args.replace('type=postvideo', 'type=post');
 
@@ -558,7 +565,7 @@ core.weibo = {
         if (isAdd)
             int_isadd = 1;
 
-        // 发布微博
+        // 发布提问
         $.post(url, { body: data, type: type, app_name: app_name, content: '', attach_id: attach_id, videourl: videourl, channel_id: channel_id, source_url: attrs.source_url, gid: attrs.gid, description: txtVal, questionid: Qid, addask: int_isadd, inviteid: inviteid }, function (msg) {
             obj.isposting = false;
             //_this.className = 'btn-grey-white';

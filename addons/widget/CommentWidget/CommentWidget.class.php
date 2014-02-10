@@ -45,9 +45,9 @@ class CommentWidget extends Widget
 			if($hasComment)
 			{
 				$var['hasAnswerComment'] = '1';
-				/*$returnData = '<div class="answer2"><div class="aTop511"><p class="icon2" style="right:85px"></p></div><div class="aCenter2" style="width: 478px;"><div id="commentlist_'.intval($var['row_id']).'"></div></div><div class="aBottom511"></div></div>';
+				/*$returnData = '<div class="answer2"><div class="aTop511"><p class="icon2" style="right:85px"></p></div><div class="aCenter2" style="width: 452px;"><div id="commentlist_'.intval($var['row_id']).'"></div></div><div class="aBottom511"></div></div>';
 				if($var['comment_type'] == 2)
-					$returnData = '<div class="answer2"><div class="aTop511"><p class="icon2" style="right:45px"></p></div><div class="aCenter2" style="width: 478px;"><div id="commentlist_'.intval($var['row_id']).'"></div></div><div class="aBottom511"></div></div>';	
+					$returnData = '<div class="answer2"><div class="aTop511"><p class="icon2" style="right:45px"></p></div><div class="aCenter2" style="width: 452px;"><div id="commentlist_'.intval($var['row_id']).'"></div></div><div class="aBottom511"></div></div>';	
 				
 				$return = array('status'=>2,'data'=>$returnData);
 				return $var['isAjax'] == 1 ?  json_encode($return) : $return['data'];*/
@@ -247,7 +247,7 @@ class CommentWidget extends Widget
 
             $oldInfo = model('Source')->getSourceInfo($data['table'], !empty($data['app_row_id']) ? $data['app_row_id'] : $data['row_id'],false,$data['app']);
     		
-            // 转发到我的微博
+            // 转发到我的提问
     		if($_POST['ifShareFeed'] == 1) {
                 $commentInfo  = model('Source')->getSourceInfo($data['table'], $data['row_id'], false, $data['app']);
                 $oldInfo = isset($commentInfo['sourceInfo']) ? $commentInfo['sourceInfo'] : $commentInfo; 
@@ -280,7 +280,7 @@ class CommentWidget extends Widget
                 if(!empty($data['to_uid'])) {
                     $lessUids[] = $data['to_uid'];
                 }
-                // 如果为原创微博，不给原创用户发送@信息
+                // 如果为原创提问，不给原创用户发送@信息
                 if($commentInfo['feedType'] == 'post' && empty($data['to_uid'])) {
                     $lessUids[] = $oldInfo['uid'];
                 }

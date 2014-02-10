@@ -47,7 +47,7 @@ core.search.searchInit = function(obj){
 core.search.displayList = function(obj){
 	this.searchKey = obj.value.replace(/(^\s*)|(\s*$)/g,"");
 	if(getLength(this.searchKey)>0){
-		var html = '<div class="search-box" id="search-box"><dd id="s_1" class="current" onclick="core.search.dosearch(\'public\',2);" onmouseover="$(this).addClass(\'current\');" onmouseout="$(this).removeClass(\'current\');">搜“<span>'+this.searchKey+'</span>”相关微博&raquo;</dd>'
+		var html = '<div class="search-box" id="search-box"><dd id="s_1" class="current" onclick="core.search.dosearch(\'public\',2);" onmouseover="$(this).addClass(\'current\');" onmouseout="$(this).removeClass(\'current\');">搜“<span>'+this.searchKey+'</span>”相关提问&raquo;</dd>'
 					+'<dd id="s_2" onclick="core.search.dosearch(\'public\',1);" onmouseover="$(this).addClass(\'current\');" onmouseout="$(this).removeClass(\'current\');">搜“<span>'+this.searchKey+'</span>”相关用户&raquo;</dd>'
 					//+'<dd id="s_3" onclick="core.search.dosearch(\'public\',3);" onmouseover="$(this).addClass(\'current\');" onmouseout="$(this).removeClass(\'current\');">搜“<span>'+this.searchKey+'</span>”相关标签&raquo;</dd>'
 					+'</div>';

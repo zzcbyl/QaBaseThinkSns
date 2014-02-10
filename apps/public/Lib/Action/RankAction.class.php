@@ -303,7 +303,7 @@ class RankAction extends Action{
 		return $resList;
 	}
 	/**
-	 * 发布排行榜到我的微博
+	 * 发布排行榜到我的提问
 	 */
 	public function postRank(){
 
@@ -336,7 +336,7 @@ class RankAction extends Action{
 		echo 1;
 	}
 	/**
-	 * 微博排行
+	 * 提问排行
 	 */
 	public function weibo(){
 		$order = intval ( $_GET['order'] );

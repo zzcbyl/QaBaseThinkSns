@@ -280,11 +280,11 @@
                                             <p style="<php>if($_GET['commentType'] == '1') { echo 'right:85px';} else if($_GET['commentType'] == '2') { echo 'right:45px';}</php>" class="icon2">
                                             </p>
                                         </div>
-                                        <div style="width: 478px;" class="aCenter2">
+                                        <div style="width: 452px;" class="aCenter2">
                                             <!--提问框-->
                                             <div style="display:none;" model-node="comment_textarea" class="tiwenK">
                                                 <div model-node="mini_editor" class="tiwen_area">
-                                                    <textarea model-args="t=comment" hidefocus="true" event-node="mini_editor_textarea" id="comment_inputor" texttype="comment" style="width: 415px;" class="input_tips"></textarea>
+                                                    <textarea model-args="t=comment" hidefocus="true" event-node="mini_editor_textarea" id="comment_inputor" texttype="comment" style="width: 390px;" class="input_tips"></textarea>
                                                 </div>
                                                 <div class="tiwenB">
                                                     <ul>
@@ -300,7 +300,7 @@
                                             </div>
                                             <!--提问框-->
         
-                                            <div style="width:480px;" id="commentlist_4086">
+                                            <div style="width:454px;" id="commentlist_4086">
                                                 <volist name='CommentList.data' id='vo'>
                                                 <div class="contTit cBline" model-node="comment_list">
                                                     <a href="{$vo.user_info.space_url}"><img class="thumb" src="{$vo.user_info.avatar_small}" event-node="face_card" uid='{$vo.user_info.uid}'></a>
@@ -360,7 +360,7 @@
                                         <p class="icon2" style="right:140px">
                                         </p>
                                     </div>
-                                    <div class="aCenter2" style="width: 478px; margin-top:-20px;">
+                                    <div class="aCenter2" style="width: 452px; margin-top:-20px;">
                                         <!--提问框-->
                                         {:W('SupplementAnswer',array('title'=>'要求补充', 'feedID'=>$feedInfo['answer'][0]['feed_id']))}
                                         <!--提问框-->

@@ -53,7 +53,7 @@ class ProfileAction extends Action {
 		$userPrivacy = $this->privacy ( $this->uid );
 		if ($userPrivacy ['space'] !== 1) {
 			$this->_sidebar ();
-			// 加载微博筛选信息
+			// 加载提问筛选信息
 			$d ['feed_type'] = t ( $_REQUEST ['feed_type'] ) ? t ( $_REQUEST ['feed_type'] ) : '';
 			$d ['feed_key'] = t ( $_REQUEST ['feed_key'] ) ? t ( $_REQUEST ['feed_key'] ) : '';
 			$d ['type'] = t ( $_REQUEST ['type'] ) ? t ( $_REQUEST ['type'] ) : 'following';
@@ -125,7 +125,7 @@ class ProfileAction extends Action {
 		$userPrivacy = $this->privacy ( $this->uid );
 		if ($userPrivacy ['space'] !== 1) {
 			$this->_sidebar ();
-			// 加载微博筛选信息
+			// 加载提问筛选信息
 			$d ['feed_type'] = t ( $_REQUEST ['feed_type'] ) ? t ( $_REQUEST ['feed_type'] ) : '';
 			$d ['feed_key'] = t ( $_REQUEST ['feed_key'] ) ? t ( $_REQUEST ['feed_key'] ) : '';
 			$this->assign ( $d );
@@ -178,7 +178,7 @@ class ProfileAction extends Action {
 		$userPrivacy = $this->privacy ( $this->uid );
 		if ($userPrivacy ['space'] !== 1) {
 			$this->_sidebar ();
-			// 加载微博筛选信息
+			// 加载提问筛选信息
 			$d ['feed_type'] = t ( $_REQUEST ['feed_type'] ) ? t ( $_REQUEST ['feed_type'] ) : '';
 			$d ['feed_key'] = t ( $_REQUEST ['feed_key'] ) ? t ( $_REQUEST ['feed_key'] ) : '';
 			$this->assign ( $d );
@@ -364,16 +364,16 @@ class ProfileAction extends Action {
 			$this->error ( L ( 'PUBLIC_INFO_ALREADY_DELETE_TIPS' ) );
 		}
 	
-		//获取微博信息
+		//获取提问信息
 		$feedInfo = model ( 'Feed' )->get ( $feed_id );
 
 		if (!$feedInfo){
-			$this->error ( '该微博不存在或已被删除' );
+			$this->error ( '该提问不存在或已被删除' );
 			exit();
 		}
 			
 		if ($feedInfo ['is_audit'] == '0' && $feedInfo ['uid'] != $this->mid) {
-			$this->error ( '此微博正在审核' );
+			$this->error ( '此提问正在审核' );
 			exit();
 		}
 
@@ -742,7 +742,7 @@ class ProfileAction extends Action {
 	}
 	
 	/**
-	 * 获取用户最后一条微博数据
+	 * 获取用户最后一条提问数据
 	 * 
 	 * @param
 	 *        	mix uids 用户uid
@@ -1169,7 +1169,7 @@ class ProfileAction extends Action {
 			// 获取用户用户组信息
 			$userGroupData = model('UserGroupLink')->getUserGroupData($fids);
 			$this->assign('userGroupData',$userGroupData);
-			// 获取用户的最后微博数据
+			// 获取用户的最后提问数据
 			//$lastFeedData = model('Feed')->getLastFeed($fids);
 			// 获取用户的关注信息状态
 			$followState = model('Follow')->getFollowStateByFids($this->mid, $fids);
@@ -1237,7 +1237,7 @@ class ProfileAction extends Action {
 			// 获取用户用户组信息
 			$userGroupData = model('UserGroupLink')->getUserGroupData($fids);
 			$this->assign('userGroupData',$userGroupData);
-			// 获取用户的最后微博数据
+			// 获取用户的最后提问数据
 			//$lastFeedData = model('Feed')->getLastFeed($fids);
 			// 获取用户的关注信息状态
 			$followState = model('Follow')->getFollowStateByFids($this->mid, $fids);

@@ -130,7 +130,7 @@ core.comment = {
         //            return false;
         //        }
 
-        // 如果转发到自己的微博
+        // 如果转发到自己的提问
         var ifShareFeed = 0;
         //        if (this.canrepost == 1) {
         //            var ischecked = $(this.comment_textarea).find("input[name='shareFeed']").get(0).checked;

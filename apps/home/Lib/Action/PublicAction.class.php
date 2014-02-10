@@ -188,7 +188,7 @@ class PublicAction extends Action{
 		$data['is_active']    = 1;
 		$data['is_init']      = 1;
 		$data['ctime']      = time();
-		$data['is_synchronizing']  = ($type == 'sina') ? '1' : '0'; // 是否同步新浪微博. 目前仅能同步新浪微博
+		$data['is_synchronizing']  = ($type == 'sina') ? '1' : '0'; // 是否同步新浪提问. 目前仅能同步新浪提问
 
 		if ( $id = M('user')->add($data) ) {
 			// 记录至同步登录表

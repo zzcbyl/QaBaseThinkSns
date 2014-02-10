@@ -1,4 +1,4 @@
-<feed app='public' type='postvideo' info='发视频微博'>
+<feed app='public' type='postvideo' info='发视频提问'>
 	<title> 
 		<![CDATA[{$actor}]]>
 	</title>

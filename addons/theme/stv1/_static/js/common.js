@@ -1072,6 +1072,16 @@ String.prototype.LTrim = function () {
 }
 String.prototype.RTrim = function () {
     return this.replace(/(\s*$)/g, "");
-} 
+}
 
 
+function showContentAll(strid, feedid) {
+    if ($("#" + strid + "All" + feedid).css("display") == "none") {
+        $("#" + strid + "SubData" + feedid).hide();
+        $("#" + strid + "All" + feedid).show();
+    }
+    else {
+        $("#" + strid + "SubData" + feedid).show();
+        $("#" + strid + "All" + feedid).hide();
+    }
+}

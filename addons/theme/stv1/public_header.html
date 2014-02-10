@@ -60,8 +60,8 @@
                         <input type="hidden" name="t" value="2"/>
                         <input type="hidden" name="a" value="public"/>
                         <dl>
-                            <dt class="clearfix"><input id="search_input" style="height:25px; line-height:25px; padding-top:0px; padding-bottom:0;" class="s_inp"  type="text" value="搜微博 / 昵称" onfocus="this.value=''" onblur="setTimeout(function(){ $('#search-box').remove();} , 200);if(this.value=='') this.value='搜微博 / 昵称';" event-node="searchKey" name='k'  autocomplete="off">
-                                <input type="submit" class="s_btn" value="" onclick="if(getLength($('#search_input').val()) && $('#search_input').val()!=='搜微博 / 昵称'){ $('#search_feed').submit(); return false;}" />
+                            <dt class="clearfix"><input id="search_input" style="height:25px; line-height:25px; padding-top:0px; padding-bottom:0;" class="s_inp"  type="text" value="搜提问 / 昵称" onfocus="this.value=''" onblur="setTimeout(function(){ $('#search-box').remove();} , 200);if(this.value=='') this.value='搜提问 / 昵称';" event-node="searchKey" name='k'  autocomplete="off">
+                                <input type="submit" class="s_btn" value="" onclick="if(getLength($('#search_input').val()) && $('#search_input').val()!=='搜提问 / 昵称'){ $('#search_feed').submit(); return false;}" />
                             </dt>
                         </dl>
                     </form>
@@ -112,9 +112,10 @@
                             </dl>
                         </div>
                     </li>
-                    <!--<li>
-                        <a href="{:U('public/Account/index')}" class="s" ></a>
-                    </li>-->
+                    <li>
+                        <!--<a href="{:U('public/Account/index')}" class="s" ></a>-->
+                        <a href="javascript:void(0);" class="s" ></a>
+                    </li>
                 </ul>
 
                 <ul class="message_list_container message_list_new"  style="display:none;">

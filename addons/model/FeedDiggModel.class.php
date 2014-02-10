@@ -1,6 +1,6 @@
 <?php
 /**
- * 微博赞模型
+ * 提问赞模型
  * @version TS3.0
  */
 class FeedDiggModel extends Model {
@@ -30,7 +30,7 @@ class FeedDiggModel extends Model {
 			model('Feed')->cleanCache($feed_id);
 				// dump($result);dump(model('Feed')->getLastSql());
 				
-			// 增加通知::  {user} 赞了你的微博：{content}。<a href="{sourceurl}" target='_blank'>去看看>></a>
+			// 增加通知::  {user} 赞了你的提问：{content}。<a href="{sourceurl}" target='_blank'>去看看>></a>
 			$author = model ( 'User' )->getUserInfo ( $mid );
 			$config['user'] = '<a href="'.$author ['space_url'].'" >'.$author ['uname'].'</a>';
 			

@@ -34,6 +34,7 @@ $admintaskrecom = CheckPermission('vtask_admin','vtask_recommend');
         <php>
             if(is_array($vl['comment']) ) {
         </php>
+            <div style="position:relative;"><eq name='vl.newCommentCount' value='1'><p class="FloatNew"></p></eq></div>
       	    <div class="contTit">
                 <a href="{$vl['comment']['user_info']['space_url']}"><img class="thumb" src="{$vl['comment']['user_info']['avatar_small']}"  event-node="face_card" uid="{$vl['comment']['user_info']['uid']}" /></a>
                 <eq name='vl.is_del' value='0'>
@@ -89,7 +90,7 @@ $admintaskrecom = CheckPermission('vtask_admin','vtask_recommend');
 	                        <php>}</php>
 	                        <php>if(!empty($vl['body'])){</php><php>}</php>
                         </h1>
-                 	    <h2><a href="{:U('public/Index/feed',array('feed_id'=>$vl['feed_id'],'uid'=>$vl['uid']))}"><!--{$vl.feed_id|format=true}-->{$vl.body|format=true}</a></h2>
+                 	    <h2><a target="_blank" href="{:U('public/Index/feed',array('feed_id'=>$vl['feed_id'],'uid'=>$vl['uid']))}"><!--{$vl.feed_id|format=true}-->{$vl.body|format=true}</a></h2>
                         <p>
                             <php>
                                 $descriptionTxt = $vl['description'];
@@ -216,7 +217,7 @@ $admintaskrecom = CheckPermission('vtask_admin','vtask_recommend');
                                         </p>
                                     </div>
 
-                                    <div model-node="comment_detail" class="repeat clearfix" style="display:none;"></div>
+                                    <div model-node="comment_detail" class="repeat clearfix" style="display:none; margin-left: -30px;"></div>
 	   	                            <div class="praise-list clearfix" style="display:none;">
 	   		                            <i class="arrow arrow-t"></i>
 	   	                                <ul>
@@ -253,7 +254,7 @@ $admintaskrecom = CheckPermission('vtask_admin','vtask_recommend');
             <div class="contTwo">
         	    <div class="contTop2">
                     <p class="q"></p>
-                    <eq name='vl.newcount' value='1'><p class="new"></p></eq></div>
+                    <eq name='vl.newcount' value='1'><p class="FloatNew"></p></eq></div>
                 <div class="contCenter2">
             	    <div class="contTit" id ='feed{$vl.feed_id}' model-node='feed_list'>
                         <a href="{$vl['user_info']['space_url']}"><img class="thumb" src="{$vl['user_info']['avatar_small']}"  event-node="face_card" uid='{$vl['user_info']['uid']}'></a>
@@ -271,7 +272,7 @@ $admintaskrecom = CheckPermission('vtask_admin','vtask_recommend');
                                 <eq name='vl.invite.answerid' value='0'><a class="zwyq" href="{:U('public/Index/feed',array('feed_id'=>$vl['feed_id'],'uid'=>$vl['uid'],'invite_id'=>$vl['invite']['invite_answer_id']))}"></a><else/><span style="float:right; margin-right:40px;">已回答邀请</span></eq>
                             <php>}</php>
                         </h1>
-                 	    <h2><a href="{:U('public/Index/feed',array('feed_id'=>$vl['feed_id'],'uid'=>$vl['uid']))}"><!--{$vl.feed_id|format=true}-->{$vl.body|format=true}</a></h2>
+                 	    <h2><a target="_blank" href="{:U('public/Index/feed',array('feed_id'=>$vl['feed_id'],'uid'=>$vl['uid']))}"><!--{$vl.feed_id|format=true}-->{$vl.body|format=true}</a></h2>
                         <p>
                             <php>
                                 $descriptionTxt = $vl['description'];
@@ -343,7 +344,7 @@ $admintaskrecom = CheckPermission('vtask_admin','vtask_recommend');
                         <php>
 		                    $cancomment_old_answer = empty($vl['answer'][0]['app_row_id'])  ? 0 : 1;
 	                    </php>
-                        <div class="answer2" id ="feed{$vl['answer'][0].feed_id}" model-node='feed_list' >
+                        <div class="answer12" id ="feed{$vl['answer'][0].feed_id}" model-node='feed_list' >
                             <div class="aTop2">
                                 <p class="icon"></p>
                                 <p class="a"></p></div>
@@ -494,14 +495,5 @@ $admintaskrecom = CheckPermission('vtask_admin','vtask_recommend');
     });
 
 
-    function showContentAll(strid, feedid) {
-        if ($("#" + strid + "All" + feedid).css("display") == "none") {
-            $("#" + strid + "SubData" + feedid).hide();
-            $("#" + strid + "All" + feedid).show();
-        }
-        else {
-            $("#" + strid + "SubData" + feedid).show();
-            $("#" + strid + "All" + feedid).hide();
-        }
-    }
+    
 </script>

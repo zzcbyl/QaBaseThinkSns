@@ -221,7 +221,7 @@ class CollectionModel extends Model {
 	}
 
 	/**
-	 * 获取动态（微博）收藏列表，API使用
+	 * 获取动态（提问）收藏列表，API使用
 	 * @param integer $uid 用户UID
 	 * @param integer $since_id 主键起始ID，默认为0
 	 * @param integer $max_id 主键最大ID，默认为0

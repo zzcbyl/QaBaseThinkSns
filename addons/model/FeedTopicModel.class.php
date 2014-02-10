@@ -40,7 +40,7 @@ class FeedTopicModel extends Model {
 		}
 	}
 
-	//添加微博与话题的关联
+	//添加提问与话题的关联
 	private function addFeedJoinTopic($topicNameOrId, $feedId, $type, $isExist = false) {
 		if($isExist) {
 			$map['topic_name'] = $topicNameOrId;
@@ -61,7 +61,7 @@ class FeedTopicModel extends Model {
 		D('feed_topic_link')->add($add);
 	}
 
-	//删除微博与话题关联
+	//删除提问与话题关联
 	public function deleteWeiboJoinTopic($feedId) {
 		$del['feed_id'] = $feedId;
 		if($topic_id = D('feed_topic_link')->where($del)->getField('topic_id')){
@@ -90,7 +90,7 @@ class FeedTopicModel extends Model {
 		return $topic;
 	}
 	/**
-	 *返回与话题相关的微博ID
+	 *返回与话题相关的提问ID
 	 */
 	public function getFeedIdByTopic( $topic ){
 		$sql = "select b.feed_id as fid from {$this->tablePrefix}feed_topic a inner join {$this->tablePrefix}feed_topic_link b on a.topic_id=b.topic_id where a.topic_name ='".$topic."'";

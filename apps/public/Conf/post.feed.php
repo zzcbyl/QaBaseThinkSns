@@ -1,4 +1,4 @@
-<feed app='public' type='post' info='原创微博'>
+<feed app='public' type='post' info='原创提问'>
 	<title comment="feed标题"> 
 		<![CDATA[{$actor}]]>
 	</title>

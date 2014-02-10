@@ -30,8 +30,8 @@
                             </p>
                         </div>
                         <p class="comm hd">
-                        <strong>粉丝：<a href="{:U('public/Profile/follower', array('uid'=>$common_following['fid']))}">{:(int)$user_count[$common_following['fid']]['follower_count']}</a></strong>
-                        <a class="a" href="{$user_info[$common_following['fid']]['space_url']}">{:(int)$user_count[$common_following['fid']]['weibo_count']}</a>
+                        <strong><a href="{:U('public/Profile/follower', array('uid'=>$common_following['fid']))}">粉丝：{:(int)$user_count[$common_following['fid']]['follower_count']}</a></strong>
+                        <a class="a" href="{:U('public/Profile/question', array('uid'=>$common_following['fid']))}">{:(int)$user_count[$common_following['fid']]['weibo_count']}</a>
                         <a class="t" href="{:U('public/Profile/answer', array('uid'=>$common_following['fid']))}">{:(int)$user_count[$common_following['fid']]['answer_count']}</a>
 
                         <a href="#" class="d">{:(int)$user_count[$common_following['fid']]['comment_agree_count']}</a>

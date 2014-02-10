@@ -1,5 +1,5 @@
 <eq name='vo.source_table' value='feed'>
-	<!-- 所有的微博 -->
+	<!-- 所有的提问 -->
 	<p>{$vo.source_content|parse_html}</p>
 </eq>
 <eq name='vo.source_table' value='comment'>
@@ -13,7 +13,7 @@
          
 		 <eq name='vo.sourceInfo.source_table' value='feed'>
 		 	<php> $source = $vo['sourceInfo'];</php>
-	 		<!-- 微博的评论 -->
+	 		<!-- 提问的评论 -->
         	<dd class="from"><img src="{$source.source_user_info.avatar_small}"  class="face" event-node='face_card' uid='{$source.source_user_info.uid}'>
         	{$source.source_user_info.space_link}</dd>
         	<dd>

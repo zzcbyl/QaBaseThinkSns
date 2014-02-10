@@ -7,7 +7,7 @@
 class IndexAction extends Action {
 	
 	/**
-	 * 我的首页 - 微博页面
+	 * 我的首页 - 提问页面
 	 * @return void
 	 */
 	public function index(){
@@ -43,7 +43,7 @@ class IndexAction extends Action {
 		$this->assign($d);
 		// 设置默认话题
 		$weiboSet = model('Xdata')->get('admin_Config:feed');
-		$initHtml = $weiboSet['weibo_default_topic'];		// 微博框默认话题
+		$initHtml = $weiboSet['weibo_default_topic'];		// 提问框默认话题
 		if($initHtml){
 			$initHtml = '#'.$initHtml.'#';
 		}
@@ -119,16 +119,16 @@ class IndexAction extends Action {
 		//增加浏览数
 		model ('Feed')->UpdatePV($feed_id);
 		
-		//获取微博信息
+		//获取提问信息
 		$feedInfo = model ( 'Feed' )->get ( $feed_id );
 
 		if (!$feedInfo){
-			$this->error ( '该微博不存在或已被删除' );
+			$this->error ( '该提问不存在或已被删除' );
 			exit();
 		}
 		
 		if ($feedInfo ['is_audit'] == '0' && $feedInfo ['uid'] != $this->mid) {
-			$this->error ( '此微博正在审核' );
+			$this->error ( '此提问正在审核' );
 			exit();
 		}
 
@@ -211,16 +211,16 @@ class IndexAction extends Action {
 			$this->error( L ( 'PUBLIC_INFO_ALREADY_DELETE_TIPS' ) );
 		}
 		
-		//获取微博信息
+		//获取提问信息
 		$feedInfo = model ( 'Feed' )->get ( $feed_id );
 
 		if (!$feedInfo){
-			$this->error ( '该微博不存在或已被删除' );
+			$this->error ( '该提问不存在或已被删除' );
 			exit();
 		}
 		
 		if ($feedInfo ['is_audit'] == '0' && $feedInfo ['uid'] != $this->mid) {
-			$this->error ( '此微博正在审核' );
+			$this->error ( '此提问正在审核' );
 			exit();
 		}
 
@@ -300,16 +300,16 @@ class IndexAction extends Action {
 			$this->error( L ( 'PUBLIC_INFO_ALREADY_DELETE_TIPS' ) );
 		}
 
-		//获取微博信息
+		//获取提问信息
 		$feedInfo = model ( 'Feed' )->getAnswerModel ( $feed_id );
 		//return;
 		if (!$feedInfo){
-			$this->error ( '该微博不存在或已被删除' );
+			$this->error ( '该提问不存在或已被删除' );
 			exit();
 		}
 		//print_r($feedInfo);
 		if ($feedInfo ['is_audit'] == '0' && $feedInfo ['uid'] != $this->mid) {
-			$this->error ( '此微博正在审核' );
+			$this->error ( '此提问正在审核' );
 			exit();
 		}
 
@@ -397,13 +397,13 @@ class IndexAction extends Action {
 	}
 
 	/**
-	 * 我的微博页面
+	 * 我的提问页面
 	 */
 	public function myFeed() {
 		// 获取用户统计数目
 		$userData = model('UserData')->getUserData($this->mid);
 		$this->assign('feedCount', $userData['weibo_count']);
-		// 微博过滤内容
+		// 提问过滤内容
 		$feedType = t($_GET['feed_type']);
 		$this->assign('feedType', $feedType);
 		// 是否有返回按钮
@@ -420,7 +420,7 @@ class IndexAction extends Action {
 		// 获取用户统计数目
 		$userData = model('UserData')->getUserData($this->mid);
 		$this->assign('answerCount', $userData['answer_count']);
-		// 微博过滤内容
+		// 提问过滤内容
 		$feedType = t($_GET['feed_type']);
 		$this->assign('feedType', $feedType);
 		// 是否有返回按钮
@@ -462,7 +462,7 @@ class IndexAction extends Action {
 		// 获取用户用户组信息
 		$userGroupData = model('UserGroupLink')->getUserGroupData($fids);
 		$this->assign('userGroupData',$userGroupData);
-		// 获取用户的最后微博数据
+		// 获取用户的最后提问数据
 		//$lastFeedData = model('Feed')->getLastFeed($fids);
 		// 获取用户的关注信息状态值
 		$followState = model('Follow')->getFollowStateByFids($this->mid, $fids);
@@ -535,7 +535,7 @@ class IndexAction extends Action {
 		// 获取用户用户组信息
 		$userGroupData = model('UserGroupLink')->getUserGroupData($fids);
 		$this->assign('userGroupData',$userGroupData);
-		// 获取用户的最后微博数据
+		// 获取用户的最后提问数据
 		//$lastFeedData = model('Feed')->getLastFeed($fids);
 		// 获取用户的关注信息状态
 		$followState = model('Follow')->getFollowStateByFids($this->mid, $fids);
@@ -581,7 +581,7 @@ class IndexAction extends Action {
 		// 获取用户用户组信息
 		$userGroupData = model('UserGroupLink')->getUserGroupData($fids);
 		$this->assign('userGroupData',$userGroupData);
-		// 获取用户的最后微博数据
+		// 获取用户的最后提问数据
 		//$lastFeedData = model('Feed')->getLastFeed($fids);
 		// 获取用户的关注信息状态
 		$followState = model('Follow')->getFollowStateByFids($this->mid, $fids);
@@ -732,7 +732,7 @@ class IndexAction extends Action {
 	}
 
 	/**
-	 * 弹窗发布微博
+	 * 弹窗发布提问
 	 * @return void
 	 */
 	public function sendFeedBox()

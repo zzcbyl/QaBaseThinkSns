@@ -30,13 +30,13 @@ class IndexAction extends Action{
 		$data['hot_user'] = array_slice($data['hot_user'], 0, 10);
 		$uids = array_merge($uids, getSubByKey($data['hot_user'], 'uid'));
 
-		// 正在发生 (原创的文字微博)
+		// 正在发生 (原创的文字提问)
 		$data['lastest_weibo'] = D('Operate', 'weibo')->getLastWeibo();
 		$data['lastest_weibo'] = array_slice($data['lastest_weibo'], 0, 6);
 		$uids = array_merge($uids, getSubByKey($data['lastest_weibo'], 'uid'));
 		$this->assign('since_id', empty($data['lastest_weibo']) ? 0 : $data['lastest_weibo'][0]['weibo_id'] );
 
-		// 原创的图片微博
+		// 原创的图片提问
 		$data['pic_weibo'] = S('S_login_pic_weibo');
 		if(empty($data['pic_weibo'])) {
 			$map['transpond_id'] = 0;

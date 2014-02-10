@@ -580,24 +580,27 @@ var follow = {
                 M.removeListener(node);
                 M(node);
                 _this.updateFollowCount(1);
-                _this.updateFriendCount(1);
+                if (txt.data.following == "1" && txt.data.follower == "1") {
+                    _this.updateFriendCount(1);
+                }
                 updateUserData('follower_count', 1, args.uid);
+                return;
                 ui.success("关注成功");
-//                if ("following_right" == args.refer) {
-//                    var item = node.parentModel;
-//                    // item.parentNode.removeChild(item);
-//                    $(item).slideUp('normal', function () {
-//                        $(this).remove();
-//                    });
-//                    $.post(U('widget/RelatedUser/changeRelate'), { uid: args.uid, limit: 1 }, function (msg) {
-//                        var _model = M.getModels("related_list");
-//                        $(_model[0]).append(msg);
-//                        M(_model[0]);
-//                    }, 'json');
-//                    ui.success("关注成功");
-//                } else {
-//                    followGroupSelectorBox(args.uid, args.isrefresh);
-//                }
+                //                if ("following_right" == args.refer) {
+                //                    var item = node.parentModel;
+                //                    // item.parentNode.removeChild(item);
+                //                    $(item).slideUp('normal', function () {
+                //                        $(this).remove();
+                //                    });
+                //                    $.post(U('widget/RelatedUser/changeRelate'), { uid: args.uid, limit: 1 }, function (msg) {
+                //                        var _model = M.getModels("related_list");
+                //                        $(_model[0]).append(msg);
+                //                        M(_model[0]);
+                //                    }, 'json');
+                //                    ui.success("关注成功");
+                //                } else {
+                //                    followGroupSelectorBox(args.uid, args.isrefresh);
+                //                }
             } else {
                 ui.error(txt.info);
             }
@@ -643,7 +646,9 @@ var follow = {
                     M(node);
                 }
                 _this.updateFollowCount(-1);
-                _this.updateFriendCount(-1);
+                if (txt.data.follower == "1") {
+                    _this.updateFriendCount(-1);
+                }
                 updateUserData('follower_count', -1, args.uid);
                 if (args.isrefresh == 1) location.reload();
             } else {
@@ -657,14 +662,18 @@ var follow = {
     * @return void
     */
     updateFollowCount: function (num) {
-        var l;
-        var following_count = M.getEvents("following_count");
-        if (following_count) {
-            l = following_count.length;
-            while (l-- > 0) {
-                following_count[l].innerHTML = parseInt(following_count[l].innerHTML) + num;
-            }
+        if (parseInt($('#gzCount a').html()) > 0) {
+            $('#gzCount a').html(parseInt($('#gzCount a').html()) + num);
         }
+
+        //        var l;
+        //        var following_count = M.getEvents("following_count");
+        //        if (following_count) {
+        //            l = following_count.length;
+        //            while (l-- > 0) {
+        //                following_count[l].innerHTML = parseInt(following_count[l].innerHTML) + num;
+        //            }
+        //        }
     },
     /**
     * 更新好友数目
@@ -672,14 +681,18 @@ var follow = {
     * @return void
     */
     updateFriendCount: function (num) {
-        var l;
-        var friend_count = M.getEvents("friend_count");
-        if (friend_count) {
-            l = friend_count.length;
-            while (l-- > 0) {
-                friend_count[l].innerHTML = parseInt(friend_count[l].innerHTML) + num;
-            }
+        if (parseInt($('#hyCount a').html()) >= 0) {
+            $('#hyCount a').html(parseInt($('#hyCount a').html()) + num);
         }
+
+        //        var l;
+        //        var friend_count = M.getEvents("friend_count");
+        //        if (friend_count) {
+        //            l = friend_count.length;
+        //            while (l-- > 0) {
+        //                friend_count[l].innerHTML = parseInt(friend_count[l].innerHTML) + num;
+        //            }
+        //        }
     }
 };
 /**

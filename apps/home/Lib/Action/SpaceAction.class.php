@@ -22,7 +22,7 @@ class SpaceAction extends Action
 			$user_info = D('User')->getUserByIdentifier($this->uid);
 	   	   	if ($user_info) {
 	   	   		$userinfo = array(
-	   	   						'微博地址' => U('home/Space/index', array('uid' => $user_info['domain'] ? $user_info['domain'] : $this->uid)),
+	   	   						'提问地址' => U('home/Space/index', array('uid' => $user_info['domain'] ? $user_info['domain'] : $this->uid)),
 	   	   						'性别'    => getSex($user_info['sex']),
 	   	   						'所在地'  => $user_info['location'],
 	   	   					);
@@ -73,7 +73,7 @@ class SpaceAction extends Action
         if ('weibo' === $data['type']) {
 	        $weiboType = $data['weibo_type'] = h($_GET['weibo_type']);
 	        $data['list'] = D('Operate','weibo')->getSpaceList($this->uid, $weiboType);
-			//微博menu组装
+			//提问menu组装
 	        $data['weibo_menu'] = array(
 	                        ''  => L('all'),
 	                        'original' => L('original'),
@@ -111,7 +111,7 @@ class SpaceAction extends Action
     	$this->display();
     }
 
-    // 查看微博详细
+    // 查看提问详细
     function detail(){
     	$intId = intval( $_GET['id'] );
 	    $data['mini']      =  D('Operate','weibo')->getOneLocation( $intId );
@@ -134,14 +134,14 @@ class SpaceAction extends Action
 	   	}
 	    $this->__getSpaceCount( $this->uid );
 
-		//SEO优化: 标题栏增加微博内容摘要
+		//SEO优化: 标题栏增加提问内容摘要
 	    $this->setTitle(getUserName($this->uid) . ':'.getShort($data['mini']['content'],30).'...');
 	    $this->assign('weibo_id',$intId);
     	$this->display();
     }
 
 	/*
-	 * 微博文档下载页
+	 * 提问文档下载页
 	 */
 	public function file()
 	{

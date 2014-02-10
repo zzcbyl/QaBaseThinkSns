@@ -87,12 +87,12 @@ class sina{
 		}
 	}
 
-	//发布一条微博
+	//发布一条提问
 	public function update($text,$opt){
 		return $this->doClient($opt)->update($text);
 	}
 
-	//上传一个照片，并发布一条微博
+	//上传一个照片，并发布一条提问
 	public function upload($text,$opt,$pic){
 		if(!file_exists($pic)){
 			return $this->doClient($opt)->update($text);
@@ -101,7 +101,7 @@ class sina{
 		}
 	}
 
-	//转发一条微博
+	//转发一条提问
     public function transpond($transpondId,$reId,$content='',$opt=null){
 		if($reId){
 			$this->doClient($opt)->send_comment($reId,$content);

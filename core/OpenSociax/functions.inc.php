@@ -1277,7 +1277,7 @@ function parseForApi($html){
 }
 
 /**
- * 格式化微博,替换话题
+ * 格式化提问,替换话题
  * @param string  $content 待格式化的内容
  * @param boolean $url     是否替换URL
  * @return string
@@ -1301,7 +1301,7 @@ function replaceUrl($content){
 
 
 /**
- * 表情替换 [格式化微博与格式化评论专用]
+ * 表情替换 [格式化提问与格式化评论专用]
  * @param array $data
  */
 function _parse_expression($data) {
@@ -1318,7 +1318,7 @@ function _parse_expression($data) {
 }
 
 /**
- * 格式化微博,替换链接地址
+ * 格式化提问,替换链接地址
  * @param string $url
  */
 function _parse_url($url){
@@ -1335,7 +1335,7 @@ function _parse_url($url){
 }
 
 /**
- * 话题替换 [格式化微博专用]
+ * 话题替换 [格式化提问专用]
  * @param array $data
  * @return string
  */
@@ -1349,7 +1349,7 @@ function _parse_theme($data){
 }
 
 /**
- * 根据用户昵称获取用户ID [格式化微博与格式化评论专用]
+ * 根据用户昵称获取用户ID [格式化提问与格式化评论专用]
  * @param array $name
  * @return string
  */
@@ -1609,7 +1609,7 @@ function getVisitorClient(){
     return '0';
 }
 
-//获取一条微博的来源信息
+//获取一条提问的来源信息
 function getFromClient($type=0, $app='public', $app_name){
     if ( $app != 'public' ){
         return '来自<a href="'.U($app).'" target="_blank">'.$app_name."</a>";
