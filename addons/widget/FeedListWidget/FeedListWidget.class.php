@@ -66,7 +66,7 @@ class FeedListWidget extends Widget {
         // 获取GET与POST数据
     	$_REQUEST = $_GET + $_POST;
         // 查询是否有分页
-    	if(!empty($_REQUEST['p']) || intval($_REQUEST['load_count']) == 4) {
+    	if(!empty($_REQUEST['p']) ) {
     		unset($_REQUEST['loadId']);
     		$this->limitnums = 40;
     	} else {
@@ -443,8 +443,8 @@ class FeedListWidget extends Widget {
     	$content['pageHtml'] = $list['html'];
 		//print(dirname(__FILE__));
 	    // 渲染模版
-		$content['html'] = $this->renderFile(dirname(__FILE__)."/".$tpl, $var);
-		//$content['html'] = $this->renderFile("E:/WorkCode/QaBaseThinkSns/addons/widget/FeedListWidget/_FeedList.html", $var);
+		//$content['html'] = $this->renderFile(dirname(__FILE__)."/".$tpl, $var);
+		$content['html'] = $this->renderFile("E:/WorkCode/QaBaseThinkSns/addons/widget/FeedListWidget/_FeedList.html", $var);
 		
 		//print(dirname(__FILE__)."/".$tpl);
 		//return $var;
