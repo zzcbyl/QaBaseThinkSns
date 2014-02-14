@@ -123,6 +123,9 @@ class FeedListWidget extends Widget {
      * @return array 获取提问相关模板数据
      */
     private function getData($var, $tpl = 'FeedList.html') {
+
+//var_dump($var);
+
     	$var['feed_key'] = t($var['feed_key']);
 		$var['newcount'] = t($var['newCount']);
         $var['cancomment'] = isset($var['cancomment']) ? $var['cancomment'] : 1;
@@ -134,6 +137,9 @@ class FeedListWidget extends Widget {
     	$var['remarkHash'] = model('Follow')->getRemarkHash($GLOBALS['ts']['mid']);
     	$map = $list = array();
     	$type = $var['new'] ? 'new'.$var['type'] : $var['type'];	// 最新的提问与默认提问类型一一对应
+
+//echo $type;
+
 		switch($type) {
 			case 'following':// 我关注的
 				if(!empty($var['feed_key'])){
@@ -160,6 +166,7 @@ class FeedListWidget extends Widget {
 				}
 				break;
 			case 'all'://所有的 --正在发生的
+
 				if(!empty($var['feed_key'])){
 					//关键字匹配 采用搜索引擎兼容函数搜索 后期可能会扩展为搜索引擎
 					$list = model('Feed')->searchFeed($var['feed_key'],'all',$var['loadId'],$this->limitnums);
@@ -177,6 +184,9 @@ class FeedListWidget extends Widget {
 					}
 					$list = model('Feed')->getQuestionAndAnswer($where,$this->limitnums);
 					//print_r($list);
+//var_dump($list);
+
+
 				}
 				break;
 			case 'newfollowing'://关注的人的最新提问  (检查使用的地方)
@@ -437,6 +447,11 @@ class FeedListWidget extends Widget {
     	$content['pageHtml'] = $list['html'];
 		//print(dirname(__FILE__));
 	    // 渲染模版
+
+ //echo dirname(__FILE__)."/".$tpl;
+//var_dump(dirname(__FILE__)."/".$tpl);
+//var_dump($content['html']);
+
 		$content['html'] = $this->renderFile(dirname(__FILE__)."/".$tpl, $var);
 	    return $content;
     }
