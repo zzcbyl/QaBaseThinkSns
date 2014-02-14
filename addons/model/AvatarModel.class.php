@@ -261,11 +261,13 @@ class AvatarModel {
         	}
 			$thumb->save(UPLOAD_PATH.$original_file_name);
 			unset($return);
+			
 			/*$return['data']['big'] 		= getImageUrl($original_file_name,200,200,true,true).'?v'.$filemtime;
 			$return['data']['middle'] 	= getImageUrl($original_file_name,100,100,true,true).'?v'.$filemtime;
 			$return['data']['small'] 	= getImageUrl($original_file_name,50,50,true,true).'?v'.$filemtime;
 			$return['data']['tiny'] 	= getImageUrl($original_file_name,30,30,true,true).'?v'.$filemtime;*/
-			$return['data']['big'] 		= getImageUrl($original_file_name,90,90,true,true).'?v'.$filemtime;
+			$return['data']['original'] = getImageUrl($original_file_name,200,200,true,true).'?v'.$filemtime;
+			$return['data']['big'] = getImageUrl($original_file_name,90,90,true,true).'?v'.$filemtime;
 			$return['data']['middle'] 	= getImageUrl($original_file_name,80,80,true,true).'?v'.$filemtime;
 			$return['data']['small'] 	= getImageUrl($original_file_name,60,60,true,true).'?v'.$filemtime;
 			$return['data']['tiny'] 	= getImageUrl($original_file_name,35,35,true,true).'?v'.$filemtime;

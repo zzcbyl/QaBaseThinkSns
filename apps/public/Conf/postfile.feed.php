@@ -4,7 +4,7 @@
 	</title>
 	<body>
 		<![CDATA[ 
-			{$body|t|replaceUrl}
+			{$body|t|replaceUrl|stripslashes}
 			<div>
 				<php>if(empty($attachInfo)):</php>
 				<ul class="feed_file_list">

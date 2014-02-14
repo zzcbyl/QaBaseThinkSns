@@ -75,6 +75,7 @@ core.weibo = {
                     $('#feed-lists').append('<div class="loading" id="loadMore">' + msg.msg + '</div>');
                 }
             }
+            //alert(msg.html);
             // 加载成功
             if (msg.status == "1") {
                 if (msg.firstId > 0 && _this.loadnew == 1) {
@@ -83,13 +84,13 @@ core.weibo = {
                     //					_this.startNewLoop();
                 }
                 $('#loadMore').remove();
-                if (_this.loadCount >= 4) {
-                    var $lastDl = $('<div></div>');
-                    $lastDl.html(msg.html);
-                    //alert(msg.html);
-                    msg.html = $lastDl.find('div').filter('.conts').slice(30);
-                    //alert(msg.html.html());
-                }
+//                if (_this.loadCount >= 4) {
+//                    var $lastDl = $('<div></div>');
+//                    $lastDl.html(msg.html);
+//                    //alert(msg.html);
+//                    msg.html = $lastDl.find('div').filter('.conts').slice(30);
+//                    //alert(msg.html.html());
+//                }
                 $('#feed-lists').append(msg.html);
                 _this.canLoading = true;
                 _this.loadId = msg.loadId;

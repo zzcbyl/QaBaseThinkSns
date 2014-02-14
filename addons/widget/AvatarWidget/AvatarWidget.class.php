@@ -32,7 +32,7 @@ class AvatarWidget extends Widget {
 	public function getflashHtml(){
 		$password   = time();
 		$userinfo   = model('User')->getUserInfo($GLOBALS['ts']['mid']);
-		$defaultImg = $userinfo['avatar_big'];
+		$defaultImg = $userinfo['avatar_original'];
 		$uploadUrl  = urlencode(U('public/Account/doSaveUploadAvatar')); 
 		echo ' <embed src="'.THEME_PUBLIC_URL.'/image/face.swf" quality="high" wmode="opaque" 
 			FlashVars="uploadServerUrl='.$uploadUrl.'&defaultImg='.$defaultImg.'" 

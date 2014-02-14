@@ -4,7 +4,7 @@
 	</title>
 	<body>
 		<![CDATA[
-			{$body|t|replaceUrl}
+			{$body|t|replaceUrl|stripslashes}
 			<br/>
 			<div class="feed_img" id="video_mini_show_{$feedid}">
         <a href="javascript:void(0);" onclick="switchVideo({$feedid},'open','{$host}','{$flashvar}')">
