@@ -3,11 +3,11 @@
 		<![CDATA[{$actor}]]>
 	</title>
 	<body>
-		<![CDATA[{$body|t|replaceUrl} ]]>
+		<![CDATA[{$body|t|replaceUrl|stripslashes} ]]>
 	</body>
 	<description>
 		<![CDATA[ 
-			{$description|t|replaceUrl}
+			{$description|t|replaceUrl|stripslashes}
 			<br/>
 			<div class="feed_img_lists" rel='small' >
 			<ul class="small">

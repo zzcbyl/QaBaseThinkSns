@@ -80,6 +80,11 @@ class FeedListWidget extends Widget {
         } else {
     	    $content = $this->getData($_REQUEST,'_FeedList.html');
         }
+		
+		/*$return = array('status'=>1,'msg'=>L('PUBLIC_SUCCESS_LOAD'));
+		$return['html'] = '||'.json_encode($content).'||';
+		exit(json_encode($return));*/
+		
         // 查看是否有更多数据
     	if(empty($content['html'])) {
             // 没有更多的
@@ -176,6 +181,7 @@ class FeedListWidget extends Widget {
 						}
 					}
 					$list = model('Feed')->getQuestionAndAnswer($where,$this->limitnums);
+					
 					//print_r($list);
 				}
 				break;
@@ -438,6 +444,11 @@ class FeedListWidget extends Widget {
 		//print(dirname(__FILE__));
 	    // 渲染模版
 		$content['html'] = $this->renderFile(dirname(__FILE__)."/".$tpl, $var);
+		//$content['html'] = $this->renderFile("E:/WorkCode/QaBaseThinkSns/addons/widget/FeedListWidget/_FeedList.html", $var);
+		
+		//print(dirname(__FILE__)."/".$tpl);
+		//return $var;
+		//return dirname(__FILE__)."\\".$tpl;
 	    return $content;
     }
 

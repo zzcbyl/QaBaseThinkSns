@@ -1393,4 +1393,80 @@ class ProfileAction extends Action {
 		echo json_encode($josnList);exit();	
 	}
 	
+	/**
+	 * 头像设置页面
+	 */
+	public function avatar() {	
+		
+		$followState = 0; //没关系
+		if($this->uid == $this->mid)
+		{
+			$followState=1; //自己
+		}
+		$state = model('Follow')->getFollowState($this->mid, $this->uid);
+		if($state['follower']==1)
+		{
+			$followState=2;//关注的人
+		}
+		
+		$this->assign ( 'followstate', $followState );
+		// 获取用户信息
+		$user_info = model ( 'User' )->getUserInfo ( $this->uid );
+		// 用户为空，则跳转用户不存在
+		if (empty ( $user_info )) {
+			$this->error ( L ( 'PUBLIC_USER_NOEXIST' ) );
+		}
+		// 个人空间头部
+		$this->_top ();
+		$this->_tab_menu();
+		
+		// 判断隐私设置
+		$userPrivacy = $this->privacy ( $this->uid );
+		if ($userPrivacy ['space'] !== 1) {
+			$this->_sidebar ();
+			// 档案类型
+			$ProfileType = model ( 'UserProfile' )->getCategoryList ();
+			$this->assign ( 'ProfileType', $ProfileType );
+			// 个人资料
+			$this->_assignUserProfile ( $this->uid );
+			// 获取用户职业信息
+			$userCategory = model ( 'UserCategory' )->getRelatedUserInfo ( $this->uid );
+			if (! empty ( $userCategory )) {
+				foreach ( $userCategory as $value ) {
+					$user_category .= '<a href="#" class="link btn-cancel"><span>' . $value ['title'] . '</span></a>&nbsp;&nbsp;';
+				}
+			}
+			$this->assign ( 'user_category', $user_category );
+		} else {
+			$this->_assignUserInfo ( $this->uid );
+		}
+		$this->assign ( 'userPrivacy', $userPrivacy );
+		
+		$this->setTitle ( $user_info ['uname'] . '的资料' );
+		$this->setKeywords ( $user_info ['uname'] . '的资料' );
+		$user_tag = model ( 'Tag' )->setAppName ( 'User' )->setAppTable ( 'user' )->getAppTags ( array (
+			$this->uid 
+			) );
+		$this->setDescription ( t ( $user_category . $user_info ['location'] . ',' . implode ( ',', $user_tag [$this->uid] ) . ',' . $user_info ['intro'] ) );
+
+		
+		model('User')->cleanCache($this->mid);
+		$user_info = model('User')->getUserInfo($this->mid);
+		$this->assign('user_info_avatar', $user_info);
+
+		$this->setTitle( L('PUBLIC_IMAGE_SETTING') );			// 个人设置
+		$this->setKeywords( L('PUBLIC_IMAGE_SETTING') );
+		// 获取用户职业信息
+		$userCategory = model('UserCategory')->getRelatedUserInfo($this->mid);
+		$userCateArray = array();
+		if(!empty($userCategory)) {
+			foreach($userCategory as $value) {
+				$user_info['category'] .= '<a href="#" class="link btn-cancel"><span>'.$value['title'].'</span></a>&nbsp;&nbsp;';
+			}
+		}
+		$user_tag = model('Tag')->setAppName('User')->setAppTable('user')->getAppTags(array($this->mid));
+		$this->setDescription(t($user_info['category'].$user_info['location'].','.implode(',', $user_tag[$this->mid]).','.$user_info['intro']));
+		$this->display();
+	}
+	
 }

@@ -75,6 +75,7 @@ core.weibo = {
                     $('#feed-lists').append('<div class="loading" id="loadMore">' + msg.msg + '</div>');
                 }
             }
+            //alert(msg.html);
             // 加载成功
             if (msg.status == "1") {
                 if (msg.firstId > 0 && _this.loadnew == 1) {
