@@ -11,13 +11,13 @@
 	              else if(ACTION_NAME=='expert') { $tabClass['expert'] = 'current'; $tabClass['square'] = ''; $tabClass['index'] = ''; }
                   else{ $tabClass['index'] = 'current'; $tabClass['square'] = ''; $tabClass['expert'] = ''; }
             </php>
-            <ul class="menu">
+            <ul class="menu" style="display:none;">
         	    <li><a class="{$tabClass.index}" href="{:SITE_URL}">首页</a></li>
                 <li><a class="{$tabClass.square}" href="{:U('public/Passport/square')}">广场</a></li>
                 <li><a class="{$tabClass.expert}" href="{:U('public/Passport/expert')}">专家</a></li>
                 <li><a href="#">活动</a></li>
             </ul>
-            <div class="person" style="float:right;">
+            <div class="person" style="float:right; display:none;">
                 <ul class="short_nav">
         	        <li><a href="#" class="h"></a></li>
                     <li model-node="notice"><a href="javascript:void(0);" class="v"></a>

@@ -289,22 +289,22 @@ class RegisterAction extends Action
 	 * 输入邀请码
 	 */
 	public function doStep1(){	
-		$return  = array('status'=>0,'data'=>L('邀请码错误'));
+		$return  = array('status'=>0,'data'=>'邀请码错误');
 		if(empty($_POST['Code'])){
-			$return['data'] = L('参数错误');
+			$return['data'] = '参数错误';
 			echo json_encode($return);exit();
 		}
 
         $result=$this->CheckInviteCode($_POST['Code']);
 
         if($result==0)
-            $return  = array('status'=>0,'data'=>L('邀请码不存在'));
+            $return  = array('status'=>0,'data'=>'邀请码不存在');
 		else if($result==1)
-            $return  = array('status'=>1,'data'=>L('邀请码验证成功'));
+            $return  = array('status'=>1,'data'=>'邀请码验证成功');
 		else if($result==2)
-            $return  = array('status'=>0,'data'=>L('邀请码已被使用'));
+            $return  = array('status'=>0,'data'=>'邀请码已被使用');
 		else if($result==3)
-            $return  = array('status'=>0,'data'=>L('邀请码限定次数已用完'));
+            $return  = array('status'=>0,'data'=>'邀请码限定次数已用完');
 
         $_SESSION["invite_code"]=$_POST['Code'];
 

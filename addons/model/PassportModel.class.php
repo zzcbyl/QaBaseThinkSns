@@ -136,15 +136,15 @@ class PassportModel {
 		// 记录登陆日志，首次登陆判断
 		$this->rel = D('LoginRecord')->where("uid = ".$uid)->field('locktime')->find();
 
-		$login_error_time = cookie('login_error_time');
+		/*$login_error_time = cookie('login_error_time');
 
 		if($this->rel['locktime'] > time()) {
 			$this->error = L('PUBLIC_ACCOUNT_LOCKED');			// 您的帐号已经被锁定，请稍后再登录
 			return false;
-		}
+		}*/
 		
 		if($password && md5(md5($password).$user['login_salt']) != $user['password']) {
-			$login_error_time = intval($login_error_time) + 1;
+			/*$login_error_time = intval($login_error_time) + 1;
 			cookie('login_error_time', $login_error_time);
 
 			$this->error = '密码输入错误，您还可以输入'.(6 - $login_error_time).'次';			// 密码错误
@@ -167,7 +167,8 @@ class PassportModel {
 				} else {
 					D('')->table(C('DB_PREFIX').'login_record')->where($m)->save($save);
 				}
-			}
+			}*/
+			$this->error = '密码输入错误';
 			return false;
 		} else {
 			$logData['uid'] = $uid;
