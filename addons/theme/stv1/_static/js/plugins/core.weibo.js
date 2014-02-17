@@ -68,6 +68,7 @@ core.weibo = {
         _this.canLoading = false;
         // 获取提问数据
         $.get(U('widget/FeedList/loadMore'), { 'loadId': _this.loadId, 'type': _this.feedType, 'uid': _this.uid, 'feed_type': _this.feed_type, 'feed_key': _this.feed_key, 'fgid': fgid, 'topic_id': _this.topic_id, 'load_count': _this.loadCount, 'gid': _this.gid }, function (msg) {
+            //alert(msg);
             // 加载失败
             if (msg.status == "0" || msg.status == "-1") {
                 $('#loadMore').remove();

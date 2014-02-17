@@ -86,6 +86,9 @@ class FeedListWidget extends Widget {
 		exit(json_encode($return));*/
 		
         // 查看是否有更多数据
+
+
+
     	if(empty($content['html'])) {
             // 没有更多的
     		$return = array('status'=>0,'msg'=>L('PUBLIC_WEIBOISNOTNEW'));
@@ -371,6 +374,8 @@ class FeedListWidget extends Widget {
 		}
     	// 分页的设置
         isset($list['html']) && $var['html'] = $list['html'];
+
+
 		$feedlist = array();
     	if(!empty($list['data'])) {
 			switch($type) {
@@ -453,21 +458,13 @@ class FeedListWidget extends Widget {
     	$content['pageHtml'] = $list['html'];
 		//print(dirname(__FILE__));
 	    // 渲染模版
-<<<<<<< HEAD
 
  //echo dirname(__FILE__)."/".$tpl;
 //var_dump(dirname(__FILE__)."/".$tpl);
 //var_dump($content['html']);
 
 		$content['html'] = $this->renderFile(dirname(__FILE__)."/".$tpl, $var);
-=======
-		//$content['html'] = $this->renderFile(dirname(__FILE__)."/".$tpl, $var);
-		$content['html'] = $this->renderFile("E:/WorkCode/QaBaseThinkSns/addons/widget/FeedListWidget/_FeedList.html", $var);
-		
-		//print(dirname(__FILE__)."/".$tpl);
-		//return $var;
-		//return dirname(__FILE__)."\\".$tpl;
->>>>>>> 2b32fd8bb71f1ca2dcf1bd64040d52e32c993565
+
 	    return $content;
     }
 
