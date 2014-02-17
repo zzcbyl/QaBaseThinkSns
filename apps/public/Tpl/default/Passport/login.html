@@ -55,8 +55,8 @@
     	<ul>
             <volist name="newfeedList.data" id = "Qfeed">
         	<li>
-            	<a href="javascript:void(0);" title="{$Qfeed['user_info']['uname']}"><img class="thumb" src="{$Qfeed['user_info']['avatar_tiny']}" ></a>
-                <h5>{$Qfeed.body}</h5>
+            	<a target="_blank" href="{:U('public/Passport/newperson',array('uid'=>$Qfeed['user_info']['uid']))}" title="{$Qfeed['user_info']['uname']}"><img class="thumb" src="{$Qfeed['user_info']['avatar_tiny']}" ></a>
+                <h5><a href="{:U('public/Passport/newquestion',array('feed_id'=>$Qfeed['feed_id']))}" title="{$Qfeed.body}" target="_blank">{$Qfeed.body}</a></h5>
                 <p>{$Qfeed.description}</p>
             </li>
             </volist>
@@ -66,11 +66,12 @@
     <div class="newUser">
     <h1>最新用户</h1>
     <div class="newUser_cont">
+    
     <ul>
          <volist name="NewUserList" id="user">
          <li>
-            <img class="thumb" src="{$user['avatar_tiny']}" ><br />
-            <a href="javascript:void(0);" title="{$user['uname']}">{$user['uname']}</a>
+            <a target="_blank" href="{:U('public/Passport/newperson',array('uid'=>$user['uid']))}" style="height:50px;" title="{$user['uname']}"><img class="thumb" src="{$user['avatar_small']}" /></a>
+            <a target="_blank" href="{:U('public/Passport/newperson',array('uid'=>$user['uid']))}" title="{$user['uname']}">{$user['uname']}</a>
          </li>
          </volist>         
      </ul>

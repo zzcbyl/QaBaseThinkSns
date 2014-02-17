@@ -171,7 +171,7 @@ class RegisterAction extends Action
             }
 			
 			//减邀请码剩余次数
-			
+			model('Invite')->where('code = '.$_GET['code'])->setDec('limited_count');
 			
             $this->redirect('public/Register/step3', array('uid'=>$uid,'code'=>$_GET['code']));
         }

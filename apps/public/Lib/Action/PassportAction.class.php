@@ -426,5 +426,140 @@ class PassportAction extends Action
 		$this->setKeywords ('专家');
 		$this->display();
 	}
+	
+	/**
+	* 最新单个问题页
+	* @return void
+	*/
+	public function newquestion(){
+		$feed_id = intval ( $_GET ['feed_id'] );
+		
+		if (empty($feed_id)) {
+			$this->error( L ( 'PUBLIC_INFO_ALREADY_DELETE_TIPS' ) );
+		}
+		
+		//增加浏览数
+		model('Feed')->UpdatePV($feed_id);
+		//model('Feed')->where('feed_id='.$feedid)->setInc("feed_pv");
+		
+		//获取提问信息
+		$feedInfo = model ( 'Feed' )->get ( $feed_id );
+		if (!$feedInfo){
+			$this->error ( '该提问不存在或已被删除' );
+			exit();
+		}
+		if ($feedInfo ['is_audit'] == '0' && $feedInfo ['uid'] != $this->mid) {
+			$this->error ( '此提问正在审核' );
+			exit();
+		}
+		if ($feedInfo ['is_del'] == '1') {
+			$this->error ( L ( 'PUBLIC_NO_RELATE_WEIBO' ) );
+			exit();
+		}
+
+		// 获取用户信息
+		$user_info = model ( 'User' )->getUserInfo ( $feedInfo['uid'] );
+		
+		$weiboSet = model ( 'Xdata' )->get ( 'admin_Config:feed' );
+		$a ['initNums'] = $weiboSet ['weibo_nums'];
+		$a ['weibo_type'] = $weiboSet ['weibo_type'];
+		$a ['weibo_premission'] = $weiboSet ['weibo_premission'];
+		$this->assign ( $a );
+		switch ($feedInfo ['app']) {
+			case 'weiba' :
+				$feedInfo ['from'] = getFromClient ( 0, $feedInfo ['app'], '微吧' );
+				break;
+			default :
+				$feedInfo ['from'] = getFromClient ( $from, $feedInfo ['app'] );
+				break;
+		}
+		$this->assign ( 'feedInfo', $feedInfo );
+
+		$this->setTitle($feedInfo['body']);
+		$this->setKeywords($feedInfo['body']);
+		
+		$this->display ();
+	}
+	
+	/**
+	 * 最新个人页
+	*/
+	public function newperson()
+	{
+		
+		$uid = intval ( $_GET ['uid'] );
+		
+		if (empty($uid)) {
+			$this->error( L ( 'PUBLIC_USER_NOEXIST' ) );
+		}
+		
+		// 获取用户信息
+		$user_info = model ( 'User' )->getUserInfo ( $uid );
+		// 用户为空，则跳转用户不存在
+		if (empty ( $user_info )) {
+			$this->error ( L ( 'PUBLIC_USER_NOEXIST' ) );
+		}
+		// 个人空间头部
+		$this->_top ($uid);
+		$this->_tab_menu($uid);
+		
+
+		// 加载提问筛选信息
+		$d ['feed_type'] = t ( $_REQUEST ['feed_type'] ) ? t ( $_REQUEST ['feed_type'] ) : '';
+		$d ['feed_key'] = t ( $_REQUEST ['feed_key'] ) ? t ( $_REQUEST ['feed_key'] ) : '';
+		$d ['type'] = t ( $_REQUEST ['type'] ) ? t ( $_REQUEST ['type'] ) : 'following';
+		$this->assign ( $d );
+			
+		! is_array ( $uid ) && $uids = explode ( ',', $uid );
+		$user_info = model ( 'User' )->getUserInfoByUids ( $uids );
+		$this->assign ( 'user_info', $user_info );
+
+		$this->setTitle ( $user_info [$uid]['uname'] . '的主页' );
+		$this->setKeywords ( $user_info [$uid]['uname'] . '的主页' );
+		
+		$this->display ();
+	}
+	
+	/**
+	 * 个人主页头部数据
+	 * 
+	 * @return void
+	 */
+	public function _top($uid) {
+		// 获取用户组信息
+		$userGroupData = model ( 'UserGroupLink' )->getUserGroupData ( $uid );
+		$this->assign ( 'userGroupData', $userGroupData );
+		// 获取用户积分信息
+		$userCredit = model ( 'Credit' )->getUserCredit ( $uid );
+		$this->assign ( 'userCredit', $userCredit );
+		// 加载用户关注信息
+		//($this->mid != $this->uid) && $this->_assignFollowState ( $uid );
+		// 获取用户统计信息
+		$userData = model ( 'UserData' )->getUserData ( $uid );
+		$this->assign ( 'userData', $userData );
+	}
+	/**
+	 * 个人主页标签导航
+	 *
+	 * @return void
+	 */
+	public function _tab_menu($uid) {
+		// 取全部APP信息
+		$appList = model ( 'App' )->where ( 'status=1' )->field ( 'app_name' )->findAll ();
+		foreach ( $appList as $app ) {
+			$appName = strtolower ( $app ['app_name'] );
+			$className = ucfirst ( $appName );
+			
+			$dao = D ( $className . 'Protocol', strtolower($className), false );
+			if (method_exists ( $dao, 'profileContent' )) {
+				$appArr [$appName] = L ( 'PUBLIC_APPNAME_' . $appName );
+			}
+			unset ( $dao );
+		}
+		$this->assign ( 'appArr', $appArr );
+		
+		return $appArr;
+	}	
+	
 }
 ?>

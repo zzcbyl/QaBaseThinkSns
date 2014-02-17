@@ -82,5 +82,8 @@ return array (
   '<BR />邀请“CN36301”成功<BR />' => '?app=public&mod=profile&act=invitefriendanswer',
   'PUBLIC_USER_INFORMATION' => '?app=admin&mod=Home&act=statistics',
   'PUBLIC_NEWINVITECOUNT_REMIND' => '?app=public&mod=Index&act=index',
+  'PUBLIC_CONFIRM' => '?app=admin&mod=Home&act=cacheConfig',
+  'PUBLIC_SAVE' => '?app=admin&mod=Tool&act=cleancache',
+  'PUBLIC_STREAM_COMMENT' => '?app=public&mod=Profile&act=index',
 );
 ?>
