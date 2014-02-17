@@ -2324,23 +2324,42 @@ function CheckAuthorPermission( $dao , $id , $field='id' , $getfield='uid'){
 
 function utf_substr($str,$len)
 {
+    //echo "<br/><br/>".$str."<br/><br/>";
+    //$str = str_replace("&nbsp;","",$str);
+    //echo "<br/><br/>".$str."<br/><br/>";
 	for($i=0;$i<$len;$i++)
 	{
 		$temp_str=substr($str,0,1);
 		if(ord($temp_str) > 127)
 		{
-			$i++;
-			if($i<$len)
-			{
-				$new_str[]=substr($str,0,3);
-				$str=substr($str,3);
-			}
+            if (ord($temp_str)!=194) {
+
+                $i++;
+                if($i<$len)
+                {
+                    $new_str[]=substr($str,0,3);
+                    //var_dump($new_str);
+                    //echo $i.substr($str,0,3).ord($temp_str);
+                    //echo "<br/>";
+                    $str=substr($str,3);
+                }
+            }
+            else {
+                //echo ord(substr($str,1,2));
+                $str=substr($str,2);
+                //echo $str;
+                $i++;
+            }
+
 		}
 		else
 		{
+            //echo substr($str,0,1).ord($temp_str);
+            //echo "<br/>";
 			$new_str[]=substr($str,0,1);
 			$str=substr($str,1);
 		}
 	}
 	return join($new_str);
+    //return "";
 }
