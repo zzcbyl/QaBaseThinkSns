@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * 用户关联资料模型 - 数据对象模型
  * @author zhangzc

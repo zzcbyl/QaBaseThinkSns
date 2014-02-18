@@ -40,7 +40,7 @@
     <script type="text/javascript">
         function sendEmail() {
             var url = "{:U('public/Register/resendActivationEmail')}";
-            $.post(url, { uid: {$User['uid']}, code: {$Code} }, function (msg) {
+            $.post(url, { uid: {$User['uid']}, code: '{$Code}' }, function (msg) {
                 if (msg.status == 0) {
                     ui.error(msg.info);
                 } else {
@@ -70,6 +70,7 @@
             }
 
             $('#mailA').attr('href',jumpUrl);
+            $('#mailA').html(mail);
         }
     </script>
 

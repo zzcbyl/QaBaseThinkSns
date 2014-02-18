@@ -4,14 +4,13 @@
     </div>
     <div class="pro_cont">
         <h4><a href="{:U('public/Profile/index', array('uid'=>$uid))}">{$user_info[$uid]['uname']}</a></h4>
-        
-        <php>if(!empty($user_info[$uid]['intro'])){</php>
         <div class="profile_intro">
+            <php>if(!empty($user_info[$uid]['intro'])){</php>
             <div style="float:left;"><strong>简介：</strong></div>
             <div style="float:left;">{$user_info[$uid]['intro']|getShort=100}</div>
             <div style="clear:both;"></div>
+            <php>}</php>
         </div>
-        <php>}</php>
         <div style="clear:both;"></div>
         <p style="padding-top:5px; height:auto;"><strong>地区：</strong>{$user_info[$uid]['location']}&nbsp;&nbsp;<!--<strong>资料：</strong>清华大学--></p>
         <p class="xz">

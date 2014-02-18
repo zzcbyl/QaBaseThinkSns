@@ -1,5 +1,5 @@
 <include file="__THEME__/public_header" />
-<div class="container" style="background:#fff;">
+<div class="container">
 <div class="cont_left pd17">
     <include file="_top"/>   
     <div class="table_box">
@@ -13,23 +13,7 @@
     <php>}</php>
 </div>
 <div class="cont_right">
-    <include file ="_login" />
+    <include file="_sidebar"/>
 </div>
-
-<include file="_popdiv"/> 
-
-<script type="text/javascript">
-    $(document).ready(function() {
-        var link = $(".contCenter2 a");
-        for (var i = 0; i < link.length; i++) {
-            $(link[i]).attr('href', 'javascript:void(0);');
-            $(link[i]).removeAttr('target');
-            $(link[i]).removeAttr('event-node');
-            $(link[i]).attr('onclick', 'jumpDiv();');
-        }
-    });
-    
-</script>
-
 <include file="__THEME__/public_footer" />
 <script src="__THEME__/js/module.weibo.js"></script>

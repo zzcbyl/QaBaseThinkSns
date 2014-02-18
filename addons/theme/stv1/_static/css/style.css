@@ -21,7 +21,7 @@ a{text-decoration:none;}
 .mt10{margin-top:10px}
 .h_logo{width:120px; height:33px; float:left; padding-top:15px}
 .h_logo a{ display:block; height:33px;}
-.short_nav{width:195px; float:right}
+.short_nav{ float:right}
 .short_nav li{float:left;height: 60px; text-align: center; width: 39px; cursor:pointer;}
 .short_nav li:hover{ color:#fff; text-decoration:none; background:#941d1d;}
 .short_nav li a{display:inline-block; width:16px; height:16px; margin-top: 22px;}
@@ -30,6 +30,7 @@ a{text-decoration:none;}
 .short_nav li a.a{background-position:-87px 0px;}
 .short_nav li a.p{background-position:-129px 0px;}
 .short_nav li a.s{background-position:-168px 0px;}
+.short_nav li a.c{background-position:-450px 0px;}
 .container{width:979px; margin:20px auto 10px; overflow:hidden; border-right:solid 1px #d4d4d4}
 .cont_left{width:670px; padding:20px; float:left; background:#fff; border-right:solid 1px #d4d4d4; min-height:800px;}
 /*20140103*/.table_box {height:32px; background:url(../image/line.png) no-repeat left bottom; position:relative}
@@ -109,7 +110,7 @@ a{text-decoration:none;}
 .profile h4 span{position:absolute; right:0px;top:0px; font-size:14px;}
 .profile .pro_cont{font-size:12px; color:#999; overflow:hidden; position:relative}
 .profile .pro_cont p{line-height:17px; margin-bottom:8px;}
-.profile_intro { height:36px; }
+.profile_intro { min-height:40px; }
 .xz{position:absolute; right:0px; top:0px; font-size:14px;}
 .xz a{margin-bottom:-6px}
 .xz a.x1,.xz a.x2,.xz a.x3,.xz a.x4{display:inline-block; width:22px; height:22px;}
@@ -187,7 +188,7 @@ a{text-decoration:none;}
 .hyList p.hy_jianjie{width:420px;}
 .hyList .pro_cont{font-size:12px; color:#999; overflow:hidden; position:relative}
 .hyList .pro_cont p{line-height:18px; margin-bottom:8px; height:36px; overflow:hidden;}
-.hyList p.hd{font-size:14px;text-align:left; padding:0px 0px 5px 0px; position:relative}
+.hyList p.hd{font-size:14px;text-align:left; padding:0px 0px 5px 0px; position:relative; margin-left:-10px;}
 .hyList p.hd strong{font-size:12px; font-weight:normal}
 .hyList p.hd .hd_btn{position:absolute; right:-350px; top:-30px;}
 .g_adimg{height:90px;}
@@ -306,7 +307,7 @@ a{text-decoration:none;}
 .reg_myinfo .picbg p a.pc,.reg_myinfo .picbg p a.camera{ height:30px; width:90px; display:block}
 .reg_myinfo .picbg p a.pc{background-position:0px -176px;}
 .reg_myinfo .picbg p a.camera{background-position:0px -210px;}
-.email{line-height:25px; padding-left:150px; background:url(../image/email.png) no-repeat 50px 20px; }
+.email{line-height:25px; padding-left:120px; background:url(../image/email.png) no-repeat 50px 20px; }
 .email h1{color:#bf292a; font-size:24px; padding-bottom:20px; font-weight:normal}
 .email .jihuo{font-size:14px; color:#666; font-weight:bold}
 .email .jihuo span{color:#bf292a; text-decoration:underline; }
@@ -598,3 +599,12 @@ p.FloatNew{background:url(../image/new.png) no-repeat; position:absolute; width:
 
 
 .contCenter2 h1 a { color:#46ADDB}
+
+
+
+
+#faqbg{background-color:#666666;position:absolute;z-index:99;left:0;top:0;display:none;width:100%;height:1000px;opacity:0.5;filter:alpha(opacity=50);-moz-opacity:0.5;}
+#faqdiv{position:absolute;width:400px;margin-left:-200px;height:auto;z-index:100;background-color:#fff;padding:1px; display:none;}
+#faqdiv h2{height:25px;font-size:14px;background-color:#8FA4F5;position:relative;padding-left:10px;line-height:25px;}
+#faqdiv h2 a{position:absolute;right:5px;font-size:12px;color:#FF0000;}
+#faqdiv .form{padding:10px;}

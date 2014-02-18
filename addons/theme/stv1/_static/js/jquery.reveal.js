@@ -1,5 +1,5 @@
 
-(function ($) {
+(function($) {
 
     /*---------------------------
     Defaults for Reveal
@@ -9,7 +9,7 @@
     Listener for data-reveal-id attributes
     ----------------------------*/
 
-    $('a[data-reveal-id]').live('click', function (e) {
+    $('a[data-reveal-id]').live('click', function(e) {
         e.preventDefault();
         var modalLocation = $(this).attr('data-reveal-id');
         $('#' + modalLocation).reveal($(this).data());
@@ -19,7 +19,7 @@
     Extend and Execute
     ----------------------------*/
 
-    $.fn.reveal = function (options) {
+    $.fn.reveal = function(options) {
 
 
         var defaults = {
@@ -32,7 +32,7 @@
         //Extend dem' options
         var options = $.extend({}, defaults, options);
 
-        return this.each(function () {
+        return this.each(function() {
 
             /*---------------------------
             Global Variables
@@ -54,7 +54,7 @@
             Open & Close Animations
             ----------------------------*/
             //Entrance Animations
-            modal.bind('reveal:open', function () {
+            modal.bind('reveal:open', function() {
                 modalBG.unbind('click.modalEvent');
                 $('.' + options.dismissmodalclass).unbind('click.modalEvent');
                 if (!locked) {
@@ -84,7 +84,7 @@
             });
 
             //Closing Animation
-            modal.bind('reveal:close', function () {
+            modal.bind('reveal:close', function() {
                 if (!locked) {
                     lockModal();
                     if (options.animation == "fadeAndPop") {
@@ -92,7 +92,7 @@
                         modal.animate({
                             "top": $(document).scrollTop() - topOffset + 'px',
                             "opacity": 0
-                        }, options.animationspeed / 2, function () {
+                        }, options.animationspeed / 2, function() {
                             modal.css({ 'top': topMeasure, 'opacity': 1, 'visibility': 'hidden' });
                             unlockModal();
                         });
@@ -101,7 +101,7 @@
                         modalBG.delay(options.animationspeed).fadeOut(options.animationspeed);
                         modal.animate({
                             "opacity": 0
-                        }, options.animationspeed, function () {
+                        }, options.animationspeed, function() {
                             modal.css({ 'opacity': 1, 'visibility': 'hidden', 'top': topMeasure });
                             unlockModal();
                         });
@@ -121,17 +121,17 @@
             modal.trigger('reveal:open')
 
             //Close Modal Listeners
-            var closeButton = $('.' + options.dismissmodalclass).bind('click.modalEvent', function () {
+            var closeButton = $('.' + options.dismissmodalclass).bind('click.modalEvent', function() {
                 modal.trigger('reveal:close')
             });
 
             if (options.closeonbackgroundclick) {
                 modalBG.css({ "cursor": "pointer" })
-                modalBG.bind('click.modalEvent', function () {
+                modalBG.bind('click.modalEvent', function() {
                     modal.trigger('reveal:close')
                 });
             }
-            $('body').keyup(function (e) {
+            $('body').keyup(function(e) {
                 if (e.which === 27) { modal.trigger('reveal:close'); } // 27 is the keycode for the Escape key
             });
 

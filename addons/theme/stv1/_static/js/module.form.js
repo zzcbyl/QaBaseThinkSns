@@ -694,6 +694,35 @@ M.addEventFns({
 			this.className='s-txt';
 		}
     },
+    // 手机号
+    mobile: {
+        focus: function() {
+            this.className = 's-txt-focus';
+            return false;
+        },
+        blur: function() {
+            this.className = 's-txt';
+
+            var mobile = this.value;
+            if (mobile != '') {
+                var result = ismobile(mobile);
+                if (!result) {
+                    tips.error(this, '手机号格式有误');
+                    this.bIsValid = false;
+                }
+                else {
+                    tips.success(this);
+                    this.bIsValid = true;
+                }
+            }
+            else {
+                this.bIsValid = true;
+            }
+        },
+        load: function() {
+            this.className = 's-txt';
+        }
+    },
 	// 昵称验证
 	uname: {
 		focus: function() {
@@ -1051,4 +1080,12 @@ function isIdCardNo(num) {
         }
     }
     return result;
+}
+
+//验证手机号
+function ismobile(str)
+{
+    var result = str.match(/^0*(13|15|18)\d{9}$/);
+    if(result==null) return false;
+    return true;
 }

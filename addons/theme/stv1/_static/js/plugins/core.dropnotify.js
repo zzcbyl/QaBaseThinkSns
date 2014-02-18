@@ -1,11 +1,11 @@
 core.dropnotify = {
-    _init: function (attrs) {
+    _init: function(attrs) {
         if (attrs.length == 1) {
             return false; // 意思是执行插件 只是为了加载此文件
         }
         this.init(attrs[1], attrs[2]);
     },
-    init: function (dropclass, parentObjId) {
+    init: function(dropclass, parentObjId) {
 
         this.dropclass = dropclass;
         this.parentObjId = parentObjId;
@@ -17,14 +17,14 @@ core.dropnotify = {
         return false;
     },
     //显示父对象
-    dispayParentObj: function () {
+    dispayParentObj: function() {
         if (this.close == false) {
             $('#' + this.parentObjId).show();
             $('.' + this.dropclass).show();
         }
     },
     //隐藏
-    hideParentObj: function () {
+    hideParentObj: function() {
         if ("undefined" != typeof (this.parentObjId)) {
             $('#' + this.parentObjId).hide();
         } else {
@@ -34,11 +34,11 @@ core.dropnotify = {
         }
     },
     //关闭 不在循环显示
-    closeParentObj: function () {
+    closeParentObj: function() {
         this.close = true;
         this.hideParentObj();
     },
-    count: function () {
+    count: function() {
         var _this = this;
 
         var noticeTipsText = {
@@ -57,9 +57,9 @@ core.dropnotify = {
             unread_group_comment: '条群组评论'
         };
         var loopCount = '';
-        var getCount = function () {
+        var getCount = function() {
 
-            $.get(U("widget/UserCount/getUnreadCount"), function (msg) {
+            $.get(U("widget/UserCount/getUnreadCount"), function(msg) {
                 if ("undefined" == typeof (msg.data) || msg.status != 1) {
                     return false;
                 } else {
@@ -72,10 +72,13 @@ core.dropnotify = {
                     } else {
                         _this.dispayParentObj();
                     }
-                    $('.' + _this.dropclass).each(function () {
-                        $(this).find('li').each(function () {
+                    var total = 0;
+                    $('.' + _this.dropclass).each(function() {
+                        $(this).find('li').each(function() {
                             var name = $(this).attr('rel');
                             num = txt[name];
+                            if (typeof (num) != 'undefined')
+                                total += parseInt(num);
                             if (num > 0) {
                                 $(this).find('span').html(num + noticeTipsText[name]);
                                 $(this).show();
@@ -84,6 +87,10 @@ core.dropnotify = {
                             }
                         });
                     });
+                    if (total > 0)
+                        $('#noticeCount').html(total.toString());
+                    else
+                        $('#noticeCount').html('');
                 }
             }, 'json');
         };

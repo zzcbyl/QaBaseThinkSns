@@ -321,7 +321,7 @@ var ui = {
 		var style = (error=="1") ? "html_clew_box clew_error" : "html_clew_box";
 		var ico = (error == "1") ? 'ico-error' : 'ico-ok';
 		var html = '<div class="'+style+'" id="ui_messageBox" style="display:none">\
-					<div class="html_clew_box_con" id="ui_messageContent">\
+					<div class="html_clew_box_con" id="ui_messageContent" style="position: relative;">\
 					<i class="'+ico+'"></i>'+message+'</div></div>';		
 		var _u = function() {
 			for (var i = 0; i < arguments.length; i++) {
@@ -351,7 +351,7 @@ var ui = {
 		setTimeout(function() { 
 			$('#ui_messageBox').find('iframe').remove();
 			$('#ui_messageBox').fadeOut("fast", function() {
-			  ui.removeblackout();
+			  //ui.removeblackout();
 			  $('#ui_messageBox').remove();
 			});
 		} , lazytime*1000);
@@ -392,7 +392,7 @@ var ui = {
 	 * @return void
 	 */
 	success: function(message, time) {
-		var t = "undefined" == typeof(time) ? 1 : time;
+		var t = "undefined" == typeof(time) ? 2 : time;
 		ui.showMessage(message, 0, t);
 	},
 	/**

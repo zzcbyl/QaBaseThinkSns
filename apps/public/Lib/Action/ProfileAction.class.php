@@ -66,22 +66,7 @@ class ProfileAction extends Action {
 		model ( 'Credit' )->setUserCredit ( $this->uid, 'space_access' );
 		
 		$this->assign ( 'userPrivacy', $userPrivacy );
-		// seo
-		/*$seo = model ( 'Xdata' )->get ( "admin_Config:seo_user_profile" );
-		$replace ['uname'] = $user_info ['uname'];
-		if ($feed_id = model ( 'Feed' )->where ( 'uid=' . $this->uid )->order ( 'publish_time desc' )->limit ( 1 )->getField ( 'feed_id' )) {
-			$replace ['lastFeed'] = D ( 'feed_data' )->where ( 'feed_id=' . $feed_id )->getField ( 'feed_content' );
-		}
-		$replaces = array_keys ( $replace );
-		foreach ( $replaces as &$v ) {
-			$v = "{" . $v . "}";
-		}
-		$seo ['title'] = str_replace ( $replaces, $replace, $seo ['title'] );
-		$seo ['keywords'] = str_replace ( $replaces, $replace, $seo ['keywords'] );
-		$seo ['des'] = str_replace ( $replaces, $replace, $seo ['des'] );
-		! empty ( $seo ['title'] ) && $this->setTitle ( $seo ['title'] );
-		! empty ( $seo ['keywords'] ) && $this->setKeywords ( $seo ['keywords'] );
-		! empty ( $seo ['des'] ) && $this->setDescription ( $seo ['des'] );*/
+		
 		
 		if($_GET['type'] == 'thank')
 		{

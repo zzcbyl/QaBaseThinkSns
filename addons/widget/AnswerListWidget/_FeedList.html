@@ -43,17 +43,17 @@ $admintaskrecom = CheckPermission('vtask_admin','vtask_recommend');
                     <a href="{$vl['user_info']['space_url']}"><img class="thumb" src="{$vl['user_info']['avatar_small']}"  event-node="face_card" uid='{$vl['user_info']['uid']}' /></a>
                     <h2 style="width: 540px">
                         {$vl.title}
-	                    <volist name="vl['GroupData'][$vl['uid']]" id="v2">
-                            <img style="width:auto;height:auto;display:inline;cursor:pointer;" src="{$v2['user_group_icon_url']}" title="{$v2['user_group_name']}" />&nbsp;
-                        </volist>
 	                    <php> if(in_array($vl['user_info']['uid'],$followUids)){</php>
 	                    {:W('Remark',array('uid'=>$vl['user_info']['uid'],'remark'=>$remarkHash[$vl['user_info']['uid']],'showonly'=>1))}
 	                    <php>}</php>
 	                    <php>if(!empty($vl['body'])){</php><php>}</php>
 
                         <p class="xz">
-                            <a href="#" class="x1"></a><a href="#" class="x2"></a><a href="#" class="x3"></a>
-                            <a href="#" class="x4"></a>
+                            <volist name="vl['GroupData'][$vl['uid']]" id="v2">
+                                <img style="width:auto;height:auto;display:inline;cursor:pointer;" src="{$v2['user_group_icon_url']}" title="{$v2['user_group_name']}" />&nbsp;
+                            </volist>
+                            <!--<a href="#" class="x1"></a><a href="#" class="x2"></a><a href="#" class="x3"></a>
+                            <a href="#" class="x4"></a>-->
                         </p>
                     
                     </h2>

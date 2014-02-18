@@ -181,11 +181,6 @@ class RegisterAction extends Action
         }
     }
 
-
-
-
-
-
     public function step3()
 	{
 		if(empty($_GET['uid']) || empty($_GET['code'])){
@@ -265,22 +260,34 @@ class RegisterAction extends Action
 		$this->assign('authenticateExpert',$authenticateExpert);
 		
 		//跟你有关的
-		$where = " is_del= 0 and is_audit = 1 and is_active = 1 and is_init = 1 and ((`invite_code` = $code and `uid` != $uid) or (`area` = ".$user['area'].")) ";
+		$where = " `is_del` = 0 and `is_audit` = 1 and `is_active` = 1 and `is_init` = 1 and ((`invite_code` = '$code' and `uid` != $uid) or (`area` = ".$user['area'].")) ";
 		$uidList = model('user')->field('uid')->where($where)->order('`uid` desc')->findAll();
 		$uids = getSubByKey($uidList, 'uid');
-		$userList = model('user')->getUserInfoByUids($uids);
-		$this->assign("youguanCount",count($uids));
-		$this->assign('userList',$userList);
+		if(!empty($uids))
+		{
+			$userList = model('user')->getUserInfoByUids($uids);
+			$this->assign("youguanCount",count($uids));
+			$this->assign('userList',$userList);
+		}
+		else
+		{
+			$this->assign("youguanCount",0);
+		}
 		
 		//推荐用户
 		$recommendwhere = " `key` = 'weibo_count' or `key` = 'answer_count' ";
 		//$recommendwhere = " `key` = 'weibo_count' ";
 		$recommendData = model('UserData')->field(uid)->where($recommendwhere)->order('`value` desc')->findPage(70);
 		$uids = getSubByKey($recommendData['data'], 'uid');
-		$recommenduserList = model('user')->getUserInfoByUids($uids);
-		//print_r($recommenduserList);
-		$this->assign("tuijianCount",count($uids));
-		$this->assign('recommendUserList',$recommenduserList);
+		if(!empty($uids))
+		{
+			$recommenduserList = model('user')->getUserInfoByUids($uids);
+			//print_r($recommenduserList);
+			$this->assign("tuijianCount",count($uids));
+			$this->assign('recommendUserList',$recommenduserList);
+		}
+		else
+			$this->assign("tuijianCount",0);
 		$this->display();	
 	}
 
@@ -539,7 +546,7 @@ class RegisterAction extends Action
 			$this->setKeywords('成功激活帐号');
 			// 跳转下一步
 			$this->assign('jumpUrl', U('public/Register/step4', array('uid'=>$user_info['uid'], 'code'=>$user_info['invite_code'])));
-			$this->success($this->_register_model->getLastError());
+			//$this->success($this->_register_model->getLastError());
 		} else {
 			$this->redirect('public/Passport/login');
 			$this->error($this->_register_model->getLastError());

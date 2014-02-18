@@ -78,6 +78,8 @@ class IndexAction extends Action {
 		$this->display();
 	}
 	
+	
+	
 	/**
 	 * 邀请我的
 	 *

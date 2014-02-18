@@ -1,5 +1,5 @@
 <include file="__THEME__/public_header" />
-<div class="container" style="background:#fff;">
+<div class="container">
 <div class="cont_left pd17">
     <include file="_top"/>   
     <div class="table_box">
@@ -7,7 +7,7 @@
     </div>
     <php>if($userPrivacy['space'] != 1){</php>
         <php>$_REQUEST['uid'] = $uid;</php>
-        {:W('FeedList',array('type'=>$type,'uid'=>$uid,'feedApp'=>t($_GET['feedApp']),'feed_type'=>$feed_type,'feed_key'=>$feed_key,'loadnew'=>0))}
+        {:W('FeedList',array('type'=>'question','uid'=>$uid,'feedApp'=>t($_GET['feedApp']),'feed_type'=>$feed_type,'feed_key'=>$feed_key,'loadnew'=>0))}
     <php>}else{</php>
         <p class="extend">-_-。sorry！根据对方隐私设置，您无权查看TA的主页</p>
     <php>}</php>
@@ -30,6 +30,6 @@
     });
     
 </script>
-
 <include file="__THEME__/public_footer" />
 <script src="__THEME__/js/module.weibo.js"></script>
+

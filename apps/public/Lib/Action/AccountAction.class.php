@@ -235,8 +235,16 @@ class AccountAction extends Action
 				$this->error('QQ格式不正确');
 			}
 		}
-		$save['qq'] = t($_POST['qq']);
 		
+		if(t($_POST['mobile'])!='')
+		{
+			if(!preg_match("/^0*(13|15|18)\d{9}$/",t($_POST['mobile'])))
+			{
+				$this->error('手机号格式不正确');
+			}
+		}
+		$save['qq'] = t($_POST['qq']);
+		$save['linknumber'] = t($_POST['mobile']);
 		$save['weixin'] = t($_POST['weixin']);
 		$save['tengxunVB'] = t($_POST['tengxuvb']);
 		$save['xinlangVB'] = t($_POST['xinlangvb']);
@@ -259,6 +267,7 @@ class AccountAction extends Action
 			model('Feed')->cleanCache($feed_ids,$this->mid);
 		}
 		
+		$permissions['mobile'] = t($_POST['sel_mobile']);
 		$permissions['qq'] = t($_POST['sel_qq']);
 		$permissions['weixin'] = t($_POST['sel_weixin']);
 		$permissions['tengxunVB'] = t($_POST['sel_tengxunVB']);

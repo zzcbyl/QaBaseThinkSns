@@ -26,7 +26,7 @@ class UserBaseInfoWidget extends Widget {
 		
 		$userper = model('UserPermissions')->getUserPermissions($uid);
 		$var['permissions'] = $userper;
-		//print_r($data[0]);
+		//print_r($userper);
 		$var['followstate'] = $data['followstate'];
 		//print_r($var);
 		

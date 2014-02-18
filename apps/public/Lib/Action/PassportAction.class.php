@@ -561,5 +561,343 @@ class PassportAction extends Action
 		return $appArr;
 	}	
 	
+	/**
+	 *个人档案的问题列表
+	 */
+	public function question()
+	{
+		$uid = intval ( $_GET ['uid'] );
+		
+		if (empty($uid)) {
+			$this->error( L ( 'PUBLIC_USER_NOEXIST' ) );
+		}
+		// 获取用户信息
+		$user_info = model ( 'User' )->getUserInfo ( $uid );
+		// 用户为空，则跳转用户不存在
+		if (empty ( $user_info )) {
+			$this->error ( L ( 'PUBLIC_USER_NOEXIST' ) );
+		}
+		// 个人空间头部
+		$this->_top ($uid);
+		$this->_tab_menu($uid);
+		
+
+		// 加载提问筛选信息
+		$d ['feed_type'] = t ( $_REQUEST ['feed_type'] ) ? t ( $_REQUEST ['feed_type'] ) : '';
+		$d ['feed_key'] = t ( $_REQUEST ['feed_key'] ) ? t ( $_REQUEST ['feed_key'] ) : '';
+		$this->assign ( $d );
+			
+		! is_array ( $uid ) && $uids = explode ( ',', $uid );
+		$user_info = model ( 'User' )->getUserInfoByUids ( $uids );
+		$this->assign ( 'user_info', $user_info );
+
+		$this->setTitle ( $user_info [$uid]['uname'] . '的提问' );
+		$this->setKeywords ( $user_info [$uid]['uname'] . '的提问' );
+		$this->display ();
+	}
+	/**
+	 *个人档案的回答列表
+	 */
+	public function answer()
+	{
+		$uid = intval ( $_GET ['uid'] );
+		
+		if (empty($uid)) {
+			$this->error( L ( 'PUBLIC_USER_NOEXIST' ) );
+		}
+		// 获取用户信息
+		$user_info = model ( 'User' )->getUserInfo ( $uid );
+		// 用户为空，则跳转用户不存在
+		if (empty ( $user_info )) {
+			$this->error ( L ( 'PUBLIC_USER_NOEXIST' ) );
+		}
+		// 个人空间头部
+		$this->_top ($uid);
+		$this->_tab_menu($uid);
+		
+		// 加载提问筛选信息
+		$d ['feed_type'] = t ( $_REQUEST ['feed_type'] ) ? t ( $_REQUEST ['feed_type'] ) : '';
+		$d ['feed_key'] = t ( $_REQUEST ['feed_key'] ) ? t ( $_REQUEST ['feed_key'] ) : '';
+		$this->assign ( $d );
+		
+		! is_array ( $uid ) && $uids = explode ( ',', $uid );
+		$user_info = model ( 'User' )->getUserInfoByUids ( $uids );
+		$this->assign ( 'user_info', $user_info );
+		
+		$this->setTitle ( $user_info [$uid]['uname'] . '的回答' );
+		$this->setKeywords ( $user_info [$uid]['uname'] . '的回答' );
+		$this->display ();
+	}
+	
+	/**
+	 * 获取用户关注列表
+	 * 
+	 * @return void
+	 */
+	public function following() {
+		$uid = intval ( $_GET ['uid'] );
+		
+		if (empty($uid)) {
+			$this->error( L ( 'PUBLIC_USER_NOEXIST' ) );
+		}
+		// 获取用户信息
+		$user_info = model ( 'User' )->getUserInfo ( $uid );
+		// 用户为空，则跳转用户不存在
+		if (empty ( $user_info )) {
+			$this->error ( L ( 'PUBLIC_USER_NOEXIST' ) );
+		}
+		// 个人空间头部
+		$this->_top ($uid);
+		
+		$following_list = model ( 'Follow' )->getFollowingList ( $uid, t ( $_GET ['gid'] ), 20 );
+
+		
+		$fids = getSubByKey ( $following_list ['data'], 'fid' );
+		if ($fids) {
+			$uids = array_merge ( $fids, array (
+				$uid
+				) );
+		} else {
+			$uids = array (
+				$uid
+				);
+		}
+		// 获取用户组信息
+		$userGroupData = model ( 'UserGroupLink' )->getUserGroupData ( $uids );
+		//$this->assign ( 'userGroupData', $userGroupData );
+		//$this->_assignFollowState ( $uids );
+		//$this->_assignUserInfo ( $uids );
+		$this->_assignUserProfile ( $uids );
+		$this->_assignUserTag ( $uids );
+		$this->_assignUserCount ( $fids );
+		// 关注分组
+		($this->mid == $this->uid) && $this->_assignFollowGroup ( $fids );
+		
+		$this->assign ( 'following_list', $following_list );
+		
+		$user_info = model ( 'User' )->getUserInfoByUids ( $uids );
+		$this->assign ( 'user_info', $user_info );
+		
+		
+		$this->setTitle ( $user_info[$uid]['uname'].'的关注' );
+		$this->setKeywords ($user_info[$uid]['uname'].'的关注');
+		$this->display ();
+	}
+	
+	/**
+	 * 获取用户粉丝列表
+	 * 
+	 * @return void
+	 */
+	public function follower() {
+		$uid = intval ( $_GET ['uid'] );
+		
+		if (empty($uid)) {
+			$this->error( L ( 'PUBLIC_USER_NOEXIST' ) );
+		}
+		// 获取用户信息
+		$user_info = model ( 'User' )->getUserInfo ( $uid );
+		// 用户为空，则跳转用户不存在
+		if (empty ( $user_info )) {
+			$this->error ( L ( 'PUBLIC_USER_NOEXIST' ) );
+		}
+		// 个人空间头部
+		$this->_top ($uid);
+
+		$follower_list = model ( 'Follow' )->getFollowerList ( $uid, 20 );
+
+		$fids = getSubByKey ( $follower_list ['data'], 'fid' );
+		if ($fids) {
+			$uids = array_merge ( $fids, array (
+				$uid
+				) );
+		} else {
+			$uids = array (
+				$uid
+				);
+		}
+		// 获取用户用户组信息
+		$userGroupData = model ( 'UserGroupLink' )->getUserGroupData ( $uids );
+		//$this->assign ( 'userGroupData', $userGroupData );
+		//$this->_assignFollowState ( $uids );
+		//$this->_assignUserInfo ( $uids );
+		$this->_assignUserProfile ( $uids );
+		$this->_assignUserTag ( $uids );
+		$this->_assignUserCount ( $fids );
+		
+		$this->assign ( 'follower_list', $follower_list );
+		
+		$user_info = model ( 'User' )->getUserInfoByUids ( $uids );
+		$this->assign ( 'user_info', $user_info );
+		
+		$this->setTitle ( $user_info[$uid]['uname'].'的粉丝' );
+		$this->setKeywords ($user_info[$uid]['uname'].'的粉丝');
+		$this->display ();
+	}
+	
+	
+	
+	/**
+	* 获取用户好友列表
+	* 
+	* @return void
+	*/
+	public function friend() {
+		$uid = intval ( $_GET ['uid'] );
+		
+		if (empty($uid)) {
+			$this->error( L ( 'PUBLIC_USER_NOEXIST' ) );
+		}
+		// 获取用户信息
+		$user_info = model ( 'User' )->getUserInfo ( $uid );
+		// 用户为空，则跳转用户不存在
+		if (empty ( $user_info )) {
+			$this->error ( L ( 'PUBLIC_USER_NOEXIST' ) );
+		}
+		// 个人空间头部
+		$this->_top ($uid);
+		
+
+		$following_list = model ( 'Follow' )->getFriendList ( $uid, 20 );
+
+		$fids = getSubByKey ( $following_list ['data'], 'fid' );
+		if ($fids) {
+			$uids = array_merge ( $fids, array (
+				$uid
+				) );
+		} else {
+			$uids = array (
+				$uid
+				);
+		}
+		// 获取用户组信息
+		$userGroupData = model ( 'UserGroupLink' )->getUserGroupData ( $uids );
+		//$this->assign ( 'userGroupData', $userGroupData );
+		//$this->_assignFollowState ( $uids );
+		//$this->_assignUserInfo ( $uids );
+		$this->_assignUserProfile ( $uids );
+		$this->_assignUserTag ( $uids );
+		$this->_assignUserCount ( $fids );
+		// 关注分组
+		//($this->mid == $this->uid) && $this->_assignFollowGroup ( $fids );
+		$this->assign ( 'following_list', $following_list );
+		
+		$user_info = model ( 'User' )->getUserInfoByUids ( $uids );
+		$this->assign ( 'user_info', $user_info );
+		
+		$this->setTitle ( $user_info[$uid]['uname'].'的好友' );
+		$this->setKeywords ($user_info[$uid]['uname'].'的好友');
+		$this->display ();
+	}
+	
+	
+	/**
+	 * 获取用户的档案信息和资料配置信息
+	 * 
+	 * @param
+	 *        	mix uids 用户uid
+	 * @return void
+	 */
+	private function _assignUserProfile($uids) {
+		$data ['user_profile'] = model ( 'UserProfile' )->getUserProfileByUids ( $uids );
+		$data ['user_profile_setting'] = model ( 'UserProfile' )->getUserProfileSetting ( array (
+			'visiable' => 1 
+			) );
+		// 用户选择处理 uid->uname
+		foreach ( $data ['user_profile_setting'] as $k => $v ) {
+			if ($v ['form_type'] == 'selectUser') {
+				$field_ids [] = $v ['field_id'];
+			}
+			if ($v ['form_type'] == 'selectDepart') {
+				$field_departs [] = $v ['field_id'];
+			}
+		}
+		foreach ( $data ['user_profile'] as $ku => &$uprofile ) {
+			foreach ( $uprofile as $key => $val ) {
+				if (in_array ( $val ['field_id'], $field_ids )) {
+					$user_info = model ( 'User' )->getUserInfo ( $val ['field_data'] );
+					$uprofile [$key] ['field_data'] = $user_info ['uname'];
+				}
+				if (in_array ( $val ['field_id'], $field_departs )) {
+					$depart_info = model ( 'Department' )->getDepartment ( $val ['field_data'] );
+					$uprofile [$key] ['field_data'] = $depart_info ['title'];
+				}
+			}
+		}
+		$this->assign ( $data );
+	}
+	
+	/**
+	 * 根据指定应用和表获取指定用户的标签
+	 * 
+	 * @param
+	 *        	array uids 用户uid数组
+	 * @return void
+	 */
+	private function _assignUserTag($uids) {
+		$user_tag = model ( 'Tag' )->setAppName ( 'User' )->setAppTable ( 'user' )->getAppTags ( $uids );
+		$this->assign ( 'user_tag', $user_tag );
+	}
+	
+	/**
+	 * 批量获取多个用户的统计数目
+	 * 
+	 * @param array $uids
+	 *        	用户uid数组
+	 * @return void
+	 */
+	private function _assignUserCount($uids) {
+		$user_count = model ( 'UserData' )->getUserDataByUids ( $uids );
+		$this->assign ( 'user_count', $user_count );
+	}
+	
+	
+	/**
+	 * 获取用户详细资料
+	 * 
+	 * @return void
+	 */
+	public function data() {
+		$uid = intval ( $_GET ['uid'] );
+		
+		if (empty($uid)) {
+			$this->error( L ( 'PUBLIC_USER_NOEXIST' ) );
+		}
+		
+		// 获取用户信息
+		$user_info = model ( 'User' )->getUserInfo ( $uid );
+		// 用户为空，则跳转用户不存在
+		if (empty ( $user_info )) {
+			$this->error ( L ( 'PUBLIC_USER_NOEXIST' ) );
+		}
+		// 个人空间头部
+		$this->_top ($uid);
+		$this->_tab_menu($uid);
+		// 档案类型
+		$ProfileType = model ( 'UserProfile' )->getCategoryList ();
+		$this->assign ( 'ProfileType', $ProfileType );
+		// 个人资料
+		$this->_assignUserProfile ( $uid );
+		// 获取用户职业信息
+		$userCategory = model ( 'UserCategory' )->getRelatedUserInfo ( $uid );
+		if (! empty ( $userCategory )) {
+			foreach ( $userCategory as $value ) {
+				$user_category .= '<a href="#" class="link btn-cancel"><span>' . $value ['title'] . '</span></a>&nbsp;&nbsp;';
+			}
+		}
+		$this->assign ( 'user_category', $user_category );
+		
+		! is_array ( $uid ) && $uids = explode ( ',', $uid );
+		$user_info = model ( 'User' )->getUserInfoByUids ( $uids );
+		$this->assign ( 'user_info', $user_info );
+		
+		$this->setTitle ( $user_info [$uid]['uname'] . '的资料' );
+		$this->setKeywords ( $user_info [$uid]['uname'] . '的资料' );
+		$user_tag = model ( 'Tag' )->setAppName ( 'User' )->setAppTable ( 'user' )->getAppTags ( array (
+			$this->uid 
+			) );
+		$this->setDescription ( t ( $user_category . $user_info ['location'] . ',' . implode ( ',', $user_tag [$this->uid] ) . ',' . $user_info ['intro'] ) );
+		$this->display ();
+	}
 }
 ?>

@@ -70,8 +70,11 @@
             </div>
             <div class="person" style="float:right;">
                 <ul class="short_nav">
-        	        <li><a href="#" class="h"></a></li>
-                    <li model-node="notice"><a href="{:U('public/Profile/newanswerinfo')}" class="v"></a>
+                    <li><a href="{:U('public/Profile/collection')}" class="c" title="收藏夹"></a></li>
+        	        <!--<li><a href="#" class="h"></a></li>-->
+                    <li model-node="notice" style="position:relative;">
+                        <a id="noticeCount" style="position:absolute; background:none; top:-10px; right:2px; color:#fff;"></a>
+                        <a href="{:U('public/Profile/newanswerinfo')}" class="v" title="消息"></a>
                         <!--<div class="dropmenu" model-node="drop_menu_list" style="z-index:9999;">
                             <dl class="acc-list W-message" style="width:100px;" >
                                 <dd><a  href="{:U('public/Mention/index')}">@提到我的</a></dd>
@@ -88,8 +91,8 @@
                             </dl>
                         </div>-->
                     </li>
-                    <li><a href="#" class="a"></a></li>
-                    <li model-node="account"><a href="javascript:void(0);" class="p"></a>
+                    <!--<li><a href="#" class="a"></a></li>-->
+                    <li model-node="account"><a href="javascript:void(0);" class="p" title="个人中心"></a>
                         <div model-node="drop_menu_list" class="dropmenu" style="width:100px; z-index:9999;">
                             <dl class="acc-list">    
                             <!--<php>if(CheckTaskSwitch()):</php>
@@ -112,10 +115,10 @@
                             </dl>
                         </div>
                     </li>
-                    <li>
-                        <!--<a href="{:U('public/Account/index')}" class="s" ></a>-->
+                    <!--<li>
+                        <!--<a href="{:U('public/Account/index')}" class="s" ></a>
                         <a href="javascript:void(0);" class="s" ></a>
-                    </li>
+                    </li>-->
                 </ul>
 
                 <ul class="message_list_container message_list_new"  style="display:none;">

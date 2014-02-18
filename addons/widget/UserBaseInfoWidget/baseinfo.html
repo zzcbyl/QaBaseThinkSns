@@ -1,4 +1,4 @@
-﻿<div id="UserBaseDiv" class="profile-datalist">
+<div id="UserBaseDiv" class="profile-datalist">
     <h4>
         <php>if($followstate==1){</php><a href="javascript:w_UpdUser();" class="right f12" style="font-weight: normal;">编辑</a><php>}</php>
         基本信息</h4>
@@ -135,6 +135,11 @@
         <!--<li>
             <label class="info-l">
                 邮箱：</label><label class="info-r">{$email}</label>&nbsp;</li>-->
+        <php>if(($followstate==1) || ($followstate==0 && $permissions['mobile']==0) || ($followstate==2 && ($permissions['mobile']==0 || $permissions['mobile']==1))) {</php>
+        <li>
+            <label class="info-l">
+                手机号：</label><label class="info-r">{$linknumber}</label>&nbsp;<php>if(empty($linknumber) && $uid==$mid){</php><a href="javascript:w_UpdLinkUser('mobile');">马上填写</a><php>}</php></li>
+        <php>}</php>
         <php>if(($followstate==1) || ($followstate==0 && $permissions['qq']==0) || ($followstate==2 && ($permissions['qq']==0 || $permissions['qq']==1))) {</php>
         <li>
             <label class="info-l">
@@ -168,6 +173,11 @@
                 <span class="redSpan">*</span>邮箱：</label><div class="info-r"><input event-node="email" event-args="suffix={$config['email_suffix']}" name="email" checkurl="{:U('public/Register/isEmailAvailable')}" autocomplete="off" type="text" id="email" name="email" value="{$email}" maxlength="100" />
                 </div>&nbsp;
                 <input type="hidden" name="old_email" value="{$email}" /></li>-->
+        <li>
+            <label class="info-l">
+                手机号：</label><div class="info-r"><input event-node="mobile" event-args='max=15' type="text" id="mobile" name="mobile" value="{$linknumber}" maxlength="15" /></div>&nbsp;
+            <div class="info-rr"><select name="sel_mobile"><option>所有人可见</option><option <if condition="1 eq $permissions['mobile']">selected</if> value="1">我关注的人可见</option><option <if condition="2 eq $permissions['mobile']">selected</if> value="2">仅自己可见</option></select></div>
+        </li>
         <li>
             <label class="info-l">
                 QQ：</label><div class="info-r"><input event-node="input_nums" event-args='max=15' type="text" id="qq" name="qq" value="{$qq}" maxlength="15" /></div>&nbsp;

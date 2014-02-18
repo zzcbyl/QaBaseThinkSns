@@ -68,9 +68,22 @@
     </div>
 </div>
 <div class="cont_right">
-    <include file="_sidebar"/>
+    <include file ="_login" />
 </div>
 
+<include file="_popdiv"/> 
 
+<script type="text/javascript">
+    $(document).ready(function() {
+        var link = $(".search-main a");
+        for (var i = 0; i < link.length; i++) {
+            $(link[i]).attr('href', 'javascript:void(0);');
+            $(link[i]).removeAttr('target');
+            $(link[i]).removeAttr('event-node');
+            $(link[i]).attr('onclick', 'jumpDiv();');
+        }
+    });
+    
+</script>
 
 <include file="__THEME__/public_footer" />
