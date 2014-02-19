@@ -85,5 +85,6 @@ return array (
   'PUBLIC_CONFIRM' => '?app=admin&mod=Home&act=cacheConfig',
   'PUBLIC_SAVE' => '?app=admin&mod=Tool&act=cleancache',
   'PUBLIC_STREAM_COMMENT' => '?app=public&mod=Profile&act=index',
+  '<BR />邀请“CN36302”成功<BR />邀请“梁爽”成功<BR />' => '?app=public&mod=profile&act=invitefriendanswer',
 );
 ?>

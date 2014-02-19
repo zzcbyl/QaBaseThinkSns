@@ -922,7 +922,7 @@ return array(
 'PUBLIC_PROFILESET_WORK_POSITION'=>'Work Position',
 'PUBLIC_PROFILESET_WORK_EXPERIENCE'=>'Work Experience',
 'PUBLIC_USERTITLESHEARE'=>'User Card Share',
-'PUBLIC_NICKNAME_LIMIT'=>'The nickname length must be in the {nums} characters',
+'PUBLIC_NICKNAME_LIMIT'=>'The nickname length must be in the {nums} characters or {nums1} Chinese characters',
 'PUBLIC_SEARCH_PAGE'=>'[Search Setting]',
 'PUBLIC_HEIDDEN_TIPS'=>'is hidden.',
 'PUBLIC_CLICK_TIPES'=>'Click event',
@@ -1112,5 +1112,6 @@ Label class does not exist',
 'PUBLIC_NEWANSWER_REMIND'=>'View',
 'PUBLIC_NEWCOMMENT_REMIND'=>'View',
 'PUBLIC_NEWAGREECOMMENT_REMIND'=>'View',
-'PUBLIC_NEWOPPOSECOMMENT_REMIND'=>'View'
+'PUBLIC_NEWOPPOSECOMMENT_REMIND'=>'View',
+'PUBLIC_NEWINVITECOUNT_REMIND'=>'View'
 );

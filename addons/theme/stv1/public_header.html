@@ -5,7 +5,7 @@
     <div class="header_box">
 	    <div class="header w980">
     	    <div class="h_logo">
-                <a href="{:SITE_URL}" <php>if(strpos($_SERVER['HTTP_USER_AGENT'],'MSIE 6.0') !== false):</php>style="_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='{$site.logo}', sizingMethod='crop');_background:none;"<php>else:</php>style="background:url({$site.logo}) no-repeat;"<php>endif;</php>> </a></div>
+                <a href="{:SITE_URL}" <php>if(strpos($_SERVER['HTTP_USER_AGENT'],'MSIE 6.0') !== false):</php>style="_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='{$site.logo}', sizingMethod='crop');_background:none;"<php>else:</php>style="background:url({$site.logo}) no-repeat center; "<php>endif;</php>> </a></div>
             <php> 
                   if(ACTION_NAME=='square'){ $tabClass['square'] = 'current'; $tabClass['index'] = '';$tabClass['expert'] = '';  }
 	              else if(ACTION_NAME=='expert') { $tabClass['expert'] = 'current'; $tabClass['square'] = ''; $tabClass['index'] = ''; }
@@ -39,7 +39,7 @@
     <div class="header_box">
 	    <div class="header w980">
     	    <div class="h_logo">
-                <a href="{:SITE_URL}" <php>if(strpos($_SERVER['HTTP_USER_AGENT'],'MSIE 6.0') !== false):</php>style="_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='{$site.logo}', sizingMethod='crop');_background:none;"<php>else:</php>style="background:url({$site.logo}) no-repeat;"<php>endif;</php>> </a></div>
+                <a href="{:SITE_URL}" <php>if(strpos($_SERVER['HTTP_USER_AGENT'],'MSIE 6.0') !== false):</php>style="_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='{$site.logo}', sizingMethod='crop');_background:none;"<php>else:</php>style="background:url({$site.logo}) no-repeat center;"<php>endif;</php>> </a></div>
             <php> 
                   if(ACTION_NAME=='square'){ $tabClass['square'] = 'current'; $tabClass['index'] = '';$tabClass['expert'] = '';  }
 	              else if(ACTION_NAME=='expert') { $tabClass['expert'] = 'current'; $tabClass['square'] = ''; $tabClass['index'] = ''; }

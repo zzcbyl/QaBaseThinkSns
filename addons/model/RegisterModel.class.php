@@ -200,6 +200,7 @@ class RegisterModel extends Model {
 			}
 			
 			$config['name'] = $user_info['uname']; 	
+			$config['login'] = $user_info['login']; 	
 			
 			model('Notify')->sendNotify($uid, $node, $config);
 			$this->_error = '发送成功';		// 系统已将一封激活邮件发送至您的邮箱，请立即查收邮件激活帐号

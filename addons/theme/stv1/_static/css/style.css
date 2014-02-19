@@ -11,7 +11,7 @@ input,textarea{outline:none; font-size:12px;}
 .header .search_box{width:280px; float:left; padding-top:18px}
 .header .search_box input{float:left}
 .header .search_box .s_inp{background:#fff; border:none; width:220px; height:25px; line-height:25px;padding:0px 10px; color:#999; font-size:12px;font-style:italic; outline:none}
-.short_nav li a,.tiwen,.comm a.d,.comm a.c,.comm a.x,.comm a.h,.contTop,.contBottom,.contTop p.q,.aTop,.aCenter,.aBottom,.aTop p.a,.right_conts h1.hot,.right_conts h1.gz,.right_conts h1.hd,.right_conts h1 span,.hd_btn a.gz,.hd_btn a.qx,.hd_btn a.gz_ed,.xz a.x1,.xz a.x2,.xz a.x3,.xz a.x4,.comm a.hx,.comm a.a,.comm a.t,.comm a.tel,.tu a.zan,.tu a.ganxie,.tu a.guanz,.zwyq{background:url(../image/sprite.png) no-repeat;}
+.short_nav li a,.tiwen,.comm a.d,.comm a.c,.comm a.x,.comm a.h,.contTop,.contBottom,.contTop p.q,.aTop,.aCenter,.aBottom,.aTop p.a,.right_conts h1.hot,.right_conts h1.gz,.right_conts h1.hd,.right_conts h1 span,.hd_btn a.gz,.hd_btn a.qx,.hd_btn a.gz_ed,.xz a.x1,.xz a.x2,.xz a.x3,.xz a.x4,.comm a.hx,.comm a.a,.comm a.t,.comm a.tel,.tu a.zan,.tu a.ganxie,.tu a.guanz,.zwyq, .hdyq{background:url(../image/sprite.png) no-repeat;}
 .tiwen,.h_logo a,.hd_btn a.gz,.hd_btn a.gz_ed,.hd_btn a.qx{text-indent:-999px;}
 .header .search_box .s_btn{background:url(../image/icon_search.png) no-repeat #fff center; border:none; width:30px; height:25px; cursor:pointer}
 .w980{width:980px; margin:0 auto;}
@@ -292,7 +292,7 @@ a{text-decoration:none;}
 .regbox input { float:left;}
 .regbox div{height:30px; line-height:30px; margin-top:20px;}
 .regbox div span{font-size:12px; color:#f4c475; float:left;}
-.regboxErrorSpan { color: #F4C475; display: block; float: right; font-size: 12px; line-height: 18px; padding-top: 5px; width:217px;}
+.regboxErrorSpan { color: #F4C475; display: block; float: right; font-size: 12px; line-height: 18px; padding-top: 5px; }
 .errorspan{font-size:12px; color:#f4c475; background:url(../image/error_icon.png) no-repeat left center; padding-left:1.5em}
 .tybox{ background:url(../image/tybg.png) repeat-x; height:13px; font-size:12px; color:#999; text-align:center; line-height:13px; padding-top:30px}
 .tybox span{ background:#fff; padding:0px 10px;}
@@ -434,6 +434,7 @@ p.FloatNew{background:url(../image/new.png) no-repeat; position:absolute; width:
 .yq{ background:url(../image/btn_yaoqing.png) no-repeat; width:79px; height:79px; position:absolute; border:none; top:10px; right:20px;_right:100px; cursor:pointer}
 .comm em{font-size:12px; color:#c5c5c5;}
 .zwyq{background-position:-144px -258px;display:inline-block; width:73px; height:22px; position:absolute; right:40px;}
+.hdyq { background-position:-231px -282px;display:inline-block; width:73px; height:22px; position:absolute; right:40px;}
 /*提问部分*/
 .back{background:#fcfcfc;}
 .tw_box{padding:50px;}
@@ -448,10 +449,15 @@ p.FloatNew{background:url(../image/new.png) no-repeat; position:absolute; width:
 .tw_B ul li{float:left; position:relative; width:75px; height:35px;}
 .tiwen_btn{ background:url(../image/btn_tiwen.png) no-repeat; width:79px; height:79px; position:absolute; border:none; top:-5px; right:-160px; cursor:pointer}
 .twbq,.twtp,.twsp,.twyqhd{ display:inline-block;height:25px; width:65px;}
-.twbq{background-position:0px -198px;}
-.twtp{background-position:-71px -198px;}
-.twsp{background-position:-140px -198px;}
-.twyqhd{background-position:-207px -198px; width:78px; }
+.twbq{background-position:-358px -107px;}
+.twtp{background-position:-428px -107px;}
+.twsp{background-position:-498px -107px;}
+.twyqhd{background-position:-560px -107px; width:78px; }
+
+.twbq:hover{background-position:-358px -140px;}
+.twtp:hover{background-position:-428px -140px;}
+.twsp:hover{background-position:-498px -140px;}
+.twyqhd:hover{background-position:-560px -140px; width:78px; }
 .share_box{height:25px; line-height:25px; text-align:left;  padding:10px 0px}
 .share_box a{ display:inline-block; font-size:12px; color:#999;}
 .s_qq,.s_sina,.s_tx,.s_rr,.s_sn,.s_bd,.s_qq_ed,.s_sina_ed,.s_tx_ed,.s_rr_ed,.s_sn_ed,.s_bd_ed{ background:url(../image/share.png) no-repeat; width:17px; height:17px;}
@@ -576,7 +582,7 @@ p.FloatNew{background:url(../image/new.png) no-repeat; position:absolute; width:
 .jcNext:hover{right:0px; background-position:-42px 0px;}
 .jincaiList ul li{width:290px; padding:5px; background:#eee; float:left; margin-right:12px}
 .jincaiList ul li dl dt{height:140px; position:relative}
-.jincaiList ul li dl dt a{position:absolute; width:260px; height:35px; line-height:35px; padding:0px 15px; background:#000; color:#fff; z-index:200; bottom:0px;filter:alpha(Opacity=80);-moz-opacity:0.80;opacity: 0.80;}
+.jincaiList ul li dl dt a{position:absolute; width:260px; height:35px; line-height:35px; padding:0px 15px; background:#000; color:#fff; z-index:200; bottom:0px;filter:alpha(Opacity=80);-moz-opacity:0.80;opacity: 0.80; left:0;}
 .jincaiList ul li dl dd{font-size:14px; color:#666; line-height:23px; background:#fff; padding:10px; height:130px; overflow:hidden;}
 .guwen{overflow:hidden;}
 .tuwenList{}
@@ -608,3 +614,5 @@ p.FloatNew{background:url(../image/new.png) no-repeat; position:absolute; width:
 #faqdiv h2{height:25px;font-size:14px;background-color:#8FA4F5;position:relative;padding-left:10px;line-height:25px;}
 #faqdiv h2 a{position:absolute;right:5px;font-size:12px;color:#FF0000;}
 #faqdiv .form{padding:10px;}
+
+.arrow_left { background:url(../image/error_bg.png) no-repeat 0 0; height:19px; width:10px;}

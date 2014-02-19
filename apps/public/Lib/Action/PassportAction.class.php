@@ -86,6 +86,10 @@ class PassportAction extends Action
 		$login 		= t($_POST['login_email']);
 		$password 	= trim($_POST['login_password']);
 		$remember	= intval($_POST['login_remember']);
+		if($login == '用户名')
+			$login = '';
+		if($password == '******')
+			$password = '';
 		
 		$result 	= $this->passport->loginLocal($login,$password,$remember);
 		if(!$result){
@@ -160,6 +164,7 @@ class PassportAction extends Action
 	    	$this->appCssList[] = 'login.css';		// 添加样式
 	        $code = md5($user["uid"].'+'.$user["password"].'+'.rand(1111,9999));
 	        $config['reseturl'] = U('public/Passport/resetPassword', array('code'=>$code));
+	        $config['login'] = $user['login'];
 	        //设置旧的code过期
 	        D('FindPassword')->where('uid='.$user["uid"])->setField('is_used',1);
 	        //添加新的修改密码code
@@ -233,7 +238,8 @@ class PassportAction extends Action
 			D('find_password')->where('uid='.$user_info['uid'])->setField('is_used',1);
 			model('User')->cleanCache($user_info['uid']);
 			$this->assign('jumpUrl', U('public/Passport/login'));
-			$config['newpass'] = $password;
+			//$config['newpass'] = $password;
+			$config['login'] = $user_info['login'];
 			model('Notify')->sendNotify($user_info['uid'],'password_setok',$config);
 			//$mail = model('Mail')->sendSysEmail($user_info['email'],'resetPassOk',array(),array('newpass'=>$password));
 			$this->success(L('PUBLIC_PASSWORD_RESET_SUCCESS'));
@@ -440,7 +446,6 @@ class PassportAction extends Action
 		
 		//增加浏览数
 		model('Feed')->UpdatePV($feed_id);
-		//model('Feed')->where('feed_id='.$feedid)->setInc("feed_pv");
 		
 		//获取提问信息
 		$feedInfo = model ( 'Feed' )->get ( $feed_id );

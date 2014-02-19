@@ -20,11 +20,16 @@
                     <a title="邀请数" href="javascript:void(0);" class="tel"><php>if(empty($TopExpert_UserCount[$TopExpert['uid']]['be_invited_count'])) echo '0'; else echo $TopExpert_UserCount[$TopExpert['uid']]['be_invited_count'];</php></a>
                 </p>
                 <p class="xz">
-                <strong>勋章：</strong>
-                <a href="javascript:void(0);" class="x1"></a>
-                <a href="javascript:void(0);" class="x2"></a>
-                <a href="javascript:void(0);" class="x3"></a>
-                <a href="javascript:void(0);" class="x4"></a>
+                    <php>if(count($TopExpert['user_group'])>0){</php>
+                    <strong>勋章：</strong>
+                    <volist name="TopExpert['user_group']" id="ui2">
+                        <img style="width:auto;height:auto;display:inline;cursor:pointer;" src="{$ui2['user_group_icon_url']}" title="{$ui2['user_group_name']}" />&nbsp;
+                    </volist>
+                    <!--<a href="#" class="x1"></a>
+                    <a href="#" class="x2"></a>
+                    <a href="#" class="x3"></a>
+                    <a href="#" class="x4"></a>-->
+                    <php>}</php>
                 </p>
             </div>
             

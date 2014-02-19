@@ -70,94 +70,35 @@
                                 <h2>
                                     专家<span>(只能邀请一个专家)</span></h2>
                                 <div class="reg_five_rz">
-                                    <div class="zjList">
+                                    <volist name="authenticateExpert" id="expert">
+                                    <div id="Expert_{$expert['uid']}" class="zjList" style="cursor:pointer;" onclick="changeExpert({$expert['uid']});">
                                         <div class="profile">
                                             <div class="pro_img">
-                                                <img src="images/thumb_img.png" /><br />
+                                                <a href="{$expert.space_url}" title="{$expert.uname}"><img event-node='face_card' uid='{$expert['uid']}' src="{$expert.avatar_small}" /><br />
                                             </div>
                                             <div class="pro_cont">
                                                 <h4>
-                                                    网申都</h4>
+                                                    {$expert.space_link}</h4>
                                                 <ul class="info">
-                                                    <li class="pd0"><a href="javascript:void(0);">150</a><br />
-                                                        问题</li>
-                                                    <li><a href="javascript:void(0);">45</a><br />
-                                                        回答</li>
-                                                    <li class="nbor"><a href="javascript:void(0);">60</a><br />
-                                                        感谢</li>
+                                                    <li class="pd0"><a><php>if(empty($authenticateExpert_UserCount[$expert['uid']]['weibo_count'])) echo '0'; else echo $authenticateExpert_UserCount[$expert['uid']]['weibo_count'];</php></a><br />问题</li>
+                                                    <li><a><php>if(empty($authenticateExpert_UserCount[$expert['uid']]['answer_count'])) echo '0'; else echo $authenticateExpert_UserCount[$expert['uid']]['answer_count'];</php></a><br />回答</li>
+                                                    <li class="nbor"><a><php>if(empty($authenticateExpert_UserCount[$expert['uid']]['tothanked_count'])) echo '0'; else echo $authenticateExpert_UserCount[$expert['uid']]['tothanked_count'];</php></a><br />感谢</li>
                                                 </ul>
                                                 <p class="xz">
-                                                    <a href="javascript:void(0);" class="x1"></a><a href="javascript:void(0);" class="x2"></a><a href="javascript:void(0);" class="x3"></a>
+                                                    <php>if(count($expert['user_group'])>0){</php>
+                                                        <volist name="expert['user_group']" id="ui2">
+                                                            <img style="width:auto;height:auto;display:inline;cursor:pointer;" src="{$ui2['user_group_icon_url']}" title="{$ui2['user_group_name']}" />&nbsp;
+                                                        </volist>
+                                                        <!--<a href="#" class="x1"></a>
+                                                        <a href="#" class="x2"></a>
+                                                        <a href="#" class="x3"></a>
+                                                        <a href="#" class="x4"></a>-->
+                                                    <php>}</php>
                                                 </p>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="zjList">
-                                        <div class="profile">
-                                            <div class="pro_img">
-                                                <img src="images/thumb_img.png" /><br />
-                                            </div>
-                                            <div class="pro_cont">
-                                                <h4>
-                                                    网申都</h4>
-                                                <ul class="info">
-                                                    <li class="pd0"><a href="javascript:void(0);">150</a><br />
-                                                        问题</li>
-                                                    <li><a href="javascript:void(0);">45</a><br />
-                                                        回答</li>
-                                                    <li class="nbor"><a href="javascript:void(0);">60</a><br />
-                                                        感谢</li>
-                                                </ul>
-                                                <p class="xz">
-                                                    <a href="javascript:void(0);" class="x1"></a><a href="javascript:void(0);" class="x2"></a><a href="javascript:void(0);" class="x3"></a>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="zjList">
-                                        <div class="profile">
-                                            <div class="pro_img">
-                                                <img src="images/thumb_img.png" /><br />
-                                            </div>
-                                            <div class="pro_cont">
-                                                <h4>
-                                                    网申都</h4>
-                                                <ul class="info">
-                                                    <li class="pd0"><a href="javascript:void(0);">150</a><br />
-                                                        问题</li>
-                                                    <li><a href="javascript:void(0);">45</a><br />
-                                                        回答</li>
-                                                    <li class="nbor"><a href="javascript:void(0);">60</a><br />
-                                                        感谢</li>
-                                                </ul>
-                                                <p class="xz">
-                                                    <a href="javascript:void(0);" class="x1"></a><a href="javascript:void(0);" class="x2"></a><a href="javascript:void(0);" class="x3"></a>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="zjList">
-                                        <div class="profile">
-                                            <div class="pro_img">
-                                                <img src="images/thumb_img.png" /><br />
-                                            </div>
-                                            <div class="pro_cont">
-                                                <h4>
-                                                    网申都</h4>
-                                                <ul class="info">
-                                                    <li class="pd0"><a href="javascript:void(0);">150</a><br />
-                                                        问题</li>
-                                                    <li><a href="javascript:void(0);">45</a><br />
-                                                        回答</li>
-                                                    <li class="nbor"><a href="javascript:void(0);">60</a><br />
-                                                        感谢</li>
-                                                </ul>
-                                                <p class="xz">
-                                                    <a href="javascript:void(0);" class="x1"></a><a href="javascript:void(0);" class="x2"></a><a href="javascript:void(0);" class="x3"></a>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    </volist>
                                 </div>
                                 <!--专家(只能邀请一个专家)-->
                                 <!--朋友-->
@@ -172,6 +113,7 @@
                                 <input type="hidden" id="InviteUid" value="" />
                                 <input type="hidden" id="LSInviteUidLi" value="" />
                                 <input type="hidden" id="InviteUidLi" value="" />
+                                <input type="hidden" id="ExpertUid" value="" />
                             </div>
                         </div>
                     </div>
@@ -304,14 +246,28 @@
         else
             $('#InvitedAnswer').hide();
     }
+    
+    function changeExpert(uid)
+    {
+        var expertList = $(".zjList");
+        for ( var i = 0; i < expertList.length; i++)
+        {
+            $(expertList[i]).css("background","");
+        }
+        $("#Expert_" + uid).css("background","#FAE7C7");
+        
+        $("#ExpertUid").val(uid);
+    }
+    
     function Invite() {
-        if ($('#LSInviteUid').val() == '') {
-            ui.error('请选择你的好友');
+        if ($('#LSInviteUid').val() == '' && $("#ExpertUid").val() == '') {
+            ui.error('请选择邀请人');
             $("#InvitedFriend").html('');
             return;
         }
-        $('#InviteUid').val($('#LSInviteUid').val().substring(0,$('#LSInviteUid').val().length-1));
+        $('#InviteUid').val($('#LSInviteUid').val()+$("#ExpertUid").val());
         //alert($('#InviteUid').val());
+        //return;
         if (questionID != 'undefined') {
             var url = U('public/profile/invitefriendanswer');
             $.post(url, { InviteUids: $('#InviteUid').val(), QuestionID: questionID }, function (msg) {

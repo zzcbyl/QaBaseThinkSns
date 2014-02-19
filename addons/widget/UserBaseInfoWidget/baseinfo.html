@@ -150,16 +150,17 @@
             <label class="info-l">
                 微信号：</label><label class="info-r">{$weixin}</label>&nbsp;<php>if(empty($weixin) && $uid==$mid){</php><a href="javascript:w_UpdLinkUser('weixin');">马上填写</a><php>}</php></li>
         <php>}</php>
-        <php>if(($followstate==1) || ($followstate==0 && $permissions['tengxunVB']==0) || ($followstate==2 && ($permissions['tengxunVB']==0 || $permissions['tengxunVB']==1))) {</php>
-        <li>
-            <label class="info-l">
-                腾讯提问：</label><label class="info-r">{$tengxunVB}</label>&nbsp;<php>if(empty($tengxunVB) && $uid==$mid){</php><a href="javascript:w_UpdLinkUser('tengxuvb');">马上填写</a><php>}</php></li>
-        <php>}</php>
         <php>if(($followstate==1) || ($followstate==0 && $permissions['xinlangVB']==0) || ($followstate==2 && ($permissions['xinlangVB']==0 || $permissions['xinlangVB']==1))) {</php>
         <li>
             <label class="info-l">
-                新浪提问：</label><label class="info-r">{$xinlangVB}</label>&nbsp;<php>if(empty($xinlangVB) && $uid==$mid){</php><a href="javascript:w_UpdLinkUser('xinlangvb');">马上填写</a><php>}</php></li>
+                新浪微博：</label><label class="info-r">{$xinlangVB}</label>&nbsp;<php>if(empty($xinlangVB) && $uid==$mid){</php><a href="javascript:w_UpdLinkUser('xinlangvb');">马上填写</a><php>}</php></li>
         <php>}</php>
+        <php>if(($followstate==1) || ($followstate==0 && $permissions['tengxunVB']==0) || ($followstate==2 && ($permissions['tengxunVB']==0 || $permissions['tengxunVB']==1))) {</php>
+        <li>
+            <label class="info-l">
+                腾讯微博：</label><label class="info-r">{$tengxunVB}</label>&nbsp;<php>if(empty($tengxunVB) && $uid==$mid){</php><a href="javascript:w_UpdLinkUser('tengxuvb');">马上填写</a><php>}</php></li>
+        <php>}</php>
+        
     </ul>
 </div>
 <div id="UpdUserLinkDiv" class="profile-datalist" style="display:none;">
@@ -190,14 +191,15 @@
         </li>
         <li>
             <label class="info-l">
-                腾讯提问：</label><div class="info-r"><input event-node="input_text" event-args='max=80' type="text" id="tengxuvb" name="tengxuvb" value="{$tengxunVB}" maxlength="80" /></div>&nbsp;
-            <div class="info-rr"><select name="sel_tengxunVB"><option>所有人可见</option><option <if condition="1 eq $permissions['tengxunVB']">selected</if> value="1">我关注的人可见</option><option <if condition="2 eq $permissions['tengxunVB']">selected</if> value="2">仅自己可见</option></select></div>
+                新浪微博：</label><div class="info-r"><input event-node="input_text" event-args='max=80' type="text" id="xinlangvb" name="xinlangvb" value="{$xinlangVB}" maxlength="80" /></div>&nbsp;
+            <div class="info-rr"><select name="sel_xinlangVB"><option>所有人可见</option><option <if condition="1 eq $permissions['xinlangVB']">selected</if> value="1">我关注的人可见</option><option <if condition="2 eq $permissions['xinlangVB']">selected</if> value="2">仅自己可见</option></select></div>
         </li>
         <li>
             <label class="info-l">
-                新浪提问：</label><div class="info-r"><input event-node="input_text" event-args='max=80' type="text" id="xinlangvb" name="xinlangvb" value="{$xinlangVB}" maxlength="80" /></div>&nbsp;
-            <div class="info-rr"><select name="sel_xinlangVB"><option>所有人可见</option><option <if condition="1 eq $permissions['xinlangVB']">selected</if> value="1">我关注的人可见</option><option <if condition="2 eq $permissions['xinlangVB']">selected</if> value="2">仅自己可见</option></select></div>
+                腾讯微博：</label><div class="info-r"><input event-node="input_text" event-args='max=80' type="text" id="tengxuvb" name="tengxuvb" value="{$tengxunVB}" maxlength="80" /></div>&nbsp;
+            <div class="info-rr"><select name="sel_tengxunVB"><option>所有人可见</option><option <if condition="1 eq $permissions['tengxunVB']">selected</if> value="1">我关注的人可见</option><option <if condition="2 eq $permissions['tengxunVB']">selected</if> value="2">仅自己可见</option></select></div>
         </li>
+        
     </ul>
     </form>
 </div>

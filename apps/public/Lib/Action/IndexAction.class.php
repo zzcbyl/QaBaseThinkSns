@@ -175,21 +175,14 @@ class IndexAction extends Action {
 		} else {
 			$this->_assignUserInfo ( $this->uid );
 		}
-		// seo
-		/*$feedContent = unserialize ( $feedInfo ['feed_data'] );
-		$seo = model ( 'Xdata' )->get ( "admin_Config:seo_feed_detail" );
-		$replace ['content'] = $feedContent ['content'];
-		$replace ['uname'] = $feedInfo ['user_info'] ['uname'];
-		$replaces = array_keys ( $replace );
-		foreach ( $replaces as &$v ) {
-			$v = "{" . $v . "}";
-		}
-		$seo ['title'] = str_replace ( $replaces, $replace, $seo ['title'] );
-		$seo ['keywords'] = str_replace ( $replaces, $replace, $seo ['keywords'] );
-		$seo ['des'] = str_replace ( $replaces, $replace, $seo ['des'] );
-		! empty ( $seo ['title'] ) && $this->setTitle ( $seo ['title'] );
-		! empty ( $seo ['keywords'] ) && $this->setKeywords ( $seo ['keywords'] );
-		! empty ( $seo ['des'] ) && $this->setDescription ( $seo ['des'] );*/
+		
+		//认证专家
+		$uids = model('UserGroupLink')->getUserByGroupID(8, 4);
+		$user_count = model ( 'UserData' )->getUserDataByUids ($uids);
+		$authenticateExpert = model('user')->getUserInfoByUids($uids);
+		//print_r($authenticateExpert);
+		$this->assign ( 'authenticateExpert_UserCount', $user_count );
+		$this->assign('authenticateExpert',$authenticateExpert);	
 	
 		$this->setTitle($feedInfo['body']);
 		$this->setKeywords($feedInfo['body']);

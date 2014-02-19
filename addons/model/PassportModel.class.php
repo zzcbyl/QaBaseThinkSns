@@ -116,8 +116,12 @@ class PassportModel {
 	 */
 	public function getLocalUser($login, $password) {
 		$login = t($login);
-		if(empty($login) || empty($password)) {
-			$this->error = L('PUBLIC_ACCOUNT_EMPTY');			// 帐号或密码不能为空
+		if(empty($login)) {
+			$this->error = '请输入您的用户名';			// 帐号不能为空
+			return false;
+		}
+		if(empty($password)) {
+			$this->error = '请输入您的密码';			// 密码不能为空
 			return false;
 		}
 
@@ -128,7 +132,7 @@ class PassportModel {
 		}
 		
 		if(!$user = model('User')->where($map)->find()) {
-			$this->error = L('PUBLIC_ACCOUNT_NOEXIST');			// 帐号不存在
+			$this->error = '用户名不存在';			// 帐号不存在
 			return false;
 		}
 

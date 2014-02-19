@@ -351,7 +351,7 @@ var ui = {
 		setTimeout(function() { 
 			$('#ui_messageBox').find('iframe').remove();
 			$('#ui_messageBox').fadeOut("fast", function() {
-			  //ui.removeblackout();
+			  ui.removeblackout();
 			  $('#ui_messageBox').remove();
 			});
 		} , lazytime*1000);

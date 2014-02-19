@@ -83,7 +83,7 @@ li{list-style-type:none}
 
 /*.s-login .login-ft .third-party span{float:left;display:block;color:#f0f0f0;font-size:14px;font-family: "微软雅黑";}
 .third-party dd{float:left;text-align:center;margin:-3px 0 0;}*/
-.third-party dd a:link, .third-party dd a:visited{color:#999;display:inline-block;margin:0 10px 0 0;}
+.third-party dd a:link, .third-party dd a:visited{color:#999;display:inline-block;margin:0 10px 0 0; background-position: -173px -97px;}
 .third-party a:hover{text-decoration:none;}
 /*.ico-qq,.ico-renren,.ico-sina,.ico-tengxun,.ico-douban,.ico-taobao,.ico-baidu{background: url(image/ico-login.png) no-repeat;width:20px;height:20px;display:inline-block;margin:0 10px 0 0;_background:url(image/ico-login8.png) no-repeat;}*/
 /*.third-party .sina, .third-party dd a:hover .sina{cursor:pointer;background:url(image/sina.png) no-repeat 0 0;display:block;width:24px;height:18px;margin:0 20px 0 0}*/

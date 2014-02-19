@@ -61,8 +61,15 @@ class RegisterAction extends Action
 
     public function index() {
 
+		$this->setTitle ( '输入邀请码' );
+		$this->setKeywords ( '输入邀请码' );
         $this->display();
+    }
+    public function terms() {
 
+		$this->setTitle ( '卢勤问答平台服务条款' );
+		$this->setKeywords ( '卢勤问答平台服务条款' );
+        $this->display();
     }
 
     public function step2() {
@@ -89,6 +96,8 @@ class RegisterAction extends Action
                 }
             }
         }
+        $this->setTitle ( '填写注册信息' );
+		$this->setKeywords ( '填写注册信息' );
         $this->display();
     }
 
@@ -196,6 +205,8 @@ class RegisterAction extends Action
 		//$this->_register_model->sendActivationEmail($uid);
 		$this->assign('Code',$_GET['code']);
 		$this->assign('User',$user);
+		$this->setTitle ( '邮箱激活' );
+		$this->setKeywords ( '邮箱激活' );
 		$this->display();	
 	}
 	
@@ -226,6 +237,8 @@ class RegisterAction extends Action
 		$this->assign('city',$city);
 		$this->assign('area',$area);
 		$this->assign('location',$location);*/
+		$this->setTitle ( '完善个人资料' );
+		$this->setKeywords ( '完善个人资料' );
 		$this->display();
 	}
 	
@@ -245,8 +258,9 @@ class RegisterAction extends Action
 		$this->assign('code',$code);
 		
 		//顶级专家
-		$TopExpert = model('user')->getUserInfo(3);
-		$user_count = model ( 'UserData' )->getUserDataByUids ( array(3) );
+		$topUserID = 3;
+		$TopExpert = model('user')->getUserInfo($topUserID);
+		$user_count = model ( 'UserData' )->getUserDataByUids ( array($topUserID) );
 		//print_r($user_count);
 		$this->assign ( 'TopExpert_UserCount', $user_count );
 		$this->assign('TopExpert',$TopExpert);
@@ -258,6 +272,7 @@ class RegisterAction extends Action
 		//print_r($authenticateExpert);
 		$this->assign ( 'authenticateExpert_UserCount', $user_count );
 		$this->assign('authenticateExpert',$authenticateExpert);
+		//print('<br /><br /><br />');
 		
 		//跟你有关的
 		$where = " `is_del` = 0 and `is_audit` = 1 and `is_active` = 1 and `is_init` = 1 and ((`invite_code` = '$code' and `uid` != $uid) or (`area` = ".$user['area'].")) ";
@@ -266,8 +281,18 @@ class RegisterAction extends Action
 		if(!empty($uids))
 		{
 			$userList = model('user')->getUserInfoByUids($uids);
-			$this->assign("youguanCount",count($uids));
-			$this->assign('userList',$userList);
+			//print_r($userList);
+			$newuserList = array();
+			foreach($userList as $k=>$v)
+			{
+				if(!array_key_exists($k, $authenticateExpert) && $k != $topUserID )
+				{
+					$newuserList[$k] = $v;
+				}
+			}
+			//print_r($newuserList);
+			$this->assign("youguanCount",count($newuserList));
+			$this->assign('userList',$newuserList);
 		}
 		else
 		{
@@ -283,11 +308,21 @@ class RegisterAction extends Action
 		{
 			$recommenduserList = model('user')->getUserInfoByUids($uids);
 			//print_r($recommenduserList);
-			$this->assign("tuijianCount",count($uids));
-			$this->assign('recommendUserList',$recommenduserList);
+			$newrecommenduserList = array();
+			foreach($recommenduserList as $k=>$v)
+			{
+				if(!array_key_exists($k, $authenticateExpert)  && $k != $topUserID)
+				{
+					$newrecommenduserList[$k] = $v;
+				}
+			}
+			$this->assign("tuijianCount",count($newrecommenduserList));
+			$this->assign('recommendUserList',$newrecommenduserList);
 		}
 		else
 			$this->assign("tuijianCount",0);
+		$this->setTitle ( '关注朋友' );
+		$this->setKeywords ( '关注朋友' );
 		$this->display();	
 	}
 
@@ -387,6 +422,16 @@ class RegisterAction extends Action
 		{
 			$this->error('补充资料失败');
 		}
+		
+		$permissions['realname'] = t($_POST['sel_realname']);
+		//$permissions['birthday'] = t($_POST['sel_birthday']);
+		$permissions['mobile'] = t($_POST['sel_mobile']);
+		$permissions['qq'] = t($_POST['sel_qq']);
+		$permissions['weixin'] = t($_POST['sel_weixin']);
+		$permissions['tengxunVB'] = t($_POST['sel_tengxunVB']);
+		$permissions['xinlangVB'] = t($_POST['sel_xinlangVB']);
+		model('UserPermissions')->saveUserPermissions($uid, $permissions);
+		
 		$this->_user_model->cleanCache ( array($uid) );
 		$this->redirect('public/Register/step5', array('uid'=>$uid, 'code'=>$_GET['code']));
 	}
@@ -522,6 +567,8 @@ class RegisterAction extends Action
 			//$this->assign('jumpUrl', U('public/Register/step4', array('uid'=>$this->user ['uid'], 'code'=>$this->user ['invite_code'])));
 			if($user_info['location'] == '')
 			{
+				//print('asdf');
+				//print('<br /><br /><br /><br />');
 				$this->redirect('public/Register/step4', array('uid'=>$user_info['uid'], 'code'=>$user_info['invite_code']));
 			}
 			else if($user_info['is_init'] == 0)

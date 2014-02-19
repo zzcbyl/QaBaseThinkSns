@@ -1,20 +1,38 @@
 <?php
 return array(
-'NOTIFY_REGISTER_ACTIVE_CONTENT'=>'Hi，{name}，欢迎加入 <a href="{site_url}"  style="text-decoration:none;color:#3366cc">{site}</a>，请立即点击下列按钮激活您的帐号。<br /><br />
-<a href="{activeurl}" target="_blank" style="background:#0F8CA8;padding:5px 10px;color:#fff;text-decoration:none; width:80px;text-align:center;">激活帐号</a>',
+'NOTIFY_REGISTER_ACTIVE_CONTENT'=>'亲：<br />
+恭喜您成为 <a href="{site_url}"  style="text-decoration:none;color:#3366cc">{site}</a> 用户，您的帐号为：{login}<br />
+请点击以下链接，激活您的帐号：<br />
+<a href="{activeurl}" target="_blank" >{activeurl}</a>
+<div style="color: #999;"> (如果您无法点击此链接，请将它复制到浏览器地址栏后访问)</div>
+<br /><br />
+1、为了保障您的帐号的安全性，请在 48小时内完成激活，逾期未激活的帐号，卢勤问答平台将予以收回；<br />
+2、此链接将在您第一次激活后失效！<br /><br /><br />
+<div style="text-align:right">卢勤问答平台帐号团队</div>',
 'NOTIFY_REGISTER_ACTIVE_TITLE'=>'[ {site} ]恭喜您成功注册，请激活您的帐号',
 'NOTIFY_AUDIT_ERROR_CONTENT'=>'抱歉，您的帐号注册申请未能通过审核，感谢您对[ {site} ]的支持。若对审核结果有疑问，请联系<a href="{kfemail}" >客服邮箱</a>。',
 'NOTIFY_AUDIT_ERROR_TITLE'=>'[ {site} ]抱歉，您的帐号注册申请被驳回。',
 'NOTIFY_AUDIT_OK_CONTENT'=>'Hi，{name}，欢迎加入 {site}，请立即点击下列按钮激活您的帐号。<br /><br />
 <a href="{activeurl}" target="_blank" style="background:#0F8CA8;padding:5px 10px;color:#fff;text-decoration:none; width:80px;text-align:center;">点此激活帐号</a>',
 'NOTIFY_AUDIT_OK_TITLE'=>'[ {site} ]恭喜您成功注册，请激活您的帐号',
-'NOTIFY_PASSWORD_RESET_CONTENT'=>'您刚刚提交了重置密码的申请，请点击下列按钮重置您的登录密码。<br /><br />
-<a href="{reseturl}" target="_blank" style="background:#0F8CA8;padding:5px 10px;color:#fff;text-decoration:none; width:80px;text-align:center;">重置密码</a><br /><br />
-<font color="grey">若该申请不是由您本人发起，请忽略该邮件。</font>',
-'NOTIFY_PASSWORD_RESET_TITLE'=>'[ {site} ]请重置您的登录密码',
-'NOTIFY_PASSWORD_SETOK_CONTENT'=>'您的密码重置成功，请记住您的新密码。新密码：{newpass}。
+'NOTIFY_PASSWORD_RESET_CONTENT'=>'亲爱的 {login}：<br />
+欢迎使用 <a href="{site_url}"  style="text-decoration:none;color:#3366cc">{site}</a> 密码找回功能。<br />
+您刚刚提交了重置密码的申请，请点击以下链接，重置您的登录密码：<br />
+<a href="{reseturl}" target="_blank">{reseturl}</a>
+<div style="color: grey;"> (如果您无法点击此链接，请将它复制到浏览器地址栏后访问)</div>
+<br /><br />
+<font color="grey">如果您并未发过此请求，则可能是因为其他用户在尝试重设密码时误输入了您的电子邮件地址而使您收到这封邮件，那么您可以放心的忽略此邮件，无需进一步采取任何操作。</font>
 <br /><br /><br />
-<a href="{site_url}" target="_blank" style="text-decoration:none;color:#3366cc">去网站看看>></a>',
+<div style="text-align:right">卢勤问答平台敬上</div>
+<br />
+（请注意，不要直接回复邮件，要解决问题或了解您的帐户详情，请访问<a href="{site_url}"  style="text-decoration:none;color:#3366cc">{site}</a>）',
+'NOTIFY_PASSWORD_RESET_TITLE'=>'[ {site} ]请重置您的登录密码',
+'NOTIFY_PASSWORD_SETOK_CONTENT'=>'亲爱的 {login}：<br />
+您的密码已经重置成功，请您牢记新的密码。
+<br /><br /><br />
+<div style="text-align:right">卢勤问答平台敬上</div>
+<br />
+（请注意，不要直接回复邮件，要解决问题或了解您的帐户详情，请访问<a href="{site_url}"  style="text-decoration:none;color:#3366cc">{site}</a>）',
 'NOTIFY_PASSWORD_SETOK_TITLE'=>'[ {site} ]重置密码成功，请记住您的新密码',
 'NOTIFY_USER_LOCK_CONTENT'=>'抱歉，由于您的密码输入错误超过6次，为了您的帐号安全，系统已将您的帐号暂时锁定，一小时后自动解锁，届时您可正常登录。',
 'NOTIFY_USER_LOCK_TITLE'=>'[ {site} ]抱歉，您的帐号暂时被锁定',
@@ -924,7 +942,7 @@ return array(
 'PUBLIC_PROFILESET_WORK_POSITION'=>'职务',
 'PUBLIC_PROFILESET_WORK_EXPERIENCE'=>'工作经历',
 'PUBLIC_USERTITLESHEARE'=>'用户名片分享',
-'PUBLIC_NICKNAME_LIMIT'=>'昵称长度必须在{nums}个汉字之间',
+'PUBLIC_NICKNAME_LIMIT'=>'昵称长度必须在{nums}个字符或{nums1}个汉字之间',
 'PUBLIC_SEARCH_PAGE'=>'[搜索配置]',
 'PUBLIC_HEIDDEN_TIPS'=>'是否隐藏',
 'PUBLIC_CLICK_TIPES'=>'点击事件',
@@ -1111,5 +1129,6 @@ return array(
 'PUBLIC_NEWANSWER_REMIND'=>'查看新回答',
 'PUBLIC_NEWCOMMENT_REMIND'=>'查看新评论',
 'PUBLIC_NEWAGREECOMMENT_REMIND'=>'查看新赞同',
-'PUBLIC_NEWOPPOSECOMMENT_REMIND'=>'查看新反对'
+'PUBLIC_NEWOPPOSECOMMENT_REMIND'=>'查看新反对',
+'PUBLIC_NEWINVITECOUNT_REMIND'=>'查看新邀请'
 );

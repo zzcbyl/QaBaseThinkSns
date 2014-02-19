@@ -241,13 +241,12 @@ class NotifyModel extends Model {
 		$s['title'] = t($data['title']);
 		$body = html_entity_decode($data['body']);
 		$site = model('Xdata')->get('admin_Config:site');
-		$s['body']= '<style>a.email_btn,a.email_btn:link,a.email_btn:visited{background:#0F8CA8;padding:5px 10px;color:#fff;width:80px;text-align:center;}</style><div style="width:540px;border:#0F8CA8 solid 2px;margin:0 auto"><div style="color:#bbb;background:#0f8ca8;padding:5px;overflow:hidden;zoom:1"><div style="float:right;height:15px;line-height:15px;padding:10px 0;display:none">2012年07月15日</div>
+		$s['body']= '<style>a.email_btn,a.email_btn:link,a.email_btn:visited{background:#0F8CA8;padding:5px 10px;color:#fff;width:80px;text-align:center;}</style><div style="width:700px;border:#C22B2B solid 2px;margin:0 auto; line-height:30px;"><div style="color:#bbb;background:#C22B2B;padding:5px;overflow:hidden;zoom:1">
 					<div style="float:left;overflow:hidden;position:relative"><a><img style="border:0 none" src="'.$GLOBALS['ts']['site']['logo'].'"></a></div></div>
 					<div style="background:#fff;padding:20px;min-height:300px;position:relative">		<div style="font-size:14px;">			
-						            	<p style="padding:0 0 20px;margin:0;font-size:12px">'.$body.'</p>
+						            	<p style="padding:0;margin:0;font-size:14px">'.$body.'</p>
 						            </div></div><div style="background:#fff;">
-			            <div style="text-align:center;height:18px;line-height:18px;color:#999;padding:6px 0;font-size:12px">若不想再收到此类邮件，请点击<a href="'.U('public/Account/notify').'" style="text-decoration:none;color:#46ADDB">设置</a></div>
-			            <div style="line-height:18px;text-align:center"><p style="color:#999;font-size:12px">'.$site['site_footer'].'</p></div>
+			            <div style="line-height:18px;text-align:center; height:35px;"><p style="color:#999;font-size:12px">'.$site['site_footer'].'</p></div>
 			        </div></div>';
 		$s['ctime'] = time();
 		
