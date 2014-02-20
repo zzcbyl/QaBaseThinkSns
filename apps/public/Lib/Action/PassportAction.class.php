@@ -393,7 +393,7 @@ class PassportAction extends Action
 	public function expert()
 	{
 		//顶级专家
-		$expertUid = 3;
+		$expertUid = 1901;
 		$TopExpert = model('user')->getUserInfo($expertUid);
 		$user_count = model ( 'UserData' )->getUserDataByUids ( array($expertUid) );
 		$this->assign ( 'TopExpert_UserCount', $user_count );

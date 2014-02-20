@@ -1,5 +1,5 @@
 <h1 class="hot">今日热门问题<span></span></h1>
-<ul class="contList mb20">
+<ul class="contList">
 <volist name="data" id="vl">
     <li><a target="_blank" href="{:U('public/Index/feed',array('feed_id'=>$vl['feed_id'],'uid'=>$vl['uid']))}">{$vl.body|format=true}</a>
         <span>{$vl.answer_count|format=true}</span>

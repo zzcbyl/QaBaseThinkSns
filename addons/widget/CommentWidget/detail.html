@@ -7,7 +7,6 @@
     <div class="aCenter2" style="width: 452px;">
         <!--提问框-->
         <php>if($GLOBALS['ts']['mid'] != $app_uid) {</php>
-        <eq name='cancomment' value="1">
         <div class="tiwenK" model-node="comment_textarea">
             <div class="tiwen_area" model-node="mini_editor">
                 <textarea class="input_tips" style="width: 390px;" texttype="comment" id="comment_inputor" event-node="mini_editor_textarea" hidefocus="true"  model-args='t=comment'></textarea>
@@ -25,9 +24,6 @@
 
             </div>
         </div>
-        <else />
-            {:L('PUBLIC_CONCENT_ISNULL')}
-        </eq>
         <php>}</php>
         <!--提问框-->
 

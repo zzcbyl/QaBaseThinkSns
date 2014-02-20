@@ -258,7 +258,7 @@ class RegisterAction extends Action
 		$this->assign('code',$code);
 		
 		//顶级专家
-		$topUserID = 3;
+		$topUserID = 1901;
 		$TopExpert = model('user')->getUserInfo($topUserID);
 		$user_count = model ( 'UserData' )->getUserDataByUids ( array($topUserID) );
 		//print_r($user_count);

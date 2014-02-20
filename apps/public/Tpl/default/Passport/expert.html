@@ -60,14 +60,15 @@
         <div class="zhuanjia_right">
         	<div class="shipin">
             
-            <embed src="http://player.youku.com/player.php/Type/Folder/Fid/21710675/Ob/1/sid/XNjYyMjAwMDE2/v.swf" quality="high" width="200" height="150" align="middle" allowScriptAccess="always" allowFullScreen="true" mode="transparent" type="application/x-shockwave-flash"></embed>
+            <embed src="http://player.youku.com/player.php/sid/XNjc1NjE5NjYw/v.swf" allowFullScreen="true" quality="high" width="480" height="400" align="middle" allowScriptAccess="always" type="application/x-shockwave-flash"></embed>
+            <!--<embed src="http://player.youku.com/player.php/sid/XNjc1NTcyNDUy/v.swf" quality="high" width="200" height="150" align="middle" allowScriptAccess="always" allowFullScreen="true" mode="transparent" type="application/x-shockwave-flash"></embed>-->
             
             </div>
             <div class="newsList">
             <h3>相关新闻</h3>
             <ul>
                 <volist name="NewsList.data" id="nl">
-            	    <li><a href="javascript:void(0);">{$nl.title}</a></li>
+            	    <li><a href="{$nl.description}" target="_blank" title="{$nl.title}">{$nl.title}</a></li>
                 </volist>
             </ul>
             </div>
