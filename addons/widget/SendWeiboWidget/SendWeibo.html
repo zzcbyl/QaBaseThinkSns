@@ -62,12 +62,18 @@
         </ul>
         
     </div>
+    <php>if($token == '1') {</php>
     <div class="share_box">
-        <input name="" type="radio" value="" />
+        <div>分享到：</div>
+        <!--<input name="" type="radio" value="" />
         <a href="#" class="s_qq"></a><a href="#" class="s_sina"></a><a href="#" class="s_tx_ed">
         </a><a href="#" class="s_rr_ed"></a><a href="#" class="s_sn_ed"></a><a href="#" class="s_bd_ed">
-        </a><a href="#">更多</a>
+        </a><a href="#">更多</a>-->
+        <div style="padding:5px 0 0 20px;">
+        <input type="checkbox" id="cbx_sina" name="cbxSina" style="margin-top:3px; float:left; margin-right:3px;" title="分享到新浪微博" />
+        <label for="cbx_sina"><a class="s_sina" title="分享到新浪微博"></a></label ></div>
     </div>
+    <php>}</php>
     <div id="InvitedFriend" class="pengyou" style="display:none;"></div>
 </div>
 

@@ -1,10 +1,10 @@
 // 提问核心Js操作
 core.weibo = {
-    _init: function () {
+    _init: function() {
         return true;
     },
     // 提问初始化
-    init: function (agrs) {
+    init: function(agrs) {
         this.initNums = agrs.initNums; 	// 提问字数
         this.maxId = args.maxId, 		// 最大提问ID
 		this.loadId = args.loadId, 		// 载入的提问ID
@@ -38,9 +38,9 @@ core.weibo = {
         //		}
     },
     // 页底加载提问
-    bindScroll: function () {
+    bindScroll: function() {
         var _this = this;
-        $(window).bind('scroll resize', function () {
+        $(window).bind('scroll resize', function() {
             // 加载3次后，将不能自动加载提问
             if (_this.loadCount >= 4 || _this.canLoading == false) {
                 return false;
@@ -63,11 +63,11 @@ core.weibo = {
         });
     },
     // 加载更多提问
-    loadMoreFeed: function () {
+    loadMoreFeed: function() {
         var _this = this;
         _this.canLoading = false;
         // 获取提问数据
-        $.get(U('widget/FeedList/loadMore'), { 'loadId': _this.loadId, 'type': _this.feedType, 'uid': _this.uid, 'feed_type': _this.feed_type, 'feed_key': _this.feed_key, 'fgid': fgid, 'topic_id': _this.topic_id, 'load_count': _this.loadCount, 'gid': _this.gid }, function (msg) {
+        $.get(U('widget/FeedList/loadMore'), { 'loadId': _this.loadId, 'type': _this.feedType, 'uid': _this.uid, 'feed_type': _this.feed_type, 'feed_key': _this.feed_key, 'fgid': fgid, 'topic_id': _this.topic_id, 'load_count': _this.loadCount, 'gid': _this.gid }, function(msg) {
             //alert(msg);
             // 加载失败
             if (msg.status == "0" || msg.status == "-1") {
@@ -85,13 +85,13 @@ core.weibo = {
                     //					_this.startNewLoop();
                 }
                 $('#loadMore').remove();
-//                if (_this.loadCount >= 4) {
-//                    var $lastDl = $('<div></div>');
-//                    $lastDl.html(msg.html);
-//                    //alert(msg.html);
-//                    msg.html = $lastDl.find('div').filter('.conts').slice(30);
-//                    //alert(msg.html.html());
-//                }
+                //                if (_this.loadCount >= 4) {
+                //                    var $lastDl = $('<div></div>');
+                //                    $lastDl.html(msg.html);
+                //                    //alert(msg.html);
+                //                    msg.html = $lastDl.find('div').filter('.conts').slice(30);
+                //                    //alert(msg.html.html());
+                //                }
                 $('#feed-lists').append(msg.html);
                 _this.canLoading = true;
                 _this.loadId = msg.loadId;
@@ -101,16 +101,16 @@ core.weibo = {
                     if ($('#feed-lists .page').find('a').size() > 2) {
                         // 4ping + next 说明还有30个以上
                         var href = false;
-                        $('#feed-lists .page').find('a').each(function () {
+                        $('#feed-lists .page').find('a').each(function() {
                             href = $(this).attr('href');
                         });
                         // 重组分页结构
                         $('#feed-lists .page').html(msg.pageHtml).show();
-                        $('#feed-lists .page').find('a').each(function () {
+                        $('#feed-lists .page').find('a').each(function() {
                             var href = $(this).attr('href');
                             if (href) {
                                 $(this).attr('href', 'javascript:;');
-                                $(this).click(function () {
+                                $(this).click(function() {
                                     core.weibo.loadMoreByPage(href);
                                 });
                             }
@@ -129,11 +129,11 @@ core.weibo = {
         return false;
     },
     // 加载更多答案
-    loadMoreAnswer: function (answerid) {
+    loadMoreAnswer: function(answerid) {
         var _this = this;
         _this.canLoading = false;
         // 获取提问数据
-        $.get(U('widget/AnswerList/loadMore'), { 'feed_id': answerid, 'loadId': _this.loadId, 'type': _this.feedType, 'uid': _this.uid, 'feed_type': _this.feed_type, 'feed_key': _this.feed_key, 'fgid': fgid, 'topic_id': _this.topic_id, 'load_count': _this.loadCount, 'gid': _this.gid }, function (msg) {
+        $.get(U('widget/AnswerList/loadMore'), { 'feed_id': answerid, 'loadId': _this.loadId, 'type': _this.feedType, 'uid': _this.uid, 'feed_type': _this.feed_type, 'feed_key': _this.feed_key, 'fgid': fgid, 'topic_id': _this.topic_id, 'load_count': _this.loadCount, 'gid': _this.gid }, function(msg) {
             // 加载失败
             if (msg.status == "0" || msg.status == "-1") {
                 $('#loadMore').remove();
@@ -162,16 +162,16 @@ core.weibo = {
                     if ($('#feed-lists .page').find('a').size() > 2) {
                         // 4ping + next 说明还有30个以上
                         var href = false;
-                        $('#feed-lists .page').find('a').each(function () {
+                        $('#feed-lists .page').find('a').each(function() {
                             href = $(this).attr('href');
                         });
                         // 重组分页结构
                         $('#feed-lists .page').html(msg.pageHtml).show();
-                        $('#feed-lists .page').find('a').each(function () {
+                        $('#feed-lists .page').find('a').each(function() {
                             var href = $(this).attr('href');
                             if (href) {
                                 $(this).attr('href', 'javascript:;');
-                                $(this).click(function () {
+                                $(this).click(function() {
                                     core.weibo.loadMoreByPage(href);
                                 });
                             }
@@ -190,24 +190,24 @@ core.weibo = {
         return false;
     },
     // 分页加载更多数据
-    loadMoreByPage: function (href) {
+    loadMoreByPage: function(href) {
         var obj = this;
         obj.canLoading = false;
         $('#feed-lists').html("<div class='loading' id='loadMore'>" + L('PUBLIC_LOADING') + "<img src='" + THEME_URL + "/image/load.gif' class='load'></div>");
         scrolltotop.scrollup();
         //alert(href);
-        $.get(href, {}, function (msg) {
+        $.get(href, {}, function(msg) {
             if (msg.status == "0" || msg.status == "-1") {
                 $('#feed-lists').append("<div class='load' id='loadMore'>'+L('PUBLIC_ISNULL')+'</div>");
             } else {
                 $('#feed-lists').html(msg.html);
                 $('#feed-lists').append('<div id="page" class="page" >' + msg.pageHtml + '</div>');
 
-                $('#feed-lists .page').find('a').each(function () {
+                $('#feed-lists .page').find('a').each(function() {
                     var href = $(this).attr('href');
                     if (href) {
                         $(this).attr('href', 'javascript:void(0);');
-                        $(this).click(function () {
+                        $(this).click(function() {
                             core.weibo.loadMoreByPage(href);
                         });
                     }
@@ -219,14 +219,14 @@ core.weibo = {
         return false;
     },
     // 加载最新提问
-    startNewLoop: function () {
+    startNewLoop: function() {
         var _this = this;
-        var searchNew = function () {
+        var searchNew = function() {
             if (_this.firstId < 1) {
                 return false;
             }
             // 加载最新的数据
-            $.post(U('widget/FeedList/loadNew'), { maxId: _this.firstId, type: 'new' + _this.feedType, uid: _this.uid }, function (msg) {
+            $.post(U('widget/FeedList/loadNew'), { maxId: _this.firstId, type: 'new' + _this.feedType, uid: _this.uid }, function(msg) {
                 if (msg.status == 1 && msg.count > 0) {
                     _this.showNew(msg.count);
                     _this.tempHtml = msg.html;
@@ -238,7 +238,7 @@ core.weibo = {
         var loop = setInterval(searchNew, 120000);
     },
     // 提示有多少新提问数据
-    showNew: function (nums) {
+    showNew: function(nums) {
         if ($('#feed-lists').find('.notes').length > 0) {
             $('#feed-lists').find('.notes').html(L('PUBLIC_WEIBO_NUM', { 'sum': nums }));
         } else {
@@ -246,7 +246,7 @@ core.weibo = {
             $('#feed-lists').prepend(html);
         }
     },
-    showNewList: function () {
+    showNewList: function() {
         $('#feed-lists').find('.notes').remove();
         $('#feed-lists').prepend(this.tempHtml);
         this.firstId = this.tmpfirstId;
@@ -254,7 +254,7 @@ core.weibo = {
         M(document.getElementById('feed-lists'));
     },
     // 发布提问之后操作
-    afterPost: function (obj, textarea, topicHtml, description_editor, description, close, questionid, int_isadd) {
+    afterPost: function(obj, textarea, topicHtml, description_editor, description, close, questionid, int_isadd) {
         if (topicHtml == '') {
             textarea.value = '';
             if (description != undefined)
@@ -264,7 +264,7 @@ core.weibo = {
         }
 
         //obj.parentModel.parentModel.childModels['numsLeft'][0].innerHTML = L('PUBLIC_INPUT_TIPES', { 'sum': '<span>' + initNums + '</span>' });
-        var fadeOutObj = function () {
+        var fadeOutObj = function() {
             textarea.ready = null;
             if (description != undefined)
                 description.ready = null;
@@ -299,7 +299,7 @@ core.weibo = {
         }
     },
     // 将json数据插入到feed-lists中
-    insertToList: function (html, feedId, questionid, int_isadd) {
+    insertToList: function(html, feedId, questionid, int_isadd) {
         //alert(html);exit;
         if ("undefined" == typeof (html) || html == '') {
             return false;
@@ -365,7 +365,7 @@ core.weibo = {
         }
     },
     // 检验提问内容，obj = 要验证的表单对象，post = 表示是否发布
-    checkNums: function (obj, post) {
+    checkNums: function(obj, post) {
         //        if ("undefined" == typeof (obj.parentModel.parentModel.parentModel.childModels['numsLeft'])) {
         //            return true;
         //        }
@@ -461,18 +461,18 @@ core.weibo = {
         }
     },
     //邀请回答某个问题
-    Invite: function (feedID, inviteList) {
+    Invite: function(feedID, inviteList) {
         var url = U('public/profile/invitefriendanswer');
         inviteList = inviteList.substring(0, inviteList.length - 1);
         //alert(url);
         //alert(inviteList);
-        $.post(url, { QuestionID: feedID, InviteUids: inviteList }, function (msg) {
+        $.post(url, { QuestionID: feedID, InviteUids: inviteList }, function(msg) {
             ui.showMessage(msg.data, 2, 3);
         }, 'json');
 
     },
     // 发布提问
-    post_feed: function (_this, mini_editor, textarea, description_editor, description, questionid, isbox, url, isAdd, inviteList) {
+    post_feed: function(_this, mini_editor, textarea, description_editor, description, questionid, isbox, url, isAdd, inviteList) {
         var obj = this;
         // 避免重复发送
         if ("undefined" == typeof (obj.isposting)) {
@@ -485,6 +485,12 @@ core.weibo = {
 
         if ("undefined" == typeof (isbox)) {
             isbox = false;
+        }
+
+        //分享到新浪微博
+        var sinaShare = 0;
+        if ($("#cbx_sina").attr("checked") == 'checked') {
+            sinaShare = 1;
         }
 
         // 提问类型在此区分
@@ -568,7 +574,7 @@ core.weibo = {
             int_isadd = 1;
 
         // 发布提问
-        $.post(url, { body: data, type: type, app_name: app_name, content: '', attach_id: attach_id, videourl: videourl, channel_id: channel_id, source_url: attrs.source_url, gid: attrs.gid, description: txtVal, questionid: Qid, addask: int_isadd, inviteid: inviteid }, function (msg) {
+        $.post(url, { body: data, type: type, app_name: app_name, content: '', attach_id: attach_id, videourl: videourl, channel_id: channel_id, source_url: attrs.source_url, gid: attrs.gid, description: txtVal, questionid: Qid, addask: int_isadd, inviteid: inviteid, ShareSina: sinaShare }, function(msg) {
             obj.isposting = false;
             //_this.className = 'btn-grey-white';
             //$(_this).html('<span>' + L('PUBLIC_SHARE_BUTTON') + '</span>');
@@ -586,7 +592,7 @@ core.weibo = {
                     var mini = M.getModelArgs(mini_editor);
                     ui.success(mini.prompt);
                     if (document.getElementById('feed-lists') != null && channel_id == 0) {
-                        setTimeout(function () {
+                        setTimeout(function() {
                             core.weibo.insertToList(msg.data, msg.feedId, questionid);
                         }, 1500);
                     }
@@ -604,8 +610,8 @@ core.weibo = {
         }, 'json');
         return false;
     },
-    friendlyDate: function (sTime, cTime) {
-        var formatTime = function (num) {
+    friendlyDate: function(sTime, cTime) {
+        var formatTime = function(num) {
             return (num < 10) ? '0' + num : num;
         };
 

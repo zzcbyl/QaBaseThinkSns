@@ -8,6 +8,7 @@
 
 
 <div id="InviteDeal" class="pengyou">
+    <php>if($friendList['data']){</php>
     <ul style="height:164px;">
         <volist name="friendList['data']" id="vo">
             <li id="UserLi_{$vo['fid']}" onclick="changeLi({$vo['fid']});" name="firendLi" hidval="{$vo['fid']}">
@@ -16,6 +17,9 @@
             </li>
         </volist>
     </ul>
+    <php>}else{</php>
+        <div class="loading">你还没有朋友呢，赶快去添加朋友，邀请朋友来回答问题吧！</div>
+    <php>}</php>
     <div style="clear:both;"></div>
 
     <div class="page" style="padding:0;">
@@ -27,12 +31,16 @@
     var changeLiHtml = "";
     var changeID = "";
     var quesionID = 0;
-    $(document).ready(function () {
+    $(document).ready(function() {
         $("#topcontrol").hide();
         quesionID = $("#feed_questionid", parent.document).val();
         changeID = $("#LSInviteUid", parent.document).val();
         changeLiHtml = $("#LSInviteUidLi", parent.document).val();
         var li = $('#InviteDeal li');
+//        if (li.length <= 0) {
+//            $("#friendTitle", parent.document).hide();
+//            $("#InviteDeal").hide();
+//        }
         if (changeID != "") {
             var checkChangeID = changeID + ',';
             for (var i = 0; i < li.length; i++) {

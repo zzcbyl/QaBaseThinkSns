@@ -48,6 +48,13 @@ class SendWeiboWidget extends Widget {
 		foreach($type as $value) {
 			!isset($var['actions'][$value]) && $var['actions'][$value] = true; 
 		}
+		
+		$loginData = model('Login')->get($data['uid']);
+		if($loginData['oauth_token'] != '')
+		{
+			$var['token'] = '1';
+		}
+		
 	    // 渲染模版
 	    $content = $this->renderFile(dirname(__FILE__)."/SendWeibo.html", $var);
 	

@@ -106,6 +106,29 @@ class FeedAction extends Action {
 			$return = array('status'=>0,'data'=>model('Feed')->getError());
 			exit(json_encode($return));
 		}
+		
+		//分享到微博
+		if($_POST['ShareSina'] == "1")
+		{
+			$loginData = model('Login')->get($data['uid']);
+			if($loginData['oauth_token'] != '')
+			{
+				$urlPar = 'http://sync.luqinwenda.cn/sync.aspx?oriid='.$data['feed_id'].'&token='.$loginData['oauth_token'].'&content='.$data['body'];
+				// 初始化一个 cURL 对象
+				$curl = curl_init();
+				// 设置你需要抓取的URL
+				curl_setopt($curl, CURLOPT_URL, $urlPar);
+				// 设置header
+				curl_setopt($curl, CURLOPT_HEADER, 1);
+				// 设置cURL 参数，要求结果保存到字符串中还是输出到屏幕上。
+				curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+				// 运行cURL，请求网页
+				$data = curl_exec($curl);
+				// 关闭URL请求
+				curl_close($curl);
+			}
+		}
+		
 		// 发布邮件之后添加积分
 		model ( 'Credit' )->setUserCredit ( $this->uid, 'add_weibo' );
 		// 提问来源设置
