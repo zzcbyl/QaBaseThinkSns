@@ -84,6 +84,11 @@ class FeedAction extends Action {
 		$d['questionid'] = filter_keyword($_POST['questionid']);		
 		// 是否追问
 		$d['isadd'] = filter_keyword($_POST['addask']);	
+		$d['inviteid'] = 0;
+		if(intval($_POST['inviteid']) > 0)
+		{
+			$d['inviteid'] = intval($_POST['inviteid']);
+		}
 	
 		// 安全过滤
 		foreach($_POST as $key => $val) {
@@ -113,7 +118,9 @@ class FeedAction extends Action {
 			$loginData = model('Login')->get($data['uid']);
 			if($loginData['oauth_token'] != '')
 			{
-				$urlPar = 'http://sync.luqinwenda.cn/sync.aspx?oriid='.$data['feed_id'].'&token='.$loginData['oauth_token'].'&content='.$data['body'];
+				$contentTxt = '我在卢勤问答平台，提出了一个问题：“'.$data['body'].'”，大家都来帮帮我。http://www.luqinwenda.cn/index.php%3Fapp=public%26mod=Passport%26act=newquestion%26feed_id='.$data['feed_id'];
+			
+				$urlPar = 'http://sync.luqinwenda.cn/sync.aspx?oriid='.$data['feed_id'].'&token='.$loginData['oauth_token'].'&content='.$contentTxt;
 				// 初始化一个 cURL 对象
 				$curl = curl_init();
 				// 设置你需要抓取的URL

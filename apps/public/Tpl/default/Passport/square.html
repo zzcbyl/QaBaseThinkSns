@@ -9,7 +9,7 @@
             <div class="g_cont">
                 <volist name="HotTopicList" id="htl" key="k" >
                     <dl>
-                        <dt><a href="{:U('public/Index/feed',array('feed_id'=>$htl['feed_id'],'uid'=>$htl['uid']))}" target="_blank">{$htl.body}</a><span>{$htl.answer_count}个回答</span></dt>
+                        <dt class="t{$k}"><a href="{:U('public/Index/feed',array('feed_id'=>$htl['feed_id'],'uid'=>$htl['uid']))}" target="_blank">{$htl.body}</a><span>{$htl.answer_count}个回答</span></dt>
                         <php>if($k < 3) {</php>
                         <dd>{$htl.description}</dd>
                         <php>}</php>
@@ -22,7 +22,7 @@
         <div class="g_cont">
             <ul>
                 <volist name="HotUserList" id="hul">
-                    <li>
+                    <li class="t{$i}">
                         <a href="{$hul['space_url']}" target="_blank"><img class="thumb" src="{$hul['avatar_tiny']}" width="35" height="35" event-node="face_card" uid="{$hul['uid']}" /></a>
                         <h5>{$hul['space_link']}</h5>
                         <p>{$hul['userdata']['value']}个回答</p>

@@ -7,7 +7,7 @@
 class FeedModel extends Model {
 
 	protected $tableName = 'feed';
-	protected $fields = array('feed_id','uid','type','app','app_row_id','app_row_table','publish_time','is_del','from','comment_count','repost_count','comment_all_count','digg_count','is_repost','is_audit','feed_questionid','feed_quid','answer_count','disapprove_count','feed_pv','thank_count','add_feedid','following_count','invite_count','_pk'=>'feed_id');
+	protected $fields = array('feed_id','uid','type','app','app_row_id','app_row_table','publish_time','is_del','from','comment_count','repost_count','comment_all_count','digg_count','is_repost','is_audit','feed_questionid','feed_quid','answer_count','disapprove_count','feed_pv','thank_count','add_feedid','following_count','invite_count','isInviteAnswer','_pk'=>'feed_id');
 
 	public $templateFile = '';			// 模板文件
 
@@ -55,6 +55,10 @@ class FeedModel extends Model {
 		$data['from'] = isset($data['from']) ? intval($data['from']) : getVisitorClient();
 		$data['is_del'] = $data['comment_count'] = $data['repost_count'] = $data['disapprove_count'] = 0;
 		$data['is_repost'] = $is_repost;
+		if($data['inviteid'] != 0)
+		{
+			$data['isInviteAnswer'] = 1;
+		}
 		if($data['isadd']=="0")
 		{
 			if($data['questionid']==null || $data['questionid'] == 0){

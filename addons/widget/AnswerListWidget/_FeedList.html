@@ -32,6 +32,9 @@ $admintaskrecom = CheckPermission('vtask_admin','vtask_recommend');
 	</php>
     <div class="answer12 mt20" model-node='feed_list' style="border-top: 1px dotted #DFDFDF; padding-top:30px;">
         <div class="aTop2">
+            <php>if($vl['isInviteAnswer'] == '1') {</php>
+            <p class="yIcon" title="被邀请回答"></p>
+            <php>}</php>
             <p class="icon">
             </p>
             <p class="a">
