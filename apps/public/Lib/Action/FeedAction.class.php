@@ -118,7 +118,7 @@ class FeedAction extends Action {
 			$loginData = model('Login')->get($data['uid']);
 			if($loginData['oauth_token'] != '')
 			{
-				$contentTxt = substr($data['description'], 0, 272).'... 请 @卢勤问答网站 来帮帮我。。'.SITE_URL.'/index.php%3Fapp=public%26mod=Passport%26act=newquestion%26feed_id='.$data['feed_id'];
+				$contentTxt = substr($data['description'], 0, 272).'...　请 @卢勤问答网站 来帮帮我。'.SITE_URL.'/index.php%3Fapp=public%26mod=Passport%26act=newquestion%26feed_id='.$data['feed_id'];
 			
 				$urlPar = 'http://sync.luqinwenda.cn/sync.aspx?oriid='.$data['feed_id'].'&token='.$loginData['oauth_token'].'&content='.$contentTxt;
 				// 初始化一个 cURL 对象
