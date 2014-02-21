@@ -241,7 +241,7 @@ class NotifyModel extends Model {
 		$s['title'] = t($data['title']);
 		$body = html_entity_decode($data['body']);
 		$site = model('Xdata')->get('admin_Config:site');
-		$s['body']= '<style>a.email_btn,a.email_btn:link,a.email_btn:visited{background:#0F8CA8;padding:5px 10px;color:#fff;width:80px;text-align:center;}</style><div style="width:700px;border:#C22B2B solid 2px;margin:0 auto; line-height:30px;"><div style="color:#bbb;background:#C22B2B;padding:5px;overflow:hidden;zoom:1">
+		$s['body']= '<style>a.email_btn,a.email_btn:link,a.email_btn:visited{background:#0F8CA8;padding:5px 10px;color:#fff;width:80px;text-align:center;}</style><div style="width:700px;border:#C22B2B solid 2px;margin:0 auto; line-height:30px;"><div style="color:#bbb;background:#C22B2B;padding:10px;overflow:hidden;zoom:1">
 					<div style="float:left;overflow:hidden;position:relative"><a><img style="border:0 none" src="'.$GLOBALS['ts']['site']['logo'].'"></a></div></div>
 					<div style="background:#fff;padding:20px;min-height:300px;position:relative">		<div style="font-size:14px;">			
 						            	<p style="padding:0;margin:0;font-size:14px">'.$body.'</p>
