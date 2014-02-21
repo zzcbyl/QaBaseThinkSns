@@ -177,7 +177,7 @@ $admintaskrecom = CheckPermission('vtask_admin','vtask_recommend');
                                 <div class="contTit">
                                     <a href="{$vl['answer'][0]['user_info']['space_url']}"><img class="thumb" src="{$vl['answer'][0]['user_info']['avatar_small']}"  event-node="face_card" uid='{$vl['answer'][0]['user_info']['uid']}'></a>
                                     <eq name='vl.is_del' value='0'>
-                                    <h2>
+                                    <h1>
                                         {$vl['answer'][0].title}
 	                                    <php> if(in_array($vl['answer'][0]['user_info']['uid'],$followUids)){</php>
 	                                    {:W('Remark',array('uid'=>$vl['answer'][0]['user_info']['uid'],'remark'=>$remarkHash[$vl['answer'][0]['user_info']['uid']],'showonly'=>1))}
@@ -188,7 +188,7 @@ $admintaskrecom = CheckPermission('vtask_admin','vtask_recommend');
                                                 <img style="width:auto;height:auto;display:inline;cursor:pointer;" src="{$v2['user_group_icon_url']}" title="{$v2['user_group_name']}" />&nbsp;
                                             </volist>
                                         </p>
-                                    </h2>
+                                    </h1>
                                     <php>
                                         if(strlen($vl['answer'][0]['body'])>279) {
                                     </php>
@@ -365,7 +365,7 @@ $admintaskrecom = CheckPermission('vtask_admin','vtask_recommend');
                                 <div class="contTit">
                                     <a href="{$vl['answer'][0]['user_info']['space_url']}"><img class="thumb" src="{$vl['answer'][0]['user_info']['avatar_small']}"  event-node="face_card" uid='{$vl['answer'][0]['user_info']['uid']}'></a>
                                     <eq name='vl.is_del' value='0'>
-                                    <h2>
+                                    <h1>
                                         {$vl['answer'][0].title}
 	                                    
 	                                    <php> if(in_array($vl['answer'][0]['user_info']['uid'],$followUids)){</php>
@@ -377,7 +377,7 @@ $admintaskrecom = CheckPermission('vtask_admin','vtask_recommend');
                                                 <img style="width:auto;height:auto;display:inline;cursor:pointer;" src="{$v2['user_group_icon_url']}" title="{$v2['user_group_name']}" />&nbsp;
                                             </volist>
                                         </p>
-                                    </h2>
+                                    </h1>
                                     <php>
                                         if(strlen($vl['answer'][0]['body'])>279) {
                                     </php>
