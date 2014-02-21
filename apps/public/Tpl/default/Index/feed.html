@@ -15,13 +15,15 @@
                     <a href="{$feedInfo['user_info']['space_url']}"><img class="thumb" src="{$feedInfo['user_info']['avatar_small']}"  event-node="face_card" uid='{$feedInfo['user_info']['uid']}' /></a>
                     <h1>
                         <a href="{$feedInfo['user_info']['space_url']}">{$feedInfo.title}</a>
-	                    <volist name="feedInfo['GroupData'][$feedInfo['uid']]" id="v2">
-                            <img style="width:auto;height:auto;display:inline;cursor:pointer;" src="{$v2['user_group_icon_url']}" title="{$v2['user_group_name']}" />&nbsp;
-                        </volist>
 	                    <php> if(in_array($feedInfo['user_info']['uid'],$followUids)){</php>
 	                    {:W('Remark',array('uid'=>$feedInfo['user_info']['uid'],'remark'=>$remarkHash[$feedInfo['user_info']['uid']],'showonly'=>1))}
 	                    <php>}</php>
                         <php>if(!empty($feedInfo['body'])){</php><php>}</php>
+                        <p class="xz" style="right:20px;">
+                            <volist name="feedInfo['GroupData'][$feedInfo['uid']]" id="v2">
+                                <img style="width:auto;height:auto;display:inline;cursor:pointer;" src="{$v2['user_group_icon_url']}" title="{$v2['user_group_name']}" />&nbsp;
+                            </volist>
+                        </p>
                     </h1>
                     <h2><a href="javascript:void(0);">{$feedInfo.body|format=true}</a></h2>
                     <div><p>{$feedInfo.description|format=true}</p></div>
