@@ -564,7 +564,7 @@ p.FloatNew{background:url(../image/new.png) no-repeat; position:absolute; width:
 .zuopin{border-top:solid 1px #e6e6e6; padding-top:10px;}
 .zuopin h3{font-size:14px; padding:0px 0px 10px}
 .zuopin ul li{ background:url(../image/dot_r.png) no-repeat left center; text-indent:.6em; float:left; width:330px; height:25px; line-height:25px; position:relative;}
-.jianjieBox{ background:url(../image/jianjie_bg.png) no-repeat; height:71px; width:235px; z-index:9999; position:absolute; top:15px; font-size:12px; padding:30px 10px 10px; line-height:22px; color:#666}
+.jianjieBox{ background:url(../image/jianjie_bg.png) no-repeat; height:71px; width:235px; z-index:9999; position:absolute; top:15px; font-size:12px; padding:30px 10px 10px; line-height:18px; color:#666}
 .zuopin ul li a{font-size:12px; color:#333; display:block; height:25px; overflow:hidden;}
 .zuopin ul li a:hover{color:#d32020}
 .zhuanjia_right{width:200px; float:right; overflow:hidden; padding-right:20px;}

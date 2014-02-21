@@ -61,7 +61,7 @@ class PassportAction extends Action
 		$this->assign('newfeedList', $newfeedList);
 		
 		//最新用户
-		$NewUserList = model('User')->getList(array(),12,'uid');
+		$NewUserList = model('User')->getList(array(),12,'uid', 'ctime desc');
 		$uids = getSubByKey($NewUserList, 'uid');
 		$NewUserInfoList = model('User')->getUserInfoByUids($uids);
 		$this->assign('NewUserList', $NewUserInfoList);
