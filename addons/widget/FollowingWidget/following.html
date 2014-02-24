@@ -7,8 +7,9 @@
             <img src="{$vo['user_info']['avatar_small']}" uid="{$vo['fid']}" event-node="face_card" /></a>
         <h2>
             <a href="{:U('public/Profile/index',array('uid'=>$vo['fid']))}" uid="{$vo['fid']}" event-node="face_card">{$vo['user_info']['uname']|getShort=4}</a></h2>
-        <p>
-            {$vo['user_info']['intro']}</p>
+        <p title="{$vo['user_info']['intro']}">
+            <php>if(strlen($vo['user_info']['intro'])>72) echo utf_substr($vo['user_info']['intro'],45).'...'; else echo $vo['user_info']['intro'];</php>    
+        </p>
     </li>
     </volist>
 </ul>

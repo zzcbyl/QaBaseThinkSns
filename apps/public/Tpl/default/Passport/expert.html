@@ -119,7 +119,7 @@
 <!--卢勤精彩问答-->
 <!--专家顾问团-->
 <div class="guwen">
-	<h1 class="jz3">专家顾问团</h1>
+	<h1 class="jz3">认证专家团</h1>
     <div class="tuwenList">
         
     	<ul>
@@ -130,13 +130,23 @@
                     <a href="{$expert['space_url']}"><img src="{$expert['avatar_big']}" event-node="face_card" uid="{$expert['uid']}" /></a>
                 </div>
                 <div class="pro_cont">
-                    <h4><a href="{$expert['space_url']}" event-node="face_card" uid="{$expert['uid']}">{$expert['uname']}</a><a href="javascript:void(0);" class="zjrz"></a></h4>
-                    <p style="height:36px; overflow:hidden;"><strong>简介：</strong>{$expert['intro']}</p>
+                    <h4><a href="{$expert['space_url']}" event-node="face_card" uid="{$expert['uid']}">{$expert['uname']}</a></h4>
+                    <p style="height:36px; overflow:hidden;" title="{$expert['intro']}"><strong>简介：</strong>
+                        <php>if(strlen($expert['intro'])>72) echo utf_substr($expert['intro'],52).'...'; else echo $expert['intro'];</php>
+                    </p>
                     <p class="comm hd pt0">
                     <a title="赞同数" href="javascript:void(0);" class="d"><php>if(empty($authenticateExpert_UserCount[$expert['uid']]['comment_agree_count'])) echo '0'; else echo $authenticateExpert_UserCount[$expert['uid']]['comment_agree_count'];</php></a>
                     <a title="感谢数" href="javascript:void(0);" class="hx"><php>if(empty($authenticateExpert_UserCount[$expert['uid']]['tothanked_count'])) echo '0'; else echo $authenticateExpert_UserCount[$expert['uid']]['tothanked_count'];</php></a>
                     <a title="反对数" href="javascript:void(0);" class="c"><php>if(empty($authenticateExpert_UserCount[$expert['uid']]['comment_oppose_count'])) echo '0'; else echo $authenticateExpert_UserCount[$expert['uid']]['comment_oppose_count'];</php></a>
                     <a title="邀请数" href="javascript:void(0);" class="tel"><php>if(empty($authenticateExpert_UserCount[$expert['uid']]['be_invited_count'])) echo '0'; else echo $authenticateExpert_UserCount[$expert['uid']]['be_invited_count'];</php></a>
+                    </p>
+                    <p class="xz">
+                        <php>if(count($expert['user_group'])>0){</php>
+                        <strong>勋章：</strong>
+                        <volist name="expert['user_group']" id="ui2">
+                            <img style="width:auto;height:auto;display:inline;cursor:pointer;" src="{$ui2['user_group_icon_url']}" title="{$ui2['user_group_name']}" />&nbsp;
+                        </volist>
+                        <php>}</php>
                     </p>
                 </div>
                 </div>

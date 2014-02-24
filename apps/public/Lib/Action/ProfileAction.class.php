@@ -1296,9 +1296,26 @@ class ProfileAction extends Action {
 	*/
 	public function invitefriend()
 	{
+		$topUserID = 1901;
 		$friendList = model('Follow')->getFriendList($GLOBALS['ts']['mid'], 18);	
 		$fids = getSubByKey ( $friendList ['data'], 'fid' );
 		$this->_assignUserInfo ( $fids );
+		
+		$uids = model('UserGroupLink')->getUserByGroupID(8, 4);
+		$user_count = model ( 'UserData' )->getUserDataByUids ($uids);
+		$authenticateExpert = model('user')->getUserInfoByUids($uids);
+		
+		$newuserList = array();
+		foreach($friendList['data'] as $k=>$v)
+		{
+			if(!array_key_exists($v['fid'], $authenticateExpert) && $v['fid'] != $topUserID )
+			{
+				$newuserList[$k] = $v;
+			}
+		}
+		
+		$friendList['data'] = $newuserList;
+		
 		$this->assign('friendList',$friendList);
 		
 		$this->display ();

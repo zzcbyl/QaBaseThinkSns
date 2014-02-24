@@ -49,7 +49,7 @@
         	    <li><a class="{$tabClass.index}" href="{:SITE_URL}">首页</a></li>
                 <li><a class="{$tabClass.square}" href="{:U('public/Passport/square')}">广场</a></li>
                 <li><a class="{$tabClass.expert}" href="{:U('public/Passport/expert')}">专家</a></li>
-                <li><a href="#">活动</a></li>
+                <li><!--<a href="#">活动</a>--></li>
             </ul>
             <div class="search_box">
                 <div class="search">
@@ -70,8 +70,8 @@
             </div>
             <div class="person" style="float:right;">
                 <ul class="short_nav">
+                    <li><a href="{:U('public/Index/postfeed')}" class="h" title="提问"></a></li>
                     <li><a href="{:U('public/Profile/collection')}" class="c" title="收藏夹"></a></li>
-        	        <!--<li><a href="#" class="h"></a></li>-->
                     <li model-node="notice" style="position:relative;">
                         <a id="noticeCount" style="position:absolute; background:none; top:-10px; right:2px; color:#fff;"></a>
                         <a href="{:U('public/Profile/newanswerinfo')}" class="v" title="消息"></a>

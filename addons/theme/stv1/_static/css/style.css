@@ -213,10 +213,10 @@ a{text-decoration:none;}
 .g_new_wt .g_cont{ }
 .g_new_wt h1{font-size:20px; background:#dd8d26; color:#fff; text-indent:.5em; height:30px; line-height:30px}
 .g_new_wt ul li{ background:url(../image/dot_r.png) no-repeat left; text-indent:.5em; line-height:30px; position:relative;}
-.g_new_wt ul li a{font-size:12px; color:#333; display: block; height: 30px; width: 470px; overflow: hidden;}
+.g_new_wt ul li a{font-size:12px; color:#333; display: block; height: 30px; width: 460px; overflow: hidden;}
 .g_new_wt ul li span{position:absolute; font-size:12px; color:#ccc; text-align:left; top:0px}
-.g_new_wt ul li span.g_com{right:90px; width:70px;}
-.g_new_wt ul li span.g_nic{color:#666; right:0px; width:90px; overflow:hidden;}
+.g_new_wt ul li span.g_com{right:110px; width:70px;}
+.g_new_wt ul li span.g_nic{color:#666; right:0px; width:120px; overflow:hidden;}
 .g_user{overflow:hidden; margin-top:20px;}
 .g_user ul li{position:relative; overflow:hidden; margin-bottom:5px; *margin-bottom:1px; _width:180px;}
 .g_user ul li img{float:left;margin-right:10px; width:35px; height:35px;}
@@ -236,14 +236,14 @@ a{text-decoration:none;}
 .g_new_dp ul li{margin-bottom:30px; _width:645px; clear:left; overflow:hidden;}
 .g_new_dp ul li img{float:left; width:60px; height:60px;}
 .g_new_dp ul li div{ margin-left:10px; padding-left:15px; font-size:14px; float:left; width:555px;}
-.g_new_dp ul li div h2.tit{font-size:14px; color:#333; padding:5px 10px; background:url(../image/icon_w.png) no-repeat 6px center #d9d9d9; text-indent:1.8em}
+.g_new_dp ul li div h2.tit{font-size:14px; color:#333; padding:5px 10px 5px 30px; background:url(../image/icon_w.png) no-repeat 6px center #d9d9d9;}
 .g_new_dp ul li div p.name{padding:10px 0px; position:relative; _width:560px;}
 .g_new_dp ul li div p.name a.nic{color:#46addb;}
 .g_new_dp ul li div p.name a.dp{color:#999; padding:0px 10px}
 .g_new_dp ul li div p.name span{position:absolute; right:0; top:10px; font-size:12px; color:#999}
 .g_new_dp ul li div p.cont{line-height:24px; color:#666; font-size:14px}
 .g_list li{line-height:20px; margin-bottom:10px;}
-.g_list li h2 a{font-size:12px; color:#666; display: block; float: left;height: 20px;margin-left: 5px;overflow: hidden;width: 180px;}
+.g_list li h2 a{font-size:12px; color:#666; display: block; float: left;height: 20px;margin-left: 5px;overflow: hidden;width: 200px;}
 .g_list li h2 span{ display:inline-block; background:url(../image/icon_num.png) no-repeat right bottom; width:18px; text-align:left; font-size:10px; color:#666;}
 .g_list li h2 span.top{background:url(../image/icon_num_top.png) no-repeat right bottom; color:#c02929; float:left;}
 .g_list li p{font-size:12px; color:#999; max-height:40px; overflow:hidden;}
@@ -558,7 +558,7 @@ p.FloatNew{background:url(../image/new.png) no-repeat; position:absolute; width:
 .jz1,.jz2,.jz3,.jz4,.zjrz{background:url(../image/sprite_tiwen.png) no-repeat; height:45px; line-height:99em; overflow:hidden; margin-bottom:10px}
 .jz1{ background-position:0px -380px;}
 .jz2{ background-position:0px -436px;}
-.jz3{ background-position:0px -491px;}
+.jz3{ background-position:-185px -495px;}
 .jz4{ background-position:0px -547px;}
 .zjrz{ background-position:0px -603px; width:54px; height:17px; display:inline-block; vertical-align:middle; margin:0px; margin-left:10px;}
 .zuopin{border-top:solid 1px #e6e6e6; padding-top:10px;}
@@ -596,7 +596,7 @@ p.FloatNew{background:url(../image/new.png) no-repeat; position:absolute; width:
 .zjHuida ul li{margin-bottom:30px; width:460px; height:150px;float:left; margin-right:8px; overflow:hidden;}
 .zjHuida ul li img{float:left; width:60px; height:60px;}
 .zjHuida ul li div{font-size:14px; float:left;}
-.zjHuida ul li div h2.tit{font-size:14px; color:#333; padding:5px 10px; background:url(../image/icon_w.png) no-repeat 6px center #d9d9d9; text-indent:1.8em; height: 20px; line-height: 20px; overflow: hidden; width:440px; }
+.zjHuida ul li div h2.tit{font-size:14px; color:#333; padding:5px 10px 5px 30px; background:url(../image/icon_w.png) no-repeat 6px center #d9d9d9; line-height: 20px; overflow: hidden; width:410px; }
 .zjHuida ul li div h2.tit a { color:#333333; }
 .zjHuida ul li div p.name{padding:10px 0px; position:relative; _width:560px;}
 .zjHuida ul li div p.name a.nic{color:#46addb;}

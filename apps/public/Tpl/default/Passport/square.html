@@ -9,7 +9,10 @@
             <div class="g_cont">
                 <volist name="HotTopicList" id="htl" key="k" >
                     <dl>
-                        <dt class="t{$k}"><a href="{:U('public/Index/feed',array('feed_id'=>$htl['feed_id'],'uid'=>$htl['uid']))}" target="_blank">{$htl.body}</a><span>{$htl.answer_count}个回答</span></dt>
+                        <dt class="t{$k}">
+                            <a href="{:U('public/Index/feed',array('feed_id'=>$htl['feed_id'],'uid'=>$htl['uid']))}" target="_blank" title="{$htl['body']}">
+                                <php> if(strlen($htl['body'])>48) echo utf_substr($htl['body'], 32).'...'; else echo $htl['body'];</php>
+                            </a><span>{$htl.answer_count}个回答</span></dt>
                         <php>if($k < 3) {</php>
                         <dd>{$htl.description}</dd>
                         <php>}</php>
@@ -130,7 +133,11 @@
         <ul class="g_list mb20">
             <volist name="FollowingQuestion" id="fq" key="k">
             <li>
-            <h2><span class="top">{$k}</span><a href="{:U('public/Index/feed',array('feed_id'=>$fq['feed_id'],'uid'=>$fq['uid']))}" target="_blank">{$fq.body}</a><div style="clear:both;"></div></h2>
+            <h2><span class="top">{$k}</span>
+                <a href="{:U('public/Index/feed',array('feed_id'=>$fq['feed_id'],'uid'=>$fq['uid']))}" target="_blank" title="{$fq.body}">
+                    
+                    <php>if(strlen($fq['body'])>45) echo utf_substr($fq['body'], 30).'...'; else echo $fq['body'];</php>
+                </a><div style="clear:both;"></div></h2>
             <p>{$fq.description}</p>
             </li>
             </volist>
@@ -142,17 +149,17 @@
                 <li>
                     <a href="{$nul['space_url']}"><img class="thumb" src="{$nul['avatar_small']}" width="35" height="35" event-node="face_card" uid="{$nul['uid']}" /></a>
                     <br />
-                    {$nul['space_link']}
+                    <span title="{$nul['uname']}" style="width:60px; display:block; height:22px; line-height:22px; overflow:hidden;">{$nul['space_link']}</span>
                 </li>
             </volist>
         </ul>
         
-        <h1 class="hd">最新活动<span></span></h1>
+        <!--<h1 class="hd">最新活动<span></span></h1>
         <ul class="contList">
             <li><a href="#">雷人规定：迟到罚亲嘴，男同事嗨了</a></li>
             <li><a href="#">8秒小电影，和木子美老师来PK</a></li>
             <li><a href="#">男朋友标准？会织毛衣的必须嫁</a></li>
-        </ul>
+        </ul>-->
 
     </div>
 </div>

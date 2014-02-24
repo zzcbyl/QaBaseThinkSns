@@ -416,7 +416,7 @@ class PassportAction extends Action
 		$this->assign('ExpertQA',$QAList);
 		
 		//认证专家
-		$uids = model('UserGroupLink')->getUserByGroupID(8, 6);
+		$uids = model('UserGroupLink')->getUserByGroupID(8);
 		$user_count = model ( 'UserData' )->getUserDataByUids ($uids);
 		$authenticateExpert = model('user')->getUserInfoByUids($uids);
 		//print_r($authenticateExpert);
