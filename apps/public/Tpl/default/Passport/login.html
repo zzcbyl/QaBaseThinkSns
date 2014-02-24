@@ -3,11 +3,13 @@
  
 <div class="bannerWrap">
     <div id="js_login_input" style="display:none; height:50px; line-height:50px; font-size:16px; font-weight:bold; background:#FBFBFB; width:150px; padding:0 50px; position:absolute; top:130px; left:550px;">
-        <i class="ico-error" style="float:left; margin-top:15px;"></i> <span style="float:left; font-size:14px; margin-left:5px; "></span>
+        <i class="ico-error" style="float:left; margin-top:15px;"></i> <span style=" font-size:14px; margin-left:5px; "></span>
         <i class="arrow_left" style="position:absolute; right:-7px; top:15px; "></i>
     </div>
     <form id="ajax_login_form" method="POST" action="{:U('public/Passport/doLogin')}">
 	<div class="loginWrap">
+	    <div class="h_logo">
+                <a href="{:SITE_URL}" <php>if(strpos($_SERVER['HTTP_USER_AGENT'],'MSIE 6.0') !== false):</php>style="_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='{$site.logo}', sizingMethod='crop');_background:none;"<php>else:</php>style="background:url({$site.logo}) no-repeat center; "<php>endif;</php>> </a></div>
     	<div class="loginBox">
         	<div>
                 <input id="account_input" name="login_email" type="text" class="lInput" autocomplete="off" value="用户名" />
