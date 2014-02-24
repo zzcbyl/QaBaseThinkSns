@@ -459,7 +459,7 @@ p.FloatNew{background:url(../image/new.png) no-repeat; position:absolute; width:
 .twtp:hover{background-position:-428px -140px;}
 .twsp:hover{background-position:-498px -140px;}
 .twyqhd:hover{background-position:-560px -140px; width:78px; }
-.share_box{height:25px; line-height:25px; text-align:left;  padding:10px 0px}
+.share_box{ line-height:25px; text-align:left;  padding:10px 0px}
 .share_box a{ display:inline-block; font-size:12px; color:#999;}
 .s_qq,.s_sina,.s_tx,.s_rr,.s_sn,.s_bd,.s_qq_ed,.s_sina_ed,.s_tx_ed,.s_rr_ed,.s_sn_ed,.s_bd_ed{ background:url(../image/share.png) no-repeat; width:17px; height:17px;}
 .s_qq{background-position:0px 0px;}

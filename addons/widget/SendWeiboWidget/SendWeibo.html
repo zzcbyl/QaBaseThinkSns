@@ -205,10 +205,14 @@ function changeExpert(uid) {
     }
     $("#Expert_" + uid).css("background", "#FAE7C7");
 
+    if (expertLi != '') {
+        $('#LSInviteUidLi').val($('#LSInviteUidLi').val().replace(expertLi, ""));
+    }
+    
     $("#ExpertUid").val(uid);
     expertLi = '<li id="UserLi_' + $("#ExpertUid").val() + '"><img src="' + $("#Expert_" + $("#ExpertUid").val() + " .pro_img img").attr('src') + '"/><br/><p style="height: 20px; line-height: 20px; overflow: hidden;">' + $("#Expert_" + $("#ExpertUid").val() + " .pro_img a").attr('title') + '</p><input type="button" value="取消" onclick="cancelInvite(' + $("#ExpertUid").val() + ');"/></li>';
 }
-    
+
 
 function Invite() {
     if ($('#LSInviteUid').val() == '' && $("#ExpertUid").val() == '') {
@@ -219,7 +223,7 @@ function Invite() {
     }
     $('#InviteUid').val($('#LSInviteUid').val() + $("#ExpertUid").val());
     //$('#InviteUid').val($('#LSInviteUid').val());
-    if ($("#ExpertUid").val() != '') {
+    if ($("#ExpertUid").val() != '' && $('#LSInviteUidLi').val().indexOf(expertLi) < 0) {
         $('#LSInviteUidLi').val(expertLi + $('#LSInviteUidLi').val());
     }
 
@@ -228,9 +232,15 @@ function Invite() {
     $("#InvitedFriend").show();
     $('.reveal-modal').css({ 'visibility': 'hidden' });
     $('.reveal-modal-bg').css({ 'display': 'none' });
+    
 }
 
 function cancelInvite(LiID) {
+    if ($("#ExpertUid").val() == LiID) {
+        $('#InviteUid').val($('#InviteUid').val().replace(',' + $("#ExpertUid").val(), ""));
+        $('#LSInviteUidLi').val($('#LSInviteUidLi').val().replace(expertLi, ""));
+        expertLi = "";
+    }
     $('#InviteUid').val($('#InviteUid').val().replace(LiID + ',', ""));
     $('#LSInviteUid').val($('#LSInviteUid').val().replace(LiID + ',', ""));
     $("#UserLi_" + LiID).remove();
