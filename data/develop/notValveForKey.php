@@ -89,5 +89,9 @@ return array (
   '<BR />邀请“梁爽”成功<BR />' => '?app=public&mod=profile&act=invitefriendanswer',
   '<BR />邀请“田昊”成功<BR />' => '?app=public&mod=profile&act=invitefriendanswer',
   '<BR />邀请“邵金”成功<BR />' => '?app=public&mod=profile&act=invitefriendanswer',
+  '<BR />邀请“CN36305”成功<BR />邀请“大学没毕业”成功<BR />' => '?app=public&mod=profile&act=invitefriendanswer',
+  '<BR />邀请“CN36307”成功<BR />邀请“大学没毕业”成功<BR />' => '?app=public&mod=profile&act=invitefriendanswer',
+  '<BR />邀请“CN36307”成功<BR />邀请“CN36302”成功<BR />' => '?app=public&mod=profile&act=invitefriendanswer',
+  '<BR />已经邀请过“CN36307”<BR />已经邀请过“CN36302”<BR />' => '?app=public&mod=profile&act=invitefriendanswer',
 );
 ?>

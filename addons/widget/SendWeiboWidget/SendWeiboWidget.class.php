@@ -49,11 +49,19 @@ class SendWeiboWidget extends Widget {
 			!isset($var['actions'][$value]) && $var['actions'][$value] = true; 
 		}
 		
-		$loginData = model('Login')->get($data['uid']);
+		$loginData = model('Login')->get($GLOBALS['ts']['mid']);
 		if($loginData['oauth_token'] != '')
 		{
 			$var['token'] = '1';
 		}
+		
+		//认证专家
+		$uids = model('UserGroupLink')->getUserByGroupID(8);
+		$user_count = model ( 'UserData' )->getUserDataByUids ($uids);
+		$authenticateExpert = model('user')->getUserInfoByUids($uids);
+		
+		$var['authenticateExpert_UserCount'] = $user_count;
+		$var['authenticateExpert'] = $authenticateExpert;	
 		
 	    // 渲染模版
 	    $content = $this->renderFile(dirname(__FILE__)."/SendWeibo.html", $var);

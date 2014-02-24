@@ -78,7 +78,8 @@ class FeedModel extends Model {
 		//判断是否先审后发
 		$weiboSet = model('Xdata')->get('admin_Config:feed');
         $weibo_premission = $weiboSet['weibo_premission'];
-		if(in_array('audit',$weibo_premission) || CheckPermission('core_normal','feed_audit')){
+		//if(in_array('audit',$weibo_premission) || CheckPermission('core_normal','feed_audit')){
+		if(in_array('audit',$weibo_premission)){
 			$data['is_audit'] = 0;
 		}else{
 			$data['is_audit'] = 1;

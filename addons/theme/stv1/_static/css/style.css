@@ -337,7 +337,7 @@ a{text-decoration:none;}
 .profile .pro_cont ul.info li{line-height:normal; border-color:#ddd;}
 .profile .pro_cont ul.info li.pd0{padding-left:0;}
 .profile .pro_cont ul.info li a{color:#999;}
-.reg_five_rz{background:#f6f6f6; border:solid 1px #eee; height:228px}
+.reg_five_rz{background:#f6f6f6; border:solid 1px #eee;}
 .reg_five_rz div.zjList {padding:23px 17px 5px;  float:left; width:275px}
 .reg_five_rz div.zjList:hover{background:#fae7c7;}
 .reg_five_rz div.zjList .profile{padding:0px; background:none; margin:0px;}
