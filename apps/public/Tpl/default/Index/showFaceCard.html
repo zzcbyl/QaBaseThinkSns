@@ -32,7 +32,7 @@
                     粉丝</li>
                 <li><a href="{:U('public/Profile/friend', array('uid'=>$uid))}" target="_blank">{$count_info.friend_count|default=0}</a><br />
                     好友</li>
-                <li><a href="{:U('public/Profile/index', array('uid'=>$uid))}" target="_blank">{$count_info.weibo_count|default=0}</a><br />
+                <li><a href="{:U('public/Profile/question', array('uid'=>$uid))}" target="_blank">{$count_info.weibo_count|default=0}</a><br />
                     提问</li>
                 <li class="nbor"><a href="{:U('public/Profile/answer', array('uid'=>$uid))}" target="_blank">{$count_info.answer_count|default=0}</a><br />
                     回答</li>
