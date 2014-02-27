@@ -393,7 +393,7 @@ class PassportAction extends Action
 	public function expert()
 	{
 		//顶级专家
-		$expertUid = 1901;
+		$expertUid = 1897;
 		$TopExpert = model('user')->getUserInfo($expertUid);
 		$user_count = model ( 'UserData' )->getUserDataByUids ( array($expertUid) );
 		$this->assign ( 'TopExpert_UserCount', $user_count );
@@ -410,8 +410,8 @@ class PassportAction extends Action
 		$this->assign('NewsList',$NewsList);
 		
 		//专家问答
-		$ExpertWhere = '(is_audit=1 OR is_audit=0) AND uid='.$expertUid.' AND is_del = 0 AND feed_questionid=0 AND add_feedid=0 ';
-		$QAList = model('feed')->getQuestionList($ExpertWhere, 10);
+		$ExpertWhere = '(is_audit=1 OR is_audit=0) AND uid='.$expertUid.' AND is_del = 0 AND feed_questionid !=0 AND add_feedid=0 ';
+		$QAList = model('feed')->getAnswerList($ExpertWhere, 10);
 		//print_r($QAList['data']);
 		$this->assign('ExpertQA',$QAList);
 		

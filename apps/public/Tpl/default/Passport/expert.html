@@ -89,9 +89,9 @@
             	<dl>
                 	<dt>
                         <!--<img src="images/img.jpg" />-->
-                        <a href="{:U('public/Index/feed',array('feed_id'=>$eqa['feed_id'],'uid'=>$eqa['uid']))}" target="_blank">{$eqa.body}</a>
+                        <a href="{:U('public/Index/feed',array('feed_id'=>$eqa['feed_id'],'uid'=>$eqa['uid']))}" target="_blank" title="{$eqa.body}">{$eqa.body|getShort=20,'...'}</a>
                     </dt>
-                    <dd>{$eqa.description}</dd>
+                    <dd>{$eqa['answer'][0]['body']}</dd>
                 </dl>
             </li>
             </volist>
@@ -166,7 +166,7 @@
             <volist name="answerList.data" id="feed">
             <li>
                 <div>
-                    <h2 class="tit"><a href="{:U('public/Index/feed',array('feed_id'=>$feed['feed_id'],'uid'=>$feed['uid']))}" target="_blank">{$feed.body}</a></h2>
+                    <h2 class="tit"><a href="{:U('public/Index/feed',array('feed_id'=>$feed['feed_id'],'uid'=>$feed['uid']))}" target="_blank" title="{$feed.body}">{$feed.body|getShort=28,'...'}</a></h2>
                     <p class="name">{$feed['answer'][0]['title']}<a class="dp">点评</a><span>{$feed['answer'][0]['publish_time']|friendlyDate}</span></p>
                     <p class="cont">
                         <!--{$feed.description}-->{$feed['answer'][0]['body']}
