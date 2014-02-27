@@ -393,7 +393,7 @@ class PassportAction extends Action
 	public function expert()
 	{
 		//顶级专家
-		$expertUid = 1897;
+		$expertUid = 1901;
 		$TopExpert = model('user')->getUserInfo($expertUid);
 		$user_count = model ( 'UserData' )->getUserDataByUids ( array($expertUid) );
 		$this->assign ( 'TopExpert_UserCount', $user_count );
@@ -903,6 +903,59 @@ class PassportAction extends Action
 			) );
 		$this->setDescription ( t ( $user_category . $user_info ['location'] . ',' . implode ( ',', $user_tag [$this->uid] ) . ',' . $user_info ['intro'] ) );
 		$this->display ();
+	}
+	
+	/**
+	 * 小网页
+	 *
+	 * @return void
+	 *
+	 */	
+	public function mobilepage()
+	{
+		$feed_id = intval ( $_GET ['feed_id'] );
+		
+		if (empty($feed_id)) {
+			$this->assign('error','该提问不存在或已被删除');
+		}
+		
+		//获取提问信息
+		$feedInfo = model ( 'Feed' )->get ( $feed_id );
+		if (!$feedInfo){
+			$this->assign('error','该提问不存在或已被删除');
+			exit();
+		}
+		if ($feedInfo ['is_audit'] == '0' && $feedInfo ['uid'] != $this->mid) {
+			$this->assign ('error', '此提问正在审核' );
+			exit();
+		}
+		if ($feedInfo ['is_del'] == '1') {
+			$this->assign('error','该提问已被删除');
+			exit();
+		}
+
+		// 获取用户信息
+		$user_info = model ( 'User' )->getUserInfo ( $feedInfo['uid'] );
+		
+		$weiboSet = model ( 'Xdata' )->get ( 'admin_Config:feed' );
+		$a ['initNums'] = $weiboSet ['weibo_nums'];
+		$a ['weibo_type'] = $weiboSet ['weibo_type'];
+		$a ['weibo_premission'] = $weiboSet ['weibo_premission'];
+		$this->assign ( $a );
+		switch ($feedInfo ['app']) {
+			case 'weiba' :
+				$feedInfo ['from'] = getFromClient ( 0, $feedInfo ['app'], '微吧' );
+				break;
+			default :
+				$feedInfo ['from'] = getFromClient ( $from, $feedInfo ['app'] );
+				break;
+		}
+		$this->assign ( 'feedInfo', $feedInfo );
+
+		$this->setTitle($feedInfo['body']);
+		$this->setKeywords($feedInfo['body']);
+		
+		$this->display ();	
 	}
 }
 ?>

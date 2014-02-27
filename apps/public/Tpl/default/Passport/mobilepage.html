@@ -1,0 +1,30 @@
+<include file="__THEME__/_header" />
+<body>
+    <div style="width:320px;">
+        <div class="header_box">
+	        <div class="header">
+    	        <div class="h_logo">
+                    <a href="{:SITE_URL}" <php>if(strpos($_SERVER['HTTP_USER_AGENT'],'MSIE 6.0') !== false):</php>style="_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='{$site.logo}', sizingMethod='crop');_background:none;"<php>else:</php>style="background:url({$site.logo}) no-repeat center; "<php>endif;</php>> </a></div>
+            </div>
+        </div>
+        
+        <div style="margin-top:10px;">
+            <div>
+                <div style="float:left;"><img class="thumb" src="{$feedInfo['user_info']['avatar_tiny']}" /></div>
+                <div style="margin-left:45px;">
+                    <div>{$feedInfo['user_info']['uname']}</div>
+                    <div>
+                        <div style="font-weight:bold;margin-top:5px;">{$feedInfo.body|format=true}</div>
+                        <div style="margin-top:5px; color:#777;">{$feedInfo.description|format=true}</div>
+                    </div>
+                </div>
+            </div>
+        
+        </div>
+
+
+    </div>
+
+    
+</body>
+</html>
