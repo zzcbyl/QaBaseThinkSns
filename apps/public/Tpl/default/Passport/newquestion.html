@@ -29,8 +29,6 @@
                             <a class="but" href="javascript:void(0);">收藏</a> 
                             <a class="but" href="javascript:void(0);">邀请回答</a> 
                             <a class="but" href="javascript:void(0);">{:L('PUBLIC_STREAM_COMMENT')}<neq name='feedInfo.comment_count' value='0'>({$feedInfo['comment_count']})</neq></a> 
-                            
-                            
                         </p>
                     </div>
                 </div>
@@ -59,7 +57,7 @@
 <include file="_popdiv"/> 
 
 <script type="text/javascript">
-    $(document).ready(function() {
+    $(document).ready(function () {
         var link = $(".contCenter2 a");
         for (var i = 0; i < link.length; i++) {
             $(link[i]).attr('href', 'javascript:void(0);');

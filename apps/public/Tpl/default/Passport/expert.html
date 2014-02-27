@@ -11,8 +11,8 @@
             </div>
             <div class="pro_cont" style="width:555px;">
                 <h4><a href="{$TopExpert['space_url']}" event-node="face_card" uid="{$TopExpert['uid']}">{$TopExpert['uname']}</a></h4>
-                <p><strong>简介：</strong>{$TopExpert['intro']}</p>
-                <p class="comm hd pt0">
+                <p style="height:auto;"><strong>简介：</strong>{$TopExpert['intro']}</p>
+                <p class="comm hd pt0" style="height:auto; padding:0;">
                     <strong>获得：</strong>
                     <a title="赞同数" href="javascript:void(0);" class="d"><php>if(empty($TopExpert_UserCount[$TopExpert['uid']]['comment_agree_count'])) echo '0'; else echo $TopExpert_UserCount[$TopExpert['uid']]['comment_agree_count'];</php></a>
                     <a title="感谢数" href="javascript:void(0);" class="hx"><php>if(empty($TopExpert_UserCount[$TopExpert['uid']]['tothanked_count'])) echo '0'; else echo $TopExpert_UserCount[$TopExpert['uid']]['tothanked_count'];</php></a>
@@ -54,6 +54,7 @@
                     </li>
                 </volist>
             </ul>
+            <div style="clear:both;"></div>
         </div>
         <!--主要作品-->
         </div>
