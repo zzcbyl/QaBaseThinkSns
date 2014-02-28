@@ -34,7 +34,7 @@ class ContentAction extends AdministratorAction
 			$_POST['is_audit'] = $isRec = isset($_REQUEST['is_audit']) ? t($_REQUEST['is_audit']) : $isRec;
 		}
 		 
-		$this->pageKeyList = array('feed_id','uid','uname','data','publish_time','type','from','DOACTION');
+		$this->pageKeyList = array('feed_id','uid','uname','body','description','publish_time','type','from','DOACTION');
 		$this->searchKey = array('feed_id','uid','type','rec');
 		$this->opt['type'] = array('0'=>L('PUBLIC_ALL_STREAM'),'post'=>L('PUBLIC_ORDINARY_WEIBO'),'repost'=>L('PUBLIC_SHARE_WEIBO'),'postimage'=>L('PUBLIC_PICTURE_WEIBO'),'postfile'=>L('PUBLIC_ATTACHMENT_WEIBO'));	//TODO 临时写死
 		
@@ -63,13 +63,15 @@ class ContentAction extends AdministratorAction
 		!empty($_POST['uid']) && $map['uid'] = array('in',explode(',',$_POST['uid']));
 		!empty($_POST['type']) && $map['type'] = t($_POST['type']);
 
-
+		$map['feed_questionid'] = '0';
 		$listData = model('Feed')->getList($map,20);
 		foreach($listData['data'] as &$v){
 			$v['uname']    = $v['user_info']['space_link'];
 			$v['type']	   = $this->opt['type'][$v['type']]; 
 			$v['from']     = $this->from[$v['from']];
-			$v['data']	   = '<div style="width:500px;line-height:22px" model-node="feed_list" class="feed_list">'.$v['body'].'  <a target="_blank" href="'.U('public/Profile/feed',array('feed_id'=>$v['feed_id'],'uid'=>$v['uid'])).'">'.L('PUBLIC_VIEW_DETAIL').'&raquo;</a></div>';
+			//$v['data']	   = '<div style="width:500px;line-height:22px" model-node="feed_list" class="feed_list">'.$v['body'].'  <a target="_blank" href="'.U('public/Profile/feed',array('feed_id'=>$v['feed_id'],'uid'=>$v['uid'])).'">'.L('PUBLIC_VIEW_DETAIL').'&raquo;</a></div>';
+			$v['body']	   = '<div style="width:200px;line-height:22px" model-node="feed_list" class="feed_list">'.$v['body'].'　<a target="_blank" href="'.U('public/Index/feed',array('feed_id'=>$v['feed_id'],'uid'=>$v['uid'])).'">'.L('PUBLIC_VIEW_DETAIL').'&raquo;</a></div>';
+			$v['description']	   = '<div style="width:500px;line-height:22px" model-node="feed_list" class="feed_list">'.getShort($v['description'],100,'...').'  </div>';
 			$v['publish_time'] = date('Y-m-d H:i:s',$v['publish_time']);
 			//$v['DOACTION'] = $isRec==0 ? "<a href='javascript:void(0)' onclick='admin.ContentEdit({$v['feed_id']},\"delFeed\",\"".L('PUBLIC_STREAM_DELETE')."\",\"".L('PUBLIC_DYNAMIC')."\")'>".L('PUBLIC_STREAM_DELETE')."</a>"
 			//							:"<a href='javascript:void(0)' onclick='admin.ContentEdit({$v['feed_id']},\"feedRecover\",\"".L('PUBLIC_RECOVER')."\",\"".L('PUBLIC_DYNAMIC')."\")'>".L('PUBLIC_RECOVER')."</a>";
@@ -82,6 +84,7 @@ class ContentAction extends AdministratorAction
 			}
 		}
 		$this->_listpk = 'feed_id';
+		//print_r($listData);
 		$this->displayList($listData);
 	}
 

@@ -281,7 +281,7 @@ a{text-decoration:none;}
 .w330{width:330px;}
 .btn_tj{background-position:0px -38px; height:33px; vertical-align:top; margin-left:10px; width:69px; text-align:center; font-size:12px; color:#fff; border:none; cursor:pointer; font-family:"微软雅黑";}
 .btn_tj:hover{background-position:0px -78px;}
-.ps{clear:both; color:#999; font-size:12px; padding-left: 180px; text-align: left;}
+.ps{clear:both; color:#999; font-size:12px; text-align: left;}
 .ps h5{font-size:12px; background:url(../image/reg_icon.png) no-repeat left center; text-indent:1.6em }
 .ps div{padding-left:1.6em; line-height:20px}
 .inputStyle2{height:25px; line-height:25px; background:#ececec; border-left:solid 2px #aeaeae; border-top:solid 2px #aeaeae; padding:0px 5px;}

@@ -53,6 +53,7 @@ class UserAction extends AdministratorAction {
 		$this->_initUserListAdminMenu('index');
 		// 数据的格式化与listKey保持一致
 		$listData = $this->_getUserList('20', $map, 'index');
+		//print_r($listData);
 		// 列表批量操作按钮
 		$this->pageButton[] = array('title'=>L('PUBLIC_SEARCH_USER'),'onclick'=>"admin.fold('search_form')");
 		$this->pageButton[] = array('title'=>L('PUBLIC_TRANSFER_USER_GROUP'),'onclick'=>"admin.changeUserGroup()");
