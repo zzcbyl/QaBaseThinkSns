@@ -118,7 +118,7 @@ class FeedAction extends Action {
 			$loginData = model('Login')->get($data['uid']);
 			if($loginData['oauth_token'] != '')
 			{
-				$contentTxt = substr($data['description'], 0, 272).'...　请 @卢勤问答网站 来帮帮我。'.SITE_URL.'/index.php%3Fapp=public%26mod=Passport%26act=newquestion%26feed_id='.$data['feed_id'];
+				$contentTxt = urlencode(substr($data['description'], 0, 272).'...　请 @卢勤问答网站 来帮帮我。'.SITE_URL.'/index.php%3Fapp=public%26mod=Passport%26act=newquestion%26feed_id='.$data['feed_id']);
 			
 				$urlPar = 'http://sync.luqinwenda.cn/sync.aspx?oriid='.$data['feed_id'].'&token='.$loginData['oauth_token'].'&content='.$contentTxt;
 				// 初始化一个 cURL 对象
@@ -130,7 +130,7 @@ class FeedAction extends Action {
 				// 设置cURL 参数，要求结果保存到字符串中还是输出到屏幕上。
 				curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 				// 运行cURL，请求网页
-				$data = curl_exec($curl);
+				$dhtml = curl_exec($curl);
 				// 关闭URL请求
 				curl_close($curl);
 			}
