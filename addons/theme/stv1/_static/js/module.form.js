@@ -716,7 +716,8 @@ M.addEventFns({
                 }
             }
             else {
-                this.bIsValid = true;
+                tips.error(this, '手机号不能为空');
+                this.bIsValid = false;
             }
         },
         load: function() {

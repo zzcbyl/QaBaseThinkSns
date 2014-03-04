@@ -58,5 +58,10 @@
     </div>
     <div class="reg_info_bottom"></div>
 </div>
-
+<script type="text/javascript">
+    $(document).ready(function () {
+        var url = U('public/Passport/logpv');
+        $.get(url, { pname: 'invite' });
+    });
+</script>
 <include file="__THEME__/public_footer" />

@@ -553,4 +553,5 @@ class PassportModel {
 		include_once SITE_PATH.'/api/uc_client/client.php';
 		return uc_user_synlogout();
 	}
+
 }

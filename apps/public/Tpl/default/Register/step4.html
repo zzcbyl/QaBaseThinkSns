@@ -42,7 +42,7 @@
                  </div>
                  <div class="tybox"> </div>
                  <div class="regbox">
-            		<div><label>手机号</label><input type="text" event-node="mobile" event-args='max=15' id="phone" name="phone" value="" maxlength="15" style="width:180px;" />
+            		<div><label><i class="RedStar">*</i>手机号</label><input type="text" event-node="mobile" event-args='max=15' id="phone" name="phone" value="" maxlength="15" style="width:180px;" />
             		    <select name="sel_mobile" style="margin:5px 0 0 0px; float:right;"><option>所有人可见</option><option <if condition="1 eq $permissions['mobile']">selected</if> value="1">我关注的人可见</option><option <if condition="2 eq $permissions['mobile']">selected</if> value="2">仅自己可见</option></select>
                     </div>
                     <div><label>QQ号</label><input type="text" event-node="input_nums" event-args='max=15' id="qq" name="qq" value="" maxlength="15" style="width:180px;" />

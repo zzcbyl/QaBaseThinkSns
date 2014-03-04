@@ -958,5 +958,278 @@ class PassportAction extends Action
 		
 		$this->display ();	
 	}
+	
+	
+	public function total()
+	{	
+		$startDt = $_GET ['dt1'];
+		$endDt = $_GET ['dt2'];	
+		if(empty($_GET ['dt1']) || empty($_GET ['dt2']))
+		{
+			$startDt = date("Y-m-d",strtotime("$startDt -2 day"));
+			$endDt = date("Y-m-d");
+		}
+		
+		$this->assign('dt1',$startDt);
+		$this->assign('dt2',$endDt);
+		$endDt = date("Y-m-d",strtotime("$endDt +1 day")); 
+
+		$dtArr = array();
+		$pv1 = array();
+		$pv2 = array();
+		$pv3 = array();
+		$pv4 = array();
+		$dip = array();
+		$AddUser = array();
+		$LoginUser = array();
+		$data = array();
+		$index = 0;
+		$i = $startDt;
+		while($i != $endDt)
+		{
+			$dtArr[$index] = $i;
+			$start = strtotime($i);
+			$t1 = date("Y-m-d H:i:s",strtotime("$i +2 hour"));
+			$time1 =  strtotime($t1);
+			$t2 = date("Y-m-d H:i:s",strtotime("$t1 +8 hour"));
+			$time2 =  strtotime($t2);
+			$t3 = date("Y-m-d H:i:s",strtotime("$t2 +2 hour"));
+			$time3 =  strtotime($t3);
+			$t4 = date("Y-m-d H:i:s",strtotime("$t3 +2 hour"));
+			$time4 =  strtotime($t4);
+			$t5 = date("Y-m-d H:i:s",strtotime("$t4 +2 hour"));
+			$time5 =  strtotime($t5);
+			$t6 = date("Y-m-d H:i:s",strtotime("$t5 +2 hour"));
+			$time6 =  strtotime($t6);
+			$t7 = date("Y-m-d H:i:s",strtotime("$t6 +2 hour"));
+			$time7 =  strtotime($t7);
+			$t8 = date("Y-m-d H:i:s",strtotime("$t7 +2 hour"));
+			$time8 =  strtotime($t8);
+			$t9 = date("Y-m-d H:i:s",strtotime("$t8 +2 hour"));
+			$time9 =  strtotime($t9);
+			
+			/*print($i);print("　　　");
+			print($start);print("　　　");
+			print($t1);print("　　　");
+			print($time1);print("　　　");
+			print($t2);print("　　　");
+			print($time2);print("　　　");
+			print($t3);print("　　　");
+			print($time3);print("　　　");
+			print($t4);print("　　　");
+			print($time4);print("　　　");
+			print($t5);print("　　　");
+			print($time5);print("　　　");
+			print($t6);print("　　　");
+			print($time6);print("　　　");
+			print($t7);print("　　　");
+			print($time7);print("　　　");
+			print($t8);print("　　　");
+			print($time8);print("　　　");
+			print($t9);print("　　　");
+			print($time9);print("　　｜　　");*/
+			
+			$data[$index]['date'] = $i;
+			$i = date("Y-m-d",strtotime("$i +1 day")); 
+			$end = strtotime($i);
+			
+			$pvresult = D('')->table(C('DB_PREFIX').'log_pv')->where('`ctime`>= '.$start.' and `ctime`< '.$end)->findAll();
+			$pv1[$index] = 0;
+			$pv2[$index] = 0;
+			$pv3[$index] = 0;
+			$pv4[$index] = 0;
+			if(count($pvresult)>0)
+			{
+				foreach($pvresult as $k=>$v)
+				{
+					//邀请码填写页面PV					
+					if(trim($v['name'])=='invite')
+						$pv1[$index] = $v['count'];
+					
+					//填写注册信息页面PV
+					if(trim($v['name'])=='step2')
+						$pv2[$index] = $v['count'];
+					
+					//邮箱激活成功页面PV
+					if(trim($v['name'])=='activate')
+						$pv3[$index] = $v['count'];
+					
+					//网站总PV
+					if(trim($v['name'])=='all')
+						$pv4[$index] = $v['count'];
+				}
+				
+			}
+			//独立IP数
+			$ipresult = D('')->table(C('DB_PREFIX').'log_ip')->where('`ctime`>= '.$start.' and `ctime`< '.$end)->findAll();
+			$dip[$index] = count($ipresult);
+			
+			//新增用户数
+			$userlist = model('user')->where('is_del = 0 and is_audit=1 and `ctime`>='.$start.' and `ctime`<'.$end)->findAll();
+			$AddUser[$index] = count($userlist);
+			//登录用户数
+			$loginlist = model('LoginLogs')->field('`uid`')->where('`ctime`>='.$start.' and `ctime`<'.$end)->group('`uid`')->findAll();
+			$LoginUser[$index] = count($loginlist);
+			
+			//第二表格
+			//登录用户数
+			$loginlist = model('LoginLogs')->field('`uid`')->where('`ctime`>='.$start.' and `ctime`<'.$time1)->group('`uid`')->findAll();
+			//注册用户数
+			$userlist = model('user')->where('is_del = 0 and is_audit=1 and `ctime`>='.$start.' and `ctime`<'.$time1)->findAll();
+			//提问数
+			$QfeedList = model('Feed')->where('`is_del` = 0 and `feed_questionid`=0 and `add_feedid`=0 and (`is_audit`=1 OR `is_audit`=0) and `publish_time`>='.$start.' and `publish_time`<'.$time1)->findAll();
+			//回答数
+			$AfeedList = model('Feed')->where('`is_del` = 0 and `feed_questionid` != 0 and `add_feedid` = 0 and (`is_audit`=1 OR `is_audit`=0) and `publish_time`>='.$start.' and `publish_time`<'.$time1)->findAll();
+			$data[$index]['Login'][0] = count($loginlist);
+			$data[$index]['Regist'][0] = count($userlist);
+			$data[$index]['Question'][0] = count($QfeedList);
+			$data[$index]['Answer'][0] = count($AfeedList);
+			
+			$loginlist = model('LoginLogs')->field('`uid`')->where('`ctime`>='.$time1.' and `ctime`<'.$time2)->group('`uid`')->findAll();
+			$userlist = model('user')->where('is_del = 0 and is_audit=1 and `ctime`>='.$time1.' and `ctime`<'.$time2)->findAll();
+			$QfeedList = model('Feed')->where('`is_del` = 0 and `feed_questionid`=0 and `add_feedid`=0 and (`is_audit`=1 OR `is_audit`=0) and `publish_time`>='.$time1.' and `publish_time`<'.$time2)->findAll();
+			$AfeedList = model('Feed')->where('`is_del` = 0 and `feed_questionid` != 0 and `add_feedid` = 0 and (`is_audit`=1 OR `is_audit`=0) and `publish_time`>='.$time1.' and `publish_time`<'.$time2)->findAll();
+			$data[$index]['Login'][1] = count($loginlist);
+			$data[$index]['Regist'][1] = count($userlist);
+			$data[$index]['Question'][1] = count($QfeedList);
+			$data[$index]['Answer'][1] = count($AfeedList);
+			
+			$loginlist = model('LoginLogs')->field('`uid`')->where('`ctime`>='.$time2.' and `ctime`<'.$time3)->group('`uid`')->findAll();
+			$userlist = model('user')->where('is_del = 0 and is_audit=1 and `ctime`>='.$time2.' and `ctime`<'.$time3)->findAll();
+			$QfeedList = model('Feed')->where('`is_del` = 0 and `feed_questionid`=0 and `add_feedid`=0 and (`is_audit`=1 OR `is_audit`=0) and `publish_time`>='.$time2.' and `publish_time`<'.$time3)->findAll();
+			$AfeedList = model('Feed')->where('`is_del` = 0 and `feed_questionid` != 0 and `add_feedid` = 0 and (`is_audit`=1 OR `is_audit`=0) and `publish_time`>='.$time2.' and `publish_time`<'.$time3)->findAll();
+			$data[$index]['Login'][2] = count($loginlist);
+			$data[$index]['Regist'][2] = count($userlist);
+			$data[$index]['Question'][2] = count($QfeedList);
+			$data[$index]['Answer'][2] = count($AfeedList);
+			
+			$loginlist = model('LoginLogs')->field('`uid`')->where('`ctime`>='.$time3.' and `ctime`<'.$time4)->group('`uid`')->findAll();
+			$userlist = model('user')->where('is_del = 0 and is_audit=1 and `ctime`>='.$time3.' and `ctime`<'.$time4)->findAll();
+			$QfeedList = model('Feed')->where('`is_del` = 0 and `feed_questionid`=0 and `add_feedid`=0 and (`is_audit`=1 OR `is_audit`=0) and `publish_time`>='.$time3.' and `publish_time`<'.$time4)->findAll();
+			$AfeedList = model('Feed')->where('`is_del` = 0 and `feed_questionid` != 0 and `add_feedid` = 0 and (`is_audit`=1 OR `is_audit`=0) and `publish_time`>='.$time3.' and `publish_time`<'.$time4)->findAll();
+			$data[$index]['Login'][3] = count($loginlist);
+			$data[$index]['Regist'][3] = count($userlist);
+			$data[$index]['Question'][3] = count($QfeedList);
+			$data[$index]['Answer'][3] = count($AfeedList);
+			
+			$loginlist = model('LoginLogs')->field('`uid`')->where('`ctime`>='.$time4.' and `ctime`<'.$time5)->group('`uid`')->findAll();
+			$userlist = model('user')->where('is_del = 0 and is_audit=1 and `ctime`>='.$time4.' and `ctime`<'.$time5)->findAll();
+			$QfeedList = model('Feed')->where('`is_del` = 0 and `feed_questionid`=0 and `add_feedid`=0 and (`is_audit`=1 OR `is_audit`=0) and `publish_time`>='.$time4.' and `publish_time`<'.$time5)->findAll();
+			$AfeedList = model('Feed')->where('`is_del` = 0 and `feed_questionid` != 0 and `add_feedid` = 0 and (`is_audit`=1 OR `is_audit`=0) and `publish_time`>='.$time4.' and `publish_time`<'.$time5)->findAll();
+			$data[$index]['Login'][4] = count($loginlist);
+			$data[$index]['Regist'][4] = count($userlist);
+			$data[$index]['Question'][4] = count($QfeedList);
+			$data[$index]['Answer'][4] = count($AfeedList);
+			
+			$loginlist = model('LoginLogs')->field('`uid`')->where('`ctime`>='.$time5.' and `ctime`<'.$time6)->group('`uid`')->findAll();
+			$userlist = model('user')->where('is_del = 0 and is_audit=1 and `ctime`>='.$time5.' and `ctime`<'.$time6)->findAll();
+			$QfeedList = model('Feed')->where('`is_del` = 0 and `feed_questionid`=0 and `add_feedid`=0 and (`is_audit`=1 OR `is_audit`=0) and `publish_time`>='.$time5.' and `publish_time`<'.$time6)->findAll();
+			$AfeedList = model('Feed')->where('`is_del` = 0 and `feed_questionid` != 0 and `add_feedid` = 0 and (`is_audit`=1 OR `is_audit`=0) and `publish_time`>='.$time5.' and `publish_time`<'.$time6)->findAll();
+			$data[$index]['Login'][5] = count($loginlist);
+			$data[$index]['Regist'][5] = count($userlist);
+			$data[$index]['Question'][5] = count($QfeedList);
+			$data[$index]['Answer'][5] = count($AfeedList);
+			
+			$loginlist = model('LoginLogs')->field('`uid`')->where('`ctime`>='.$time6.' and `ctime`<'.$time7)->group('`uid`')->findAll();
+			$userlist = model('user')->where('is_del = 0 and is_audit=1 and `ctime`>='.$time6.' and `ctime`<'.$time7)->findAll();
+			$QfeedList = model('Feed')->where('`is_del` = 0 and `feed_questionid`=0 and `add_feedid`=0 and (`is_audit`=1 OR `is_audit`=0) and `publish_time`>='.$time6.' and `publish_time`<'.$time7)->findAll();
+			$AfeedList = model('Feed')->where('`is_del` = 0 and `feed_questionid` != 0 and `add_feedid` = 0 and (`is_audit`=1 OR `is_audit`=0) and `publish_time`>='.$time6.' and `publish_time`<'.$time7)->findAll();
+			$data[$index]['Login'][6] = count($loginlist);
+			$data[$index]['Regist'][6] = count($userlist);
+			$data[$index]['Question'][6] = count($QfeedList);
+			$data[$index]['Answer'][6] = count($AfeedList);
+			
+			$loginlist = model('LoginLogs')->field('`uid`')->where('`ctime`>='.$time7.' and `ctime`<'.$time8)->group('`uid`')->findAll();
+			$userlist = model('user')->where('is_del = 0 and is_audit=1 and `ctime`>='.$time7.' and `ctime`<'.$time8)->findAll();
+			$QfeedList = model('Feed')->where('`is_del` = 0 and `feed_questionid`=0 and `add_feedid`=0 and (`is_audit`=1 OR `is_audit`=0) and `publish_time`>='.$time7.' and `publish_time`<'.$time8)->findAll();
+			$AfeedList = model('Feed')->where('`is_del` = 0 and `feed_questionid` != 0 and `add_feedid` = 0 and (`is_audit`=1 OR `is_audit`=0) and `publish_time`>='.$time7.' and `publish_time`<'.$time8)->findAll();
+			$data[$index]['Login'][7] = count($loginlist);
+			$data[$index]['Regist'][7] = count($userlist);
+			$data[$index]['Question'][7] = count($QfeedList);
+			$data[$index]['Answer'][7] = count($AfeedList);
+			
+			$loginlist = model('LoginLogs')->field('`uid`')->where('`ctime`>='.$time8.' and `ctime`<'.$time9)->group('`uid`')->findAll();
+			$userlist = model('user')->where('is_del = 0 and is_audit=1 and `ctime`>='.$time8.' and `ctime`<'.$time9)->findAll();
+			$QfeedList = model('Feed')->where('`is_del` = 0 and `feed_questionid`=0 and `add_feedid`=0 and (`is_audit`=1 OR `is_audit`=0) and `publish_time`>='.$time8.' and `publish_time`<'.$time9)->findAll();
+			$AfeedList = model('Feed')->where('`is_del` = 0 and `feed_questionid` != 0 and `add_feedid` = 0 and (`is_audit`=1 OR `is_audit`=0) and `publish_time`>='.$time8.' and `publish_time`<'.$time9)->findAll();
+			$data[$index]['Login'][8] = count($loginlist);
+			$data[$index]['Regist'][8] = count($userlist);
+			$data[$index]['Question'][8] = count($QfeedList);
+			$data[$index]['Answer'][8] = count($AfeedList);
+
+			$index++;
+		}
+		
+		$this->assign('dtTitle',$dtArr);
+		$this->assign('addUser',$AddUser);
+		$this->assign('loginUser',$LoginUser);
+		$this->assign('data2',$data);
+		$this->assign('pv1',$pv1);
+		$this->assign('pv2',$pv2);
+		$this->assign('pv3',$pv3);
+		$this->assign('pv4',$pv4);
+		$this->assign('ip',$dip);
+		
+		$startInt = strtotime($startDt);
+		$endInt = strtotime($endDt);
+		//总问题数
+		$QfeedList = model('Feed')->where('`is_del` = 0 and `feed_questionid`=0 and `add_feedid`=0 and (`is_audit`=1 OR `is_audit`=0) and `publish_time`>='.$startInt.' and `publish_time`<'.$endInt)->findAll();
+		$QAllCount = count($QfeedList);
+		$this->assign('QAllCount',$QAllCount);
+		//总回答数
+		$AfeedList = model('Feed')->where('`is_del` = 0 and `feed_questionid` != 0 and `add_feedid` = 0 and (`is_audit`=1 OR `is_audit`=0) and `publish_time`>='.$startInt.' and `publish_time`<'.$endInt)->findAll();
+		$AAllCount = count($AfeedList);
+		$this->assign('AAllCount',$AAllCount);
+		//总评论数
+		$CommentList = model('Comment')->where('`is_del` = 0 and `table` = \'feed\' and `ctime`>='.$startInt.' and `ctime`<'.$endInt)->findAll();
+		$CommentCount = count($CommentList);
+		$this->assign('CommentCount',$CommentCount);
+		//总感谢数
+		$ThankList = model('Feed')->where('`is_del` = 0 and `feed_questionid` != 0 and `add_feedid` = 0 and `thank_count`>0 and (`is_audit`=1 OR `is_audit`=0) and `publish_time`>='.$startInt.' and `publish_time`<'.$endInt)->findAll();
+		$ThankCount = count($ThankList);
+		$this->assign('ThankCount',$ThankCount);
+		
+		$this->display();
+	}
+		
+		
+		
+	/**
+	* 页面增加pv
+		 *
+	* @return void
+		 *
+	*/	
+	public function logpv()
+	{
+		$pName = $_GET['pname'];
+		if(!empty($pName))
+		{
+			$where = '`name` = \''.$pName.'\' and `ctime`>= UNIX_TIMESTAMP(curdate()) and `ctime`< UNIX_TIMESTAMP(date_add(curdate(), interval 1 day))';
+			$result = D('')->table(C('DB_PREFIX').'log_pv')->where($where)->findAll();
+			if(count($result) > 0)
+				D('')->table(C('DB_PREFIX').'log_pv')->where($where)->setInc('count');
+			else
+			{
+				$pvdata['name'] = $pName;
+				$pvdata['count'] = 1;
+				$pvdata['ctime'] = time();
+				D('')->table(C('DB_PREFIX').'log_pv')->add($pvdata);	
+			}	
+		}
+		
+		if($pName == 'all')
+		{
+			$ipStr = get_client_ip();
+			$where = '`ip` = \''.$ipStr.'\' and `ctime`>= UNIX_TIMESTAMP(curdate()) and `ctime`< UNIX_TIMESTAMP(date_add(curdate(), interval 1 day))';
+			$result = D('')->table(C('DB_PREFIX').'log_ip')->where($where)->findAll();
+			if(count($result) <= 0)
+			{
+				$ipdata['ip'] = $ipStr;
+				$ipdata['ctime'] = time();
+				D('')->table(C('DB_PREFIX').'log_ip')->add($ipdata);	
+			}	
+		}
+	}
 }
 ?>

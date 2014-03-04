@@ -32,17 +32,21 @@
 
 <script type="text/javascript">
     $(document).ready(function() {
+        var url = U('public/Passport/logpv');
+        $.get(url, { pname: 'activate' });
+
         delayURL('{$jumpUrl}');
     });
-	function delayURL(url) {
-		var delay = document.getElementById("time").innerHTML;
-		if(delay > 0) {
-			delay--;
-			document.getElementById("time").innerHTML = delay;
-		} else {
-			window.top.location.href = url;
-		}
-		setTimeout("delayURL('" + url + "')", 1000);
-	}
+    function delayURL(url) {
+        var delay = document.getElementById("time").innerHTML;
+        if (delay > 0) {
+            delay--;
+            document.getElementById("time").innerHTML = delay;
+        } else {
+            window.top.location.href = url;
+        }
+        setTimeout("delayURL('" + url + "')", 1000);
+    }
+
 </script>
 <include file="__THEME__/public_footer" />

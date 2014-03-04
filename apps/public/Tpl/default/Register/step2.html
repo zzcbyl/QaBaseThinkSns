@@ -88,4 +88,8 @@
 
 
     }
+    $(document).ready(function () {
+        var url = U('public/Passport/logpv');
+        $.get(url, { pname: 'step2' });
+    });
 </script>
