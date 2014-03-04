@@ -9,7 +9,7 @@
     <div>
         选择日期：<input id="dt1" type="text" value="{$dt1}" style="width:120px; height:20px; line-height:20px; padding:2px 5px; color:#666; font-size:14px;" readonly="readonly" onfocus="core.rcalendar(this,'');" /> 至 
         <input id="dt2" type="text" value="{$dt2}" style="width:120px; height:20px; line-height:20px; padding:2px 5px; color:#666; font-size:14px;" readonly="readonly" onfocus="core.rcalendar(this,'');" />　
-        <input type="button" value="确 定" onclick="ShowTotal();" />　　<span style="color:Red;">{$error}</span>
+        <input type="button" value="确 定" onclick="ShowTotal();" style="height:25px;  width:50px;" />　　<span style="color:Red;">{$error}</span>
     </div>
     <div style="margin:20px 0;">
         {$dt1} 至 {$dt2}数据统计
@@ -18,7 +18,7 @@
         <tr>
             <td style="width:120px;"></td>
             <volist name="dtTitle" id="dt">
-                <td style="width:60px;">{$dt}</td>
+                <td style="width:70px;">{$dt}</td>
             </volist>
         </tr>
         <tr>
