@@ -1,4 +1,4 @@
-<a href="{:U('public/Profile/newagreeinfo')}" class="d" title="赞同">{$userData.comment_agree_count|default=0}</a>
+<a href="{:U('public/Profile/index',array('uid'=>$user_info[$uid]['uid'], 'type'=>'agree'))}" class="d" title="赞同">{$userData.comment_agree_count|default=0}</a>
 <a href="{:U('public/Profile/index',array('uid'=>$user_info[$uid]['uid'], 'type'=>'thank'))}" class="hx" title="感谢">{$userData.tothanked_count|default=0}</a>
 <a href="{:U('public/Profile/newopposeinfo')}" class="c" title="反对">{$userData.comment_oppose_count|default=0}</a>
 <!--<a href="#" class="tel" title="邀请">{$userData.invite_count|default=0}</a>-->
