@@ -193,9 +193,6 @@ class FeedListWidget extends Widget {
 					$list = model('Feed')->getQuestionAndAnswer($where,$this->limitnums);
 					
 					//print_r($list);
-//var_dump($list);
-
-
 				}
 				break;
 			case 'newfollowing'://关注的人的最新提问  (检查使用的地方)

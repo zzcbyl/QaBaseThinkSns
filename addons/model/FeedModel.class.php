@@ -7,7 +7,7 @@
 class FeedModel extends Model {
 
 	protected $tableName = 'feed';
-	protected $fields = array('feed_id','uid','type','app','app_row_id','app_row_table','publish_time','is_del','from','comment_count','repost_count','comment_all_count','digg_count','is_repost','is_audit','feed_questionid','feed_quid','answer_count','disapprove_count','feed_pv','thank_count','add_feedid','following_count','invite_count','isInviteAnswer','_pk'=>'feed_id');
+	protected $fields = array('feed_id','uid','type','app','app_row_id','app_row_table','publish_time','is_del','from','comment_count','repost_count','comment_all_count','digg_count','is_repost','is_audit','feed_questionid','feed_quid','answer_count','disapprove_count','feed_pv','thank_count','add_feedid','following_count','invite_count','isInviteAnswer','last_updtime','_pk'=>'feed_id');
 
 	public $templateFile = '';			// 模板文件
 
@@ -52,6 +52,7 @@ class FeedModel extends Model {
 		$data['app_row_id'] = $app_id;
 		$data['app_row_table'] = $app_table;
 		$data['publish_time'] = time();
+		$data['last_updtime'] = time();
 		$data['from'] = isset($data['from']) ? intval($data['from']) : getVisitorClient();
 		$data['is_del'] = $data['comment_count'] = $data['repost_count'] = $data['disapprove_count'] = 0;
 		$data['is_repost'] = $is_repost;
@@ -141,6 +142,7 @@ class FeedModel extends Model {
 		{
 			$feed_Qid=model('feed')->where('feed_id='.$feed_id)->getField('feed_questionid');
 			$updData['answer_count']=model('feed')->where('feed_questionid='.$feed_Qid.' and is_del=0')->count();
+			$updData['last_updtime'] = time();
 			model('feed')->where('feed_id='.$feed_Qid)->save($updData);
 			$this->	cleanCache(array($feed_Qid));
 			$this->	updateFeedCache($feed_Qid,'update');
@@ -394,7 +396,7 @@ class FeedModel extends Model {
 	 * @param integer $limit 结果集数目，默认为10
 	 * @return array 提问列表数据
 	 */
-	public function getQuestionAndAnswer($map, $limit = 10 , $order = 'publish_time desc') {
+	public function getQuestionAndAnswer($map, $limit = 10 , $order = 'last_updtime desc') {
 		$feedlist = $this->field('feed_id')->where($map)->order($order)->findPage($limit); 
 		$feed_ids = getSubByKey($feedlist['data'], 'feed_id');
 		$feedlist['data'] = $this->getFeeds($feed_ids);
