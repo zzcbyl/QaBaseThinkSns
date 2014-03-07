@@ -188,6 +188,17 @@ class CommentModel extends Model {
 			{
 				D($add['table'])->setInc('disapprove_count', "`{$pk}`={$add['row_id']}", 1);
 			}
+			
+			//修改问题的更新时间
+			$UpdFeedData['last_updtime'] = time();
+			$feed_Qid=D($add['table'])->where("`{$pk}`={$add['row_id']}")->getField('feed_questionid');
+			if($feed_Qid != 0) {
+				model($add['table'])->where('feed_id='.$feed_Qid)->save($UpdFeedData);
+			}
+			else {
+				D($add['table'])->where("`{$pk}`={$add['row_id']}")->save($UpdFeedData);
+			}
+			
 			//兼容旧版本app
 			D($add['table'])->setInc('commentCount', "`{$pk}`={$add['row_id']}", 1);
 			D($add['table'])->setInc('comment_all_count', "`{$pk}`={$add['row_id']}", 1);
