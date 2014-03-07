@@ -181,7 +181,7 @@ class FeedListWidget extends Widget {
 				}else{
 					$where =' (is_audit=1 OR is_audit=0) AND is_del = 0 AND feed_questionid=0 AND add_feedid=0 ';
 					if($var['loadId'] > 0){ //非第一次
-						$where .=" AND publish_time < '".intval($var['loadId'])."'";
+						$where .=" AND `last_updtime` < '".intval($var['loadId'])."'";
 					}
 					if(!empty($var['feed_type'])){
 						if ( $var['feed_type'] == 'post' ){
@@ -410,6 +410,10 @@ class FeedListWidget extends Widget {
 					$content['firstId'] = $var['firstId'] = $list['data'][0]['invite']['invite_answer_id'];
 					$content['lastId'] = $var['lastId'] = $list['data'][(count($list['data'])-1)]['invite']['invite_answer_id'];
 					break;
+				case 'all':
+					$content['firstId'] = $var['firstId'] = $list['data'][0]['last_updtime'];
+					$content['lastId'] = $var['lastId'] = $list['data'][(count($list['data'])-1)]['last_updtime'];
+					break;	
 				default:
 					$content['firstId'] = $var['firstId'] = $list['data'][0]['publish_time'];
 					$content['lastId'] = $var['lastId'] = $list['data'][(count($list['data'])-1)]['publish_time'];
