@@ -66,14 +66,23 @@ class FeedListWidget extends Widget {
         // 获取GET与POST数据
     	$_REQUEST = $_GET + $_POST;
         // 查询是否有分页
-    	if(!empty($_REQUEST['p']) ) {
+		if(!empty($_REQUEST['p']) || intval($_REQUEST['load_count']) == 4) {
+			unset($_REQUEST['loadId']);
+			$this->limitnums = 40;
+		} else {
+			$return = array('status'=>-1,'msg'=>L('PUBLIC_LOADING_ID_ISNULL'));
+			$_REQUEST['loadId'] = intval($_REQUEST['loadId']);
+			$this->limitnums = 10;
+		}
+		
+    	/*if(!empty($_REQUEST['p']) ) {
     		unset($_REQUEST['loadId']);
     		$this->limitnums = 40;
     	} else {
     		$return = array('status'=>-1,'msg'=>L('PUBLIC_LOADING_ID_ISNULL'));
             $_REQUEST['loadId'] = intval($_REQUEST['loadId']);
     		$this->limitnums = 10;
-    	}
+    	}*/
         // 查询是否有话题ID
         if($_REQUEST['topic_id']) { 
             $content = $this->getTopicData($_REQUEST,'_FeedList.html');
