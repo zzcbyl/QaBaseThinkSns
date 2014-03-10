@@ -10,7 +10,7 @@
                 <volist name="HotTopicList" id="htl" key="k" >
                     <dl>
                         <dt class="t{$k}">
-                            <a href="{:U('public/Index/feed',array('feed_id'=>$htl['feed_id'],'uid'=>$htl['uid']))}" target="_blank" title="{$htl['body']}">
+                            <a href="{:U('public/Passport/newquestion',array('feed_id'=>$htl['feed_id']))}" target="_blank" title="{$htl['body']}">
                                 <php> if(strlen($htl['body'])>48) echo utf_substr($htl['body'], 32).'...'; else echo $htl['body'];</php>
                             </a><span>{$htl.answer_count}个回答</span></dt>
                         <php>if($k < 3) {</php>
@@ -26,8 +26,8 @@
             <ul>
                 <volist name="HotUserList" id="hul">
                     <li class="t{$i}">
-                        <a href="{$hul['space_url']}" target="_blank"><img class="thumb" src="{$hul['avatar_tiny']}" width="35" height="35" event-node="face_card" uid="{$hul['uid']}" /></a>
-                        <h5>{$hul['space_link']}</h5>
+                        <a href="{:U('public/Passport/newperson',array('uid'=>$hul['uid']))}" target="_blank"><img class="thumb" src="{$hul['avatar_tiny']}" width="35" height="35" event-node="face_card" uid="{$hul['uid']}" /></a>
+                        <h5><a href="{:U('public/Passport/newperson',array('uid'=>$hul['uid']))}" target="_blank">{$hul['uname']}</a></h5>
                         <p>{$hul['userdata']['value']}个回答</p>
                         <!--<div class="xz">
                             <a href="#" class="x1"></a>
@@ -49,9 +49,10 @@
         <ul>
             <volist name="NewQuestion" id="nq">
                 <li>
-                    <a href="{:U('public/Index/feed',array('feed_id'=>$nq['feed_id'],'uid'=>$nq['uid']))}" target="_blank">{$nq.body}</a>
+                    <a href="{:U('public/Passport/newquestion',array('feed_id'=>$nq['feed_id']))}" target="_blank">{$nq.body}</a>
                     <span class="g_com">{$nq.answer_count}个回答</span>
-                    <span class="g_nic" title ="{$nq['user_info']['uname']}">{$nq['user_info']['space_link']}</span>
+                    <span class="g_nic" title ="{$nq['user_info']['uname']}">
+                        <a target="_blank" href="{:U('public/Passport/newperson',array('uid'=>$nq['uid']))}">{$nq['user_info']['uname']}</a></span>
                 </li>
             </volist>
         </ul>
@@ -66,8 +67,8 @@
                 <ul>
                     <volist name="InviteUserInfoList" id="iuil">
                         <li>
-                            <a href="{$iuil['userinfo'][$iuil['uid']]['space_url']}" target="_blank"><img class="thumb" src="{$iuil['userinfo'][$iuil['uid']]['avatar_tiny']}" width="35" height="35" event-node="face_card" uid="{$iuil['uid']}" /></a>
-                            <h5>{$iuil['userinfo'][$iuil['uid']]['space_link']}</h5>
+                            <a href="{:U('public/Passport/newperson',array('uid'=>$iuil['uid']))}" target="_blank"><img class="thumb" src="{$iuil['userinfo'][$iuil['uid']]['avatar_tiny']}" width="35" height="35" event-node="face_card" uid="{$iuil['uid']}" /></a>
+                            <h5><a href="{:U('public/Passport/newperson',array('uid'=>$iuil['uid']))}" target="_blank">{$iuil['userinfo'][$iuil['uid']]['uname']}</a></h5>
                             <p>{$iuil['value']}</p>
                         </li>
                     </volist>
@@ -80,8 +81,8 @@
                 <ul>
                     <volist name="AgreeUserInfoList" id="auil">
                         <li>
-                            <a href="{$auil['userinfo'][$auil['uid']]['space_url']}" target="_blank"><img class="thumb" src="{$auil['userinfo'][$auil['uid']]['avatar_tiny']}" width="35" height="35" event-node="face_card" uid="{$auil['uid']}" /></a>
-                            <h5>{$auil['userinfo'][$auil['uid']]['space_link']}</h5>
+                            <a href="{:U('public/Passport/newperson',array('uid'=>$auil['uid']))}" target="_blank"><img class="thumb" src="{$auil['userinfo'][$auil['uid']]['avatar_tiny']}" width="35" height="35" event-node="face_card" uid="{$auil['uid']}" /></a>
+                            <h5><a href="{:U('public/Passport/newperson',array('uid'=>$auil['uid']))}" target="_blank">{$auil['userinfo'][$auil['uid']]['uname']}</a></h5>
                             <p>{$auil['value']}</p>
                         </li>
                     </volist>
@@ -94,8 +95,8 @@
                 <ul>
                     <volist name="ThankUserInfoList" id="tuil">
                         <li>
-                            <a href="{$tuil['userinfo'][$tuil['uid']]['space_url']}" target="_blank"><img class="thumb" src="{$tuil['userinfo'][$tuil['uid']]['avatar_tiny']}" width="35" height="35" event-node="face_card" uid="{$tuil['uid']}" /></a>
-                            <h5>{$tuil['userinfo'][$tuil['uid']]['space_link']}</h5>
+                            <a href="{:U('public/Passport/newperson',array('uid'=>$tuil['uid']))}" target="_blank"><img class="thumb" src="{$tuil['userinfo'][$tuil['uid']]['avatar_tiny']}" width="35" height="35" event-node="face_card" uid="{$tuil['uid']}" /></a>
+                            <h5><a href="{:U('public/Passport/newperson',array('uid'=>$tuil['uid']))}" target="_blank">{$tuil['userinfo'][$tuil['uid']]['uname']}</a></h5>
                             <p>{$tuil['value']}</p>
                         </li>
                     </volist>
@@ -111,10 +112,10 @@
         <ul>
             <volist name="answerList.data" id="feed">
             <li>
-                <a href="{$feed['answer'][0]['user_info']['space_url']}"><img class="thumb" src="{$feed['answer'][0]['user_info']['avatar_small']}"  event-node="face_card" uid='{$feed['answer'][0]['user_info']['uid']}'></a>
+                <a target="_blank" href="{:U('public/Passport/newperson',array('uid'=>$feed['answer'][0]['user_info']['uid']))}"><img class="thumb" src="{$feed['answer'][0]['user_info']['avatar_small']}"  event-node="face_card" uid='{$feed['answer'][0]['user_info']['uid']}'></a>
                 <div>
-                    <h2 class="tit"><a href="{:U('public/Index/feed',array('feed_id'=>$feed['feed_id'],'uid'=>$feed['uid']))}" target="_blank">{$feed.body}</a></h2>
-                    <p class="name">{$feed['answer'][0]['title']}<a class="dp">点评</a><span>{$feed['answer'][0]['publish_time']|friendlyDate}</span></p>
+                    <h2 class="tit"><a target="_blank" href="{:U('public/Passport/newquestion',array('feed_id'=>$feed['feed_id']))}" target="_blank">{$feed.body}</a></h2>
+                    <p class="name"><a target="_blank" href="{:U('public/Passport/newperson',array('uid'=>$feed['answer'][0]['user_info']['uid']))}">{$feed['answer'][0]['user_info']['uname']}</a><a class="dp">点评</a><span>{$feed['answer'][0]['publish_time']|friendlyDate}</span></p>
                     <p class="cont">
                         {$feed['answer'][0]['body']}
                     </p>
@@ -134,7 +135,7 @@
             <volist name="FollowingQuestion" id="fq" key="k">
             <li>
             <h2><span class="top">{$k}</span>
-                <a href="{:U('public/Index/feed',array('feed_id'=>$fq['feed_id'],'uid'=>$fq['uid']))}" target="_blank" title="{$fq.body}">
+                <a href="{:U('public/Passport/newquestion',array('feed_id'=>$fq['feed_id']))}" target="_blank" title="{$fq.body}">
                     
                     <php>if(strlen($fq['body'])>45) echo utf_substr($fq['body'], 30).'...'; else echo $fq['body'];</php>
                 </a><div style="clear:both;"></div></h2>
@@ -147,9 +148,10 @@
         <ul class="g_yh mb20">
             <volist name="NewUserList" id="nul">
                 <li>
-                    <a href="{$nul['space_url']}"><img class="thumb" src="{$nul['avatar_small']}" width="35" height="35" event-node="face_card" uid="{$nul['uid']}" /></a>
+                    <a target="_blank" href="{:U('public/Passport/newperson',array('uid'=>$nul['uid']))}"><img class="thumb" src="{$nul['avatar_small']}" width="35" height="35" event-node="face_card" uid="{$nul['uid']}" /></a>
                     <br />
-                    <span title="{$nul['uname']}" style="width:60px; display:block; height:22px; line-height:22px; overflow:hidden;">{$nul['space_link']}</span>
+                    <span title="{$nul['uname']}" style="width:60px; display:block; height:22px; line-height:22px; overflow:hidden;">
+                        <a target="_blank" href="{:U('public/Passport/newperson',array('uid'=>$nul['uid']))}">{$nul['uname']}</a></span>
                 </li>
             </volist>
         </ul>

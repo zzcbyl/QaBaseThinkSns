@@ -56,9 +56,21 @@ class PassportAction extends Action
 		
 		//最新问题
 		$Qwhere=' is_del = 0 AND feed_questionid=0 AND add_feedid=0 AND (is_audit=1 OR is_audit=0) ';
-		$newfeedList = model('feed')->getQuestionList($Qwhere,3);
+		$newfeedList = model('feed')->getQuestionList($Qwhere,20);
+		$newList = $newfeedList;
+		$newList['data'] = array();
+		$index = 0;
+		//print_r($newList);
+		foreach($newfeedList['data'] as $k => $v)
+		{
+			if(!empty($v['description']) && $v['description']!='')
+			{
+				$newList['data'][$index] = $v;
+				$index++;
+			}
+		}
 		//print_r($newfeedList);
-		$this->assign('newfeedList', $newfeedList);
+		$this->assign('newfeedList', $newList);
 		
 		//最新用户
 		$uwhere=' is_del = 0 and is_audit=1 and is_active=1 and is_init = 1 ';
@@ -66,6 +78,14 @@ class PassportAction extends Action
 		$uids = getSubByKey($NewUserList, 'uid');
 		$NewUserInfoList = model('User')->getUserInfoByUids($uids);
 		$this->assign('NewUserList', $NewUserInfoList);
+        
+        //最新专家点评
+		$Euids = model('UserGroupLink')->getUserByGroupID(8, 6);
+		$struid = implode(',',$Euids);
+		$answerWhere =' is_del = 0 AND feed_questionid!=0 AND add_feedid=0 AND (is_audit=1 OR is_audit=0) AND uid in ('.$struid.')';
+		$answerList = model('Feed')->getAnswerList($answerWhere, 4,' publish_time desc');
+		$this->assign('answerList',$answerList);
+		//print_r($answerList);
         
 		$this->display('login');
 	}
@@ -306,7 +326,7 @@ class PassportAction extends Action
 		
 		//热心用户
 		$map['key'] = 'answer_count';
-		$list = model('UserData')->getlist($map,' `value` desc,`uid` desc ');
+		$list = model('UserData')->getlist($map,' `value`+0 desc,`uid` desc ');
 		$userinfo=array();
 		foreach($list as $k => $v)
 		{
@@ -330,7 +350,7 @@ class PassportAction extends Action
 		
 		//最新用户
 		$userwhere='is_del = 0 and is_audit = 1 and is_active = 1 and is_init = 1';
-		$NewUserList = model('User')->getList($userwhere,6,'uid');
+		$NewUserList = model('User')->getList($userwhere,12,'uid');
 		$uids = getSubByKey($NewUserList, 'uid');
 		$NewUserInfoList = model('User')->getUserInfoByUids($uids);
 		$this->assign('NewUserList', $NewUserInfoList);
@@ -338,7 +358,7 @@ class PassportAction extends Action
 		
 		//得到邀请最多的用户
 		$invitemap['key'] = 'be_invited_count';
-		$InviteUserList = model('UserData')->getlist($invitemap,' `value` desc', 10);
+		$InviteUserList = model('UserData')->getlist($invitemap,' `value`+0 desc', 10);
 		$InviteUserInfoList=array();
 		foreach($InviteUserList as $k=>$v)
 		{
@@ -350,7 +370,7 @@ class PassportAction extends Action
 		
 		//得到赞同最多的用户
 		$map['key'] = 'comment_agree_count';
-		$AgreeUserList = model('UserData')->getlist($map,' `value` desc', 10);
+		$AgreeUserList = model('UserData')->getlist($map,' `value`+0 desc', 10);
 		$AgreeUserInfoList=array();
 		foreach($AgreeUserList as $k=>$v)
 		{
@@ -362,7 +382,7 @@ class PassportAction extends Action
 		
 		//得到感谢最多的用户
 		$Thankmap['key'] = 'tothanked_count';
-		$ThankUserList = model('UserData')->getlist($Thankmap,' `value` desc', 10);
+		$ThankUserList = model('UserData')->getlist($Thankmap,' `value`+0 desc', 10);
 		$ThankUserInfoList=array();
 		foreach($ThankUserList as $k=>$v)
 		{
@@ -445,6 +465,12 @@ class PassportAction extends Action
 			$this->error( L ( 'PUBLIC_INFO_ALREADY_DELETE_TIPS' ) );
 		}
 		
+		//登录跳转
+		if($this->mid > 0)
+		{
+			$this->redirect('public/Index/feed', array('feed_id'=>$feed_id));
+		}
+		
 		//增加浏览数
 		model('Feed')->UpdatePV($feed_id);
 		
@@ -499,6 +525,12 @@ class PassportAction extends Action
 			$this->error( L ( 'PUBLIC_USER_NOEXIST' ) );
 		}
 		
+		//登录跳转
+		if($this->mid > 0)
+		{
+			$this->redirect('public/Profile/index', array('uid'=>$uid));
+		}
+
 		// 获取用户信息
 		$user_info = model ( 'User' )->getUserInfo ( $uid );
 		// 用户为空，则跳转用户不存在
