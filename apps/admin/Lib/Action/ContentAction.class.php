@@ -90,7 +90,6 @@ class ContentAction extends AdministratorAction
 	}
 
 	public function answer($isRec = 0, $is_audit = 1){
-		
 		$questionID = $_GET['feed_id'];
 		$map['add_feedid'] = '0';
 		$map['feed_questionid'] = $questionID;
@@ -148,6 +147,7 @@ class ContentAction extends AdministratorAction
 			}
 		}
 		$this->_listpk = 'feed_id';
+		$this->searchPostUrl = $this->searchPostUrl.'&feed_id='.$questionID;
 		//print_r($listData);
 		$this->displayList($listData);
 	}
