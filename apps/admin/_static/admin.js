@@ -68,11 +68,11 @@ admin.moveDown = function(obj)
 };
 
 
-admin.getChecked = function() {
+admin.getChecked = function () {
     var ids = new Array();
-    $.each($('#list input:checked'), function(i, n){
-        if($(n).val() !='0' && $(n).val()!='' ){
-            ids.push( $(n).val() );    
+    $.each($('#list input:checked'), function (i, n) {
+        if ($(n).val() != '0' && $(n).val() != '') {
+            ids.push($(n).val());
         }
     });
     return ids;
@@ -480,12 +480,12 @@ admin.delschedule = function(){
    }
 };
 //内容管理用到的JS
-admin.ContentEdit = function(_id,action,title,type){
+admin.ContentEdit = function (_id, action, title, type) {
 	var id = ("undefined"== typeof(_id)|| _id=='') ? admin.getChecked() : _id;
     if(id==''){
         ui.error(L('PUBLIC_SELECT_TITLE_TYPE',{'title':title,'type':type}));
         return false;
-	}
+    }
    if(confirm(L('PUBLIC_CONFIRM_DO',{'title':title,'type':type}))){
 	   $.post(U('admin/Content/'+action),{id:id},function(msg){
 			admin.ajaxReload(msg);

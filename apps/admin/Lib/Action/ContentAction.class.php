@@ -64,14 +64,78 @@ class ContentAction extends AdministratorAction
 		!empty($_POST['type']) && $map['type'] = t($_POST['type']);
 
 		$map['feed_questionid'] = '0';
+		$map['add_feedid'] = '0';
 		$listData = model('Feed')->getList($map,20);
 		foreach($listData['data'] as &$v){
 			$v['uname']    = $v['user_info']['space_link'];
 			$v['type']	   = $this->opt['type'][$v['type']]; 
 			$v['from']     = $this->from[$v['from']];
 			//$v['data']	   = '<div style="width:500px;line-height:22px" model-node="feed_list" class="feed_list">'.$v['body'].'  <a target="_blank" href="'.U('public/Profile/feed',array('feed_id'=>$v['feed_id'],'uid'=>$v['uid'])).'">'.L('PUBLIC_VIEW_DETAIL').'&raquo;</a></div>';
-			$v['body']	   = '<div style="width:200px;line-height:22px" model-node="feed_list" class="feed_list">'.$v['body'].'　<a target="_blank" href="'.U('public/Index/feed',array('feed_id'=>$v['feed_id'],'uid'=>$v['uid'])).'">'.L('PUBLIC_VIEW_DETAIL').'&raquo;</a></div>';
+			$v['body']	   = '<div style="width:200px;line-height:22px" model-node="feed_list" class="feed_list">'.$v['body'].'　<br /><a target="_blank" href="'.U('public/Index/feed',array('feed_id'=>$v['feed_id'],'uid'=>$v['uid'])).'">'.L('PUBLIC_VIEW_DETAIL').'&raquo;</a>&nbsp;&nbsp;&nbsp;&nbsp;<a target="_blank" href ="'.U('admin/Content/answer',array('feed_id'=>$v['feed_id'])).'">查看回答('.$v['answer_count'].')&raquo;</a></div>';
 			$v['description']	   = '<div style="width:500px;line-height:22px" model-node="feed_list" class="feed_list">'.getShort($v['description'],100,'...').'  </div>';
+			$v['publish_time'] = date('Y-m-d H:i:s',$v['publish_time']);
+			//$v['DOACTION'] = $isRec==0 ? "<a href='javascript:void(0)' onclick='admin.ContentEdit({$v['feed_id']},\"delFeed\",\"".L('PUBLIC_STREAM_DELETE')."\",\"".L('PUBLIC_DYNAMIC')."\")'>".L('PUBLIC_STREAM_DELETE')."</a>"
+			//							:"<a href='javascript:void(0)' onclick='admin.ContentEdit({$v['feed_id']},\"feedRecover\",\"".L('PUBLIC_RECOVER')."\",\"".L('PUBLIC_DYNAMIC')."\")'>".L('PUBLIC_RECOVER')."</a>";
+			if($isRec == 0 && $is_audit == 1){
+				$v['DOACTION'] = "<a href='javascript:void(0)' onclick='admin.ContentEdit({$v['feed_id']},\"delFeed\",\"".L('PUBLIC_STREAM_DELETE')."\",\"".L('PUBLIC_DYNAMIC')."\")'>".L('PUBLIC_STREAM_DELETE')."</a>";
+			}else if($isRec==0 && $is_audit == 0){
+				$v['DOACTION'] = "<a href='javascript:void(0)' onclick='admin.ContentEdit({$v['feed_id']},\"auditFeed\",\"".'通过'."\",\"".L('PUBLIC_DYNAMIC')."\")'>".'通过'."</a>&nbsp;|&nbsp;"."<a href='javascript:void(0)' onclick='admin.ContentEdit({$v['feed_id']},\"delFeed\",\"".L('PUBLIC_STREAM_DELETE')."\",\"".L('PUBLIC_DYNAMIC')."\")'>".L('PUBLIC_STREAM_DELETE')."</a>";;
+			}else{
+				$v['DOACTION'] = "<a href='javascript:void(0)' onclick='admin.ContentEdit({$v['feed_id']},\"feedRecover\",\"".L('PUBLIC_RECOVER')."\",\"".L('PUBLIC_DYNAMIC')."\")'>".L('PUBLIC_RECOVER')."</a>";
+			}
+		}
+		$this->_listpk = 'feed_id';
+		//print_r($listData);
+		$this->displayList($listData);
+	}
+
+	public function answer($isRec = 0, $is_audit = 1){
+		
+		$questionID = $_GET['feed_id'];
+		$map['add_feedid'] = '0';
+		$map['feed_questionid'] = $questionID;
+		//搜索区别
+		$_POST['rec'] = $isRec = isset($_REQUEST['rec']) ? t($_REQUEST['rec']) : $isRec;
+		if(!$isRec){
+			$_POST['is_audit'] = $isRec = isset($_REQUEST['is_audit']) ? t($_REQUEST['is_audit']) : $isRec;
+		}
+		
+		$this->pageKeyList = array('feed_id','uid','uname','body','publish_time','from','DOACTION');
+		$this->searchKey = array('feed_id','uid','rec');
+		$this->opt['type'] = array('0'=>L('PUBLIC_ALL_STREAM'),'post'=>L('PUBLIC_ORDINARY_WEIBO'),'repost'=>L('PUBLIC_SHARE_WEIBO'),'postimage'=>L('PUBLIC_PICTURE_WEIBO'),'postfile'=>L('PUBLIC_ATTACHMENT_WEIBO'));	//TODO 临时写死
+		
+		$this->pageTab[] = array('title'=>'回答管理','tabHash'=>'list','url'=>U('admin/Content/answer',array('feed_id'=>$questionID)));
+		$this->pageTab[] = array('title'=>'待审列表','tabHash'=>'unAudit','url'=>U('admin/Content/answerUnAudit',array('feed_id'=>$questionID)));
+		$this->pageTab[] = array('title'=>L('PUBLIC_RECYCLE_BIN'),'tabHash'=>'rec','url'=>U('admin/Content/answerRec',array('feed_id'=>$questionID)));
+		
+		$this->pageButton[] = array('title'=>'搜索回答','onclick'=>"admin.fold('search_form')");
+		if($isRec == 0 && $is_audit == 1){
+			$this->pageButton[] = array('title'=>'删除回答','onclick'=>"admin.ContentEdit('','delFeed','".L('PUBLIC_STREAM_DELETE')."','".L('PUBLIC_DYNAMIC')."')");
+		}else if($is_Rec==0 && $is_audit == 0){
+			$this->pageButton[] = array('title'=>'通过','onclick'=>"admin.ContentEdit('','auditFeed','".'通过'."','".L('PUBLIC_DYNAMIC')."')");
+			$this->pageButton[] = array('title'=>'删除','onclick'=>"admin.ContentEdit('','delFeed','".L('PUBLIC_STREAM_DELETE')."','".L('PUBLIC_DYNAMIC')."')");
+		}else{
+			$this->pageButton[] = array('title'=>L('PUBLIC_REMOVE_COMPLETELY'),'onclick'=>"admin.ContentEdit('','deleteFeed','".L('PUBLIC_REMOVE_COMPLETELY')."','".L('PUBLIC_DYNAMIC')."')");
+		}
+		
+		$isRec == 1 &&  $_REQUEST['tabHash'] = 'rec';
+		$is_audit == 0 && $_REQUEST['tabHash'] = 'unAudit';
+		$this->assign('pageTitle',$isRec ? L('PUBLIC_RECYCLE_BIN'):'回答管理');
+		$map['is_del'] = $isRec==1 ? 1 :0; 
+		if(!$isRec){
+			$map['is_audit'] = $is_audit==1 ? 1 :0; 
+		}
+		!empty($_POST['feed_id']) && $map['feed_id'] = array('in',explode(',',$_POST['feed_id']));
+		!empty($_POST['uid']) && $map['uid'] = array('in',explode(',',$_POST['uid']));
+		!empty($_POST['type']) && $map['type'] = t($_POST['type']);
+
+		$listData = model('Feed')->getList($map,20);
+		foreach($listData['data'] as &$v){
+			$v['uname']    = $v['user_info']['space_link'];
+			$v['type']	   = $this->opt['type'][$v['type']]; 
+			$v['from']     = $this->from[$v['from']];
+			//$v['data']	   = '<div style="width:500px;line-height:22px" model-node="feed_list" class="feed_list">'.$v['body'].'  <a target="_blank" href="'.U('public/Profile/feed',array('feed_id'=>$v['feed_id'],'uid'=>$v['uid'])).'">'.L('PUBLIC_VIEW_DETAIL').'&raquo;</a></div>';
+			$v['body']	   = '<div style="width:600px;line-height:22px" model-node="feed_list" class="feed_list">'.$v['body'].'</div>';
 			$v['publish_time'] = date('Y-m-d H:i:s',$v['publish_time']);
 			//$v['DOACTION'] = $isRec==0 ? "<a href='javascript:void(0)' onclick='admin.ContentEdit({$v['feed_id']},\"delFeed\",\"".L('PUBLIC_STREAM_DELETE')."\",\"".L('PUBLIC_DYNAMIC')."\")'>".L('PUBLIC_STREAM_DELETE')."</a>"
 			//							:"<a href='javascript:void(0)' onclick='admin.ContentEdit({$v['feed_id']},\"feedRecover\",\"".L('PUBLIC_RECOVER')."\",\"".L('PUBLIC_DYNAMIC')."\")'>".L('PUBLIC_RECOVER')."</a>";
@@ -101,6 +165,21 @@ class ContentAction extends AdministratorAction
         $this->searchPageKey = 'S_'.$this->pageKey ;
 		$this->feed(1);
 	}
+	
+	//回答待审列表
+	public function answerUnAudit(){
+		$this->pageKey = APP_NAME.'_'.MODULE_NAME.'_feed';
+		$this->searchPageKey = 'S_'.$this->pageKey ;
+		$this->answer(0 , 0);
+	}
+
+	//回答回收站
+	public function answerRec(){
+		$this->pageKey = APP_NAME.'_'.MODULE_NAME.'_feed';
+		$this->searchPageKey = 'S_'.$this->pageKey ;
+		$this->answer(1);
+	}
+	
 	//恢复
 	public function feedRecover(){
 		

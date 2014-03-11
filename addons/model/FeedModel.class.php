@@ -1126,17 +1126,25 @@ class FeedModel extends Model {
 				$feedList = $this->getFeeds($ids);
 				$res = $this->where($map)->save($save);
 				if($type == 'feedRecover'){
-					// 添加提问数
+					// 添加提问数或回答数
 					foreach($feedList as $v) {
-						model('UserData')->setUid($v['user_info']['uid'])->updateKey('feed_count', 1);
-						model('UserData')->setUid($v['user_info']['uid'])->updateKey('weibo_count', 1);
+						if($v['feed_questionid'] == 0) {
+							model('UserData')->setUid($v['user_info']['uid'])->updateKey('feed_count', 1);
+							model('UserData')->setUid($v['user_info']['uid'])->updateKey('weibo_count', 1);
+						}
+						else
+							model('UserData')->setUid($v['user_info']['uid'])->updateKey('answer_count', 1);
 					}
 					$this->_deleteFeedAttach($ids, 'recoverAttach');
 				} else {
-					// 减少提问数
+					// 减少提问数或回答数
 					foreach($feedList as $v) {
-						model('UserData')->setUid($v['user_info']['uid'])->updateKey('feed_count', -1);
-						model('UserData')->setUid($v['user_info']['uid'])->updateKey('weibo_count', -1);
+						if($v['feed_questionid'] == 0) {
+							model('UserData')->setUid($v['user_info']['uid'])->updateKey('feed_count', -1);
+							model('UserData')->setUid($v['user_info']['uid'])->updateKey('weibo_count', -1);
+						}
+						else
+							model('UserData')->setUid($v['user_info']['uid'])->updateKey('answer_count', -1);
 					}
 					$this->_deleteFeedAttach($ids, 'delAttach');
 					// 删除频道相应提问

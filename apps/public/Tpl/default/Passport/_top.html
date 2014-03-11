@@ -31,7 +31,7 @@
     <strong>获得：</strong>
     <include file="_countdata"/>   
     <span class="hd_btn">
-        <php>if($mid != $user_info[$uid]['uid'] && $mid){</php>
+        <php>if($mid != $user_info[$uid]['uid'] && $mid && count($user_info[$uid]['user_group'])==0){</php>
             {:W('FollowBtn', array('fid'=>$user_info[$uid]['uid'], 'uname'=>$user_info[$uid]['uname'], 'follow_state'=>$follow_state[$user_info[$uid]['uid']], 'isrefresh'=>1))}
             <!--<php>if(CheckPermission('core_normal','send_message')){</php>
             <eq name='userPrivacy.message' value='0'>

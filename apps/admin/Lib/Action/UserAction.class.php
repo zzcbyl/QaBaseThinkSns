@@ -233,7 +233,7 @@ class UserAction extends AdministratorAction {
 		switch(strtolower($type)) {
 			case 'index':
 			case 'dellist':
-				$this->pageKeyList = array('uid','uname','user_group','location','is_audit','is_active','is_init','ctime','reg_ip','DOACTION');
+				$this->pageKeyList = array('uid','uname','user_group','location','is_audit','is_active','is_init','linknumber','ctime','reg_ip','DOACTION');
 				break;
 			case 'pending':
 				$this->pageKeyList = array('uid','uname','location','ctime','reg_ip','DOACTION');

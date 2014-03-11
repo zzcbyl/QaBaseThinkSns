@@ -37,7 +37,7 @@ $admintaskrecom = CheckPermission('vtask_admin','vtask_recommend');
             <div style="position:relative;"><eq name='vl.newCommentCount' value='1'><p class="FloatNew"></p></eq></div>
       	    <div class="contTit">
                 <a href="{$vl['comment']['user_info']['space_url']}"><img class="thumb" src="{$vl['comment']['user_info']['avatar_small']}"  event-node="face_card" uid="{$vl['comment']['user_info']['uid']}" /></a>
-                <eq name='vl.is_del' value='0'>
+                <eq name="vl['comment']['is_del']" value='0'>
                 <h1>
                     {$vl['comment']['user_info'].space_link}
                 </h1>
@@ -176,7 +176,7 @@ $admintaskrecom = CheckPermission('vtask_admin','vtask_recommend');
                             <div class="aCenter">
                                 <div class="contTit">
                                     <a href="{$vl['answer'][0]['user_info']['space_url']}"><img class="thumb" src="{$vl['answer'][0]['user_info']['avatar_small']}"  event-node="face_card" uid='{$vl['answer'][0]['user_info']['uid']}'></a>
-                                    <eq name='vl.is_del' value='0'>
+                                    <eq name="vl['answer'][0]['is_del']" value='0'>
                                     <h1>
                                         {$vl['answer'][0].title}
 	                                    <php> if(in_array($vl['answer'][0]['user_info']['uid'],$followUids)){</php>
@@ -364,7 +364,7 @@ $admintaskrecom = CheckPermission('vtask_admin','vtask_recommend');
                             <div class="aCenter2">
                                 <div class="contTit">
                                     <a href="{$vl['answer'][0]['user_info']['space_url']}"><img class="thumb" src="{$vl['answer'][0]['user_info']['avatar_small']}"  event-node="face_card" uid='{$vl['answer'][0]['user_info']['uid']}'></a>
-                                    <eq name='vl.is_del' value='0'>
+                                    <eq name="vl['answer'][0]['is_del']" value='0'>
                                     <h1>
                                         {$vl['answer'][0].title}
 	                                    
