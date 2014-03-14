@@ -292,8 +292,8 @@ a{text-decoration:none;}
 .regbox label{width:80px; text-align:right; display:inline-block; padding:0px 10px; float:left;}
 .regbox input { float:left;}
 .regbox div{height:30px; line-height:30px; margin-top:20px;}
-.regbox div span{font-size:12px; color:#f4c475; float:left;}
-.regboxErrorSpan { color: #F4C475; display: block; float: right; font-size: 12px; line-height: 18px; padding-top: 5px; }
+.regbox div span{font-size:12px; color:#f4c475; }
+.regboxErrorSpan { color: #F4C475; font-size: 12px; line-height: 18px; padding-top: 5px; }
 .errorspan{font-size:12px; color:#f4c475; background:url(../image/error_icon.png) no-repeat left center; padding-left:1.5em}
 .tybox{ background:url(../image/tybg.png) repeat-x; height:13px; font-size:12px; color:#999; text-align:center; line-height:13px; padding-top:30px}
 .tybox span{ background:#fff; padding:0px 10px;}
@@ -401,7 +401,7 @@ p.FloatNew{background:url(../image/new.png) no-repeat; position:absolute; width:
 .gxBtn{ background-position:0px -160px; width:55px;}
 .jxzw{ background-position:-65px -160px; width:80px;}
 .caina{ background-position:-152px -160px; width:108px; }
-.tiwenK{ background:#f0f0f0; border:solid 1px #e8e8e8; margin:0px 0px 40px;  padding:20px; _padding:10px; position:relative;}
+.tiwenK{ background:#f0f0f0; border:solid 1px #e8e8e8; margin:0px 0px 40px;  padding:10px 20px; _padding:10px; position:relative;}
 .tiwen_area textarea{width:495px; padding:10px; background:#fff; height:80px; font-size:14px; color:#999; border:none; border-top:solid 1px #ccc; border-left:solid 1px #ccc;}
 .tiwenB{height:20px; padding-top:15px; position:relative}
 .tiwenB ul li{float:left; position:relative; width:75px; height:50px;}
@@ -663,3 +663,7 @@ p.FloatNew{background:url(../image/new.png) no-repeat; position:absolute; width:
 #faqdiv .form{padding:10px;}
 
 .arrow_left { background:url(../image/error_bg.png) no-repeat 0 0; height:19px; width:10px;}
+
+
+.sx_btn { background-color: #FFB847; border-color: #FF9B01; border-radius: 2px; border-style: solid; border-width: 1px; color: #FFFFFF; cursor: pointer; display: inline-block; overflow: hidden; vertical-align: middle;}
+.sx_btn span { border-radius: 2px; border-style: solid; border-width: 1px; display: inline-block; height: 18px; line-height: 18px; padding: 0 9px 0 10px; white-space: nowrap;border-color: #FFB33B; color: #FFFFFF;}

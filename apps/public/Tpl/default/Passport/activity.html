@@ -1,0 +1,145 @@
+<include file="__THEME__/public_header" />
+    <style type="text/css">
+        table td { padding:5px 0; font-size:14px; color:#666;}
+        table td input[type=text] { width:110px;}
+        table td textarea { line-height:20px; padding:0 5px;}
+        .tdtitle { text-align:right; width:130px;}
+        .xingchengCss{ width:800px; border-bottom:1px solid #ccc; border-left:1px solid #ccc; }
+        .xingchengCss td { border-top:1px solid #ccc; border-right:1px solid #ccc; padding:2px 5px; }
+        .bgtitle { background:#800080; color:#fff; padding:2px 3px;}
+    </style>
+<div class="container regContent" style="padding-top:15px;">
+<div class="reg_info" style="margin-top:0;">
+    <div class="reg_info_top"></div>
+    <div class="reg_info_center">
+        <div style="font-size:14px; line-height:30px; width:800px; margin:0 auto; position:relative;">
+            <h1 style="text-align:center;">卢勤带你去长隆（五一假日营）</h1><br />
+            <div style="position:absolute; right:0; top:-10px;"><a href="#baoming"><img src="__THEME__/image/baoming.jpg" /></a></div>
+            <div style="text-align:center; margin:10px 0;"><img src="__THEME__/image/activity_img3.jpg" /></div>
+            <div>　　快乐人生需要会发现的双眼，会走路的双脚，会做事的双手，会思考的大脑。</div>
+            <div>　　快乐的孩子应该在蓝天下奔跑，在神奇的大自然中寻找自己。你希望孩子拥有快乐的人生吗？今年"五一"假期，著名家庭教育专家卢勤老师将带大家去广州，一起畅玩长隆野生动物世界，了解神奇的动物，发现自己的与众不同；一起投身于长隆欢乐大世界，体验勇敢，感受合作；一起观看国际大马戏团的精彩表演，开阔眼界，放飞梦想。</div>
+            <div>　　给孩子一个管理自己的机会；给孩子一个认识自己的机会；给孩子一个解读父母的机会；给孩子一个"我能行"的精彩体验。</div>
+            <div>　　让我们拉起卢勤老师的手，一起奔向没有雾霾的广州长隆，一起奔向精彩的野生动物世界吧！</div>
+            <div style="text-align:center; margin:10px 0;"><img src="__THEME__/image/activity_img1.jpg" /></div>
+            <p><span class="bgtitle">活动时间：</span> 2014年5月1日 - 5月3日</p>
+            <p><span class="bgtitle">活动地点：</span> 广州长隆</p>
+            <p><span class="bgtitle">活动安排：</span></p>
+            <div>
+                <table class="xingchengCss">
+                    <tr><td>日期</td><td>行程</td><td>时间</td><td>具体活动</td></tr>
+                    <tr><td rowspan="3">5月1日</td><td rowspan="3">快乐出发，我能行！</td><td>上午</td><td>营员报到，飞往广州。入住长隆酒店（五星级）</td></tr>
+                    <tr><td>下午</td><td>开营仪式，卢勤老师亲子讲座</td></tr>
+                    <tr><td>晚上</td><td>观看长隆国际大马戏精彩表演</td></tr>
+                    <tr><td rowspan="2">5月2日</td><td>奔向大自然，你真棒！</td><td>白天</td><td>游览长隆野生动物世界</td></tr>
+                    <tr><td>认识自己，感受合作，你真棒！</td><td>晚上</td><td>“快乐人生”联欢会</td></tr>
+                    <tr><td rowspan="2">5月3日</td><td>痛快玩吧，太好了！</td><td>白天</td><td>畅游长隆欢乐大世界</td></tr>
+                    <tr><td>温暖告别</td><td>下午</td><td>闭营仪式，返程</td></tr>
+                </table>
+            </div>
+            <div><span class="bgtitle">行程及收费标准：</span></div>
+            <div>　住宿标准：广州长隆酒店（五星级）</div>
+            <div>　餐饮标准：</div>
+            <div>　　　早餐：长隆酒店白虎自助餐厅</div>
+            <div>　　　中餐：长隆酒店餐厅、广州市内餐厅</div>
+            <div>　　　晚餐：长隆酒店餐厅</div>
+            <div>　景点：长隆国际大马戏、长隆野生动物世界、长隆欢乐世界</div>
+            <div>　参营人员要求：10-15岁的孩子，家长可选择参营；10岁以下孩子至少需要一名家长陪同。</div>
+            <div>　收费标准： 4800元/人（包括住宿，餐饮，市内交通、景点门票、保险等，不含往返机票）</div>
+            <a name="baoming"></a>
+            <div><span class="bgtitle">报名方式：</span></div>
+            <div>　请填写下列报名表，并点击提交按钮报名</div>
+            <div style="border:1px solid #ccc; margin-top:20px; padding:10px;">
+                <div style="padding:0 0 10px 0; font-size:16px; font-weight:bold;">报名表格</div>
+                <form action="{:U('public/Passport/doActivityForm')}" method="post">
+                    <table>
+                        <tr><td class="tdtitle"><i class="RedStar">*</i>孩子姓名：</td><td><input class="s-txt" type="text" maxlength="10" value="" id="childName" name="childName"></td>
+                            <td class="tdtitle"><i class="RedStar">*</i>孩子年龄：</td><td><select id="childAge" name="childAge" style="border:1px solid #ccc;"><option>8</option><option>9</option><option>10</option><option>11</option><option>12</option><option>13</option><option>14</option><option>15</option></select></td>
+                            <td></td><td></td></tr>
+                        <tr><td class="tdtitle"><i class="RedStar">*</i>参营家长姓名：</td><td><input class="s-txt" type="text" maxlength="10" value="" id="parentName1" name="parentName1"></td>
+                            <td class="tdtitle"><i class="RedStar">*</i>手机号码：</td><td><input class="s-txt" type="text" maxlength="11" value="" id="parentMobile1" name="parentMobile1"></td>
+                            <td class="tdtitle"><i class="RedStar">*</i>电子邮箱：</td><td><input class="s-txt" type="text" maxlength="50" value="" id="parentEmail1" name="parentEmail1" style="width:170px;"></td></tr>
+                        <tr><td class="tdtitle">参营家长姓名：</td><td><input class="s-txt" type="text" maxlength="10" value="" id="parentName2" name="parentName2"></td>
+                            <td class="tdtitle">手机号码：</td><td><input class="s-txt" type="text" maxlength="11" value="" id="parentMobile2" name="parentMobile2"></td>
+                            <td class="tdtitle">电子邮箱：</td><td><input class="s-txt" type="text" maxlength="5010" value="" id="parentEmail2" name="parentEmail2" style="width:170px;"></td></tr>
+                        <tr><td class="tdtitle">家长是否同行：</td><td><select name="istogether" style="border:1px solid #ccc;"><option value="1">是</option><option value="0">否</option></select></td><td></td><td></td><td></td><td></td></tr>
+                        <tr><td class="tdtitle">备注：</td><td colspan="5"><textarea id="remarks" name="remarks" style="width:420px; height:80px;"></textarea></td></tr>
+                        <tr><td colspan="6" style="text-align:center; padding-top:10px;">
+                            <input type="submit" value="提 交" onclick="return checkSubmit();" style="padding:3px 10px;" /></td></tr>
+                    </table>
+                </form>
+            </div>
+
+            <div style="text-align:right;">注：报名截止日期4月16日</div>
+
+            <div style="text-align:center; margin:50px 0 10px 0;"><img src="__THEME__/image/activity_img2.jpg" /></div>
+            <div>如果你想及时得到卢勤问答平台的最新咨询，请搜索公共微信号“卢勤问答平台”或者扫描下方二维码进行关注！</div>
+            <div style="text-align:center; margin:10px 0;"><img src="__THEME__/image/wx2v.jpg" width="150px" /></div>
+                
+
+
+
+
+        </div>
+        
+    </div>
+    <div class="reg_info_bottom"></div>
+</div>
+</div>
+<script type="text/javascript">
+    function checkSubmit() {
+        if ($('#childName').val().Trim() == "") {
+            ui.error('孩子姓名不能为空!');
+            $('#childName').focus();
+            $('#childName').css('border-color','red');
+            return false;
+        }
+        if ($('#parentName1').val().Trim() == "") {
+            ui.error('参营家长姓名不能为空!');
+            return false;
+        }
+        if ($('#parentMobile1').val().Trim() == "") {
+            ui.error('手机号码不能为空!');
+            return false;
+        }
+        if (!ismobile($('#parentMobile1').val().Trim())) {
+            ui.error('手机号格式有误');
+            return false;
+        }
+        if ($('#parentEmail1').val().Trim() == "") {
+            ui.error('电子邮箱不能为空!');
+            return false;
+        }
+        var myReg = /^[-._A-Za-z0-9]+@([_A-Za-z0-9]+\.)+[A-Za-z0-9]{2,3}$/;
+        if (!myReg.test($('#parentEmail1').val().Trim())) {
+            ui.error('电子邮箱格式有误!');
+            return false;
+        }
+        if ($('#parentMobile2').val().Trim() != "") {
+            if (!ismobile($('#parentMobile2').val().Trim())) {
+                ui.error('手机号格式有误');
+                return false;
+            }
+        }
+        if ($('#parentEmail2').val().Trim() != "") {
+            if (!myReg.test($('#parentEmail2').val().Trim())) {
+                ui.error('电子邮箱格式有误!');
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    $('input[type=text]').blur(function () {
+        $('#childName').css('border-color', '#ccc');
+    });
+
+    //验证手机号
+    function ismobile(str) {
+        var result = str.match(/^0*(13|15|18)\d{9}$/);
+        if (result == null) return false;
+        return true;
+    }
+
+</script>
+<include file="__THEME__/public_footer" />

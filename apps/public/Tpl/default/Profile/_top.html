@@ -27,25 +27,17 @@
     <p class="comm hd">
     <strong>获得：</strong>
     <include file="_countdata"/>   
-    <span class="hd_btn">
+    <span class="hd_btn" style="right:-500px;">
         <php>if($mid != $user_info[$uid]['uid'] && $mid && count($user_info[$uid]['user_group'])==0){</php>
             {:W('FollowBtn', array('fid'=>$user_info[$uid]['uid'], 'uname'=>$user_info[$uid]['uname'], 'follow_state'=>$follow_state[$user_info[$uid]['uid']], 'isrefresh'=>1))}
-            <!--<php>if(CheckPermission('core_normal','send_message')){</php>
-            <eq name='userPrivacy.message' value='0'>
-            <a onclick="ui.sendmessage({$user_info[$uid]['uid']}, 0)" href="javascript:void(0)" event-node="postMsg" class="ml5 btn-cancel"><span>发私信</span></a>
-            </eq>&nbsp;
-            <php>}</php>-->
         <php>}</php>
 
-        <!--<a href="#" class="gz">关注</a>
-        <a href="#" class="gz_ed">已关注</a>
-        <a href="#" class="qx">取消</a>-->
+        <eq name='userPrivacy.message' value='0'>
+            <a onclick="ui.sendmessage({$user_info[$uid]['uid']}, 0)" href="javascript:void(0)" event-node="postMsg" class="sx_btn" style="margin-top: -18px;"><span>发私信</span></a>
+        </eq>&nbsp;
     </span>
     </p>
 </div>
-
-
-
 
 <script type="text/javascript">
 // 事件监听

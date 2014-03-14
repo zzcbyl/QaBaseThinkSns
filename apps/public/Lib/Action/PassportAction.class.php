@@ -73,11 +73,30 @@ class PassportAction extends Action
 		$this->assign('newfeedList', $newList);
 		
 		//最新用户
-		$uwhere=' is_del = 0 and is_audit=1 and is_active=1 and is_init = 1 ';
-		$NewUserList = model('User')->getList($uwhere,12,'uid', 'ctime desc');
-		$uids = getSubByKey($NewUserList, 'uid');
-		$NewUserInfoList = model('User')->getUserInfoByUids($uids);
-		$this->assign('NewUserList', $NewUserInfoList);
+		$NewUserData = array();
+		$struids = '';
+		while(true)
+		{
+			$uwhere=' is_del = 0 and is_audit=1 and is_active=1 and is_init = 1 ';
+			if($struids!='')
+				$uwhere .= ' and uid not in ('.substr($struids,0,strlen($struids)-1).')';
+			$NewUserList = model('User')->getList($uwhere, 12 ,'uid', 'ctime desc');
+			$uids = getSubByKey($NewUserList, 'uid');
+			$struids = $struids.implode(',',$uids).',';
+			$NewUserInfoList = model('User')->getUserInfoByUids($uids);
+			foreach($NewUserInfoList as $k => $v)
+			{
+				if(strstr($v['avatar_original'], '/noavatar/big.jpg') == '')
+				{
+					$NewUserData[$k] = $v;
+					if(count($NewUserData) >= 12)
+						break;
+				}
+			}
+			if(count($NewUserData) >= 12)
+				break;
+		}
+		$this->assign('NewUserList', $NewUserData);
         
         //最新专家点评
 		$Euids = model('UserGroupLink')->getUserByGroupID(8, 6);
@@ -1262,6 +1281,60 @@ class PassportAction extends Action
 				D('')->table(C('DB_PREFIX').'log_ip')->add($ipdata);	
 			}	
 		}
+	}
+	
+	/**
+	 * 报名数据
+	 *
+	 * @return $result varchar
+	 *
+	 */	
+	public function doActivityForm()
+	{
+		$map['childname'] = $_POST['childName'];
+		$map['childage'] = $_POST['childAge'];
+		$map['parentsname1'] = $_POST['parentName1'];
+		$map['parentsmobile1'] = $_POST['parentMobile1'];
+		$map['parentsemail1'] = $_POST['parentEmail1'];
+		$map['parentsname2'] = $_POST['parentName2'];
+		$map['parentsmobile2'] = $_POST['parentMobile2'];
+		$map['parentsemail2'] = $_POST['parentEmail2'];
+		$map['istogether'] = $_POST['istogether'];
+		$map['remarks'] = $_POST['remarks'];
+		$map['ctime'] = time();
+		
+		$result = model('ActivityForm')->add($map);
+		if($result>0)
+		{
+			//发送验证邮件
+			$this->sendActivityEmail($_POST['childName'], $_POST['parentEmail1']);
+			//报名成功
+			$this->success('报名成功');	
+		}
+	}
+	
+	public function sendActivityEmail($name, $email) {
+		$data['node'] = '';
+		$data['appname'] = '';
+		$data['title'] = '“快乐人生万里行（五一长隆假日营）”报名确认函';
+		$data['body'] = '<p>'.$name.'的家长：</p>	<p>　　您好，感谢您参与"快乐人生万里行（五一长隆假日营）"的报名。你的报名信息我们已经收到！随后相关的工作人员将与你取得联系，确认报名信息以及后续事宜，包括付款方式、机票事宜、集合地点等。如果你有什么问题想要咨询，也可以拨打以下两位工作人员的电话：邵老师（15699780807），梁老师（18311160841）。</p>
+						<p>　　如果你想知道更多关于卢勤问答平台的资讯，请直接搜索微信号添加"卢勤问答平台"，或者扫描下方二维码。</p>
+						<p>　　亲密良好的亲子互动，有利于孩子的成长。这样的机会，也许你的朋友也需要！如果你的周围也有想参加亲子营的朋友，希望你能把这个消息分享给他们。</p>
+						<p>　　最后，感谢您对"快乐人生万里行（五一长隆假日营）"的大力支持！预祝您旅途愉快！</p>
+						<p style="text-align:center;"><img src="http://www.luqinwenda.com/addons/theme/stv1/_static/image/wx2v.jpg" style="width:150px;" /></p>
+						<p style="text-align:right;"> 卢勤问答平台敬上</p>';
+		$data['uid'] = 0;
+		$data['email'] = $email;
+		
+		model('Notify')->sendActivityEmail($data);
+	}
+	
+	public function activityresult()
+	{
+		$data = model('ActivityForm')->getList('',null,'ctime desc',20);
+		//print_r($data);
+		$this->assign('data',$data);
+		$this->display();
 	}
 }
 ?>

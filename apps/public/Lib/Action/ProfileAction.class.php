@@ -1471,4 +1471,84 @@ class ProfileAction extends Action {
 		$this->display();
 	}
 	
+	public function messages()
+	{
+		// 获取用户信息
+		$user_info = model ( 'User' )->getUserInfo ( $this->mid );
+		// 用户为空，则跳转用户不存在
+		if (empty ( $user_info )) {
+			$this->error ( L ( 'PUBLIC_USER_NOEXIST' ) );
+		}
+
+		// 个人空间头部
+		$this->_top ();
+		
+		// 判断隐私设置
+		$userPrivacy = $this->privacy ( $this->uid );
+		if ($userPrivacy ['space'] !== 1) {
+			$this->_sidebar ();
+
+		} else {
+			$this->_assignUserInfo ( $this->uid );
+		}
+		
+		$dao = model('Message');
+		$list = $dao->getMessageListByUid($this->mid, array(MessageModel::ONE_ON_ONE_CHAT, MessageModel::MULTIPLAYER_CHAT));
+		$this->assign($list);
+		// 设置信息已读(在右上角提示去掉),
+		model('Message')->setMessageIsRead(t($POST['id']), $this->mid, 1);
+		$this->setTitle( L('PUBLIC_MESSAGE_INDEX') );
+		$userInfo = model('User')->getUserInfo($this->mid);
+		
+		$this->setTitle ( $userInfo['uname'].'的私信' );
+		$this->setKeywords ($userInfo['uname'].'的私信');
+
+		$this->display();
+	}
+	
+	public function messagesdetail()
+	{
+		// 获取用户信息
+		$user_info = model ( 'User' )->getUserInfo ( $this->mid );
+		// 用户为空，则跳转用户不存在
+		if (empty ( $user_info )) {
+			$this->error ( L ( 'PUBLIC_USER_NOEXIST' ) );
+		}
+		
+		// 个人空间头部
+		$this->_top ();
+		
+		// 判断隐私设置
+		$userPrivacy = $this->privacy ( $this->uid );
+		if ($userPrivacy ['space'] !== 1) {
+			$this->_sidebar ();
+
+		} else {
+			$this->_assignUserInfo ( $this->uid );
+		}
+		
+		$message = model('Message')->isMember(t($_GET['id']), $this->mid, true);
+
+		// 验证数据
+		if(empty($message)) {			
+			$this->error(L('PUBLIC_PRI_MESSAGE_NOEXIST'));
+		}
+		$message['member'] = model('Message')->getMessageMembers(t($_GET['id']), 'member_uid');
+		$message['to'] = array();
+		// 添加发送用户ID
+		foreach($message['member'] as $v) {
+			$this->mid != $v['member_uid'] && $message['to'][] = $v;
+		}
+		// 设置信息已读(私信列表页去掉new标识)
+		model('Message')->setMessageIsRead(t($_GET['id']), $this->mid, 0);
+		$message['since_id'] = model('Message')->getSinceMessageId($message['list_id'],$message['message_num']);
+		
+		$this->assign('message', $message);
+		$this->assign('type', intval($_GET['type']));
+
+		$this->setTitle('与'.$message['to'][0]['user_info']['uname'].'的私信对话');
+		$this->setKeywords('与'.$message['to'][0]['user_info']['uname'].'的私信对话');
+
+		$this->display();
+	}
 }

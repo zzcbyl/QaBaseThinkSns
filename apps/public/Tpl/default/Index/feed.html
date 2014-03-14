@@ -27,7 +27,30 @@
                     </h1>
                     <h2><a href="javascript:void(0);">{$feedInfo.body|format=true}</a></h2>
                     <div><p>{$feedInfo.description|format=true}</p></div>
-                    <p></p>
+                    <!--要求补充-->
+                    <!--<div style="padding-left:120px; margin-top:10px;">
+                        <php>if(count($addquestionlist)>0) {</php>
+                            <volist name='addquestionlist' id ='add'>
+                                <div class="contTit cBline" style="padding:5px 0;">
+                                    <!--<a target="_blank" href="{$add['user_info']['space_url']}"><img class="thumb" event-node="face_card" uid="{$add['user_info']['uid']}" src="{$add['user_info']['avatar_small']}" /></a>
+                                    <!--<p class="xz">
+                                        <a href="#" class="x1"></a>
+                                        <a href="#" class="x2"></a>
+                                        <a href="#" class="x3"></a>
+                                        <a href="#" class="x4"></a>
+                                    </p>
+                                    <div style="font-size:14px; line-height:20px;">
+                                        {$add['title']} 
+                                        <a style="float:right;">回答补充</a>
+                                        <i style="color: #C5C5C5; font-size: 12px; letter-spacing: 0.3px; float:right; margin-right:10px;">{$add['publish_time']|friendlyDate}</i>
+                                    </div>
+                                    <p style="padding-left:0px;"><strong>要求补充：</strong>{$add['body']}</p>
+                                    
+                                </div>
+                            </volist>
+                        <php>}</php>
+                    </div>-->
+                    <!--要求补充-->
                     <div class="info_gz" style="margin-top:10px;">
                         <p class="gz_info">
                             <i>{$feedInfo.publish_time|friendlyDate} / 浏览{$feedInfo.feed_pv}次</i><!--<a href="javascript:void(0);" class="gzNum">关注23</a>--></p>
@@ -38,7 +61,7 @@
                             </eq>
                             <php>}</php>
                             <a href="javascript:void(0);" onclick="showInviteAnswerDiv();">邀请回答</a> 
-                            <!--<a href="javascript:void(0);" onclick="if($('#AddQuestionDiv').css('display')=='none')  $('#AddQuestionDiv').show();  else  $('#AddQuestionDiv').hide(); ">追问</a> -->
+                            <!--<a href="javascript:void(0);" onclick="if($('#AddQuestionDiv').css('display')=='none')  $('#AddQuestionDiv').show();  else  $('#AddQuestionDiv').hide(); ">要求补充</a>-->
                             <php>if(in_array('comment',$weibo_premission)):</php>
                                 <a nodeAName='comment' nodeName='comment' href="javascript:void(0)" style="min-width:50px; text-align:left;" onclick="if($('#commentBlock').css('display')=='none') $('#commentBlock').show(); else  $('#commentBlock').hide();">{:L('PUBLIC_STREAM_COMMENT')}<neq name='feedInfo.comment_count' value='0'>({$feedInfo['comment_count']})</neq></a>
                             <php> endif; </php>
@@ -49,7 +72,7 @@
                 <!--邀请回答-->
                 <!--邀请列表--> 
                 <div class="yqList_box"  id="InvitedAnswer" style="display:none;">
-                   	<p class="icon3" style="right:90px;"></p>
+                   	<p class="icon3" style="right:80px;"></p>
                    	<div class="yqList">
                     	<ul id="inviteList">
                         </ul>
@@ -124,39 +147,18 @@
                 <!--邀请弹框--> 
                 <!--邀请回答-->
 
-                <!--追问-->
+                <!--要求补充-->
                 <!--列表-->
-                <div class="answer2" id="AddQuestionDiv" style="display:none;">
-                    <div class="aTop2">
-                        <p class="icon2" style="right:80px;"></p></div>
-                    <div class="aCenter2" style="margin-top:-20px;">
+                <div class="answer2" id="AddQuestionDiv" style="display:none; padding-left:150px;">
+                    <div class="aTop511">
+                        <p class="icon2" style="right:90px;"></p></div>
+                    <div class="aCenter2" style="margin-top:-20px; width: 452px;">
                         <!--提问框-->
-                        {:W('AddAsk',array('title'=>'追问', 'feedID'=>$feedInfo['feed_id']))}
+                        {:W('AddAsk',array('title'=>'要求补充', 'feedID'=>$feedInfo['feed_id']))}
                         <!--提问框-->
-                        <php>if(count($addquestionlist)>0) {</php>
-                            <volist name='addquestionlist' id ='add'>
-                                <div class="contTit cBline">
-                                    <a target="_blank" href="{$add['user_info']['space_url']}"><img class="thumb" event-node="face_card" uid="{$add['user_info']['uid']}" src="{$add['user_info']['avatar_small']}" /></a>
-                                    <h2>{$add['title']}
-                                    <p class="xz">
-                                        <a href="#" class="x1"></a>
-                                        <a href="#" class="x2"></a>
-                                        <a href="#" class="x3"></a>
-                                        <a href="#" class="x4"></a>
-                                    </p>
-                                    </h2>
-                                    <p>追问：{$add['body']}</p>
-                                    <div class="info_gz" >
-                                        <p class="gz_info">
-                                            <i>{$add['publish_time']|friendlyDate}</i></p>
-                                        <p class="comm">
-                                        </p>
-                                    </div>
-                                </div>
-                            </volist>
-                        <php>}</php>
+                        
                     </div>
-                    <div class="aBottom2"></div>
+                    <div class="aBottom511"></div>
                 </div>
                 <!--列表-->
                 <!--追问-->

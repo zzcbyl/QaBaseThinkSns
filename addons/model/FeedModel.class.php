@@ -1639,4 +1639,16 @@ class FeedModel extends Model {
 		return $inviteResult;
 	}
 	
+	/**
+	 * 获取追问信息
+	 *
+	 * @return array
+	 *
+	 */	
+	public function getAddQuestion($feed_id)
+	{
+		
+	}
+	
+	
 }

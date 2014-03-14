@@ -12,6 +12,9 @@
                 <!--关闭-->
                 <span style="float:right; margin-right:20px;">
                     {:W('FollowBtn', array('fid'=>$userInfo['uid'], 'uname'=>$userInfo['uname'], 'refer'=> $uid == $mid ? 'following_list' : '', 'follow_state'=>$follow_state, 'type'=>'normal'))}
+
+                    <a onclick="ui.sendmessage({$userInfo['uid']}, 0)" href="javascript:void(0)" event-node="postMsg" class="sx_btn" style=" margin:-18px 0 0 10px;"><span style="font-size:12px; position:relative;">发私信</span></a>
+                    
                 </span>
                 <!--<a href="javascript:void(0);" class="yqhd"></a>-->
             </h4>

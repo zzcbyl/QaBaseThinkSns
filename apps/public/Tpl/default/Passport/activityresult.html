@@ -1,0 +1,32 @@
+<include file="__THEME__/public_header" />
+<style type="text/css">
+    table{ border-top:1px solid #ccc; border-right:1px solid #ccc; margin-top:20px; width:100%; font-size:14px; }
+    td { border-bottom:1px solid #ccc; border-left:1px solid #ccc; height:20px; line-height:20px; padding:2px 5px; min-width:50px; }
+</style>
+<div class="container" style="background:#fff; border:0;">
+<div style="padding:20px;">
+    <div><h3>报名结果</h3></div>
+    <table>
+        <tr style="text-align:center;"><td style="width:65px;">孩子姓名</td><td style="width:65px;">孩子年龄</td><td>参营家长信息</td><td style="width:90px;">家长是否同行</td><td style="width:270px;">备注</td><td style="width:90px;">报名时间</td></tr>
+        <volist name="data['data']" id='result'>
+            <tr>
+                <td>{$result['childname']}</td>
+                <td style="text-align:center;">{$result['childage']}</td>
+                <td>
+                    <div>姓名：{$result['parentsname1']}　手机号码：{$result['parentsmobile1']}<span style="display:block;">　　　电子邮箱：{$result['parentsemail1']}</span></div>
+                    <div><neq name='result.parentsname2' value=''>姓名：{$result['parentsname2']}</neq>
+                    <neq name='result.parentsmobile2' value=''>　手机号码：{$result['parentsmobile2']}</neq>
+                    <neq name='result.parentsemail2' value=''><span style="display:block;">　　　电子邮箱：{$result['parentsemail2']}</span></neq></div>
+                </td>
+                <td style="text-align:center;"><php>if($result['istogether']==0) echo '否';else echo '是';</php></td>
+                <td>{$result['remarks']}</td>
+                <td style="text-align:center;"><php>if($result['ctime']>0) echo date("Y-m-d H:i:s",$result['ctime']);</php></td></tr>
+        </volist>
+    </table>
+    <div id="page" class="page">
+		{$data['html']}
+	</div>
+</div>
+
+<include file="__THEME__/public_footer" />
+

@@ -24,7 +24,7 @@ class AddAskWidget extends Widget {
 		$var = array();
 		//频道id
 		$var['channelID'] = $data['channelID'];
-		
+		$var['title'] = $data['title'];
 		$var['initHtml'] = '';
 		$var['post_event'] ='post_feed';
 		$var['cancomment'] = 0;

@@ -183,6 +183,10 @@ class IndexAction extends Action {
 		//print_r($authenticateExpert);
 		$this->assign ( 'authenticateExpert_UserCount', $user_count );
 		$this->assign('authenticateExpert',$authenticateExpert);	
+		
+		//获取追问信息
+		$addFeed =	model('feed')->getQuestionList('add_feedid = '.$feed_id.' and is_del = 0 and (is_audit=1 OR is_audit=0)');
+		$this->assign('addquestionlist', $addFeed['data']);
 	
 		$this->setTitle($feedInfo['body']);
 		$this->setKeywords($feedInfo['body']);

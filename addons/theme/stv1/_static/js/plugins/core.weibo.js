@@ -330,6 +330,11 @@ core.weibo = {
                 //提交回答
                 var before = $('#feed-lists div').eq(0);
                 $div = $('<div>' + html + '</div>');
+                var _this = this;
+                var answerPTime = $($div.find("#answer_publish_time")[0]).val();
+                if (answerPTime != '') {
+                    _this.loadIdx = answerPTime;
+                }
                 if (before.length > 0) {
                     $div.insertBefore(before);
                 } else {
