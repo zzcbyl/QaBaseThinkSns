@@ -11,7 +11,6 @@
           <div class="feed-nav"><div class="set-hd"><h3>{:L('PUBLIC_PRIVATE_MESSAGE')}</h3></div></div>
           <!--tab菜单/end-->
           <!--消息回复区-->
-          <php>if(CheckPermission('core_normal','send_message')){</php>
           <div id="replay" class="replay-section clearfix">
             <div class="hd">
               <span><a href="{:U('public/Profile/messages')}">{:L('PUBLIC_BACK')}</a></span>{:L('PUBLIC_METO')}
@@ -37,7 +36,6 @@
               </dl>
             </div>
           </div>
-          <php>}</php>
           <!--消息回复列表-->
           <div class="reply-lists" id="feed_list"></div>
           <p class="moreFoot" id="moreFoot"><a id="load_more_btn" onclick="load_more_message(this)" href="javascript:void(0)"><span class="ico_morefoot"></span>{:L('PUBLIC_MORE')}</a></p>

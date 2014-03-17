@@ -667,3 +667,7 @@ p.FloatNew{background:url(../image/new.png) no-repeat; position:absolute; width:
 
 .sx_btn { background-color: #FFB847; border-color: #FF9B01; border-radius: 2px; border-style: solid; border-width: 1px; color: #FFFFFF; cursor: pointer; display: inline-block; overflow: hidden; vertical-align: middle;}
 .sx_btn span { border-radius: 2px; border-style: solid; border-width: 1px; display: inline-block; height: 18px; line-height: 18px; padding: 0 9px 0 10px; white-space: nowrap;border-color: #FFB33B; color: #FFFFFF;}
+
+
+.share_sina { background:url(../image/share_sprite.png) no-repeat 0 -270px; display:inline-block; height:16px; width:16px; vertical-align:middle; }
+
