@@ -461,10 +461,12 @@ class FeedListWidget extends Widget {
     	$content['pageHtml'] = $list['html'];
 		//print(dirname(__FILE__));
 	    // 渲染模版
-
- //echo dirname(__FILE__)."/".$tpl;
-//var_dump(dirname(__FILE__)."/".$tpl);
-//var_dump($content['html']);
+		
+		$loginData = model('Login')->get($GLOBALS['ts']['mid']);
+		if($loginData['oauth_token'] != '')
+		{
+			$var['token'] = '1';
+		}
 
 		$content['html'] = $this->renderFile(dirname(__FILE__)."/".$tpl, $var);
 

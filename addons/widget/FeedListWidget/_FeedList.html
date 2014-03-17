@@ -130,6 +130,9 @@ $admintaskrecom = CheckPermission('vtask_admin','vtask_recommend');
                             <p class="gz_info">
                                 <i>{$vl.publish_time|friendlyDate} <php>if($vl['feed_pv']>0) {</php>/ 浏览{$vl.feed_pv}次<php>}</php></i></p>
                             <p class="comm">
+                                <php>if($token==1) {</php>
+                                    <a class="share_sina" href="javascript:void(0);" onclick="core.share.ShareSina({$vl.feed_id});"></a>
+                                <php>} </php>
                                 <php>if($vl['user_info']['uid']!=$GLOBALS['ts']['mid']) {</php>
                                     {:W('FeedFollowing',array('fid'=>$vl['feed_id'], 'tpl'=>'btn'))}
                                     <eq name='vl.actions.favor' value='true'>
@@ -141,7 +144,6 @@ $admintaskrecom = CheckPermission('vtask_admin','vtask_recommend');
 		                                <a nodeAName='comment' event-node="comment" href="javascript:void(0)" event-args='row_id={$vl.feed_id}&app_uid={$vl.uid}&app_row_id={$vl.app_row_id}&app_row_table={$vl.app_row_table}&to_comment_id=0&to_uid=0&app_name={$vl.app}&table=feed&cancomment={$cancomment}&cancomment_old={$cancomment_old}&comment_type=0'>{:L('PUBLIC_STREAM_COMMENT')}<neq name='vl.comment_count' value='0'> ({$vl.comment_count}) </neq></a>
 	                                </eq>
 	                            <php>endif;</php>
-                                <a class="share_sina" href="javascript:void(0);" onclick="core.share.ShareSina({$vl.feed_id});"></a>
                             </p>
                         </div>
 
@@ -317,6 +319,9 @@ $admintaskrecom = CheckPermission('vtask_admin','vtask_recommend');
                             <p class="gz_info">
                                 <i>{$vl.publish_time|friendlyDate} <php>if($vl['feed_pv']>0) {</php>/ 浏览{$vl.feed_pv}次<php>}</php></i></p>
                             <p class="comm">
+                                <php>if($token==1) {</php>
+                                    <a class="share_sina" href="javascript:void(0);" onclick="core.share.ShareSina({$vl.feed_id});"></a>
+                                <php>}</php>
                                 <php>if($vl['user_info']['uid']!=$GLOBALS['ts']['mid']) {</php>
                                     {:W('FeedFollowing',array('fid'=>$vl['feed_id'], 'tpl'=>'btn'))}
                                     
@@ -330,8 +335,6 @@ $admintaskrecom = CheckPermission('vtask_admin','vtask_recommend');
 		                                <a nodeAName='comment' event-node="comment" href="javascript:void(0)" event-args='row_id={$vl.feed_id}&app_uid={$vl.uid}&app_row_id={$vl.app_row_id}&app_row_table={$vl.app_row_table}&to_comment_id=0&to_uid=0&app_name={$vl.app}&table=feed&cancomment={$cancomment}&cancomment_old={$cancomment_old}&comment_type=0'>{:L('PUBLIC_STREAM_COMMENT')}<neq name='vl.comment_count' value='0'> ({$vl.comment_count}) </neq></a>
 	                                </eq>
 	                            <php>endif;</php>
-
-                                <a class="share_sina" href="javascript:void(0);" onclick="core.share.ShareSina({$vl.feed_id});"></a>
                             </p>
                         </div>
 

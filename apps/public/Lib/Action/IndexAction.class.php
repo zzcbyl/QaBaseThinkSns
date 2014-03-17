@@ -187,6 +187,12 @@ class IndexAction extends Action {
 		//获取追问信息
 		$addFeed =	model('feed')->getQuestionList('add_feedid = '.$feed_id.' and is_del = 0 and (is_audit=1 OR is_audit=0)');
 		$this->assign('addquestionlist', $addFeed['data']);
+		
+		$loginData = model('Login')->get($GLOBALS['ts']['mid']);
+		if($loginData['oauth_token'] != '')
+		{
+			$this->assign('token', '1');
+		}
 	
 		$this->setTitle($feedInfo['body']);
 		$this->setKeywords($feedInfo['body']);

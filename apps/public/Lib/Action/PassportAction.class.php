@@ -105,6 +105,14 @@ class PassportAction extends Action
 		$answerList = model('Feed')->getAnswerList($answerWhere, 4,' publish_time desc');
 		$this->assign('answerList',$answerList);
 		//print_r($answerList);
+		
+		//专家问答
+		$expertUid = 1901;
+		$ExpertWhere = '(is_audit=1 OR is_audit=0) AND uid='.$expertUid.' AND is_del = 0 AND feed_questionid !=0 AND add_feedid=0 ';
+		$QAList = model('feed')->getAnswerList($ExpertWhere, 4);
+		//print(model('feed')->getLastSql());
+		//print_r($QAList['data']);
+		$this->assign('ExpertQA',$QAList);
         
 		$this->display('login');
 	}

@@ -115,7 +115,8 @@ class FeedAction extends Action {
 		//分享到微博
 		if($_POST['ShareSina'] == "1")
 		{
-			$this->shareWeiBo($data['uid'], $data['feed_id'], $data['description']);
+			$contentTxt = utf_substr($data['description'], 180).'...　请 @卢勤问答网站 @知心姐姐卢勤 来帮帮我。'.SITE_URL.'/index.php%3Fapp=public%26mod=Passport%26act=newquestion%26feed_id='.$data['feed_id'];
+			$this->shareWeiBo($data['uid'], $data['feed_id'], $contentTxt);
 		}
 		
 		// 发布邮件之后添加积分
@@ -207,21 +208,27 @@ class FeedAction extends Action {
 		$feedData = model('feed')->getFeeds(array($feedid));
 		if(!empty($feedData))
 		{
-			$this->shareWeiBo($this->mid, $feedData[0]['feed_id'], $feedData[0]['description']);
+			$WBTxt = $feedData[0]['body'].'　'.$feedData[0]['description'];
+			$description = $WBTxt;
+			if(strlen($WBTxt) > 200)
+				$description = utf_substr($WBTxt, 200).'...';
+			
+			$WBcontent = $description.' @知心姐姐卢勤 '.SITE_URL.'/index.php%3Fapp=public%26mod=Passport%26act=newquestion%26feed_id='.$feedData[0]['feed_id'];
+			$this->shareWeiBo($this->mid, $feedData[0]['feed_id'], $WBcontent);
 			$return = array('status'=>1,'data'=>'分享成功');
 		}
 		exit(json_encode($return));
 	}
 	
 	//分享到新浪微博
-	public function shareWeiBo($uid, $feed_id, $description)
+	public function shareWeiBo($uid, $feed_id, $contentTxt)
 	{
+		
 		$loginData = model('Login')->get($uid);
 		if($loginData['oauth_token'] != '')
 		{
-			$contentTxt = urlencode(utf_substr($description, 180).'...　请 @卢勤问答网站 @知心姐姐卢勤 来帮帮我。http://www.luqinwenda.com/index.php%3Fapp=public%26mod=Passport%26act=newquestion%26feed_id='.$feed_id);
+			$urlPar = 'http://sync.luqinwenda.cn/sync.aspx?oriid='.$feed_id.'&token='.$loginData['oauth_token'].'&content='.urlencode($contentTxt);
 			
-			$urlPar = 'http://sync.luqinwenda.cn/sync.aspx?oriid='.$feed_id.'&token='.$loginData['oauth_token'].'&content='.$contentTxt;
 			// 初始化一个 cURL 对象
 			$curl = curl_init();
 			// 设置你需要抓取的URL
@@ -237,19 +244,6 @@ class FeedAction extends Action {
 		}
 	}
 	
-	public function chinesesubstr($str, $start, $len) { // $str指字符串,$start指字符串的起始位置，$len指字符串长度
-		$strlen = $start + $len; // 用$strlen存储字符串的总长度，即从字符串的起始位置到字符串的总长度
-		for($i = $start; $i < $strlen;) {
-			if (ord ( substr ( $str, $i, 1 ) ) > 0xa0) { // 如果字符串中首个字节的ASCII序数值大于0xa0,则表示汉字
-				$tmpstr .= substr ( $str, $i, 3 ); // 每次取出三位字符赋给变量$tmpstr，即等于一个汉字
-				$i=$i+3; // 变量自加3
-			} else{
-				$tmpstr .= substr ( $str, $i, 1 ); // 如果不是汉字，则每次取出一位字符赋给变量$tmpstr
-				$i++;
-			}
-		}
-		return $tmpstr; // 返回字符串
-	}
 	
 	
 	/**
