@@ -126,7 +126,9 @@ core.weibo = {
                 }
                 M(document.getElementById('feed-lists'));
             }
+            zdylink();
         }, 'json')
+
         return false;
     },
     // 加载更多答案

@@ -19,15 +19,34 @@
 <include file="_popdiv"/> 
 
 <script type="text/javascript">
-    $(document).ready(function() {
+    $(document).ready(function () {
+        zdylink();
+    });
+
+    function zdylink() {
         var link = $(".contCenter2 a");
         for (var i = 0; i < link.length; i++) {
-            $(link[i]).attr('href', 'javascript:void(0);');
-            $(link[i]).removeAttr('target');
-            $(link[i]).removeAttr('event-node');
-            $(link[i]).attr('onclick', 'jumpDiv();');
+            if (typeof ($(link[i]).attr('onclick')) != 'undefined' && $(link[i]).attr('onclick').toLowerCase().indexOf('showcontentall') >= 0) {
+                continue;
+            }
+            else if (typeof ($(link[i]).attr('href')) != 'undefined' && $(link[i]).attr('href').toLowerCase().indexOf('index.php?app=public&mod=profile&act=index&uid=') > 0) {
+                var newuid = $(link[i]).attr('href').substring($(link[i]).attr('href').indexOf('uid=') + 4);
+                $(link[i]).attr('target', '_blank');
+                $(link[i]).attr('href', "{:U('public/Passport/newperson', array('uid'=>'" + newuid + "'))}");
+            }
+            else if (typeof ($(link[i]).attr('href')) != 'undefined' && $(link[i]).attr('href').toLowerCase().indexOf('/index.php?app=public&mod=index&act=feed&feed_id=') > 0) {
+                var newfeedid = $(link[i]).attr('href').substring($(link[i]).attr('href').indexOf('feed_id=') + 8, $(link[i]).attr('href').indexOf('&uid='));
+                $(link[i]).attr('target', '_blank');
+                $(link[i]).attr('href', "{:U('public/Passport/newquestion', array('feed_id'=>'" + newfeedid + "'))}");
+            }
+            else {
+                $(link[i]).attr('href', 'javascript:void(0);');
+                $(link[i]).removeAttr('target');
+                $(link[i]).removeAttr('event-node');
+                $(link[i]).attr('onclick', 'jumpDiv();');
+            }
         }
-    });
+    }
     
 </script>
 <include file="__THEME__/public_footer" />
