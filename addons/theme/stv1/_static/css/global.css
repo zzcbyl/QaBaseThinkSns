@@ -1342,7 +1342,7 @@ a.btn-register:link,a.btn-register:visited,a.btn-register:hover,.btn-register sp
 .quike-login li.mb{padding:1px 1px 8px 0;}
 .quike-login .quike-reg{font-size:14px;}
 .ico-qq,.ico-renren,.ico-sina,.ico-qzone,.ico-douban,.ico-taobao,.ico-baidu{background: url(../image/ico-account.png) no-repeat;display:inline-block;cursor:pointer;_background:url(../image/ico-account.gif) no-repeat;}
-.ico-qzone{background-position:-105px 0;width:20px;height:20px;}
+.ico-qzone{background-position:-173px 0;width:20px;height:20px;}
 a.ico-qzone:hover{background-position:-173px 0;}
 
 .ico-qq{background-position:-105px -143px;width:12px;height:18px;}
