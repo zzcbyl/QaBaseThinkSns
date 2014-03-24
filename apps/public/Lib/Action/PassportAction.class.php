@@ -75,8 +75,10 @@ class PassportAction extends Action
 		//最新用户
 		$NewUserData = array();
 		$struids = '';
+		$i = 0;
 		while(true)
 		{
+			$i++;
 			$uwhere=' is_del = 0 and is_audit=1 and is_active=1 and is_init = 1 ';
 			if($struids!='')
 				$uwhere .= ' and uid not in ('.substr($struids,0,strlen($struids)-1).')';
@@ -93,7 +95,7 @@ class PassportAction extends Action
 						break;
 				}
 			}
-			if(count($NewUserData) >= 12)
+			if(count($NewUserData) >= 12 || $i > 100)
 				break;
 		}
 		$this->assign('NewUserList', $NewUserData);
