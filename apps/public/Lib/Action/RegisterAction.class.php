@@ -112,24 +112,21 @@ class RegisterAction extends Action
             if(empty($_POST['email']) || empty($_POST['uname']) ){
                 $this->error('参数错误');
             }
-
         }
-        else {
+		else {
+			if(empty($_POST['email']) || empty($_POST['uname']) || empty($_POST['password_new']) || empty($_POST['repassword_new'])){
+				$this->error('参数错误');
+			}
 
-            if(empty($_POST['email']) || empty($_POST['uname']) || empty($_POST['password_new']) || empty($_POST['repassword_new'])){
-                $this->error('参数错误');
-            }
+			$result=$this->CheckInviteCode($_GET['code']);
 
-        }
-
-        $result=$this->CheckInviteCode($_GET['code']);
-
-        if($result==0)
-            $this->error('邀请码不存在');
-        else if($result==2)
-            $this->error('邀请码已被使用');
-        else if($result==3)
-            $this->error('邀请码限定次数已用完');
+			if($result==0)
+				$this->error('邀请码不存在');
+			else if($result==2)
+				$this->error('邀请码已被使用');
+			else if($result==3)
+				$this->error('邀请码限定次数已用完');
+		}
 
         //echo "aaaa";
 
@@ -179,7 +176,9 @@ class RegisterAction extends Action
             }
 			
 			//减邀请码剩余次数
-			model('Invite')->where("code = '".$_GET['code']."'")->setDec('limited_count');
+			if (!isset($_SESSION['sina'])) {
+				model('Invite')->where("code = '".$_GET['code']."'")->setDec('limited_count');
+			}
 			
             $this->redirect('public/Register/step3', array('uid'=>$uid,'code'=>$_GET['code']));
         }
@@ -191,18 +190,25 @@ class RegisterAction extends Action
 
     public function step3()
 	{
-		if(empty($_GET['uid']) || empty($_GET['code'])){
+		if(empty($_GET['uid'])){
 			$this->error('参数错误');
 		}
 		$uid = intval($_GET['uid']);
-		
 		$user = $this->_user_model->getUserInfo($uid);
-		if($user['invite_code'] != $_GET['code'])
-		{
-			$this->error('参数错误');
+		
+		if (!isset($_SESSION["sina"])) {
+			if(empty($_GET['code']))
+			{
+				$this->error('参数错误');
+			}
+			if($user['invite_code'] != $_GET['code'])
+			{
+				$this->error('参数错误');
+			}	
+			//$this->_register_model->sendActivationEmail($uid);
+			$this->assign('Code',$_GET['code']);
 		}
-		//$this->_register_model->sendActivationEmail($uid);
-		$this->assign('Code',$_GET['code']);
+		
 		$this->assign('User',$user);
 		$this->setTitle ( '邮箱激活' );
 		$this->setKeywords ( '邮箱激活' );
@@ -211,18 +217,25 @@ class RegisterAction extends Action
 	
 	public function step4()
 	{
-		if(empty($_GET['uid']) || empty($_GET['code'])){
+		if(empty($_GET['uid'])){
 			$this->error('参数错误');
 		}
 		$uid = intval($_GET['uid']);
 		
 		$user = $this->_user_model->getUserInfo($uid);
-		if($user['invite_code'] != $_GET['code'])
-		{
-			$this->error('参数错误');
+		if (!isset($_SESSION["sina"])) {
+			if(empty($_GET['code']))
+			{
+				$this->error('参数错误');
+			}
+			if($user['invite_code'] != $_GET['code'])
+			{
+				$this->error('参数错误');
+			}
+			//$this->_register_model->sendActivationEmail($uid);
+			$this->assign('Code',$_GET['code']);
 		}
-		//$this->_register_model->sendActivationEmail($uid);
-		$this->assign('Code',$_GET['code']);
+		
 		$this->assign('User',$user);
         if (isset($_SESSION['user_message'])) {
             $user_message = $_SESSION['user_message'];
@@ -243,18 +256,25 @@ class RegisterAction extends Action
 	
 	public function step5()
 	{
-		if(empty($_GET['uid']) || empty($_GET['code'])){
+		if(empty($_GET['uid'])){
 			$this->error('参数错误');
 		}
 		$uid = intval($_GET['uid']);
 		$code = $_GET['code'];
 		$user = $this->_user_model->getUserInfo($uid);
-		if($user['invite_code'] != $code)
-		{
-			$this->error('参数错误');
+		if (!isset($_SESSION["sina"])) {
+			if(empty($_GET['code']))
+			{
+				$this->error('参数错误');
+			}
+			if($user['invite_code'] != $code)
+			{
+				$this->error('参数错误');
+			}
+			$this->assign('code',$code);
 		}
 		$this->assign('uid',$uid);
-		$this->assign('code',$code);
+		
 		
 		//顶级专家
 		$topUserID = 1901;
@@ -350,8 +370,6 @@ class RegisterAction extends Action
         $_SESSION["invite_code"]=$_POST['Code'];
 
 		echo json_encode($return);exit();
-
-        echo json_encode($return);exit();
 	}
 
 
@@ -373,15 +391,21 @@ class RegisterAction extends Action
 	 *
 	 */	
 	public function doStep4(){	
-		if(empty($_GET['code']) || empty($_GET['uid'])){
+		if(empty($_GET['uid'])){
 			$this->error("参数错误");
 		} 
 		$uid = intval($_GET['uid']);
 		
 		$user = $this->_user_model->getUserInfo($uid);
-		if($user['invite_code'] != $_GET['code'])
-		{
-			$this->error('参数错误');
+		if (!isset($_SESSION['sina'])) {
+			if(empty($_GET['code']))
+			{
+				$this->error("参数错误");
+			}
+			if($user['invite_code'] != $_GET['code'])
+			{
+				$this->error('参数错误');
+			}
 		}
 		
 		$user["realname"] = t($_POST['realname']);
@@ -437,15 +461,21 @@ class RegisterAction extends Action
 	
 	public function doStep5()
 	{
-		if(empty($_GET['code']) || empty($_GET['uid'])){
+		if(empty($_GET['uid'])){
 			$this->error("参数错误");
 		} 
 		$uid = intval($_GET['uid']);
 		
 		$user = $this->_user_model->getUserInfo($uid);
-		if($user['invite_code'] != $_GET['code'])
-		{
-			$this->error('参数错误');
+		if (!isset($_SESSION['sina'])) {
+			if(empty($_GET['code']))
+			{
+				$this->error("参数错误");
+			}
+			if($user['invite_code'] != $_GET['code'])
+			{
+				$this->error('参数错误');
+			}	
 		}
 		
 		$uids = explode(',', $_POST['FollowingList']);

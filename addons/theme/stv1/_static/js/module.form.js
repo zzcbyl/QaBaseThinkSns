@@ -599,7 +599,7 @@ M.addEventFns({
 			this.value = this.value.replace(/^\s+|\s+$/g,""); 
 		},
 		load: function() {
-			this.value = '';
+			//this.value = '';
 			this.className='s-txt';
 		}
 	},
@@ -629,7 +629,7 @@ M.addEventFns({
 			}
 		},
 		load: function() {
-			this.value = '';
+			//this.value = '';
 			this.className='s-txt';
 		}
 	},
