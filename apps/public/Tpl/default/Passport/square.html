@@ -107,7 +107,7 @@
     <!--//用户-->
     <!--最新专家点评-->
     <div class="g_new_dp">
-    <h1>最新专家点评</h1>
+    <h1>最新专家回答</h1>
     <div class="g_cont">
         <ul>
             <volist name="answerList.data" id="feed">
@@ -115,7 +115,7 @@
                 <a target="_blank" href="{:U('public/Passport/newperson',array('uid'=>$feed['answer'][0]['user_info']['uid']))}"><img class="thumb" src="{$feed['answer'][0]['user_info']['avatar_small']}"  event-node="face_card" uid='{$feed['answer'][0]['user_info']['uid']}'></a>
                 <div>
                     <h2 class="tit"><a target="_blank" href="{:U('public/Passport/newquestion',array('feed_id'=>$feed['feed_id']))}" target="_blank">{$feed.body}</a></h2>
-                    <p class="name"><a target="_blank" href="{:U('public/Passport/newperson',array('uid'=>$feed['answer'][0]['user_info']['uid']))}">{$feed['answer'][0]['user_info']['uname']}</a><a class="dp">点评</a><span>{$feed['answer'][0]['publish_time']|friendlyDate}</span></p>
+                    <p class="name"><a target="_blank" href="{:U('public/Passport/newperson',array('uid'=>$feed['answer'][0]['user_info']['uid']))}">{$feed['answer'][0]['user_info']['uname']}</a><a class="dp">回答</a><span>{$feed['answer'][0]['publish_time']|friendlyDate}</span></p>
                     <p class="cont">
                         {$feed['answer'][0]['body']}
                     </p>

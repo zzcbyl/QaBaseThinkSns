@@ -60,7 +60,7 @@
 <div class="homeCont">
 	<div class="newAsk">
         <fieldset> 
-            <legend>卢勤精彩点评</legend>
+            <legend>卢勤精彩回答</legend>
             <div class="newAsk_cont g_new_dp" style="height:427px; margin-top:0;" >
                 <div style="text-align:right; clear:both; padding:0 10px 10px 0;"><a href="{:U('public/Passport/square')}" target="_blank">更多>></a></div>
                 <ul>
@@ -70,7 +70,7 @@
                         <a target="_blank" href="{:U('public/Passport/newperson',array('uid'=>$feed['answer'][0]['user_info']['uid']))}" title="{$feed['answer'][0]['user_info']['uname']}"><img class="thumb" src="{$feed['answer'][0]['user_info']['avatar_small']}"  event-node="face_card" uid='{$feed['answer'][0]['user_info']['uid']}'></a>
                         <div style="width: 375px; margin:0; padding:0;">
                             <h2 class="tit"><a style="width:340px; height:16px; display:block; overflow:hidden;" href="{:U('public/Passport/newquestion',array('feed_id'=>$feed['feed_id']))}" target="_blank" title="{$feed.body}">{$feed.body}</a></h2>
-                            <p class="name" style="height:auto; padding:5px 0;"><a href="{:U('public/Passport/newperson',array('uid'=>$feed['answer'][0]['user_info']['uid']))}" target="_blank">{$feed['answer'][0]['user_info']['uname']}</a><a class="dp">点评</a><span>{$feed['answer'][0]['publish_time']|friendlyDate}</span></p>
+                            <p class="name" style="height:auto; padding:5px 0;"><a href="{:U('public/Passport/newperson',array('uid'=>$feed['answer'][0]['user_info']['uid']))}" target="_blank">{$feed['answer'][0]['user_info']['uname']}</a><a class="dp">回答</a><span>{$feed['answer'][0]['publish_time']|friendlyDate}</span></p>
                             <p class="cont" style="font-size:12px; font-weight:normal; line-height:18px; height:36px; overflow:hidden;" title="{$feed['answer'][0]['body']}">
                                 {$feed['answer'][0]['body']}
                             </p>
@@ -83,7 +83,7 @@
         </fieldset> 
         <div style="margin-top:20px;">
             <fieldset> 
-            <legend>最新专家点评</legend>
+            <legend>最新专家回答</legend>
             <div class="newAsk_cont g_new_dp" style="height:440px; margin-top:0;" >
                 <div style="text-align:right; clear:both; padding:0 10px 10px 0;"><a href="{:U('public/Passport/square')}" target="_blank">更多>></a></div>
                 <ul>
@@ -93,7 +93,7 @@
                         <a target="_blank" href="{:U('public/Passport/newperson',array('uid'=>$feed['answer'][0]['user_info']['uid']))}" title="{$feed['answer'][0]['user_info']['uname']}"><img class="thumb" src="{$feed['answer'][0]['user_info']['avatar_small']}"  event-node="face_card" uid='{$feed['answer'][0]['user_info']['uid']}'></a>
                         <div style="width: 375px; margin:0; padding:0;">
                             <h2 class="tit"><a style="width:340px; height:16px; display:block; overflow:hidden;" href="{:U('public/Passport/newquestion',array('feed_id'=>$feed['feed_id']))}" target="_blank" title="{$feed.body}">{$feed.body}</a></h2>
-                            <p class="name" style="height:auto; padding:5px 0;"><a href="{:U('public/Passport/newperson',array('uid'=>$feed['answer'][0]['user_info']['uid']))}" target="_blank">{$feed['answer'][0]['user_info']['uname']}</a><a class="dp">点评</a><span>{$feed['answer'][0]['publish_time']|friendlyDate}</span></p>
+                            <p class="name" style="height:auto; padding:5px 0;"><a href="{:U('public/Passport/newperson',array('uid'=>$feed['answer'][0]['user_info']['uid']))}" target="_blank">{$feed['answer'][0]['user_info']['uname']}</a><a class="dp">回答</a><span>{$feed['answer'][0]['publish_time']|friendlyDate}</span></p>
                             <p class="cont" style="font-size:12px; font-weight:normal; line-height:18px; height:36px; overflow:hidden;" title="{$feed['answer'][0]['body']}">
                                 {$feed['answer'][0]['body']}
                             </p>
