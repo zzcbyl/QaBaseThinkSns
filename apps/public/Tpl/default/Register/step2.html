@@ -51,6 +51,7 @@
 <script src="__THEME__/js/module.form.js"></script>
 <include file="__THEME__/public_footer" />
 <script type="text/javascript" >
+
     var from = "{$from}";
     if (from == "sina") {
         document.getElementById("txt_uname").value = "{$nick}";
@@ -58,13 +59,15 @@
         //elem_pwd.value = "{$pwd}";
         //elem_pwd.disabled = true;
         //elem_pwd.attributes[1].value = "";
-        $(elem_pwd).attr('event-node', '');
+        elem_pwd.value = '';
+        $(elem_pwd).removeAttr('event-node');
         $(elem_pwd).hide();
         var elem_repwd = document.getElementById("txt_repwd");
         //elem_repwd.value = "{$pwd}";
         //elem_repwd.disabled = true;
         //elem_repwd.attributes[1].value = "";
-        $(elem_repwd).attr('event-node', '');
+        elem_repwd.value = '';
+        $(elem_repwd).removeAttr('event-node');
         $(elem_repwd).hide();
         var gender = "{$gender}";
 
