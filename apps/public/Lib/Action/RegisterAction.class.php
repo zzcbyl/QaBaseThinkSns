@@ -140,6 +140,11 @@ class RegisterAction extends Action
         $user["invite_code"] = t($_GET['code']);
         $user["is_active"] = 0;
         $user["is_audit"] = 1;
+		//注册邮箱@anran.com的不做邮箱验证
+		if(strpos($user["login"],'@anran.com') > 0)
+		{
+			$user["is_active"] = 1;
+		}
 
         $uid = $this->_user_model->addUser($user);
 
@@ -165,10 +170,15 @@ class RegisterAction extends Action
             $userGroup = model('Xdata')->get('admin_Config:register');
             $userGroup = empty($userGroup['default_user_group']) ? C('DEFAULT_GROUP_ID') : $userGroup['default_user_group'];
             model('UserGroupLink')->domoveUsergroup($uid, implode(',', $userGroup));
-
-            //发送验证邮件
-            $this->_register_model->sendActivationEmail($uid);
-
+			
+			//注册邮箱@anran.com的不做邮箱验证
+			if(strpos($user["login"],'@anran.com') > 0)
+			{
+				$this->redirect('public/Register/step4', array('uid'=>$uid,'code'=>$_GET['code']));
+			}
+			//发送验证邮件
+			$this->_register_model->sendActivationEmail($uid);
+			
             if (isset($_SESSION['sina'])) {
                 $user_message = $_SESSION["user_message"];
                 $avatar = new AvatarModel($uid);
