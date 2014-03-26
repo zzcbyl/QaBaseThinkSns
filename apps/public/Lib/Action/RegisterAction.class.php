@@ -78,7 +78,7 @@ class RegisterAction extends Action
         $this->assign("nick","");
         $this->assign("from","");
 
-var_dump($_SESSION);
+//var_dump($_SESSION);
 
 
         if ($_SESSION["open_platform_type"] == "sina") {
@@ -99,7 +99,11 @@ var_dump($_SESSION);
             }
         }
         if ($_SESSION["open_platform_type"] == "qzone" ) {
-            echo "aaaa";
+            include_once('third-party-api/qq/qqConnectAPI.php');
+            $qc = new QC();
+            $user_message = $qc->get_user_info();
+            $this->assign("pwd","lqqa123456");
+            $this->assign("nick",$user_message["nickname"]);
         }
         $this->setTitle ( '填写注册信息' );
 		$this->setKeywords ( '填写注册信息' );
