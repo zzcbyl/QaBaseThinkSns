@@ -103,6 +103,7 @@ class RegisterAction extends Action
             $qc = new QC();
             $user_message = $qc->get_user_info();
             $this->assign("pwd","lqqa123456");
+var_dump($user_message);
             $this->assign("nick",$user_message["nickname"]);
         }
         $this->setTitle ( '填写注册信息' );
