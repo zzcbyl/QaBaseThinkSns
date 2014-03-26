@@ -98,13 +98,22 @@ class RegisterAction extends Action
                 }
             }
         }
+
+
         if ($_SESSION["open_platform_type"] == "qzone" ) {
             include_once('third-party-api/qq/qqConnectAPI.php');
             $qc = new QC();
             $user_message = $qc->get_user_info();
             $this->assign("pwd","lqqa123456");
-var_dump($user_message);
             $this->assign("nick",$user_message["nickname"]);
+            $this->assign("from","qq");
+            if ($user_message["gender"]=="男") {
+                $this->assign("gender","1");
+            } else {
+                if ($user_message["gender"]=="女") {
+                    $this->assign("gender","2");
+                }
+            }
         }
         $this->setTitle ( '填写注册信息' );
 		$this->setKeywords ( '填写注册信息' );
