@@ -1,7 +1,6 @@
 ﻿#
 # 卢勤问答 安装说明.txt
 #
-
 + 常用路径
   - 安装路径: http://yoursite/install
   - 前台登录: http://yoursite
