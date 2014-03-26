@@ -78,6 +78,9 @@ class RegisterAction extends Action
         $this->assign("nick","");
         $this->assign("from","");
 
+var_dump($_SESSION);
+
+
         if (isset($_SESSION["sina"])) {
             include_once( 'third-party-api/weibo/config.php' );
             include_once( 'third-party-api/weibo/saetv2.ex.class.php' );
