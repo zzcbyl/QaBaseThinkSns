@@ -81,7 +81,7 @@ class RegisterAction extends Action
 var_dump($_SESSION);
 
 
-        if (isset($_SESSION["sina"])) {
+        if ($_SESSION["open_platform_type"] == "sina") {
             include_once( 'third-party-api/weibo/config.php' );
             include_once( 'third-party-api/weibo/saetv2.ex.class.php' );
             $this->assign("from","sina");
@@ -97,6 +97,9 @@ var_dump($_SESSION);
                     $this->assign("gender","2");
                 }
             }
+        }
+        if ($_SESSION["open_platform_type"] == "qzone" ) {
+            echo "aaaa";
         }
         $this->setTitle ( '填写注册信息' );
 		$this->setKeywords ( '填写注册信息' );
