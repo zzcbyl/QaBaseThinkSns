@@ -101,9 +101,6 @@ class RegisterAction extends Action
 
 
         if ($_SESSION["open_platform_type"] == "qzone" ) {
-            //$qc = new qzone();
-
-            //$user = $qc->userinfo();
 
             var_dump($user);
 

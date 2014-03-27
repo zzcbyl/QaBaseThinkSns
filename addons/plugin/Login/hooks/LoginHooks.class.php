@@ -483,7 +483,9 @@ class LoginHooks extends Hooks {
         S('user_login_'.$this->mid,null);
         $type = strtolower($param['type']);
         $result = &$param['res'];
-        
+
+        echo $_GET['do'];
+
         //当前操作如果是绑定
         if ($_GET ['do'] == "bind") {
             $this->_bindPublish ( $type, $param['res'] );
