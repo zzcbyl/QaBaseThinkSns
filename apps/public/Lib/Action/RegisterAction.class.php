@@ -101,13 +101,14 @@ class RegisterAction extends Action
 
 
         if ($_SESSION["open_platform_type"] == "qzone" ) {
-            $qc = new QC();
-            //$qc->qq_callback();
-            $qc->get_openid();
-            var_dump($qc);
-            $user_message = $qc->get_user_info();
+            $qc = new qzone();
+
+            $user = $qc->userinfo();
+
+            var_dump($user);
+
             $this->assign("pwd","lqqa123456");
-            $this->assign("nick",$user_message["nickname"]);
+            $this->assign("nick",$user["uname"]);
             $this->assign("from","qq");
             if ($user_message["gender"]=="男") {
                 $this->assign("gender","1");

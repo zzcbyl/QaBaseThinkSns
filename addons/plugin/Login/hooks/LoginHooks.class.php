@@ -557,19 +557,6 @@ class LoginHooks extends Hooks {
             $object = new $type ();
             $url = Addons::createAddonShow('Login','no_register_display',array('type'=>$type));
             $url = $object->getUrl($url);
-           // if(!$url){
-                //dump($type.'-login-error:'.$object->getError());
-            //}
-
-
-            //echo $url;
-
-
-
-            if ($_REQUEST['type'] == 'qzone') {
-                $qc = new QC();
-                $qc->qq_login();
-            }
             redirect($url);
         }
 
