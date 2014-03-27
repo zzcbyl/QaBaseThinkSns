@@ -1,4 +1,7 @@
 <?php
+require_once("apps/public/Lib/Action/third-party-api/qq/qqConnectAPI.php");
+include_once( 'apps/public/Lib/Action/third-party-api/weibo/config.php' );
+include_once( 'apps/public/Lib/Action/third-party-api/weibo/saetv2.ex.class.php' );
 error_reporting(E_ERROR);
 define('APP_DEBUG',TRUE);
 /** ///调试、找错时请去掉///前空格

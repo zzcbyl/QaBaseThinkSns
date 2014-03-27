@@ -560,6 +560,16 @@ class LoginHooks extends Hooks {
            // if(!$url){
                 //dump($type.'-login-error:'.$object->getError());
             //}
+
+
+            //echo $url;
+
+
+
+            if ($_REQUEST['type'] == 'qzone') {
+                $qc = new QC();
+                $qc->qq_login();
+            }
             redirect($url);
         }
 

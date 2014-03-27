@@ -83,8 +83,7 @@ class RegisterAction extends Action
 
 
         if ($_SESSION["open_platform_type"] == "sina") {
-            include_once( 'third-party-api/weibo/config.php' );
-            include_once( 'third-party-api/weibo/saetv2.ex.class.php' );
+
             $this->assign("from","sina");
             $c = new SaeTClientV2( WB_AKEY , WB_SKEY , $_SESSION['sina']['access_token']['oauth_token'] );
             $user_message = $c->show_user_by_id($_SESSION["sina"]["uid"]);
@@ -102,7 +101,6 @@ class RegisterAction extends Action
 
 
         if ($_SESSION["open_platform_type"] == "qzone" ) {
-            require_once('third-party-api/qq/qqConnectAPI.php');
             $qc = new QC();
             $user_message = $qc->get_user_info();
             $this->assign("pwd","lqqa123456");
