@@ -102,6 +102,7 @@ class RegisterAction extends Action
 
         if ($_SESSION["open_platform_type"] == "qzone" ) {
             $qc = new QC();
+            var_dump($qc);
             $user_message = $qc->get_user_info();
             $this->assign("pwd","lqqa123456");
             $this->assign("nick",$user_message["nickname"]);
