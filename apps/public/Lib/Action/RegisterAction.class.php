@@ -106,6 +106,7 @@ class RegisterAction extends Action
             echo "aaaa";
             $qc = new QC();
             echo "bbb";
+            var_dump($_SESSION);
             $user_message = $qc->get_user_info();
             echo "getinfo";
             return;
