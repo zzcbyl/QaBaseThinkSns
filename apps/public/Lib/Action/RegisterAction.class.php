@@ -83,7 +83,8 @@ class RegisterAction extends Action
 
 
         if ($_SESSION["open_platform_type"] == "sina") {
-
+            include_once( 'third-party-api/weibo/config.php' );
+            include_once( 'third-party-api/weibo/saetv2.ex.class.php' );
             $this->assign("from","sina");
             $c = new SaeTClientV2( WB_AKEY , WB_SKEY , $_SESSION['sina']['access_token']['oauth_token'] );
             $user_message = $c->show_user_by_id($_SESSION["sina"]["uid"]);
@@ -101,8 +102,11 @@ class RegisterAction extends Action
 
 
         if ($_SESSION["open_platform_type"] == "qzone" ) {
+            include_once('third-party-api/qq/qqConnectAPI.php');
+            $qc = new QC();
+            $user_message = $qc->get_user_info();
             $this->assign("pwd","lqqa123456");
-            $this->assign("nick",$user["uname"]);
+            $this->assign("nick",$user_message["nickname"]);
             $this->assign("from","qq");
             if ($user_message["gender"]=="男") {
                 $this->assign("gender","1");
@@ -167,31 +171,19 @@ class RegisterAction extends Action
 
         if($uid)
         {
-			if ($_SESSION["open_platform_type"] == "sina" || $_SESSION["open_platform_type"] == "qzone") {
-				if($_SESSION["open_platform_type"] == "sina")
-				{
-					$syncdata['uid'] = $uid;
-					$syncdata['type_uid'] = $_SESSION["sina"]["uid"];
-					$syncdata['type'] = 'sina';
-					$syncdata['oauth_token'] = $_SESSION ['sina'] ['access_token'] ['oauth_token'];
-					$syncdata['oauth_token_secret'] = $_SESSION ['sina'] ['access_token'] ['oauth_token_secret'];
-				}
-				if($_SESSION["open_platform_type"] == "qzone")
-				{
-					$syncdata['uid'] = $uid;
-					$syncdata['type_uid'] = $_SESSION["qzone"]["uid"];
-					$syncdata['type'] = 'qzone';
-					$syncdata['oauth_token'] = $_SESSION ['qzone'] ['access_token'] ['oauth_token'];
-					$syncdata['oauth_token_secret'] = $_SESSION ['qzone'] ['access_token'] ['oauth_token_secret'];
-				}
-				if ($info = M ( 'login' )->where ( "type_uid={$userinfo['id']} AND type='" . $type . "'" )->find ()) {
-					// 该新浪用户已在本站存在, 将其与当前用户关联(即原用户ID失效)
-					M ( 'login' )->where ( "`login_id`={$info['login_id']}" )->save ( $syncdata );
-				} else {
-					// 添加同步信息
-					M ( 'login' )->add ( $syncdata );
-				}
-			}
+            $syncdata['uid'] = $uid;
+            $syncdata['type_uid'] = $_SESSION["sina"]["uid"];
+            $syncdata['type'] = 'sina';
+            $syncdata['oauth_token'] = $_SESSION ['sina'] ['access_token'] ['oauth_token'];
+            $syncdata['oauth_token_secret'] = $_SESSION ['sina'] ['access_token'] ['oauth_token_secret'];
+            if ($info = M ( 'login' )->where ( "type_uid={$userinfo['id']} AND type='" . $type . "'" )->find ()) {
+                // 该新浪用户已在本站存在, 将其与当前用户关联(即原用户ID失效)
+                M ( 'login' )->where ( "`login_id`={$info['login_id']}" )->save ( $syncdata );
+            } else {
+                // 添加同步信息
+                M ( 'login' )->add ( $syncdata );
+            }
+
             // 添加积分
             model('Credit')->setUserCredit($uid,'init_default');
 

@@ -483,8 +483,7 @@ class LoginHooks extends Hooks {
         S('user_login_'.$this->mid,null);
         $type = strtolower($param['type']);
         $result = &$param['res'];
-
-
+        
         //当前操作如果是绑定
         if ($_GET ['do'] == "bind") {
             $this->_bindPublish ( $type, $param['res'] );
@@ -496,6 +495,7 @@ class LoginHooks extends Hooks {
             $platform = new $type ();
             $platform->checkUser ('login');
             $userinfo = $platform->userInfo();
+
             // 检查是否成功获取用户信息
             if ( empty ( $userinfo ['id'] ) || empty ( $userinfo ['uname'] )) {
                 $result ['status']  = 0;
@@ -557,6 +557,9 @@ class LoginHooks extends Hooks {
             $object = new $type ();
             $url = Addons::createAddonShow('Login','no_register_display',array('type'=>$type));
             $url = $object->getUrl($url);
+           // if(!$url){
+                //dump($type.'-login-error:'.$object->getError());
+            //}
             redirect($url);
         }
 
