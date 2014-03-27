@@ -486,6 +486,8 @@ class LoginHooks extends Hooks {
 
         echo $_GET['do'];
 
+        return;
+
         //当前操作如果是绑定
         if ($_GET ['do'] == "bind") {
             $this->_bindPublish ( $type, $param['res'] );
