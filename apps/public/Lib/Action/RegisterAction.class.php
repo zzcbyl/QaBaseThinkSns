@@ -78,6 +78,7 @@ class RegisterAction extends Action
         $this->assign("nick","");
         $this->assign("from","");
 
+
 //var_dump($_SESSION);
 
 
@@ -127,7 +128,7 @@ class RegisterAction extends Action
      */
     public function doStep2() {
 
-        if (isset($_SESSION['sina'])) {
+		if ($_SESSION["open_platform_type"] == "sina" || $_SESSION["open_platform_type"] == "qzone") {
 
             if(empty($_POST['email']) || empty($_POST['uname']) ){
                 $this->error('参数错误');
@@ -199,14 +200,14 @@ class RegisterAction extends Action
 			//发送验证邮件
 			$this->_register_model->sendActivationEmail($uid);
 			
-            if (isset($_SESSION['sina'])) {
+			if ($_SESSION["open_platform_type"] == "sina")  {
                 $user_message = $_SESSION["user_message"];
                 $avatar = new AvatarModel($uid);
                 $avatar->saveRemoteAvatar($user_message['avatar_large'],$uid);
             }
 			
 			//减邀请码剩余次数
-			if (!isset($_SESSION['sina'])) {
+			if ($_SESSION["open_platform_type"] != "sina" && $_SESSION["open_platform_type"] != "qzone") {
 				model('Invite')->where("code = '".$_GET['code']."'")->setDec('limited_count');
 			}
 			
@@ -226,7 +227,7 @@ class RegisterAction extends Action
 		$uid = intval($_GET['uid']);
 		$user = $this->_user_model->getUserInfo($uid);
 		
-		if (!isset($_SESSION["sina"])) {
+		if ($_SESSION["open_platform_type"] != "sina" && $_SESSION["open_platform_type"] != "qzone") {
 			if(empty($_GET['code']))
 			{
 				$this->error('参数错误');
@@ -253,7 +254,7 @@ class RegisterAction extends Action
 		$uid = intval($_GET['uid']);
 		
 		$user = $this->_user_model->getUserInfo($uid);
-		if (!isset($_SESSION["sina"])) {
+		if ($_SESSION["open_platform_type"] != "sina" && $_SESSION["open_platform_type"] != "qzone") {
 			if(empty($_GET['code']))
 			{
 				$this->error('参数错误');
@@ -292,7 +293,7 @@ class RegisterAction extends Action
 		$uid = intval($_GET['uid']);
 		$code = $_GET['code'];
 		$user = $this->_user_model->getUserInfo($uid);
-		if (!isset($_SESSION["sina"])) {
+		if ($_SESSION["open_platform_type"] != "sina" && $_SESSION["open_platform_type"] != "qzone") {
 			if(empty($_GET['code']))
 			{
 				$this->error('参数错误');
@@ -427,7 +428,7 @@ class RegisterAction extends Action
 		$uid = intval($_GET['uid']);
 		
 		$user = $this->_user_model->getUserInfo($uid);
-		if (!isset($_SESSION['sina'])) {
+		if ($_SESSION["open_platform_type"] != "sina" && $_SESSION["open_platform_type"] != "qzone") {
 			if(empty($_GET['code']))
 			{
 				$this->error("参数错误");
@@ -497,7 +498,7 @@ class RegisterAction extends Action
 		$uid = intval($_GET['uid']);
 		
 		$user = $this->_user_model->getUserInfo($uid);
-		if (!isset($_SESSION['sina'])) {
+		if ($_SESSION["open_platform_type"] != "sina" && $_SESSION["open_platform_type"] != "qzone") {
 			if(empty($_GET['code']))
 			{
 				$this->error("参数错误");

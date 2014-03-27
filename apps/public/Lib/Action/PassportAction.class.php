@@ -101,7 +101,7 @@ class PassportAction extends Action
 		$this->assign('NewUserList', $NewUserData);
         
         //最新专家点评
-		$Euids = model('UserGroupLink')->getUserByGroupID(8, 6);
+		$Euids = model('UserGroupLink')->getUserByGroupID(8, 50);
 		$struid = implode(',',$Euids);
 		$answerWhere =' is_del = 0 AND feed_questionid!=0 AND add_feedid=0 AND (is_audit=1 OR is_audit=0) AND uid in ('.$struid.')';
 		$answerList = model('Feed')->getAnswerList($answerWhere, 4,' publish_time desc');
@@ -422,7 +422,7 @@ class PassportAction extends Action
 		//print_r($ThankUserInfoList);
 		
 		//最新专家点评
-		$Euids = model('UserGroupLink')->getUserByGroupID(8, 6);
+		$Euids = model('UserGroupLink')->getUserByGroupID(8, 50);
 		$struid = implode(',',$Euids);
 		$answerWhere =' is_del = 0 AND feed_questionid!=0 AND add_feedid=0 AND (is_audit=1 OR is_audit=0) AND uid in ('.$struid.')';
 		$answerList = model('Feed')->getAnswerList($answerWhere, 4,' publish_time desc');
