@@ -103,13 +103,8 @@ class RegisterAction extends Action
 
         if ($_SESSION["open_platform_type"] == "qzone" ) {
             include_once('third-party-api/qq/qqConnectAPI.php');
-            echo "aaaa";
             $qc = new QC();
-            echo "bbb";
-            var_dump($_SESSION);
             $user_message = $qc->get_user_info();
-            echo "getinfo";
-            return;
             $this->assign("pwd","lqqa123456");
             $this->assign("nick",$user_message["nickname"]);
             $this->assign("from","qq");
