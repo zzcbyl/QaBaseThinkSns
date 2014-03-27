@@ -17,7 +17,34 @@
                 <li><a class="{$tabClass.expert}" href="{:U('public/Passport/expert')}">专家</a></li>
                 <li><a href="#">活动</a></li>
             </ul>
+<<<<<<< HEAD
             <div class="person" style="float:right; display:none;">
+=======
+
+
+            <div id="wb_connect_btn"></div>
+            <script type="text/javascript" >
+
+                WB2.anyWhere(function(W){
+                    W.widget.connectButton({
+                        id: "wb_connect_btn",
+                        type: '3,2',
+                        callback : {
+                            login:function(o){
+                                alert(o.screen_name+"，欢迎和知心姐姐交流。")
+                            },
+                            logout:function(){
+                                alert('再见');
+                            }
+                        }
+                    });
+                });
+
+            </script>
+
+
+            <div class="person" style="float:right;">
+>>>>>>> FETCH_HEAD
                 <ul class="short_nav">
         	        <li><a href="#" class="h"></a></li>
                     <li model-node="notice"><a href="javascript:void(0);" class="v"></a>
