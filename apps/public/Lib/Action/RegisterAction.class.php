@@ -175,19 +175,31 @@ class RegisterAction extends Action
 
         if($uid)
         {
-            $syncdata['uid'] = $uid;
-            $syncdata['type_uid'] = $_SESSION["sina"]["uid"];
-            $syncdata['type'] = 'sina';
-            $syncdata['oauth_token'] = $_SESSION ['sina'] ['access_token'] ['oauth_token'];
-            $syncdata['oauth_token_secret'] = $_SESSION ['sina'] ['access_token'] ['oauth_token_secret'];
-            if ($info = M ( 'login' )->where ( "type_uid={$userinfo['id']} AND type='" . $type . "'" )->find ()) {
-                // 该新浪用户已在本站存在, 将其与当前用户关联(即原用户ID失效)
-                M ( 'login' )->where ( "`login_id`={$info['login_id']}" )->save ( $syncdata );
-            } else {
-                // 添加同步信息
-                M ( 'login' )->add ( $syncdata );
-            }
-
+			if ($_SESSION["open_platform_type"] == "sina" || $_SESSION["open_platform_type"] == "qzone") {
+				if($_SESSION["open_platform_type"] == "sina")
+				{
+					$syncdata['uid'] = $uid;
+					$syncdata['type_uid'] = $_SESSION["sina"]["uid"];
+					$syncdata['type'] = 'sina';
+					$syncdata['oauth_token'] = $_SESSION ['sina'] ['access_token'] ['oauth_token'];
+					$syncdata['oauth_token_secret'] = $_SESSION ['sina'] ['access_token'] ['oauth_token_secret'];
+				}
+				if($_SESSION["open_platform_type"] == "qzone")
+				{
+					$syncdata['uid'] = $uid;
+					$syncdata['type_uid'] = $_SESSION["qzone"]["uid"];
+					$syncdata['type'] = 'qzone';
+					$syncdata['oauth_token'] = $_SESSION ['qzone'] ['access_token'] ['oauth_token'];
+					$syncdata['oauth_token_secret'] = $_SESSION ['qzone'] ['access_token'] ['oauth_token_secret'];
+				}
+				if ($info = M ( 'login' )->where ( "type_uid={$userinfo['id']} AND type='" . $type . "'" )->find ()) {
+					// 该新浪用户已在本站存在, 将其与当前用户关联(即原用户ID失效)
+					M ( 'login' )->where ( "`login_id`={$info['login_id']}" )->save ( $syncdata );
+				} else {
+					// 添加同步信息
+					M ( 'login' )->add ( $syncdata );
+				}
+			}
             // 添加积分
             model('Credit')->setUserCredit($uid,'init_default');
 
