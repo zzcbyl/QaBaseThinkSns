@@ -106,8 +106,9 @@ class RegisterAction extends Action
             echo "aaaa";
             $qc = new QC();
             echo "bbb";
-            return;
             $user_message = $qc->get_user_info();
+            echo "getinfo";
+            return;
             $this->assign("pwd","lqqa123456");
             $this->assign("nick",$user_message["nickname"]);
             $this->assign("from","qq");
