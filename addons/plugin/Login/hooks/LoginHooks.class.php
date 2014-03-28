@@ -821,6 +821,9 @@ class LoginHooks extends Hooks {
                 $sina->checkUser();
                 redirect(Addons::createAddonUrl('Login','login_display_on_client', array('type' => $type)));
                 break;
+            case 'qzone':
+                echo 'login success';
+                break;
             default:
                 ;
         }
