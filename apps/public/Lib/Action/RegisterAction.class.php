@@ -74,14 +74,19 @@ class RegisterAction extends Action
     public function step2() {
 
         $this->assign("gender",0);
-        $this->assign("pwd","");
-        $this->assign("nick","");
-        $this->assign("from","");
-
+        $this->assign("pwd","lqqa123456");
+        $this->assign("nick",$_SESSION['third-party-user-info']['uname']);
+        $this->assign("from",$_SESSION['third-party-type']);
+        if ($_SESSION['third-party-user-info']['sex']=='1') {
+            $this->assign("gender","1");
+        } else {
+            $this->assign("gender","2");
+        }
 
 //var_dump($_SESSION);
 
 
+/*
         if ($_SESSION["open_platform_type"] == "sina") {
             include_once( 'third-party-api/weibo/config.php' );
             include_once( 'third-party-api/weibo/saetv2.ex.class.php' );
@@ -116,6 +121,10 @@ class RegisterAction extends Action
                 }
             }
         }
+
+*/
+
+
         $this->setTitle ( '填写注册信息' );
 		$this->setKeywords ( '填写注册信息' );
         $this->display();

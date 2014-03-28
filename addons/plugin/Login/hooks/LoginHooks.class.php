@@ -498,9 +498,9 @@ class LoginHooks extends Hooks {
             $platform->checkUser ('login');
             $userinfo = $platform->userInfo();
 
-            var_dump($userinfo);
+            $_SESSION['third-party-user-info'] = $userinfo;
 
-            return;
+            $_SESSION['third-party-type'] = $_GET['type'];
 
             // 检查是否成功获取用户信息
             if ( empty ( $userinfo ['id'] ) || empty ( $userinfo ['uname'] )) {
