@@ -77,12 +77,7 @@ class RegisterAction extends Action
         $this->assign("pwd","lqqa123456");
         $this->assign("nick",$_SESSION['third-party-user-info']['uname']);
         $this->assign("from",$_SESSION['third-party-type']);
-        if ($_SESSION['third-party-user-info']['sex']=='1') {
-            $this->assign("gender","1");
-        } else {
-            $this->assign("gender","2");
-        }
-
+        $this->assign("gender",$_SESSION['third-party-user-info']['sex']);
 //var_dump($_SESSION);
 
 
