@@ -162,10 +162,10 @@ class RegisterAction extends Action
 			//发送验证邮件
 			$this->_register_model->sendActivationEmail($uid);
 			
-			if ($_SESSION["open_platform_type"] == "sina")  {
-                $user_message = $_SESSION["user_message"];
+			if ($_SESSION["third-party-type"] == "sina" || $_SESSION["third-party-type"] == "qzone")  {
+                $user_message = $_SESSION["third-party-user-info"];
                 $avatar = new AvatarModel($uid);
-                $avatar->saveRemoteAvatar($user_message['avatar_large'],$uid);
+                $avatar->saveRemoteAvatar($user_message['userface'],$uid);
             }
 			
 			//减邀请码剩余次数
@@ -232,10 +232,9 @@ class RegisterAction extends Action
 		$this->assign('User',$user);
 
 
-
-        if (isset($_SESSION['third-party-user-info'])) {
-            $user_message = $_SESSION['third-party-user-info'];
-            $this->assign('Weibo',$user_message['userface']);
+        if (isset($_SESSION['user_message'])) {
+            $user_message = $_SESSION['user_message'];
+            $this->assign('Weibo','http://weibo.com/u/'.$user_message['id']);
         }
 
 		$this->setTitle ( '完善个人资料' );
