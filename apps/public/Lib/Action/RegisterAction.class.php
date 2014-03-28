@@ -78,48 +78,6 @@ class RegisterAction extends Action
         $this->assign("nick",$_SESSION['third-party-user-info']['uname']);
         $this->assign("from",$_SESSION['third-party-type']);
         $this->assign("gender",$_SESSION['third-party-user-info']['sex']);
-//var_dump($_SESSION);
-
-
-/*
-        if ($_SESSION["open_platform_type"] == "sina") {
-            include_once( 'third-party-api/weibo/config.php' );
-            include_once( 'third-party-api/weibo/saetv2.ex.class.php' );
-            $this->assign("from","sina");
-            $c = new SaeTClientV2( WB_AKEY , WB_SKEY , $_SESSION['sina']['access_token']['oauth_token'] );
-            $user_message = $c->show_user_by_id($_SESSION["sina"]["uid"]);
-            $this->assign("pwd","lqqa123456");
-            $this->assign("nick",$user_message["screen_name"]);
-            $_SESSION['user_message'] = $user_message;
-            if ($user_message["gender"]=="m") {
-                $this->assign("gender","1");
-            } else {
-                if ($user_message["gender"]=="f") {
-                    $this->assign("gender","2");
-                }
-            }
-        }
-
-
-        if ($_SESSION["open_platform_type"] == "qzone" ) {
-            include_once('third-party-api/qq/qqConnectAPI.php');
-            $qc = new QC();
-            $user_message = $qc->get_user_info();
-            $this->assign("pwd","lqqa123456");
-            $this->assign("nick",$user_message["nickname"]);
-            $this->assign("from","qq");
-            if ($user_message["gender"]=="男") {
-                $this->assign("gender","1");
-            } else {
-                if ($user_message["gender"]=="女") {
-                    $this->assign("gender","2");
-                }
-            }
-        }
-
-*/
-
-
         $this->setTitle ( '填写注册信息' );
 		$this->setKeywords ( '填写注册信息' );
         $this->display();
@@ -272,18 +230,14 @@ class RegisterAction extends Action
 		}
 		
 		$this->assign('User',$user);
-        if (isset($_SESSION['user_message'])) {
-            $user_message = $_SESSION['user_message'];
-            $this->assign('Weibo','http://weibo.com/u/'.$user_message['id']);
+
+
+
+        if (isset($_SESSION['third-party-user-info'])) {
+            $user_message = $_SESSION['third-party-user-info'];
+            $this->assign('Weibo',$user_message['userface']);
         }
-		/*$province = 610000;
-		$city = 610600;
-		$area = 610602;
-		$location = '陕西省 延安市 宝塔区';
-		$this->assign('province',$province);
-		$this->assign('city',$city);
-		$this->assign('area',$area);
-		$this->assign('location',$location);*/
+
 		$this->setTitle ( '完善个人资料' );
 		$this->setKeywords ( '完善个人资料' );
 		$this->display();
