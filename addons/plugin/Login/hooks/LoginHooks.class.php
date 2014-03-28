@@ -484,9 +484,7 @@ class LoginHooks extends Hooks {
         $type = strtolower($param['type']);
         $result = &$param['res'];
 
-        var_dump($param);
-        var_dump($_GET['do']);
-        return;
+
 
         //当前操作如果是绑定
         if ($_GET ['do'] == "bind") {
@@ -499,6 +497,10 @@ class LoginHooks extends Hooks {
             $platform = new $type ();
             $platform->checkUser ('login');
             $userinfo = $platform->userInfo();
+
+            var_dump($userinfo);
+
+            return;
 
             // 检查是否成功获取用户信息
             if ( empty ( $userinfo ['id'] ) || empty ( $userinfo ['uname'] )) {
