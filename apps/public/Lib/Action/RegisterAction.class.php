@@ -360,6 +360,7 @@ class RegisterAction extends Action
 			$this->assign("tuijianCount",0);
 		$this->setTitle ( '关注朋友' );
 		$this->setKeywords ( '关注朋友' );
+        unset($_SESSION['third-party-type']);
 		$this->display();	
 	}
 
