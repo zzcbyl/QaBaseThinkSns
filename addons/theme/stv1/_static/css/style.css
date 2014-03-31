@@ -402,7 +402,7 @@ p.FloatNew{background:url(../image/new.png) no-repeat; position:absolute; width:
 .jxzw{ background-position:-65px -160px; width:80px;}
 .caina{ background-position:-152px -160px; width:108px; }
 .tiwenK{ background:#f0f0f0; border:solid 1px #e8e8e8; margin:0px 0px 40px;  padding:10px 20px; _padding:10px; position:relative;}
-.tiwen_area textarea{width:495px; padding:10px; background:#fff; height:80px; font-size:14px; color:#999; border:none; border-top:solid 1px #ccc; border-left:solid 1px #ccc;}
+.tiwen_area textarea{width:495px; padding:5px; background:#fff; height:80px; font-size:14px; color:#999; border:none; border-top:solid 1px #ccc; border-left:solid 1px #ccc;}
 .tiwenB{height:20px; padding-top:15px; position:relative}
 .tiwenB ul li{float:left; position:relative; width:75px; height:50px;}
 .wenzi,.biaoqing,.tupian,.shipin{ display:inline-block; width:75px; height:25px;}
