@@ -133,7 +133,7 @@ class RegisterAction extends Action
 
         if($uid)
         {
-            $syncdata['uid'] = $uid;
+			$syncdata['uid'] = $uid;
             $syncdata['type_uid'] = $_SESSION["sina"]["uid"];
             $syncdata['type'] = 'sina';
             $syncdata['oauth_token'] = $_SESSION ['sina'] ['access_token'] ['oauth_token'];
@@ -146,13 +146,13 @@ class RegisterAction extends Action
                 M ( 'login' )->add ( $syncdata );
             }
 
-            // 添加积分
-            model('Credit')->setUserCredit($uid,'init_default');
+			// 添加积分
+			model('Credit')->setUserCredit($uid,'init_default');
 
-            // 添加至默认的用户组
-            $userGroup = model('Xdata')->get('admin_Config:register');
-            $userGroup = empty($userGroup['default_user_group']) ? C('DEFAULT_GROUP_ID') : $userGroup['default_user_group'];
-            model('UserGroupLink')->domoveUsergroup($uid, implode(',', $userGroup));
+			// 添加至默认的用户组
+			$userGroup = model('Xdata')->get('admin_Config:register');
+			$userGroup = empty($userGroup['default_user_group']) ? C('DEFAULT_GROUP_ID') : $userGroup['default_user_group'];
+			model('UserGroupLink')->domoveUsergroup($uid, implode(',', $userGroup));
 			
 			//注册邮箱@anran.com的不做邮箱验证
 			if(strpos($user["login"],'@anran.com') > 0)
