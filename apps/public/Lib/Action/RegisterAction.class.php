@@ -133,6 +133,16 @@ class RegisterAction extends Action
 
         if($uid)
         {
+            if (isset($_SESSION['third-party-type'])) {
+                $user_info = $_SESSION['third-party-user-info'];
+                $syncdata['uid'] = $uid;
+                $syncdata['type_uid'] = $user_info['id'];
+                $syncdata['type'] = $_SESSION['third-party-type'];
+                $syncdata['oauth_token'] = $_SESSION [$_SESSION['third-party-type']] ['access_token'] ['oauth_token'];
+                $syncdata['oauth_token_secret'] = $_SESSION [$_SESSION['third-party-type']] ['access_token'] ['oauth_token_secret'];
+
+            }
+            /*
 			if ($_SESSION["open_platform_type"] == "sina" || $_SESSION["open_platform_type"] == "qzone") {
 				if($_SESSION["open_platform_type"] == "sina")
 				{
@@ -158,6 +168,7 @@ class RegisterAction extends Action
 					M ( 'login' )->add ( $syncdata );
 				}
 			}
+            */
 
 			// 添加积分
 			model('Credit')->setUserCredit($uid,'init_default');
