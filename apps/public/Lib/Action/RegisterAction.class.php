@@ -140,6 +140,14 @@ class RegisterAction extends Action
                 $syncdata['type'] = $_SESSION['third-party-type'];
                 $syncdata['oauth_token'] = $_SESSION [$_SESSION['third-party-type']] ['access_token'] ['oauth_token'];
                 $syncdata['oauth_token_secret'] = $_SESSION [$_SESSION['third-party-type']] ['access_token'] ['oauth_token_secret'];
+				
+				if ($info = M ( 'login' )->where ( "type_uid={$userinfo['id']} AND type='" . $type . "'" )->find ()) {
+					// 该新浪用户已在本站存在, 将其与当前用户关联(即原用户ID失效)
+					M ( 'login' )->where ( "`login_id`={$info['login_id']}" )->save ( $syncdata );
+				} else {
+					// 添加同步信息
+					M ( 'login' )->add ( $syncdata );
+				}
 
             }
             /*
