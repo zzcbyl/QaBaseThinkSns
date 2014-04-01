@@ -90,7 +90,7 @@ class RegisterAction extends Action
      */
     public function doStep2() {
 
-		if ($_SESSION["open_platform_type"] == "sina" || $_SESSION["open_platform_type"] == "qzone") {
+		if (isset($_SESSION['third-party-type'])) {
 
             if(empty($_POST['email']) || empty($_POST['uname']) ){
                 $this->error('参数错误');
@@ -192,7 +192,7 @@ class RegisterAction extends Action
 			//发送验证邮件
 			$this->_register_model->sendActivationEmail($uid);
 			
-			if ($_SESSION["third-party-type"] == "sina" || $_SESSION["third-party-type"] == "qzone")  {
+			if (isset($_SESSION['third-party-type']))  {
                 $user_message = $_SESSION["third-party-user-info"];
                 $avatar = new AvatarModel($uid);
                 $avatar->saveRemoteAvatar($user_message['userface'],$uid);
@@ -219,7 +219,7 @@ class RegisterAction extends Action
 		$uid = intval($_GET['uid']);
 		$user = $this->_user_model->getUserInfo($uid);
 		
-		if ($_SESSION["open_platform_type"] != "sina" && $_SESSION["open_platform_type"] != "qzone") {
+		if (!isset($_SESSION['third-party-type'])) {
 			if(empty($_GET['code']))
 			{
 				$this->error('参数错误');
@@ -246,7 +246,7 @@ class RegisterAction extends Action
 		$uid = intval($_GET['uid']);
 		
 		$user = $this->_user_model->getUserInfo($uid);
-		if ($_SESSION["open_platform_type"] != "sina" && $_SESSION["open_platform_type"] != "qzone") {
+		if (!isset($_SESSION['third-party-type'])) {
 			if(empty($_GET['code']))
 			{
 				$this->error('参数错误');
@@ -280,7 +280,7 @@ class RegisterAction extends Action
 		$uid = intval($_GET['uid']);
 		$code = $_GET['code'];
 		$user = $this->_user_model->getUserInfo($uid);
-		if ($_SESSION["open_platform_type"] != "sina" && $_SESSION["open_platform_type"] != "qzone") {
+		if (!isset($_SESSION['third-party-type'])) {
 			if(empty($_GET['code']))
 			{
 				$this->error('参数错误');
@@ -360,7 +360,6 @@ class RegisterAction extends Action
 			$this->assign("tuijianCount",0);
 		$this->setTitle ( '关注朋友' );
 		$this->setKeywords ( '关注朋友' );
-        unset($_SESSION['third-party-type']);
 		$this->display();	
 	}
 
@@ -416,7 +415,7 @@ class RegisterAction extends Action
 		$uid = intval($_GET['uid']);
 		
 		$user = $this->_user_model->getUserInfo($uid);
-		if ($_SESSION["open_platform_type"] != "sina" && $_SESSION["open_platform_type"] != "qzone") {
+		if (!isset($_SESSION['third-party-type'])) {
 			if(empty($_GET['code']))
 			{
 				$this->error("参数错误");
@@ -486,7 +485,7 @@ class RegisterAction extends Action
 		$uid = intval($_GET['uid']);
 		
 		$user = $this->_user_model->getUserInfo($uid);
-		if ($_SESSION["open_platform_type"] != "sina" && $_SESSION["open_platform_type"] != "qzone") {
+		if (!isset($_SESSION['third-party-type'])) {
 			if(empty($_GET['code']))
 			{
 				$this->error("参数错误");
@@ -506,7 +505,7 @@ class RegisterAction extends Action
 		//初始化完成
 		$this->_register_model->overUserInit($uid);
 		$this->_user_model->cleanCache ( array($uid) );
-		
+		unset($_SESSION['third-party-type']);
 		$result = model('Passport')->loginLocalWhitoutPassword($user['login']);
 		if(!$result){
 			$status = 0; 
