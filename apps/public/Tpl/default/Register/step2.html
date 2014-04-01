@@ -53,42 +53,56 @@
 <script type="text/javascript" >
 
     var from = "{$from}";
-    if (from == "sina" || from == "qq" ) {
+    if (from == "sina" || from == "qzone" ) {
         document.getElementById("txt_uname").value = "{$nick}";
         var elem_pwd = document.getElementById("txt_pwd");
-        //elem_pwd.value = "{$pwd}";
-        //elem_pwd.disabled = true;
-        //elem_pwd.attributes[1].value = "";
         elem_pwd.value = '';
         $(elem_pwd).removeAttr('event-node');
         var elem_repwd = document.getElementById("txt_repwd");
-        //elem_repwd.value = "{$pwd}";
-        //elem_repwd.disabled = true;
-        //elem_repwd.attributes[1].value = "";
         elem_repwd.value = '';
         $(elem_repwd).removeAttr('event-node');
         $('#div_pwd').hide();
         var gender = "{$gender}";
 
-        if (gender == "1") {
+        if (from=="sina") {
+            if (gender == "1") {
 
-            document.getElementById("rdo_male").checked = true;
-            document.getElementById("rdo_female").checked = false;
-
-        } else {
-
-            if (gender=="2") {
-
-                document.getElementById("rdo_female").checked = true;
-                document.getElementById("rdo_male").checked = false;
+                document.getElementById("rdo_male").checked = true;
+                document.getElementById("rdo_female").checked = false;
 
             } else {
 
-                document.getElementById("rdo_female").checked = false;
-                document.getElementById("rdo_male").checked = false;
+                if (gender=="0") {
 
+                    document.getElementById("rdo_female").checked = true;
+                    document.getElementById("rdo_male").checked = false;
+
+                } else {
+
+                    document.getElementById("rdo_female").checked = false;
+                    document.getElementById("rdo_male").checked = false;
+                }
             }
+        }
+        if (from=="qq") {
+            if (gender == "0") {
 
+                document.getElementById("rdo_male").checked = true;
+                document.getElementById("rdo_female").checked = false;
+
+            } else {
+
+                if (gender=="1") {
+
+                    document.getElementById("rdo_female").checked = true;
+                    document.getElementById("rdo_male").checked = false;
+
+                } else {
+
+                    document.getElementById("rdo_female").checked = false;
+                    document.getElementById("rdo_male").checked = false;
+                }
+            }
         }
 
 

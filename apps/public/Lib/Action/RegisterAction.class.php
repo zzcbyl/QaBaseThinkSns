@@ -74,47 +74,10 @@ class RegisterAction extends Action
     public function step2() {
 
         $this->assign("gender",0);
-        $this->assign("pwd","");
-        $this->assign("nick","");
-        $this->assign("from","");
-
-//var_dump($_SESSION);
-
-
-        if ($_SESSION["open_platform_type"] == "sina") {
-            include_once( 'third-party-api/weibo/config.php' );
-            include_once( 'third-party-api/weibo/saetv2.ex.class.php' );
-            $this->assign("from","sina");
-            $c = new SaeTClientV2( WB_AKEY , WB_SKEY , $_SESSION['sina']['access_token']['oauth_token'] );
-            $user_message = $c->show_user_by_id($_SESSION["sina"]["uid"]);
-            $this->assign("pwd","lqqa123456");
-            $this->assign("nick",$user_message["screen_name"]);
-            $_SESSION['user_message'] = $user_message;
-            if ($user_message["gender"]=="m") {
-                $this->assign("gender","1");
-            } else {
-                if ($user_message["gender"]=="f") {
-                    $this->assign("gender","2");
-                }
-            }
-        }
-
-
-        if ($_SESSION["open_platform_type"] == "qzone" ) {
-            include_once('third-party-api/qq/qqConnectAPI.php');
-            $qc = new QC();
-            $user_message = $qc->get_user_info();
-            $this->assign("pwd","lqqa123456");
-            $this->assign("nick",$user_message["nickname"]);
-            $this->assign("from","qq");
-            if ($user_message["gender"]=="男") {
-                $this->assign("gender","1");
-            } else {
-                if ($user_message["gender"]=="女") {
-                    $this->assign("gender","2");
-                }
-            }
-        }
+        $this->assign("pwd","lqqa123456");
+        $this->assign("nick",$_SESSION['third-party-user-info']['uname']);
+        $this->assign("from",$_SESSION['third-party-type']);
+        $this->assign("gender",$_SESSION['third-party-user-info']['sex']);
         $this->setTitle ( '填写注册信息' );
 		$this->setKeywords ( '填写注册信息' );
         $this->display();
@@ -127,7 +90,7 @@ class RegisterAction extends Action
      */
     public function doStep2() {
 
-        if (isset($_SESSION['sina'])) {
+		if ($_SESSION["open_platform_type"] == "sina" || $_SESSION["open_platform_type"] == "qzone") {
 
             if(empty($_POST['email']) || empty($_POST['uname']) ){
                 $this->error('参数错误');
@@ -170,26 +133,56 @@ class RegisterAction extends Action
 
         if($uid)
         {
-            $syncdata['uid'] = $uid;
-            $syncdata['type_uid'] = $_SESSION["sina"]["uid"];
-            $syncdata['type'] = 'sina';
-            $syncdata['oauth_token'] = $_SESSION ['sina'] ['access_token'] ['oauth_token'];
-            $syncdata['oauth_token_secret'] = $_SESSION ['sina'] ['access_token'] ['oauth_token_secret'];
-            if ($info = M ( 'login' )->where ( "type_uid={$userinfo['id']} AND type='" . $type . "'" )->find ()) {
-                // 该新浪用户已在本站存在, 将其与当前用户关联(即原用户ID失效)
-                M ( 'login' )->where ( "`login_id`={$info['login_id']}" )->save ( $syncdata );
-            } else {
-                // 添加同步信息
-                M ( 'login' )->add ( $syncdata );
+            if (isset($_SESSION['third-party-type'])) {
+                $user_info = $_SESSION['third-party-user-info'];
+                $syncdata['uid'] = $uid;
+                $syncdata['type_uid'] = $user_info['id'];
+                $syncdata['type'] = $_SESSION['third-party-type'];
+                $syncdata['oauth_token'] = $_SESSION [$_SESSION['third-party-type']] ['access_token'] ['oauth_token'];
+                $syncdata['oauth_token_secret'] = $_SESSION [$_SESSION['third-party-type']] ['access_token'] ['oauth_token_secret'];
+                if ($info = M ( 'login' )->where ( "type_uid={$userinfo['id']} AND type='" . $type . "'" )->find ()) {
+                    // 该新浪用户已在本站存在, 将其与当前用户关联(即原用户ID失效)
+                    M ( 'login' )->where ( "`login_id`={$info['login_id']}" )->save ( $syncdata );
+                } else {
+                    // 添加同步信息
+                    M ( 'login' )->add ( $syncdata );
+                }
             }
+            /*
+			if ($_SESSION["open_platform_type"] == "sina" || $_SESSION["open_platform_type"] == "qzone") {
+				if($_SESSION["open_platform_type"] == "sina")
+				{
+					$syncdata['uid'] = $uid;
+					$syncdata['type_uid'] = $_SESSION["sina"]["uid"];
+					$syncdata['type'] = 'sina';
+					$syncdata['oauth_token'] = $_SESSION ['sina'] ['access_token'] ['oauth_token'];
+					$syncdata['oauth_token_secret'] = $_SESSION ['sina'] ['access_token'] ['oauth_token_secret'];
+				}
+				if($_SESSION["open_platform_type"] == "qzone")
+				{
+					$syncdata['uid'] = $uid;
+					$syncdata['type_uid'] = $_SESSION["qzone"]["uid"];
+					$syncdata['type'] = 'qzone';
+					$syncdata['oauth_token'] = $_SESSION ['qzone'] ['access_token'] ['oauth_token'];
+					$syncdata['oauth_token_secret'] = $_SESSION ['qzone'] ['access_token'] ['oauth_token_secret'];
+				}
+				if ($info = M ( 'login' )->where ( "type_uid={$userinfo['id']} AND type='" . $type . "'" )->find ()) {
+					// 该新浪用户已在本站存在, 将其与当前用户关联(即原用户ID失效)
+					M ( 'login' )->where ( "`login_id`={$info['login_id']}" )->save ( $syncdata );
+				} else {
+					// 添加同步信息
+					M ( 'login' )->add ( $syncdata );
+				}
+			}
+            */
 
-            // 添加积分
-            model('Credit')->setUserCredit($uid,'init_default');
+			// 添加积分
+			model('Credit')->setUserCredit($uid,'init_default');
 
-            // 添加至默认的用户组
-            $userGroup = model('Xdata')->get('admin_Config:register');
-            $userGroup = empty($userGroup['default_user_group']) ? C('DEFAULT_GROUP_ID') : $userGroup['default_user_group'];
-            model('UserGroupLink')->domoveUsergroup($uid, implode(',', $userGroup));
+			// 添加至默认的用户组
+			$userGroup = model('Xdata')->get('admin_Config:register');
+			$userGroup = empty($userGroup['default_user_group']) ? C('DEFAULT_GROUP_ID') : $userGroup['default_user_group'];
+			model('UserGroupLink')->domoveUsergroup($uid, implode(',', $userGroup));
 			
 			//注册邮箱@anran.com的不做邮箱验证
 			if(strpos($user["login"],'@anran.com') > 0)
@@ -199,14 +192,14 @@ class RegisterAction extends Action
 			//发送验证邮件
 			$this->_register_model->sendActivationEmail($uid);
 			
-            if (isset($_SESSION['sina'])) {
-                $user_message = $_SESSION["user_message"];
+			if ($_SESSION["third-party-type"] == "sina" || $_SESSION["third-party-type"] == "qzone")  {
+                $user_message = $_SESSION["third-party-user-info"];
                 $avatar = new AvatarModel($uid);
-                $avatar->saveRemoteAvatar($user_message['avatar_large'],$uid);
+                $avatar->saveRemoteAvatar($user_message['userface'],$uid);
             }
 			
 			//减邀请码剩余次数
-			if (!isset($_SESSION['sina'])) {
+			if ($_SESSION["open_platform_type"] != "sina" && $_SESSION["open_platform_type"] != "qzone") {
 				model('Invite')->where("code = '".$_GET['code']."'")->setDec('limited_count');
 			}
 			
@@ -226,7 +219,7 @@ class RegisterAction extends Action
 		$uid = intval($_GET['uid']);
 		$user = $this->_user_model->getUserInfo($uid);
 		
-		if (!isset($_SESSION["sina"])) {
+		if ($_SESSION["open_platform_type"] != "sina" && $_SESSION["open_platform_type"] != "qzone") {
 			if(empty($_GET['code']))
 			{
 				$this->error('参数错误');
@@ -253,7 +246,7 @@ class RegisterAction extends Action
 		$uid = intval($_GET['uid']);
 		
 		$user = $this->_user_model->getUserInfo($uid);
-		if (!isset($_SESSION["sina"])) {
+		if ($_SESSION["open_platform_type"] != "sina" && $_SESSION["open_platform_type"] != "qzone") {
 			if(empty($_GET['code']))
 			{
 				$this->error('参数错误');
@@ -267,18 +260,13 @@ class RegisterAction extends Action
 		}
 		
 		$this->assign('User',$user);
+
+
         if (isset($_SESSION['user_message'])) {
             $user_message = $_SESSION['user_message'];
             $this->assign('Weibo','http://weibo.com/u/'.$user_message['id']);
         }
-		/*$province = 610000;
-		$city = 610600;
-		$area = 610602;
-		$location = '陕西省 延安市 宝塔区';
-		$this->assign('province',$province);
-		$this->assign('city',$city);
-		$this->assign('area',$area);
-		$this->assign('location',$location);*/
+
 		$this->setTitle ( '完善个人资料' );
 		$this->setKeywords ( '完善个人资料' );
 		$this->display();
@@ -292,7 +280,7 @@ class RegisterAction extends Action
 		$uid = intval($_GET['uid']);
 		$code = $_GET['code'];
 		$user = $this->_user_model->getUserInfo($uid);
-		if (!isset($_SESSION["sina"])) {
+		if ($_SESSION["open_platform_type"] != "sina" && $_SESSION["open_platform_type"] != "qzone") {
 			if(empty($_GET['code']))
 			{
 				$this->error('参数错误');
@@ -372,6 +360,7 @@ class RegisterAction extends Action
 			$this->assign("tuijianCount",0);
 		$this->setTitle ( '关注朋友' );
 		$this->setKeywords ( '关注朋友' );
+        unset($_SESSION['third-party-type']);
 		$this->display();	
 	}
 
@@ -427,7 +416,7 @@ class RegisterAction extends Action
 		$uid = intval($_GET['uid']);
 		
 		$user = $this->_user_model->getUserInfo($uid);
-		if (!isset($_SESSION['sina'])) {
+		if ($_SESSION["open_platform_type"] != "sina" && $_SESSION["open_platform_type"] != "qzone") {
 			if(empty($_GET['code']))
 			{
 				$this->error("参数错误");
@@ -497,7 +486,7 @@ class RegisterAction extends Action
 		$uid = intval($_GET['uid']);
 		
 		$user = $this->_user_model->getUserInfo($uid);
-		if (!isset($_SESSION['sina'])) {
+		if ($_SESSION["open_platform_type"] != "sina" && $_SESSION["open_platform_type"] != "qzone") {
 			if(empty($_GET['code']))
 			{
 				$this->error("参数错误");

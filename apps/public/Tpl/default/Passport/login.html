@@ -115,7 +115,7 @@
                  <volist name="NewUserList" id="user">
                  <li>
                     <a target="_blank" href="{:U('public/Passport/newperson',array('uid'=>$user['uid']))}" style="height:50px;" title="{$user['uname']}"><img class="thumb" src="{$user['avatar_small']}" /></a>
-                    <a target="_blank" href="{:U('public/Passport/newperson',array('uid'=>$user['uid']))}" title="{$user['uname']}">{$user['uname']}</a>
+                    <a target="_blank" href="{:U('public/Passport/newperson',array('uid'=>$user['uid']))}" title="{$user['uname']}">{$user['uname']|getShort=3,'...'}</a>
                  </li>
                  </volist>         
              </ul>
