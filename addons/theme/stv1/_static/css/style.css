@@ -10,7 +10,7 @@ input,textarea{outline:none; font-size:12px;}
 .header .menu li a:hover,.header .menu li a.current{font-size:14px; color:#fff; text-decoration:none; background:#941d1d;}
 .header .search_box{width:280px; float:left; padding-top:18px}
 .header .search_box input{float:left}
-.header .search_box .s_inp{background:#fff; border:none; width:220px; height:25px; line-height:25px;padding:0px 10px; color:#999; font-size:12px;font-style:italic; outline:none}
+.header .search_box .s_inp{background:#fff; border:none; width:220px; height:25px; line-height:25px;padding:0px 10px; color:#999; font-size:12px; outline:none}
 .short_nav li a,.tiwen,.comm a.d,.comm a.c,.comm a.x,.comm a.h,.contTop,.contBottom,.contTop p.q,.aTop,.aCenter,.aBottom,.aTop p.a,.right_conts h1.hot,.right_conts h1.gz,.right_conts h1.hd,.right_conts h1 span,.hd_btn a.gz,.hd_btn a.qx,.hd_btn a.gz_ed,.xz a.x1,.xz a.x2,.xz a.x3,.xz a.x4,.comm a.hx,.comm a.a,.comm a.t,.comm a.tel,.tu a.zan,.tu a.ganxie,.tu a.guanz,.zwyq, .hdyq{background:url(../image/sprite.png) no-repeat;}
 .tiwen,.h_logo a,.hd_btn a.gz,.hd_btn a.gz_ed,.hd_btn a.qx{text-indent:-999px;}
 .header .search_box .s_btn{background:url(../image/icon_search.png) no-repeat #fff center; border:none; width:30px; height:25px; cursor:pointer}
