@@ -80,13 +80,15 @@ $admintaskrecom = CheckPermission('vtask_admin','vtask_recommend');
             	    <div class="contTit" id ='feed{$vl.feed_id}' model-node='feed_list'>
                         <a href="{$vl['user_info']['space_url']}"><img class="thumb" src="{$vl['user_info']['avatar_small']}"  event-node="face_card" uid='{$vl['user_info']['uid']}'></a>
                         <eq name='vl.is_del' value='0'>
-                        <h1>
+                        <h1 style="height:15px;">
+                            <div style="float:left;">
                             {$vl.title}
-	                        <php> if(in_array($vl['user_info']['uid'],$followUids)){</php>
+	                        <!--<php> if(in_array($vl['user_info']['uid'],$followUids)){</php>
 	                        {:W('Remark',array('uid'=>$vl['user_info']['uid'],'remark'=>$remarkHash[$vl['user_info']['uid']],'showonly'=>1))}
 	                        <php>}</php>
-	                        <php>if(!empty($vl['body'])){</php><php>}</php>
-	                        <p class="xz" style="right:20px;">
+	                        <php>if(!empty($vl['body'])){</php><php>}</php>-->
+	                        </div>
+                            <p class="xz" style="right:20px; position:static; float:left; padding-left:10px;">
                                 <volist name="vl['GroupData'][$vl['uid']]" id="v2">
                                     <img style="width:auto;height:auto;display:inline;cursor:pointer;" src="{$v2['user_group_icon_url']}" title="{$v2['user_group_name']}" />&nbsp;
                                 </volist>
@@ -131,7 +133,7 @@ $admintaskrecom = CheckPermission('vtask_admin','vtask_recommend');
                                 <i>{$vl.publish_time|friendlyDate} <php>if($vl['feed_pv']>0) {</php>/ 浏览{$vl.feed_pv}次<php>}</php></i></p>
                             <p class="comm">
                                 <php>if($token==1) {</php>
-                                    <a class="share_sina" href="javascript:void(0);" onclick="core.share.ShareSina({$vl.feed_id});"></a>
+                                    <a class="ico-sina" href="javascript:void(0);" onclick="core.share.ShareSina({$vl.feed_id});" title="分享到新浪微博" style="height:18px; vertical-align:bottom;"></a>
                                 <php>} </php>
                                 <php>if($vl['user_info']['uid']!=$GLOBALS['ts']['mid']) {</php>
                                     {:W('FeedFollowing',array('fid'=>$vl['feed_id'], 'tpl'=>'btn'))}
@@ -180,15 +182,17 @@ $admintaskrecom = CheckPermission('vtask_admin','vtask_recommend');
                                 <div class="contTit">
                                     <a href="{$vl['answer'][0]['user_info']['space_url']}"><img class="thumb" src="{$vl['answer'][0]['user_info']['avatar_small']}"  event-node="face_card" uid='{$vl['answer'][0]['user_info']['uid']}'></a>
                                     <eq name="vl['answer'][0]['is_del']" value='0'>
-                                    <h1>
+                                    <h1 style="height:20px;">
+                                        <div style="float:left;">
                                         {$vl['answer'][0].title}
-	                                    <php> if(in_array($vl['answer'][0]['user_info']['uid'],$followUids)){</php>
+	                                    <!--<php> if(in_array($vl['answer'][0]['user_info']['uid'],$followUids)){</php>
 	                                    {:W('Remark',array('uid'=>$vl['answer'][0]['user_info']['uid'],'remark'=>$remarkHash[$vl['answer'][0]['user_info']['uid']],'showonly'=>1))}
 	                                    <php>}</php>
-	                                    <php>if(!empty($vl['answer'][0]['body'])){</php><php>}</php>
-	                                    <p class="xz" style="right:20px;">
+	                                    <php>if(!empty($vl['answer'][0]['body'])){</php><php>}</php>-->
+	                                    </div>
+	                                    <p class="xz" style="right:20px; position:static; float:left; padding-left:10px;">
                                             <volist name="vl['answer'][0]['GroupData'][$vl['answer'][0]['uid']]" id="v2">
-                                                <img style="width:auto;height:auto;display:inline;cursor:pointer;" src="{$v2['user_group_icon_url']}" title="{$v2['user_group_name']}" />&nbsp;
+                                                <img style="width:auto;height:auto;display:inline;cursor:pointer; vertical-align:top;" src="{$v2['user_group_icon_url']}" title="{$v2['user_group_name']}" />&nbsp;
                                             </volist>
                                         </p>
                                     </h1>
@@ -270,20 +274,26 @@ $admintaskrecom = CheckPermission('vtask_admin','vtask_recommend');
             	    <div class="contTit" id ='feed{$vl.feed_id}' model-node='feed_list'>
                         <a href="{$vl['user_info']['space_url']}"><img class="thumb" src="{$vl['user_info']['avatar_small']}"  event-node="face_card" uid='{$vl['user_info']['uid']}'></a>
                         <eq name='vl.is_del' value='0'>
-                        <h1>
+                        <h1 style="height:15px;">
+                            <div style="float:left;">
                             {$vl.title}
-	                        <php> if(in_array($vl['user_info']['uid'],$followUids)){</php>
+	                        <!--<php> if(in_array($vl['user_info']['uid'],$followUids)){</php>
 	                        {:W('Remark',array('uid'=>$vl['user_info']['uid'],'remark'=>$remarkHash[$vl['user_info']['uid']],'showonly'=>1))}
 	                        <php>}</php>
-	                        <php>if(!empty($vl['body'])){</php><php>}</php>
-                            <php>if(is_array($vl['invite'])) { </php>
-                                <eq name='vl.invite.answerid' value='0'><a style="z-index:9999; right:120px;" class="hdyq" href="{:U('public/Index/feed',array('feed_id'=>$vl['feed_id'],'uid'=>$vl['uid'],'invite_id'=>$vl['invite']['invite_answer_id']))}"></a><else/><span style="z-index:9999; right:120px; position:absolute;">已回答邀请</span></eq>
-                            <php>}</php>
-                            <p class="xz" style="right:20px;">
+	                        <php>if(!empty($vl['body'])){</php><php>}</php>-->
+                            
+                            </div>
+                            <p class="xz" style="right:20px; position:static; float:left; padding-left:10px;">
                                 <volist name="vl['GroupData'][$vl['uid']]" id="v2">
                                     <img style="width:auto;height:auto;display:inline;cursor:pointer; margin-top:-5px;" src="{$v2['user_group_icon_url']}" title="{$v2['user_group_name']}" />&nbsp;
                                 </volist>
                             </p>
+                            <div style="float:right; margin-right:30px;">
+                            <php>if(is_array($vl['invite'])) { </php>
+                                <eq name='vl.invite.answerid' value='0'><a style="position:static;" class="hdyq" href="{:U('public/Index/feed',array('feed_id'=>$vl['feed_id'],'uid'=>$vl['uid'],'invite_id'=>$vl['invite']['invite_answer_id']))}"></a><else/><span>已回答邀请</span></eq>
+                            <php>}</php>
+                            </div>
+                            <div style="clear:both;"></div>
                         </h1>
                  	    <h2><a target="_blank" href="{:U('public/Index/feed',array('feed_id'=>$vl['feed_id'],'uid'=>$vl['uid']))}"><!--{$vl.feed_id|format=true}-->{$vl.body|format=true}</a></h2>
                         
@@ -320,7 +330,7 @@ $admintaskrecom = CheckPermission('vtask_admin','vtask_recommend');
                                 <i>{$vl.publish_time|friendlyDate} <php>if($vl['feed_pv']>0) {</php>/ 浏览{$vl.feed_pv}次<php>}</php></i></p>
                             <p class="comm">
                                 <php>if($token==1) {</php>
-                                    <a class="share_sina" href="javascript:void(0);" onclick="core.share.ShareSina({$vl.feed_id});"></a>
+                                    <a class="ico-sina" href="javascript:void(0);" onclick="core.share.ShareSina({$vl.feed_id});" title="分享到新浪微博" style="height:18px; vertical-align:bottom;"></a>
                                 <php>}</php>
                                 <php>if($vl['user_info']['uid']!=$GLOBALS['ts']['mid']) {</php>
                                     {:W('FeedFollowing',array('fid'=>$vl['feed_id'], 'tpl'=>'btn'))}
@@ -371,18 +381,20 @@ $admintaskrecom = CheckPermission('vtask_admin','vtask_recommend');
                                 <div class="contTit">
                                     <a href="{$vl['answer'][0]['user_info']['space_url']}"><img class="thumb" src="{$vl['answer'][0]['user_info']['avatar_small']}"  event-node="face_card" uid='{$vl['answer'][0]['user_info']['uid']}'></a>
                                     <eq name="vl['answer'][0]['is_del']" value='0'>
-                                    <h1>
+                                    <h1 style="height:20px;">
+                                        <div style="float:left;">
                                         {$vl['answer'][0].title}
-	                                    
-	                                    <php> if(in_array($vl['answer'][0]['user_info']['uid'],$followUids)){</php>
+	                                    <!--<php> if(in_array($vl['answer'][0]['user_info']['uid'],$followUids)){</php>
 	                                    {:W('Remark',array('uid'=>$vl['answer'][0]['user_info']['uid'],'remark'=>$remarkHash[$vl['answer'][0]['user_info']['uid']],'showonly'=>1))}
 	                                    <php>}</php>
-	                                    <php>if(!empty($vl['answer'][0]['body'])){</php><php>}</php>
-	                                    <p class="xz" style="right:20px;">
+	                                    <php>if(!empty($vl['answer'][0]['body'])){</php><php>}</php>-->
+                                        </div>
+	                                    <p class="xz" style="right:20px; position:static; float:left; padding-left:10px;">
                                             <volist name="vl['answer'][0]['GroupData'][$vl['answer'][0]['uid']]" id="v2">
-                                                <img style="width:auto;height:auto;display:inline;cursor:pointer;" src="{$v2['user_group_icon_url']}" title="{$v2['user_group_name']}" />&nbsp;
+                                                <img style="width:auto;height:auto;display:inline;cursor:pointer; vertical-align:top;" src="{$v2['user_group_icon_url']}" title="{$v2['user_group_name']}" />&nbsp;
                                             </volist>
                                         </p>
+                                        <div style="clear:both;"></div>
                                     </h1>
                                     <php>
                                         if(strlen($vl['answer'][0]['body'])>279) {
