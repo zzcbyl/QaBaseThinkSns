@@ -73,7 +73,7 @@ M.addModelFns({
 				("function" === typeof(dInput.onblur)) && dInput.onblur();
 
 				if(!dInput.bIsValid) {
-                    alert($(dInput).attr('name'));
+                    //alert($(dInput).attr('name'));
 					bValid = false;
 					if(dInput.type != 'hidden') {
 						dFirstError = dFirstError || dInput;
@@ -906,15 +906,28 @@ M.addEventFns({
                 var Code = this;
                 var sValue = Code.value;
                 var sUrl = Code.getAttribute('checkurl');
+                var oArgs = M.getEventArgs(Code);
                 if(sValue.length==0) {
                     tips.error( Code, '邀请码不能为空' );
                     this.bIsValid = false;
+                    return false;
                 }
                 else {
                     tips.clear(Code)
-                    tips.success( this );
-                    this.bIsValid = true;
                 }
+
+                $.post(sUrl, { Code: sValue }, function(oTxt) {
+				    if(oTxt.status == '1') {
+					    'false' == oArgs.success ? tips.clear(Code) : tips.success(Code);
+					    Code.bIsValid = true;
+				    } else {
+					    'false' == oArgs.error ? tips.clear(Code) : tips.error(Code, oTxt.data);
+					    Code.bIsValid = false;
+				    }
+				    return true;
+			    }, 'json');
+			    $(this.dTips).hide();
+
            }
            else
                this.bIsValid = true;

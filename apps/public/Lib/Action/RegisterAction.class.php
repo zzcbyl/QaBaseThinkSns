@@ -83,6 +83,14 @@ class RegisterAction extends Action
         $this->display();
     }
 
+	/**
+	 * 最新注册流程第一步填写资料
+	*/
+	public function doRegiest()
+	{
+			
+	}
+
 
     /**
      * 注册流程 - 执行第二步骤
