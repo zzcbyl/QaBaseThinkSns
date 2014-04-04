@@ -293,7 +293,7 @@ a{text-decoration:none;}
 .regbox input { float:left;}
 .regbox div{height:30px; line-height:30px; margin-top:20px;}
 .regbox div span{font-size:12px; color:#f4c475; }
-.regboxErrorSpan { color: #F4C475; font-size: 12px; line-height: 18px; padding-top: 5px; }
+.regboxErrorSpan { color: #F4C475; font-size: 12px; line-height: 18px; padding-top: 5px; display:block; }
 .errorspan{font-size:12px; color:#f4c475; background:url(../image/error_icon.png) no-repeat left center; padding-left:1.5em}
 .tybox{ background:url(../image/tybg.png) repeat-x; height:13px; font-size:12px; color:#999; text-align:center; line-height:13px; padding-top:30px}
 .tybox span{ background:#fff; padding:0px 10px;}

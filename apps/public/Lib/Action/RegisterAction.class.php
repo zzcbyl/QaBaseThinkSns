@@ -670,6 +670,16 @@ class RegisterAction extends Action
 		$result = $this->_register_model->isValidEmail($email);
 		$this->ajaxReturn(null, $this->_register_model->getLastError(), $result);
 	}
+	
+	/**
+	 * 验证帐号是否已被使用
+	 */
+	public function isAccountAvailable() {
+		$account = t($_POST['account']);
+		$result = $this->_register_model->isValidAccount($account);
+		$this->ajaxReturn(null, $this->_register_model->getLastError(), $result);
+	}
+
 
 	/**
 	 * 验证邀请邮件
