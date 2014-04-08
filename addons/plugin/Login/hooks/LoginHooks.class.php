@@ -522,10 +522,10 @@ class LoginHooks extends Hooks {
                 //已经绑定过，执行登录操作，设置token
                 } else {
                     if ($info ['oauth_token'] == '') {
-                        $syncdata ['login_id']  = $info ['login_id'];
+                        //$syncdata ['login_id']  = $info ['login_id'];
                         $syncdata ['oauth_token'] = $_SESSION [$type] ['access_token'] ['oauth_token'];
                         $syncdata ['oauth_token_secret'] = $_SESSION [$type] ['access_token'] ['oauth_token_secret'];
-                        D('Login')->save ( $syncdata );
+						D('Login')->where('login_id='.$info ['login_id'])->save ( $syncdata );
                     }
                     model('Passport')->loginLocalWhitoutPassword($user['login']);
                     $result ['status'] = 1;
