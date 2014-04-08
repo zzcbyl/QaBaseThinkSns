@@ -188,10 +188,16 @@ class IndexAction extends Action {
 		$addFeed =	model('feed')->getQuestionList('add_feedid = '.$feed_id.' and is_del = 0 and (is_audit=1 OR is_audit=0)');
 		$this->assign('addquestionlist', $addFeed['data']);
 		
-		$loginData = model('Login')->get($GLOBALS['ts']['mid']);
+		$loginData = model('Login')->get($GLOBALS['ts']['mid'], 'sina');
 		if($loginData['oauth_token'] != '')
 		{
 			$this->assign('token', '1');
+		}
+		
+		$loginData = model('Login')->get($GLOBALS['ts']['mid'], 'qzone');
+		if($loginData['oauth_token'] != '')
+		{
+			$this->assign('qqtoken', '1');
 		}
 	
 		$this->setTitle($feedInfo['body']);
