@@ -527,6 +527,11 @@ class LoginHooks extends Hooks {
                         $syncdata ['oauth_token_secret'] = $_SESSION [$type] ['access_token'] ['oauth_token_secret'];
                         D('Login')->save ( $syncdata );
                     }
+					else {
+						$syncdata ['oauth_token'] = $_SESSION [$type] ['access_token'] ['oauth_token'];
+						$syncdata ['oauth_token_secret'] = $_SESSION [$type] ['access_token'] ['oauth_token_secret'];
+						D('Login')->where('login_id='.$info ['login_id'])->save ( $syncdata );
+					}
                     model('Passport')->loginLocalWhitoutPassword($user['login']);
                     $result ['status'] = 1;
                     $result ['url'] = $GLOBALS['ts']['site']['home_url'];
