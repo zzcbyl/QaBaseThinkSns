@@ -332,6 +332,9 @@ $admintaskrecom = CheckPermission('vtask_admin','vtask_recommend');
                                 <php>if($token==1) {</php>
                                     <a class="ico-sina" href="javascript:void(0);" onclick="core.share.ShareSina({$vl.feed_id});" title="分享到新浪微博" style="height:18px; vertical-align:bottom;"></a>
                                 <php>}</php>
+                                <php>if($qqtoken==1) {</php>
+                                    <a class="ico-qq" href="javascript:void(0);" onclick="core.share.ShareTengXun({$vl.feed_id});" title="分享到腾讯微博" style="height:18px; vertical-align:bottom;"></a>
+                                <php>}</php>
                                 <php>if($vl['user_info']['uid']!=$GLOBALS['ts']['mid']) {</php>
                                     {:W('FeedFollowing',array('fid'=>$vl['feed_id'], 'tpl'=>'btn'))}
                                     
