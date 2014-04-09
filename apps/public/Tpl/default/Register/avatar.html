@@ -1,4 +1,5 @@
-﻿<include file="__THEME__/public_header" />
+<include file="__THEME__/public_header" />
+<link href="__APP__/account.css" rel="stylesheet" type="text/css" />
 
 <div class="container regContent">
 
@@ -11,7 +12,7 @@
             <div class="reg_myinfo">
             	{:W('Avatar',array('avatar'=>$User,'defaultImg'=>$User['avatar_big']))}
             </div>
-            <div class="btn_reg"><input type="button" value="下一步"></div>
+            <div class="btn_reg"><input type="button" value="下一步" onclick="location.href='{:U('public/Register/follow')}';"></div>
         </div>
         <div class="reg_info_bottom"></div>
     </div>
