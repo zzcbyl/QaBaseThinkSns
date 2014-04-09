@@ -1,13 +1,13 @@
-<include file="__THEME__/public_header" />
+﻿<include file="__THEME__/public_header" />
 
 <div class="container regContent">
     <div class="reg_bz">
-    	<div class="reg_num2"></div>
+    	<div class="reg_num1"></div>
         <div class="reg_numTit">
         	<ul>
             	<li>填写注册信息</li>
                 <li>上传头像</li>
-                <li>关注朋友</li>
+                <li class="mg0">关注朋友</li>
             </ul>
         </div>
     </div>
@@ -15,7 +15,7 @@
     	<div class="reg_info_top"></div>
         <div class="reg_info_center">
         	<div class="regTit">
-            	<h2>完善注册信息</h2>
+            	<h2>填写注册信息</h2>
             </div>
             <div class="regCont">
                 <form action="{:U('public/Register/doRegiest')}" method="post" model-node='normal_form' name="ajax_register_form" id="ajax_register_form">
@@ -60,7 +60,7 @@
                      <div class="tybox">
                      <span><input event-node="readRules" name="readRules" type="checkbox" value="" checked="checked" /> 我已阅读并同意相关<a target="_blank" href="{:U('public/Register/terms')}">服务条款</a><br /></span>
                      </div>
-                     <div class="btn_reg"><input type="submit" value="完善信息" /></div>
+                     <div class="btn_reg"><input type="submit" value="提交信息" /></div>
                  </form>
             </div>
         </div>
