@@ -83,6 +83,156 @@ class RegisterAction extends Action
         $this->display();
     }
 
+	private $_email_reg = '/[_a-zA-Z\d\-\.]+(@[_a-zA-Z\d\-\.]+\.[_a-zA-Z\d\-]+)+$/i';		// 邮箱正则规则
+	private $_mobile_reg = '/^0*(13|15|18)\d{9}$/i';		// 手机号正则规则
+
+	/**
+	 * 最新注册流程第一步填写资料
+	*/
+	public function doRegiest()
+	{
+		
+		$account = t($_POST['account']);
+		if($account=='')
+		{
+			$this->_error = '帐号不能为空';
+		}
+		
+		$res = preg_match($this->_email_reg, $account, $matches) !== 0;
+		
+		$res_mobile = preg_match($this->_mobile_reg, $account, $matches) !== 0;
+		
+		if(!$res && !$res_mobile) {
+			$this->_error = '无效的帐号';
+		}
+		//邮箱
+		$user["login"] = $account;
+		if($res)
+		{
+			$result=$this->CheckInviteCode($_POST['yqCode']);
+			if($result==0)
+				$this->error('邀请码不存在');
+			else if($result==2)
+				$this->error('邀请码已被使用');
+			else if($result==3)
+				$this->error('邀请码限定次数已用完');
+			
+			$user["linknumber"] = t($_POST['mobile']);
+			$user["invite_code"] = t($_POST['yqCode']);
+			$user["email"] = $account;
+		}
+		
+		//手机号
+		if($res_mobile)
+		{
+			//验证收到的手机验证码
+			
+			
+			$user["email"] = t($_POST['email']);
+			$user["linknumber"] = $account;
+		}
+		$user["uname"] = t($_POST['uname']);
+		$user["password"] = t($_POST['password_new']);
+		$user["sex"] = intval($_POST['sex']);
+		$user["is_active"] = 0;
+		$user["is_audit"] = 1;
+		
+		$user["realname"] = t($_POST['realname']);
+		$user["idcard"] = t($_POST['idcard']);
+		$birthday = '';
+		$len = strlen($user["idcard"]);
+		if($len==15)
+		{
+			$birthday = '19'.substr($user["idcard"],6,2).'-'.substr($user["idcard"],8,2).'-'.substr($user["idcard"],10,2);
+		}
+		else if($len==18)
+		{
+			$birthday = substr($user["idcard"],6,4).'-'.substr($user["idcard"],10,2).'-'.substr($user["idcard"],12,2);
+		}
+		else
+			$this->error('输入的身份证号格式不正确');
+		$user["birthday"] = $birthday;
+		
+		$cityIds = t($_POST['city_ids']);
+		$cityIds = explode(',', $cityIds);
+		if(!$cityIds[0] || !$cityIds[1] || !$cityIds[2]) $this->error('请选择完整地区');
+		isset($cityIds[0]) && $user["province"] = intval($cityIds[0]);
+		isset($cityIds[1]) && $user["city"] = intval($cityIds[1]);
+		isset($cityIds[2]) && $user['area'] = intval($cityIds[2]);
+		$user["location"] = t($_POST['city_names']);
+		$user["intro"] = t($_POST['intro']);
+		
+		//注册邮箱@anran.com的不做邮箱验证
+		if(strpos($user["login"],'@anran.com') > 0)
+		{
+			$user["is_active"] = 1;
+		}
+
+		$uid = $this->_user_model->addUser($user);
+		
+		if($uid)
+		{
+			if (isset($_SESSION['third-party-type'])) {
+				$user_info = $_SESSION['third-party-user-info'];
+				$syncdata['uid'] = $uid;
+				$syncdata['type_uid'] = $user_info['id'];
+				$syncdata['type'] = $_SESSION['third-party-type'];
+				$syncdata['oauth_token'] = $_SESSION [$_SESSION['third-party-type']] ['access_token'] ['oauth_token'];
+				$syncdata['oauth_token_secret'] = $_SESSION [$_SESSION['third-party-type']] ['access_token'] ['oauth_token_secret'];
+				if ($info = M ( 'login' )->where ( "type_uid={$userinfo['id']} AND type='" . $type . "'" )->find ()) {
+					// 该新浪用户已在本站存在, 将其与当前用户关联(即原用户ID失效)
+					M ( 'login' )->where ( "`login_id`={$info['login_id']}" )->save ( $syncdata );
+				} else {
+					// 添加同步信息
+					M ( 'login' )->add ( $syncdata );
+				}
+			}
+
+			// 添加积分
+			model('Credit')->setUserCredit($uid,'init_default');
+
+			// 添加至默认的用户组
+			$userGroup = model('Xdata')->get('admin_Config:register');
+			$userGroup = empty($userGroup['default_user_group']) ? C('DEFAULT_GROUP_ID') : $userGroup['default_user_group'];
+			model('UserGroupLink')->domoveUsergroup($uid, implode(',', $userGroup));
+			
+			//注册邮箱@anran.com的不做邮箱验证
+			if(strpos($user["login"],'@anran.com') > 0)
+			{
+				//$this->redirect('public/Register/step4', array('uid'=>$uid,'code'=>$_GET['code']));
+				$this->redirect('public/Register/avatar', array('uid'=>$uid));
+			}
+			
+			if (isset($_SESSION['third-party-type']))  {
+				$user_message = $_SESSION["third-party-user-info"];
+				$avatar = new AvatarModel($uid);
+				$avatar->saveRemoteAvatar($user_message['userface'],$uid);
+			}
+			
+			//邮箱注册减邀请码剩余次数
+			if($res)
+			{
+				//发送验证邮件
+				$this->_register_model->sendActivationEmail($uid);
+				
+				if ($_SESSION["open_platform_type"] != "sina" && $_SESSION["open_platform_type"] != "qzone") {
+					model('Invite')->where("code = '".$_POST['yqCode']."'")->setDec('limited_count');
+				}
+				
+				$this->redirect('public/Register/step3', array('uid'=>$uid, 'code'=>$_POST['yqCode']));
+			}
+			if($res_mobile)
+			{
+				$this->redirect('public/Register/avatar', array('uid'=>$uid));
+			}
+			
+		}
+		else
+		{
+			$this->error(L('PUBLIC_REGISTER_FAIL'));			// 注册失败
+		}
+	}
+
 
     /**
      * 注册流程 - 执行第二步骤
@@ -236,6 +386,28 @@ class RegisterAction extends Action
 		$this->setTitle ( '邮箱激活' );
 		$this->setKeywords ( '邮箱激活' );
 		$this->display();	
+	}
+	
+	public function avatar()
+	{
+		if(empty($_GET['uid'])){
+			$this->error('参数错误');
+		}
+		$uid = intval($_GET['uid']);
+		
+		$user = $this->_user_model->getUserInfo($uid);
+		
+		$this->assign('User',$user);
+
+
+		if (isset($_SESSION['user_message'])) {
+			$user_message = $_SESSION['user_message'];
+			$this->assign('Weibo','http://weibo.com/u/'.$user_message['id']);
+		}
+
+		$this->setTitle ( '上传头像' );
+		$this->setKeywords ( '上传头像' );
+		$this->display();
 	}
 	
 	public function step4()
@@ -670,6 +842,16 @@ class RegisterAction extends Action
 		$result = $this->_register_model->isValidEmail($email);
 		$this->ajaxReturn(null, $this->_register_model->getLastError(), $result);
 	}
+	
+	/**
+	 * 验证帐号是否已被使用
+	 */
+	public function isAccountAvailable() {
+		$account = t($_POST['account']);
+		$result = $this->_register_model->isValidAccount($account);
+		$this->ajaxReturn(null, $this->_register_model->getLastError(), $result);
+	}
+
 
 	/**
 	 * 验证邀请邮件
