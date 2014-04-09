@@ -170,11 +170,6 @@ class RegisterAction extends Action
 
 		$uid = $this->_user_model->addUser($user);
 		
-		$userinfo = $this->_user_model->getUserInfo($uid);
-		
-		print_r($userinfo);
-		return;
-		
 		if($uid)
 		{
 			if (isset($_SESSION['third-party-type'])) {
@@ -205,6 +200,7 @@ class RegisterAction extends Action
 			if(strpos($user["login"],'@anran.com') > 0)
 			{
 				//$this->redirect('public/Register/step4', array('uid'=>$uid,'code'=>$_GET['code']));
+				$this->redirect('public/Register/avatar', array('uid'=>$uid));
 			}
 			
 			if (isset($_SESSION['third-party-type']))  {
