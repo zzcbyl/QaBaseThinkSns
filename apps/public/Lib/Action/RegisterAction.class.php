@@ -897,15 +897,16 @@ class RegisterAction extends Action
 
 		if ($user_info && $user_info['is_active'] == 1) {
 			//$this->assign('jumpUrl', U('public/Register/step4', array('uid'=>$this->user ['uid'], 'code'=>$this->user ['invite_code'])));
-			if($user_info['location'] == '')
+			/*if($user_info['location'] == '')
 			{
 				//print('asdf');
 				//print('<br /><br /><br /><br />');
 				$this->redirect('public/Register/step4', array('uid'=>$user_info['uid'], 'code'=>$user_info['invite_code']));
 			}
-			else if($user_info['is_init'] == 0)
+			else */
+			if($user_info['is_init'] == 0)
 			{
-				$this->redirect('public/Register/step5', array('uid'=>$user_info['uid'], 'code'=>$user_info['invite_code']));
+				$this->redirect('public/Register/avatar', array('uid'=>$user_info['uid']));
 			}
 			else
 			{
@@ -924,7 +925,7 @@ class RegisterAction extends Action
 			$this->setTitle('成功激活帐号');
 			$this->setKeywords('成功激活帐号');
 			// 跳转下一步
-			$this->assign('jumpUrl', U('public/Register/step4', array('uid'=>$user_info['uid'], 'code'=>$user_info['invite_code'])));
+			$this->assign('jumpUrl', U('public/Register/avatar', array('uid'=>$user_info['uid'])));
 			//$this->success($this->_register_model->getLastError());
 		} else {
 			$this->redirect('public/Passport/login');
