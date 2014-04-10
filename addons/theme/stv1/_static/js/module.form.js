@@ -342,8 +342,14 @@ M.addEventFns({
                 $("#emailDiv").hide();
                 $("#mobileDiv").hide(); 
                 $("#yzmDiv").hide(); 
-                $("#yqmCode").show();
-                $("#yqmCodeText").show();
+                if (from == "sina" || from == "qzone") {
+                    $("#yqmCode").hide();
+                    $("#yqmCodeText").hide();
+                }
+                else {
+                    $("#yqmCode").show();
+                    $("#yqmCodeText").show();
+                }
                 return false;
             }
 
@@ -356,8 +362,14 @@ M.addEventFns({
                 $("#emailDiv").hide();
                 $("#mobileDiv").hide(); 
                 $("#yzmDiv").hide(); 
-                $("#yqmCode").show();
-                $("#yqmCodeText").show();
+                if (from == "sina" || from == "qzone") {
+                    $("#yqmCode").hide();
+                    $("#yqmCodeText").hide();
+                }
+                else {
+                    $("#yqmCode").show();
+                    $("#yqmCodeText").show();
+                }
                 return false;
             }
             else
@@ -383,8 +395,14 @@ M.addEventFns({
                 $("#emailDiv").hide();
                 $("#mobileDiv").show();
                 $("#yzmDiv").hide();
-                $("#yqmCode").show();
-                $("#yqmCodeText").show();
+                if (from == "sina" || from == "qzone") {
+                    $("#yqmCode").hide();
+                    $("#yqmCodeText").hide();
+                }
+                else {
+                    $("#yqmCode").show();
+                    $("#yqmCodeText").show();
+                }
             }
             //手机号
             else if(ismobile(sValue)) {
@@ -398,8 +416,14 @@ M.addEventFns({
                 $("#emailDiv").hide();
                 $("#mobileDiv").hide(); 
                 $("#yzmDiv").hide(); 
-                $("#yqmCode").show();
-                $("#yqmCodeText").show();
+                if (from == "sina" || from == "qzone") {
+                    $("#yqmCode").hide();
+                    $("#yqmCodeText").hide();
+                }
+                else {
+                    $("#yqmCode").show();
+                    $("#yqmCodeText").show();
+                }
             }
 
         },
@@ -889,7 +913,7 @@ M.addEventFns({
                 }
                 else
                 {
-                    tips.clear(Code)
+                    tips.clear(BtnCode)
                     this.bIsValid = true;
                 }
             }
