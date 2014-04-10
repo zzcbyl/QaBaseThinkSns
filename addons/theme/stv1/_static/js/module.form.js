@@ -343,6 +343,7 @@ M.addEventFns({
                 $("#mobileDiv").hide(); 
                 $("#yzmDiv").hide(); 
                 $("#yqmCode").show();
+                $("#yqmCodeText").show();
                 return false;
             }
 
@@ -356,6 +357,7 @@ M.addEventFns({
                 $("#mobileDiv").hide(); 
                 $("#yzmDiv").hide(); 
                 $("#yqmCode").show();
+                $("#yqmCodeText").show();
                 return false;
             }
             else
@@ -382,6 +384,7 @@ M.addEventFns({
                 $("#mobileDiv").show();
                 $("#yzmDiv").hide();
                 $("#yqmCode").show();
+                $("#yqmCodeText").show();
             }
             //手机号
             else if(ismobile(sValue)) {
@@ -389,12 +392,14 @@ M.addEventFns({
                 $("#mobileDiv").hide(); 
                 $("#yzmDiv").show(); 
                 $("#yqmCode").hide();
+                $("#yqmCodeText").hide();
             }
             else {
                 $("#emailDiv").hide();
                 $("#mobileDiv").hide(); 
                 $("#yzmDiv").hide(); 
                 $("#yqmCode").show();
+                $("#yqmCodeText").show();
             }
 
         },

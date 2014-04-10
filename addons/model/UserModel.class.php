@@ -408,6 +408,7 @@ class UserModel extends Model {
 		} else {
 			$user ['search_key'] = $user ['uname'];
 		}
+		
 		// 添加用户操作
 		$result = $this->add ( $user );
 		if (! $result) {

@@ -416,7 +416,7 @@ class AccountAction extends Action
         }
         model('User')->cleanCache($this->mid);
         $user_feeds = model('Feed')->where('uid='.$this->mid)->field('feed_id')->findAll();
-		if($user_feeds){
+		if($user_feeds) {
 			$feed_ids = getSubByKey($user_feeds, 'feed_id');
 			model('Feed')->cleanCache($feed_ids,$this->mid);
 		}
