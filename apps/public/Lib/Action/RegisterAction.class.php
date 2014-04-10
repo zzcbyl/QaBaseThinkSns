@@ -120,13 +120,15 @@ class RegisterAction extends Action
 		$user["login"] = $account;
 		if($res)
 		{
-			$result=$this->CheckInviteCode($_POST['yqCode']);
-			if($result==0)
-				$this->error('邀请码不存在');
-			else if($result==2)
-				$this->error('邀请码已被使用');
-			else if($result==3)
-				$this->error('邀请码限定次数已用完');
+			if (!isset($_SESSION['third-party-type'])) {
+				$result=$this->CheckInviteCode($_POST['yqCode']);
+				if($result==0)
+					$this->error('邀请码不存在');
+				else if($result==2)
+					$this->error('邀请码已被使用');
+				else if($result==3)
+					$this->error('邀请码限定次数已用完');
+			}
 			
 			$user["linknumber"] = t($_POST['mobile']);
 			$user["invite_code"] = t($_POST['yqCode']);
