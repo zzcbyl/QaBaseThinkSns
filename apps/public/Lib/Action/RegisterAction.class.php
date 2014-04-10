@@ -82,6 +82,17 @@ class RegisterAction extends Action
 		$this->setKeywords ( '填写注册信息' );
         $this->display();
     }
+	
+	public function home() {
+		$this->assign("gender",0);
+		$this->assign("pwd","lqqa123456");
+		$this->assign("nick",$_SESSION['third-party-user-info']['uname']);
+		$this->assign("from",$_SESSION['third-party-type']);
+		$this->assign("gender",$_SESSION['third-party-user-info']['sex']);
+		$this->setTitle ( '填写注册信息' );
+		$this->setKeywords ( '填写注册信息' );
+		$this->display();
+	}
 
 	private $_email_reg = '/[_a-zA-Z\d\-\.]+(@[_a-zA-Z\d\-\.]+\.[_a-zA-Z\d\-]+)+$/i';		// 邮箱正则规则
 	private $_mobile_reg = '/^0*(13|15|18)\d{9}$/i';		// 手机号正则规则
