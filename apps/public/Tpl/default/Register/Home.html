@@ -71,7 +71,7 @@
         <div class="reg_info_bottom"></div>
     </div>
 </div>
-<script src="__THEME__/js/module.form.js"></script>
+
 <include file="__THEME__/public_footer" />
 <script type="text/javascript" >
 
@@ -85,6 +85,9 @@
         elem_repwd.value = '';
         $(elem_repwd).removeAttr('event-node');
         $('#div_pwd').hide();
+        $("#yqmCode").removeAttr('event-node');
+        $("#yqmCode").hide();
+        $("#yqmCodeText").hide();
         var gender = "{$gender}";
 
         if (from == "sina") {
@@ -135,3 +138,4 @@
         $.get(url, { pname: 'home' });
     });
 </script>
+<script src="__THEME__/js/module.form.js"></script>
