@@ -94,5 +94,6 @@ return array (
   '<BR />邀请“CN36307”成功<BR />邀请“CN36302”成功<BR />' => '?app=public&mod=profile&act=invitefriendanswer',
   '<BR />已经邀请过“CN36307”<BR />已经邀请过“CN36302”<BR />' => '?app=public&mod=profile&act=invitefriendanswer',
   '<BR />邀请“CN36301”成功<BR />邀请“底蕴”成功<BR />' => '?app=public&mod=profile&act=invitefriendanswer',
+  'PUBLIC_CANCEL' => '?app=public&mod=Register&act=avatar',
 );
 ?>
