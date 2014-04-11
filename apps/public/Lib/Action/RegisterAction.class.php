@@ -106,7 +106,7 @@ class RegisterAction extends Action
 		$account = t($_POST['account']);
 		if($account=='')
 		{
-			$this->_error = '帐号不能为空';
+			$this->error = '帐号不能为空';
 		}
 		
 		$res = preg_match($this->_email_reg, $account, $matches) !== 0;
@@ -114,7 +114,7 @@ class RegisterAction extends Action
 		$res_mobile = preg_match($this->_mobile_reg, $account, $matches) !== 0;
 		
 		if(!$res && !$res_mobile) {
-			$this->_error = '无效的帐号';
+			$this->error = '无效的帐号';
 		}
 		//邮箱
 		$user["login"] = $account;
@@ -139,8 +139,12 @@ class RegisterAction extends Action
 		if($res_mobile)
 		{
 			//验证收到的手机验证码
-			
-			
+			$CodeResult = $_SESSION["YMZCODE"];
+			if(t($_POST['yzmCode']) != $CodeResult)
+			{
+				$this->error('验证码不正确');
+			}
+
 			$user["email"] = t($_POST['email']);
 			$user["linknumber"] = $account;
 		}
@@ -948,8 +952,95 @@ class RegisterAction extends Action
 	}
 
 
+	/**
+	 * 发送短信
+	 *
+	 * @return array
+	 *
+	 */	
+	public function SendSms()
+	{
+		$return  = array('status'=>0,'data'=>'发送失败');
+		$account = t($_POST['Number']);
+		if($account=='')
+		{
+			$return['data'] = '帐号不能为空';
+			echo json_encode($return);exit();
+		}
+				
+		$res_mobile = preg_match($this->_mobile_reg, $account, $matches) !== 0;
+		
+		if($res_mobile)
+		{
+			$Validresult = $this->_register_model->isValidAccount($account);
+			if($this->_register_model->getLastError())
+			{
+				$return  = array('status'=>0,'data'=>$this->_register_model->getLastError());
+				echo json_encode($return);exit();
+			}
+			
+			//一分钟同一号码只发一次
+			$record = D('sms')->where('`number` = '.$account)->find();
+			if($record)
+			{
+				$startTime = date('Y-m-d H:i:s',strtotime('+1 minute', $record['dtime']));
+				$endTime = date('Y-m-d H:i:s',time());
+				$minute=floor((strtotime($endTime)-strtotime($startTime))%86400/60);
+				if($minute < 0)
+				{
+					//$return  = array('status'=>0,'data'=>$startTime.' - '.$endTime.' = '.$minute);
+					$return  = array('status'=>0,'data'=>'请稍候再重新发送');
+					echo json_encode($return);exit();
+				}
+			}
+			
+			$code = rand ( 111111, 999999 );
+			$_SESSION["YMZCODE"] = $code;
+			$content = "您的验证码是：".$code."。感谢您注册卢勤问答平台。";
+			$smsapi = "api.smsbao.com"; //短信网关 
+			$charset = "utf8"; //文件编码 
+			$user = "jhwl"; //短信平台帐号 
+			$pass = md5("JHWL0304802"); //短信平台密码 
+			
+			include_once("third-party-api/sms/snoopy.php"); 
+			$snoopy = new snoopy();
+			$sendurl = "http://{$smsapi}/sms?u={$user}&p={$pass}&m={$account}&c=".urlencode($content);
+			
+			$snoopy->fetch($sendurl);
+			$SendResult = $snoopy->results;
+			
+			if($SendResult > 0)
+			{
+				$return  = array('status'=>0,'data'=>'发送失败');
+			}
+			else
+			{
+				//写入库
+				$record = D('sms')->where('`number` = '.$account)->find();
+				if($record)
+				{
+					$data['dtime'] = time();
+					$data['count'] = $record['count']+1;
+					D('sms')->where('`number` = '.$account)->save($data);
+				}
+				else
+				{
+					$data['number'] = $account;
+					$data['count'] = 1;
+					$data['dtime'] = time();
+					D('sms')->add($data);
+				}
+				$return  = array('status'=>1,'data'=>'发送成功','code'=>$code);
+			}
+		}
+		else
+		{
+			$return  = array('status'=>0,'data'=>'手机号格式错误');
+		}
 
-
+		echo json_encode($return);exit();
+		
+	}
 
 
 	/**

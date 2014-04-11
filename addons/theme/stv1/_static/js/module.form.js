@@ -914,7 +914,22 @@ M.addEventFns({
                 else
                 {
                     tips.clear(BtnCode)
-                    this.bIsValid = true;
+                    var smsCode = $("#SmsCode").val();
+                    if(smsCode != "")
+                    {
+                        if(sValue != smsCode)
+                        {
+                            tips.error( BtnCode, '验证码错误' );
+                            this.bIsValid = false;
+                        }
+                        else
+                        {
+                            tips.success(BtnCode);
+                            this.bIsValid = true;
+                        }
+                    }
+                    else
+                        this.bIsValid = true;
                 }
             }
             else
