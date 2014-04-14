@@ -18,7 +18,7 @@ class qzone{
 					.'&client_id='.QZONE_KEY
 					.'&redirect_uri='.$this->getCallback('qzone', $callbackurl)
 					.'&state='.$_SESSION['state']
-					.'&scope=get_user_info,add_share';
+					.'&scope=get_user_info,add_t';
 		
 		return $loginUrl;
 	}
