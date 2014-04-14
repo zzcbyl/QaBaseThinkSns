@@ -193,14 +193,16 @@ abstract class Action
 				U ( 'public/Register/step3', array('uid'=>$this->user ['uid'], 'code'=>$this->user ['invite_code']), true );
 			} else {
 				$init_config = model ( 'Xdata' )->get ( 'admin_Config:register' );
+				//$Newuser = model('User')->getUserInfo($this->mid);
+				//print_r($init_config);return;
 				if ($init_config ['photo_open']) {
-					U ( 'public/Register/step4', array('uid'=>$this->user ['uid'], 'code'=>$this->user ['invite_code']), true );
+					U ( 'public/Register/avatar', array('uid'=>$this->user ['uid']), true );
 				}
 				/*if ($init_config ['tag_open']) {
 					U ( 'public/Register/step3', '', true );
 				}*/
 				if ($init_config ['interester_open']) {
-					U ( 'public/Register/step5', array('uid'=>$this->user ['uid'], 'code'=>$this->user ['invite_code']), true );
+					U ( 'public/Register/follow', array('uid'=>$this->user ['uid']), true );
 				}
 				model ( 'Register' )->overUserInit ( $GLOBALS ['ts'] ['mid'] );
 				U ( 'public/Register/index', '', true );

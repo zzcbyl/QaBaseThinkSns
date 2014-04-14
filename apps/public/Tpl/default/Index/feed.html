@@ -60,6 +60,9 @@
                             <php>if($token==1) {</php>
                                 <a class="ico-sina" href="javascript:void(0);" onclick="core.share.ShareSina({$feedInfo.feed_id});" title="分享到新浪微博" style="height:18px; vertical-align:bottom;"></a>
                             <php>}</php>
+                            <php>if($qqtoken==1) {</php>
+                                <a class="ico-qq" href="javascript:void(0);" onclick="core.share.ShareTengXun({$feedInfo.feed_id});" title="分享到腾讯微博" style="height:18px; vertical-align:bottom;"></a>
+                            <php>}</php>
                             <php>if($feedInfo['user_info']['uid'] != $GLOBALS['ts']['mid']) {</php>
                             <eq name='feedInfo.actions.favor' value='true'>
                                 {:W('Collection',array('type'=>'btn','sid'=>$feedInfo['feed_id'],'stable'=>'feed','sapp'=>$feedInfo['app']))}

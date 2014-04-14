@@ -119,7 +119,7 @@ class XdataModel extends Model {
 		}
 			
 		$list = $this->lget($keys[0]);
-		
+
 		return $list ? $list[$keys[1]] : '';
 	}
 
