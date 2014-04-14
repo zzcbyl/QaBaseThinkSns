@@ -503,6 +503,12 @@ core.weibo = {
             sinaShare = 1;
         }
 
+        //分享到腾讯微博
+        var qqShare = 0;
+        if ($("#cbx_qq").attr("checked") == 'checked') {
+            qqShare = 1;
+        }
+
         // 提问类型在此区分
         var args = $(_this).attr('event-args');
         var setargs = args.replace('type=postvideo', 'type=post');
@@ -584,7 +590,7 @@ core.weibo = {
             int_isadd = 1;
 
         // 发布提问
-        $.post(url, { body: data, type: type, app_name: app_name, content: '', attach_id: attach_id, videourl: videourl, channel_id: channel_id, source_url: attrs.source_url, gid: attrs.gid, description: txtVal, questionid: Qid, addask: int_isadd, inviteid: inviteid, ShareSina: sinaShare }, function (msg) {
+        $.post(url, { body: data, type: type, app_name: app_name, content: '', attach_id: attach_id, videourl: videourl, channel_id: channel_id, source_url: attrs.source_url, gid: attrs.gid, description: txtVal, questionid: Qid, addask: int_isadd, inviteid: inviteid, ShareSina: sinaShare, ShareQQ: qqShare }, function (msg) {
             //alert(msg.data);
             //return;
             obj.isposting = false;
