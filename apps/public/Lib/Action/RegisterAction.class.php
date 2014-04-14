@@ -228,6 +228,8 @@ class RegisterAction extends Action
 			
 			//登录
 			model('Passport')->loginLocalWhitoutPassword($account);
+			unset($_SESSION['YMZCODE']);
+			unset($_SESSION['sendDT']);
 			
 			//邮箱注册减邀请码剩余次数
 			if($res)
@@ -979,6 +981,20 @@ class RegisterAction extends Action
 				echo json_encode($return);exit();
 			}
 			
+			//同一客户端一分钟发一次
+			if($_SESSION['sendDT'])
+			{
+				$startSessionTime = date('Y-m-d H:i:s',strtotime('+1 minute', $_SESSION['sendDT']));
+				$endSessionTime = date('Y-m-d H:i:s',time());
+				$Sessionminute=floor((strtotime($endSessionTime)-strtotime($startSessionTime))%86400/60);
+
+				if($Sessionminute < 0)
+				{
+					//$return  = array('status'=>0,'data'=>$startSessionTime.' - '.$endSessionTime.' = '.$Sessionminute);
+					$return  = array('status'=>0,'data'=>'请稍候再重新发送');
+					echo json_encode($return);exit();
+				}
+			}
 			//一分钟同一号码只发一次
 			$record = D('sms')->where('`number` = '.$account)->find();
 			if($record)
@@ -1008,7 +1024,7 @@ class RegisterAction extends Action
 			
 			$snoopy->fetch($sendurl);
 			$SendResult = $snoopy->results;
-			
+			$_SESSION['sendDT'] = time();
 			if($SendResult > 0)
 			{
 				$return  = array('status'=>0,'data'=>'发送失败');
@@ -1030,6 +1046,7 @@ class RegisterAction extends Action
 					$data['dtime'] = time();
 					D('sms')->add($data);
 				}
+				
 				$return  = array('status'=>1,'data'=>'发送成功','code'=>$code);
 			}
 		}
