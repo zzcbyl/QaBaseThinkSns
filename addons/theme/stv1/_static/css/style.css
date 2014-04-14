@@ -264,8 +264,9 @@ a{text-decoration:none;}
 .reg_num4{ background-position:0px -183px;}
 .reg_num5{ background-position:0px -245px;}
 .reg_numTit{width:800px; margin-left:55px; height:30px; line-height:30px}
-.reg_numTit ul li{width:158px; text-align:center; font-size:16px; color:#666; float:left}
-.reg_info{overflow:hidden;  width:954px; margin:40px auto 30px;}
+.reg_numTit ul li{width:158px; text-align:center; font-size:16px; color:#666; float:left; margin-right:157px;}
+.reg_numTit ul .mg0 { margin:0;}
+.reg_info{overflow:hidden;  width:954px; margin:20px auto 30px;}
 .reg_info_top,.reg_info_bottom,.btn_tj,.btn_reg input,.reg_myinfo .picbg p a.pc,.reg_myinfo .picbg p a.camera,.tgz,.tgzed,.tgzed1,.cgz,.hgz,.youguan a.zj_prev,.youguan a.zj_next,.youguan a.zj_prev_sel,.youguan a.zj_next_sel{background:url(../image/sprite_reg.png) no-repeat; overflow:hidden}
 .reg_info_top{background-position:0px 0px; height:19px;}
 .reg_info_bottom{background-position:0px -20px; height:14px;}
@@ -293,7 +294,7 @@ a{text-decoration:none;}
 .regbox input { float:left;}
 .regbox div{height:30px; line-height:30px; margin-top:20px;}
 .regbox div span{font-size:12px; color:#f4c475; }
-.regboxErrorSpan { color: #F4C475; font-size: 12px; line-height: 18px; padding-top: 5px; }
+.regboxErrorSpan { color: #F4C475; font-size: 12px; line-height: 18px; padding-top: 5px; display:block; }
 .errorspan{font-size:12px; color:#f4c475; background:url(../image/error_icon.png) no-repeat left center; padding-left:1.5em}
 .tybox{ background:url(../image/tybg.png) repeat-x; height:13px; font-size:12px; color:#999; text-align:center; line-height:13px; padding-top:30px}
 .tybox span{ background:#fff; padding:0px 10px;}

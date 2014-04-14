@@ -192,6 +192,35 @@ class FeedAction extends Action {
 	}
 	
 	/**
+	 * 分享到腾讯微博(js)
+	 *
+	 * @return mixed This is the return value description
+	 *
+	 */
+	public function shareTengXun()
+	{
+		$feedid = $_POST['feed_id'];
+		if(empty($feedid)||$feedid<=0)
+		{
+			$return = array('status'=>0,'data'=>'分享失败');
+			exit(json_encode($return));
+		}
+		$feedData = model('feed')->getFeeds(array($feedid));
+		if(!empty($feedData))
+		{
+			$WBTxt = $feedData[0]['body'].'　'.$feedData[0]['description'];
+			$description = $WBTxt;
+			if(strlen($WBTxt) > 200)
+				$description = utf_substr($WBTxt, 200).'...';
+			
+			$WBcontent = $description.' @卢勤 '.SITE_URL.'/index.php%3Fapp=public%26mod=Passport%26act=newquestion%26feed_id='.$feedData[0]['feed_id'];
+			$this->shareWeiBo($this->mid, $feedData[0]['feed_id'], $WBcontent, 'qzone');
+			$return = array('status'=>1,'data'=>'分享成功');
+		}
+		exit(json_encode($return));
+	}
+	
+	/**
 	 * 分享到新浪微博(js)
 	 *
 	 * @return mixed This is the return value description
@@ -214,20 +243,20 @@ class FeedAction extends Action {
 				$description = utf_substr($WBTxt, 200).'...';
 			
 			$WBcontent = $description.' @知心姐姐卢勤 '.SITE_URL.'/index.php%3Fapp=public%26mod=Passport%26act=newquestion%26feed_id='.$feedData[0]['feed_id'];
-			$this->shareWeiBo($this->mid, $feedData[0]['feed_id'], $WBcontent);
+			$this->shareWeiBo($this->mid, $feedData[0]['feed_id'], $WBcontent, 'sina');
 			$return = array('status'=>1,'data'=>'分享成功');
 		}
 		exit(json_encode($return));
 	}
 	
 	//分享到新浪微博
-	public function shareWeiBo($uid, $feed_id, $contentTxt)
+	public function shareWeiBo($uid, $feed_id, $contentTxt, $type)
 	{
 		
-		$loginData = model('Login')->get($uid);
+		$loginData = model('Login')->get($uid, $type);
 		if($loginData['oauth_token'] != '')
 		{
-			$urlPar = 'http://sync.luqinwenda.cn/sync.aspx?oriid='.$feed_id.'&token='.$loginData['oauth_token'].'&content='.urlencode($contentTxt);
+			$urlPar = 'http://sync.luqinwenda.cn/sync.aspx?oriid='.$feed_id.'&target='.$type.'&token='.$loginData['oauth_token'].'&content='.urlencode($contentTxt);
 			
 			// 初始化一个 cURL 对象
 			$curl = curl_init();

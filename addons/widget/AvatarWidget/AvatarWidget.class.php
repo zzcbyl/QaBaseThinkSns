@@ -20,7 +20,7 @@ class AvatarWidget extends Widget {
 		$var['attach_max_size'] = $attachConf['attach_max_size'];
 
  		is_array($data) && $var = array_merge($var,$data);
-
+		
 		$content = $this->renderFile(dirname(__FILE__)."/default.html", $var);
 		
 		return $content;

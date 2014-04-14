@@ -10,7 +10,8 @@ class RegisterModel extends Model {
 	private $_user_model;																// 用户模型对象字段
 	private $_error;																	// 错误信息字段
 	private $_email_reg = '/[_a-zA-Z\d\-\.]+(@[_a-zA-Z\d\-\.]+\.[_a-zA-Z\d\-]+)+$/i';		// 邮箱正则规则
-	private $_name_reg = "/^[\x{4e00}-\x{9fa5}A-Za-z0-9_]+$/u";							// 昵称正则规则
+	private $_mobile_reg = '/^0*(13|15|18)\d{9}$/i';		// 手机号正则规则
+	private $_name_reg = '/^[\x{4e00}-\x{9fa5}A-Za-z0-9_]+$/u';							// 昵称正则规则
 
 	/**
 	 * 初始化操作，获取注册配置信息；实例化用户模型对象 
@@ -66,10 +67,50 @@ class RegisterModel extends Model {
 			!$res && $this->_error = '该邮箱后缀不允许注册';				// 邮箱后缀不允许注册
 		}
 		if($res && ($email != $old_email) && $this->_user_model->where('`email`="'.mysql_escape_string($email).'"')->find()) {
-			$this->_error = L('PUBLIC_EMAIL_REGISTER');			// 该Email已被注册
+			$this->_error = '该Email已存在';			// 该Email已被注册
 			$res = false;
 		}
 
+		return (boolean)$res;
+	}
+	
+	/**
+	 * 验证帐号的正确性
+	 * @param string $account 输入帐号的信息
+	 * @param string $old_account 原始帐号的信息
+	 * @return boolean 是否验证成功
+	 */
+	public function isValidAccount($account, $old_account = null)
+	{
+		if($account=='')
+		{
+			$this->_error = '帐号不能为空';
+			return;
+		}
+		$res = preg_match($this->_email_reg, $account, $matches) !== 0;
+		
+		$res_mobile = preg_match($this->_mobile_reg, $account, $matches) !== 0;
+		
+		if(!$res && !$res_mobile) {
+			$this->_error = '无效的帐号';
+		}
+		else
+		{
+			$res=true;
+		}
+		
+		if($res && !empty($this->_config['email_suffix']))
+		{
+			$res = in_array($matches['1'], explode(',', $this->_config['email_suffix']));
+			// !$res && $this->_error = $matches['1'].L('PUBLIC_EMAIL_SUFFIX_FORBIDDEN');				// 邮箱后缀不允许注册
+			!$res && $this->_error = '该邮箱后缀不允许注册';				// 邮箱后缀不允许注册
+		}
+		
+		if($res && ($account != $old_account) && $this->_user_model->where('`login`="'.mysql_escape_string($account).'"')->find()) {
+			$this->_error = '该帐号已被注册';		
+			$res = false;
+		}
+		
 		return (boolean)$res;
 	}
 

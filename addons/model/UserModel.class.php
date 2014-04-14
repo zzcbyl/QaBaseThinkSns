@@ -387,14 +387,14 @@ class UserModel extends Model {
 		if (is_object ( $user )) {
 			$salt = rand ( 11111, 99999 );
 			$user->login_salt = $salt;
-			$user->login = $user->email;
+			//$user->login = $user->email;
 			$user->ctime = time ();
 			$user->reg_ip = get_client_ip ();
 			$user->password = $this->encryptPassword ( $user->password, $salt );
 		} else if (is_array ( $user )) {
 			$salt = rand ( 11111, 99999 );
 			$user ['login_salt'] = $salt;
-			$user ['login'] = $user ['email'];
+			//$user ['login'] = $user ['email'];
 			$user ['ctime'] = time ();
 			$user ['reg_ip'] = get_client_ip ();
 			$user ['password'] = $this->encryptPassword ( $user ['password'], $salt );
@@ -408,6 +408,7 @@ class UserModel extends Model {
 		} else {
 			$user ['search_key'] = $user ['uname'];
 		}
+		
 		// 添加用户操作
 		$result = $this->add ( $user );
 		if (! $result) {

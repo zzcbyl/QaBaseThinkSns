@@ -1,0 +1,148 @@
+﻿<include file="__THEME__/public_header" />
+
+<div class="container regContent">
+    <div class="reg_bz">
+    	<div class="reg_num1"></div>
+        <div class="reg_numTit">
+        	<ul>
+            	<li>填写注册信息</li>
+                <li>上传头像</li>
+                <li class="mg0">关注朋友</li>
+            </ul>
+        </div>
+    </div>
+	<div class="reg_info">
+    	<div class="reg_info_top"></div>
+        <div class="reg_info_center">
+        	<div class="regTit">
+            	<h2>填写注册信息</h2>
+            </div>
+            <div class="regCont">
+                <form action="{:U('public/Register/doRegiest')}" method="post" model-node='normal_form' name="ajax_register_form" id="ajax_register_form">
+             	    <div class="regbox">
+                    	<div><label><i class="RedStar">*</i>账号</label><input type="text" id="account" event-node="account" name="account" checkurl="{:U('public/Register/isAccountAvailable')}" value="" style="width:180px;" maxlength="150" />
+                        </div>
+                        <div id="yzmDiv" style="display:none;">
+                            <label><i class="RedStar">*</i>验证码</label><input type="text" event-node="yzmCode" name="yzmCode" checkurl="{:U('public/Register/isEmailAvailable')}" value="" style="width:80px;" maxlength="8" />
+                            <input type="button" id="btnGetCode" value="获取验证码" style="margin:3px 5px 0 0;" />
+                        </div>
+                        <div><label><i class="RedStar">*</i>昵称</label><input type="text" event-node="uname" checkurl="{:U('public/Register/isUnameAvailable')}" id="txt_uname" name="uname" value="" maxlength="30" style="width:180px;" />
+                        </div>
+                        <div id="div_pwd" style="height:74px;"><div><label><i class="RedStar">*</i>密码</label><input type="password"  event-node="password_new" name="password_new" value="" id="txt_pwd" maxlength="30" style="width:180px;" />
+                        </div>
+                        <div><label><i class="RedStar">*</i>确认密码</label><input type="password" event-node="repassword_new" name="repassword_new" id="txt_repwd" value="" maxlength="30" style="width:180px;" />
+                        </div></div>
+                        <div><label><i class="RedStar">*</i>性别</label>
+                        男 <input name="sex" id="rdo_male" type="radio" checked="checked" value="1" style="float:none;" />&nbsp;&nbsp;
+                        女 <input name="sex" id="rdo_female" type="radio" value="2" style="float:none;" />
+                        </div>
+                        <div><label><i class="RedStar">*</i>身份证号</label><input type="text" value="" event-node="idcard" event-args='max=20' id="idcard" name="idcard" maxlength="20" style="width:180px;" />
+                        </div>
+                        <div class="reg_select"><label style="float:left;"><i class="RedStar">*</i>所在地</label>
+                            <div style="padding-top:5px;">{:W('Area',array('curPro'=>$province,'curCity'=>$city,'area'=>$area,'city_names'=>$location,'tpl'=>'selectArea'))}</div>
+                 	    </div>
+                        <div id="emailDiv" style="display:none;">
+                            <label>邮箱</label><input type="text" event-node="email" name="email" ismust="false" checkurl="{:U('public/Register/isEmailAvailable')}" maxlength="100" value="" style="width:180px;" />
+                        </div>
+                        <div id="mobileDiv" style="display:none;">
+                            <label>手机号</label><input type="text" event-node="mobile" name="mobile" ismust="false" value="" event-args='max=15' maxlength="15" style="width:180px;" />
+                        </div>
+                        <div id="yqmCode">
+                            <label><i class="RedStar">*</i>邀请码</label><input type="text" event-node="yqCode" id="yqCode" name="yqCode" checkurl="{:U('public/Register/doStep1')}" value="" maxlength="30" style="width:180px;" />
+                        </div>
+                        <div id="yqmCodeText" style="height:18px; margin:0;">
+                            <a style="margin-left:100px; font-size:12px;" href="{:U('public/Register/inviteRule')}" target="_blank">获取邀请码</a>
+                        </div>
+                        <div><label>真实姓名</label><input type="text" event-node="realname" id="realname" name="realname" maxlength="20" value="" />
+                        </div>
+                        <div class="reg_textarea"><label style="vertical-align:top">个人简介</label><textarea name="intro" cols="" rows=""></textarea>
+                        </div>
+                     </div>
+                     <div class="tybox">
+                     <span><input event-node="readRules" name="readRules" type="checkbox" value="" checked="checked" /> 我已阅读并同意相关<a target="_blank" href="{:U('public/Register/terms')}">服务条款</a><br /></span>
+                     </div>
+                     <div class="btn_reg"><input type="submit" value="提交信息" /></div>
+                 </form>
+                 <input type="hidden" id="sendUrl" value="{:U('public/Register/SendSms')}" />
+                 <input type="hidden" id="SmsCode" value="" />
+            </div>
+        </div>
+        <div class="reg_info_bottom"></div>
+    </div>
+</div>
+
+<include file="__THEME__/public_footer" />
+<script type="text/javascript" >
+
+    var from = "{$from}";
+    if (from == "sina" || from == "qzone") {
+        document.getElementById("txt_uname").value = "{$nick}";
+        var elem_pwd = document.getElementById("txt_pwd");
+        elem_pwd.value = '';
+        $(elem_pwd).removeAttr('event-node');
+        var elem_repwd = document.getElementById("txt_repwd");
+        elem_repwd.value = '';
+        $(elem_repwd).removeAttr('event-node');
+        $('#div_pwd').hide();
+        $("#yqmCode").removeAttr('event-node');
+        $("#yqmCode").hide();
+        $("#yqmCodeText").hide();
+        var gender = "{$gender}";
+
+        if (from == "sina") {
+            if (gender == "1") {
+
+                document.getElementById("rdo_male").checked = true;
+                document.getElementById("rdo_female").checked = false;
+
+            } else {
+
+                if (gender == "0") {
+
+                    document.getElementById("rdo_female").checked = true;
+                    document.getElementById("rdo_male").checked = false;
+
+                } else {
+
+                    document.getElementById("rdo_female").checked = false;
+                    document.getElementById("rdo_male").checked = false;
+                }
+            }
+        }
+        if (from == "qq") {
+            if (gender == "0") {
+
+                document.getElementById("rdo_male").checked = true;
+                document.getElementById("rdo_female").checked = false;
+
+            } else {
+
+                if (gender == "1") {
+
+                    document.getElementById("rdo_female").checked = true;
+                    document.getElementById("rdo_male").checked = false;
+
+                } else {
+
+                    document.getElementById("rdo_female").checked = false;
+                    document.getElementById("rdo_male").checked = false;
+                }
+            }
+        }
+
+
+    }
+
+    $(document).ready(function () {
+        var url = U('public/Passport/logpv');
+        $.get(url, { pname: 'home' });
+    });
+
+
+
+
+    
+
+</script>
+<script src="__THEME__/js/module.form.js"></script>
+<script src="__THEME__/js/module.sms.js"></script>

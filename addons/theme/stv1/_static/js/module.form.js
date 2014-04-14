@@ -73,6 +73,7 @@ M.addModelFns({
 				("function" === typeof(dInput.onblur)) && dInput.onblur();
 
 				if(!dInput.bIsValid) {
+                    //alert($(dInput).attr('name'));
 					bValid = false;
 					if(dInput.type != 'hidden') {
 						dFirstError = dFirstError || dInput;
@@ -321,6 +322,116 @@ M.addEventFns({
 			this.className = 's-txt';
 		}
 	},
+    account:    {
+        focus: function() {
+			this.className = 's-txt-focus';
+			//var x = $(this).offset();
+			//$(this.dTips).css({'position':'absolute','left':x.left+'px','top':x.top+$(this).height()+12+'px','width':$(this).width()+10+'px'});
+		},
+		blur: function() {
+            var dAccount = this;
+			var sUrl = dAccount.getAttribute("checkurl");
+			var sValue = dAccount.value;
+            //alert(sValue);
+			if(!sUrl || (this.dSuggest && this.dSuggest.isEnter)) {
+				return false;
+			}
+            if(sValue.length==0)
+            {
+                tips.error( dAccount, '帐号不能为空' );
+                $("#emailDiv").hide();
+                $("#mobileDiv").hide(); 
+                $("#yzmDiv").hide(); 
+                if (from == "sina" || from == "qzone") {
+                    $("#yqmCode").hide();
+                    $("#yqmCodeText").hide();
+                }
+                else {
+                    $("#yqmCode").show();
+                    $("#yqmCodeText").show();
+                }
+                return false;
+            }
+
+            var myReg = /^[-._A-Za-z0-9]+@([_A-Za-z0-9]+\.)+[A-Za-z0-9]{2,3}$/; 
+            var mobileReg = /^0*(13|15|18)\d{9}$/;
+
+            if(!myReg.test(sValue) && !mobileReg.test(sValue))
+            {
+                tips.error( dAccount, '帐号只能是手机号或者邮箱' );
+                $("#emailDiv").hide();
+                $("#mobileDiv").hide(); 
+                $("#yzmDiv").hide(); 
+                if (from == "sina" || from == "qzone") {
+                    $("#yqmCode").hide();
+                    $("#yqmCodeText").hide();
+                }
+                else {
+                    $("#yqmCode").show();
+                    $("#yqmCodeText").show();
+                }
+                return false;
+            }
+            else
+            {
+                tips.clear( dAccount )
+            }
+
+            $.post(sUrl, {account:sValue}, function(oTxt) {
+				var oArgs = M.getEventArgs(dAccount);
+				if(oTxt.status) {
+					"false" == oArgs.success ? tips.clear( dAccount ) : tips.success( dAccount );
+					dAccount.bIsValid = true;
+				} else {
+					"false" == oArgs.error ? tips.clear( dAccount ) : tips.error( dAccount, oTxt.info );
+					dAccount.bIsValid = false;
+				}
+				return true;
+			}, 'json');
+			$(this.dTips).hide();
+
+            //邮箱
+            if(myReg.test(sValue)) {
+                $("#emailDiv").hide();
+                $("#mobileDiv").show();
+                $("#yzmDiv").hide();
+                if (from == "sina" || from == "qzone") {
+                    $("#yqmCode").hide();
+                    $("#yqmCodeText").hide();
+                }
+                else {
+                    $("#yqmCode").show();
+                    $("#yqmCodeText").show();
+                }
+            }
+            //手机号
+            else if(ismobile(sValue)) {
+                $("#emailDiv").show();
+                $("#mobileDiv").hide(); 
+                $("#yzmDiv").show(); 
+                $("#yqmCode").hide();
+                $("#yqmCodeText").hide();
+            }
+            else {
+                $("#emailDiv").hide();
+                $("#mobileDiv").hide(); 
+                $("#yzmDiv").hide(); 
+                if (from == "sina" || from == "qzone") {
+                    $("#yqmCode").hide();
+                    $("#yqmCodeText").hide();
+                }
+                else {
+                    $("#yqmCode").show();
+                    $("#yqmCodeText").show();
+                }
+            }
+
+        },
+		load: function() {
+            this.value = '';
+			this.className = 's-txt';
+        }
+    },
 	// 邮箱验证
 	email: {
 		focus: function() {
@@ -333,39 +444,51 @@ M.addEventFns({
 
 			var dEmail = this;
 			var sUrl = dEmail.getAttribute("checkurl");
+            var sMust = dEmail.getAttribute("ismust");
 			var sValue = dEmail.value;
             //alert(sValue);
 			if(!sUrl || (this.dSuggest && this.dSuggest.isEnter)) {
 				return false;
 			}
-            
-            if(sValue.length==0)
+            if(sMust=='true')
             {
-                tips.error( dEmail, '邮箱地址不能为空' );
-                return false;
-            }
-
-            var myReg = /^[-._A-Za-z0-9]+@([_A-Za-z0-9]+\.)+[A-Za-z0-9]{2,3}$/; 
-            if(!myReg.test(sValue))
-            {
-                tips.error( dEmail, '无效的邮箱地址' );
-                return false;
+                if(sValue.length==0)
+                {
+                    tips.error( dEmail, '邮箱地址不能为空' );
+                    return false;
+                }
             }
             else
+            {
                 tips.clear( dEmail )
+                if(sValue.length==0)
+                    dEmail.bIsValid = true;
+            }
 
-			$.post(sUrl, {email:sValue}, function(oTxt) {
-				var oArgs = M.getEventArgs(dEmail);
-				if(oTxt.status) {
-					"false" == oArgs.success ? tips.clear( dEmail ) : tips.success( dEmail );
-					dEmail.bIsValid = true;
-				} else {
-					"false" == oArgs.error ? tips.clear( dEmail ) : tips.error( dEmail, oTxt.info );
-					dEmail.bIsValid = false;
-				}
-				return true;
-			}, 'json');
-			$(this.dTips).hide();
+            if(sValue.length!=0)
+            {
+                var myReg = /^[-._A-Za-z0-9]+@([_A-Za-z0-9]+\.)+[A-Za-z0-9]{2,3}$/; 
+                if(!myReg.test(sValue))
+                {
+                    tips.error( dEmail, '无效的邮箱地址' );
+                    return false;
+                }
+                else
+                    tips.clear( dEmail )
+
+			    $.post(sUrl, {email:sValue}, function(oTxt) {
+				    var oArgs = M.getEventArgs(dEmail);
+				    if(oTxt.status) {
+					    "false" == oArgs.success ? tips.clear( dEmail ) : tips.success( dEmail );
+					    dEmail.bIsValid = true;
+				    } else {
+					    "false" == oArgs.error ? tips.clear( dEmail ) : tips.error( dEmail, oTxt.info );
+					    dEmail.bIsValid = false;
+				    }
+				    return true;
+			    }, 'json');
+			    $(this.dTips).hide();
+            }
 		},
 		load: function() {
 			this.className = 's-txt';
@@ -625,6 +748,7 @@ M.addEventFns({
 				this.bIsValid = false;
 			} else {
 				tips.clear( this );
+                tips.success( this );
 				this.bIsValid = true;
 			}
 		},
@@ -704,6 +828,8 @@ M.addEventFns({
             this.className = 's-txt';
 
             var mobile = this.value;
+            var sMust = this.getAttribute("ismust");
+
             if (mobile != '') {
                 var result = ismobile(mobile);
                 if (!result) {
@@ -715,10 +841,15 @@ M.addEventFns({
                     this.bIsValid = true;
                 }
             }
-            else {
+            else if(sMust == 'true') {
                 tips.error(this, '手机号不能为空');
                 this.bIsValid = false;
             }
+            else
+            {
+                tips.clear(this);
+                this.bIsValid = true;
+             }
         },
         load: function() {
             this.className = 's-txt';
@@ -764,6 +895,91 @@ M.addEventFns({
 			this.className='s-txt';
 		}
 	},
+    yzmCode: {
+        focus: function() {
+			this.className='s-txt-focus';
+			return false;
+		},
+		blur: function() {
+            if($("#yzmDiv").css('display')!='none') {
+                this.className='s-txt';
+                var Code = this;
+                var BtnCode = document.getElementById("btnGetCode");
+                var sValue = Code.value;
+                var sUrl = Code.getAttribute('checkurl');
+                if(sValue.length==0) {
+                    tips.error( BtnCode, '验证码不能为空' );
+                    this.bIsValid = false;
+                }
+                else
+                {
+                    tips.clear(BtnCode)
+                    var smsCode = $("#SmsCode").val();
+                    if(smsCode != "")
+                    {
+                        if(sValue != smsCode)
+                        {
+                            tips.error( BtnCode, '验证码错误' );
+                            this.bIsValid = false;
+                        }
+                        else
+                        {
+                            tips.success(BtnCode);
+                            this.bIsValid = true;
+                        }
+                    }
+                    else
+                        this.bIsValid = true;
+                }
+            }
+            else
+               this.bIsValid = true;
+        },
+		load: function() {
+			this.className='s-txt';
+		}
+    },
+    yqCode: {
+        focus: function() {
+			this.className='s-txt-focus';
+			return false;
+		},
+		blur: function() {
+            if($("#yqmCode").css('display')!='none') {
+                this.className='s-txt';
+                var Code = this;
+                var sValue = Code.value;
+                var sUrl = Code.getAttribute('checkurl');
+                var oArgs = M.getEventArgs(Code);
+                if(sValue.length==0) {
+                    tips.error( Code, '邀请码不能为空' );
+                    this.bIsValid = false;
+                    return false;
+                }
+                else {
+                    tips.clear(Code)
+                }
+
+                $.post(sUrl, { Code: sValue }, function(oTxt) {
+				    if(oTxt.status == '1') {
+					    'false' == oArgs.success ? tips.clear(Code) : tips.success(Code);
+					    Code.bIsValid = true;
+				    } else {
+					    'false' == oArgs.error ? tips.clear(Code) : tips.error(Code, oTxt.data);
+					    Code.bIsValid = false;
+				    }
+				    return true;
+			    }, 'json');
+			    $(this.dTips).hide();
+
+           }
+           else
+               this.bIsValid = true;
+        },
+		load: function() {
+			this.className='s-txt';
+		}
+    },
 	radio: {
 		click: function() {
 			this.onblur();
