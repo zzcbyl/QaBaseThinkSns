@@ -112,12 +112,35 @@ class FeedAction extends Action {
 			exit(json_encode($return));
 		}
 		
-		//分享到微博
+		//分享到新浪微博
 		if($_POST['ShareSina'] == "1")
 		{
-			$contentTxt = utf_substr($data['description'], 180).'...　请 @卢勤问答网站 @知心姐姐卢勤 来帮帮我。'.SITE_URL.'/index.php%3Fapp=public%26mod=Passport%26act=newquestion%26feed_id='.$data['feed_id'];
-			$this->shareWeiBo($data['uid'], $data['feed_id'], $contentTxt);
+			$WBTxt = $data['body'].'　'.$data['description'];
+			$description = $WBTxt;
+			if(strlen($WBTxt) > 200)
+				$description = utf_substr($WBTxt, 200).'...';
+			
+			$WBcontent = $description.' @知心姐姐卢勤 '.SITE_URL.'/index.php%3Fapp=public%26mod=Passport%26act=newquestion%26feed_id='.$data['feed_id'];
+			$this->shareWeiBo($this->mid, $data['feed_id'], $WBcontent, 'sina');
+			
+			//$contentTxt = utf_substr($data['description'], 180).'...　请 @卢勤问答网站 @知心姐姐卢勤 来帮帮我。'.SITE_URL.'/index.php%3Fapp=public%26mod=Passport%26act=newquestion%26feed_id='.$data['feed_id'];
+			//$this->shareWeiBo($data['uid'], $data['feed_id'], $contentTxt);
 		}
+		
+		//分享到腾讯微博
+		if($_POST['ShareQQ'] == "1")
+		{
+			$WBTxt = $data['body'].'　'.$data['description'];
+			$description = $WBTxt;
+			if(strlen($WBTxt) > 200)
+				$description = utf_substr($WBTxt, 200).'...';
+			
+			$WBcontent = $description.' @卢勤 '.SITE_URL.'/index.php%3Fapp=public%26mod=Passport%26act=newquestion%26feed_id='.$data['feed_id'];
+			$this->shareWeiBo($this->mid, $data['feed_id'], $WBcontent, 'qzone');
+			//$contentTxt = utf_substr($data['description'], 180).'...　请 @卢勤问答网站 @知心姐姐卢勤 来帮帮我。'.SITE_URL.'/index.php%3Fapp=public%26mod=Passport%26act=newquestion%26feed_id='.$data['feed_id'];
+			//$this->shareWeiBo($data['uid'], $data['feed_id'], $contentTxt);
+		}
+
 		
 		// 发布邮件之后添加积分
 		model ( 'Credit' )->setUserCredit ( $this->uid, 'add_weibo' );
@@ -257,7 +280,7 @@ class FeedAction extends Action {
 		if($loginData['oauth_token'] != '')
 		{
 			$urlPar = 'http://sync.luqinwenda.cn/sync.aspx?oriid='.$feed_id.'&target='.$type.'&token='.$loginData['oauth_token'].'&content='.urlencode($contentTxt);
-			
+
 			// 初始化一个 cURL 对象
 			$curl = curl_init();
 			// 设置你需要抓取的URL

@@ -63,7 +63,7 @@
         </ul>
         
     </div>
-    <php>if($token == '1') {</php>
+    <php>if($token == '1' || $qqtoken == '1') {</php>
     <div class="share_box">
         <div>分享到：</div>
         <!--<input name="" type="radio" value="" />
@@ -71,8 +71,15 @@
         </a><a href="#" class="s_rr_ed"></a><a href="#" class="s_sn_ed"></a><a href="#" class="s_bd_ed">
         </a><a href="#">更多</a>-->
         <div style="padding:5px 0 0 20px;">
-        <input type="checkbox" id="cbx_sina" name="cbxSina" style="margin-top:3px; float:left; margin-right:3px;" title="分享到新浪微博" />
-        <label for="cbx_sina"><a class="s_sina" title="分享到新浪微博"></a></label ></div>
+        <php>if($token == '1') {</php>
+            <input type="checkbox" id="cbx_sina" name="cbxSina" style="margin-top:3px; float:left; margin-right:3px;" title="分享到新浪微博" />
+            <label for="cbx_sina"><a class="s_sina" title="分享到新浪微博"></a></label >
+        <php>}</php>
+        <php>if($qqtoken == '1') {</php>　
+            <input type="checkbox" id="cbx_qq" name="cbxQQ" style="margin-top:3px; float:left; margin-right:3px;" title="分享到腾讯微博" />
+            <label for="cbx_qq"><a class="s_tx" title="分享到腾讯微博"></a></label >
+        <php>}</php>
+        </div>
     </div>
     <php>}</php>
     <div id="InvitedFriend" class="pengyou" style="display:none;"></div>
