@@ -1,4 +1,4 @@
-﻿
+
 var sendSms = {
     node: null,
     count: 60,
