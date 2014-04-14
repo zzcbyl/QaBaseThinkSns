@@ -49,10 +49,15 @@ class SendWeiboWidget extends Widget {
 			!isset($var['actions'][$value]) && $var['actions'][$value] = true; 
 		}
 		
-		$loginData = model('Login')->get($GLOBALS['ts']['mid']);
+		$loginData = model('Login')->get($GLOBALS['ts']['mid'], 'sina');
 		if($loginData['oauth_token'] != '')
 		{
 			$var['token'] = '1';
+		}
+		$loginData = model('Login')->get($GLOBALS['ts']['mid'], 'qzone');
+		if($loginData['oauth_token'] != '')
+		{
+			$var['qqtoken'] = '1';
 		}
 		
 		//认证专家
