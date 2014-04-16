@@ -279,6 +279,8 @@ class FeedAction extends Action {
 		$loginData = model('Login')->get($uid, $type);
 		if($loginData['oauth_token'] != '')
 		{
+			if($type == 'sina')
+				$type = 'weibo';
 			$urlPar = 'http://sync.luqinwenda.cn/sync.aspx?oriid='.$feed_id.'&target='.$type.'&token='.$loginData['oauth_token'].'&content='.urlencode($contentTxt);
 
 			// 初始化一个 cURL 对象
