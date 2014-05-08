@@ -11,7 +11,8 @@
     <form id="ajax_login_form" method="POST" action="{:U('public/Passport/doLogin')}">
 	<div class="loginWrap">
 	    <div class="h_logo">
-                <a href="{:SITE_URL}" <php>if(strpos($_SERVER['HTTP_USER_AGENT'],'MSIE 6.0') !== false):</php>style="_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='{$site.logo}', sizingMethod='crop');_background:none;"<php>else:</php>style="background:url({$site.logo}) no-repeat center; "<php>endif;</php>> </a></div>
+            <a href="{:SITE_URL}" <php>if(strpos($_SERVER['HTTP_USER_AGENT'],'MSIE 6.0') !== false):</php>style="_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='{$site.logo}', sizingMethod='crop');_background:none;"<php>else:</php>style="background:url({$site.logo}) no-repeat center; "<php>endif;</php>> </a>
+        </div>
     	<div class="loginBox">
         	<div>
                 <input id="account_input" name="login_email" type="text" class="lInput" autocomplete="off" value="用户名" />
@@ -49,6 +50,9 @@
                     <span>其它帐号登录：</span>{:Addons::hook('login_input_footer')}
                 </div>
                 <php>endif;</php>
+            </div>
+            <div style="padding:0px 0 0 130px;">
+                <a href="http://www.xinmu.com" target="_blank"><img src="__THEME__/image/xinmu1.jpg" /></a>
             </div>
         </div>
     </div>
@@ -142,6 +146,9 @@
         </div>
     </div>
     <div style="clear:both;"></div>
+    <div style="border:1px solid #E0E0E0; margin-top:30px;">
+        <a href="http://www.xinmu.com" target="_blank"><img src="__THEME__/image/xinmu.jpg" style="width:968px;" /></a>
+    </div>
 </div>
 <div class="copyRight">{$GLOBALS.ts.site.site_footer}　<a target="_blank" style="color:#666;" href="http://www.miibeian.gov.cn/">京ICP备09107273</a>
     <script type="text/javascript">        var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://"); document.write(unescape("%3Cspan id='cnzz_stat_icon_1000288780'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s23.cnzz.com/z_stat.php%3Fid%3D1000288780%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
