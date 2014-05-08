@@ -335,7 +335,7 @@ core.weibo = {
                 var _this = this;
                 var answerPTime = $($div.find("#answer_publish_time")[0]).val();
                 if (answerPTime != '') {
-                    _this.loadIdx = answerPTime;
+                    _this.loadId = answerPTime;
                 }
                 if (before.length > 0) {
                     $div.insertBefore(before);
