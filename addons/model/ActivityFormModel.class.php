@@ -16,7 +16,9 @@ class ActivityFormModel extends Model {
 	 * @param integer $type 类型ID
 	 * @return
 	 */
-	public function getList($childname='',$istogether=null,$order='ctime desc',$limit=20) {
+	public function getList($childname='',$istogether=null,$order='ctime desc',$limit=20,$name='') {
+		if($name!='')
+			$map['activityname'] = $name;
 		if($childname!='')
 			$map['childname'] = $childname;
 		if($istogether!=null)
