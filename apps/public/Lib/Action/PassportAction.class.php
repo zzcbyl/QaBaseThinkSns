@@ -1342,7 +1342,7 @@ class PassportAction extends Action
 	
 	public function activityresult()
 	{
-		$data = model('ActivityForm')->getList('',null,'ctime desc',20);
+		$data = model('ActivityForm')->getList('',null,'ctime desc',20,'“放飞梦想我能行”北京夏令营（新疆石河子专场）');
 		//print_r($data);
 		$this->assign('data',$data);
 		$this->display();
