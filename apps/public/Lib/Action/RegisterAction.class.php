@@ -212,14 +212,7 @@ class RegisterAction extends Action
 			$userGroup = model('Xdata')->get('admin_Config:register');
 			$userGroup = empty($userGroup['default_user_group']) ? C('DEFAULT_GROUP_ID') : $userGroup['default_user_group'];
 			model('UserGroupLink')->domoveUsergroup($uid, implode(',', $userGroup));
-			
-			//注册邮箱@anran.com的不做邮箱验证
-			if(strpos($user["login"],'@anran.com') > 0)
-			{
-				//$this->redirect('public/Register/step4', array('uid'=>$uid,'code'=>$_GET['code']));
-				$this->redirect('public/Register/avatar');
-			}
-			
+
 			if (isset($_SESSION['third-party-type']))  {
 				$user_message = $_SESSION["third-party-user-info"];
 				$avatar = new AvatarModel($uid);
@@ -230,6 +223,13 @@ class RegisterAction extends Action
 			model('Passport')->loginLocalWhitoutPassword($account);
 			unset($_SESSION['YMZCODE']);
 			unset($_SESSION['sendDT']);
+			
+			//注册邮箱@anran.com的不做邮箱验证
+			if(strpos($user["login"],'@anran.com') > 0)
+			{
+				//$this->redirect('public/Register/step4', array('uid'=>$uid,'code'=>$_GET['code']));
+				$this->redirect('public/Register/avatar');
+			}
 			
 			//邮箱注册减邀请码剩余次数
 			if($res)
