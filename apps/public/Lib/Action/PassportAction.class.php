@@ -1326,7 +1326,7 @@ class PassportAction extends Action
 			}
 			else
 			{
-				$this->success('报名成功');	
+				$this->redirect('public/Passport/activity_shzresult');
 			}
 		}
 	}
