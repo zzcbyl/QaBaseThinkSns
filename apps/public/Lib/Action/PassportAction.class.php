@@ -1320,7 +1320,14 @@ class PassportAction extends Action
 			//发送验证邮件
 			$this->sendActivityEmail($_POST['childName'], $_POST['parentEmail1']);
 			//报名成功
-			$this->success('报名成功');	
+			if($_POST['webType']=="mobile")
+			{
+				$this->redirect('public/Passport/pactshz_result');
+			}
+			else
+			{
+				$this->success('报名成功');	
+			}
 		}
 	}
 	
@@ -1347,5 +1354,6 @@ class PassportAction extends Action
 		$this->assign('data',$data);
 		$this->display();
 	}
+	
 }
 ?>
