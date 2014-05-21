@@ -1,9 +1,9 @@
 <include file="__THEME__/public_header" />
     <style type="text/css">
         table td { padding:5px 0; font-size:14px; color:#666;}
-        table td input[type=text] { width:110px;}
+        table td input[type=text] { width:90px;}
         table td textarea { line-height:20px; padding:0 5px;}
-        .tdtitle { text-align:right; width:130px;}
+        .tdtitle { text-align:right; width:110px;}
         .xingchengCss{ width:800px; border-bottom:1px solid #ccc; border-left:1px solid #ccc; }
         .xingchengCss td { border-top:1px solid #ccc; border-right:1px solid #ccc; padding:2px 5px; }
         .bgtitle { background:#800080; color:#fff; padding:2px 3px;}
@@ -95,14 +95,23 @@
                 <form action="{:U('public/Passport/doActivityForm')}" method="post">
                     <table>
                         <tr><td class="tdtitle"><i class="RedStar">*</i>孩子姓名：</td><td><input class="s-txt" type="text" maxlength="10" value="" id="childName" name="childName"></td>
-                            <td class="tdtitle"><i class="RedStar">*</i>孩子年龄：</td><td><select id="childAge" name="childAge" style="border:1px solid #ccc;"><option>8</option><option>9</option><option>10</option><option>11</option><option>12</option><option>13</option><option>14</option><option>15</option></select></td>
+                            <td class="tdtitle"><i class="RedStar">*</i>孩子性别：</td><td><select id="childSex" name="childSex" style="border:1px solid #ccc;"><option>男</option><option>女</option></select></td>
+                            <td class="tdtitle"><i class="RedStar">*</i>孩子年龄：</td><td><select id="childAge" name="childAge" style="border:1px solid #ccc;"><option>8</option><option>9</option><option>10</option><option>11</option><option>12</option><option>13</option><option>14</option><option>15</option></select></td></tr>
+                        <tr><td class="tdtitle"><i class="RedStar">*</i>孩子身高：</td><td><input class="s-txt" type="text" maxlength="10" value="" id="childHeight" name="childHeight" />cm</td>
+                            <td class="tdtitle"><i class="RedStar">*</i>孩子民族：</td><td><input class="s-txt" type="text" maxlength="10" value="" id="childMinzu" name="childMinzu" /></td>
                             <td></td><td></td></tr>
                         <tr><td class="tdtitle"><i class="RedStar">*</i>参营家长姓名：</td><td><input class="s-txt" type="text" maxlength="10" value="" id="parentName1" name="parentName1"></td>
+                            <td class="tdtitle"><i class="RedStar">*</i>参营家长性别：</td><td><select id="parentSex1" name="parentSex1" style="border:1px solid #ccc;"><option>男</option><option>女</option></select></td>
+                            <td class="tdtitle"><i class="RedStar">*</i>参营家长身高：</td><td><input class="s-txt" type="text" maxlength="10" value="" id="parentHeight1" name="parentHeight1" />cm</td></td></tr>
+                        <tr><td class="tdtitle"><i class="RedStar">*</i>参营家长民族：</td><td><input class="s-txt" type="text" maxlength="10" value="" id="parentMinzu1" name="parentMinzu1" /></td>
                             <td class="tdtitle"><i class="RedStar">*</i>手机号码：</td><td><input class="s-txt" type="text" maxlength="11" value="" id="parentMobile1" name="parentMobile1"></td>
-                            <td class="tdtitle"><i class="RedStar">*</i>电子邮箱：</td><td><input class="s-txt" type="text" maxlength="50" value="" id="parentEmail1" name="parentEmail1" style="width:170px;"></td></tr>
+                            <td class="tdtitle"><i class="RedStar">*</i>电子邮箱：</td><td><input class="s-txt" type="text" maxlength="50" value="" id="parentEmail1" name="parentEmail1" style="width:150px;"></td></tr>
                         <tr><td class="tdtitle">参营家长姓名：</td><td><input class="s-txt" type="text" maxlength="10" value="" id="parentName2" name="parentName2"></td>
+                            <td class="tdtitle">参营家长性别：</td><td><select id="parentSex2" name="parentSex2" style="border:1px solid #ccc;"><option>男</option><option>女</option></select></td>
+                            <td class="tdtitle">参营家长身高：</td><td><input class="s-txt" type="text" maxlength="10" value="" id="parentHeight2" name="parentHeight2" />cm</td></tr>
+                        <tr><td class="tdtitle">参营家长民族：</td><td><input class="s-txt" type="text" maxlength="10" value="" id="parentMinzu2" name="parentMinzu2" /></td>
                             <td class="tdtitle">手机号码：</td><td><input class="s-txt" type="text" maxlength="11" value="" id="parentMobile2" name="parentMobile2"></td>
-                            <td class="tdtitle">电子邮箱：</td><td><input class="s-txt" type="text" maxlength="5010" value="" id="parentEmail2" name="parentEmail2" style="width:170px;"></td></tr>
+                            <td class="tdtitle">电子邮箱：</td><td><input class="s-txt" type="text" maxlength="5010" value="" id="parentEmail2" name="parentEmail2" style="width:150px;"></td></tr>
                         <tr><td class="tdtitle">家长是否同行：</td><td><select name="istogether" style="border:1px solid #ccc;"><option value="1">是</option><option value="0">否</option></select></td><td></td><td></td><td></td><td></td></tr>
                         <tr><td class="tdtitle">备注：</td><td colspan="5"><textarea id="remarks" name="remarks" style="width:420px; height:80px;"></textarea></td></tr>
                         <tr><td colspan="6" style="text-align:center; padding-top:10px;">
