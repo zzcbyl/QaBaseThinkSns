@@ -1355,5 +1355,59 @@ class PassportAction extends Action
 		$this->display();
 	}
 	
+	public function yeepaytest()
+	{
+		//订单编号
+		$order_id= 'xly_shz_'.time();
+		//支付金额
+		$order_pay="4880.00";
+		//商品名称
+		$order_productname="“放飞梦想我能行”北京夏令营";
+		//商品类型
+		$order_producttype="假日营";
+		//商品详情
+		$order_productdetail="“放飞梦想我能行”北京夏令营（新疆石河子专场）";
+		//支付成功返回地址
+		$order_callback="http://pay.luqinwenda.com/Callback.aspx";
+		
+		$this->yeepay($order_id, $order_pay, $order_productname, $order_producttype, $order_productdetail, $order_callback);
+	}
+	
+	/**
+	 *  易宝支付
+	 *  //订单编号
+		$order_id="";
+		//支付金额
+		$order_pay="";
+		//商品名称
+		$order_productname="";
+		//商品类型
+		$order_producttype="";
+		//商品详情
+		$order_productdetail="";
+		//支付成功返回地址
+		$order_callback="";
+		//0:不需要,1:需要
+		$order_isdelivery="0";
+		//商家扩展信息
+		$order_shopextension="";
+		//支付通道编码,默认空
+		$order_paychannel="";
+	*/
+	public function yeepay($order_id, $order_pay, $order_productname, $order_producttype, $order_productdetail, $order_callback, $order_isdelivery=0, $order_shopextension='', $order_paychannel='')
+	{
+		$parameter="p2_Order=$order_id&p3_Amt=$order_pay&p5_Pid=".urlencode($order_productname)."&p6_Pcat=".urlencode($order_producttype)."&p7_Pdesc=".urlencode($order_productdetail)."&p8_Url=".urlencode($order_callback)."&p9_SAF=$order_isdelivery&pa_MP=".urlencode($order_shopextension)."&pd_FrpId=$order_paychannel";
+		
+		$url="http://pay.luqinwenda.com/Req.aspx?".$parameter;
+		
+		
+		echo "<script language='javascript' type='text/javascript'>";
+		echo "window.location.href='$url'";
+		echo "</script>";
+   
+		//$this->redirect($url);
+	}
+	
 }
+
 ?>
