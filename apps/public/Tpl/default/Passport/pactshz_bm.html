@@ -3,7 +3,7 @@
 <head>
 <meta name="viewport" content="width=device-width"/>  
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>卢勤问答平台 - 长大不容易，沟通有办法</title>
+<title>“放飞梦想我能行”北京夏令营</title>
 <meta content="卢勤问答平台" name="keywords">
 <meta content="卢勤问答平台" name="description">
 <meta property="qc:admins" content="5235562777645116756416375" />
@@ -85,7 +85,7 @@
         div{ line-height:20px;}
         select { width:40px; height:20px; line-height:20px;}
         table td { padding:5px 0; font-size:14px; color:#666;}
-        table td input[type=text] { width:110px;}
+        table td input[type=text] { width:100px;}
         table td textarea { line-height:20px; padding:0 5px;}
         .tdtitle { text-align:right; width:120px;}
         .xingchengCss{ width:800px; border-bottom:1px solid #ccc; border-left:1px solid #ccc; }
@@ -102,14 +102,23 @@
                 <div style="padding:0 0 10px 0; font-size:16px; font-weight:bold;">报名表格</div>
                 <form action="{:U('public/Passport/doActivityForm')}" method="post">
                     <table>
-                        <tr><td class="tdtitle"><i class="RedStar">*</i>孩子姓名：</td><td><input class="s-txt" type="text" maxlength="10" value="" id="childName" name="childName"></td></tr>
+                        <tr><td class="tdtitle"><i class="RedStar">*</i>孩子姓名：</td><td><input class="s-txt" type="text" maxlength="10" value="" id="childName" name="childName" /></td></tr>
+                        <tr><td class="tdtitle"><i class="RedStar">*</i>孩子性别：</td><td><select id="childSex" name="childSex" style="border:1px solid #ccc;"><option>男</option><option>女</option></select></td></tr>
                         <tr><td class="tdtitle"><i class="RedStar">*</i>孩子年龄：</td><td><select id="childAge" name="childAge" style="border:1px solid #ccc;"><option>8</option><option>9</option><option>10</option><option>11</option><option>12</option><option>13</option><option>14</option><option>15</option></select></td></tr>
-                        <tr><td class="tdtitle"><i class="RedStar">*</i>参营家长姓名：</td><td><input class="s-txt" type="text" maxlength="10" value="" id="parentName1" name="parentName1"></td></tr>
+                        <tr><td class="tdtitle"><i class="RedStar">*</i>孩子身高：</td><td><input class="s-txt" type="text" maxlength="10" value="" id="childHeight" name="childHeight" />cm</td></tr>
+                        <tr><td class="tdtitle"><i class="RedStar">*</i>孩子民族：</td><td><input class="s-txt" type="text" maxlength="10" value="" id="childMinzu" name="childMinzu" /></td></tr>
+                        <tr><td class="tdtitle"><i class="RedStar">*</i>参营家长姓名：</td><td><input class="s-txt" type="text" maxlength="10" value="" id="parentName1" name="parentName1" /></td></tr>
+                        <tr><td class="tdtitle"><i class="RedStar">*</i>参营家长性别：</td><td><select id="parentSex1" name="parentSex1" style="border:1px solid #ccc;"><option>男</option><option>女</option></select></td></tr>
+                        <tr><td class="tdtitle"><i class="RedStar">*</i>参营家长身高：</td><td><input class="s-txt" type="text" maxlength="10" value="" id="parentHeight1" name="parentHeight1" />cm</td></tr>
+                        <tr><td class="tdtitle"><i class="RedStar">*</i>参营家长民族：</td><td><input class="s-txt" type="text" maxlength="10" value="" id="parentMinzu1" name="parentMinzu1" /></td></tr>
                         <tr><td class="tdtitle"><i class="RedStar">*</i>手机号码：</td><td><input class="s-txt" type="text" maxlength="11" value="" id="parentMobile1" name="parentMobile1"></td></tr>
-                        <tr><td class="tdtitle"><i class="RedStar">*</i>电子邮箱：</td><td><input class="s-txt" type="text" maxlength="50" value="" id="parentEmail1" name="parentEmail1" style="width:150px;"></td></tr>
-                        <tr><td class="tdtitle">参营家长姓名：</td><td><input class="s-txt" type="text" maxlength="10" value="" id="parentName2" name="parentName2"></td></tr>
-                        <tr><td class="tdtitle">手机号码：</td><td><input class="s-txt" type="text" maxlength="11" value="" id="parentMobile2" name="parentMobile2"></td></tr>
-                        <tr><td class="tdtitle">电子邮箱：</td><td><input class="s-txt" type="text" maxlength="5010" value="" id="parentEmail2" name="parentEmail2" style="width:150px;"></td></tr>
+                        <tr><td class="tdtitle"><i class="RedStar">*</i>电子邮箱：</td><td><input class="s-txt" type="text" maxlength="50" value="" id="parentEmail1" name="parentEmail1" style="width:150px;" /></td></tr>
+                        <tr><td class="tdtitle">参营家长姓名：</td><td><input class="s-txt" type="text" maxlength="10" value="" id="parentName2" name="parentName2" /></td></tr>
+                        <tr><td class="tdtitle">参营家长性别：</td><td><select id="parentSex2" name="parentSex2" style="border:1px solid #ccc;"><option>男</option><option>女</option></select></td></tr>
+                        <tr><td class="tdtitle">参营家长身高：</td><td><input class="s-txt" type="text" maxlength="10" value="" id="parentHeight2" name="parentHeight2" />cm</td></tr>
+                        <tr><td class="tdtitle">参营家长民族：</td><td><input class="s-txt" type="text" maxlength="10" value="" id="parentMinzu2" name="parentMinzu2" /></td></tr>
+                        <tr><td class="tdtitle">手机号码：</td><td><input class="s-txt" type="text" maxlength="11" value="" id="parentMobile2" name="parentMobile2" /></td></tr>
+                        <tr><td class="tdtitle">电子邮箱：</td><td><input class="s-txt" type="text" maxlength="5010" value="" id="parentEmail2" name="parentEmail2" style="width:150px;" /></td></tr>
                         <tr><td class="tdtitle">家长是否同行：</td><td><select name="istogether" style="border:1px solid #ccc;"><option value="1">是</option><option value="0">否</option></select></td></tr>
                         <tr><td class="tdtitle">备注：</td><td><textarea id="remarks" name="remarks" style="width:150px; height:100px;"></textarea></td></tr>
                         <tr><td colspan="6" style="text-align:center; padding-top:10px;">
@@ -127,42 +136,85 @@
 </div>
 <script type="text/javascript">
     function checkSubmit() {
+
+        $('input[type=text]').blur(function () {
+            $(this).css('border-color', '#ccc');
+        });
+
         if ($('#childName').val().Trim() == "") {
             ui.error('孩子姓名不能为空!');
             $('#childName').focus();
             $('#childName').css('border-color', 'red');
             return false;
         }
+        if ($('#childHeight').val().Trim() == "") {
+            ui.error('孩子身高不能为空!');
+            $('#childHeight').focus();
+            $('#childHeight').css('border-color', 'red');
+            return false;
+        }
+        if ($('#childMinzu').val().Trim() == "") {
+            ui.error('孩子民族不能为空!');
+            $('#childMinzu').focus();
+            $('#childMinzu').css('border-color', 'red');
+            return false;
+        }
         if ($('#parentName1').val().Trim() == "") {
             ui.error('参营家长姓名不能为空!');
+            $('#parentName1').focus();
+            $('#parentName1').css('border-color', 'red');
+            return false;
+        }
+        if ($('#parentHeight1').val().Trim() == "") {
+            ui.error('参营家长身高不能为空!');
+            $('#parentHeight1').focus();
+            $('#parentHeight1').css('border-color', 'red');
+            return false;
+        }
+        if ($('#parentMinzu1').val().Trim() == "") {
+            ui.error('参营家长民族不能为空!');
+            $('#parentMinzu1').focus();
+            $('#parentMinzu1').css('border-color', 'red');
             return false;
         }
         if ($('#parentMobile1').val().Trim() == "") {
             ui.error('手机号码不能为空!');
+            $('#parentMobile1').focus();
+            $('#parentMobile1').css('border-color', 'red');
             return false;
         }
         if (!ismobile($('#parentMobile1').val().Trim())) {
             ui.error('手机号格式有误');
+            $('#parentMobile1').focus();
+            $('#parentMobile1').css('border-color', 'red');
             return false;
         }
         if ($('#parentEmail1').val().Trim() == "") {
             ui.error('电子邮箱不能为空!');
+            $('#parentEmail1').focus();
+            $('#parentEmail1').css('border-color', 'red');
             return false;
         }
         var myReg = /^[-._A-Za-z0-9]+@([_A-Za-z0-9]+\.)+[A-Za-z0-9]{2,3}$/;
         if (!myReg.test($('#parentEmail1').val().Trim())) {
             ui.error('电子邮箱格式有误!');
+            $('#parentEmail1').focus();
+            $('#parentEmail1').css('border-color', 'red');
             return false;
         }
         if ($('#parentMobile2').val().Trim() != "") {
             if (!ismobile($('#parentMobile2').val().Trim())) {
                 ui.error('手机号格式有误');
+                $('#parentMobile2').focus();
+                $('#parentMobile2').css('border-color', 'red');
                 return false;
             }
         }
         if ($('#parentEmail2').val().Trim() != "") {
             if (!myReg.test($('#parentEmail2').val().Trim())) {
                 ui.error('电子邮箱格式有误!');
+                $('#parentEmail2').focus();
+                $('#parentEmail2').css('border-color', 'red');
                 return false;
             }
         }
@@ -170,9 +222,7 @@
         return true;
     }
 
-    $('input[type=text]').blur(function () {
-        $('#childName').css('border-color', '#ccc');
-    });
+    
 
     //验证手机号
     function ismobile(str) {

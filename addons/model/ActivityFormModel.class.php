@@ -7,8 +7,7 @@
 class ActivityFormModel extends Model {
 
 	protected $tableName = 'activity_form';
-	//protected $fields = array('activity_form_id','childname','childage','parentsname1','parentsmobile1','parentsemail1','parentsname2','parentsmobile2','parentsemail2','istogether','remarks','_pk'=>'activity_form_id');
-
+	protected $fields = array('activity_form_id','childname','childage','childsex','childheight','childminzu','parentsname1','parentsex1','parentheight1','parentminzu1','parentsmobile1','parentsemail1','parentsname2','parentsex2','parentheight2','parentminzu2','parentsmobile2','parentsemail2','istogether','remarks','ctime','activityname','_pk'=>'activity_form_id');
 	
 	/**
 	 * 获取指定的关联数据
@@ -26,5 +25,4 @@ class ActivityFormModel extends Model {
 		$data = $this->where($map)->order($order)->findPage($limit);
 		return $data;
 	}
-		
 }
