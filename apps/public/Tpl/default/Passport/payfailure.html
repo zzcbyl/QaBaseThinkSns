@@ -9,7 +9,7 @@
         <div style="font-size:14px; line-height:30px; width:600px; margin:0 auto; position:relative;">
             <p style="text-align:center; font-size:22px; font-weight:bold; line-height:38px;"><i class="ico-error-big"></i>支付失败</p>
             <div style="margin-top:30px;">
-                错误信息：<php>echo $_GET['message'];</php>
+                错误信息：<php>echo urldecode(iconv("GB2312","UTF-8",t($_GET['message'])));</php>
             </div>
         </div>
     </div>
