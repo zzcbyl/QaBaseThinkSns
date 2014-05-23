@@ -1335,6 +1335,17 @@ class PassportAction extends Action
 			}
 			else
 			{
+				$name = 'bj';
+				if($map['activityname']=='“放飞梦想我能行”北京夏令营')
+					$name = 'bj';
+				else if($map['activityname']=='快乐人生万里行之大秦岭探险')
+					$name = 'ql';
+				else if($map['activityname']=='“放飞梦想我能行”北京夏令营（新疆石河子专场）')
+					$name = 'shz';	
+				$_SESSION["JoinID"] = $result;
+				$_SESSION["JoinInfo"] = '孩子姓名：'.$map['childname'].'　家长姓名：'.$map['parentsname1'].'　手机号：'.$map['parentsmobile1']; 
+				$_SESSION["name"] = $name;
+				$_SESSION["activityname"] = $map['activityname'];
 				$this->redirect('public/Passport/activity_shzresult');
 			}
 		}
@@ -1361,6 +1372,21 @@ class PassportAction extends Action
 		$data = model('ActivityForm')->getList('',null,'ctime desc',20,'“放飞梦想我能行”北京夏令营（新疆石河子专场）');
 		//print_r($data);
 		$this->assign('data',$data);
+		$this->display();
+	}
+	
+	public function activity_shzresult()
+	{
+		$postUrl = '';
+		if($_SESSION["name"]=='bj')
+			$postUrl=U('public/Passport/bjActivity_pay');
+		else if($_SESSION["name"]=='ql')
+			$postUrl=U('public/Passport/qlActivity_pay');
+		else if($_SESSION["name"]=='shz')
+			$postUrl=U('public/Passport/shzActivity_pay');
+		
+		$this->assign('postUrl',$postUrl);
+		$this->assign('activityname',$_SESSION["activityname"]);
 		$this->display();
 	}
 	
@@ -1421,6 +1447,124 @@ class PassportAction extends Action
 		echo "</script>";
 	}
 	
+	public function shzActivity_pay()
+	{
+		$count = $_POST['joinCount'];
+		//订单编号
+		$order_id= 'xly_shz_'.time();		
+		//支付金额
+		$order_pay = 4580 * $count;
+		
+		//更新报名信息的订单号,支付金额,支付时间
+		$updInfo['orderID'] = $order_id;
+		$updInfo['paytotal'] = $order_pay;
+		$updInfo['paytime'] = time();
+		model('ActivityForm')->where('`activity_form_id`='.$_SESSION["JoinID"])->save($updInfo);
+
+		//商品名称
+		$order_productname="“放飞梦想我能行”北京夏令营（新疆石河子专场）";
+		$order_productname = iconv("UTF-8","GB2312",$order_productname);
+		//商品类型
+		$order_producttype="假日营";
+		$order_producttype = iconv("UTF-8","GB2312",$order_producttype);
+		//商品详情
+		$order_productdetail="“放飞梦想我能行”北京夏令营（新疆石河子专场）";
+		$order_productdetail = iconv("UTF-8","GB2312",$order_productdetail);
+		//支付成功返回地址
+		$order_callback="http://pay.luqinwenda.com/Callback.aspx";
+		//商品的扩展信息,写入报名人的信息
+		$order_shopextension = $_SESSION["JoinInfo"]."　缴费人数：".$count;
+		$order_shopextension = iconv("UTF-8","GB2312",$order_shopextension);
+		
+		$this->yeepay($order_id, $order_pay, $order_productname, $order_producttype, $order_productdetail, $order_callback, 0, $order_shopextension);
+	}
+	
+	public function bjActivity_pay()
+	{
+		$count = $_POST['joinCount'];
+		//订单编号
+		$order_id= 'xly_bj_'.time();
+		//支付金额
+		$order_pay = 4580 * $count;
+		
+		//更新报名信息的订单号,支付金额,支付时间
+		$updInfo['orderID'] = $order_id;
+		$updInfo['paytotal'] = $order_pay;
+		$updInfo['paytime'] = time();
+		model('ActivityForm')->where('`activity_form_id`='.$_SESSION["JoinID"])->save($updInfo);
+		
+		//商品名称
+		$order_productname="“放飞梦想我能行”北京夏令营";
+		$order_productname = iconv("UTF-8","GB2312",$order_productname);
+		//商品类型
+		$order_producttype="假日营";
+		$order_producttype = iconv("UTF-8","GB2312",$order_producttype);
+		//商品详情
+		$order_productdetail="“放飞梦想我能行”北京夏令营";
+		$order_productdetail = iconv("UTF-8","GB2312",$order_productdetail);
+		//支付成功返回地址
+		$order_callback="http://pay.luqinwenda.com/Callback.aspx";
+		//商品的扩展信息,写入报名人的信息
+		$order_shopextension = $_SESSION["JoinInfo"]."　缴费人数：".$count;
+		$order_shopextension = iconv("UTF-8","GB2312",$order_shopextension);
+		
+		$this->yeepay($order_id, $order_pay, $order_productname, $order_producttype, $order_productdetail, $order_callback, 0, $order_shopextension);
+	}
+	
+	public function qlActivity_pay()
+	{
+		$count = $_POST['joinCount'];
+		//订单编号
+		$order_id= 'xly_ql_'.time();
+		//支付金额
+		$order_pay = 4580 * $count;
+		
+		//更新报名信息的订单号,支付金额,支付时间
+		$updInfo['orderID'] = $order_id;
+		$updInfo['paytotal'] = $order_pay;
+		$updInfo['paytime'] = time();
+		model('ActivityForm')->where('`activity_form_id`='.$_SESSION["JoinID"])->save($updInfo);
+		
+		//商品名称
+		$order_productname="快乐人生万里行之大秦岭探险";
+		$order_productname = iconv("UTF-8","GB2312",$order_productname);
+		//商品类型
+		$order_producttype="假日营";
+		$order_producttype = iconv("UTF-8","GB2312",$order_producttype);
+		//商品详情
+		$order_productdetail="快乐人生万里行之大秦岭探险";
+		$order_productdetail = iconv("UTF-8","GB2312",$order_productdetail);
+		//支付成功返回地址
+		$order_callback="http://pay.luqinwenda.com/Callback.aspx";
+		//商品的扩展信息,写入报名人的信息
+		$order_shopextension = $_SESSION["JoinInfo"]."　缴费人数：".$count;
+		$order_shopextension = iconv("UTF-8","GB2312",$order_shopextension);
+		
+		$this->yeepay($order_id, $order_pay, $order_productname, $order_producttype, $order_productdetail, $order_callback, 0, $order_shopextension);
+	}
+	
+	//支付失败
+	public function payfailure()
+	{
+		if($_GET['order'])
+		{
+			$updInfo['ispay'] = 2;
+			model('ActivityForm')->where("`orderID`='".$_GET['order']."'")->save($updInfo);
+		}
+		$this->display();
+	}
+	
+	//支付成功
+	public function paysuccess()
+	{
+		if($_GET['order'])
+		{
+			$updInfo['ispay'] = 1;
+			$updInfo['paysuccesstime'] = time();
+			model('ActivityForm')->where("`orderID`='".$_GET['order']."'")->save($updInfo);
+		}
+		$this->display();
+	}
 }
 
 ?>
