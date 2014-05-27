@@ -89,6 +89,8 @@ class RegisterAction extends Action
 		$this->assign("nick",$_SESSION['third-party-user-info']['uname']);
 		$this->assign("from",$_SESSION['third-party-type']);
 		$this->assign("gender",$_SESSION['third-party-user-info']['sex']);
+		if($_GET['login'])
+			$this->assign("loginname",$_GET['login']);
 		$this->setTitle ( '填写注册信息' );
 		$this->setKeywords ( '填写注册信息' );
 		$this->display();
@@ -120,7 +122,7 @@ class RegisterAction extends Action
 		$user["login"] = $account;
 		if($res)
 		{
-			if (!isset($_SESSION['third-party-type'])) {
+			/*if (!isset($_SESSION['third-party-type'])) {
 				$result=$this->CheckInviteCode($_POST['yqCode']);
 				if($result==0)
 					$this->error('邀请码不存在');
@@ -128,10 +130,10 @@ class RegisterAction extends Action
 					$this->error('邀请码已被使用');
 				else if($result==3)
 					$this->error('邀请码限定次数已用完');
-			}
+			}*/
 			
 			$user["linknumber"] = t($_POST['mobile']);
-			$user["invite_code"] = t($_POST['yqCode']);
+			//$user["invite_code"] = t($_POST['yqCode']);
 			$user["email"] = $account;
 		}
 		
@@ -237,11 +239,12 @@ class RegisterAction extends Action
 				//发送验证邮件
 				$this->_register_model->sendActivationEmail($uid);
 				
-				if ($_SESSION["open_platform_type"] != "sina" && $_SESSION["open_platform_type"] != "qzone") {
+				/*if ($_SESSION["open_platform_type"] != "sina" && $_SESSION["open_platform_type"] != "qzone") {
 					model('Invite')->where("code = '".$_POST['yqCode']."'")->setDec('limited_count');
-				}
+				}*/
 				
-				$this->redirect('public/Register/step3', array('uid'=>$uid, 'code'=>$_POST['yqCode']));
+				//$this->redirect('public/Register/step3', array('uid'=>$uid, 'code'=>$_POST['yqCode']));
+				$this->redirect('public/Register/step3', array('uid'=>$uid));
 			}
 			if($res_mobile)
 			{

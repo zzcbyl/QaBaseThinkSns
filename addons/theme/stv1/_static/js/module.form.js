@@ -3,6 +3,9 @@
  * @param object form 表单DOM对象
  * @return void
  */
+
+var myReg = /^[-._A-Za-z0-9]+@([_A-Za-z0-9]+\.)+[A-Za-z0-9]{2,3}$/; 
+var mobileReg = /^0*(13|15|18)\d{9}$/;
 var ajaxSubmit = function (form) {
     var args = M.getModelArgs(form);
     M.getJS(THEME_URL + '/js/jquery.form.js', function () {
@@ -342,19 +345,16 @@ M.addEventFns({
                 $("#emailDiv").hide();
                 $("#mobileDiv").hide(); 
                 $("#yzmDiv").hide(); 
-                if (from == "sina" || from == "qzone") {
-                    $("#yqmCode").hide();
-                    $("#yqmCodeText").hide();
-                }
-                else {
-                    $("#yqmCode").show();
-                    $("#yqmCodeText").show();
-                }
+//                if (from == "sina" || from == "qzone") {
+//                    $("#yqmCode").hide();
+//                    $("#yqmCodeText").hide();
+//                }
+//                else {
+//                    $("#yqmCode").show();
+//                    $("#yqmCodeText").show();
+//                }
                 return false;
             }
-
-            var myReg = /^[-._A-Za-z0-9]+@([_A-Za-z0-9]+\.)+[A-Za-z0-9]{2,3}$/; 
-            var mobileReg = /^0*(13|15|18)\d{9}$/;
 
             if(!myReg.test(sValue) && !mobileReg.test(sValue))
             {
@@ -362,14 +362,14 @@ M.addEventFns({
                 $("#emailDiv").hide();
                 $("#mobileDiv").hide(); 
                 $("#yzmDiv").hide(); 
-                if (from == "sina" || from == "qzone") {
-                    $("#yqmCode").hide();
-                    $("#yqmCodeText").hide();
-                }
-                else {
-                    $("#yqmCode").show();
-                    $("#yqmCodeText").show();
-                }
+//                if (from == "sina" || from == "qzone") {
+//                    $("#yqmCode").hide();
+//                    $("#yqmCodeText").hide();
+//                }
+//                else {
+//                    $("#yqmCode").show();
+//                    $("#yqmCodeText").show();
+//                }
                 return false;
             }
             else
@@ -395,14 +395,14 @@ M.addEventFns({
                 $("#emailDiv").hide();
                 $("#mobileDiv").show();
                 $("#yzmDiv").hide();
-                if (from == "sina" || from == "qzone") {
-                    $("#yqmCode").hide();
-                    $("#yqmCodeText").hide();
-                }
-                else {
-                    $("#yqmCode").show();
-                    $("#yqmCodeText").show();
-                }
+//                if (from == "sina" || from == "qzone") {
+//                    $("#yqmCode").hide();
+//                    $("#yqmCodeText").hide();
+//                }
+//                else {
+//                    $("#yqmCode").show();
+//                    $("#yqmCodeText").show();
+//                }
             }
             //手机号
             else if(ismobile(sValue)) {
@@ -416,19 +416,37 @@ M.addEventFns({
                 $("#emailDiv").hide();
                 $("#mobileDiv").hide(); 
                 $("#yzmDiv").hide(); 
-                if (from == "sina" || from == "qzone") {
-                    $("#yqmCode").hide();
-                    $("#yqmCodeText").hide();
-                }
-                else {
-                    $("#yqmCode").show();
-                    $("#yqmCodeText").show();
-                }
+//                if (from == "sina" || from == "qzone") {
+//                    $("#yqmCode").hide();
+//                    $("#yqmCodeText").hide();
+//                }
+//                else {
+//                    $("#yqmCode").show();
+//                    $("#yqmCodeText").show();
+//                }
             }
 
         },
 		load: function() {
-            this.value = '';
+            sValue = this.value;
+
+            //邮箱
+            if(myReg.test(sValue)) {
+                $("#emailDiv").hide();
+                $("#mobileDiv").show();
+                $("#yzmDiv").hide();
+            }
+            //手机号
+            else if(ismobile(sValue)) {
+                $("#emailDiv").show();
+                $("#mobileDiv").hide(); 
+                $("#yzmDiv").show(); 
+            }
+            else {
+                $("#emailDiv").hide();
+                $("#mobileDiv").hide(); 
+                $("#yzmDiv").hide(); 
+            }
 			this.className = 's-txt';
         }
     },

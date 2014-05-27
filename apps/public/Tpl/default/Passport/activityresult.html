@@ -7,20 +7,21 @@
 <div style="padding:20px;">
     <div><h3>报名结果</h3></div>
     <table>
-        <tr style="text-align:center;"><td style="width:65px;">孩子姓名</td><td style="width:65px;">孩子年龄</td><td>参营家长信息</td><td style="width:90px;">家长是否同行</td><td style="width:270px;">备注</td><td style="width:90px;">报名时间</td></tr>
+        <tr style="text-align:center;"><td>夏令营</td><td style="width:190px;">孩子信息</td><td style="width:200px">参营家长信息</td><td style="width:40px;">家长是否同行</td><td style="width:120px;">备注</td><td style="width:80px;">报名时间</td><td style="width:130px;">缴费信息</td></tr>
         <volist name="data['data']" id='result'>
             <tr>
-                <td>{$result['childname']}</td>
-                <td style="text-align:center;">{$result['childage']}</td>
+                <td>{$result['activityname']}</td>
+                <td>姓名：{$result['childname']}　性别：{$result['childsex']}　年龄：{$result['childage']}岁　身高：{$result['childheight']}cm　民族：{$result['childminzu']}</td>
                 <td>
-                    <div>姓名：{$result['parentsname1']}　手机号码：{$result['parentsmobile1']}<span style="display:block;">　　　电子邮箱：{$result['parentsemail1']}</span></div>
-                    <div><neq name='result.parentsname2' value=''>姓名：{$result['parentsname2']}</neq>
-                    <neq name='result.parentsmobile2' value=''>　手机号码：{$result['parentsmobile2']}</neq>
-                    <neq name='result.parentsemail2' value=''><span style="display:block;">　　　电子邮箱：{$result['parentsemail2']}</span></neq></div>
+                    <div>姓名：{$result['parentsname1']}　性别：{$result['parentsex1']}　身高：{$result['parentheight1']}cm　民族：{$result['parentminzu1']}　<br />手机号码：{$result['parentsmobile1']}<span style="display:block;">电子邮箱：{$result['parentsemail1']}</span></div>
+                    <div style="margin-top:10px;"><neq name='result.parentsname2' value=''>姓名：{$result['parentsname2']}　性别：{$result['parentsex2']}　身高：{$result['parentheight2']}cm　民族：{$result['parentminzu2']}<br /></neq>
+                    <neq name='result.parentsmobile2' value=''>手机号码：{$result['parentsmobile2']}</neq>
+                    <neq name='result.parentsemail2' value=''><span style="display:block;">电子邮箱：{$result['parentsemail2']}</span></neq></div>
                 </td>
                 <td style="text-align:center;"><php>if($result['istogether']==0) echo '否';else echo '是';</php></td>
                 <td>{$result['remarks']}</td>
-                <td style="text-align:center;"><php>if($result['ctime']>0) echo date("Y-m-d H:i:s",$result['ctime']);</php></td></tr>
+                <td style="text-align:center;"><php>if($result['ctime']>0) echo date("Y-m-d H:i:s",$result['ctime']);</php></td>
+                <td style="text-align:center;">是否缴费：<php>echo $result['ispay']==1 ? '是' : '否';</php><br />缴费金额：{$result['paytotal']}<br />缴费时间：<br /><php>if($result['paysuccesstime']>0) echo date("Y-m-d H:i:s",$result['paysuccesstime']);</php></td></tr>
         </volist>
     </table>
     <div id="page" class="page">
