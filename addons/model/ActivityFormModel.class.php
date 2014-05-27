@@ -22,6 +22,7 @@ class ActivityFormModel extends Model {
 			$map['childname'] = $childname;
 		if($istogether!=null)
 			$map['istogether'] = $istogether;
+		$map['childname']  = array('neq','');
 		$data = $this->where($map)->order($order)->findPage($limit);
 		return $data;
 	}
