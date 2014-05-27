@@ -1,6 +1,28 @@
 // 提交表单
-$(document).ready(function() {
-    $('#ajax_login_form').submit(function() {
+$(document).ready(function () {
+    $("#account_input").blur(function () {
+        $.post(U('public/Passport/checkLogin'), { login_user: $("#account_input").val(), rndtime: new Date().getTime() }, function (msg) {
+            if (msg == '') {
+                $($('#js_login_input span')[0]).html('');
+                $('#js_login_input').hide();
+                return;
+            }
+            var msgobj = eval('(' + msg + ')');
+            if (msgobj.status == 0) {
+                var errorInfo = msgobj.info;
+                $($('#js_login_input span')[0]).html(errorInfo);
+                $('#js_login_input').css('top', '130px');
+                $('#js_login_input').show();
+            }
+            else {
+                $($('#js_login_input span')[0]).html('');
+                $('#js_login_input').hide();
+            }
+        });
+    });
+
+
+    $('#ajax_login_form').submit(function () {
         $(this).ajaxSubmit({
             beforeSubmit: checkLoginForm,
             success: loginCallback,
@@ -9,7 +31,7 @@ $(document).ready(function() {
         return false;
     });
     // 提交发布前验证
-    var checkLoginForm = function() {
+    var checkLoginForm = function () {
         if ($('#account_input').val().length == 0) {
             $('#account_input').focus();
             return false;
@@ -21,7 +43,7 @@ $(document).ready(function() {
         return true;
     };
     // 成功后的回调函数
-    var loginCallback = function(i) {
+    var loginCallback = function (i) {
         // var i = eval("("+e+")");
         if (i.status == 1) {
             //$('#js_login_input').html('<p>'+i.info+'</p>').show();    
@@ -37,7 +59,7 @@ $(document).ready(function() {
                 $('#js_login_input').css('top', '190px');
             }
             else {
-                $('#js_login_input').css('top','130px');
+                $('#js_login_input').css('top', '130px');
             }
             $('#js_login_input').show();
         }

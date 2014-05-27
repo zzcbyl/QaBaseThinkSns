@@ -127,6 +127,24 @@ class PassportAction extends Action
 		$this->assign( 'register_type' , $registerConf['register_type']);
 		$this->display();
 	}
+	
+	/**
+	 * 用户检查
+	 * @return void
+	 */
+	public function checkLogin() {
+		$login 		= t($_POST['login_user']);
+		if($login == '用户名')
+			$login = '';
+		
+		$result = $this->passport->CheckLocalUser($login);
+		if(!$result){
+			$status = 0; 
+			$info	= $this->passport->getError();
+			$data 	= 0;
+			$this->ajaxReturn($data,$info,$status);
+		}		
+	}
 
 	/**
 	 * 用户登录
@@ -1369,7 +1387,7 @@ class PassportAction extends Action
 	
 	public function activityresult()
 	{
-		$data = model('ActivityForm')->getList('',null,'ctime desc',20,'“放飞梦想我能行”北京夏令营（新疆石河子专场）');
+		$data = model('ActivityForm')->getList('',null,'ctime desc',20,'');
 		//print_r($data);
 		$this->assign('data',$data);
 		$this->display();
