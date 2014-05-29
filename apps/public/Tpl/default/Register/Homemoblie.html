@@ -13,6 +13,7 @@
             </div>
             <div class="regCont" style="width:auto;">
                 <form action="{:U('public/Register/doRegiest_mobile')}" method="post" model-node='normal_form' name="ajax_register_form" id="ajax_register_form">
+                    <input type="hidden" id="openid"  name="openid" value="" />
              	    <div class="regbox">
                         <div><label><i class="RedStar">*</i>昵称</label><input type="text" event-node="uname" checkurl="{:U('public/Register/isUnameAvailable')}" id="txt_uname" name="uname" value="" maxlength="30" style="width:120px;" />
                         </div>
