@@ -4,7 +4,6 @@
     .regbox div { clear:both;}
     .regboxErrorSpan { display:block; float:left; padding:0;}
     .reg_select .regboxErrorSpan { display:block; float:left; }
-    .reg_select select { float:left;}
 </style>
 <div class="container regContent" style="padding:0; width:100%">
 	<div class="reg_info" style="margin-top:0; width:100%">
@@ -13,7 +12,7 @@
             	<h2>填写注册信息</h2>
             </div>
             <div class="regCont" style="width:auto;">
-                <form action="{:U('public/Register/doRegiest')}" method="post" model-node='normal_form' name="ajax_register_form" id="ajax_register_form">
+                <form action="{:U('public/Register/doRegiest_mobile')}" method="post" model-node='normal_form' name="ajax_register_form" id="ajax_register_form">
              	    <div class="regbox">
                         <div><label><i class="RedStar">*</i>昵称</label><input type="text" event-node="uname" checkurl="{:U('public/Register/isUnameAvailable')}" id="txt_uname" name="uname" value="" maxlength="30" style="width:120px;" />
                         </div>
@@ -21,8 +20,10 @@
                         男 <input name="sex" id="rdo_male" type="radio" checked="checked" value="1" style="float:none;" />&nbsp;&nbsp;
                         女 <input name="sex" id="rdo_female" type="radio" value="2" style="float:none;" />
                         </div>
-                        <div class="reg_select"><label style="float:left;"><i class="RedStar">*</i>所在地</label>
-                            <div style="padding-top:5px; clear:none;">{:W('Area',array('curPro'=>$province,'curCity'=>$city,'area'=>$area,'city_names'=>$location,'tpl'=>'selectArea'))}</div>
+                        <div><label><i class="RedStar">*</i>身份证</label><input type="text" value="" event-node="idcard" event-args='max=20' id="idcard" name="idcard" maxlength="20" style="width:120px;" />
+                        </div>
+                        <div class="reg_select"><label><i class="RedStar">*</i>所在地</label>
+                            <span style="clear:none; float:left; display:block; height:100px; width:200px;">{:W('Area',array('curPro'=>$province,'curCity'=>$city,'area'=>$area,'city_names'=>$location,'tpl'=>'selectArea_br'))}</span>
                  	    </div>
                         <div id="emailDiv">
                             <label>邮箱</label><input type="text" event-node="email" name="email" ismust="false" checkurl="{:U('public/Register/isEmailAvailable')}" maxlength="100" value="" style="width:120px;" />
@@ -42,7 +43,7 @@
                         </div>
                      </div>
                      <div class="tybox" style="clear:both;">
-                     <span><input event-node="readRules" name="readRules" type="checkbox" value="" checked="checked" /> 我已阅读并同意相关<a target="_blank" href="{:U('public/Register/terms')}">服务条款</a><br /></span>
+                     <span><input event-node="readRules" name="readRules" type="checkbox" value="" checked="checked" /> 我已阅读并同意相关<a target="_blank" href="{:U('public/Register/termsmoblie')}">服务条款</a><br /></span>
                      </div>
                      <div class="btn_reg"><input type="submit" value="提交信息" /></div>
                  </form>
