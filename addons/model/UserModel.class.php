@@ -429,6 +429,56 @@ class UserModel extends Model {
 	}
 	
 	/**
+	* 添加用户
+	* 
+	* @param array|object $user
+	*        	新用户的相关信息|新用户对象
+	* @return boolean 是否添加成功
+	*/
+	public function addUserMobile($user) {
+		// 验证用户名称是否重复
+		$map ['uname'] = t ( $user ['uname'] );
+		$isExist = $this->where ( $map )->count ();
+		if ($isExist > 0) {
+			$this->error = '用户昵称已存在，请使用其他昵称';
+			return false;
+		}
+		$salt = rand ( 11111, 99999 );
+		$user ['login_salt'] = $salt;
+		$user ['ctime'] = time ();
+		$user ['reg_ip'] = get_client_ip ();
+		
+		// 添加昵称拼音索引
+		$user ['first_letter'] = getFirstLetter ( $user ['uname'] );
+		// 如果包含中文将中文翻译成拼音
+		if (preg_match ( '/[\x7f-\xff]+/', $user ['uname'] )) {
+			// 昵称和呢称拼音保存到搜索字段
+			$user ['search_key'] = $user ['uname'] . ' ' . model ( 'PinYin' )->Pinyin ( $user ['uname'] );
+		} else {
+			$user ['search_key'] = $user ['uname'];
+		}
+		
+		// 添加用户操作
+		$result = $this->add ( $user );
+		if (! $result) {
+			$this->error = L ( 'PUBLIC_ADD_USER_FAIL' ); // 添加用户失败
+			return 0;
+		} else {
+			// 添加部门关联信息
+			model ( 'Department' )->updateUserDepartById ( $result, intval ( $_POST ['department_id'] ) );
+			// 添加用户组关联信息
+			if (! empty ( $_POST ['user_group'] )) {
+				model ( 'UserGroupLink' )->domoveUsergroup ( $result, implode ( ',', $_POST ['user_group'] ) );
+			}
+			// 添加用户职业关联信息
+			if (! empty ( $_POST ['user_category'] )) {
+				model ( 'UserCategory' )->updateRelateUser ( $result, $_POST ['user_category'] );
+			}
+			return $result;
+		}
+	}
+	
+	/**
 	 * 密码加密处理
 	 * 
 	 * @param string $password

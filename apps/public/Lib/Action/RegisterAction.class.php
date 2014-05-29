@@ -269,9 +269,11 @@ class RegisterAction extends Action
 		$user["is_active"] = 1;
 		$user["is_audit"] = 1;
 		$user["linknumber"] = t($_POST['mobile']);
-		$user["email"] = t($_POST['email']);
+		if(t($_POST['email'])!='')
+			$user["email"] = t($_POST['email']);
 		$user["realname"] = t($_POST['realname']);
 		$user["idcard"] = t($_POST['idcard']);
+		$user["openid"] = t($_POST['openid']);
 		$birthday = '';
 		$len = strlen($user["idcard"]);
 		if($len==15)
@@ -295,7 +297,7 @@ class RegisterAction extends Action
 		$user["location"] = t($_POST['city_names']);
 		$user["intro"] = t($_POST['intro']);
 		
-		$uid = $this->_user_model->addUser($user);
+		$uid = $this->_user_model->addUserMobile($user);
 
 		if($uid)
 		{
@@ -334,11 +336,11 @@ class RegisterAction extends Action
 			unset($_SESSION['YMZCODE']);
 			unset($_SESSION['sendDT']);
 			
-			$this->redirect('public/Register/follow');
+			$this->redirect('public/Register/regSuccess');			// 注册成功
 		}
 		else
 		{
-			$this->error(L('PUBLIC_REGISTER_FAIL'));			// 注册失败
+			$this->redirect('public/Register/regFailure');				// 注册失败
 		}
 	}
 
