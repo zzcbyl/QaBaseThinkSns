@@ -1346,7 +1346,7 @@ class PassportAction extends Action
 		if($result>0)
 		{
 			//发送验证邮件
-			$this->sendActivityEmail($_POST['childName'], $_POST['parentEmail1']);
+			//$this->sendActivityEmail($_POST['childName'], $_POST['parentEmail1']);
 			//报名成功
 			if($_POST['webType']=="mobile")
 			{
