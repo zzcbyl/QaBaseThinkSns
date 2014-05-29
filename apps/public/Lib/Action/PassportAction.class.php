@@ -1340,6 +1340,7 @@ class PassportAction extends Action
 		$map['remarks'] = $_POST['remarks'];
 		$map['ctime'] = time();
 		$map['activityname'] = $_POST['activityname'];
+		$map["location"] = t($_POST['city_names']);
 		
 		$result = model('ActivityForm')->add($map);
 		if($result>0)

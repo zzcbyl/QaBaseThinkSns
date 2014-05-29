@@ -258,6 +258,89 @@ class RegisterAction extends Action
 		}
 	}
 
+	
+	/**
+	* 最新注册流程第一步填写资料_手机
+	*/
+	public function doRegiest_mobile()
+	{
+		$user["uname"] = t($_POST['uname']);
+		$user["sex"] = intval($_POST['sex']);
+		$user["is_active"] = 1;
+		$user["is_audit"] = 1;
+		$user["linknumber"] = t($_POST['mobile']);
+		$user["email"] = t($_POST['email']);
+		$user["realname"] = t($_POST['realname']);
+		$user["idcard"] = t($_POST['idcard']);
+		$birthday = '';
+		$len = strlen($user["idcard"]);
+		if($len==15)
+		{
+			$birthday = '19'.substr($user["idcard"],6,2).'-'.substr($user["idcard"],8,2).'-'.substr($user["idcard"],10,2);
+		}
+		else if($len==18)
+		{
+			$birthday = substr($user["idcard"],6,4).'-'.substr($user["idcard"],10,2).'-'.substr($user["idcard"],12,2);
+		}
+		else
+			$this->error('输入的身份证号格式不正确');
+		$user["birthday"] = $birthday;
+		
+		$cityIds = t($_POST['city_ids']);
+		$cityIds = explode(',', $cityIds);
+		if(!$cityIds[0] || !$cityIds[1] || !$cityIds[2]) $this->error('请选择完整地区');
+		isset($cityIds[0]) && $user["province"] = intval($cityIds[0]);
+		isset($cityIds[1]) && $user["city"] = intval($cityIds[1]);
+		isset($cityIds[2]) && $user['area'] = intval($cityIds[2]);
+		$user["location"] = t($_POST['city_names']);
+		$user["intro"] = t($_POST['intro']);
+		
+		$uid = $this->_user_model->addUser($user);
+
+		if($uid)
+		{
+			if (isset($_SESSION['third-party-type'])) {
+				$user_info = $_SESSION['third-party-user-info'];
+				$syncdata['uid'] = $uid;
+				$syncdata['type_uid'] = $user_info['id'];
+				$syncdata['type'] = $_SESSION['third-party-type'];
+				$syncdata['oauth_token'] = $_SESSION [$_SESSION['third-party-type']] ['access_token'] ['oauth_token'];
+				$syncdata['oauth_token_secret'] = $_SESSION [$_SESSION['third-party-type']] ['access_token'] ['oauth_token_secret'];
+				if ($info = M ( 'login' )->where ( "type_uid={$userinfo['id']} AND type='" . $type . "'" )->find ()) {
+					// 该新浪用户已在本站存在, 将其与当前用户关联(即原用户ID失效)
+					M ( 'login' )->where ( "`login_id`={$info['login_id']}" )->save ( $syncdata );
+				} else {
+					// 添加同步信息
+					M ( 'login' )->add ( $syncdata );
+				}
+			}
+
+			// 添加积分
+			model('Credit')->setUserCredit($uid,'init_default');
+
+			// 添加至默认的用户组
+			$userGroup = model('Xdata')->get('admin_Config:register');
+			$userGroup = empty($userGroup['default_user_group']) ? C('DEFAULT_GROUP_ID') : $userGroup['default_user_group'];
+			model('UserGroupLink')->domoveUsergroup($uid, implode(',', $userGroup));
+
+			if (isset($_SESSION['third-party-type']))  {
+				$user_message = $_SESSION["third-party-user-info"];
+				$avatar = new AvatarModel($uid);
+				$avatar->saveRemoteAvatar($user_message['userface'],$uid);
+			}
+			
+			//登录
+			model('Passport')->loginLocalWhitoutPassword($account);
+			unset($_SESSION['YMZCODE']);
+			unset($_SESSION['sendDT']);
+			
+			$this->redirect('public/Register/follow');
+		}
+		else
+		{
+			$this->error(L('PUBLIC_REGISTER_FAIL'));			// 注册失败
+		}
+	}
 
     /**
      * 注册流程 - 执行第二步骤
