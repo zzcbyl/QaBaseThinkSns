@@ -70,7 +70,7 @@
                             <td class="tdtitle"><i class="RedStar">*</i>孩子年龄：</td><td><select id="childAge" name="childAge" style="border:1px solid #ccc;"><option>8</option><option>9</option><option>10</option><option>11</option><option>12</option><option>13</option><option>14</option><option>15</option></select></td></tr>
                         <tr><td class="tdtitle"><i class="RedStar">*</i>孩子身高：</td><td><select id="childHeight" name="childHeight" style="border:1px solid #ccc;"><option>100</option><option>110</option><option>120</option><option>130</option><option>140</option><option>150</option><option>160</option><option>170</option><option>180</option><option>190</option><option>200</option></select> cm</td>
                             <td class="tdtitle"><i class="RedStar">*</i>孩子民族：</td><td><input class="s-txt" type="text" maxlength="10" value="" id="childMinzu" name="childMinzu" /></td>
-                            <td></td><td></td></tr>
+                            <td class="tdtitle"><i class="RedStar">*</i>孩子身份证号：</td><td><input class="s-txt" type="text" maxlength="50" value="" id="childIDcard" name="childIDcard" style="width:150px;" /></td></tr>
                         <tr><td class="tdtitle"><i class="RedStar">*</i>所在地区：</td><td colspan="5">{:W('Area',array('curPro'=>$province,'curCity'=>$city,'area'=>$area,'city_names'=>$location,'tpl'=>'selectArea'))}</td></tr>
                         <tr><td class="tdtitle">家长是否同行：</td><td colspan="5"><select name="istogether" style="border:1px solid #ccc;"><option value="1">是</option><option value="0">否</option></select>　<span style="color:#aaa;">（如果家长不需要同行以下填写的家长信息只作为联系信息）</span></td></tr>
                         <tr><td class="tdtitle"><i class="RedStar">*</i>参营家长姓名：</td><td><input class="s-txt" type="text" maxlength="10" value="" id="parentName1" name="parentName1"></td>
@@ -79,12 +79,14 @@
                         <tr><td class="tdtitle"><i class="RedStar">*</i>参营家长民族：</td><td><input class="s-txt" type="text" maxlength="10" value="" id="parentMinzu1" name="parentMinzu1" /></td>
                             <td class="tdtitle"><i class="RedStar">*</i>手机号码：</td><td><input class="s-txt" type="text" maxlength="11" value="" id="parentMobile1" name="parentMobile1"></td>
                             <td class="tdtitle"><i class="RedStar">*</i>电子邮箱：</td><td><input class="s-txt" type="text" maxlength="50" value="" id="parentEmail1" name="parentEmail1" style="width:150px;"></td></tr>
+                        <tr><td class="tdtitle"><i class="RedStar">*</i>家长身份证号：</td><td colspan="5"><input class="s-txt" type="text" maxlength="50" value="" id="parentIDcard1" name="parentIDcard1" style="width:150px;" /></td></tr>
                         <tr><td class="tdtitle">参营家长姓名：</td><td><input class="s-txt" type="text" maxlength="10" value="" id="parentName2" name="parentName2"></td>
                             <td class="tdtitle">参营家长性别：</td><td><select id="parentSex2" name="parentSex2" style="border:1px solid #ccc;"><option>男</option><option>女</option></select></td>
                             <td class="tdtitle">参营家长身高：</td><td><select id="parentHeight2" name="parentHeight2" style="border:1px solid #ccc;"><option>100</option><option>110</option><option>120</option><option>130</option><option>140</option><option>150</option><option>160</option><option>170</option><option>180</option><option>190</option><option>200</option></select> cm</td></tr>
                         <tr><td class="tdtitle">参营家长民族：</td><td><input class="s-txt" type="text" maxlength="10" value="" id="parentMinzu2" name="parentMinzu2" /></td>
                             <td class="tdtitle">手机号码：</td><td><input class="s-txt" type="text" maxlength="11" value="" id="parentMobile2" name="parentMobile2"></td>
                             <td class="tdtitle">电子邮箱：</td><td><input class="s-txt" type="text" maxlength="5010" value="" id="parentEmail2" name="parentEmail2" style="width:150px;"></td></tr>
+                        <tr><td class="tdtitle">家长身份证号：</td><td colspan="5"><input class="s-txt" type="text" maxlength="50" value="" id="parentIDcard2" name="parentIDcard2" style="width:150px;" /></td></tr>
                         <tr><td class="tdtitle">备注：</td><td colspan="5"><textarea id="remarks" name="remarks" style="width:420px; height:80px;"></textarea></td></tr>
                         <tr><td colspan="6" style="text-align:center; padding-top:10px;">
                             <input type="hidden" name="activityname" id="activityname" value="快乐人生万里行之大秦岭探险" />
@@ -124,40 +126,78 @@
             $('#childName').css('border-color', 'red');
             return false;
         }
+        if ($("#childMinzu").val().Trim() == "") {
+            ui.error('孩子民族不能为空!');
+            $('#childMinzu').focus();
+            $('#childMinzu').css('border-color', 'red');
+            return false;
+        }
+        if ($("#childIDcard").val().Trim() == "") {
+            ui.error('孩子身份证号不能为空!');
+            $('#childIDcard').focus();
+            $('#childIDcard').css('border-color', 'red');
+            return false;
+        }
         if ($("#current_name").val().Trim() == "") {
             ui.error('请选择所在地区!');
             return false;
         }
         if ($('#parentName1').val().Trim() == "") {
             ui.error('参营家长姓名不能为空!');
+            $('#parentName1').focus();
+            $('#parentName1').css('border-color', 'red');
+            return false;
+        }
+        if ($('#parentMinzu1').val().Trim() == "") {
+            ui.error('参营家长民族不能为空!');
+            $('#parentMinzu1').focus();
+            $('#parentMinzu1').css('border-color', 'red');
             return false;
         }
         if ($('#parentMobile1').val().Trim() == "") {
             ui.error('手机号码不能为空!');
+            $('#parentMobile1').focus();
+            $('#parentMobile1').css('border-color', 'red');
             return false;
         }
         if (!ismobile($('#parentMobile1').val().Trim())) {
             ui.error('手机号格式有误');
+            $('#parentMobile1').focus();
+            $('#parentMobile1').css('border-color', 'red');
             return false;
         }
         if ($('#parentEmail1').val().Trim() == "") {
             ui.error('电子邮箱不能为空!');
+            $('#parentEmail1').focus();
+            $('#parentEmail1').css('border-color', 'red');
             return false;
         }
         var myReg = /^[-._A-Za-z0-9]+@([_A-Za-z0-9]+\.)+[A-Za-z0-9]{2,3}$/;
         if (!myReg.test($('#parentEmail1').val().Trim())) {
             ui.error('电子邮箱格式有误!');
+            $('#parentEmail1').focus();
+            $('#parentEmail1').css('border-color', 'red');
+            return false;
+        }
+        if ($('#parentIDcard1').val().Trim() == "") {
+            ui.error('参营家长身份证号不能为空!');
+            $('#parentIDcard1').focus();
+            $('#parentIDcard1').css('border-color', 'red');
             return false;
         }
         if ($('#parentMobile2').val().Trim() != "") {
             if (!ismobile($('#parentMobile2').val().Trim())) {
                 ui.error('手机号格式有误');
+                $('#parentMobile2').focus();
+                $('#parentMobile2').css('border-color', 'red');
                 return false;
             }
         }
         if ($('#parentEmail2').val().Trim() != "") {
             if (!myReg.test($('#parentEmail2').val().Trim())) {
                 ui.error('电子邮箱格式有误!');
+                $('#parentEmail2').focus();
+                $('#parentEmail2').css('border-color', 'red');
                 return false;
             }
         }
@@ -166,7 +206,7 @@
     }
 
     $('input[type=text]').blur(function () {
-        $('#childName').css('border-color', '#ccc');
+        $(this).css('border-color', '#ccc');
     });
 
     //验证手机号
