@@ -1475,7 +1475,7 @@ class PassportAction extends Action
 		//订单编号
 		$order_id= 'xly_shz_'.time();		
 		//支付金额
-		$order_pay = 4580 * $count;
+		$order_pay = 4880 * $count;
 		
 		//更新报名信息的订单号,支付金额,支付时间
 		$updInfo['orderID'] = $order_id;
@@ -1507,7 +1507,7 @@ class PassportAction extends Action
 		//订单编号
 		$order_id= 'xly_bj_'.time();
 		//支付金额
-		$order_pay = 4580 * $count;
+		$order_pay = 4880 * $count;
 		
 		//更新报名信息的订单号,支付金额,支付时间
 		$updInfo['orderID'] = $order_id;
