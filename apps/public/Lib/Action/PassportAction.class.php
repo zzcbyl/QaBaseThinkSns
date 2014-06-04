@@ -1420,6 +1420,7 @@ class PassportAction extends Action
 		{
 			$activityprice = '5880';
 			$postUrl=U('public/Passport/qlActivity_pay');
+			$this->assign('activityDetail','<div style="margin-top:0px; font-size:14px; font-weight:bold; color:Red; text-align:center;">6月20日之前报名优惠300元；老营员优惠200元；以上优惠可累计。</div><div style="margin-top:0px; text-align:center;">现参营收费：￥5580元/人</div>');
 		}
 		else if($_SESSION["name"]=='shz')
 			$postUrl=U('public/Passport/shzActivity_pay');
@@ -1557,7 +1558,7 @@ class PassportAction extends Action
 		//订单编号
 		$order_id= 'xly_ql_'.time();
 		//支付金额
-		$order_pay = 5880 * $count;
+		$order_pay = 5580 * $count;
 		
 		//更新报名信息的订单号,支付金额,支付时间
 		$updInfo['orderID'] = $order_id;
