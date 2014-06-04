@@ -1358,16 +1358,26 @@ class PassportAction extends Action
 			else
 			{
 				$name = 'bj';
+				$showname = '“放飞梦想我能行”北京夏令营';
 				if($map['activityname']=='“放飞梦想我能行”北京夏令营')
+				{
 					$name = 'bj';
-				else if($map['activityname']=='“知心姐姐”快乐生存秦岭自然体验营')
+					$showname = '“放飞梦想我能行”北京夏令营';
+				}
+				else if($map['activityname']=='qly')
+				{
 					$name = 'ql';
+					$showname = '“知心姐姐”快乐生存秦岭自然体验营';
+				}
 				else if($map['activityname']=='“放飞梦想我能行”北京夏令营（新疆石河子专场）')
+				{
 					$name = 'shz';	
+					$showname = '“放飞梦想我能行”北京夏令营（新疆石河子专场）';
+				}
 				$_SESSION["JoinID"] = $result;
 				$_SESSION["JoinInfo"] = '孩子姓名：'.$map['childname'].'　家长姓名：'.$map['parentsname1'].'　手机号：'.$map['parentsmobile1']; 
 				$_SESSION["name"] = $name;
-				$_SESSION["activityname"] = $map['activityname'];
+				$_SESSION["activityname"] = $showname;
 				$this->redirect('public/Passport/activity_shzresult');
 			}
 		}
