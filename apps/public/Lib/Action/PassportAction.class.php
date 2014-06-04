@@ -1360,7 +1360,7 @@ class PassportAction extends Action
 				$name = 'bj';
 				if($map['activityname']=='“放飞梦想我能行”北京夏令营')
 					$name = 'bj';
-				else if($map['activityname']=='快乐人生万里行之大秦岭探险')
+				else if($map['activityname']=='“知心姐姐”快乐生存秦岭自然体验营')
 					$name = 'ql';
 				else if($map['activityname']=='“放飞梦想我能行”北京夏令营（新疆石河子专场）')
 					$name = 'shz';	
@@ -1391,7 +1391,10 @@ class PassportAction extends Action
 	
 	public function activityresult()
 	{
-		$data = model('ActivityForm')->getList('',null,'ctime desc',20,'');
+		$name = '“放飞梦想我能行”北京夏令营';
+		if($_GET['name'] && $_GET['name']!='')
+			$name = $_GET['name'];
+		$data = model('ActivityForm')->getList('',null,'ctime desc',20,$name);
 		//print_r($data);
 		$this->assign('data',$data);
 		$this->display();
@@ -1399,16 +1402,21 @@ class PassportAction extends Action
 	
 	public function activity_shzresult()
 	{
+		$activityprice = '4880';
 		$postUrl = '';
 		if($_SESSION["name"]=='bj')
 			$postUrl=U('public/Passport/bjActivity_pay');
 		else if($_SESSION["name"]=='ql')
+		{
+			$activityprice = '5880';
 			$postUrl=U('public/Passport/qlActivity_pay');
+		}
 		else if($_SESSION["name"]=='shz')
 			$postUrl=U('public/Passport/shzActivity_pay');
 		
 		$this->assign('postUrl',$postUrl);
 		$this->assign('activityname',$_SESSION["activityname"]);
+		$this->assign('activityprice',$activityprice);
 		$this->display();
 	}
 	
@@ -1548,13 +1556,13 @@ class PassportAction extends Action
 		model('ActivityForm')->where('`activity_form_id`='.$_SESSION["JoinID"])->save($updInfo);
 		
 		//商品名称
-		$order_productname="快乐人生万里行之大秦岭探险";
+		$order_productname="“知心姐姐”快乐生存秦岭自然体验营";
 		$order_productname = iconv("UTF-8","GB2312",$order_productname);
 		//商品类型
 		$order_producttype="假日营";
 		$order_producttype = iconv("UTF-8","GB2312",$order_producttype);
 		//商品详情
-		$order_productdetail="快乐人生万里行之大秦岭探险";
+		$order_productdetail="“知心姐姐”快乐生存秦岭自然体验营";
 		$order_productdetail = iconv("UTF-8","GB2312",$order_productdetail);
 		//支付成功返回地址
 		$order_callback="http://pay.luqinwenda.com/Callback.aspx";
