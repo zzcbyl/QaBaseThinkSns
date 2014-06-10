@@ -196,4 +196,38 @@ class ApiAction
 		echo json_encode($ArrayData);
 		
 	}
+	
+	/**
+	 * 通过ID获取用户
+	 *
+	 * @param uid 用户ID
+	 * @return JSON
+	 *
+	 */	
+	public function getUserID()
+	{
+		$current_uid = intval($_GET['uid']);
+		
+		$user = model('User')->getUserInfo($current_uid);
+		
+		echo json_encode($user);
+		
+	}
+	
+	/**
+	 * 通过OpenID获取用户
+	 *
+	 * @param uid 用户ID
+	 * @return JSON
+	 *
+	 */	
+	public function getUserOpenID()
+	{
+		$OpenID = intval($_GET['openID']);
+		
+		$user = model('User')->getUserInfoByOpenID($OpenID);
+		
+		echo json_encode($user);
+		
+	}
 }
