@@ -285,7 +285,7 @@ class UserModel extends Model {
 	public function getUserInfoByOpenID($openID, $map) {
 		if (empty ( $openID )) {
 			$this->error = '参数不能为空'; // 用户名不能为空
-			return '';
+			return false;
 		}
 		$map ['openid'] = $openID;
 		$data = $this->_getUserInfo ( $map );

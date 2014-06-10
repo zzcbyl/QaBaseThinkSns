@@ -228,6 +228,5 @@ class ApiAction
 		$user = model('User')->getUserInfoByOpenID($OpenID);
 		
 		echo json_encode($user);
-		
 	}
 }
