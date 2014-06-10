@@ -45,7 +45,9 @@ class UserModel extends Model {
 		34 => 'birthday',
 		35 => 'bloodtype',
 		36 => 'idcard',
-		37=> 'linknumber',
+		37 => 'linknumber',
+		38 => 'user_extend',
+		39 => 'openid',
 		'_autoinc' => true,
 		'_pk' => 'uid' 
 		);
@@ -270,6 +272,22 @@ class UserModel extends Model {
 			return false;
 		}
 		$map ['uname'] = t ( $uname );
+		$data = $this->_getUserInfo ( $map );
+		return $data;
+	}
+	
+	/**
+	* 通过OpenID查询用户相关信息
+	* 
+	* @param string $openID
+	* @return array 用户的相关信息
+	*/
+	public function getUserInfoByOpenID($openID, $map) {
+		if (empty ( $openID )) {
+			$this->error = '参数不能为空'; // 用户名不能为空
+			return '';
+		}
+		$map ['openid'] = $openID;
 		$data = $this->_getUserInfo ( $map );
 		return $data;
 	}
