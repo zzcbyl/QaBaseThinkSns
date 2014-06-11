@@ -1,5 +1,40 @@
 <include file="__THEME__/mobile_header" />
 
+<div class="table_box" style="margin-top:5px; padding:0 5px;">
+    <ul>
+        <switch name="type">
+            <case value="all">
+            <li><span><a class="current" href="{:U('public/Index/index')}" title="全部">全部</a></span></li> 
+            <li><span><a href="{:U('public/Index/index',array('type'=>'question'))}" title="我的问题">我的问题</a></span></li>
+            <li><span><a href="{:U('public/Index/index',array('type'=>'answer'))}" title="我的答案">我的答案</a></span></li>
+            <li><span><a href="{:U('public/Index/inviteme')}" title="邀请我的">邀请我的</a></span></li>
+            <!--<li><span><a href="{:U('public/Index/index')}">你的话题</a></span></li>-->
+            </case>
+            <case value="question">
+            <li><span><a href="{:U('public/Index/index')}" title="全部">全部</a></span></li> 
+            <li><span><a class="current" href="{:U('public/Index/index',array('type'=>'question'))}" title="我的问题">我的问题</a></span></li>
+            <li><span><a href="{:U('public/Index/index',array('type'=>'answer'))}" title="我的答案">我的答案</a></span></li>
+            <li><span><a href="{:U('public/Index/inviteme')}" title="邀请我的">邀请我的</a></span></li>
+            <!--<li><span><a href="{:U('public/Index/index')}">你的话题</a></span></li>-->
+            </case>
+            <case value="answer">
+            <li><span><a href="{:U('public/Index/index')}" title="全部">全部</a></span></li> 
+            <li><span><a href="{:U('public/Index/index',array('type'=>'question'))}" title="我的问题">我的问题</a></span></li>
+            <li><span><a class="current" href="{:U('public/Index/index',array('type'=>'answer'))}" title="我的答案">我的答案</a></span></li>
+            <li><span><a href="{:U('public/Index/inviteme')}" title="邀请我的">邀请我的</a></span></li>
+            <!--<li><span><a href="{:U('public/Index/index')}">你的话题</a></span></li>-->
+            </case>
+            <case value="following">
+            <li><span><a href="{:U('public/Index/index')}" title="全部">全部</a></span></li> 
+            <li><span><a href="{:U('public/Index/index',array('type'=>'question'))}" title="我的问题">我的问题</a></span></li>
+            <li><span><a href="{:U('public/Index/index',array('type'=>'answer'))}" title="我的答案">我的答案</a></span></li>
+            <li><span><a href="{:U('public/Index/inviteme')}" title="邀请我的">邀请我的</a></span></li>
+            <!--<li><span><a href="{:U('public/Index/index')}">你的话题</a></span></li>-->
+            </case>
+        </switch>
+    </ul>
+    <!--<a href="{:U('public/Index/postfeed')}" class="tiwen"> </a>-->
+</div>
 {:W('FeedListMobile',array('type'=>$type,'feed_type'=>$feed_type,'feed_key'=>$feed_key,'fgid'=>t($_GET['fgid'])))}
 
 <script type="text/javascript" src="__THEME__/js/home/module.home.js"></script>

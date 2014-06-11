@@ -44,7 +44,7 @@ a{text-decoration:none;}
 .conts{padding:10px 0px; border-bottom:solid 1px #d9d9d9; width:100%;}
 .contTit{overflow:hidden; position:relative;}
 .contTit img.thumb{width:60px; height:60px; float:left; margin-right:20px; float:left; position:relative; z-index:9;}
-.contTit img.thumb_m{width:30px; height:30px; float:left; margin-right:20px; float:left; position:relative; z-index:9;}
+.contTit img.thumb_m{width:30px; height:30px; float:left; margin-right:10px; float:left; position:relative; z-index:9;}
 .contTit h2{ position:relative;}
 .contTit h2 a{ color: #666666; font-size: 14px; height: 20px; line-height: 20px; overflow: hidden;}
 .contTit h2 em{position:absolute; font-size:12px; font-weight:normal; color:#c5c5c5; right:30px;_right:140px; top:0px;}
