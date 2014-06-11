@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * 手机页面
  * @author zhangzc
