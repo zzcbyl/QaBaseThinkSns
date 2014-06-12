@@ -1,0 +1,51 @@
+<div class="contTit cBline" model-node="comment_list">
+    <a href="{:U('public/Mobile/personal',array('uid'=>$userInfo['uid']))}"><img class="thumb_m" src="{$userInfo.avatar_small}" uid='{$userInfo.uid}'></a>
+    <h2>
+        {$userInfo.space_link}
+        
+        <p class="xz">
+            <php>if(count($userInfo['groupData'][$userInfo['uid']])>0){</php>
+                <volist name="userInfo['groupData'][$userInfo['uid']]" id="v2">
+                    <img style="width:auto;height:auto;display:inline;cursor:pointer" src="{$v2['user_group_icon_url']}" title="{$v2['user_group_name']}" />&nbsp;
+                </volist>
+            <php>}</php>
+        </p>
+    </h2>
+    <p style="padding-left:40px;">
+        {$content}
+    </p>
+    <div class="info_gz" >
+        <p class="gz_info"  style="padding-left:40px;">
+            <i>{:L('PUBLIC_JUST')}</i></p>
+        <p class="comm">
+            <php>if($iscommentdel){</php>
+		        <a href="javascript:void(0);" onclick="delComment(this);" event-node="comment_del" event-args="comment_id={$comment_id}">{:L('PUBLIC_STREAM_DELETE')}</a>
+		        <!--<i class="vline">|</i>-->
+		    <php>}</php>
+		    <!--<a href="javascript:void(0);" event-args='row_id={$row_id}&app_uid={$app_uid}&to_comment_id={$comment_id}&to_uid={$userInfo.uid}&to_comment_uname={$userInfo.uname}' 
+	            event-node="reply_comment">{:L('PUBLIC_STREAM_REPLY')}</a>-->
+        </p>
+
+    </div>
+
+</div>
+<script type="text/javascript">
+    function delComment(obj) {
+        var attrs = M.getEventArgs(obj);
+
+        //var comment_list = $(obj).parent().parent().parent().parent().parent().parent().parent().parent().find('div[model-node=comment_detail]');
+        //alert($(obj));
+        //return;
+        //core.comment.init(attrs, comment_list);
+        $(obj).parent().parent().parent().fadeOut();
+        if ("undefined" == typeof (core.comment)) {
+            core.plugFunc('comment', function () {
+                core.comment.delComment(attrs.comment_id);
+            });
+        } else {
+            core.comment.delComment(attrs.comment_id);
+        }
+    }
+</script>
+
+

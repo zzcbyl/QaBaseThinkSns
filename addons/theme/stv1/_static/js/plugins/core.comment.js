@@ -199,10 +199,20 @@ core.comment = {
                 //改变评论数字
                 if (msg.comment_type == 0) {
                     var commentStr = $(commentListObj.parentModel).find('a[nodeAName="comment"]').html();
-                    var commentNum = 1;
-                    if (commentStr.Trim() != '评论')
-                        commentNum = parseInt(commentStr.replace('评论', '').replace('(', '').replace(')', '')) + 1;
-                    $(commentListObj.parentModel).find('a[nodeAName="comment"]').html('评论(' + commentNum.toString() + ')');
+                    if (commentStr != null) {
+                        var commentNum = 1;
+                        if (commentStr.Trim() != '评论')
+                            commentNum = parseInt(commentStr.replace('评论', '').replace('(', '').replace(')', '')) + 1;
+                        $(commentListObj.parentModel).find('a[nodeAName="comment"]').html('评论(' + commentNum.toString() + ')');
+                    }
+                    else {
+                        //手机页面
+                        var commentStr = $(commentListObj.parentModel.parentModel).find('#sp_CommentCount').html();
+                        var commentNum = 1;
+                        if (commentStr.Trim != '')
+                            commentNum = parseInt(commentStr) + 1;
+                        $(commentListObj.parentModel.parentModel).find('#sp_CommentCount').html(commentNum.toString());
+                    }
                 }
                 else {
                     //赞同或者反对成功隐藏回复框
@@ -250,10 +260,22 @@ core.comment = {
             //改变评论数字
             if (msg.comment_type == 0) {
                 var commentStr = $(commentListObj.parentModel).find('a[nodeAName="comment"]').html();
-                var commentNumStr = '';
-                if (commentStr.Trim() != '评论(1)')
-                    commentNumStr = '(' + (parseInt(commentStr.replace('评论', '').replace('(', '').replace(')', '')) - 1).toString() + ')';
-                $(commentListObj.parentModel).find('a[nodeAName="comment"]').html('评论' + commentNumStr);
+                if (commentStr != null) {
+                    var commentNumStr = '';
+                    if (commentStr.Trim() != '评论(1)')
+                        commentNumStr = '(' + (parseInt(commentStr.replace('评论', '').replace('(', '').replace(')', '')) - 1).toString() + ')';
+                    $(commentListObj.parentModel).find('a[nodeAName="comment"]').html('评论' + commentNumStr);
+                }
+                else {
+                    //手机页面
+                    var commentStr = $(commentListObj.parentModel.parentModel).find('#sp_CommentCount').html();
+                    var commentNum = 0;
+                    if (commentStr.Trim != '')
+                        commentNum = parseInt(commentStr) - 1;
+                    if (parseInt(commentStr) <= 0)
+                        commentNum = 0;
+                    $(commentListObj.parentModel.parentModel).find('#sp_CommentCount').html(commentNum.toString());
+                }
             }
             else {
                 //赞同或者反对删除成功重新加载输入框
