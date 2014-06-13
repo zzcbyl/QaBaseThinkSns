@@ -20,7 +20,7 @@ class LandingPageAction
 		}
 		//判断时间
 		$date = date("Y-m-d H:i:s",strtotime("-30 minute"));
-		echo time().'<br>';
+		//echo time().'<br>';
 		if($dt > time() || $dt < strtotime($date))
 		{
 			echo '访问超时';
@@ -28,7 +28,7 @@ class LandingPageAction
 		}
 		//判断code
 		$key = C('WXURL_KEY');
-		echo md5($openid.$dt.$key).'<br>';
+		//echo md5($openid.$dt.$key).'<br>';
 		if(md5($openid.$dt.$key) != $code)
 		{
 			echo '非法访问';
