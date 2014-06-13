@@ -48,6 +48,7 @@ class UserModel extends Model {
 		37 => 'linknumber',
 		38 => 'user_extend',
 		39 => 'openid',
+		40 => 'source',
 		'_autoinc' => true,
 		'_pk' => 'uid' 
 		);

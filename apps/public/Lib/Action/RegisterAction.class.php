@@ -95,6 +95,17 @@ class RegisterAction extends Action
 		$this->setKeywords ( '填写注册信息' );
 		$this->display();
 	}
+	
+	public function Homemobile() {
+		if(empty($_GET['openid']))
+		{
+			echo '参数有误';
+			return;
+		}
+		$this->assign('openid',$_GET['openid']);
+		$this->assign('source',$_GET['source']);
+		$this->display();
+	}
 
 	private $_email_reg = '/[_a-zA-Z\d\-\.]+(@[_a-zA-Z\d\-\.]+\.[_a-zA-Z\d\-]+)+$/i';		// 邮箱正则规则
 	private $_mobile_reg = '/^0*(13|15|18)\d{9}$/i';		// 手机号正则规则
@@ -264,6 +275,12 @@ class RegisterAction extends Action
 	*/
 	public function doRegiest_mobile()
 	{
+		if(empty($_POST['openid'])) {
+			$this->error = '非法注册';
+		}
+		$account = t($_POST['openid']);
+		$user["login"] = t($_POST['openid']);
+		$user["password"] = t($_POST['openid']);
 		$user["uname"] = t($_POST['uname']);
 		$user["sex"] = intval($_POST['sex']);
 		$user["is_active"] = 1;
@@ -274,6 +291,7 @@ class RegisterAction extends Action
 		$user["realname"] = t($_POST['realname']);
 		$user["idcard"] = t($_POST['idcard']);
 		$user["openid"] = t($_POST['openid']);
+		$user["source"] = t($_POST['source']);
 		$birthday = '';
 		$len = strlen($user["idcard"]);
 		if($len==15)
@@ -336,7 +354,7 @@ class RegisterAction extends Action
 			unset($_SESSION['YMZCODE']);
 			unset($_SESSION['sendDT']);
 			
-			$this->redirect('public/Register/regSuccess');			// 注册成功
+			$this->redirect('public/Register/avatarmobile');			// 注册成功
 		}
 		else
 		{
@@ -519,6 +537,27 @@ class RegisterAction extends Action
 		$this->display();
 	}
 	
+	public function avatarmobile()
+	{
+		$uid = $this->mid;
+		if(empty($uid)){
+			$this->error('参数错误');
+		}
+		model('User')->cleanCache($uid);
+		$user = $this->_user_model->getUserInfo($uid);
+		$this->assign('User',$user);
+
+
+		if (isset($_SESSION['user_message'])) {
+			$user_message = $_SESSION['user_message'];
+			$this->assign('Weibo','http://weibo.com/u/'.$user_message['id']);
+		}
+
+		$this->setTitle ( '上传头像' );
+		$this->setKeywords ( '上传头像' );
+		$this->display();
+	}
+	
 	public function step4()
 	{
 		if(empty($_GET['uid'])){
@@ -576,7 +615,7 @@ class RegisterAction extends Action
 		
 		
 		//顶级专家
-		$topUserID = 1901;
+		$topUserID = C('TopExpert');
 		$TopExpert = model('user')->getUserInfo($topUserID);
 		$user_count = model ( 'UserData' )->getUserDataByUids ( array($topUserID) );
 		//print_r($user_count);
@@ -655,7 +694,7 @@ class RegisterAction extends Action
 		
 		
 		//顶级专家
-		$topUserID = 1901;
+		$topUserID = C('TopExpert');
 		$TopExpert = model('user')->getUserInfo($topUserID);
 		$user_count = model ( 'UserData' )->getUserDataByUids ( array($topUserID) );
 		//print_r($user_count);
@@ -751,8 +790,40 @@ class RegisterAction extends Action
 			$info 	= model('Passport')->getSuccess();
 			redirect($GLOBALS['ts']['site']['home_url']);
 		}
+	}
+	
+	//手机页面自动关注专家
+	public function doAvatar()
+	{
+		$uid = $this->mid;
+		if(empty($uid)){
+			$this->error('参数错误');
+		}
+		$user = $this->_user_model->getUserInfo($uid);
 		
+		//认证专家
+		$uids = model('UserGroupLink')->getUserByGroupID(8);
+		//顶级专家
+		$uids[] = C('TopExpert');
+		foreach($uids as $k=>$v)
+		{
+			model('Follow')->doFollow($uid,$v);
+		}
 		
+		//初始化完成
+		$this->_register_model->overUserInit($uid);
+		$this->_user_model->cleanCache ( array($uid) );
+		unset($_SESSION['third-party-type']);
+		$result = model('Passport')->loginLocalWhitoutPassword($user['login']);
+		if(!$result){
+			$status = 0; 
+			$info	= model('Passport')->getError();
+			$data 	= 0;
+		}else{
+			$status = 1;
+			$info 	= model('Passport')->getSuccess();
+			$this->redirect('public/Mobile/all');
+		}
 	}
 
 	/**
