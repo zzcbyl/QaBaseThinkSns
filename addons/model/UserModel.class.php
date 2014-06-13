@@ -462,10 +462,21 @@ class UserModel extends Model {
 			$this->error = '用户昵称已存在，请使用其他昵称';
 			return false;
 		}
-		$salt = rand ( 11111, 99999 );
-		$user ['login_salt'] = $salt;
-		$user ['ctime'] = time ();
-		$user ['reg_ip'] = get_client_ip ();
+		if (is_object ( $user )) {
+			$salt = rand ( 11111, 99999 );
+			$user->login_salt = $salt;
+			//$user->login = $user->email;
+			$user->ctime = time ();
+			$user->reg_ip = get_client_ip ();
+			$user->password = $this->encryptPassword ( $user->password, $salt );
+		} else if (is_array ( $user )) {
+			$salt = rand ( 11111, 99999 );
+			$user ['login_salt'] = $salt;
+			//$user ['login'] = $user ['email'];
+			$user ['ctime'] = time ();
+			$user ['reg_ip'] = get_client_ip ();
+			$user ['password'] = $this->encryptPassword ( $user ['password'], $salt );
+		}
 		
 		// 添加昵称拼音索引
 		$user ['first_letter'] = getFirstLetter ( $user ['uname'] );
