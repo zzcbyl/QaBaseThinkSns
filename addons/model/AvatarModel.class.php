@@ -200,7 +200,7 @@ class AvatarModel {
     	//header("Content-type: image/jpeg"); 
     	//Log::write(var_export($facedata,true));
 		$picWidth = intval($facedata['picwidth']); //原图的宽度
-		$scale = $picWidth/300;	//缩放比例
+		$scale = $picWidth/200;	//缩放比例
 		$x1 = intval($facedata['x1'])*$scale;		// 选择区域左上角x轴坐标
 		$y1 = intval($facedata['y1'])*$scale;		// 选择区域左上角y轴坐标
 		$x2 = intval($facedata['x2'])*$scale;		// 选择区域右下角x轴坐标

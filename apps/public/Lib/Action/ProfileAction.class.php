@@ -1296,7 +1296,7 @@ class ProfileAction extends Action {
 	*/
 	public function invitefriend()
 	{
-		$topUserID = 1901;
+		$topUserID = C('TopExpert');
 		$friendList = model('Follow')->getFriendList($GLOBALS['ts']['mid'], 18);	
 		$fids = getSubByKey ( $friendList ['data'], 'fid' );
 		$this->_assignUserInfo ( $fids );
