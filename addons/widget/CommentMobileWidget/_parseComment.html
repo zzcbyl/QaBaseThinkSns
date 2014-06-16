@@ -40,10 +40,10 @@
         $(obj).parent().parent().parent().fadeOut();
         if ("undefined" == typeof (core.comment)) {
             core.plugFunc('comment', function () {
-                core.comment.delComment(attrs.comment_id);
+                core.comment_mobile.delComment(attrs.comment_id);
             });
         } else {
-            core.comment.delComment(attrs.comment_id);
+            core.comment_mobile.delComment(attrs.comment_id);
         }
     }
 </script>

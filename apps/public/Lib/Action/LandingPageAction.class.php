@@ -44,7 +44,7 @@ class LandingPageAction
 			$result = model('Passport')->loginLocalWhitoutPassword($openid);
 			if(empty($url))
 			{
-				$this->redirect('public/Index/index');
+				$this->redirect('public/Mobile/all');
 			}
 			else
 			{
