@@ -75,6 +75,10 @@ class CommentMobileWidget extends Widget
 			$map['app'] 	= t($var['app_name']);
 			$map['table']	= t($var['table']);
 			$map['row_id']	= intval($var['row_id']);	//必须存在
+			if($var['comment_type'] == 1 || $var['comment_type'] == 2)
+			{
+				$map['comment_type']	= intval($var['comment_type']);
+			}
 			if(!empty($map['row_id'])){	
 				//分页形式数据
 				$var['list'] = model('Comment')->getCommentList($map,'comment_id '.$var['order'],$var['limit']);

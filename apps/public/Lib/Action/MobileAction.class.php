@@ -298,7 +298,7 @@ class MobileAction extends Action
 	
 	
 	/**
-	* 获取指定用户的某条动态
+	* 获取指定用户的某条评论
 	* 
 	* @return void
 	*/
@@ -335,5 +335,81 @@ class MobileAction extends Action
 		$this->display ();
 	}
 	
+	
+	/**
+	* 获取指定用户的某条赞同评论
+	* 
+	* @return void
+	*/
+	public function agree() {
+		$feed_id = intval ( $_GET ['feed_id'] );
+		
+		if (empty($feed_id)) {
+			$this->error( L ( 'PUBLIC_INFO_ALREADY_DELETE_TIPS' ) );
+		}
+
+		//获取提问信息
+		$feedInfo = model ( 'Feed' )->get ( $feed_id );
+
+		if (!$feedInfo){
+			$this->error ( '该提问不存在或已被删除' );
+			exit();
+		}
+		
+		if ($feedInfo ['is_audit'] == '0' && $feedInfo ['uid'] != $this->mid) {
+			$this->error ( '此提问正在审核' );
+			exit();
+		}
+
+		if ($feedInfo ['is_del'] == '1') {
+			$this->error ( L ( 'PUBLIC_NO_RELATE_WEIBO' ) );
+			exit();
+		}
+		//print_r($feedInfo);
+		$this->assign ( 'feedInfo', $feedInfo );
+		
+		$this->setTitle('评论－'.$feedInfo['body']);
+		$this->setKeywords('评论－'.$feedInfo['body']);
+		
+		$this->display ();
+	}
+	
+	/**
+	* 获取指定用户的某条反对评论
+	* 
+	* @return void
+	*/
+	public function oppose() {
+		$feed_id = intval ( $_GET ['feed_id'] );
+		
+		if (empty($feed_id)) {
+			$this->error( L ( 'PUBLIC_INFO_ALREADY_DELETE_TIPS' ) );
+		}
+
+		//获取提问信息
+		$feedInfo = model ( 'Feed' )->get ( $feed_id );
+
+		if (!$feedInfo){
+			$this->error ( '该提问不存在或已被删除' );
+			exit();
+		}
+		
+		if ($feedInfo ['is_audit'] == '0' && $feedInfo ['uid'] != $this->mid) {
+			$this->error ( '此提问正在审核' );
+			exit();
+		}
+
+		if ($feedInfo ['is_del'] == '1') {
+			$this->error ( L ( 'PUBLIC_NO_RELATE_WEIBO' ) );
+			exit();
+		}
+		//print_r($feedInfo);
+		$this->assign ( 'feedInfo', $feedInfo );
+		
+		$this->setTitle('评论－'.$feedInfo['body']);
+		$this->setKeywords('评论－'.$feedInfo['body']);
+		
+		$this->display ();
+	}
 	
 }

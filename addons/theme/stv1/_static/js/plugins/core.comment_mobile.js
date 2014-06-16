@@ -219,21 +219,32 @@ core.comment_mobile = {
                     var commenttextarea = commentListObj.childModels['comment_textarea'][0];
                     $(commenttextarea).hide();
 
-                    //改变赞同数字
-                    if (msg.comment_type == 1) {
-                        var commentStr = $(commentListObj.parentModel).find('a[nodeAName="agreecomment"]').html();
-                        var commentNum = 1;
-                        if (commentStr.Trim() != '&nbsp;')
-                            commentNum = parseInt(commentStr.replace('&nbsp;', '')) + 1;
-                        $(commentListObj.parentModel).find('a[nodeAName="agreecomment"]').html(commentNum.toString());
+                    var commentStr = $(commentListObj.parentModel).find('a[nodeAName="comment"]').html();
+                    if (commentStr != null) {
+                        //改变赞同数字
+                        if (msg.comment_type == 1) {
+                            var commentStr = $(commentListObj.parentModel).find('a[nodeAName="agreecomment"]').html();
+                            var commentNum = 1;
+                            if (commentStr.Trim() != '&nbsp;')
+                                commentNum = parseInt(commentStr.replace('&nbsp;', '')) + 1;
+                            $(commentListObj.parentModel).find('a[nodeAName="agreecomment"]').html(commentNum.toString());
+                        }
+                        //改变反对数字
+                        else if (msg.comment_type == 2) {
+                            var commentStr = $(commentListObj.parentModel).find('a[nodeAName="disapprovecomment"]').html();
+                            var commentNum = 1;
+                            if (commentStr.Trim() != '&nbsp;')
+                                commentNum = parseInt(commentStr.replace('&nbsp;', '')) + 1;
+                            $(commentListObj.parentModel).find('a[nodeAName="disapprovecomment"]').html(commentNum.toString());
+                        }
                     }
-                    //改变反对数字
-                    else if (msg.comment_type == 2) {
-                        var commentStr = $(commentListObj.parentModel).find('a[nodeAName="disapprovecomment"]').html();
+                    else {
+                        //手机页面
+                        var commentStr = $(commentListObj.parentModel.parentModel).find('#sp_CommentCount').html();
                         var commentNum = 1;
-                        if (commentStr.Trim() != '&nbsp;')
-                            commentNum = parseInt(commentStr.replace('&nbsp;', '')) + 1;
-                        $(commentListObj.parentModel).find('a[nodeAName="disapprovecomment"]').html(commentNum.toString());
+                        if (commentStr.Trim != '')
+                            commentNum = parseInt(commentStr) + 1;
+                        $(commentListObj.parentModel.parentModel).find('#sp_CommentCount').html(commentNum.toString());
                     }
                 }
 
@@ -255,8 +266,6 @@ core.comment_mobile = {
     delComment: function (comment_id) {
         var commentListObj = this.commentListObj;
         $.post(U('widget/CommentMobile/delcomment'), { comment_id: comment_id }, function (msg) {
-            //什么也不做吧
-
             //改变评论数字
             if (msg.comment_type == 0) {
                 var commentStr = $(commentListObj.parentModel).find('a[nodeAName="comment"]').html();
@@ -281,25 +290,38 @@ core.comment_mobile = {
                 //赞同或者反对删除成功重新加载输入框
                 $(commentListObj.childModels['comment_textarea'][0]).show();
 
-                //改变赞同数字
-                if (msg.comment_type == 1) {
-                    var commentStr = $(commentListObj.parentModel).find('a[nodeAName="agreecomment"]').html();
-                    var commentNumStr = '&nbsp;';
-                    if (commentStr.Trim() != '1')
-                        commentNumStr = (parseInt(commentStr) - 1).toString();
-                    $(commentListObj.parentModel).find('a[nodeAName="agreecomment"]').html(commentNumStr);
-                    //$(commentListObj.parentModel).find('a[nodeAName="agreecomment"]').click();
-                    //$(commentListObj.parentModel).find('a[nodeAName="agreecomment"]').click();
+                var commentStr = $(commentListObj.parentModel).find('a[nodeAName="comment"]').html();
+                if (commentStr != null) {
+                    //改变赞同数字
+                    if (msg.comment_type == 1) {
+                        var commentStr = $(commentListObj.parentModel).find('a[nodeAName="agreecomment"]').html();
+                        var commentNumStr = '&nbsp;';
+                        if (commentStr.Trim() != '1')
+                            commentNumStr = (parseInt(commentStr) - 1).toString();
+                        $(commentListObj.parentModel).find('a[nodeAName="agreecomment"]').html(commentNumStr);
+                        //$(commentListObj.parentModel).find('a[nodeAName="agreecomment"]').click();
+                        //$(commentListObj.parentModel).find('a[nodeAName="agreecomment"]').click();
+                    }
+                    //改变反对数字
+                    else if (msg.comment_type == 2) {
+                        var commentStr = $(commentListObj.parentModel).find('a[nodeAName="disapprovecomment"]').html();
+                        var commentNumStr = '&nbsp;';
+                        if (commentStr.Trim() != '1')
+                            commentNumStr = (parseInt(commentStr) - 1).toString();
+                        $(commentListObj.parentModel).find('a[nodeAName="disapprovecomment"]').html(commentNumStr);
+                        //$(commentListObj.parentModel).find('a[nodeAName="disapprovecomment"]').click();
+                        //$(commentListObj.parentModel).find('a[nodeAName="disapprovecomment"]').click();
+                    }
                 }
-                //改变反对数字
-                else if (msg.comment_type == 2) {
-                    var commentStr = $(commentListObj.parentModel).find('a[nodeAName="disapprovecomment"]').html();
-                    var commentNumStr = '&nbsp;';
-                    if (commentStr.Trim() != '1')
-                        commentNumStr = (parseInt(commentStr) - 1).toString();
-                    $(commentListObj.parentModel).find('a[nodeAName="disapprovecomment"]').html(commentNumStr);
-                    //$(commentListObj.parentModel).find('a[nodeAName="disapprovecomment"]').click();
-                    //$(commentListObj.parentModel).find('a[nodeAName="disapprovecomment"]').click();
+                else {
+                    //手机页面
+                    var commentStr = $(commentListObj.parentModel.parentModel).find('#sp_CommentCount').html();
+                    var commentNum = 0;
+                    if (commentStr.Trim != '')
+                        commentNum = parseInt(commentStr) - 1;
+                    if (parseInt(commentStr) <= 0)
+                        commentNum = 0;
+                    $(commentListObj.parentModel.parentModel).find('#sp_CommentCount').html(commentNum.toString());
                 }
             }
         }, 'json');
