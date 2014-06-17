@@ -1,10 +1,10 @@
 <include file="__THEME__/mobile_header" />
-<div class="container" style="width:auto; padding:5px; background:#fff;">
+<div class="container" style="width:auto; background:#fff;">
     <include file="_top"/>   
 
     <php>if($userPrivacy['space'] != 1){</php>
         
-        <div class="mod-data">
+        <div class="mod-data" style="padding:0 5px;">
 
             {:W('UserBaseInfo',array('uid'=>$uid, 'followstate'=>$followstate))}
 
