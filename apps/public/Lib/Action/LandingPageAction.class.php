@@ -8,6 +8,7 @@ class LandingPageAction
 {
 	public function Landing()
 	{
+		//echo urlencode('http://localhost/index.php?app=public&mod=Mobile&act=all&type=invite').'<br />';
 		$openid = $_GET['openid'];
 		$dt = $_GET['time'];
 		$url = $_GET['url'];
@@ -37,6 +38,8 @@ class LandingPageAction
 		//判断openid存在去登录,否则去注册
 		$user = model('User')->getUserInfoByOpenID($openid);
 		//print_r($user);
+		
+		//echo $url;
 		//return;
 		
 		if(!empty($user))
@@ -48,7 +51,7 @@ class LandingPageAction
 			}
 			else
 			{
-				$this->redirect($url);
+				redirect($url);
 			}
 		}
 		else
@@ -59,7 +62,7 @@ class LandingPageAction
 			}
 			else
 			{
-				$this->redirect($url);
+				redirect($url);
 			}
 		}
 	}
