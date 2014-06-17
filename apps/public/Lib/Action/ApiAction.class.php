@@ -223,7 +223,7 @@ class ApiAction
 	 */	
 	public function getUserOpenID()
 	{
-		$OpenID = intval($_GET['openID']);
+		$OpenID = $_GET['openID'];
 		
 		$user = model('User')->getUserInfoByOpenID($OpenID);
 		
