@@ -412,4 +412,191 @@ class MobileAction extends Action
 		$this->display ();
 	}
 	
+	
+	/**
+	* 个人问题页面
+	*/
+	public function questionlist() {
+		$followState = 0; //没关系
+		if($this->uid == $this->mid)
+		{
+			$followState=1; //自己
+		}
+		$state = model('Follow')->getFollowState($this->mid, $this->uid);
+		if($state['follower']==1)
+		{
+			$followState=2;//关注的人
+		}
+		
+		$this->assign ( 'followstate', $followState );
+		// 获取用户信息
+		$user_info = model ( 'User' )->getUserInfo ( $this->uid );
+		// 用户为空，则跳转用户不存在
+		if (empty ( $user_info )) {
+			$this->error ( L ( 'PUBLIC_USER_NOEXIST' ) );
+		}
+		// 个人空间头部
+		$this->_top ();
+		$this->_assignUserInfo ( $this->uid );
+		
+		$this->assign ( 'userPrivacy', $userPrivacy );
+		
+		$this->setTitle ( $user_info ['uname'] . '的提问' );
+		$this->setKeywords ( $user_info ['uname'] . '的提问' );
+		$user_tag = model ( 'Tag' )->setAppName ( 'User' )->setAppTable ( 'user' )->getAppTags ( array (
+			$this->uid 
+			) );
+		$this->setDescription ( t ( $user_category . $user_info ['location'] . ',' . implode ( ',', $user_tag [$this->uid] ) . ',' . $user_info ['intro'] ) );
+		$this->display ();
+	}
+	
+	/**
+	* 个人回答页面
+	*/
+	public function answerlist() {
+		$followState = 0; //没关系
+		if($this->uid == $this->mid)
+		{
+			$followState=1; //自己
+		}
+		$state = model('Follow')->getFollowState($this->mid, $this->uid);
+		if($state['follower']==1)
+		{
+			$followState=2;//关注的人
+		}
+		
+		$this->assign ( 'followstate', $followState );
+		// 获取用户信息
+		$user_info = model ( 'User' )->getUserInfo ( $this->uid );
+		// 用户为空，则跳转用户不存在
+		if (empty ( $user_info )) {
+			$this->error ( L ( 'PUBLIC_USER_NOEXIST' ) );
+		}
+		// 个人空间头部
+		$this->_top ();
+		$this->_assignUserInfo ( $this->uid );
+		
+		$this->assign ( 'userPrivacy', $userPrivacy );
+		
+		$this->setTitle ( $user_info ['uname'] . '的回答' );
+		$this->setKeywords ( $user_info ['uname'] . '的回答' );
+		$user_tag = model ( 'Tag' )->setAppName ( 'User' )->setAppTable ( 'user' )->getAppTags ( array (
+			$this->uid 
+			) );
+		$this->setDescription ( t ( $user_category . $user_info ['location'] . ',' . implode ( ',', $user_tag [$this->uid] ) . ',' . $user_info ['intro'] ) );
+		$this->display ();
+	}
+	
+	/**
+	* 个人赞同页面
+	*/
+	public function agreelist() {
+		$followState = 0; //没关系
+		if($this->uid == $this->mid)
+		{
+			$followState=1; //自己
+		}
+		$state = model('Follow')->getFollowState($this->mid, $this->uid);
+		if($state['follower']==1)
+		{
+			$followState=2;//关注的人
+		}
+		
+		$this->assign ( 'followstate', $followState );
+		// 获取用户信息
+		$user_info = model ( 'User' )->getUserInfo ( $this->uid );
+		// 用户为空，则跳转用户不存在
+		if (empty ( $user_info )) {
+			$this->error ( L ( 'PUBLIC_USER_NOEXIST' ) );
+		}
+		// 个人空间头部
+		$this->_top ();
+		$this->_assignUserInfo ( $this->uid );
+		
+		$this->assign ( 'userPrivacy', $userPrivacy );
+		
+		$this->setTitle ( $user_info ['uname'] . '的回答' );
+		$this->setKeywords ( $user_info ['uname'] . '的回答' );
+		$user_tag = model ( 'Tag' )->setAppName ( 'User' )->setAppTable ( 'user' )->getAppTags ( array (
+			$this->uid 
+			) );
+		$this->setDescription ( t ( $user_category . $user_info ['location'] . ',' . implode ( ',', $user_tag [$this->uid] ) . ',' . $user_info ['intro'] ) );
+		$this->display ();
+	}
+	
+	
+	/**
+	* 个人反对页面
+	*/
+	public function opposelist() {
+		$followState = 0; //没关系
+		if($this->uid == $this->mid)
+		{
+			$followState=1; //自己
+		}
+		$state = model('Follow')->getFollowState($this->mid, $this->uid);
+		if($state['follower']==1)
+		{
+			$followState=2;//关注的人
+		}
+		
+		$this->assign ( 'followstate', $followState );
+		// 获取用户信息
+		$user_info = model ( 'User' )->getUserInfo ( $this->uid );
+		// 用户为空，则跳转用户不存在
+		if (empty ( $user_info )) {
+			$this->error ( L ( 'PUBLIC_USER_NOEXIST' ) );
+		}
+		// 个人空间头部
+		$this->_top ();
+		$this->_assignUserInfo ( $this->uid );
+		
+		$this->assign ( 'userPrivacy', $userPrivacy );
+		
+		$this->setTitle ( $user_info ['uname'] . '的回答' );
+		$this->setKeywords ( $user_info ['uname'] . '的回答' );
+		$user_tag = model ( 'Tag' )->setAppName ( 'User' )->setAppTable ( 'user' )->getAppTags ( array (
+			$this->uid 
+			) );
+		$this->setDescription ( t ( $user_category . $user_info ['location'] . ',' . implode ( ',', $user_tag [$this->uid] ) . ',' . $user_info ['intro'] ) );
+		$this->display ();
+	}
+	
+	
+	/**
+	* 个人感谢页面
+	*/
+	public function thanklist() {
+		$followState = 0; //没关系
+		if($this->uid == $this->mid)
+		{
+			$followState=1; //自己
+		}
+		$state = model('Follow')->getFollowState($this->mid, $this->uid);
+		if($state['follower']==1)
+		{
+			$followState=2;//关注的人
+		}
+		
+		$this->assign ( 'followstate', $followState );
+		// 获取用户信息
+		$user_info = model ( 'User' )->getUserInfo ( $this->uid );
+		// 用户为空，则跳转用户不存在
+		if (empty ( $user_info )) {
+			$this->error ( L ( 'PUBLIC_USER_NOEXIST' ) );
+		}
+		// 个人空间头部
+		$this->_top ();
+		$this->_assignUserInfo ( $this->uid );
+		
+		$this->assign ( 'userPrivacy', $userPrivacy );
+		
+		$this->setTitle ( $user_info ['uname'] . '的回答' );
+		$this->setKeywords ( $user_info ['uname'] . '的回答' );
+		$user_tag = model ( 'Tag' )->setAppName ( 'User' )->setAppTable ( 'user' )->getAppTags ( array (
+			$this->uid 
+			) );
+		$this->setDescription ( t ( $user_category . $user_info ['location'] . ',' . implode ( ',', $user_tag [$this->uid] ) . ',' . $user_info ['intro'] ) );
+		$this->display ();
+	}
 }

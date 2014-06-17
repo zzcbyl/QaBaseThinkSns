@@ -28,6 +28,11 @@ $admintaskrecom = CheckPermission('vtask_admin','vtask_recommend');
 
 
 </php>
+<eq name='data' value=''>
+    <div style="width:100%; margin:30px 0 10px; text-align:center; color:#999999;">
+        暂无数据
+    </div>
+</eq>
 <volist name='data' id='vl'>
 <div class="conts">
     <div class="contTwo">
@@ -179,7 +184,16 @@ $admintaskrecom = CheckPermission('vtask_admin','vtask_recommend');
                             <div class="info_gz" >
                                 <p class="gz_info" style="padding-left:40px;">
                                     <i>{$vl['answer'][0].publish_time|friendlyDate}</i></p>
-                                
+                                <p class="comm">
+                                    <php>if(in_array('comment',$weibo_premission)):</php>
+                                        <a href="{:U('public/Mobile/agree',array('feed_id'=>$vl['answer'][0]['feed_id']))}" title="赞同" class="d" href="javascript:void(0)"><neq name="vl['answer'][0].comment_count" value='0'>{$vl['answer'][0].comment_count}<else/>&nbsp;</neq></a>
+                                        <a href="{:U('public/Mobile/oppose',array('feed_id'=>$vl['answer'][0]['feed_id']))}" title="反对" class="c" href="javascript:void(0)"><neq name="vl['answer'][0].disapprove_count" value='0'>{$vl['answer'][0].disapprove_count}<else/>&nbsp;</neq></a>
+	                                    <!--<eq name='vl.actions.comment' value='true'>
+                                            <a nodeAName='agreecomment' class="d" title="赞同" event-node="comment" href="javascript:void(0)" event-args="row_id={$vl['answer'][0].feed_id}&app_uid={$vl['answer'][0].uid}&app_row_id={$vl['answer'][0].app_row_id}&app_row_table={$vl['answer'][0].app_row_table}&to_comment_id=0&to_uid=0&app_name={$vl['answer'][0].app}&table=feed&cancomment={$cancomment}&cancomment_old={$cancomment_old_answer}&comment_type=1"><neq name="vl['answer'][0].comment_count" value='0'>{$vl['answer'][0].comment_count}</neq></a>
+                                            <a nodeAName='disapprovecomment' class="c" title="反对" event-node="comment" href="javascript:void(0)" event-args="row_id={$vl['answer'][0].feed_id}&app_uid={$vl['answer'][0].uid}&app_row_id={$vl['answer'][0].app_row_id}&app_row_table={$vl['answer'][0].app_row_table}&to_comment_id=0&to_uid=0&app_name={$vl['answer'][0].app}&table=feed&cancomment={$cancomment}&cancomment_old={$cancomment_old_answer}&comment_type=2"><neq name="vl['answer'][0].disapprove_count" value='0'>{$vl['answer'][0].disapprove_count}</neq></a>
+	                                    </eq>-->
+	                                <php>endif;</php>
+                                </p>
                             </div>
 
                             <div model-node="comment_detail" class="repeat clearfix" style="display:none;"></div>

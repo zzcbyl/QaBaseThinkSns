@@ -303,6 +303,16 @@ class FeedListWidget extends Widget {
 				$list = model('Feed')->getCommentFeedList($where, $this->limitnums,$LoadWhere);
 				//print_r($list);
 				break;
+			case 'oppose':	//个人反对列表
+				if($var['loadId'] > 0){ //非第一次
+					$LoadWhere = "t.comment_count < '".intval($var['loadId'])."'";
+				}
+				$current_uid=$GLOBALS['ts']['mid'];
+				if($var['uid']!=null && $var['uid']!='0') $current_uid = $var['uid'];
+				$where =" `uid` = $current_uid AND `feed_questionid` != 0 AND `add_feedid`=0 and `disapprove_count` > 0";
+				$list = model('Feed')->getCommentFeedList($where, $this->limitnums,$LoadWhere);
+				//print_r($list);
+				break;
 			case 'newanswer':	//消息答案列表
 				$LoadWhere='';
 				if($var['loadId'] > 0){ //非第一次
@@ -389,6 +399,7 @@ class FeedListWidget extends Widget {
 					$content['lastId'] = $var['lastId'] = $list['data'][(count($list['data'])-1)]['answer'][0]['publish_time'];
 					break;
 				case 'agree':
+				case 'oppose':
 					$content['firstId'] = $var['firstId'] = $list['data'][0]['answer'][0]['comment_count'];
 					$content['lastId'] = $var['lastId'] = $list['data'][(count($list['data'])-1)]['answer'][0]['comment_count'];
 					break;

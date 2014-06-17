@@ -64,7 +64,7 @@ $admintaskrecom = CheckPermission('vtask_admin','vtask_recommend');
                             <i>{$vl.publish_time|friendlyDate}</i></p>
                         <p class="comm" style="padding:0;">
                             <php>if($GLOBALS['ts']['mid'] == $vl['feed_quid']) {</php>
-                                <a href="javascript:void(0)" onclick="core.plugInit('thank',this,'{$vl.feed_id}','{$vl.uid}');" <eq name='vl.thank_count' value='0'>rel="yes"</eq> ><php>if($vl['thank_count']==0) { print('感谢'); } else { print('已感谢'); } </php></a>
+                                <a href="javascript:void(0)" onclick="core.plugInit('thank',this,'{$vl.feed_id}','{$vl.uid}');" rel="yes" ><php>if($vl['thank_count']==0) { print('感谢'); } else { print('已感谢'); } </php></a>
                                 <!--<a href="javascript:void(0);" onclick="ShowSupplementDiv('SupplementAnswer_{$vl.feed_id}');">要求补充</a>-->
                             <php>} else {</php>
                                 <php>if($vl['thank_count'] > 0) { print('<a href="javascript:void(0)">已感谢</a>'); } </php>

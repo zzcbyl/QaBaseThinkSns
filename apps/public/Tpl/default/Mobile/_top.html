@@ -1,4 +1,4 @@
-<div class="profile">
+<div class="profile" style="padding:0 5px;">
     <div class="pro_img" style="width:60px; height:60px; margin-right:10px;">
         <a href="{:U('public/Mobile/personal', array('uid'=>$uid))}" title="{$user_info[$uid]['uname']}"><img style="width:60px; height:60px;" src="{$user_info[$uid]['avatar_middle']}" /></a>
     </div>
@@ -6,16 +6,15 @@
         <h4><a style="font-size:16px;" href="{:U('public/Mobile/personal', array('uid'=>$uid))}">{$user_info[$uid]['uname']}</a></h4>
         <div class="profile_intro">
             <ul class="info">
-                <li id="gzCount" style="font-size:12px;padding: 0 5px;"><a href="{:U('public/Profile/following')}">{$userData.following_count|default=0}</a><br />关注</li>
-                <li id="hyCount" style="font-size:12px;padding: 0 5px;"><a href="{:U('public/Profile/friend')}">{$userData.friend_count|default=0}</strong></a><br />好友</li>
-                <li id="fsCount" style="font-size:12px;padding: 0 5px;"><a href="{:U('public/Profile/follower')}">{$userData.follower_count|default=0}</strong></a><br />粉丝</li>
-                <li id="twCount" style="font-size:12px;padding: 0 5px;"><a href="{:U('public/Profile/question')}">{$userData.weibo_count|default=0}</strong></a><br />提问</li>
-                <li id="hdCount" class="nbor" style="font-size:12px;padding: 0 5px;"><a href="{:U('public/Profile/answer')}">{$userData.answer_count|default=0}</strong></a><br />回答</li>
+                <li id="gzCount" style="font-size:12px;padding: 0 5px;"><a href="{:U('public/Profile/following')}">{$userData.following_count|default=0}</a><br /><span style="font-size:12px; font-family:微软雅黑;">关注</span></li>
+                <li id="hyCount" style="font-size:12px;padding: 0 5px;"><a href="{:U('public/Profile/friend')}">{$userData.friend_count|default=0}</strong></a><br /><span style="font-size:12px; font-family:微软雅黑;">好友</span></li>
+                <li id="fsCount" style="font-size:12px;padding: 0 5px;"><a href="{:U('public/Profile/follower')}">{$userData.follower_count|default=0}</strong></a><br /><span style="font-size:12px; font-family:微软雅黑;">粉丝</span></li>
+                <li id="twCount" style="font-size:12px;padding: 0 5px;"><a style="<php>if(ACTION_NAME=='questionlist'){ echo 'color:#666; font-weight:bold;'; }</php>" href="{:U('public/Mobile/questionlist', array('uid'=>$uid))}">{$userData.weibo_count|default=0}</strong><br /><span style="font-size:12px; font-family:微软雅黑;">提问</span></a></li>
+                <li id="hdCount" class="nbor" style="font-size:12px;padding: 0 5px;"><a style="<php>if(ACTION_NAME=='answerlist'){ echo 'color:#666; font-weight:bold;'; }</php>" href="{:U('public/Mobile/answerlist', array('uid'=>$uid))}">{$userData.answer_count|default=0}</strong><br /><span style="font-size:12px; font-family:微软雅黑;">回答</span></a></li>
                 <div style="clear:both;"></div>    
             </ul>
         </div>
         <div style="clear:both;"></div>
-        
         <p class="xz" style="line-height:22px;">
             <php>if(count($user_info[$uid]['user_group'])>0){</php>
             <volist name="user_info[$uid]['user_group']" id="ui2">
