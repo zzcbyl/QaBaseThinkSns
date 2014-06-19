@@ -1068,9 +1068,9 @@ a.btn-register:link,a.btn-register:visited,a.btn-register:hover,.btn-register sp
 .profile-datalist h4{font-weight:bold;padding:0 0 10px 0;border-bottom:1px solid #ddd; font-size:16px; color:#666;}
 .profile-datalist ul{padding:20px 0 15px 0;font-size:12px;}
 .profile-datalist li{padding:0 0 10px 0;overflow:hidden;*zoom:1;}
-.profile-datalist li .info-l{width:80px;float:left;text-align:right;color:#888;margin:0 5px 0 0; line-height:22px;}
-.profile-datalist li .info-r{width:auto;line-height:22px; padding-left:85px; display:block;}
-.profile-datalist li .info-rr{float:right;width:150px;line-height:22px;}
+.profile-datalist li .info-l{width:60px;float:left;text-align:right;color:#888;margin:0 5px 0 0; line-height:22px;}
+.profile-datalist li .info-r{line-height:22px;  display:block; float:left;}
+.profile-datalist li .info-rr{float:left;line-height:22px; margin-left:5px;}
 .profile-datalist li a {  line-height:22px;}
 .profile-datalist li input[type=text] { height:20px; line-height:20px; padding:0 3px; width:150px;}
 .profile-datalist li input[type=password] { height:20px; line-height:20px; padding:0 3px; width:150px;}

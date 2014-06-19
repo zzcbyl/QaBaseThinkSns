@@ -6,9 +6,9 @@
         <h4><a style="font-size:16px;" href="{:U('public/Mobile/personal', array('uid'=>$uid))}">{$user_info[$uid]['uname']}</a></h4>
         <div class="profile_intro">
             <ul class="info">
-                <li id="gzCount" style="font-size:12px;padding: 0 5px;"><a href="{:U('public/Profile/following')}">{$userData.following_count|default=0}</a><br /><span style="font-size:12px; font-family:微软雅黑;">关注</span></li>
-                <li id="hyCount" style="font-size:12px;padding: 0 5px;"><a href="{:U('public/Profile/friend')}">{$userData.friend_count|default=0}</strong></a><br /><span style="font-size:12px; font-family:微软雅黑;">好友</span></li>
-                <li id="fsCount" style="font-size:12px;padding: 0 5px;"><a href="{:U('public/Profile/follower')}">{$userData.follower_count|default=0}</strong></a><br /><span style="font-size:12px; font-family:微软雅黑;">粉丝</span></li>
+                <li id="gzCount" style="font-size:12px;padding: 0 5px;"><a href="{:U('public/Profile/following')}">{$userData.following_count|default=0}<br /><span style="font-size:12px; font-family:微软雅黑;">关注</span></a></li>
+                <li id="hyCount" style="font-size:12px;padding: 0 5px;"><a href="{:U('public/Profile/friend')}">{$userData.friend_count|default=0}</strong><br /><span style="font-size:12px; font-family:微软雅黑;">好友</span></a></li>
+                <li id="fsCount" style="font-size:12px;padding: 0 5px;"><a href="{:U('public/Profile/follower')}">{$userData.follower_count|default=0}</strong><br /><span style="font-size:12px; font-family:微软雅黑;">粉丝</span></a></li>
                 <li id="twCount" style="font-size:12px;padding: 0 5px;"><a style="<php>if(ACTION_NAME=='questionlist'){ echo 'color:#666; font-weight:bold;'; }</php>" href="{:U('public/Mobile/questionlist', array('uid'=>$uid))}">{$userData.weibo_count|default=0}</strong><br /><span style="font-size:12px; font-family:微软雅黑;">提问</span></a></li>
                 <li id="hdCount" class="nbor" style="font-size:12px;padding: 0 5px;"><a style="<php>if(ACTION_NAME=='answerlist'){ echo 'color:#666; font-weight:bold;'; }</php>" href="{:U('public/Mobile/answerlist', array('uid'=>$uid))}">{$userData.answer_count|default=0}</strong><br /><span style="font-size:12px; font-family:微软雅黑;">回答</span></a></li>
                 <div style="clear:both;"></div>    
@@ -46,7 +46,7 @@
                 {:W('FollowBtn', array('fid'=>$user_info[$uid]['uid'], 'uname'=>$user_info[$uid]['uname'], 'follow_state'=>$follow_state[$user_info[$uid]['uid']], 'isrefresh'=>1))}
             <php>}</php>
 
-                <a onclick="ui.sendmessage({$user_info[$uid]['uid']}, 0)" href="javascript:void(0)" event-node="postMsg" class="sx_btn" style="margin-top: -18px;"><span>发私信</span></a>
+                <a onclick="ui.sendmessage_mobile({$user_info[$uid]['uid']}, 0)" href="javascript:void(0)"  class="sx_btn" style="margin-top: -18px;"><span>发私信</span></a>
         </span>
     </p>
 </div>

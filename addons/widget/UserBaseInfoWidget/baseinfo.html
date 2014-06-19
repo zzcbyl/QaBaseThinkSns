@@ -59,13 +59,13 @@
                 <input type="hidden" name="old_name" value="{$uname}" /></li>
         <li>
             <label class="info-l">
-                真实姓名：</label><div class="info-r"><input event-node="realname" type="text" id="realname" name="realname" value="{$realname}" maxlength="20" /></div>&nbsp;
+                真实姓名：</label><div class="info-r"><input event-node="realname" type="text" id="realname" name="realname" value="{$realname}" maxlength="20" style="width:80px;" /></div>&nbsp;
             <div class="info-rr"><select name="sel_realname"><option>所有人可见</option><option <if condition="1 eq $permissions['realname']">selected</if> value="1">我关注的人可见</option><option <if condition="2 eq $permissions['realname']">selected</if> value="2">仅自己可见</option></select></div>
         </li>
         <li>
             <label class="info-l">
                 <span class="redSpan">*</span>所在地：</label><div class="info-r">
-                    {:W('Area',array('curPro'=>$province,'curCity'=>$city,'area'=>$area,'city_names'=>$location,'tpl'=>'selectArea'))}</div>&nbsp;</li>
+                    {:W('Area',array('curPro'=>$province,'curCity'=>$city,'area'=>$area,'city_names'=>$location,'tpl'=>'selectArea_br'))}</div>&nbsp;</li>
         <li>
             <label class="info-l">
                 <span class="redSpan">*</span>性别：</label><div class="info-r">
@@ -97,7 +97,7 @@
     <h4>修改密码</h4>
     <ul class="">
         <li>
-            <label class="info-l">
+            <label class="info-l" style="width:80px;">
                 <span class="redSpan">*</span>{:L('PUBLIC_ORIGINAL_PASSWORD')}：
             </label>
             <div class="info-r">
@@ -105,7 +105,7 @@
             </div>
         </li>
         <li>
-            <label class="info-l">
+            <label class="info-l" style="width:80px;">
                 <span class="redSpan">*</span>{:L('PUBLIC_NEW_PASSWORD')}：
             </label>
             <div class="info-r">
@@ -113,7 +113,7 @@
             </div>
         </li>
         <li>
-            <label class="info-l">
+            <label class="info-l" style="width:80px;">
                 <span class="redSpan">*</span>{:L('PUBLIC_CONFIRM_PASSWORD')}：
             </label>
             <div class="info-r">
@@ -176,27 +176,27 @@
                 <input type="hidden" name="old_email" value="{$email}" /></li>-->
         <li>
             <label class="info-l">
-                手机号：</label><div class="info-r"><input event-node="mobile" event-args='max=15' type="text" id="mobile" name="mobile" value="{$linknumber}" maxlength="15" /></div>&nbsp;
+                手机号：</label><div class="info-r"><input style="width:95px;" event-node="mobile" event-args='max=15' type="text" id="mobile" name="mobile" value="{$linknumber}" maxlength="15" /></div>&nbsp;
             <div class="info-rr"><select name="sel_mobile"><option>所有人可见</option><option <if condition="1 eq $permissions['mobile']">selected</if> value="1">我关注的人可见</option><option <if condition="2 eq $permissions['mobile']">selected</if> value="2">仅自己可见</option></select></div>
         </li>
         <li>
             <label class="info-l">
-                QQ：</label><div class="info-r"><input event-node="input_nums" event-args='max=15' type="text" id="qq" name="qq" value="{$qq}" maxlength="15" /></div>&nbsp;
+                QQ：</label><div class="info-r"><input style="width:95px;" event-node="input_nums" event-args='max=15' type="text" id="qq" name="qq" value="{$qq}" maxlength="15" /></div>&nbsp;
             <div class="info-rr"><select name="sel_qq"><option>所有人可见</option><option <if condition="1 eq $permissions['qq']">selected</if> value="1">我关注的人可见</option><option <if condition="2 eq $permissions['qq']">selected</if> value="2">仅自己可见</option></select></div>
         </li>
         <li>
             <label class="info-l">
-                微信号：</label><div class="info-r"><input event-node="input_text" event-args='max=80' type="text" id="weixin" name="weixin" value="{$weixin}" maxlength="80" /></div>&nbsp;
+                微信号：</label><div class="info-r"><input style="width:95px;" event-node="input_text" event-args='max=80' type="text" id="weixin" name="weixin" value="{$weixin}" maxlength="80" /></div>&nbsp;
             <div class="info-rr"><select name="sel_weixin"><option>所有人可见</option><option <if condition="1 eq $permissions['weixin']">selected</if> value="1">我关注的人可见</option><option <if condition="2 eq $permissions['weixin']">selected</if> value="2">仅自己可见</option></select></div>
         </li>
         <li>
             <label class="info-l">
-                新浪微博：</label><div class="info-r"><input event-node="input_text" event-args='max=80' type="text" id="xinlangvb" name="xinlangvb" value="{$xinlangVB}" maxlength="80" /></div>&nbsp;
+                新浪微博：</label><div class="info-r"><input style="width:95px;" event-node="input_text" event-args='max=80' type="text" id="xinlangvb" name="xinlangvb" value="{$xinlangVB}" maxlength="80" /></div>&nbsp;
             <div class="info-rr"><select name="sel_xinlangVB"><option>所有人可见</option><option <if condition="1 eq $permissions['xinlangVB']">selected</if> value="1">我关注的人可见</option><option <if condition="2 eq $permissions['xinlangVB']">selected</if> value="2">仅自己可见</option></select></div>
         </li>
         <li>
             <label class="info-l">
-                腾讯微博：</label><div class="info-r"><input event-node="input_text" event-args='max=80' type="text" id="tengxuvb" name="tengxuvb" value="{$tengxunVB}" maxlength="80" /></div>&nbsp;
+                腾讯微博：</label><div class="info-r"><input style="width:95px;" event-node="input_text" event-args='max=80' type="text" id="tengxuvb" name="tengxuvb" value="{$tengxunVB}" maxlength="80" /></div>&nbsp;
             <div class="info-rr"><select name="sel_tengxunVB"><option>所有人可见</option><option <if condition="1 eq $permissions['tengxunVB']">selected</if> value="1">我关注的人可见</option><option <if condition="2 eq $permissions['tengxunVB']">selected</if> value="2">仅自己可见</option></select></div>
         </li>
         
