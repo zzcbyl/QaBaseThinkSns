@@ -368,8 +368,8 @@ class MobileAction extends Action
 		//print_r($feedInfo);
 		$this->assign ( 'feedInfo', $feedInfo );
 		
-		$this->setTitle('评论－'.$feedInfo['body']);
-		$this->setKeywords('评论－'.$feedInfo['body']);
+		$this->setTitle('赞同评论－'.$feedInfo['body']);
+		$this->setKeywords('赞同评论－'.$feedInfo['body']);
 		
 		$this->display ();
 	}
@@ -406,8 +406,8 @@ class MobileAction extends Action
 		//print_r($feedInfo);
 		$this->assign ( 'feedInfo', $feedInfo );
 		
-		$this->setTitle('评论－'.$feedInfo['body']);
-		$this->setKeywords('评论－'.$feedInfo['body']);
+		$this->setTitle('反对评论－'.$feedInfo['body']);
+		$this->setKeywords('反对评论－'.$feedInfo['body']);
 		
 		$this->display ();
 	}
@@ -515,8 +515,8 @@ class MobileAction extends Action
 		
 		$this->assign ( 'userPrivacy', $userPrivacy );
 		
-		$this->setTitle ( $user_info ['uname'] . '的回答' );
-		$this->setKeywords ( $user_info ['uname'] . '的回答' );
+		$this->setTitle ( $user_info ['uname'] . '获得的赞同' );
+		$this->setKeywords ( $user_info ['uname'] . '获得的赞同' );
 		$user_tag = model ( 'Tag' )->setAppName ( 'User' )->setAppTable ( 'user' )->getAppTags ( array (
 			$this->uid 
 			) );
@@ -553,8 +553,8 @@ class MobileAction extends Action
 		
 		$this->assign ( 'userPrivacy', $userPrivacy );
 		
-		$this->setTitle ( $user_info ['uname'] . '的回答' );
-		$this->setKeywords ( $user_info ['uname'] . '的回答' );
+		$this->setTitle ( $user_info ['uname'] . '获得的反对' );
+		$this->setKeywords ( $user_info ['uname'] . '获得的反对' );
 		$user_tag = model ( 'Tag' )->setAppName ( 'User' )->setAppTable ( 'user' )->getAppTags ( array (
 			$this->uid 
 			) );
@@ -591,8 +591,8 @@ class MobileAction extends Action
 		
 		$this->assign ( 'userPrivacy', $userPrivacy );
 		
-		$this->setTitle ( $user_info ['uname'] . '的回答' );
-		$this->setKeywords ( $user_info ['uname'] . '的回答' );
+		$this->setTitle ( $user_info ['uname'] . '获得的感谢' );
+		$this->setKeywords ( $user_info ['uname'] . '获得的感谢' );
 		$user_tag = model ( 'Tag' )->setAppName ( 'User' )->setAppTable ( 'user' )->getAppTags ( array (
 			$this->uid 
 			) );

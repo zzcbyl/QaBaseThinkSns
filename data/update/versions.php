@@ -96,5 +96,14 @@ return array (
     'package' => 'thinksns_d2013110801_v28822.zip',
     'status' => 0,
   ),
+  2014061001 => 
+  array (
+    'id' => '2014061001',
+    'title' => '2014-06-10：ThinkSNS V3 安全补丁！+ 升级功能修复！（二次开发的用户请对比升级）
+',
+    'version' => 'ThinkSNS.V3.30630',
+    'package' => 'thinksns_d2014061001_v30630.zip',
+    'status' => 0,
+  ),
 );
 ?>

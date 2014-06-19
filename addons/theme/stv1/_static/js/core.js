@@ -310,484 +310,496 @@ var U = function(url, params) {
  * 窗体对象，全站使用，统一窗体接口
  */
 var ui = {
-	/**
-	 * 浮屏显示消息，提示信息框
-	 * @param string message 信息内容
-	 * @param integer error 是否是错误样式，1表示错误样式、0表示成功样式
-	 * @param integer lazytime 提示时间
-	 * @return void
-	 */
-	showMessage: function(message, error, lazytime) {
-		var style = (error=="1") ? "html_clew_box clew_error" : "html_clew_box";
-		var ico = (error == "1") ? 'ico-error' : 'ico-ok';
-		var html = '<div class="'+style+'" id="ui_messageBox" style="display:none">\
+    /**
+    * 浮屏显示消息，提示信息框
+    * @param string message 信息内容
+    * @param integer error 是否是错误样式，1表示错误样式、0表示成功样式
+    * @param integer lazytime 提示时间
+    * @return void
+    */
+    showMessage: function (message, error, lazytime) {
+        var style = (error == "1") ? "html_clew_box clew_error" : "html_clew_box";
+        var ico = (error == "1") ? 'ico-error' : 'ico-ok';
+        var html = '<div class="' + style + '" id="ui_messageBox" style="display:none">\
 					<div class="html_clew_box_con" id="ui_messageContent" style="position: relative;">\
-					<i class="'+ico+'"></i>'+message+'</div></div>';		
-		var _u = function() {
-			for (var i = 0; i < arguments.length; i++) {
-		        if (typeof arguments[i] != 'undefined') return false;
-			}
-		    return true;
-		};
-		// 显示提示弹窗
-		ui.showblackout();
-		// 将弹窗加载到body后
-		$(html).appendTo(document.body);
-		// 获取高宽
-		var _h = $('#ui_messageBox').height();
-		var _w = $('#ui_messageBox').width();
-		// 获取定位值
-		var left = ($('body').width() - _w)/2 ;
-		var top  = $(window).scrollTop() + ($(window).height()-_h)/2;
-		// 添加弹窗样式与动画效果（出现）
-		$('#ui_messageBox').css({
-			left:left + "px",
-			top:top + "px"
-		}).fadeIn("slow",function(){
-			$('#ui_messageBox').prepend('<iframe style="z-index:;position: absolute;visibility:inherit;width:'+_w+'px;height:'+_h+'px;top:0;left:0;filter=\'progid:DXImageTransform.Microsoft.Alpha(style=0,opacity=0)\'"'+
+					<i class="' + ico + '"></i>' + message + '</div></div>';
+        var _u = function () {
+            for (var i = 0; i < arguments.length; i++) {
+                if (typeof arguments[i] != 'undefined') return false;
+            }
+            return true;
+        };
+        // 显示提示弹窗
+        ui.showblackout();
+        // 将弹窗加载到body后
+        $(html).appendTo(document.body);
+        // 获取高宽
+        var _h = $('#ui_messageBox').height();
+        var _w = $('#ui_messageBox').width();
+        // 获取定位值
+        var left = ($('body').width() - _w) / 2;
+        var top = $(window).scrollTop() + ($(window).height() - _h) / 2;
+        // 添加弹窗样式与动画效果（出现）
+        $('#ui_messageBox').css({
+            left: left + "px",
+            top: top + "px"
+        }).fadeIn("slow", function () {
+            $('#ui_messageBox').prepend('<iframe style="z-index:;position: absolute;visibility:inherit;width:' + _w + 'px;height:' + _h + 'px;top:0;left:0;filter=\'progid:DXImageTransform.Microsoft.Alpha(style=0,opacity=0)\'"' +
 		 	'src="about:blank"  border="0" frameborder="0"></iframe>');
-		});
-		// 添加弹窗动画效果（消失）
-		setTimeout(function() { 
-			$('#ui_messageBox').find('iframe').remove();
-			$('#ui_messageBox').fadeOut("fast", function() {
-			  ui.removeblackout();
-			  $('#ui_messageBox').remove();
-			});
-		} , lazytime*1000);
-	},
-	/**
-	 * 添加弹窗
-	 * @return void
-	 */
-	showblackout: function() {
-		if($('.boxy-modal-blackout').length > 0) {
-			// TODO:???
-    	} else {
-    		var height = $('body').height() > $(window).height() ? $('body').height() : $(window).height();
-    		$('<div class ="boxy-modal-blackout" ><iframe style="z-index:-1;position: absolute;visibility:inherit;width:'+$('body').width()+'px;height:'+height+'px;top:0;left:0;filter=\'progid:DXImageTransform.Microsoft.Alpha(style=0,opacity=0)\'"'+
+        });
+        // 添加弹窗动画效果（消失）
+        setTimeout(function () {
+            $('#ui_messageBox').find('iframe').remove();
+            $('#ui_messageBox').fadeOut("fast", function () {
+                ui.removeblackout();
+                $('#ui_messageBox').remove();
+            });
+        }, lazytime * 1000);
+    },
+    /**
+    * 添加弹窗
+    * @return void
+    */
+    showblackout: function () {
+        if ($('.boxy-modal-blackout').length > 0) {
+            // TODO:???
+        } else {
+            var height = $('body').height() > $(window).height() ? $('body').height() : $(window).height();
+            $('<div class ="boxy-modal-blackout" ><iframe style="z-index:-1;position: absolute;visibility:inherit;width:' + $('body').width() + 'px;height:' + height + 'px;top:0;left:0;filter=\'progid:DXImageTransform.Microsoft.Alpha(style=0,opacity=0)\'"' +
 		 'src="about:blank"  border="0" frameborder="0"></iframe></div>')
         	.css({
-        	    height:height+'px',width:$('body').width()+'px',zIndex: 999, opacity: 0.5
+        	    height: height + 'px', width: $('body').width() + 'px', zIndex: 999, opacity: 0.5
         	}).appendTo(document.body);
-    	}
-	},
-	/**
-	 * 移除弹窗
-	 * @return void
-	 */
-	removeblackout: function() {
-		if($('#tsbox').length > 0) {
-		 	if(document.getElementById('tsbox').style.display == 'none'){
-		 		$('.boxy-modal-blackout').remove();
-		 	}	
-		 } else {
-		 	$('.boxy-modal-blackout').remove(); 	
-		 }
-	},
-	/**
-	 *  操作成功显示API
-	 * @param string message 信息内容
-	 * @param integer time 展示时间
-	 * @return void
-	 */
-	success: function(message, time) {
-		var t = "undefined" == typeof(time) ? 2 : time;
-		ui.showMessage(message, 0, t);
-	},
-	/**
-	 * 操作出错显示API
-	 * @param string message 信息内容
-	 * @param integer time 展示时间
-	 * @return void
-	 */
-	error: function(message, time) {
-		var t = "undefined" == typeof(time) ? 2 : time;
-		ui.showMessage(message, 1, t);
-	},
-	/**
-	 * 确认弹框显示API - 浮窗型
-	 * @example
-	 * 可以加入callback，回调函数
-	 * @param object o 定位对象
-	 * @param string text 提示语言
-	 * @param string|function _callback 回调函数名称
-	 * @return void
-	 */
-	confirm: function(o, text, _callback) {
-		// 判断弹窗是否存在
-		document.getElementById('ts_ui_confirm') !== null && $('#ts_ui_confirm').remove();
-		var callback = "undefined" == typeof(_callback) ? $(o).attr('callback') : _callback;
-		text = text || L('PUBLIC_ACCONT_TIPES');
-		text = "<i class='ico-error'></i>"+text;
-		this.html = '<div id="ts_ui_confirm" class="ts_confirm"><div class="layer-mini-info"><dl><dt class="txt"> </dt><dd class="action"><a class="btn-green-small mr10 btn_ok" href="javascript:void(0)"><span>'+L('PUBLIC_QUEDING')+'</span></a><a class="btn-cancel" href="javascript:void(0)"><span>'+L('PUBLIC_QUXIAO')+'</span></a></dd></dl></div></div>';
-		$('body').append(this.html);
-		var position = $(o).offset();
-		$('#ts_ui_confirm').css({"top":position.top+"px","left":position.left+"px","display":"none"});
-		$("#ts_ui_confirm .txt").html(text);
-		$('#ts_ui_confirm').fadeIn("fast");
-		$("#ts_ui_confirm .btn-cancel").one('click',function(){
-			$('#ts_ui_confirm').fadeOut("fast");
-			// 修改原因: ts_ui_confirm .btn_b按钮会重复提交
-			$('#ts_ui_confirm').remove();
-			return false;
-		});
-		$("#ts_ui_confirm .btn_ok").one('click',function(){
-			$('#ts_ui_confirm').fadeOut("fast");
-			// 修改原因: ts_ui_confirm .btn_b按钮会重复提交
-			$('#ts_ui_confirm').remove();
-			if("undefined" == typeof(callback)){
-				return true;
-			}else{
-				if("function"==typeof(callback)){
-					callback();
-				}else{
-					eval(callback);
-				}
-			}
-		});
-		$('body').bind('keyup', function(event) {
+        }
+    },
+    /**
+    * 移除弹窗
+    * @return void
+    */
+    removeblackout: function () {
+        if ($('#tsbox').length > 0) {
+            if (document.getElementById('tsbox').style.display == 'none') {
+                $('.boxy-modal-blackout').remove();
+            }
+        } else {
+            $('.boxy-modal-blackout').remove();
+        }
+    },
+    /**
+    *  操作成功显示API
+    * @param string message 信息内容
+    * @param integer time 展示时间
+    * @return void
+    */
+    success: function (message, time) {
+        var t = "undefined" == typeof (time) ? 2 : time;
+        ui.showMessage(message, 0, t);
+    },
+    /**
+    * 操作出错显示API
+    * @param string message 信息内容
+    * @param integer time 展示时间
+    * @return void
+    */
+    error: function (message, time) {
+        var t = "undefined" == typeof (time) ? 2 : time;
+        ui.showMessage(message, 1, t);
+    },
+    /**
+    * 确认弹框显示API - 浮窗型
+    * @example
+    * 可以加入callback，回调函数
+    * @param object o 定位对象
+    * @param string text 提示语言
+    * @param string|function _callback 回调函数名称
+    * @return void
+    */
+    confirm: function (o, text, _callback) {
+        // 判断弹窗是否存在
+        document.getElementById('ts_ui_confirm') !== null && $('#ts_ui_confirm').remove();
+        var callback = "undefined" == typeof (_callback) ? $(o).attr('callback') : _callback;
+        text = text || L('PUBLIC_ACCONT_TIPES');
+        text = "<i class='ico-error'></i>" + text;
+        this.html = '<div id="ts_ui_confirm" class="ts_confirm"><div class="layer-mini-info"><dl><dt class="txt"> </dt><dd class="action"><a class="btn-green-small mr10 btn_ok" href="javascript:void(0)"><span>' + L('PUBLIC_QUEDING') + '</span></a><a class="btn-cancel" href="javascript:void(0)"><span>' + L('PUBLIC_QUXIAO') + '</span></a></dd></dl></div></div>';
+        $('body').append(this.html);
+        var position = $(o).offset();
+        $('#ts_ui_confirm').css({ "top": position.top + "px", "left": position.left + "px", "display": "none" });
+        $("#ts_ui_confirm .txt").html(text);
+        $('#ts_ui_confirm').fadeIn("fast");
+        $("#ts_ui_confirm .btn-cancel").one('click', function () {
+            $('#ts_ui_confirm').fadeOut("fast");
+            // 修改原因: ts_ui_confirm .btn_b按钮会重复提交
+            $('#ts_ui_confirm').remove();
+            return false;
+        });
+        $("#ts_ui_confirm .btn_ok").one('click', function () {
+            $('#ts_ui_confirm').fadeOut("fast");
+            // 修改原因: ts_ui_confirm .btn_b按钮会重复提交
+            $('#ts_ui_confirm').remove();
+            if ("undefined" == typeof (callback)) {
+                return true;
+            } else {
+                if ("function" == typeof (callback)) {
+                    callback();
+                } else {
+                    eval(callback);
+                }
+            }
+        });
+        $('body').bind('keyup', function (event) {
             $("#ts_ui_confirm .btn_ok").click();
         });
-		return false;
-	},
-	/**
-	 * 确认框显示API - 弹窗型
-	 * @param string title 弹窗标题
-	 * @param string text 提示语言
-	 * @param string|function _callback 回调函数名称
-	 * @return void
-	 */
-	confirmBox: function(title, text, _callback) {
-		this.box.init(title);
-		text = text || L('PUBLIC_ACCONT_TIPES');
-		text = "<i class='ico-error'></i>"+text;
+        return false;
+    },
+    /**
+    * 确认框显示API - 弹窗型
+    * @param string title 弹窗标题
+    * @param string text 提示语言
+    * @param string|function _callback 回调函数名称
+    * @return void
+    */
+    confirmBox: function (title, text, _callback) {
+        this.box.init(title);
+        text = text || L('PUBLIC_ACCONT_TIPES');
+        text = "<i class='ico-error'></i>" + text;
 
-		var content = '<div class="pop-create-group"><dl><dt class="txt">'+ text + '</dt><dd class="action"><a class="btn-green-small mr10" href="javascript:void(0)"><span>'+L('PUBLIC_QUEDING')+'</span></a><a class="btn-cancel" href="javascript:void(0)"><span>'+L('PUBLIC_QUXIAO')+'</span></a></dd></dl></div>';
+        var content = '<div class="pop-create-group"><dl><dt class="txt">' + text + '</dt><dd class="action"><a class="btn-green-small mr10" href="javascript:void(0)"><span>' + L('PUBLIC_QUEDING') + '</span></a><a class="btn-cancel" href="javascript:void(0)"><span>' + L('PUBLIC_QUXIAO') + '</span></a></dd></dl></div>';
 
-		this.box.setcontent(content);
-		this.box.center();
+        this.box.setcontent(content);
+        this.box.center();
 
-		var callback = "undefined" == typeof(_callback) ? $(o).attr('callback') : _callback;
+        var callback = "undefined" == typeof (_callback) ? $(o).attr('callback') : _callback;
 
-		var _this = this;
-		$("#tsbox .btn-cancel").one('click',function(){
-			$('#tsbox').fadeOut("fast",function(){
-				$('#tsbox').remove();	
-			});
-			_this.box.close();
-			return false;
-		});
-		$("#tsbox .btn-green-small").one('click',function(){
-			$('#tsbox').fadeOut("fast",function(){
-				$('#tsbox').remove();
-			});
-			_this.box.close();
-			if("undefined" == typeof(callback)){
-				return true;
-			}else{
-				if("function"==typeof(callback)){
-					callback();
-				}else{
-					eval(callback);
-				}
-			}
-		});
-		return false;
-	},
-	/**
-	 * 私信弹窗API
-	 * @param string touid 收件人ID
-	 * @return void
-	 */
-	sendmessage: function(touid, editable) {
-		if(typeof(editable) == "undefined" ) {
-			editable = 1;
-		}
-		touid = touid || '';
-		this.box.load(U('public/Message/post')+'&touid='+touid+'&editable='+editable, L('PUBLIC_SETPRIVATE_MAIL'));
-	},
-	/**
-	 * @Me弹窗API
-	 * @param string touid @人ID
-	 * @return void
-	 */
-	sendat: function(touid) {
-		touid = touid || '';
-		this.box.load(U('public/Mention/at')+'&touid='+touid, '@TA');
-	},
-	/**
-	 * 弹窗发布提问
-	 * @param string title 弹窗标题
-	 * @param string initHTML 插入内容
-	 * @return void
-	 */
-	sendbox: function(title, initHtml,channelID) {
-		if($.browser.msie) {
-			initHtml = encodeURI(initHtml);
-		}
-		initHtml = initHtml.replace(/\#/g, "%23"); 
-		this.box.load(U('public/Index/sendFeedBox')+'&initHtml='+initHtml+'&channelID='+channelID, title,function(){
-			$('#at-view').hide();
-		});
-	},
-	/**
-	 * 回复弹窗API
-	 * @param integer comment_id 评论ID
-	 * @return void
-	 */
-	reply: function(comment_id) {
-		this.box.load(U('public/Comment/reply')+'&comment_id='+comment_id,L('PUBLIC_RESAVE'),function (){$('#at-view').hide();});
-	},
-	groupreply: function(comment_id,gid) {
-		this.box.load(U('group/Group/reply')+'&gid='+gid+'&comment_id='+comment_id,L('PUBLIC_RESAVE'),function (){$('#at-view').hide();});
-	},
-	/**
-	 * 选择部门弹窗API - 暂不使用
-	 */
-	changeDepartment: function(hid,showname,sid,nosid,notop) {
-		this.box.load(U('widget/Department/change')+'&hid='+hid+'&showName='+showname+'&sid='+sid+'&nosid='+nosid+'&notop='+notop,L('PUBLIC_DEPATEMENT_SELECT'));
-	},
-	/**
-	 * 自定弹窗API接口
-	 */
-	box: {
-		WRAPPER: '<div class="wrap-layer" id="tsbox" style="display:none">\
+        var _this = this;
+        $("#tsbox .btn-cancel").one('click', function () {
+            $('#tsbox').fadeOut("fast", function () {
+                $('#tsbox').remove();
+            });
+            _this.box.close();
+            return false;
+        });
+        $("#tsbox .btn-green-small").one('click', function () {
+            $('#tsbox').fadeOut("fast", function () {
+                $('#tsbox').remove();
+            });
+            _this.box.close();
+            if ("undefined" == typeof (callback)) {
+                return true;
+            } else {
+                if ("function" == typeof (callback)) {
+                    callback();
+                } else {
+                    eval(callback);
+                }
+            }
+        });
+        return false;
+    },
+    /**
+    * 私信弹窗API
+    * @param string touid 收件人ID
+    * @return void
+    */
+    sendmessage: function (touid, editable) {
+        if (typeof (editable) == "undefined") {
+            editable = 1;
+        }
+        touid = touid || '';
+        this.box.load(U('public/Message/post') + '&touid=' + touid + '&editable=' + editable, L('PUBLIC_SETPRIVATE_MAIL'));
+    },
+    /**
+    * 手机私信弹窗API
+    * @param string touid 收件人ID
+    * @return void
+    */
+    sendmessage_mobile: function (touid, editable) {
+        if (typeof (editable) == "undefined") {
+            editable = 1;
+        }
+        touid = touid || '';
+        this.box.load(U('public/MessageMobile/post') + '&touid=' + touid + '&editable=' + editable, L('PUBLIC_SETPRIVATE_MAIL'));
+    },
+    /**
+    * @Me弹窗API
+    * @param string touid @人ID
+    * @return void
+    */
+    sendat: function (touid) {
+        touid = touid || '';
+        this.box.load(U('public/Mention/at') + '&touid=' + touid, '@TA');
+    },
+    /**
+    * 弹窗发布提问
+    * @param string title 弹窗标题
+    * @param string initHTML 插入内容
+    * @return void
+    */
+    sendbox: function (title, initHtml, channelID) {
+        if ($.browser.msie) {
+            initHtml = encodeURI(initHtml);
+        }
+        initHtml = initHtml.replace(/\#/g, "%23");
+        this.box.load(U('public/Index/sendFeedBox') + '&initHtml=' + initHtml + '&channelID=' + channelID, title, function () {
+            $('#at-view').hide();
+        });
+    },
+    /**
+    * 回复弹窗API
+    * @param integer comment_id 评论ID
+    * @return void
+    */
+    reply: function (comment_id) {
+        this.box.load(U('public/Comment/reply') + '&comment_id=' + comment_id, L('PUBLIC_RESAVE'), function () { $('#at-view').hide(); });
+    },
+    groupreply: function (comment_id, gid) {
+        this.box.load(U('group/Group/reply') + '&gid=' + gid + '&comment_id=' + comment_id, L('PUBLIC_RESAVE'), function () { $('#at-view').hide(); });
+    },
+    /**
+    * 选择部门弹窗API - 暂不使用
+    */
+    changeDepartment: function (hid, showname, sid, nosid, notop) {
+        this.box.load(U('widget/Department/change') + '&hid=' + hid + '&showName=' + showname + '&sid=' + sid + '&nosid=' + nosid + '&notop=' + notop, L('PUBLIC_DEPATEMENT_SELECT'));
+    },
+    /**
+    * 自定弹窗API接口
+    */
+    box: {
+        WRAPPER: '<div class="wrap-layer" id="tsbox" style="display:none">\
      			  <div class="content-layer">\
      			  <div class="layer-content" id="layer-content"></div>\
      			  </div></div>',
-		inited: false,
-		IE6: (jQuery.browser.msie && jQuery.browser.version < 7),
-		init: function(title, callback) {
-			this.callback = callback;
-			// 弹窗中隐藏小名片
-			if("undefined" != typeof(core.facecard)){
-				core.facecard.dohide();
-			}
+        inited: false,
+        IE6: (jQuery.browser.msie && jQuery.browser.version < 7),
+        init: function (title, callback) {
+            this.callback = callback;
+            // 弹窗中隐藏小名片
+            if ("undefined" != typeof (core.facecard)) {
+                core.facecard.dohide();
+            }
 
-			if($('#tsbox').length >0) {
-				return false;
-			} else {
-				$('body').prepend(this.WRAPPER);
-			}
-			var url = THEME_URL+'/js/tbox/box.css';
-			core.loadCss(url);
-			// 添加头部
-			if("undefined" != typeof(title)) {
-				$("<div class='hd'>"+title+"<a class='ico-close' href='#'></a></div>").insertBefore($('#tsbox .layer-content'));
-			}
-			
-			ui.showblackout();
-			
-			$('#tsbox').stop().css({width: '', height: ''});
-			// 添加键盘事件
-			jQuery(document.body).bind('keypress.tsbox', function(event) {
-				var key = event.keyCode ? event.keyCode : event.which ? event.which : event.charCode;
-				if (key == 27) {
-					jQuery(document.body).unbind('keypress.tsbox');
-					ui.box.close(callback);
-					return false;
-				}
-			});
-			// 关闭弹窗，回调函数
-			$('#tsbox').find('.ico-close').click(function() {
-				ui.box.close(callback);
-				return false;
-			});
-			
-			this.center();
-			var show = function(){
-				$('#tsbox').show();
-			}
-			setTimeout(show, 200);
-			
-			$('#tsbox').draggable({ handle: '.hd' });
+            if ($('#tsbox').length > 0) {
+                return false;
+            } else {
+                $('body').prepend(this.WRAPPER);
+            }
+            var url = THEME_URL + '/js/tbox/box.css';
+            core.loadCss(url);
+            // 添加头部
+            if ("undefined" != typeof (title)) {
+                $("<div class='hd'>" + title + "<a class='ico-close' href='#'></a></div>").insertBefore($('#tsbox .layer-content'));
+            }
 
-			$('.hd').mousedown(function(){
-				$('.mod-at-wrap').remove();
-			});
-		},
-		/**
-		 * 设置弹窗中的内容
-		 * @param string content 内容信息
-		 * @return void
-		 */
-		setcontent: function(content) {
-			$('#layer-content').html(content);
-		},
-		/**
-		 * 关闭窗口
-		 * @param function fn 回调函数名称
-		 * @return void
-		 */
-		close: function(fn) {
-			$('#ui-fs .ui-fs-all .ui-fs-allinner div.list').find("a").die("click");
-			$('.talkPop').remove();
-			$('#tsbox').remove();
-			$('.mod-at-wrap').remove();
-			jQuery('.boxy-modal-blackout').remove();
-			var back ='';
-			if("undefined" != typeof(fn)){
-			 	back = fn;
-			}else if("undefined" != typeof(this.callback)){
-				back = this.callback;
-			}
-			if("function" == typeof(back)){
-				back();
-			}else{
-				eval(back);
-			}
-		},
-		/**
-		 * 提示弹窗
-		 * @param string data 信息数据
-		 * @param string title 标题信息
-		 * @param function callback 回调函数
-		 * @return void
-		 */
-		alert:function(data,title,callback){
-			this.init(title,callback);
-			this.setcontent('<div class="question">'+data+'</div>');
-			this.center();
-		},
-		/**
-		 * 显示弹窗
-		 * @param string content 信息数据
-		 * @param string title 标题信息
-		 * @param function callback 回调函数
-		 * @return void
-		 */
-		show:function(content,title,callback){
-			this.init(title,callback);
-			this.setcontent(content);
-			this.center();
-		},
-		/**
-		 * 载入弹窗API
-		 * @param string requestUrl 请求地址
-		 * @param string title 弹窗标题
-		 * @param string callback 窗口关闭后的回调事件
-		 * @param object requestData requestData
-		 * @param string type Ajax请求协议，默认为GET
-		 * @return void
-		 */
-		load:function(requestUrl,title,callback,requestData,type) {
-			this.init(title,callback);
-			if("undefined" != typeof(type)) {
-				var ajaxType = type;
-			}else{
-				var ajaxType = "GET";
-			}
-			this.setcontent('<div style="width:150px;height:70px;text-align:center"><div class="load">&nbsp;</div></div>');
-			var obj = this;
-			if("undefined" == requestData) {
-				var requestData = {};
-			}
-			jQuery.ajax({url:requestUrl,
-				type:ajaxType,
-				data:requestData,
-				cache:false,
-				dataType:'html',
-				success:function(html){
-					obj.setcontent(html);
-					obj.center();
-				}
-			});
-		},	
-		/**
-		 * 弹窗定位
-		 * @return void
-		 */
-		_viewport: function() {
-			var d = document.documentElement, b = document.body, w = window;
-			return jQuery.extend(
-				jQuery.browser.msie ? { left: b.scrollLeft || d.scrollLeft, top: b.scrollTop || d.scrollTop } : { left: w.pageXOffset, top: w.pageYOffset },
-				!ui.box._u(w.innerWidth) ? { width: w.innerWidth, height: w.innerHeight } : (!ui.box._u(d) && !ui.box._u(d.clientWidth) && d.clientWidth != 0 ? { width: d.clientWidth, height: d.clientHeight } : { width: b.clientWidth, height: b.clientHeight }) );
-		},
-		/**
-		 * 验证参数
-		 * @return void
-		 */
-		_u: function() {
-			for(var i = 0; i < arguments.length; i++) {
-				if(typeof arguments[i] != 'undefined') return false;
-			}
-			return true;
-		},
-		/**
-		 * 样式覆盖
-		 * @return void
-		 */
-		_cssForOverlay: function() {
-			if (ui.box.IE6) {
-				return ui.box._viewport();
-			} else {
-				return {width: '100%', height: jQuery(document).height()};
-			}
-		},
-		/**
-		 * 中间定位
-		 * @param string axis 横向，纵向
-		 * @return void
-		 */
-		center: function(axis) {
-			var v = ui.box._viewport();
-			var o =  [v.left, v.top];
-			if (!axis || axis == 'x') this.centerAt(o[0] + v.width / 2 , null);
-			if (!axis || axis == 'y') this.centerAt(null, o[1] + v.height / 2);
-			return this;
-		},
-		/**
-		 * 横向移动
-		 * @param integer x 数值
-		 * @return void
-		 */
-		moveToX: function(x) {
-			if (typeof x == 'number') $('#tsbox').css({left: x});
-			else this.centerX();
-			return this;
-		},
-		/**
-		 * 纵向移动
-		 * @param integer y 数值
-		 * @return void
-		 */
-		moveToY: function(y) {
-			if (typeof y == 'number') $('#tsbox').css({top: y});
-			else this.centerY();
-			return this;
-		},      
-		centerAt: function(x, y) {
-			var s = this.getSize();
-			if (typeof x == 'number') this.moveToX(x - s[0]/2 );
-			if (typeof y == 'number') this.moveToY(y - s[1]/2 );
-			return this;
-		},
-		centerAtX: function(x) {
-			return this.centerAt(x, null);
-		},
-		centerAtY: function(y) {
-			return this.centerAt(null, y);
-		},
-		getSize: function() {
-			return [$('#tsbox').width(), $('#tsbox').height()];
-		},
-		getContent: function() {
-			return $('#tsbox').find('.boxy-content');
-		},
-		getPosition: function() {
-			var b = $('#tsbox');
-			return [b.offsetLeft, b.offsetTop];
-		},        
-		getContentSize: function() {
-			var c = this.getContent();
-			return [c.width(), c.height()];
-		},
-		_getBoundsForResize: function(width, height) {
-			var csize = this.getContentSize();
-			var delta = [width - csize[0], height - csize[1]];
-			var p = this.getPosition();
-			return [Math.max(p[0] - delta[0] / 2, 0), Math.max(p[1] - delta[1] / 2, 0), width, height];
-		}
-	}
+            ui.showblackout();
+
+            $('#tsbox').stop().css({ width: '', height: '' });
+            // 添加键盘事件
+            jQuery(document.body).bind('keypress.tsbox', function (event) {
+                var key = event.keyCode ? event.keyCode : event.which ? event.which : event.charCode;
+                if (key == 27) {
+                    jQuery(document.body).unbind('keypress.tsbox');
+                    ui.box.close(callback);
+                    return false;
+                }
+            });
+            // 关闭弹窗，回调函数
+            $('#tsbox').find('.ico-close').click(function () {
+                ui.box.close(callback);
+                return false;
+            });
+
+            this.center();
+            var show = function () {
+                $('#tsbox').show();
+            }
+            setTimeout(show, 200);
+
+            $('#tsbox').draggable({ handle: '.hd' });
+
+            $('.hd').mousedown(function () {
+                $('.mod-at-wrap').remove();
+            });
+        },
+        /**
+        * 设置弹窗中的内容
+        * @param string content 内容信息
+        * @return void
+        */
+        setcontent: function (content) {
+            $('#layer-content').html(content);
+        },
+        /**
+        * 关闭窗口
+        * @param function fn 回调函数名称
+        * @return void
+        */
+        close: function (fn) {
+            $('#ui-fs .ui-fs-all .ui-fs-allinner div.list').find("a").die("click");
+            $('.talkPop').remove();
+            $('#tsbox').remove();
+            $('.mod-at-wrap').remove();
+            jQuery('.boxy-modal-blackout').remove();
+            var back = '';
+            if ("undefined" != typeof (fn)) {
+                back = fn;
+            } else if ("undefined" != typeof (this.callback)) {
+                back = this.callback;
+            }
+            if ("function" == typeof (back)) {
+                back();
+            } else {
+                eval(back);
+            }
+        },
+        /**
+        * 提示弹窗
+        * @param string data 信息数据
+        * @param string title 标题信息
+        * @param function callback 回调函数
+        * @return void
+        */
+        alert: function (data, title, callback) {
+            this.init(title, callback);
+            this.setcontent('<div class="question">' + data + '</div>');
+            this.center();
+        },
+        /**
+        * 显示弹窗
+        * @param string content 信息数据
+        * @param string title 标题信息
+        * @param function callback 回调函数
+        * @return void
+        */
+        show: function (content, title, callback) {
+            this.init(title, callback);
+            this.setcontent(content);
+            this.center();
+        },
+        /**
+        * 载入弹窗API
+        * @param string requestUrl 请求地址
+        * @param string title 弹窗标题
+        * @param string callback 窗口关闭后的回调事件
+        * @param object requestData requestData
+        * @param string type Ajax请求协议，默认为GET
+        * @return void
+        */
+        load: function (requestUrl, title, callback, requestData, type) {
+            this.init(title, callback);
+            if ("undefined" != typeof (type)) {
+                var ajaxType = type;
+            } else {
+                var ajaxType = "GET";
+            }
+            this.setcontent('<div style="width:150px;height:70px;text-align:center"><div class="load">&nbsp;</div></div>');
+            var obj = this;
+            if ("undefined" == requestData) {
+                var requestData = {};
+            }
+            jQuery.ajax({ url: requestUrl,
+                type: ajaxType,
+                data: requestData,
+                cache: false,
+                dataType: 'html',
+                success: function (html) {
+                    obj.setcontent(html);
+                    obj.center();
+                }
+            });
+        },
+        /**
+        * 弹窗定位
+        * @return void
+        */
+        _viewport: function () {
+            var d = document.documentElement, b = document.body, w = window;
+            return jQuery.extend(
+				jQuery.browser.msie ? { left: b.scrollLeft || d.scrollLeft, top: b.scrollTop || d.scrollTop} : { left: w.pageXOffset, top: w.pageYOffset },
+				!ui.box._u(w.innerWidth) ? { width: w.innerWidth, height: w.innerHeight} : (!ui.box._u(d) && !ui.box._u(d.clientWidth) && d.clientWidth != 0 ? { width: d.clientWidth, height: d.clientHeight} : { width: b.clientWidth, height: b.clientHeight }));
+        },
+        /**
+        * 验证参数
+        * @return void
+        */
+        _u: function () {
+            for (var i = 0; i < arguments.length; i++) {
+                if (typeof arguments[i] != 'undefined') return false;
+            }
+            return true;
+        },
+        /**
+        * 样式覆盖
+        * @return void
+        */
+        _cssForOverlay: function () {
+            if (ui.box.IE6) {
+                return ui.box._viewport();
+            } else {
+                return { width: '100%', height: jQuery(document).height() };
+            }
+        },
+        /**
+        * 中间定位
+        * @param string axis 横向，纵向
+        * @return void
+        */
+        center: function (axis) {
+            var v = ui.box._viewport();
+            var o = [v.left, v.top];
+            if (!axis || axis == 'x') this.centerAt(o[0] + v.width / 2, null);
+            if (!axis || axis == 'y') this.centerAt(null, o[1] + v.height / 2);
+            return this;
+        },
+        /**
+        * 横向移动
+        * @param integer x 数值
+        * @return void
+        */
+        moveToX: function (x) {
+            if (typeof x == 'number') $('#tsbox').css({ left: x });
+            else this.centerX();
+            return this;
+        },
+        /**
+        * 纵向移动
+        * @param integer y 数值
+        * @return void
+        */
+        moveToY: function (y) {
+            if (typeof y == 'number') $('#tsbox').css({ top: y });
+            else this.centerY();
+            return this;
+        },
+        centerAt: function (x, y) {
+            var s = this.getSize();
+            if (typeof x == 'number') this.moveToX(x - s[0] / 2);
+            if (typeof y == 'number') this.moveToY(y - s[1] / 2);
+            return this;
+        },
+        centerAtX: function (x) {
+            return this.centerAt(x, null);
+        },
+        centerAtY: function (y) {
+            return this.centerAt(null, y);
+        },
+        getSize: function () {
+            return [$('#tsbox').width(), $('#tsbox').height()];
+        },
+        getContent: function () {
+            return $('#tsbox').find('.boxy-content');
+        },
+        getPosition: function () {
+            var b = $('#tsbox');
+            return [b.offsetLeft, b.offsetTop];
+        },
+        getContentSize: function () {
+            var c = this.getContent();
+            return [c.width(), c.height()];
+        },
+        _getBoundsForResize: function (width, height) {
+            var csize = this.getContentSize();
+            var delta = [width - csize[0], height - csize[1]];
+            var p = this.getPosition();
+            return [Math.max(p[0] - delta[0] / 2, 0), Math.max(p[1] - delta[1] / 2, 0), width, height];
+        }
+    }
 };
