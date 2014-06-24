@@ -145,13 +145,16 @@ class AvatarModel {
 		$data['attach_type'] = 'avatar';
         $data['upload_type'] = 'image';
         $info = model('Attach')->upload($data);
+
         //Log::write(var_export($info,true));
     	if($info['status']){
+
     		$data = $info['info'][0];
     		$image_url = getImageUrl($data['save_path'].$data['save_name']);
     		$image_info = getimagesize($image_url);
     		//如果不支持获取远程图片信息，使用如下方法
     		if(!$image_info){
+
 		  		$cloud = model('CloudImage');
 		        if($cloud->isOpen()){
 		        	$cinfo = $cloud->getFileInfo($data['save_path'].$data['save_name']);
@@ -165,6 +168,20 @@ class AvatarModel {
 		        }
 		    }
     		if($image_info){
+
+                $width = intval($image_info[0]) ;
+                $height = intval($image_info[1]);
+                $scale = 0;
+                if ($width>$height){
+                    $scale = $height;
+                }else{
+                    $scale = $width;
+                }
+                require_once SITE_PATH.'/addons/library/phpthumb/ThumbLib.inc.php';
+                $thumb = PhpThumbFactory::create(UPLOAD_PATH.'/'.$data['save_path'].$data['save_name']);
+                $thumb->crop(0, 0, $scale, $scale);
+                $thumb->save(UPLOAD_PATH.'/'.$data['save_path'].$data['save_name']);
+
     			unset($return);
     			$return['data']['picwidth'] = $image_info[0];
     			$return['data']['picheight'] = $image_info[1];
@@ -261,7 +278,7 @@ class AvatarModel {
         	}
 			$thumb->save(UPLOAD_PATH.$original_file_name);
 			unset($return);
-			
+
 			/*$return['data']['big'] 		= getImageUrl($original_file_name,200,200,true,true).'?v'.$filemtime;
 			$return['data']['middle'] 	= getImageUrl($original_file_name,100,100,true,true).'?v'.$filemtime;
 			$return['data']['small'] 	= getImageUrl($original_file_name,50,50,true,true).'?v'.$filemtime;
