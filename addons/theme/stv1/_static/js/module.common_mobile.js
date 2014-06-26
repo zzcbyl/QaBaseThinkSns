@@ -396,6 +396,8 @@ M.addEventFns({
     },
     comment_del: {
         click: function () {
+            if (!confirm("你确定要删除评论吗?"))
+                return;
             var attrs = M.getEventArgs(this);
             var comment_list = this.parentModel.parentModel.parentModel.childModels['comment_detail'][0];
             core.comment_mobile.init(attrs, comment_list);

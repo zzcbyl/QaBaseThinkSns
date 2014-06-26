@@ -6,11 +6,11 @@
         
         <div class="mod-data" style="padding:0 5px;">
 
-            {:W('UserBaseInfo',array('uid'=>$uid, 'followstate'=>$followstate))}
+            {:W('UserBaseInfo',array('mid'=>0, 'uid'=>$uid, 'followstate'=>2))}
 
-            {:W('UserProfessionInfo',array('mid'=>$mid, 'uid'=>$uid, 'followstate'=>$followstate))}
+            {:W('UserProfessionInfo',array('mid'=>0, 'uid'=>$uid, 'followstate'=>2))}
 
-            {:W('UserEducationInfo',array('mid'=>$mid, 'uid'=>$uid, 'followstate'=>$followstate))}
+            {:W('UserEducationInfo',array('mid'=>0, 'uid'=>$uid, 'followstate'=>2))}
 
             <volist name='ProfileType' id='vo'>
                 <div class="profile-datalist">

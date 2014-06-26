@@ -1,8 +1,9 @@
 <div class="contTit cBline" model-node="comment_list">
     <a href="{:U('public/Mobile/personal',array('uid'=>$userInfo['uid']))}"><img class="thumb_m" src="{$userInfo.avatar_small}" uid='{$userInfo.uid}'></a>
     <h2>
-        {$userInfo.space_link}
-        
+        <!--{$userInfo.space_link}-->
+        <a href="{:U('public/Mobile/personal',array('uid'=>$userInfo['uid']))}">{$userInfo.uname}</a>
+
         <p class="xz">
             <php>if(count($userInfo['groupData'][$userInfo['uid']])>0){</php>
                 <volist name="userInfo['groupData'][$userInfo['uid']]" id="v2">
@@ -33,10 +34,6 @@
     function delComment(obj) {
         var attrs = M.getEventArgs(obj);
 
-        //var comment_list = $(obj).parent().parent().parent().parent().parent().parent().parent().parent().find('div[model-node=comment_detail]');
-        //alert($(obj));
-        //return;
-        //core.comment.init(attrs, comment_list);
         $(obj).parent().parent().parent().fadeOut();
         if ("undefined" == typeof (core.comment)) {
             core.plugFunc('comment', function () {
