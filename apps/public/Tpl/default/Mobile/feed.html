@@ -59,11 +59,11 @@
                             <php>if($qqtoken==1) {</php>
                                 <a class="ico-qq" href="javascript:void(0);" onclick="core.share.ShareTengXun({$feedInfo.feed_id});" title="分享到腾讯微博" style="height:18px; vertical-align:bottom;"></a>
                             <php>}</php>
-                            <php>if($feedInfo['user_info']['uid'] != $GLOBALS['ts']['mid']) {</php>
+                            <!--<php>if($feedInfo['user_info']['uid'] != $GLOBALS['ts']['mid']) {</php>
                             <eq name='feedInfo.actions.favor' value='true'>
                                 {:W('Collection',array('type'=>'btn','sid'=>$feedInfo['feed_id'],'stable'=>'feed','sapp'=>$feedInfo['app']))}
                             </eq>
-                            <php>}</php>
+                            <php>}</php>-->
                             <!--<a href="javascript:void(0);" onclick="showInviteAnswerDiv();">邀请回答</a> -->
                             <!--<a href="javascript:void(0);" onclick="if($('#AddQuestionDiv').css('display')=='none')  $('#AddQuestionDiv').show();  else  $('#AddQuestionDiv').hide(); ">要求补充</a>-->
                             <php>if(in_array('comment',$weibo_premission)):</php>

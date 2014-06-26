@@ -19,7 +19,7 @@ class UserBaseInfoWidget extends Widget {
 		$uid = intval ( $data ['uid'] );
 		
 		$var =	model('User')->getUserInfo($uid);
-		$var['mid'] = $GLOBALS['ts']['mid'];
+		$var['mid'] = intval ( $data ['mid'] );
 		
 		$this->_config = model('Xdata')->get('admin_Config:register');
 		$var['config']=$this->_config;

@@ -8,8 +8,6 @@
             <a href="{$vo.user_info.space_url}"><img class="thumb" src="{$vo.user_info.avatar_small}" event-node="face_card" uid='{$vo.user_info.uid}'></a>
             <h2>
                 {$vo.user_info.space_link}        
-                
-                                
                 <p class="xz">
                     <php>if(count($vo['user_info']['groupData'][$vo['user_info']['uid']])>0){</php>
                         <volist name="vo['user_info']['groupData'][$vo['user_info']['uid']]" id="v2">
