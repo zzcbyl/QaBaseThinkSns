@@ -241,6 +241,18 @@ class MobileAction extends Action
 	}
 	
 	/**
+	* 批量获取多个用户的统计数目
+	* 
+	* @param array $uids
+	*        	用户uid数组
+	* @return void
+	*/
+	private function _assignUserCount($uids) {
+		$user_count = model ( 'UserData' )->getUserDataByUids ( $uids );
+		$this->assign ( 'user_count', $user_count );
+	}
+	
+	/**
 	* 个人主页头部数据
 	* 
 	* @return void
@@ -597,6 +609,158 @@ class MobileAction extends Action
 			$this->uid 
 			) );
 		$this->setDescription ( t ( $user_category . $user_info ['location'] . ',' . implode ( ',', $user_tag [$this->uid] ) . ',' . $user_info ['intro'] ) );
+		$this->display ();
+	}
+	
+	
+	/**
+	* 关注列表
+	*/
+	public function followlist() {
+		// 获取用户信息
+		$user_info = model ( 'User' )->getUserInfo ( $this->uid );
+		// 用户为空，则跳转用户不存在
+		if (empty ( $user_info )) {
+			$this->error ( L ( 'PUBLIC_USER_NOEXIST' ) );
+		}
+		// 个人空间头部
+		$this->_top ();
+		// 判断隐私设置
+		$userPrivacy = $this->privacy ( $this->uid );
+		if ($userPrivacy ['space'] !== 1) {			
+			$following_list = model ( 'Follow' )->getFollowingList ( $this->uid, t ( $_GET ['gid'] ), 20 );
+
+			$fids = getSubByKey ( $following_list ['data'], 'fid' );
+			if ($fids) {
+				$uids = array_merge ( $fids, array (
+					$this->uid 
+					) );
+			} else {
+				$uids = array (
+					$this->uid 
+					);
+			}
+			// 获取用户组信息
+			$userGroupData = model ( 'UserGroupLink' )->getUserGroupData ( $uids );
+			$this->assign ( 'userGroupData', $userGroupData );
+			$this->_assignFollowState ( $uids );
+			$this->_assignUserInfo ( $uids );
+			$this->_assignUserProfile ( $uids );
+			//$this->_assignUserTag ( $uids );
+			$this->_assignUserCount ( $fids );
+			// 关注分组
+			//($this->mid == $this->uid) && $this->_assignFollowGroup ( $fids );
+			
+			$this->assign ( 'following_list', $following_list );
+		} else {
+			$this->_assignUserInfo ( $this->uid );
+		}
+		$this->assign ( 'userPrivacy', $userPrivacy );
+		
+		$this->setTitle ( $user_info['uname'].'的关注' );
+		$this->setKeywords ($user_info['uname'].'的关注');
+		$this->display ();
+	}
+	
+	
+	
+	/**
+	* 粉丝列表
+	*/
+	public function followerlist() {
+		// 获取用户信息
+		$user_info = model ( 'User' )->getUserInfo ( $this->uid );
+		// 用户为空，则跳转用户不存在
+		if (empty ( $user_info )) {
+			$this->error ( L ( 'PUBLIC_USER_NOEXIST' ) );
+		}
+		// 个人空间头部
+		$this->_top ();
+		// 判断隐私设置
+		$userPrivacy = $this->privacy ( $this->uid );
+		if ($userPrivacy ['space'] !== 1) {
+			$follower_list = model ( 'Follow' )->getFollowerList ( $this->uid, 20 );
+			$fids = getSubByKey ( $follower_list ['data'], 'fid' );
+			if ($fids) {
+				$uids = array_merge ( $fids, array (
+						$this->uid 
+				) );
+			} else {
+				$uids = array (
+						$this->uid 
+				);
+			}
+			// 获取用户用户组信息
+			$userGroupData = model ( 'UserGroupLink' )->getUserGroupData ( $uids );
+			$this->assign ( 'userGroupData', $userGroupData );
+			$this->_assignFollowState ( $uids );
+			$this->_assignUserInfo ( $uids );
+			$this->_assignUserProfile ( $uids );
+			//$this->_assignUserTag ( $uids );
+			$this->_assignUserCount ( $fids );
+			// 更新查看粉丝时间
+			if ($this->uid == $this->mid) {
+				$t = time () - intval ( $GLOBALS ['ts'] ['_userData'] ['view_follower_time'] ); // 避免服务器时间不一致
+				model ( 'UserData' )->setUid ( $this->mid )->updateKey ( 'view_follower_time', $t, true );
+			}
+			$this->assign ( 'follower_list', $follower_list );
+		} else {
+			$this->_assignUserInfo ( $this->uid );
+		}
+		$this->assign ( 'userPrivacy', $userPrivacy );
+		
+		$this->setTitle ( $user_info['uname'].'的粉丝' );
+		$this->setKeywords ($user_info['uname'].'的粉丝');
+		$this->display ();
+	}
+	
+	/**
+	* 好友列表
+	*/
+	public function friendlist() {
+		// 获取用户信息
+		$user_info = model ( 'User' )->getUserInfo ( $this->uid );
+		// 用户为空，则跳转用户不存在
+		if (empty ( $user_info )) {
+			$this->error ( L ( 'PUBLIC_USER_NOEXIST' ) );
+		}
+		// 个人空间头部
+		$this->_top ();
+	
+		// 判断隐私设置
+		$userPrivacy = $this->privacy ( $this->uid );
+		if ($userPrivacy ['space'] !== 1) {
+			$following_list = model ( 'Follow' )->getFriendList ( $this->uid, 20 );
+			$fids = getSubByKey ( $following_list ['data'], 'fid' );
+			if ($fids) {
+				$uids = array_merge ( $fids, array (
+					$this->uid 
+					) );
+			} else {
+				$uids = array (
+					$this->uid 
+					);
+			}
+			// 获取用户组信息
+			$userGroupData = model ( 'UserGroupLink' )->getUserGroupData ( $uids );
+			$this->assign ( 'userGroupData', $userGroupData );
+			$this->_assignFollowState ( $uids );
+			$this->_assignUserInfo ( $uids );
+			$this->_assignUserProfile ( $uids );
+			//$this->_assignUserTag ( $uids );
+			$this->_assignUserCount ( $fids );
+			// 关注分组
+			//($this->mid == $this->uid) && $this->_assignFollowGroup ( $fids );
+			
+			//print_r($following_list);
+			$this->assign ( 'following_list', $following_list );
+		} else {
+			$this->_assignUserInfo ( $this->uid );
+		}
+		$this->assign ( 'userPrivacy', $userPrivacy );
+		
+		$this->setTitle ( $user_info['uname'].'的好友' );
+		$this->setKeywords ($user_info['uname'].'的好友');
 		$this->display ();
 	}
 }
