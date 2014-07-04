@@ -380,6 +380,13 @@ class FeedListMobileWidget extends Widget {
 				$list =  model('Feed')->getInviteList($current_uid, $this->limitnums, $LoadWhere, $var['newcount']);
 				//print_r($list);
 				break;
+				
+			case 'searchbyid'://所有的 --正在发生的
+				$feed_ids = explode(",",$var['feedidlist']);
+				$list = model('Feed')->getQuestionAndAnswerBySearchID($feed_ids);	
+				
+				//print_r($list);
+				break;
 		}
     	// 分页的设置
         isset($list['html']) && $var['html'] = $list['html'];
