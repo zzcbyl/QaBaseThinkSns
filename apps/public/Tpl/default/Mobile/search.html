@@ -1,0 +1,14 @@
+<include file="__THEME__/mobile_header" />
+<div class="container" style="width:auto; background:#fff;">
+    <div style="padding:5px">
+        <form action="{:U('public/Mobile/search')}" method="post">
+            请输入您的问题：<input type="text" name="keywork" value="{$word}" class="input_tips" style="height:25px; line-height:25px; width:200px; display:inline" />
+            <input type="hidden" name="" />
+            <input type="submit" value="搜索"  style="height:25px; width:50px;"  />
+        </form>
+    </div>
+    <div style=" border-bottom:1px solid #d9d9d9; margin:5px 5px 0 5px; font-size:14px; font-weight:bold; color:#7b7b7b; padding-bottom:2px;">相关提问</div>
+    {:W('FeedListMobile',array('type'=>'searchbyid','feedidlist'=>$idlist))}
+</div>
+
+<include file="__THEME__/mobile_footer" />

@@ -137,7 +137,7 @@ M.addEventFns({
 
             var inviteObj = this.parentModel;
             var inviteList = $(inviteObj).find('input').get(2);
-
+            
             core.weibo_mobile.post_feed(_this, mini_editor, textarea, description_editor, description, questionid, false, '', 0, inviteList);
         }
     },
@@ -186,8 +186,8 @@ M.addEventFns({
 
             var questionid_editor = this.parentModel.parentModel.childModels['mini_editor'][0];
             var questionid = $(mini_editor).find('input').get(0);
-//            alert(textarea.value);
-//            alert(questionid.value);
+            //            alert(textarea.value);
+            //            alert(questionid.value);
             core.weibo_mobile.post_feed(_this, mini_editor, textarea, null, null, questionid, false, "", true);
         }
     },

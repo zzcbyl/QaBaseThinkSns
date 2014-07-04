@@ -763,4 +763,76 @@ class MobileAction extends Action
 		$this->setKeywords ($user_info['uname'].'的好友');
 		$this->display ();
 	}
+	
+	public function object_array($array) {  
+		if(is_object($array)) {  
+			$array = (array)$array;  
+		} if(is_array($array)) {  
+			foreach($array as $key=>$value) {  
+				$array[$key] = $this->object_array($value);  
+			}  
+		}  
+		return $array;  
+	} 
+	
+	public function curls($url, $timeout = '1000')
+	{
+		// 1. 初始化
+		$ch = curl_init();
+		// 2. 设置选项，包括URL
+		curl_setopt($ch, CURLOPT_URL, $url);
+		curl_setopt($ch, CURLOPT_TIMEOUT, $timeout);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($ch, CURLOPT_HEADER, 0);
+		// 3. 执行并获取HTML文档内容
+		$info = curl_exec($ch);
+		// 4. 释放curl句柄
+		curl_close($ch);
+
+		return $info;
+	}
+	
+	/**
+	* 解析json串
+	* @param type $json_str
+	* @return type
+	*/
+	function analyJson($json_str) {
+		$json_str = str_replace('＼＼', '', $json_str);
+		$out_arr = array();
+		preg_match('/{.*}/', $json_str, $out_arr);
+		if (!empty($out_arr)) {
+			$result = json_decode($out_arr[0], TRUE);
+		} else {
+			return FALSE;
+		}
+		return $result;
+	}
+	
+	/** 搜索页面
+	*/
+	public function search()
+	{
+		$idlist = '';
+		if($_POST['keywork'])
+		{
+			$url = 'http://api.luqinwenda.com/s.aspx?key='.$_POST['keywork'];
+			$Result = file_get_contents($url);
+
+			$jsonArr = $this->analyJson($Result);
+			
+			if(intval($jsonArr['count'])>0)
+			{
+				for($i = 0; $i < count($jsonArr['items']); $i++)
+				{
+					$idlist .= $jsonArr['items'][$i]['_id'].',';
+				}
+			}
+			$this->assign ( 'word', $_POST['keywork'] );
+		}
+		$this->assign ( 'idlist', $idlist );
+		$this->display ();
+	}
+	
+	
 }
