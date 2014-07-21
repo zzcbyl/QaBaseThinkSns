@@ -817,7 +817,7 @@ class MobileAction extends Action
 		if($_POST['keywork'])
 		{
 			$url = 'http://api.luqinwenda.com/s.aspx?key='.$_POST['keywork'];
-			$Result = file_get_contents($url);
+			$Result = $this->curls($url);
 
 			$jsonArr = $this->analyJson($Result);
 			
