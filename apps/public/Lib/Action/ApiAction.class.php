@@ -240,8 +240,18 @@ class ApiAction
 	{
 		$where =' (`is_audit`=1 OR `is_audit`=0) AND `is_del` = 0 AND `feed_questionid`=0 AND `add_feedid` = 0  ';
 		$list = model('Feed')->getList($where,5,'answer_count desc, publish_time desc');
-		//print_r($list['data']);
-		echo json_encode($list['data']);
+		
+		$returnData = Array();
+		foreach($list['data'] as $k=>$v)
+		{
+			$data = Array();
+			$data['feed_id'] = $v['feed_id'];
+			$data['body'] = $v['body'];
+			$data['description'] = $v['description'];
+			$returnData[$k] = $data;
+		}
+
+		echo json_encode($returnData);
 	}
 	
 	/**
@@ -254,7 +264,15 @@ class ApiAction
 	{
 		$where =' (`is_audit`=1 OR `is_audit`=0) AND `is_del` = 0 AND `feed_questionid`=0 AND `add_feedid` = 0  ';
 		$NewQuestion = model('Feed')->getQuestionList($where, 5);
-		//print_r($NewQuestion['data']);
-		echo json_encode($NewQuestion['data']);
+		$returnData = Array();
+		foreach($NewQuestion['data'] as $k=>$v)
+		{
+			$data = Array();
+			$data['feed_id'] = $v['feed_id'];
+			$data['body'] = $v['body'];
+			$data['description'] = $v['description'];
+			$returnData[$k] = $data;
+		}
+		echo json_encode($returnData);
 	}
 }
