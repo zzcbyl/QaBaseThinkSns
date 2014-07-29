@@ -1,6 +1,6 @@
-ï»¿<?php
+<?php
 /**
- * å¯¹å¤–æŽ¥å£
+ * ¶ÔÍâ½Ó¿Ú
  * @author zhangzc
  * @version TS3.0
  */
@@ -8,7 +8,7 @@ class ApiAction
 {
     private $limitnums = 10;
 	/**
-	 * å…¨ç«™é—®é¢˜
+	 * È«Õ¾ÎÊÌâ
 	 *
 	 * @return JSON
 	 *
@@ -16,7 +16,7 @@ class ApiAction
 	public function getAllFeed()
 	{
 		$where =" (is_audit=1 OR is_audit=0) AND is_del = 0 AND feed_questionid=0 AND add_feedid=0";
-		if($var['loadId'] > 0){ //éžç¬¬ä¸€æ¬¡
+		if($var['loadId'] > 0){ //·ÇµÚÒ»´Î
 			$where .=" AND `last_updtime` < '".intval($var['loadId'])."'";
 		}
 		$list = model('Feed')->getQuestionAndAnswer($where,$this->limitnums);
@@ -25,16 +25,16 @@ class ApiAction
 	}
 	
 	/**
-	 * èŽ·å–æˆ‘çš„é—®é¢˜
+	 * »ñÈ¡ÎÒµÄÎÊÌâ
 	 * 
-	 * @param uid  ç”¨æˆ·ID
+	 * @param uid  ÓÃ»§ID
 	 * @return JSON
 	 *
 	 */	
 	public function getMyQuestion()
 	{
 		$current_uid = intval($_GET['uid']);
-		if($var['loadId'] > 0){ //éžç¬¬ä¸€æ¬¡
+		if($var['loadId'] > 0){ //·ÇµÚÒ»´Î
 			$LoadWhere = "AND publish_time < '".intval($var['loadId'])."'";
 		}
 		$where =' uid='.$current_uid.' AND is_del = 0 AND feed_questionid=0 AND add_feedid=0 AND (is_audit=1 OR is_audit=0) '.$LoadWhere;
@@ -43,16 +43,16 @@ class ApiAction
 	}
 	
 	/**
-	 * èŽ·å–æˆ‘çš„å›žç­”
+	 * »ñÈ¡ÎÒµÄ»Ø´ð
 	 *
-	 * @param uid ç”¨æˆ·ID
+	 * @param uid ÓÃ»§ID
 	 * @return JSON
 	 *
 	 */ 	
 	public function getMyAnswer()
 	{
 		$current_uid = intval($_GET['uid']);
-		if($var['loadId'] > 0){ //éžç¬¬ä¸€æ¬¡
+		if($var['loadId'] > 0){ //·ÇµÚÒ»´Î
 			$LoadWhere = "AND publish_time < '".intval($var['loadId'])."'";
 		}
 		$where =' uid='.$current_uid.' AND is_del = 0 AND feed_questionid!=0 AND add_feedid=0 AND (is_audit=1 OR is_audit=0) '.$LoadWhere;
@@ -61,16 +61,16 @@ class ApiAction
 	}
 	
 	/**
-	 * é‚€è¯·æˆ‘çš„
+	 * ÑûÇëÎÒµÄ
 	 *
-	 * @param uid ç”¨æˆ·ID
+	 * @param uid ÓÃ»§ID
 	 * @return JSON
 	 *
 	 */	
 	public function getInviteMe()
 	{
 		$current_uid = intval($_GET['uid']);
-		if($var['loadId'] > 0){ //éžç¬¬ä¸€æ¬¡
+		if($var['loadId'] > 0){ //·ÇµÚÒ»´Î
 			$LoadWhere = "invite_answer_id < '".intval($var['loadId'])."'";
 		}
 		$list =  model('Feed')->getInviteList($current_uid, $this->limitnums, $LoadWhere, $var['newcount']);
@@ -78,9 +78,9 @@ class ApiAction
 	}
 	
 	/**
-	 * èŽ·å–æˆ‘çš„å…³æ³¨
+	 * »ñÈ¡ÎÒµÄ¹Ø×¢
 	 *
-	 * @param uid ç”¨æˆ·ID
+	 * @param uid ÓÃ»§ID
 	 * @return JSON
 	 *
 	 */	
@@ -99,7 +99,7 @@ class ApiAction
 				$this->uid 
 				);
 		}
-		// èŽ·å–ç”¨æˆ·ç»„ä¿¡æ¯
+		// »ñÈ¡ÓÃ»§×éÐÅÏ¢
 		$follow_state = model ( 'Follow' )->getFollowStateByFids ( $current_uid, $fids );
 		$ArrayData['follow_state']=$follow_state;
 		
@@ -118,9 +118,9 @@ class ApiAction
 	}
 	
 	/**
-	 * èŽ·å–æˆ‘çš„ç²‰ä¸
+	 * »ñÈ¡ÎÒµÄ·ÛË¿
 	 *
-	 * @param uid ç”¨æˆ·ID
+	 * @param uid ÓÃ»§ID
 	 * @return JSON
 	 *
 	 */	
@@ -139,7 +139,7 @@ class ApiAction
 				$this->uid 
 				);
 		}
-		// èŽ·å–ç”¨æˆ·ç»„ä¿¡æ¯
+		// »ñÈ¡ÓÃ»§×éÐÅÏ¢
 		$follow_state = model ( 'Follow' )->getFollowStateByFids ( $current_uid, $fids );
 		$ArrayData['follow_state']=$follow_state;
 		
@@ -158,9 +158,9 @@ class ApiAction
 	}
 	
 	/**
-	 * èŽ·å–æˆ‘çš„å¥½å‹
+	 * »ñÈ¡ÎÒµÄºÃÓÑ
 	 *
-	 * @param uid ç”¨æˆ·ID
+	 * @param uid ÓÃ»§ID
 	 * @return JSON
 	 *
 	 */	
@@ -179,7 +179,7 @@ class ApiAction
 				$this->uid 
 				);
 		}
-		// èŽ·å–ç”¨æˆ·ç»„ä¿¡æ¯
+		// »ñÈ¡ÓÃ»§×éÐÅÏ¢
 		$follow_state = model ( 'Follow' )->getFollowStateByFids ( $current_uid, $fids );
 		$ArrayData['follow_state']=$follow_state;
 		
@@ -198,9 +198,9 @@ class ApiAction
 	}
 	
 	/**
-	 * é€šè¿‡IDèŽ·å–ç”¨æˆ·
+	 * Í¨¹ýID»ñÈ¡ÓÃ»§
 	 *
-	 * @param uid ç”¨æˆ·ID
+	 * @param uid ÓÃ»§ID
 	 * @return JSON
 	 *
 	 */	
@@ -215,9 +215,9 @@ class ApiAction
 	}
 	
 	/**
-	 * é€šè¿‡OpenIDèŽ·å–ç”¨æˆ·
+	 * Í¨¹ýOpenID»ñÈ¡ÓÃ»§
 	 *
-	 * @param uid ç”¨æˆ·ID
+	 * @param uid ÓÃ»§ID
 	 * @return JSON
 	 *
 	 */	
@@ -231,7 +231,7 @@ class ApiAction
 	}
 	
 	/**
-	 * çƒ­é—¨é—®é¢˜(5æ¡)
+	 * ÈÈÃÅÎÊÌâ(5Ìõ)
 	 *
 	 * @return JSON
 	 *
@@ -250,12 +250,44 @@ class ApiAction
 			$data['description'] = $v['description'];
 			$returnData[$k] = $data;
 		}
-
-		echo '{"data":'.json_encode($returnData).'}';
+		
+		echo '{"data":'.$this->JSON($returnData).'}';
 	}
 	
+	function JSON($array) {
+
+		$this->	arrayRecursive($array, 'urlencode', true);
+		$json = json_encode($array);
+		return urldecode($json);
+	}
+
+	function arrayRecursive(&$array, $function, $apply_to_keys_also = false)
+	{
+		static $recursive_counter = 0;
+		if (++$recursive_counter > 1000) {
+			die('possible deep recursion attack');
+		}
+		foreach ($array as $key => $value) {
+			if (is_array($value)) {
+				$this->arrayRecursive($array[$key], $function, $apply_to_keys_also);
+			} else {
+				$array[$key] = $function($value);
+			}
+			
+			if ($apply_to_keys_also && is_string($key)) {
+				$new_key = $function($key);
+				if ($new_key != $key) {
+					$array[$new_key] = $array[$key];
+					unset($array[$key]);
+				}
+			}
+		}
+		$recursive_counter--;
+	}
+	
+	
 	/**
-	 * æœ€æ–°é—®é¢˜(5æ¡)
+	 * ×îÐÂÎÊÌâ(5Ìõ)
 	 *
 	 * @return JSON
 	 *
@@ -273,6 +305,6 @@ class ApiAction
 			$data['description'] = $v['description'];
 			$returnData[$k] = $data;
 		}
-		echo '{"data":'.json_encode($returnData).'}';
+		echo '{"data":'.$this->JSON($returnData).'}';
 	}
 }
