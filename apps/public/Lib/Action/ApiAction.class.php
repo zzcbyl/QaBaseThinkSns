@@ -251,7 +251,7 @@ class ApiAction
 			$returnData[$k] = $data;
 		}
 
-		echo '{data:'.json_encode($returnData).'}';
+		echo '{"data":'.json_encode($returnData).'}';
 	}
 	
 	/**
@@ -273,6 +273,6 @@ class ApiAction
 			$data['description'] = $v['description'];
 			$returnData[$k] = $data;
 		}
-		echo '{data:'.json_encode($returnData).'}';
+		echo '{"data":'.json_encode($returnData).'}';
 	}
 }
