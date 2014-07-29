@@ -257,7 +257,6 @@ class ApiAction
 	function JSON($array) {
 
 		$this->	arrayRecursive($array, 'urlencode', true);
-
 		$json = json_encode($array);
 		return urldecode($json);
 	}
@@ -285,11 +284,7 @@ class ApiAction
 		}
 		$recursive_counter--;
 	}
-
- 
-
-
-		
+	
 	
 	/**
 	 * 最新问题(5条)
