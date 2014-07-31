@@ -1,0 +1,185 @@
+<include file="__THEME__/mobile_pyqheader" />
+<style>
+    .contentImg img { padding:3px 1px;}
+    .container { letter-spacing:0.3px;}
+</style>
+<div class="container" style="width:auto; background:#fff; border:none; padding:0 5px;"> 
+    <div style="clear:both;"></div>
+    <div style="float:left;"><a href="{:U('public/mobile/topiclist')}">返回</a></div>
+    <div style="clear:both;"></div>
+    <div style="border-top:1px solid #d9d9d9;">
+        <div class="newTopicList" style="padding:5px 0;">
+            <div style="float:left;">
+                <img src="{$topicData['userinfo']['avatar_small']}" style="height:30px; width:30px;" />
+            </div>
+            <div style="padding-left:35px;">
+                <div><a>{$topicData['userinfo']['uname']}</a></div>
+                <div style="margin-top:5px;"><php>echo nl2br($topicData['topic_content']);</php></div>
+                <div class="contentImg">
+                    <volist name ="topicData.topicImage" id="vlimg">
+                        <a href="javascript:openBig({$topicData['topic_id']}, {$i}, '{$vlimg['img']}', '{$vlimg['suolvimg']}');"><img id="contentImg{$topicData['topic_id']}{$i}" src="{$vlimg['suolvimg']}" /></a>
+                    </volist>
+                </div>
+            </div>
+        </div>
+        <div style="border-bottom:1px solid #efefef; line-height:20px;">
+            <div style="float:left;">评论列表</div>
+            <div style="float:right;">评论<span id="comment_count"><neq name="topicData['topic_commentcount']" value="0">({$topicData['topic_commentcount']})</neq></span></div>
+            <div style="clear:both;"></div>
+        </div>
+        <div style="padding:10px 0 5px 10px;">
+            <textarea name="commentcontent" id="commentcontent" class="input_tips" style="line-height:25px; width:250px; display:inline; height:auto; font-size:12px"></textarea>
+            <input type="hidden" id="HidTopicID"  value="{$topicData['topic_id']}" />
+            <input type="hidden" id="HidParentCommentID"  value="0" />
+            <input type="hidden" id="HidParentContent"  value="" />
+        </div>
+        <div style="float:right; margin-right:10px;"><button type="submit" id="fileSubmit" onclick="addPYQComment();">提交</button></div>
+        <div style="clear:both;"></div>
+        <div id="commentList" style="margin-top:10px;">
+            <volist name="commentList.data" id="commentvl">
+                <div id="comment_{$commentvl['comment_id']}" class="commentDiv" style="margin:5px 0; padding:2px 0; border-bottom:1px dotted #efefef; cursor:pointer;" onclick="CallBackComment({$commentvl['comment_id']},'{$commentvl['userinfo']['uname']}');">
+                    <div style="float:left;">
+                        <a href="javascript:void(0);" onclick="jumpA('{:U('public/mobile/mytopic',array('uid'=>$commentvl['userinfo']['uid']))}');"><img src="{$commentvl['userinfo']['avatar_small']}" style="height:30px; width:30px;" /></a>
+                    </div>
+                    <div style="padding-left:35px;">
+                        <div>
+                            <php>
+                                if(empty($commentvl['parentcomment']))
+                                {
+                            </php>
+                                <a href="javascript:void(0);" onclick="jumpA('{:U('public/mobile/mytopic',array('uid'=>$commentvl['userinfo']['uid']))}');">{$commentvl['userinfo']['uname']}</a>
+                            <php>}else{</php>
+                                <a href="javascript:void(0);" onclick="jumpA('{:U('public/mobile/mytopic',array('uid'=>$commentvl['userinfo']['uid']))}');">{$commentvl['userinfo']['uname']}</a>回复<a href="javascript:void(0);" onclick="jumpA('{:U('public/mobile/mytopic',array('uid'=>$commentvl['parentcomment']['userinfo']['uid']))}');">{$commentvl['parentcomment']['userinfo']['uname']}</a>
+                            <php>}</php>
+
+                            <php>if($commentvl['comment_uid']==$GLOBALS['ts']['mid']) { </php>
+                                <a id="delCommentA" class="ico-close2" style="float:right; margin-right:5px;" title="删除" href="javascript:void(0);" onclick="delTopic({$commentvl['comment_id']});"></a>
+                            <php>}</php>
+                        </div>
+                        <div style="margin-top:5px;"><php>echo nl2br($commentvl['comment_content']);</php></div>
+                    </div>
+                </div>
+            </volist>
+        </div>
+        <div id="page" class="page">
+                {$commentList.html}</div>
+    </div>
+</div>
+<include file="__THEME__/mobile_footer" />
+
+<script type="text/javascript">
+
+
+    function openBig(topicid, index, src, suoimg) {
+        if ($('#contentImg' + topicid + index).attr('src') == suoimg) {
+            $('#contentImg' + topicid + index).css('width', $(document.body).width() - 50);
+            $('#contentImg' + topicid + index).attr('src', src);
+        }
+        else {
+            $('#contentImg' + topicid + index).attr('src', suoimg);
+            $('#contentImg' + topicid + index).css('width', 'auto');
+        }
+    }
+
+    function addPYQComment() {
+        if ($("#commentcontent").val() == '') {
+            ui.error('请输入评论内容');
+            return;
+        }
+        $.get(U('public/mobile/addPYQComment'), { 'topicID': $('#HidTopicID').val(), 'parentID': $('#HidParentCommentID').val(), 'commentContent': $('#commentcontent').val() }, function (msg) {
+            if (msg.status == "0" || msg.status == "-1") {
+                ui.error(msg.data);
+                return;
+            }
+
+            if (msg.status == "1") {
+                if (msg.data != '') {
+                    var before = $('#commentList div').eq(0);
+                    if (before.length > 0) {
+                        var newDiv = $(msg.data);
+                        newDiv.insertBefore(before);
+                    }
+                    else {
+                        $('#commentList').html(msg.data);
+                    }
+                    $('#commentcontent').val('');
+                    $('#HidParentCommentID').val('0');
+                    $('#HidParentContent').val('');
+                    var cc = $('#comment_count').html();
+                    if (cc != '') {
+                        var ccInt = parseInt(cc.replace('(', '').replace(')', ''));
+                        ccInt++;
+                        $('#comment_count').html('(' + ccInt + ')');
+                    }
+                    else {
+                        $('#comment_count').html('(1)')
+                    }
+                    ui.success('评论成功');
+                }
+            }
+        }, 'json');
+    }
+    $(document).ready(function () {
+        $('#commentcontent').focus(function () {
+
+            if ($('#HidParentCommentID').val() != '0' && rgb2hex($('#commentcontent').css('color')) != '#000000') {
+                $('#commentcontent').val('');
+                $('#commentcontent').css('color', '#000');
+            }
+        })
+        $('#commentcontent').blur(function () {
+            if ($('#HidParentCommentID').val() != '0' && $('#commentcontent').val() == '') {
+                $('#commentcontent').val($('#HidParentContent').val());
+                $('#commentcontent').css('color', '#999');
+            }
+        })
+    });
+
+    function CallBackComment(parentid, uname) {
+        $('#HidParentCommentID').val(parentid);
+        $('#commentcontent').val('回复' + uname + "：");
+        $('#HidParentContent').val('回复' + uname + "：");
+        $('#commentcontent').css('color','#999');
+    }
+
+    function stopPropagation(e) {
+        e = e || window.event;  
+        if (e.stopPropagation) { //W3C阻止冒泡方法  
+            e.stopPropagation();
+        } else {
+            e.cancelBubble = true; //IE阻止冒泡方法  
+        }
+    }  
+
+    function rgb2hex(rgb) {
+        rgb = rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
+        function hex(x) {
+            return ("0" + parseInt(x).toString(16)).slice(-2);
+        }
+        return "#" + hex(rgb[1]) + hex(rgb[2]) + hex(rgb[3]);
+    }
+
+    function delTopic(commentid) {
+        var e = window.event || arguments.callee.caller.arguments[0];
+        stopPropagation(e);  
+        if (confirm('确定要删除吗?')) {
+            $.get(U('public/Mobile/delPYQComment'), { 'commentID': commentid }, function (msg) {
+                if (msg.status == "0" || msg.status == "-1") {
+                    ui.error(msg.data);
+                    return;
+                }
+                if (msg.status == "1" && parseInt(msg.data) > 0) {
+                    ui.success('删除成功');
+                    $('#comment_' + commentid).hide();
+                }
+            }, 'json');
+        }
+    }
+
+    function jumpA(url) {
+        var e = window.event || arguments.callee.caller.arguments[0];
+        stopPropagation(e);
+
+        location.href = url;
+    }
+</script>

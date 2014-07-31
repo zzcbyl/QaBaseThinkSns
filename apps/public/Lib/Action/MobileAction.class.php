@@ -834,5 +834,175 @@ class MobileAction extends Action
 		$this->display ();
 	}
 	
+	/** 朋友圈添加主题
+	*/
+	public function topicadd()
+	{
+		if($_POST['upload']==1)
+		{
+			$ImgURL='';
+			if(empty($_POST['content']) && empty($_FILES['fileselect']['name'][0]))
+			{
+				$this->assign('errorInfo','发布内容不能为空');
+				$this->display();
+				return;
+			}
+			else
+			{
+				$this->assign('errorInfo','');
+				
+				if(is_array($_FILES['fileselect']) && !empty($_FILES['fileselect']['name'][0]))
+				{
+					$imgArr = $_FILES['fileselect'];
+					$errorInfo = '';
+					foreach($imgArr['size'] as $key=>$value)
+					{
+
+						if(strpos($imgArr['type'][$key],'image') === false)
+						{
+							$errorInfo .= '文件"' . $imgArr['name'][$key] . '"不是图片<br />';
+						}
+						if($value>500000)
+						{
+							$errorInfo .= '您这张"' . $imgArr['name'][$key] . '"图片大小过大，应小于500k<br />';
+						}
+					}
+					
+					if($errorInfo!='')
+					{
+						$this->assign('errorInfo',$errorInfo);
+						$this->display();
+						return;
+					}
+
+					foreach($imgArr['name'] as $key=>$value)
+					{
+						$exname=strtolower(substr($imgArr['name'][$key],(strrpos($imgArr['name'][$key],'.')+1)));
+
+						$uploadfile = $this->getname($exname); 
+						$ImgURL .= $uploadfile.';';
+						move_uploaded_file($imgArr['tmp_name'][$key], SITE_PATH . C('PYQ_IMAGE').$uploadfile);
+						
+						$original_file_name ='/pyqimage/'.$uploadfile;
+						$thumbInfo = getThumbImage($original_file_name,50,50,true,true);
+					}
+				}
+				
+				$map['topic_content'] = $_POST['content'];// str_replace(array("\r\n", "\r", "\n"),"<br />",$_POST['content']);
+				$map['topic_dt'] = time();
+				$map['topic_img'] = $ImgURL;
+				$map['topic_uid'] = $this->mid;
+				$map['topic_state'] = 1;
+				
+				$data = model('Topic')->add($map);
+				//print_r($data);
+				$this->redirect('public/Mobile/topiclist');
+			}
+		}
+		
+		$this->display();
+	}
 	
+	public function getname($exname){
+		$fileName = time().rand(1,10000000).'.'.$exname;
+		$dir = SITE_PATH . C('PYQ_IMAGE');
+		if(!is_dir($dir)){
+			mkdir($dir,0777);
+		}
+		while(true){
+			if(!is_file($dir.$fileName)){
+				$name=$fileName;
+				break;
+			}
+			$fileName = time().rand(1,10000000).'.'.$exname;
+		}
+		return $name;
+	}
+	
+	public function mytopic()
+	{
+		$userid = $this->mid;
+		if(!empty($_GET['uid']))
+		{
+			$userid	 = $_GET['uid'];
+		}
+		$this->assign('userid',$userid);
+		$this->display();
+	}
+	
+	public function topiccomment()
+	{
+		if(empty($_GET['topicid']))
+		{
+			$this->error ( '参数错误' );
+		}
+		$topicid = $_GET['topicid'];
+		//朋友圈内容
+		$data = model('topic')->getTopicByID($topicid);
+		$this->assign('topicData',$data['data'][0]);
+		//评论内容
+		$where['comment_topicid'] = $topicid;
+		$where['comment_state'] = 1;
+		$commentList = model('TopicComment')->getCommentList($where, 20);
+		$this->assign('commentList',$commentList);
+		$this->display();
+		
+	}
+	
+	public function addPYQComment()
+	{
+		// 返回数据格式
+		$return = array('status'=>1, 'data'=>'');
+		$topicid = $_GET['topicID'];
+		$content = $_GET['commentContent'];
+		$parentid = $_GET['parentID'];
+		if(empty($topicid)||empty($content))
+		{
+			$return = array('status'=>0,'data'=>'参数错误');
+			exit(json_encode($return));
+		}
+		
+		$map['comment_content'] = $content;
+		$map['comment_uid'] = $this->mid;
+		$map['comment_topicid'] = $topicid;
+		$map['comment_parentid'] = $parentid;
+		$map['comment_dt'] = time();
+		$map['comment_state'] = 1;
+		
+		$data = model('TopicComment')->add($map);
+		//修改评论数
+		model('topic')->where('topic_id='.$topicid)->setInc('topic_commentcount');
+		//获取最新评论的数据
+		$where['comment_id'] = $data;
+		$commentData = model('TopicComment')->getCommentList($where);
+		$this->assign ( 'commentvl', $commentData['data'][0] );
+		$return ['data'] = $this->fetch();
+		//$return = array('status'=>1,'data'=>$commentData);
+		exit(json_encode($return));
+	}
+	
+	public function delPYQComment()
+	{
+		// 返回数据格式
+		$return = array('status'=>1, 'data'=>'');
+		$commentid = $_GET['commentID'];
+		if(empty($commentid))
+		{
+			$return = array('status'=>0,'data'=>'参数错误');
+			exit(json_encode($return));
+		}
+		
+		$map['comment_state'] = 2;
+		$data = model('TopicComment')->where('`comment_id`='.$commentid.' and `comment_uid` = '.$GLOBALS['ts']['mid'])->save($map);
+		if($data>0)
+		{
+			$return['data'] = $data;
+		}
+		else
+		{
+			$return = array('status'=>0,'data'=>'删除失败');
+		}
+		
+		exit(json_encode($return));
+	}
 }

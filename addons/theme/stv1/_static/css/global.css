@@ -808,6 +808,8 @@ a.ico-close:hover{background-position:0 -50px;vertical-align:0;_vertical-align:2
 .ico-close1{background-position:0 -26px;width:9px;height:8px;cursor:pointer;margin:0 0 0 8px;_vertical-align:3px;}
 *+html .ico-close1{vertical-align:3px}
 a:hover .ico-close1{background-position:0 -105px;width:9px;height:8px;cursor:pointer;margin:0 0 0 8px;_vertical-align:3px;}
+.ico-close2, .ico-close2:hover{background:url(../image/del.png) no-repeat 0 -26px;width:9px;height:9px;display:inline-block;overflow:hidden }
+.ico-close2:hover{background-position:0 -82px}
 
 
 
