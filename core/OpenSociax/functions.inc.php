@@ -1441,16 +1441,17 @@ function filter_keyword($html){
 function getThumbImage($filename,$width=100,$height='auto',$cut=false,$replace=false){
     $filename  = str_ireplace(UPLOAD_URL,'',$filename); //将URL转化为本地地址
     $info      = pathinfo($filename);
+	
     $oldFile   = $info['dirname'].DIRECTORY_SEPARATOR.$info['filename'].'.'.$info['extension'];
     $thumbFile = $info['dirname'].DIRECTORY_SEPARATOR.$info['filename'].'_'.$width.'_'.$height.'.'.$info['extension'];
-
+	
     $oldFile = str_replace('\\','/', $oldFile);
     $thumbFile = str_replace('\\','/',$thumbFile);
 
     $filename   = '/'.ltrim($filename,'/');
     $oldFile    = '/'.ltrim($oldFile,'/');
     $thumbFile  = '/'.ltrim($thumbFile,'/');
-
+	//echo UPLOAD_PATH.$oldFile;
     //原图不存在直接返回
     if(!file_exists(UPLOAD_PATH.$oldFile)){
         @unlink(UPLOAD_PATH.$thumbFile);

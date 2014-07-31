@@ -6,24 +6,38 @@
  */
 class TopicCommentModel extends Model {
 
-	/*protected $tableName = 'activity_form';
-	protected $fields = array('activity_form_id','childname','childage','childsex','childheight','childminzu','childidcard','parentsname1','parentsex1','parentheight1','parentminzu1','parentsmobile1','parentsemail1','parentidcard1','parentsname2','parentsex2','parentheight2','parentminzu2','parentsmobile2','parentsemail2','parentidcard2','istogether','remarks','ctime','activityname','orderID','ispay','paytotal','paytime','paysuccesstime','location','_pk'=>'activity_form_id');
-	*/
-	/**
-	 * 获取指定的关联数据
-	 * @param integer $uid 用户ID
-	 * @param integer $type 类型ID
-	 * @return
-	 */
-	/*public function getList($childname='',$istogether=null,$order='ctime desc',$limit=20,$name='') {
-		if($name!='')
-			$map['activityname'] = $name;
-		if($childname!='')
-			$map['childname'] = $childname;
-		if($istogether!=null)
-			$map['istogether'] = $istogether;
-		$map['childname']  = array('neq','');
-		$data = $this->where($map)->order($order)->findPage($limit);
-		return $data;
-	}*/
+	protected $tableName = 'topic_comment';
+	protected $fields = array('comment_id','comment_content','comment_uid','comment_topicid','comment_parentid','comment_dt','comment_state', '_pk'=>'comment_id');
+	
+	
+	public function getCommentList($where, $limit=10)
+	{
+		$commentlist = $this->where($where)->order('comment_id desc')->findPage($limit);
+		$result=$this->CreateArr($commentlist);
+		//print_r($result);
+		return $result;
+	}
+	
+	
+	public function CreateArr($commentlist)
+	{
+		//增加答案块/评论块
+		foreach( $commentlist["data"] as $v => $vv )
+		{
+			$userinfo = model('user')->getUserInfo($vv['comment_uid']);
+			$vv['userinfo'] = $userinfo;
+			
+			if(intval($vv['comment_parentid'])>0)
+			{
+				$parentcomment = $this->where('`comment_id` = '.$vv['comment_parentid'])->select();
+				$parentuserinfo = model('user')->getUserInfo($parentcomment[0]['comment_uid']);
+				$parentcomment[0]['userinfo'] = $parentuserinfo;
+				$vv['parentcomment'] = $parentcomment[0];
+			}
+			
+			$commentlist["data"][$v] = $vv;
+		}
+		
+		return $commentlist;
+	}
 }
