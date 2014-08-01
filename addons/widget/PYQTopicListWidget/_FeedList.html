@@ -1,9 +1,9 @@
 <volist name='data' id='vl'>
 <div id="topiclist_{$vl['topic_id']}" class="newTopicList" style="padding:5px 0; border-bottom:1px solid #efefef;">
     <div style="float:left;">
-        <a href="{:U('public/mobile/mytopic',array('uid'=>$vl['userinfo']['uid']))}"><img src="{$vl['userinfo']['avatar_small']}" style="height:30px; width:30px;" /></a>
+        <a href="{:U('public/mobile/mytopic',array('uid'=>$vl['userinfo']['uid']))}"><img src="{$vl['userinfo']['avatar_small']}" style="height:50px; width:50px;" /></a>
     </div>
-    <div style="padding-left:35px;">
+    <div style="padding-left:55px;">
         <div>
             <a href="{:U('public/mobile/mytopic',array('uid'=>$vl['userinfo']['uid']))}">{$vl['userinfo']['uname']}</a>
             <php>if($vl['topic_uid']==$GLOBALS['ts']['mid']) { </php>
