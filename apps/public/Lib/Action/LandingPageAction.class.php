@@ -42,7 +42,7 @@ class LandingPageAction
 		//echo $url;
 		//return;
 		
-		if(!empty($user))
+		if($user['uid']>0)
 		{
 			$result = model('Passport')->loginLocalWhitoutPassword($openid);
 			if(empty($url))
@@ -56,14 +56,7 @@ class LandingPageAction
 		}
 		else
 		{
-			if(empty($url))
-			{
-				$this->redirect('public/Register/Homemobile', array('openid'=>$openid,'source'=>$source));
-			}
-			else
-			{
-				redirect($url);
-			}
+			$this->redirect('public/Register/Homemobile', array('openid'=>$openid,'source'=>$source));
 		}
 	}
 	/**

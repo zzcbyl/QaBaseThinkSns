@@ -289,6 +289,7 @@ class UserModel extends Model {
 			return false;
 		}
 		$map ['openid'] = $openID;
+		$map ['is_del'] = 0;
 		$data = $this->_getUserInfo ( $map );
 		return $data;
 	}
