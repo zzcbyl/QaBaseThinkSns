@@ -10,9 +10,9 @@
     <div style="border-top:1px solid #d9d9d9;">
         <div class="newTopicList" style="padding:5px 0;">
             <div style="float:left;">
-                <img src="{$topicData['userinfo']['avatar_small']}" style="height:30px; width:30px;" />
+                <img src="{$topicData['userinfo']['avatar_small']}" style="height:50px; width:50px;" />
             </div>
-            <div style="padding-left:35px;">
+            <div style="padding-left:55px;">
                 <div><a>{$topicData['userinfo']['uname']}</a></div>
                 <div style="margin-top:5px;"><php>echo nl2br($topicData['topic_content']);</php></div>
                 <div class="contentImg">
@@ -28,7 +28,7 @@
             <div style="clear:both;"></div>
         </div>
         <div style="padding:10px 0 5px 10px;">
-            <textarea name="commentcontent" id="commentcontent" class="input_tips" style="line-height:25px; width:250px; display:inline; height:auto; font-size:12px"></textarea>
+            <textarea name="commentcontent" id="commentcontent" class="input_tips" style="line-height:25px; width:300px; display:inline; height:auto; font-size:12px"></textarea>
             <input type="hidden" id="HidTopicID"  value="{$topicData['topic_id']}" />
             <input type="hidden" id="HidParentCommentID"  value="0" />
             <input type="hidden" id="HidParentContent"  value="" />
@@ -39,9 +39,9 @@
             <volist name="commentList.data" id="commentvl">
                 <div id="comment_{$commentvl['comment_id']}" class="commentDiv" style="margin:5px 0; padding:2px 0; border-bottom:1px dotted #efefef; cursor:pointer;" onclick="CallBackComment({$commentvl['comment_id']},'{$commentvl['userinfo']['uname']}');">
                     <div style="float:left;">
-                        <a href="javascript:void(0);" onclick="jumpA('{:U('public/mobile/mytopic',array('uid'=>$commentvl['userinfo']['uid']))}');"><img src="{$commentvl['userinfo']['avatar_small']}" style="height:30px; width:30px;" /></a>
+                        <a href="javascript:void(0);" onclick="jumpA('{:U('public/mobile/mytopic',array('uid'=>$commentvl['userinfo']['uid']))}');"><img src="{$commentvl['userinfo']['avatar_small']}" style="height:50px; width:50px;" /></a>
                     </div>
-                    <div style="padding-left:35px;">
+                    <div style="padding-left:55px;">
                         <div>
                             <php>
                                 if(empty($commentvl['parentcomment']))
@@ -58,6 +58,7 @@
                         </div>
                         <div style="margin-top:5px;"><php>echo nl2br($commentvl['comment_content']);</php></div>
                     </div>
+                    <div style="clear:both;"></div>
                 </div>
             </volist>
         </div>
