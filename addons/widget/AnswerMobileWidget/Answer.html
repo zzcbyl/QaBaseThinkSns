@@ -1,4 +1,4 @@
-<div class="tiwenK" model-node="weibo_post_box" style="margin:10px 0 40px 40px; padding:10px 15px;">
+<div class="tiwenK" model-node="weibo_post_box" style="margin:10px 0 40px 60px; padding:10px 15px;">
     <div style="padding-bottom:5px; font-size:14px; font-weight:bold; color:#777777;">{$title}</div>
     <div class="tiwen_area" model-node="mini_editor" model-args="prompt={$prompt}" style="width:100%;">
         <textarea id="inputor{$time}" name="at" texttype="answer" class="input_tips" style="width:95%; height:100px; display:inline; line-height:20px;" event-node="mini_editor_textarea" model-args='t=feed'><if condition="trim($topicHtml) neq ''">{$topicHtml} </if></textarea>
