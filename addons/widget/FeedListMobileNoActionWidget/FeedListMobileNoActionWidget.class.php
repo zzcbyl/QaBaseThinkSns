@@ -385,6 +385,13 @@ class FeedListMobileNoActionWidget extends Widget {
 				$feed_ids = explode(",",$var['feedidlist']);
 				$list = model('Feed')->getQuestionAndAnswerBySearchID($feed_ids);	
 				
+				if(empty($list['data']))
+				{
+					$hotwhere =' (`is_audit`=1 OR `is_audit`=0) AND `is_del` = 0 AND `feed_questionid`=0 AND `add_feedid` = 0  ';
+					$list = model('Feed')->getList($hotwhere,5,'answer_count desc, publish_time desc');
+					
+					$var['noData'] = '1';
+				}
 				//print_r($list);
 				break;
 		}
