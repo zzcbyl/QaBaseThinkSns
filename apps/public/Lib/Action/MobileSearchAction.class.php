@@ -147,6 +147,7 @@ class MobileSearchAction
 			}
 			$this->assign ( 'word', $_POST['keywork'] );
 		}
+		//print_r($idlist);
 		$this->assign ( 'idlist', $idlist );
 		$this->display ();
 	}
