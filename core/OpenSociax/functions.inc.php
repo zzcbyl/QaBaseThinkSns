@@ -48,7 +48,7 @@ function cookie($name,$value='',$option=null) {
        return;
     }
     $name = $config['prefix'].$name;
-
+	
     if (''===$value){
         //return isset($_COOKIE[$name]) ? unserialize($_COOKIE[$name]) : null;// 获取指定Cookie
         return isset($_COOKIE[$name]) ? ($_COOKIE[$name]) : null;// 获取指定Cookie
@@ -62,6 +62,7 @@ function cookie($name,$value='',$option=null) {
             //setcookie($name,serialize($value),$expire,$config['path'],$config['domain']);
             setcookie($name,($value),$expire,$config['path'],$config['domain']);
             //$_COOKIE[$name] = ($value);
+
         }
     }
 }

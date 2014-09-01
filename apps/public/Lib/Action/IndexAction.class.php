@@ -74,7 +74,6 @@ class IndexAction extends Action {
 				$this->setTitle('我的首页');
 				$this->setKeywords('我的首页');
 		}
-
 		$this->display();
 	}
 	
@@ -108,7 +107,6 @@ class IndexAction extends Action {
 	* @return void
 	*/
 	public function feed() {
-		
 		$feed_id = intval ( $_GET ['feed_id'] );
 		
 		if (empty($feed_id)) {
