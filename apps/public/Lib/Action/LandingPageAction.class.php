@@ -18,7 +18,6 @@ class LandingPageAction
 			echo '服务器繁忙，请稍后再试...';
 			return;
 		}
-		
 		$expire = 3600 * 24 * 30 * 36;
 		cookie('lqwd_openid', $openid, $expire);
 				
@@ -38,7 +37,18 @@ class LandingPageAction
 			}
 			else
 			{
-				redirect($url);
+				switch($url)
+				{
+					case '1':
+						$this->redirect('public/Mobile/ask');
+						break;
+					case '2':
+						$this->redirect('public/Mobile/answerlist', array('uid'=>'1901'));
+						break;
+					case '3':
+						$this->redirect('public/Mobile/all');
+						break;
+				}
 			}
 		}
 		else
@@ -50,9 +60,6 @@ class LandingPageAction
 			$url = 'http://weixin.luqinwenda.com/getuserinfo.aspx?openid='.$openid;
 			$UserResult = $this->curls($url);
 			$jsonUserArr = $this->analyJson($UserResult);
-			print_r($jsonUserArr);
-			echo '<br/>';	
-			
 			//print_r(model('user')->getUserInfo(2062));
 			//return;
 
