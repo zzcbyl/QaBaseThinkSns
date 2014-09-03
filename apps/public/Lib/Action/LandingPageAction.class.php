@@ -62,11 +62,13 @@ class LandingPageAction
 			$jsonUserArr = $this->analyJson($UserResult);
 			//print_r(model('user')->getUserInfo(2062));
 			//return;
+			
+			$uname = $this->getUname($jsonUserArr['nickname']);
 
 			$account = t($openid);
 			$user["login"] = t($openid);
 			$user["password"] = t($openid);
-			$user["uname"] = t($jsonUserArr['nickname']);
+			$user["uname"] = t($uname);
 			$user["sex"] = intval($jsonUserArr['sex']);
 			$user["is_active"] = 1;
 			$user["is_audit"] = 1;
@@ -84,8 +86,9 @@ class LandingPageAction
 			$user['area'] = 0;
 			$user["is_del"] = 0;
 			$user["intro"] = '';
+			$user["domain"] = '';
 			$uid = model('User')->addUserMobile($user);
-			print(model('User')->getLastSql());
+			//print(model('User')->getLastSql());
 			if($uid)
 			{
 				// 添加积分
@@ -116,12 +119,24 @@ class LandingPageAction
 				$this->redirect('public/Mobile/all');
 				
 			}
-			else
-			{
-				$this->redirect('public/Register/Homemobile', array('openid'=>$openid,'source'=>$source));
-			}
+			//else
+			//{
+			//	$this->redirect('public/Register/Homemobile', array('openid'=>$openid,'source'=>$source));
+			//}
 		}
 	}
+	
+	private function getUname ($uname)
+	{
+		$isUse = model('Register')->isValidName($uname);
+		if(!$isUse)
+		{
+			$uname = $uname.rand(1000,999999);
+			$this->getUname($uname);
+		}
+		return $uname;
+	}
+	
 	/**
 	* Action跳转(URL重定向） 支持指定模块和延时跳转
 	* @access protected

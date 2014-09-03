@@ -128,7 +128,7 @@ class RegisterModel extends Model {
 		if($name=='')
 		{
 			$this->_error = '昵称不能为空';
-			return ;
+			return false ;
 		}
 		$res = preg_match($this->_name_reg, $name) !== 0;
 		if($res) {
