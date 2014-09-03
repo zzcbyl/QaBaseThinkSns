@@ -74,7 +74,7 @@ class LandingPageAction
 			$user["is_audit"] = 1;
 			$user["is_init"] = 1;
 			$user["linknumber"] = '';
-			$user["email"] = '无';
+			$user["email"] = '-';
 			$user["realname"] = '';
 			$user["idcard"] = '';
 			$user["openid"] = t($openid);
