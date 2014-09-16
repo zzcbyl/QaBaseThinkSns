@@ -21,22 +21,12 @@ class MyApiAction
 		if($password == '******')
 			$password = '';
 		
-		$result 	= model('Passport')->loginLocal($login,$password,0);
-		if(!$result){
-			$status = 0; 
-			$info	= model('Passport')->getError();
-			$data 	= 0;
-		}else{
-			$status = 1;
-			$info 	= model('Passport')->getSuccess();
-			$data 	= $GLOBALS['mid'];
-		}
-		
-		echo $this->ajaxReturn($data,$info,$status);
+		$user 	= model('Passport')->getLocalUser($login,$password);
+		if($user)
+			echo json_encode($user);
+		else
+			echo 0;
 	}
-	
-	
-	
 	
 	
 	protected function ajaxReturn($data,$info='',$status=1,$type='JSON') {
