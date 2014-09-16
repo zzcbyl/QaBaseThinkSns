@@ -10,7 +10,8 @@ class LandingPageAction
 	{
 		$openid = cookie('lqwd_openid');
 		$url = 'http://weixin.luqinwenda.com/menu_click_landing.aspx?openid='.$openid;
-		$Result = $this->curls($url);
+		//$Result = $this->curls($url);
+		$Result = '{"status":0,"openid":"oqrMvt6yRAWFu3DmhGe4Td0nKZRo" }';
 		$jsonArr = $this->analyJson($Result);
 		$openid = $jsonArr['openid'];
 		if(empty($openid) || $openid == '' || $openid == null)
@@ -23,8 +24,7 @@ class LandingPageAction
 				
 		$url = $_GET['url'];
 		$source = $_GET['source'];
-				
-				
+		
 		//判断openid存在去登录,否则去注册
 		$user = model('User')->getUserInfoByOpenID($openid);
 				
@@ -74,7 +74,7 @@ class LandingPageAction
 			$user["is_audit"] = 1;
 			$user["is_init"] = 1;
 			$user["linknumber"] = '';
-			$user["email"] = '-';
+			$user["email"] = t($openid);
 			$user["realname"] = '';
 			$user["idcard"] = '';
 			$user["openid"] = t($openid);
