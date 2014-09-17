@@ -22,8 +22,16 @@ class MyApiAction
 			$password = '';
 		
 		$user 	= model('Passport')->getLocalUser($login,$password);
+		$result=array();
+		$resule['uid']=$user['uid'];
+		$resule['login']=$user['login'];
+		$resule['uname']=$user['uname'];
+		$resule['email']=$user['email'];
+		$resule['sex']=$user['sex'];
+		$resule['location']=$user['location'];
+		$resule['is_del']=$user['is_del'];
 		if($user)
-			echo json_encode($user);
+			echo json_encode($result);
 		else
 			echo 0;
 	}
