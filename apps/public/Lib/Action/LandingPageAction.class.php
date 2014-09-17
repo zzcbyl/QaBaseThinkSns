@@ -10,8 +10,8 @@ class LandingPageAction
 	{
 		$openid = cookie('lqwd_openid');
 		$url = 'http://weixin.luqinwenda.com/menu_click_landing.aspx?openid='.$openid;
-		//$Result = $this->curls($url);
-		$Result = '{"status":0,"openid":"oqrMvt6yRAWFu3DmhGe4Td0nKZRo" }';
+		$Result = $this->curls($url);
+		//$Result = '{"status":0,"openid":"oqrMvt6yRAWFu3DmhGe4Td0nKZRo" }';
 		$jsonArr = $this->analyJson($Result);
 		$openid = $jsonArr['openid'];
 		if(empty($openid) || $openid == '' || $openid == null)
