@@ -106,7 +106,14 @@ class LandingPageAction
 				}
 
 				//头像
-				model('Avatar')->saveRemoteAvatar($jsonUserArr['headimgurl'], $uid);
+				if($jsonUserArr!=null&&$jsonUserArr['headimgurl']!=null&&$jsonUserArr['headimgurl']!='')
+				{
+					model('Avatar')->saveRemoteAvatar($jsonUserArr['headimgurl'], $uid);
+				}
+				else
+				{
+					model('Avatar')->saveRemoteAvatar("http://www.luqinwenda.com/addons/theme/stv1/_static/image/noavatar/big.jpg", $uid);
+				}
 				
 				model('Register')->overUserInit($uid);
 				model('User')->cleanCache ( array($uid) );
