@@ -11,6 +11,7 @@
             	{:W('AvatarMobile',array('avatar'=>$User,'defaultImg'=>$User['avatar_big']))}
             </div>
             <form action="{:U('public/Register/doAvatar')}" method="post" id="following_form">
+                <input type="hidden" id="source"  name="source" value="{$source}" />
                 <div class="btn_reg"><input type="submit" value="进入" ></div>
             </form>
         </div>

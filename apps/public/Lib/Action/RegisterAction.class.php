@@ -354,7 +354,7 @@ class RegisterAction extends Action
 			unset($_SESSION['YMZCODE']);
 			unset($_SESSION['sendDT']);
 			
-			$this->redirect('public/Register/avatarmobile');			// 注册成功
+			$this->redirect('public/Register/avatarmobile', array('source'=>$_POST['source']));			// 注册成功
 		}
 		else
 		{
@@ -543,6 +543,7 @@ class RegisterAction extends Action
 		if(empty($uid)){
 			$this->error('参数错误');
 		}
+		$this->assign('source',$_GET['source']);
 		model('User')->cleanCache($uid);
 		$user = $this->_user_model->getUserInfo($uid);
 		$this->assign('User',$user);
@@ -822,7 +823,22 @@ class RegisterAction extends Action
 		}else{
 			$status = 1;
 			$info 	= model('Passport')->getSuccess();
-			$this->redirect('public/Mobile/all');
+			
+			$url = $_POST['source'];
+			switch($url)
+			{
+				case '1':
+					$this->redirect('public/Mobile/ask');
+					break;
+				case '2':
+					$this->redirect('public/Mobile/answerlist', array('uid'=>'1901'));
+					break;
+				case '3':
+					$this->redirect('public/Mobile/all');
+					break;
+				default:
+					$this->redirect('public/Mobile/all');
+			}
 		}
 	}
 
