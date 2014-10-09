@@ -21,7 +21,8 @@ class LandingPageAction
 		}
 		$expire = 3600 * 24 * 30 * 36;
 		cookie('lqwd_openid', $openid, $expire);
-				
+		
+		//$openid = $_GET['openid'];
 		$url = $_GET['url'];
 		$source = $_GET['source'];
 		
@@ -56,80 +57,85 @@ class LandingPageAction
 			//$this->redirect('public/Register/Homemobile', array('openid'=>$openid,'source'=>$source));
 			//$openid = 'oqrMvtySBUCd-r6-ZIivSwsmzr44';
 			
-			//自动注册
-			$url = 'http://weixin.luqinwenda.com/getuserinfo.aspx?openid='.$openid;
-			$UserResult = $this->curls($url);
-			$jsonUserArr = $this->analyJson($UserResult);
-			//print_r(model('user')->getUserInfo(2062));
-			//return;
-			
-			$uname = $this->getUname($jsonUserArr['nickname']);
-
-			$account = t($openid);
-			$user["login"] = t($openid);
-			$user["password"] = t($openid);
-			$user["uname"] = t($uname);
-			$user["sex"] = intval($jsonUserArr['sex']);
-			$user["is_active"] = 1;
-			$user["is_audit"] = 1;
-			$user["is_init"] = 1;
-			$user["linknumber"] = '';
-			$user["email"] = t($openid);
-			$user["realname"] = '';
-			$user["idcard"] = '';
-			$user["openid"] = t($openid);
-			$user["source"] = '';
-			$user["birthday"] = '';
-			$user["location"] = $jsonUserArr['country'].' '.$jsonUserArr['province'].' '.$jsonUserArr['city'];
-			$user["province"] = 0;
-			$user["city"] = 0;
-			$user['area'] = 0;
-			$user["is_del"] = 0;
-			$user["intro"] = '';
-			$user["domain"] = '';
-			$uid = model('User')->addUserMobile($user);
-			//print(model('User')->getLastSql());
-			if($uid)
+			$from = $_GET['from'];
+			if($from != null && $from != '' && $from == '1')
 			{
-				// 添加积分
-				model('Credit')->setUserCredit($uid,'init_default');
-				
-				// 添加至默认的用户组
-				$userGroup = model('Xdata')->get('admin_Config:register');
-				$userGroup = empty($userGroup['default_user_group']) ? C('DEFAULT_GROUP_ID') : $userGroup['default_user_group'];
-				model('UserGroupLink')->domoveUsergroup($uid, implode(',', $userGroup));
-
-				if (isset($_SESSION['third-party-type']))  {
-					$user_message = $_SESSION["third-party-user-info"];
-					$avatar = new AvatarModel($uid);
-					$avatar->saveRemoteAvatar($user_message['userface'],$uid);
-				}
-
-				//头像
-				if($jsonUserArr!=null&&$jsonUserArr['headimgurl']!=null&&$jsonUserArr['headimgurl']!='')
-				{
-					model('Avatar')->saveRemoteAvatar($jsonUserArr['headimgurl'], $uid);
-				}
-				else
-				{
-					model('Avatar')->saveRemoteAvatar("http://www.luqinwenda.com/addons/theme/stv1/_static/image/noavatar/big.jpg", $uid);
-				}
-				
-				model('Register')->overUserInit($uid);
-				model('User')->cleanCache ( array($uid) );
-				
-				//登录
-				model('Passport')->loginLocalWhitoutPassword($account);
-				unset($_SESSION['YMZCODE']);
-				unset($_SESSION['sendDT']);
-				
-				$this->redirect('public/Mobile/all');
-				
+				$this->redirect('public/Register/Homemobile', array('openid'=>$openid,'source'=>$source));
 			}
-			//else
-			//{
-			//	$this->redirect('public/Register/Homemobile', array('openid'=>$openid,'source'=>$source));
-			//}
+			else
+			{
+				
+				//自动注册
+				$url = 'http://weixin.luqinwenda.com/getuserinfo.aspx?openid='.$openid;
+				$UserResult = $this->curls($url);
+				$jsonUserArr = $this->analyJson($UserResult);
+				//print_r(model('user')->getUserInfo(2062));
+				//return;
+				
+				$uname = $this->getUname($jsonUserArr['nickname']);
+
+				$account = t($openid);
+				$user["login"] = t($openid);
+				$user["password"] = t($openid);
+				$user["uname"] = t($uname);
+				$user["sex"] = intval($jsonUserArr['sex']);
+				$user["is_active"] = 1;
+				$user["is_audit"] = 1;
+				$user["is_init"] = 1;
+				$user["linknumber"] = '';
+				$user["email"] = t($openid);
+				$user["realname"] = '';
+				$user["idcard"] = '';
+				$user["openid"] = t($openid);
+				$user["source"] = '';
+				$user["birthday"] = '';
+				$user["location"] = $jsonUserArr['country'].' '.$jsonUserArr['province'].' '.$jsonUserArr['city'];
+				$user["province"] = 0;
+				$user["city"] = 0;
+				$user['area'] = 0;
+				$user["is_del"] = 0;
+				$user["intro"] = '';
+				$user["domain"] = '';
+				$uid = model('User')->addUserMobile($user);
+				//print(model('User')->getLastSql());
+				if($uid)
+				{
+					// 添加积分
+					model('Credit')->setUserCredit($uid,'init_default');
+					
+					// 添加至默认的用户组
+					$userGroup = model('Xdata')->get('admin_Config:register');
+					$userGroup = empty($userGroup['default_user_group']) ? C('DEFAULT_GROUP_ID') : $userGroup['default_user_group'];
+					model('UserGroupLink')->domoveUsergroup($uid, implode(',', $userGroup));
+
+					if (isset($_SESSION['third-party-type']))  {
+						$user_message = $_SESSION["third-party-user-info"];
+						$avatar = new AvatarModel($uid);
+						$avatar->saveRemoteAvatar($user_message['userface'],$uid);
+					}
+
+					//头像
+					if($jsonUserArr!=null&&$jsonUserArr['headimgurl']!=null&&$jsonUserArr['headimgurl']!='')
+					{
+						model('Avatar')->saveRemoteAvatar($jsonUserArr['headimgurl'], $uid);
+					}
+					else
+					{
+						model('Avatar')->saveRemoteAvatar("http://www.luqinwenda.com/addons/theme/stv1/_static/image/noavatar/big.jpg", $uid);
+					}
+					
+					model('Register')->overUserInit($uid);
+					model('User')->cleanCache ( array($uid) );
+					
+					//登录
+					model('Passport')->loginLocalWhitoutPassword($account);
+					unset($_SESSION['YMZCODE']);
+					unset($_SESSION['sendDT']);
+					
+					$this->redirect('public/Mobile/all');
+					
+				}
+			}
 		}
 	}
 	
