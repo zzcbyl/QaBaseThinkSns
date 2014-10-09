@@ -60,7 +60,7 @@ class LandingPageAction
 			$from = $_GET['from'];
 			if($from != null && $from != '' && $from == '1')
 			{
-				$this->redirect('public/Register/Homemobile', array('openid'=>$openid,'source'=>$source));
+				$this->redirect('public/Register/Homemobile', array('openid'=>$openid,'source'=>$url));
 			}
 			else
 			{
