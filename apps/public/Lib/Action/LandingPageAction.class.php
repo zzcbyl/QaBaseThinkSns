@@ -49,8 +49,6 @@ class LandingPageAction
 					case '3':
 						$this->redirect('public/Mobile/all');
 						break;
-					default:
-						$this->redirect('public/Mobile/all');
 				}
 			}
 		}
