@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * 用户档案模型 - 数据对象模型
  * @author jason <yangjs17@yeah.net> 
