@@ -1,4 +1,4 @@
-﻿/**
+/**
 * 关注问题模型Js核心插件
 * @author zhangzc
 * @version TS3.0

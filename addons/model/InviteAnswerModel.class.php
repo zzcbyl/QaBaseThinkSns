@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * 邀请回答模型 - 数据对象模型
  * @author zhangzc

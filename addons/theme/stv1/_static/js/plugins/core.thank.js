@@ -1,4 +1,4 @@
-﻿/**
+/**
  * 扩展核心评论对象
  * @author jason <yangjs17@yeah.net>
  * @version TS3.0
