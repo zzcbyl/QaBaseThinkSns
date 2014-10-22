@@ -46,6 +46,9 @@ if("undefined" == typeof(topic_id)) {
 if("undefinde" == typeof(gid)){
 	var gid = 0;
 }
+if ("undefinde" == typeof (openid)) {
+    var openid = '';
+}
 var _doc = document;
 var feedbtnlock = 0;
 var args = new Array();
@@ -61,7 +64,8 @@ args['uid']			= UID;
 args['feed_type']   = feed_type;
 args['feed_key']	= feed_key;
 args['topic_id'] 	= topic_id;
-args['gid'] 	= gid;
+args['gid'] = gid;
+args['openid'] = openid;
 
 if("undefined" == typeof(core.weibo_mobile)){	//只init一次
 	core.plugFunc('weibo_mobile',function(){
@@ -137,8 +141,10 @@ M.addEventFns({
 
             var inviteObj = this.parentModel;
             var inviteList = $(inviteObj).find('input').get(2);
-            
-            core.weibo_mobile.post_feed(_this, mini_editor, textarea, description_editor, description, questionid, false, '', 0, inviteList);
+
+            var openid = $(inviteObj).find('input').get(5);
+
+            core.weibo_mobile.post_feed(_this, mini_editor, textarea, description_editor, description, questionid, false, '', 0, inviteList, openid);
         }
     },
     post_addask: {	//追问

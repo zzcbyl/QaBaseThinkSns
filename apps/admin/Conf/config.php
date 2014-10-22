@@ -78,7 +78,7 @@ $menu = array(
 				L('PUBLIC_TAG_MANAGEMENT')		=>  U('admin/Home/tag'),
 				L('PUBLIC_INVITE_CALCULATION')	=>	U('admin/Home/invatecount'),
 				'模板管理'	=>	U('admin/Content/template'),
-				'朋友圈'	=>	U('admin/Content/friendcircle'),
+				'朋友圈'	=>	U('admin/Content/friendcircle')
 	    	),
     	),
     	'task'	=> array(

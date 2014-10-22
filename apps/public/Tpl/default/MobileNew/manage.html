@@ -1,0 +1,19 @@
+<include file="__THEME__/mobile_header" />
+<style>
+    .fontSize { font-size:12p width:100%;}
+</style>
+<div class="fontSize">
+    <div class="container" style="width:auto; background:#fff; margin-top:0;">
+        {:W('FeedListMobileNoFace',array('type'=>$type,'openid'=>$openid))}
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var logoA = $('.h_logo a').eq(0);
+        $(logoA).attr('href', U('public/MobileNew/manage'));
+    });
+</script>
+<script src="http://www.luqinwenda.com/data/lang/public_zh-cn.js?v=20130523"></script>
+<script type="text/javascript" src="__THEME__/js/home/module.home.js"></script>
+<script type="text/javascript" src="__THEME__/js/module.weibo_mobile.js"></script>
+<include file="__THEME__/mobile_footer" />
