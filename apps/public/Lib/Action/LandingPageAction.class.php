@@ -52,7 +52,7 @@ class LandingPageAction
 				case '3':
 					$this->redirect('public/MobileNew/quickask', array('openid'=>$openid));
 					break;
-				case '3':
+				case '4':
 					$this->redirect('public/MobileNew/myquestion', array('openid'=>$openid));
 					break;
 				default:
