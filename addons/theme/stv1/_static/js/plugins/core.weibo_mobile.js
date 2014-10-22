@@ -619,7 +619,7 @@ core.weibo_mobile = {
                     }
                 }
                 if (Oid != undefined && Oid != '') {
-                    location.href = U('public/MobileNew/myquestion');
+                    location.href = U('public/MobileNew/myquestion&openid=' + Oid);
                 }
                 if (Qid != undefined && Qid != '') {
                     location.href = U('public/MobileNew/feed&feed_id=' + Qid);
