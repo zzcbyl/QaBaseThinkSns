@@ -8,7 +8,7 @@ class LandingPageAction
 {
 	public function Landing()
 	{
-		$this->redirect('public/MobileNew/prompt');
+		//$this->redirect('public/MobileNew/prompt'); //暂停页面
 		
 		sleep(1);
 		$openid = ''; //cookie('lqwd_openid');
