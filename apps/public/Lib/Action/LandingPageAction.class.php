@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
 * 登录验证页面
 * @author liuxiaoqing <liuxiaoqing@zh
