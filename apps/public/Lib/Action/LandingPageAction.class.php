@@ -8,6 +8,8 @@ class LandingPageAction
 {
 	public function Landing()
 	{
+		$this->redirect('public/MobileNew/prompt');
+		
 		sleep(1);
 		$openid = ''; //cookie('lqwd_openid');
 		$url = 'http://weixin.luqinwenda.com/menu_click_landing.aspx?openid='.$openid;

@@ -224,6 +224,10 @@ class MobileNewAction
 	}
 	
 	
+	public function prompt()
+	{
+		$this->display ();
+	}
 	
 	/**
 	* 获取指定用户的某条动态
