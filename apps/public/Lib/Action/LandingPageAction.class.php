@@ -8,7 +8,8 @@ class LandingPageAction
 {
 	public function Landing()
 	{
-		$openid = cookie('lqwd_openid');
+		sleep(1);
+		$openid = ''; //cookie('lqwd_openid');
 		$url = 'http://weixin.luqinwenda.com/menu_click_landing.aspx?openid='.$openid;
 		$Result = $this->curls($url);
 		//$Result = '{"status":0,"openid":"oqrMvt6yRAWFu3DmhGe4Td0nKZRo" }';
@@ -19,8 +20,8 @@ class LandingPageAction
 			echo '服务器繁忙，请稍后再试...';
 			return;
 		}
-		$expire = 3600 * 24 * 30 * 36;
-		cookie('lqwd_openid', $openid, $expire);
+		//$expire = 3600 * 24 * 30 * 36;
+		//cookie('lqwd_openid', $openid, $expire);
 		
 		//$openid = $_GET['openid'];
 		$url = $_GET['url'];
@@ -28,33 +29,36 @@ class LandingPageAction
 		
 		//判断openid存在去登录,否则去注册
 		$user = model('User')->getUserInfoByOpenID($openid);
-				
 		if($user['uid']>0)
 		{
 			$result = model('Passport')->loginLocalWhitoutPassword($user['login']);
-			if(empty($url))
-			{
-				$this->redirect('public/Mobile/all');
-			}
-			else
-			{
-				switch($url)
-				{
-					case '1':
-						$this->redirect('public/Mobile/ask');
-						break;
-					case '2':
-						$this->redirect('public/Mobile/answerlist', array('uid'=>'1901'));
-						break;
-					case '3':
-						$this->redirect('public/Mobile/all');
-						break;
-					default:
-						$this->redirect('public/Mobile/all');
-				}
-			}
+		}
+		if(empty($url))
+		{
+			$this->redirect('public/MobileNew/all', array('openid'=>$openid));
 		}
 		else
+		{
+			switch($url)
+			{
+				case '1':
+					$this->redirect('public/MobileNew/all', array('openid'=>$openid));
+					break;
+				case '2':
+					$this->redirect('public/MobileNew/answer_lulaoshi', array('openid'=>$openid));
+					break;
+				case '3':
+					$this->redirect('public/MobileNew/quickask', array('openid'=>$openid));
+					break;
+				case '3':
+					$this->redirect('public/MobileNew/myquestion', array('openid'=>$openid));
+					break;
+				default:
+					$this->redirect('public/MobileNew/all', array('openid'=>$openid));
+			}
+		}
+		
+		/*else
 		{
 			//$this->redirect('public/Register/Homemobile', array('openid'=>$openid,'source'=>$source));
 			//$openid = 'oqrMvtySBUCd-r6-ZIivSwsmzr44';
@@ -138,7 +142,7 @@ class LandingPageAction
 					
 				}
 			}
-		}
+		}*/
 	}
 	
 	private function getUname ($uname)

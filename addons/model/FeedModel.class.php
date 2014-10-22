@@ -7,7 +7,7 @@
 class FeedModel extends Model {
 
 	protected $tableName = 'feed';
-	protected $fields = array('feed_id','uid','type','app','app_row_id','app_row_table','publish_time','is_del','from','comment_count','repost_count','comment_all_count','digg_count','is_repost','is_audit','feed_questionid','feed_quid','answer_count','disapprove_count','feed_pv','thank_count','add_feedid','following_count','invite_count','isInviteAnswer','last_updtime','_pk'=>'feed_id');
+	protected $fields = array('feed_id','uid','type','app','app_row_id','app_row_table','publish_time','is_del','from','comment_count','repost_count','comment_all_count','digg_count','is_repost','is_audit','feed_questionid','feed_quid','answer_count','disapprove_count','feed_pv','thank_count','add_feedid','following_count','invite_count','isInviteAnswer','last_updtime','openid','_pk'=>'feed_id');
 
 	public $templateFile = '';			// 模板文件
 
@@ -168,7 +168,6 @@ class FeedModel extends Model {
 		
 		// 添加关联数据
 		$feed_data = D('FeedData')->data(array('feed_id'=>$feed_id,'feed_data'=>serialize($data),'client_ip'=>get_client_ip(),'feed_content'=>$data['body'],'feed_description'=>$data['description']))->add();
-
 		// 添加提问成功后
 		if($feed_id && $feed_data) {
 			//提问发布成功后的钩子
@@ -433,6 +432,35 @@ class FeedModel extends Model {
 		foreach( $feedlist["data"] as $v => $vv )
 		{
 			$AnswerWhere='feed_questionid='.$vv['feed_id'];
+			$AnswerFeed = $this->field('feed_id')->where($AnswerWhere)->order("publish_time desc")->findPage(1);				
+			$AnswerFeed_id = getSubByKey($AnswerFeed['data'], 'feed_id');
+			$AnswerFeedData = $this->getFeeds($AnswerFeed_id);
+			
+			$vv["answer"] = $AnswerFeedData;
+			$feedlist["data"][$v]=$vv;
+			
+			/*print_r($vv);
+			print('<br /><br /><br /><br />');*/
+		}
+		
+		return $feedlist;
+	}
+	
+	/**
+	 * 获取问题和卢老师的回答列表
+	 * @param array $map 查询条件
+	 * @param integer $limit 结果集数目，默认为10
+	 * @return array 提问列表数据
+	 */
+	public function getQuestionAndLLSAnswer($map, $limit = 10, $openid , $order = 'last_updtime desc') {
+		$feedlist = $this->field('feed_id')->where($map)->order($order)->findPage($limit); 
+		$feed_ids = getSubByKey($feedlist['data'], 'feed_id');
+		$feedlist['data'] = $this->getFeeds($feed_ids);
+		
+		//增加答案块
+		foreach( $feedlist["data"] as $v => $vv )
+		{
+			$AnswerWhere='feed_questionid='.$vv['feed_id'].' and openid='.$openid;
 			$AnswerFeed = $this->field('feed_id')->where($AnswerWhere)->order("publish_time desc")->findPage(1);				
 			$AnswerFeed_id = getSubByKey($AnswerFeed['data'], 'feed_id');
 			$AnswerFeedData = $this->getFeeds($AnswerFeed_id);

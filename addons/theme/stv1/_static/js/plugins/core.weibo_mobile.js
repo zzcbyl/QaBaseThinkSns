@@ -20,6 +20,7 @@ core.weibo_mobile = {
         this.inviteid = args.inviteid;
         //alert(agrs.feedid);
         this.answerid = agrs.answerid;
+        this.openid = agrs.openid;
 
         //this.pre_page = "undefined" == typeof(pre_page) ? 1 :pre_page;//分页用到的前一页
         if ("undefined" == typeof (this.loadCount)) {
@@ -42,7 +43,7 @@ core.weibo_mobile = {
         var _this = this;
         $(window).bind('scroll resize', function () {
             // 加载3次后，将不能自动加载提问
-            if (_this.loadCount >= 4 || _this.canLoading == false) {
+            if (_this.loadCount >= 400 || _this.canLoading == false) {
                 return false;
             }
             var bodyTop = document.documentElement.scrollTop + document.body.scrollTop;
@@ -66,9 +67,10 @@ core.weibo_mobile = {
     loadMoreFeed: function () {
         var _this = this;
         _this.canLoading = false;
+        //return;
         // 获取提问数据
-        $.get(U('widget/FeedListMobile/loadMore'), { 'loadId': _this.loadId, 'type': _this.feedType, 'uid': _this.uid, 'feed_type': _this.feed_type, 'feed_key': _this.feed_key, 'fgid': fgid, 'topic_id': _this.topic_id, 'load_count': _this.loadCount, 'gid': _this.gid }, function (msg) {
-            //alert(msg);
+        $.get(U('widget/FeedListMobileNoFace/loadMore'), { 'loadId': _this.loadId, 'type': _this.feedType, 'uid': _this.uid, 'feed_type': _this.feed_type, 'feed_key': _this.feed_key, 'fgid': fgid, 'topic_id': _this.topic_id, 'load_count': _this.loadCount, 'gid': _this.gid, 'openid': _this.openid }, function (msg) {
+            //alert(msg.html);
             // 加载失败
             if (msg.status == "0" || msg.status == "-1") {
                 $('#loadMore').remove();
@@ -86,7 +88,7 @@ core.weibo_mobile = {
                     //					_this.startNewLoop();
                 }
                 $('#loadMore').remove();
-                if (_this.loadCount >= 4) {
+                if (_this.loadCount >= 400) {
                     var $lastDl = $('<div></div>');
                     $lastDl.html(msg.html);
                     //alert(msg.html);
@@ -97,7 +99,7 @@ core.weibo_mobile = {
                 _this.canLoading = true;
                 _this.loadId = msg.loadId;
 
-                if (_this.loadCount >= 4) {
+                if (_this.loadCount >= 400) {
                     $('#feed-lists').append('<div id="page" class="page" style="display:none;">' + msg.pageHtml + '</div>');
                     if ($('#feed-lists .page').find('a').size() > 2) {
                         // 4ping + next 说明还有30个以上
@@ -136,7 +138,7 @@ core.weibo_mobile = {
         var _this = this;
         _this.canLoading = false;
         // 获取提问数据
-        $.get(U('widget/AnswerList/loadMore'), { 'feed_id': answerid, 'loadId': _this.loadId, 'type': _this.feedType, 'uid': _this.uid, 'feed_type': _this.feed_type, 'feed_key': _this.feed_key, 'fgid': fgid, 'topic_id': _this.topic_id, 'load_count': _this.loadCount, 'gid': _this.gid }, function (msg) {
+        $.get(U('widget/AnswerListMobileNoFace/loadMore'), { 'feed_id': answerid, 'loadId': _this.loadId, 'type': _this.feedType, 'uid': _this.uid, 'feed_type': _this.feed_type, 'feed_key': _this.feed_key, 'fgid': fgid, 'topic_id': _this.topic_id, 'load_count': _this.loadCount, 'gid': _this.gid }, function (msg) {
             // 加载失败
             if (msg.status == "0" || msg.status == "-1") {
                 $('#loadMore').remove();
@@ -229,7 +231,7 @@ core.weibo_mobile = {
                 return false;
             }
             // 加载最新的数据
-            $.post(U('widget/FeedListMobile/loadNew'), { maxId: _this.firstId, type: 'new' + _this.feedType, uid: _this.uid }, function (msg) {
+            $.post(U('widget/FeedListMobileNoFace/loadNew'), { maxId: _this.firstId, type: 'new' + _this.feedType, uid: _this.uid, openid: _this.openid }, function (msg) {
                 if (msg.status == 1 && msg.count > 0) {
                     _this.showNew(msg.count);
                     _this.tempHtml = msg.html;
@@ -482,7 +484,7 @@ core.weibo_mobile = {
 
     },
     // 发布提问
-    post_feed: function (_this, mini_editor, textarea, description_editor, description, questionid, isbox, url, isAdd, inviteList) {
+    post_feed: function (_this, mini_editor, textarea, description_editor, description, questionid, isbox, url, isAdd, inviteList, openid) {
         var obj = this;
         // 避免重复发送
         if ("undefined" == typeof (obj.isposting)) {
@@ -579,7 +581,7 @@ core.weibo_mobile = {
         txtVal = txtVal.replace(/\n/g, "<br />")
 
         if (!url || url == "") {
-            url = U('public/Feed/PostFeed');
+            url = U('public/MobileNew/PostFeed');
         }
 
         var Qid = 0;
@@ -588,11 +590,12 @@ core.weibo_mobile = {
         var int_isadd = 0;
         if (isAdd)
             int_isadd = 1;
-
+        var Oid = '';
+        if (openid)
+            Oid = openid.value;
         // 发布提问
-        $.post(url, { body: data, type: type, app_name: app_name, content: '', attach_id: attach_id, videourl: videourl, channel_id: channel_id, source_url: attrs.source_url, gid: attrs.gid, description: txtVal, questionid: Qid, addask: int_isadd, inviteid: inviteid, ShareSina: sinaShare, ShareQQ: qqShare }, function (msg) {
+        $.post(url, { body: data, type: type, app_name: app_name, content: '', attach_id: attach_id, videourl: videourl, channel_id: channel_id, source_url: attrs.source_url, gid: attrs.gid, description: txtVal, questionid: Qid, addask: int_isadd, inviteid: inviteid, ShareSina: sinaShare, ShareQQ: qqShare, Openid: Oid }, function (msg) {
             //alert(msg.data);
-            //return;
             obj.isposting = false;
             //_this.className = 'btn-grey-white';
             //$(_this).html('<span>' + L('PUBLIC_SHARE_BUTTON') + '</span>');
@@ -614,6 +617,12 @@ core.weibo_mobile = {
                             core.weibo_mobile.insertToList(msg.data, msg.feedId, questionid);
                         }, 1500);
                     }
+                }
+                if (Oid != undefined && Oid != '') {
+                    location.href = U('public/MobileNew/myquestion');
+                }
+                if (Qid != undefined && Qid != '') {
+                    location.href = U('public/MobileNew/feed&feed_id=' + Qid);
                 }
 
                 //邀请回答

@@ -1,0 +1,118 @@
+<volist name='data' id='vl'>
+<div class="conts" style="padding:5px 0 0 0; border:none;">
+    <div class="contTwo" style="border:1px solid #999;">
+        <div class="contCenter2" style="border:none; padding: 0px; width:auto; background:#f3f3f3;">
+            <div class="contTit" id ='feed{$vl.feed_id}' model-node='feed_list'>
+                <eq name='vl.is_del' value='0'>
+                <h2 style="margin:5px 5px 0 5px; padding:2px 1px; border-bottom:1px dashed #ddd;"><a style="font-size:18px;" href="{:U('public/MobileNew/feed',array('feed_id'=>$vl['feed_id'],'openid'=>$openid))}">{$vl.body|format=true}</a></h2>
+                <div style="padding:5px; background:#fff;">
+                    <php>
+                        $descriptionTxt = $vl['description'];
+                        $descriptionImg = "";
+                        if(strpos($vl['description'],'<div') > 0)
+                        {
+                            $descriptionTxt = substr($vl['description'], 0, strpos($vl['description'],'<div'));
+                            $descriptionImg = substr($vl['description'], strpos($vl['description'],'<div'), strrpos($vl['description'],'div>'));
+                        }
+                    if(strlen($descriptionTxt) > 279) {
+                    </php>
+                    <div id="feedSubData{$vl['comment'].comment_id}{$vl.feed_id}{$vl['answer'][0].feed_id}">
+                        <p style="padding-left:0px; text-indent:20px; font-size:16px;">
+                            <php> print(utf_substr(str_replace('<br />',' ',$descriptionTxt),185).'... '); </php>
+                            <div style="margin-top: 5px;"><a style="font-size:14px; cursor:pointer;" onclick="showContentAll('feed','{$vl['comment'].comment_id}{$vl.feed_id}{$vl['answer'][0].feed_id}');">查看全文</a></div>
+                            <php>print($descriptionImg);</php>
+                        </p>
+                    </div>
+                    <div id="feedAll{$vl['comment'].comment_id}{$vl.feed_id}{$vl['answer'][0].feed_id}" style="display:none;">
+                        <p style="padding-left:0px; text-indent:20px; font-size:16px;">
+                            <php> print($descriptionTxt); </php>
+                            <div style="margin-top: 5px;" ><a style="font-size:14px; cursor:pointer;" onclick="showContentAll('feed','{$vl['comment'].comment_id}{$vl.feed_id}{$vl['answer'][0].feed_id}');">收起</a></div>
+                            <div style="clear:both;"></div>
+                            <php>print($descriptionImg);</php>
+                        </p>
+                    </div>        
+                    <php> } else {  print('<p style="padding-left:0px; text-indent:20px; font-size:16px;">'.$descriptionTxt.$descriptionImg.'</p>'); } </php>
+                </div>
+                <div style="width: 100%; background: #f3f3f3; line-height: 40px; height:40px; border-top: 2px solid #ddd; border-bottom: 2px solid #ddd; ">
+                    <div style="float: left; width: 33%; text-align:left; border-right: 2px solid #ddd; height:40px;">
+                        <a class="mobilecommentbg" href="{:U('public/MobileNew/feed',array('feed_id'=>$vl['feed_id'],'openid'=>$openid))}" style="margin:0px 0 0 20px; display:block; float:left;"></a>
+                        <div style="float:left;"><neq name='vl.answer_count' value='0'><a href="{:U('public/MobileNew/feed',array('feed_id'=>$vl['feed_id'],'openid'=>$openid))}">{$vl.answer_count}</a></neq></div>
+                    </div>
+                    <div style="float: left; width: 22%; border-right: 2px solid #ddd; height:40px;">
+                        <a class="mobileanswerbg" href="{:U('public/MobileNew/answer',array('feed_id'=>$vl['feed_id'],'openid'=>$openid))}" style="margin:0px auto; display:block; "></a>
+                    </div>
+                    <div style="float: left; width: 22%; border-right: 2px solid #ddd; height:40px;">
+                        <a class="mobilesharebg" href="javascript:void(0);" onclick="shareWeiXin('{$vl.body|format=true}','{:U('public/MobileNew/feed',array('feed_id'=>$vl['feed_id'],'openid'=>$openid))}');" style="margin:0px auto; display:block; "></a>
+                    </div>
+                    <div style="float: left; width: 21%;  height:40px;">
+                        <a class="mobilecollectbg" href="javascript:void(0);" onclick="shareWeiXin('{$vl.body|format=true}','{:U('public/MobileNew/feed',array('feed_id'=>$vl['feed_id'],'openid'=>$openid))}');" style="margin:0px auto;  display:block; "></a>
+                    </div>
+                    <div style="clear: both;"></div>
+                </div>
+ 	            <else />
+	            <p>{:L('PUBLIC_INFO_ALREADY_DELETE_TIPS')}</p>
+                </eq>
+            </div>
+             <!--答-->
+            <php>
+                if(is_array($vl['answer']) && $expert== C('TopExpert')) {
+            </php>
+            <div class="answer12" id ="feed{$vl['answer'][0].feed_id}" model-node='feed_list' style="padding-left:0; padding-top:0;">
+                <div class="aCenter2" style="border:none; padding:5px 0 5px 5px; width:auto; background:#fff;">
+                    <div class="contTit">
+                        <eq name="vl['answer'][0]['is_del']" value='0'>
+                        <h1 style="height:25px;font-size:18px; line-height:25px;">
+                                卢老师
+                        </h1>
+                        <php>
+                            if(strlen($vl['answer'][0]['body'])>279) {
+                        </php>
+                            <div id="answerSubData{$vl['comment'].comment_id}{$vl.feed_id}{$vl['answer'][0].feed_id}">
+                                <p style="padding-left:0px; text-indent:20px;font-size:16px;">
+                                <php>
+                                        print(utf_substr(str_replace('<br />',' ',$vl['answer'][0]['body']),180).'... ');
+                                </php>
+                                <div style="margin-top: 5px;"><a style="font-size:14px; cursor:pointer;" onclick="showContentAll('answer','{$vl['comment'].comment_id}{$vl.feed_id}{$vl['answer'][0].feed_id}');">显示全部</a></div>
+                                </p>
+                            </div>
+                            <div id="answerAll{$vl['comment'].comment_id}{$vl.feed_id}{$vl['answer'][0].feed_id}" style="display:none;">
+                                <p style="padding-left:0px; text-indent:20px;font-size:16px;">
+                                {$vl['answer'][0].body|format=true}
+                                <div style="margin-top: 5px;"><a style="font-size:14px; cursor:pointer;" onclick="showContentAll('answer','{$vl['comment'].comment_id}{$vl.feed_id}{$vl['answer'][0].feed_id}');">收起</a></div>
+                                <div style="clear:both;"></div>
+                                </p>
+                            </div>
+                        <php> } else {
+                            print('<p style="padding-left:0px; text-indent:20px;font-size:16px;">'.$vl['answer'][0]['body'].'</p>');
+                            }
+                        </php>
+                        <div class="info_gz" >
+                            <p class="gz_info" style="padding-left:0px;">
+                                <i>{$vl['answer'][0].publish_time|friendlyDate}</i></p>
+                        </div>
+
+                        <div model-node="comment_detail" class="repeat clearfix" style="display:none;"></div>
+	   	                <div class="praise-list clearfix" style="display:none;">
+	   		                <i class="arrow arrow-t"></i>
+	   	                    <ul>
+	   	  	                    <li><a href=""><img src="{$vl['answer'][0]['user_info']['avatar_small']}" width="30" height="30"/></a><a href="" class="ico-close1"></a></li>
+	   	  	                    <li><a href=""><img src="{$vl['answer'][0]['user_info']['avatar_small']}" width="30" height="30"/></a></li>
+	   	  	                    <li><a href=""><img src="{$vl['answer'][0]['user_info']['avatar_small']}" width="30" height="30"/></a></li>
+	   	  	                    <li><a href=""><img src="{$vl['answer'][0]['user_info']['avatar_small']}" width="30" height="30"/></a></li>
+	   	  	                    <li><a href=""><i class="arrow-next-page"></i></a></li>
+	   	                    </ul>
+                        </div>
+ 	
+ 	                    <else />
+                            <p>{:L('PUBLIC_INFO_ALREADY_DELETE_TIPS')}</p>
+                        </eq> 
+                    </div>
+                </div>
+            </div>
+            <php> } </php>
+            <!--//答-->
+        </div>
+
+    </div>   
+</div>
+</volist>

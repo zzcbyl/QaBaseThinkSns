@@ -65,6 +65,7 @@ class ContentAction extends AdministratorAction
 
 		$map['feed_questionid'] = '0';
 		$map['add_feedid'] = '0';
+		//$map['openid'] = array('exp','is null');
 		$listData = model('Feed')->getList($map,20);
 		foreach($listData['data'] as &$v){
 			$v['uname']    = $v['user_info']['space_link'];
