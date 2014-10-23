@@ -48,7 +48,7 @@
         <div style="width: 100%; background: #f3f3f3; line-height: 40px; height:40px; border: 2px solid #ddd; border-bottom: 4px solid #ddd; position:fixed; z-index:99; bottom:0; left:0;">
             <div style="float: left; width: 33%; height:40px; text-align:left; border-right: 2px solid #ddd;  ">
                 <a class="mobilecommentbg" href="javascript:void(0);" style="margin:0px 0 0 20px;  display:block; float:left;"></a>
-                <div style="float:left;"><neq name='feedInfo.answer_count' value='0'>{$feedInfo.answer_count}</neq></div>
+                <div style="float:left;">&nbsp;<neq name='feedInfo.answer_count' value='0'><span style="font-size:16px;">{$feedInfo.answer_count}</span></neq></div>
             </div>
             <div style="float: left; width: 22%;  height:40px; border-right: 2px solid #ddd;">
                 <a class="mobileanswerbg" href="{:U('public/MobileNew/answer',array('feed_id'=>$feedInfo['feed_id'],'openid'=>$openid))}" style="margin:0px auto; display:block; "></a>
