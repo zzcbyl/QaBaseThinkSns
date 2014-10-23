@@ -61,14 +61,15 @@
                 <div class="aCenter2" style="border:none; padding:5px 0 5px 5px; width:auto; background:#fff;">
                     <div class="contTit">
                         <eq name="vl['answer'][0]['is_del']" value='0'>
-                        <h1 style="height:25px;font-size:18px; line-height:25px;">
-                                卢老师
-                        </h1>
+                        <a href="javascript:void(0)"><img class="thumb_m" src="__THEME__/image/lulaoshi_avatar.jpg" /></a>
+                        <div style="height:25px;font-size:16px; line-height:25px; color:#424141; font-weight:bold;">
+                            卢老师
+                        </div>
                         <php>
                             if(strlen($vl['answer'][0]['body'])>279) {
                         </php>
                             <div id="answerSubData{$vl['comment'].comment_id}{$vl.feed_id}{$vl['answer'][0].feed_id}">
-                                <p style="padding-left:0px; text-indent:20px;font-size:16px;">
+                                <p style="padding-left:60px; font-size:16px;">
                                 <php>
                                         print(utf_substr(str_replace('<br />',' ',$vl['answer'][0]['body']),180).'... ');
                                 </php>
@@ -76,14 +77,14 @@
                                 </p>
                             </div>
                             <div id="answerAll{$vl['comment'].comment_id}{$vl.feed_id}{$vl['answer'][0].feed_id}" style="display:none;">
-                                <p style="padding-left:0px; text-indent:20px;font-size:16px;">
+                                <p style="padding-left:60px; font-size:16px;">
                                 {$vl['answer'][0].body|format=true}
                                 <div style="margin-top: 5px;"><a style="font-size:14px; cursor:pointer;" onclick="showContentAll('answer','{$vl['comment'].comment_id}{$vl.feed_id}{$vl['answer'][0].feed_id}');">收起</a></div>
                                 <div style="clear:both;"></div>
                                 </p>
                             </div>
                         <php> } else {
-                            print('<p style="padding-left:0px; text-indent:20px;font-size:16px;">'.$vl['answer'][0]['body'].'</p>');
+                            print('<p style="padding-left:60px; font-size:16px;">'.$vl['answer'][0]['body'].'</p>');
                             }
                         </php>
                         <div class="info_gz" >
