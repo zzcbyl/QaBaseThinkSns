@@ -73,13 +73,13 @@
                                 <php>
                                         print(utf_substr(str_replace('<br />',' ',$vl['answer'][0]['body']),180).'... ');
                                 </php>
-                                <div style="margin-top: 5px;"><a style="font-size:14px; cursor:pointer;" onclick="showContentAll('answer','{$vl['comment'].comment_id}{$vl.feed_id}{$vl['answer'][0].feed_id}');">显示全部</a></div>
+                                <div style="padding-left:60px;margin-top: 5px;"><a style="font-size:14px; cursor:pointer;" onclick="showContentAll('answer','{$vl['comment'].comment_id}{$vl.feed_id}{$vl['answer'][0].feed_id}');">显示全部</a></div>
                                 </p>
                             </div>
                             <div id="answerAll{$vl['comment'].comment_id}{$vl.feed_id}{$vl['answer'][0].feed_id}" style="display:none;">
                                 <p style="padding-left:60px; font-size:16px;">
                                 {$vl['answer'][0].body|format=true}
-                                <div style="margin-top: 5px;"><a style="font-size:14px; cursor:pointer;" onclick="showContentAll('answer','{$vl['comment'].comment_id}{$vl.feed_id}{$vl['answer'][0].feed_id}');">收起</a></div>
+                                <div style="padding-left:60px; margin-top: 5px;"><a style="font-size:14px; cursor:pointer;" onclick="showContentAll('answer','{$vl['comment'].comment_id}{$vl.feed_id}{$vl['answer'][0].feed_id}');">收起</a></div>
                                 <div style="clear:both;"></div>
                                 </p>
                             </div>
@@ -88,7 +88,7 @@
                             }
                         </php>
                         <div class="info_gz" >
-                            <p class="gz_info" style="padding-left:0px;">
+                            <p class="gz_info" style="padding-left:60px;">
                                 <i>{$vl['answer'][0].publish_time|friendlyDate}</i></p>
                         </div>
 
