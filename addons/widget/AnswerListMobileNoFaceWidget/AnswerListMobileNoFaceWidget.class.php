@@ -41,7 +41,7 @@ class AnswerListMobileNoFaceWidget extends Widget {
         // 查看是否有更多数据
         if(empty($content['html'])) {
         	// 没有更多的
-			$var['list'] = "<span style='margin-left:10px'>暂无回答</span>";
+			$var['list'] = "<div style=\"height:70px; line-height:50px; font-size:16px; text-align:center; color:#666;\">暂无回答</div>";
         } else {
         	$var['list'] = $content['html'];
         	$var['lastId'] = $content['lastId'];
