@@ -147,7 +147,6 @@ class MobileNewAction
 			}
 			$this->assign ( 'word', $_POST['keywork'] );
 		}
-		//print_r($idlist);
 		$this->assign ( 'idlist', $idlist );
 		$this->display ();
 	}
@@ -286,6 +285,7 @@ class MobileNewAction
 		//获取提问信息
 		$feedInfo = model ( 'Feed' )->get ( $feed_id );
 
+
 		if (!$feedInfo){
 			$this->error ( '该提问不存在或已被删除' );
 			exit();
@@ -306,7 +306,7 @@ class MobileNewAction
 
 		$this->setTitle($feedInfo['body']);
 		$this->setKeywords($feedInfo['body']);
-		
+
 		$this->display ();
 	}
 	
@@ -355,7 +355,6 @@ class MobileNewAction
 		}
 		//安全过滤
 		$d['type'] = 'question';
-		
 		$d['openid'] = $_GET['openid'];
 		
 		$this->assign($d);

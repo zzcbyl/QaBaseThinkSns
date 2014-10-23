@@ -668,7 +668,7 @@ p.FloatNew{background:url(../image/new.png) no-repeat; position:absolute; width:
 .share_sina { background:url(../image/share_sprite.png) no-repeat 0 -270px; display:inline-block; height:16px; width:16px; vertical-align:middle; }
 
 
-.mobilecommentbg {background:url(../image/mobile_Icon1.png) no-repeat 0 0; width:40px; height:40px;}
+.mobilecommentbg {background:url(../image/mobile_Icon1.png) no-repeat 0 0; width:40px; height:40px; }
 .mobilesharebg {background:url(../image/mobile_Icon1.png) no-repeat -55px 0; width:40px; height:40px;}
 .mobilecollectbg {background:url(../image/mobile_Icon1.png) no-repeat -125px 0; width:40px; height:40px;}
 .mobileanswerbg {background:url(../image/mobile_Icon2.png) no-repeat -125px 0; width:40px; height:40px;}
