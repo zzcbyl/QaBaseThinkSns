@@ -6,7 +6,7 @@
  */
 class ApiAction 
 {
-    private $limitnums = 10;
+	private $limitnums = 10;
 	/**
 	 * 全站问题
 	 *
@@ -15,10 +15,14 @@ class ApiAction
 	 */	
 	public function getAllFeed()
 	{
-		$where =" (is_audit=1 OR is_audit=0) AND is_del = 0 AND feed_questionid=0 AND add_feedid=0";
-		if($var['loadId'] > 0){ //非第一次
-			$where .=" AND `last_updtime` < '".intval($var['loadId'])."'";
+		$psize = $_GET['psize'];
+		if(!empty($psize))
+		{
+			$this->limitnums = $psize;
 		}
+		
+		$where =" (is_audit=1 OR is_audit=0) AND is_del = 0 AND feed_questionid=0 AND add_feedid=0";
+		
 		$list = model('Feed')->getQuestionAndAnswer($where,$this->limitnums);
 		
 		echo json_encode($list);
@@ -34,10 +38,19 @@ class ApiAction
 	public function getMyQuestion()
 	{
 		$current_uid = intval($_GET['uid']);
-		if($var['loadId'] > 0){ //非第一次
-			$LoadWhere = "AND publish_time < '".intval($var['loadId'])."'";
+		if($current_uid<=0)
+		{
+			echo '{"error":"uid unavailable"}';
+			return;
 		}
-		$where =' uid='.$current_uid.' AND is_del = 0 AND feed_questionid=0 AND add_feedid=0 AND (is_audit=1 OR is_audit=0) '.$LoadWhere;
+		
+		$psize = $_GET['psize'];
+		if(!empty($psize))
+		{
+			$this->limitnums = $psize;
+		}
+		
+		$where =' uid='.$current_uid.' AND is_del = 0 AND feed_questionid=0 AND add_feedid=0 AND (is_audit=1 OR is_audit=0) ';
 		$list = model('Feed')->getQuestionAndAnswer($where, $this->limitnums);
 		echo json_encode($list);
 	}
@@ -52,9 +65,18 @@ class ApiAction
 	public function getMyAnswer()
 	{
 		$current_uid = intval($_GET['uid']);
-		if($var['loadId'] > 0){ //非第一次
-			$LoadWhere = "AND publish_time < '".intval($var['loadId'])."'";
+		if($current_uid<=0)
+		{
+			echo '{"error":"uid unavailable"}';
+			return;
 		}
+		
+		$psize = $_GET['psize'];
+		if(!empty($psize))
+		{
+			$this->limitnums = $psize;
+		}
+		
 		$where =' uid='.$current_uid.' AND is_del = 0 AND feed_questionid!=0 AND add_feedid=0 AND (is_audit=1 OR is_audit=0) '.$LoadWhere;
 		$list = model('Feed')->getAnswerList($where, $this->limitnums);
 		echo json_encode($list);
@@ -70,10 +92,18 @@ class ApiAction
 	public function getInviteMe()
 	{
 		$current_uid = intval($_GET['uid']);
-		if($var['loadId'] > 0){ //非第一次
-			$LoadWhere = "invite_answer_id < '".intval($var['loadId'])."'";
+		if($current_uid<=0)
+		{
+			echo '{"error":"uid unavailable"}';
+			return;
 		}
-		$list =  model('Feed')->getInviteList($current_uid, $this->limitnums, $LoadWhere, $var['newcount']);
+		
+		$psize = $_GET['psize'];
+		if(!empty($psize))
+		{
+			$this->limitnums = $psize;
+		}
+		$list =  model('Feed')->getInviteList($current_uid, $this->limitnums);
 		echo json_encode($list);
 	}
 	
@@ -87,6 +117,11 @@ class ApiAction
 	public function getMyFollowing()
 	{
 		$current_uid = intval($_GET['uid']);
+		if($current_uid<=0)
+		{
+			echo '{"error":"uid unavailable"}';
+			return;
+		}
 		
 		$following_list = model ( 'Follow' )->getFollowingList ( $current_uid);
 		$fids = getSubByKey ( $following_list ['data'], 'fid' );
@@ -127,6 +162,11 @@ class ApiAction
 	public function getMyFollower()
 	{
 		$current_uid = intval($_GET['uid']);
+		if($current_uid<=0)
+		{
+			echo '{"error":"uid unavailable"}';
+			return;
+		}
 		
 		$following_list = model ( 'Follow' )->getFollowerList ( $current_uid);
 		$fids = getSubByKey ( $following_list ['data'], 'fid' );
@@ -167,6 +207,12 @@ class ApiAction
 	public function getMyFriend()
 	{
 		$current_uid = intval($_GET['uid']);
+		if($current_uid<=0)
+		{
+			echo '{"error":"uid unavailable"}';
+			return;
+		}
+		
 		
 		$following_list = model ( 'Follow' )->getFriendList ( $current_uid);
 		$fids = getSubByKey ( $following_list ['data'], 'fid' );
@@ -207,6 +253,11 @@ class ApiAction
 	public function getUserID()
 	{
 		$current_uid = intval($_GET['uid']);
+		if($current_uid<=0)
+		{
+			echo '{"error":"uid unavailable"}';
+			return;
+		}
 		
 		$user = model('User')->getUserInfo($current_uid);
 		
@@ -223,8 +274,13 @@ class ApiAction
 	 */	
 	public function getUserOpenID()
 	{
-		$OpenID = $_GET['openID'];
-		
+		$OpenID = $_GET['openid'];
+		if($OpenID<=0)
+		{
+			echo '{"error":"openid unavailable"}';
+			return;
+		}
+
 		$user = model('User')->getUserInfoByOpenID($OpenID);
 		
 		echo json_encode($user);
@@ -307,4 +363,7 @@ class ApiAction
 		}
 		echo '{"data":'.$this->JSON($returnData).'}';
 	}
+	
+	
+	
 }
