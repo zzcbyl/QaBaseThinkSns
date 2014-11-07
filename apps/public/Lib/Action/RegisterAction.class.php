@@ -158,7 +158,7 @@ class RegisterAction extends Action
 				$this->error('验证码不正确');
 			}*/
 			if(empty($_POST['email']))
-				$user["email"] = '　';
+				$user["email"] = $account;
 			else
 				$user["email"] = t($_POST['email']);
 			$user["linknumber"] = $account;
