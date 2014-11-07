@@ -1040,7 +1040,7 @@ class FeedModel extends Model {
 		$return["userInfo"]  = $user;
 		$return["actor_groupData"] = $var["actor_groupData"];
 		$return['title'] = trim((string) $result[0]->title);
-	    $return['body'] =  trim((string) $result[0]->body);
+		$return['body'] = str_replace('<p> </p>', '', trim((string) $result[0]->body));
 		$return['description'] =  trim((string) $result[0]->description);
 		// $return['sbody'] = trim((string) $result[0]->sbody);
 	    $return['info'] =  trim((string) $result[0]['info']);

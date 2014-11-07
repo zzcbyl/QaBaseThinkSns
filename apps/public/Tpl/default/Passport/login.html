@@ -51,7 +51,7 @@
                 </div>
                 <php>endif;</php>
             </div>
-            <div style="padding:167px 0 0 240px;">
+            <div style="padding:100px 0 0 240px;">
                 <a href="http://www.xinmu.com" target="_blank"><img src="__THEME__/image/xinmu1.png" /></a>
             </div>
         </div>
@@ -63,13 +63,13 @@
 <!--<php>
 phpinfo();
 </php>-->
-<div class="homeCont" style="padding-top:5px;">
-    <div style="margin:0 0 20px 0; float:left;">
+<div class="homeCont" style="padding-top:20px;">
+    <!--<div style="margin:0 0 20px 0; float:left;">
         <a href="{:U('public/Passport/activity_ql')}" target="_blank"><img src="__THEME__/image/index_banner1.jpg" width="470px" /></a>
     </div>
     <div style="margin:0 0 20px 0; float:right;">
         <a href="{:U('public/Passport/activity_ql')}" target="_blank"><img src="__THEME__/image/index_banner1.jpg" width="470px" /></a>
-    </div>
+    </div>-->
 	<div class="newAsk">
         <fieldset> 
             <legend>卢勤精彩回答</legend>
@@ -83,7 +83,7 @@ phpinfo();
                         <div style="width: 375px; margin:0; padding:0;">
                             <h2 class="tit"><a style="width:340px; height:16px; display:block; overflow:hidden;" href="{:U('public/Passport/newquestion',array('feed_id'=>$feed['feed_id']))}" target="_blank" title="{$feed.body}">{$feed.body}</a></h2>
                             <p class="name" style="height:auto; padding:5px 0;"><a href="{:U('public/Passport/newperson',array('uid'=>$feed['answer'][0]['user_info']['uid']))}" target="_blank">{$feed['answer'][0]['user_info']['uname']}</a><a class="dp">回答</a><span>{$feed['answer'][0]['publish_time']|friendlyDate}</span></p>
-                            <p class="cont" style="font-size:12px; font-weight:normal; line-height:18px; height:36px; overflow:hidden;" title="{$feed['answer'][0]['body']}">
+                            <p class="cont" style="font-size:12px; font-weight:normal; line-height:18px; height:36px; overflow:hidden;" title="">
                                 {$feed['answer'][0]['body']}
                             </p>
                         </div>

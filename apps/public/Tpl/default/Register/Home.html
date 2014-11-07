@@ -22,23 +22,23 @@
              	    <div class="regbox">
                     	<div><label><i class="RedStar">*</i>账号</label><input type="text" id="account" event-node="account" name="account" checkurl="{:U('public/Register/isAccountAvailable')}" value="{$loginname}" style="width:180px;" maxlength="150" />
                         </div>
-                        <div id="yzmDiv" style="display:none;">
+                        <!--<div id="yzmDiv" style="display:none;">
                             <label><i class="RedStar">*</i>验证码</label><input type="text" event-node="yzmCode" name="yzmCode" checkurl="{:U('public/Register/isEmailAvailable')}" value="" style="width:80px;" maxlength="8" />
                             <input type="button" id="btnGetCode" value="获取验证码" style="margin:3px 5px 0 0;" />
-                        </div>
+                        </div>-->
                         <div><label><i class="RedStar">*</i>昵称</label><input type="text" event-node="uname" checkurl="{:U('public/Register/isUnameAvailable')}" id="txt_uname" name="uname" value="" maxlength="30" style="width:180px;" />
                         </div>
                         <div id="div_pwd" style="height:74px;"><div><label><i class="RedStar">*</i>密码</label><input type="password"  event-node="password_new" name="password_new" value="" id="txt_pwd" maxlength="30" style="width:180px;" />
                         </div>
                         <div><label><i class="RedStar">*</i>确认密码</label><input type="password" event-node="repassword_new" name="repassword_new" id="txt_repwd" value="" maxlength="30" style="width:180px;" />
                         </div></div>
-                        <div><label><i class="RedStar">*</i>性别</label>
+                        <div><label>性别</label>
                         男 <input name="sex" id="rdo_male" type="radio" checked="checked" value="1" style="float:none;" />&nbsp;&nbsp;
                         女 <input name="sex" id="rdo_female" type="radio" value="2" style="float:none;" />
                         </div>
-                        <div><label><i class="RedStar">*</i>身份证号</label><input type="text" value="" event-node="idcard" event-args='max=20' id="idcard" name="idcard" maxlength="20" style="width:180px;" />
-                        </div>
-                        <div class="reg_select"><label style="float:left;"><i class="RedStar">*</i>所在地</label>
+                        <!--<div><label>身份证号</label><input type="text" value="" event-node="idcard" event-args='max=20' id="idcard" name="idcard" maxlength="20" style="width:180px;" />
+                        </div>-->
+                        <div class="reg_select"><label style="float:left;">所在地</label>
                             <div style="padding-top:5px;">{:W('Area',array('curPro'=>$province,'curCity'=>$city,'area'=>$area,'city_names'=>$location,'tpl'=>'selectArea'))}</div>
                  	    </div>
                         <div id="emailDiv" style="display:none;">
@@ -53,10 +53,10 @@
                         <div id="yqmCodeText" style="height:18px; margin:0;">
                             <a style="margin-left:100px; font-size:12px;" href="{:U('public/Register/inviteRule')}" target="_blank">获取邀请码</a>
                         </div>-->
-                        <div><label>真实姓名</label><input type="text" event-node="realname" id="realname" name="realname" maxlength="20" value="" />
+                        <!--<div><label>真实姓名</label><input type="text" event-node="realname" id="realname" name="realname" maxlength="20" value="" />
                         </div>
                         <div class="reg_textarea"><label style="vertical-align:top">个人简介</label><textarea name="intro" cols="" rows=""></textarea>
-                        </div>
+                        </div>-->
                      </div>
                      <div class="tybox">
                      <span><input event-node="readRules" name="readRules" type="checkbox" value="" checked="checked" /> 我已阅读并同意相关<a target="_blank" href="{:U('public/Register/terms')}">服务条款</a><br /></span>

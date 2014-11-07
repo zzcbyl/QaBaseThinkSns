@@ -152,13 +152,15 @@ class RegisterAction extends Action
 		if($res_mobile)
 		{
 			//验证收到的手机验证码
-			$CodeResult = $_SESSION["YMZCODE"];
+			/*$CodeResult = $_SESSION["YMZCODE"];
 			if(t($_POST['yzmCode']) != $CodeResult)
 			{
 				$this->error('验证码不正确');
-			}
-
-			$user["email"] = t($_POST['email']);
+			}*/
+			if(empty($_POST['email']))
+				$user["email"] = '　';
+			else
+				$user["email"] = t($_POST['email']);
 			$user["linknumber"] = $account;
 		}
 		$user["uname"] = t($_POST['uname']);
@@ -167,10 +169,10 @@ class RegisterAction extends Action
 		$user["is_active"] = 0;
 		$user["is_audit"] = 1;
 		
-		$user["realname"] = t($_POST['realname']);
-		$user["idcard"] = t($_POST['idcard']);
+		$user["realname"] = ''; //t($_POST['realname']);
+		$user["idcard"] = ''; //t($_POST['idcard']);
 		$birthday = '';
-		$len = strlen($user["idcard"]);
+		/*$len = strlen($user["idcard"]);
 		if($len==15)
 		{
 			$birthday = '19'.substr($user["idcard"],6,2).'-'.substr($user["idcard"],8,2).'-'.substr($user["idcard"],10,2);
@@ -180,26 +182,36 @@ class RegisterAction extends Action
 			$birthday = substr($user["idcard"],6,4).'-'.substr($user["idcard"],10,2).'-'.substr($user["idcard"],12,2);
 		}
 		else
-			$this->error('输入的身份证号格式不正确');
+			$this->error('输入的身份证号格式不正确');*/
 		$user["birthday"] = $birthday;
 		
 		$cityIds = t($_POST['city_ids']);
 		$cityIds = explode(',', $cityIds);
-		if(!$cityIds[0] || !$cityIds[1] || !$cityIds[2]) $this->error('请选择完整地区');
-		isset($cityIds[0]) && $user["province"] = intval($cityIds[0]);
-		isset($cityIds[1]) && $user["city"] = intval($cityIds[1]);
-		isset($cityIds[2]) && $user['area'] = intval($cityIds[2]);
+		//if(!$cityIds[0] || !$cityIds[1] || !$cityIds[2]) $this->error('请选择完整地区');
+		if($cityIds[0] && $cityIds[1] && $cityIds[2]) {
+			isset($cityIds[0]) && $user["province"] = intval($cityIds[0]);
+			isset($cityIds[1]) && $user["city"] = intval($cityIds[1]);
+			isset($cityIds[2]) && $user['area'] = intval($cityIds[2]);
+		}
+		else
+		{
+			$user["province"] = 0;
+			$user["city"] = 0;
+			$user['area'] = 0;
+		}
 		$user["location"] = t($_POST['city_names']);
-		$user["intro"] = t($_POST['intro']);
+		$user["intro"] = ''; //t($_POST['intro']);
 		
 		//注册邮箱@anran.com的不做邮箱验证
-		if($res_mobile || strpos($user["login"],'@anran.com') > 0)
+		/*if($res_mobile || strpos($user["login"],'@anran.com') > 0)
 		{
 			$user["is_active"] = 1;
-		}
-
+		}*/
+		$user["is_active"] = 1;
+		
 		$uid = $this->_user_model->addUser($user);
-
+		//print($this->_user_model->getLastSql());
+		//return;
 		if($uid)
 		{
 			if (isset($_SESSION['third-party-type'])) {
@@ -237,8 +249,10 @@ class RegisterAction extends Action
 			unset($_SESSION['YMZCODE']);
 			unset($_SESSION['sendDT']);
 			
+			$this->redirect('public/Register/avatar');
+			
 			//注册邮箱@anran.com的不做邮箱验证
-			if(strpos($user["login"],'@anran.com') > 0)
+			/*if(strpos($user["login"],'@anran.com') > 0)
 			{
 				//$this->redirect('public/Register/step4', array('uid'=>$uid,'code'=>$_GET['code']));
 				$this->redirect('public/Register/avatar');
@@ -252,7 +266,7 @@ class RegisterAction extends Action
 				
 				/*if ($_SESSION["open_platform_type"] != "sina" && $_SESSION["open_platform_type"] != "qzone") {
 					model('Invite')->where("code = '".$_POST['yqCode']."'")->setDec('limited_count');
-				}*/
+				}
 				
 				//$this->redirect('public/Register/step3', array('uid'=>$uid, 'code'=>$_POST['yqCode']));
 				$this->redirect('public/Register/step3', array('uid'=>$uid));
@@ -260,7 +274,7 @@ class RegisterAction extends Action
 			if($res_mobile)
 			{
 				$this->redirect('public/Register/avatar');
-			}
+			}*/
 			
 		}
 		else

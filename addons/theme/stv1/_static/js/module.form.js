@@ -246,47 +246,47 @@ M.addEventFns({
 			core.plugInit('department', $(this), $(this));
 		}
 	},
-	// 地区信息验证
-	input_area: {
-		blur: function() {
-			// 获取数据
-			var sValue = $.trim(this.value);
-			var sValueArr = sValue.split(",");
-			// 验证数据正确性
-			if(sValue == "" || sValueArr[0] == 0) {
-				tips.error(this, "请选择地区");
-				this.bIsValid = false;
-				this.value = '0,0,0';
-			} else if(sValueArr[1] == 0 || sValueArr[2] == 0) {
-				tips.error(this, "请选择完整地区信息");
-				this.bIsValid = false;
-			} else {
-				tips.success(this);
-				this.bIsValid = true;
-			}
-		},
-		load: function() {
-			// 获取参数信息
-			var _this = this;
-			// 验证数据正确性
-			setInterval(function() {
-				// 获取数据
-				var sValue = $.trim(_this.value);
-				var sValueArr = sValue.split(",");
-				// 验证数据正确性
-				if(sValue == "" || sValueArr[0] == 0) {
-					tips.error(_this, "请选择地区");
-					_this.bIsValid = false;
-				} else if(sValueArr[1] == 0 || sValueArr[2] == 0) {
-					tips.error(_this, "请选择完整地区信息");
-					_this.bIsValid = false;
-				} else {
-					tips.success(_this);
-					_this.bIsValid = true;
-				}
-			}, 200);
-		}
-	},
+//	// 地区信息验证
+//	input_area: {
+//		blur: function() {
+//			// 获取数据
+//			var sValue = $.trim(this.value);
+//			var sValueArr = sValue.split(",");
+//			// 验证数据正确性
+//			if(sValue == "" || sValueArr[0] == 0) {
+//				tips.error(this, "请选择地区");
+//				this.bIsValid = false;
+//				this.value = '0,0,0';
+//			} else if(sValueArr[1] == 0 || sValueArr[2] == 0) {
+//				tips.error(this, "请选择完整地区信息");
+//				this.bIsValid = false;
+//			} else {
+//				tips.success(this);
+//				this.bIsValid = true;
+//			}
+//		},
+//		load: function() {
+//			// 获取参数信息
+//			var _this = this;
+//			// 验证数据正确性
+//			setInterval(function() {
+//				// 获取数据
+//				var sValue = $.trim(_this.value);
+//				var sValueArr = sValue.split(",");
+//				// 验证数据正确性
+//				if(sValue == "" || sValueArr[0] == 0) {
+//					tips.error(_this, "请选择地区");
+//					_this.bIsValid = false;
+//				} else if(sValueArr[1] == 0 || sValueArr[2] == 0) {
+//					tips.error(_this, "请选择完整地区信息");
+//					_this.bIsValid = false;
+//				} else {
+//					tips.success(_this);
+//					_this.bIsValid = true;
+//				}
+//			}, 200);
+//		}
+//	},
 	// 时间格式验证
 	input_date: {
 		focus: function() {
@@ -344,7 +344,7 @@ M.addEventFns({
                 tips.error( dAccount, '帐号不能为空' );
                 $("#emailDiv").hide();
                 $("#mobileDiv").hide(); 
-                $("#yzmDiv").hide(); 
+                //$("#yzmDiv").hide(); 
 //                if (from == "sina" || from == "qzone") {
 //                    $("#yqmCode").hide();
 //                    $("#yqmCodeText").hide();
@@ -361,7 +361,7 @@ M.addEventFns({
                 tips.error( dAccount, '帐号只能是手机号或者邮箱' );
                 $("#emailDiv").hide();
                 $("#mobileDiv").hide(); 
-                $("#yzmDiv").hide(); 
+                //$("#yzmDiv").hide(); 
 //                if (from == "sina" || from == "qzone") {
 //                    $("#yqmCode").hide();
 //                    $("#yqmCodeText").hide();
@@ -394,7 +394,7 @@ M.addEventFns({
             if(myReg.test(sValue)) {
                 $("#emailDiv").hide();
                 $("#mobileDiv").show();
-                $("#yzmDiv").hide();
+                //$("#yzmDiv").hide();
 //                if (from == "sina" || from == "qzone") {
 //                    $("#yqmCode").hide();
 //                    $("#yqmCodeText").hide();
@@ -408,14 +408,14 @@ M.addEventFns({
             else if(ismobile(sValue)) {
                 $("#emailDiv").show();
                 $("#mobileDiv").hide(); 
-                $("#yzmDiv").show(); 
+                //$("#yzmDiv").show(); 
                 $("#yqmCode").hide();
                 $("#yqmCodeText").hide();
             }
             else {
                 $("#emailDiv").hide();
                 $("#mobileDiv").hide(); 
-                $("#yzmDiv").hide(); 
+                //$("#yzmDiv").hide(); 
 //                if (from == "sina" || from == "qzone") {
 //                    $("#yqmCode").hide();
 //                    $("#yqmCodeText").hide();
@@ -434,18 +434,18 @@ M.addEventFns({
             if(myReg.test(sValue)) {
                 $("#emailDiv").hide();
                 $("#mobileDiv").show();
-                $("#yzmDiv").hide();
+                //$("#yzmDiv").hide();
             }
             //手机号
             else if(ismobile(sValue)) {
                 $("#emailDiv").show();
                 $("#mobileDiv").hide(); 
-                $("#yzmDiv").show(); 
+                //$("#yzmDiv").show(); 
             }
             else {
                 $("#emailDiv").hide();
                 $("#mobileDiv").hide(); 
-                $("#yzmDiv").hide(); 
+                //$("#yzmDiv").hide(); 
             }
 			this.className = 's-txt';
         }
@@ -803,39 +803,39 @@ M.addEventFns({
 		}
     },
     // 身份证
-	idcard: {
-		focus: function() {
-			this.className='s-txt-focus';
-			return false;
-		},
-		blur: function() {
-			this.className='s-txt';
-            
-			var idCardVal = this.value;
-            if(idCardVal != '')
-            {
-                var result = isIdCardNo(idCardVal);
-                if(result != '')
-                {
-                    tips.error( this, L(result) );
-				    this.bIsValid = false;
-                }
-                else
-                {
-                    tips.success( this );
-				    this.bIsValid = true;
-                }
-            }
-            else
-            {
-                tips.error( this, '请输入您的身份证号');
-				    this.bIsValid = false;
-            }
-        },
-        load: function() {
-			this.className='s-txt';
-		}
-    },
+//	idcard: {
+//		focus: function() {
+//			this.className='s-txt-focus';
+//			return false;
+//		},
+//		blur: function() {
+//			this.className='s-txt';
+//            
+//			var idCardVal = this.value;
+//            if(idCardVal != '')
+//            {
+//                var result = isIdCardNo(idCardVal);
+//                if(result != '')
+//                {
+//                    tips.error( this, L(result) );
+//				    this.bIsValid = false;
+//                }
+//                else
+//                {
+//                    tips.success( this );
+//				    this.bIsValid = true;
+//                }
+//            }
+//            else
+//            {
+//                tips.error( this, '请输入您的身份证号');
+//				    this.bIsValid = false;
+//            }
+//        },
+//        load: function() {
+//			this.className='s-txt';
+//		}
+//    },
     // 手机号
     mobile: {
         focus: function() {
@@ -913,50 +913,50 @@ M.addEventFns({
 			this.className='s-txt';
 		}
 	},
-    yzmCode: {
-        focus: function() {
-			this.className='s-txt-focus';
-			return false;
-		},
-		blur: function() {
-            if($("#yzmDiv").css('display')!='none') {
-                this.className='s-txt';
-                var Code = this;
-                var BtnCode = document.getElementById("btnGetCode");
-                var sValue = Code.value;
-                var sUrl = Code.getAttribute('checkurl');
-                if(sValue.length==0) {
-                    tips.error( BtnCode, '验证码不能为空' );
-                    this.bIsValid = false;
-                }
-                else
-                {
-                    tips.clear(BtnCode)
-                    var smsCode = $("#SmsCode").val();
-                    if(smsCode != "")
-                    {
-                        if(sValue != smsCode)
-                        {
-                            tips.error( BtnCode, '验证码错误' );
-                            this.bIsValid = false;
-                        }
-                        else
-                        {
-                            tips.success(BtnCode);
-                            this.bIsValid = true;
-                        }
-                    }
-                    else
-                        this.bIsValid = true;
-                }
-            }
-            else
-               this.bIsValid = true;
-        },
-		load: function() {
-			this.className='s-txt';
-		}
-    },
+//    yzmCode: {
+//        focus: function() {
+//			this.className='s-txt-focus';
+//			return false;
+//		},
+//		blur: function() {
+//            if($("#yzmDiv").css('display')!='none') {
+//                this.className='s-txt';
+//                var Code = this;
+//                var BtnCode = document.getElementById("btnGetCode");
+//                var sValue = Code.value;
+//                var sUrl = Code.getAttribute('checkurl');
+//                if(sValue.length==0) {
+//                    tips.error( BtnCode, '验证码不能为空' );
+//                    this.bIsValid = false;
+//                }
+//                else
+//                {
+//                    tips.clear(BtnCode)
+//                    var smsCode = $("#SmsCode").val();
+//                    if(smsCode != "")
+//                    {
+//                        if(sValue != smsCode)
+//                        {
+//                            tips.error( BtnCode, '验证码错误' );
+//                            this.bIsValid = false;
+//                        }
+//                        else
+//                        {
+//                            tips.success(BtnCode);
+//                            this.bIsValid = true;
+//                        }
+//                    }
+//                    else
+//                        this.bIsValid = true;
+//                }
+//            }
+//            else
+//               this.bIsValid = true;
+//        },
+//		load: function() {
+//			this.className='s-txt';
+//		}
+//    },
     yqCode: {
         focus: function() {
 			this.className='s-txt-focus';
