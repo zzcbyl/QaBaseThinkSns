@@ -726,7 +726,10 @@ class RegisterAction extends Action
 		//print('<br /><br /><br />');
 		
 		//跟你有关的
-		$where = " `is_del` = 0 and `is_audit` = 1 and `is_active` = 1 and `is_init` = 1 and ((`invite_code` = '$code' and `uid` != $uid) or (`area` = ".$user['area'].")) ";
+		$myarea = $user['area'];
+		if($myarea == '0')
+			$myarea = '110105';
+		$where = " `is_del` = 0 and `is_audit` = 1 and `is_active` = 1 and `is_init` = 1 and ((`invite_code` = '$code' and `uid` != $uid) or (`area` = ".$myarea.")) ";
 		$uidList = model('user')->field('uid')->where($where)->order('`uid` desc')->findAll();
 		$uids = getSubByKey($uidList, 'uid');
 		if(!empty($uids))
