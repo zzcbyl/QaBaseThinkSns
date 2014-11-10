@@ -35,6 +35,11 @@ class LandingPageAction
 		{
 			$result = model('Passport')->loginLocalWhitoutPassword($user['login']);
 		}
+		else
+		{
+			saveUser($openid);
+		}
+		
 		if(empty($url))
 		{
 			$this->redirect('public/MobileNew/all', array('openid'=>$openid));
@@ -145,6 +150,74 @@ class LandingPageAction
 				}
 			}
 		}*/
+	}
+	
+	private function saveUser($openid)
+	{
+		$result=false;
+		if(!empty($openid))
+		{
+			//自动注册
+			$url = 'http://weixin.luqinwenda.com/getuserinfo.aspx?openid='.$openid;
+			$UserResult = $this->curls($url);
+			$jsonUserArr = $this->analyJson($UserResult);
+			//print_r(model('user')->getUserInfo(2062));
+			//return;
+			
+			$uname = $this->getUname($jsonUserArr['nickname']);
+
+			$account = t($openid);
+			$user["login"] = t($openid);
+			$user["password"] = t($openid);
+			$user["uname"] = t($uname);
+			$user["sex"] = intval($jsonUserArr['sex']);
+			$user["is_active"] = 1;
+			$user["is_audit"] = 1;
+			$user["is_init"] = 1;
+			$user["linknumber"] = '';
+			$user["email"] = t($openid);
+			$user["realname"] = '';
+			$user["idcard"] = '';
+			$user["openid"] = t($openid);
+			$user["source"] = '';
+			$user["birthday"] = '';
+			$user["location"] = $jsonUserArr['country'].' '.$jsonUserArr['province'].' '.$jsonUserArr['city'];
+			$user["province"] = 0;
+			$user["city"] = 0;
+			$user['area'] = 0;
+			$user["is_del"] = 0;
+			$user["intro"] = '';
+			$user["domain"] = '';
+			$uid = model('User')->addUserMobile($user);
+			//print(model('User')->getLastSql());
+			if($uid)
+			{
+				// 添加积分
+				model('Credit')->setUserCredit($uid,'init_default');
+				
+				// 添加至默认的用户组
+				$userGroup = model('Xdata')->get('admin_Config:register');
+				$userGroup = empty($userGroup['default_user_group']) ? C('DEFAULT_GROUP_ID') : $userGroup['default_user_group'];
+				model('UserGroupLink')->domoveUsergroup($uid, implode(',', $userGroup));
+
+				//头像
+				if($jsonUserArr!=null&&$jsonUserArr['headimgurl']!=null&&$jsonUserArr['headimgurl']!='')
+				{
+					model('Avatar')->saveRemoteAvatar($jsonUserArr['headimgurl'], $uid);
+				}
+				else
+				{
+					model('Avatar')->saveRemoteAvatar("http://www.luqinwenda.com/addons/theme/stv1/_static/image/noavatar/big.jpg", $uid);
+				}
+				
+				model('Register')->overUserInit($uid);
+				model('User')->cleanCache ( array($uid) );
+				
+				$result = model('Passport')->loginLocalWhitoutPassword($user['login']);
+				//$result=true;
+			}
+		}
+		return $result;
 	}
 	
 	private function getUname ($uname)
