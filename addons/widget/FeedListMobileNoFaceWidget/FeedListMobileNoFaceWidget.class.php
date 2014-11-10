@@ -43,7 +43,8 @@ class FeedListMobileNoFaceWidget extends Widget {
         // 查看是否有更多数据
         if(empty($content['html'])) {
         	// 没有更多的
-			$var['list'] = "<span style='margin-left:10px'>暂无提问</span>";
+			$var['list'] = "<span style='margin-left:10px; font-size:14px;'>暂无提问</span><br /><br /><br />".
+				"<div style='text-align:center; height:40px; line-height:40px; font-size:16px;'><a href='".U('public/MobileNew/quickask', array('openid'=>$data['openid']))."'>立即提问</a></div>";
         } else {
         	$var['list'] = $content['html'];
         	$var['lastId'] = $content['lastId'];
