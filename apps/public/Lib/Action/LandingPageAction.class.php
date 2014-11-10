@@ -47,13 +47,13 @@ class LandingPageAction
 				return;
 			}
 			//判断时间
-			$date = date("Y-m-d H:i:s",strtotime("-30 minute"));
+			/*$date = date("Y-m-d H:i:s",strtotime("-30 minute"));
 			//echo time().'<br>';
 			if($dt > time() || $dt < strtotime($date))
 			{
 				echo '访问超时';
 				return;
-			}
+			}*/
 			//判断code
 			$key = C('WXURL_KEY');
 			//echo md5($openid.$dt.$key).'<br>';
