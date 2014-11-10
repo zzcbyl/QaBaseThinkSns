@@ -10,7 +10,7 @@ class LandingPageAction
 	{
 		//$this->redirect('public/MobileNew/prompt'); //暂停页面
 		
-		sleep(1);
+		/*sleep(1);
 		$openid = ''; //cookie('lqwd_openid');
 		$url = 'http://weixin.luqinwenda.com/menu_click_landing.aspx?openid='.$openid;
 		$Result = $this->curls($url);
@@ -27,7 +27,35 @@ class LandingPageAction
 		
 		//$openid = $_GET['openid'];
 		$url = $_GET['url'];
+		$source = $_GET['source'];*/
+		
+		
+		$openid = $_GET['openid'];
+		$dt = $_GET['time'];
+		$url = $_GET['url'];
+		$code = $_GET['code'];
 		$source = $_GET['source'];
+		
+		if(empty($openid) || empty($dt) || empty($code)) {
+			echo '非法访问';
+			return;
+		}
+		//判断时间
+		$date = date("Y-m-d H:i:s",strtotime("-30 minute"));
+		//echo time().'<br>';
+		if($dt > time() || $dt < strtotime($date))
+		{
+			echo '访问超时';
+			return;
+		}
+		//判断code
+		$key = C('WXURL_KEY');
+		//echo md5($openid.$dt.$key).'<br>';
+		if(md5($openid.$dt.$key) != $code)
+		{
+			echo '非法访问';
+			return;
+		}
 		
 		//判断openid存在去登录,否则去注册
 		$user = model('User')->getUserInfoByOpenID($openid);
