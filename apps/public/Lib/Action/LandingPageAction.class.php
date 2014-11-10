@@ -10,51 +10,58 @@ class LandingPageAction
 	{
 		//$this->redirect('public/MobileNew/prompt'); //暂停页面
 		
-		/*sleep(1);
-		$openid = ''; //cookie('lqwd_openid');
-		$url = 'http://weixin.luqinwenda.com/menu_click_landing.aspx?openid='.$openid;
-		$Result = $this->curls($url);
-		//$Result = '{"status":0,"openid":"oqrMvt6yRAWFu3DmhGe4Td0nKZRo" }';
-		$jsonArr = $this->analyJson($Result);
-		$openid = $jsonArr['openid'];
-		if(empty($openid) || $openid == '' || $openid == null)
+		$openid = '';
+		$url = '';
+		$from = $_GET['from'];
+		if($from=="1")
 		{
-			echo '服务器繁忙，请稍后再试...';
-			return;
+			sleep(1);
+			$idurl = 'http://weixin.luqinwenda.com/menu_click_landing.aspx?openid='.$openid;
+			$Result = $this->curls($idurl);
+			//$Result = '{"status":0,"openid":"oqrMvt6yRAWFu3DmhGe4Td0nKZRo" }';
+			$jsonArr = $this->analyJson($Result);
+			$openid = $jsonArr['openid'];
+			if(empty($openid) || $openid == '' || $openid == null)
+			{
+				echo '服务器繁忙，请稍后再试...';
+				return;
+			}
+			//$expire = 3600 * 24 * 30 * 36;
+			//cookie('lqwd_openid', $openid, $expire);
+					
+			//$openid = $_GET['openid'];
+			$url = $_GET['url'];
+			$source = $_GET['source'];
 		}
-		//$expire = 3600 * 24 * 30 * 36;
-		//cookie('lqwd_openid', $openid, $expire);
-		
-		//$openid = $_GET['openid'];
-		$url = $_GET['url'];
-		$source = $_GET['source'];*/
-		
-		
-		$openid = $_GET['openid'];
-		$dt = $_GET['time'];
-		$url = $_GET['url'];
-		$code = $_GET['code'];
-		$source = $_GET['source'];
-		
-		if(empty($openid) || empty($dt) || empty($code)) {
-			echo '非法访问';
-			return;
-		}
-		//判断时间
-		$date = date("Y-m-d H:i:s",strtotime("-30 minute"));
-		//echo time().'<br>';
-		if($dt > time() || $dt < strtotime($date))
+		else
 		{
-			echo '访问超时';
-			return;
-		}
-		//判断code
-		$key = C('WXURL_KEY');
-		//echo md5($openid.$dt.$key).'<br>';
-		if(md5($openid.$dt.$key) != $code)
-		{
-			echo '非法访问';
-			return;
+			
+			$openid = $_GET['openid'];
+			$dt = $_GET['time'];
+			$url = $_GET['url'];
+			$code = $_GET['code'];
+			$source = $_GET['source'];
+			
+			if(empty($openid) || empty($dt) || empty($code)) {
+				echo '非法访问';
+				return;
+			}
+			//判断时间
+			$date = date("Y-m-d H:i:s",strtotime("-30 minute"));
+			//echo time().'<br>';
+			if($dt > time() || $dt < strtotime($date))
+			{
+				echo '访问超时';
+				return;
+			}
+			//判断code
+			$key = C('WXURL_KEY');
+			//echo md5($openid.$dt.$key).'<br>';
+			if(md5($openid.$dt.$key) != $code)
+			{
+				echo '非法访问';
+				return;
+			}
 		}
 		
 		//判断openid存在去登录,否则去注册
