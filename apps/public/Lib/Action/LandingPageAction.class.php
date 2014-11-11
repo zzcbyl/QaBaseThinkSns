@@ -13,7 +13,7 @@ class LandingPageAction
 		$openid = '';
 		$url = '';
 		$from = $_GET['from'];
-		if($from=="1")
+		if($from=="1") //服务号
 		{
 			sleep(1);
 			$idurl = 'http://weixin.luqinwenda.com/menu_click_landing.aspx?openid='.$openid;
@@ -66,13 +66,17 @@ class LandingPageAction
 		
 		//判断openid存在去登录,否则去注册
 		$user = model('User')->getUserInfoByOpenID($openid);
+		
 		if($user['uid']>0)
 		{
 			$result = model('Passport')->loginLocalWhitoutPassword($user['login']);
 		}
 		else
 		{
-			saveUser($openid);
+			if($from=="1")
+			{
+				saveUser($openid);
+			}
 		}
 		
 		if(empty($url))
@@ -189,7 +193,7 @@ class LandingPageAction
 	
 	private function saveUser($openid)
 	{
-		$result=false;
+		//$result=false;
 		if(!empty($openid))
 		{
 			//自动注册
@@ -248,11 +252,12 @@ class LandingPageAction
 				model('Register')->overUserInit($uid);
 				model('User')->cleanCache ( array($uid) );
 				
-				$result = model('Passport')->loginLocalWhitoutPassword($user['login']);
+				model('Passport')->loginLocalWhitoutPassword($user['login']);
+				//$result = model('Passport')->loginLocalWhitoutPassword($user['login']);
 				//$result=true;
 			}
 		}
-		return $result;
+		//return $result;
 	}
 	
 	private function getUname ($uname)

@@ -290,7 +290,7 @@ class UserModel extends Model {
 		}
 		$map ['openid'] = $openID;
 		$map ['is_del'] = 0;
-		$data = $this->where($map)->find();
+		$data = $this->_getUserInfo ($map);
 		return $data;
 	}
 	
