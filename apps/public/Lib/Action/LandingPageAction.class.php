@@ -193,13 +193,17 @@ class LandingPageAction
 	
 	private function saveUser($openid)
 	{
-		//$result=false;
+		$result=false;
 		if(!empty($openid))
 		{
 			//自动注册
 			$url = 'http://weixin.luqinwenda.com/getuserinfo.aspx?openid='.$openid;
 			$UserResult = $this->curls($url);
 			$jsonUserArr = $this->analyJson($UserResult);
+			if(intval($jsonUserArr['errcode']) > 0)
+			{
+				return $result;
+			}
 			//print_r(model('user')->getUserInfo(2062));
 			//return;
 			
@@ -254,10 +258,10 @@ class LandingPageAction
 				
 				model('Passport')->loginLocalWhitoutPassword($user['login']);
 				//$result = model('Passport')->loginLocalWhitoutPassword($user['login']);
-				//$result=true;
+				$result=true;
 			}
 		}
-		//return $result;
+		return $result;
 	}
 	
 	private function getUname ($uname)

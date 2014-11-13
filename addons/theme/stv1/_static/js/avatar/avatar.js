@@ -46,7 +46,7 @@ var avatar = function (args) {
 		    // up_pic_width = w;
 		    // up_pic_height = h;
 		    up_pic_width = 300;
-		    up_pic_height = 300 * h / w;
+		    up_pic_height = 300;
 		},
 
 		onSelectEnd = function (img, selection) {
@@ -88,6 +88,7 @@ var avatar = function (args) {
         };
 
         if (!checkFile()) {
+
             ui.error(L('PUBLIC_UPDATE_TYPE_TIPS'));
             return false;
         }
@@ -185,6 +186,8 @@ var avatar = function (args) {
                 // 显示上传表单，隐藏设置表单
                 settingForm.style.display = "none";
                 uploadForm.style.display = "block";
+
+                location.reload();
             }
         };
         $(settingForm).ajaxSubmit(options);
