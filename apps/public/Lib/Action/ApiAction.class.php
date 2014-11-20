@@ -1,6 +1,6 @@
 <?php
 /**
- * ¶ÔÍâ½Ó¿Ú
+ * å¯¹å¤–æŽ¥å£
  * @author zhangzc
  * @version TS3.0
  */
@@ -8,7 +8,7 @@ class ApiAction
 {
 	private $limitnums = 10;
 	/**
-	 * È«Õ¾ÎÊÌâ
+	 * å…¨ç«™é—®é¢˜
 	 *
 	 * @return JSON
 	 *
@@ -29,9 +29,9 @@ class ApiAction
 	}
 	
 	/**
-	 * »ñÈ¡ÎÒµÄÎÊÌâ
+	 * èŽ·å–æˆ‘çš„é—®é¢˜
 	 * 
-	 * @param uid  ÓÃ»§ID
+	 * @param uid  ç”¨æˆ·ID
 	 * @return JSON
 	 *
 	 */	
@@ -56,9 +56,9 @@ class ApiAction
 	}
 	
 	/**
-	 * »ñÈ¡ÎÒµÄ»Ø´ð
+	 * èŽ·å–æˆ‘çš„å›žç­”
 	 *
-	 * @param uid ÓÃ»§ID
+	 * @param uid ç”¨æˆ·ID
 	 * @return JSON
 	 *
 	 */ 	
@@ -83,9 +83,9 @@ class ApiAction
 	}
 	
 	/**
-	 * ÑûÇëÎÒµÄ
+	 * é‚€è¯·æˆ‘çš„
 	 *
-	 * @param uid ÓÃ»§ID
+	 * @param uid ç”¨æˆ·ID
 	 * @return JSON
 	 *
 	 */	
@@ -108,9 +108,9 @@ class ApiAction
 	}
 	
 	/**
-	 * »ñÈ¡ÎÒµÄ¹Ø×¢
+	 * èŽ·å–æˆ‘çš„å…³æ³¨
 	 *
-	 * @param uid ÓÃ»§ID
+	 * @param uid ç”¨æˆ·ID
 	 * @return JSON
 	 *
 	 */	
@@ -134,7 +134,7 @@ class ApiAction
 				$this->uid 
 				);
 		}
-		// »ñÈ¡ÓÃ»§×éÐÅÏ¢
+		// èŽ·å–ç”¨æˆ·ç»„ä¿¡æ¯
 		$follow_state = model ( 'Follow' )->getFollowStateByFids ( $current_uid, $fids );
 		$ArrayData['follow_state']=$follow_state;
 		
@@ -153,9 +153,9 @@ class ApiAction
 	}
 	
 	/**
-	 * »ñÈ¡ÎÒµÄ·ÛË¿
+	 * èŽ·å–æˆ‘çš„ç²‰ä¸
 	 *
-	 * @param uid ÓÃ»§ID
+	 * @param uid ç”¨æˆ·ID
 	 * @return JSON
 	 *
 	 */	
@@ -179,7 +179,7 @@ class ApiAction
 				$this->uid 
 				);
 		}
-		// »ñÈ¡ÓÃ»§×éÐÅÏ¢
+		// èŽ·å–ç”¨æˆ·ç»„ä¿¡æ¯
 		$follow_state = model ( 'Follow' )->getFollowStateByFids ( $current_uid, $fids );
 		$ArrayData['follow_state']=$follow_state;
 		
@@ -198,9 +198,9 @@ class ApiAction
 	}
 	
 	/**
-	 * »ñÈ¡ÎÒµÄºÃÓÑ
+	 * èŽ·å–æˆ‘çš„å¥½å‹
 	 *
-	 * @param uid ÓÃ»§ID
+	 * @param uid ç”¨æˆ·ID
 	 * @return JSON
 	 *
 	 */	
@@ -225,7 +225,7 @@ class ApiAction
 				$this->uid 
 				);
 		}
-		// »ñÈ¡ÓÃ»§×éÐÅÏ¢
+		// èŽ·å–ç”¨æˆ·ç»„ä¿¡æ¯
 		$follow_state = model ( 'Follow' )->getFollowStateByFids ( $current_uid, $fids );
 		$ArrayData['follow_state']=$follow_state;
 		
@@ -244,9 +244,9 @@ class ApiAction
 	}
 	
 	/**
-	 * Í¨¹ýID»ñÈ¡ÓÃ»§
+	 * é€šè¿‡IDèŽ·å–ç”¨æˆ·
 	 *
-	 * @param uid ÓÃ»§ID
+	 * @param uid ç”¨æˆ·ID
 	 * @return JSON
 	 *
 	 */	
@@ -266,9 +266,9 @@ class ApiAction
 	}
 	
 	/**
-	 * Í¨¹ýOpenID»ñÈ¡ÓÃ»§
+	 * é€šè¿‡OpenIDèŽ·å–ç”¨æˆ·
 	 *
-	 * @param uid ÓÃ»§ID
+	 * @param uid ç”¨æˆ·ID
 	 * @return JSON
 	 *
 	 */	
@@ -287,7 +287,7 @@ class ApiAction
 	}
 	
 	/**
-	 * ÈÈÃÅÎÊÌâ(5Ìõ)
+	 * çƒ­é—¨é—®é¢˜(5æ¡)
 	 *
 	 * @return JSON
 	 *
@@ -343,7 +343,7 @@ class ApiAction
 	
 	
 	/**
-	 * ×îÐÂÎÊÌâ(5Ìõ)
+	 * æœ€æ–°é—®é¢˜(5æ¡)
 	 *
 	 * @return JSON
 	 *
@@ -362,6 +362,57 @@ class ApiAction
 			$returnData[$k] = $data;
 		}
 		echo '{"data":'.$this->JSON($returnData).'}';
+	}
+	
+	public function isPass($str, $dt, $code)
+	{
+		$date = date("Y-m-d H:i:s",strtotime("-30 minute"));
+		if($dt > time() || $dt < strtotime($date))
+		{
+			return false;
+		}
+		
+		$key = C('WXURL_KEY');
+		if(md5($str.$dt.$key) != $code)
+		{
+			return false;
+		}
+		
+		return true;
+	}
+	
+	/**
+	 * ç™»å½•
+	 *
+	 * @return JSON
+	 *
+	 */	
+	public function userlogin()
+	{
+		$login = $_GET['login'];
+		$pwd = $_GET['pwd'];
+		$dt = $_GET['time'];
+		$code = $_GET['code'];
+		
+		/*if(!$this->isPass($login, $dt, $code))
+		{
+			echo 'éžæ³•è®¿é—®';
+			return;
+		}*/
+
+		$result = model('Passport')->getLocalUser($login,$pwd);
+		
+		if(!$result){
+			$status = 0; 
+			$info	= model('Passport')->getError();
+			$data 	= 0;
+		}else{
+			$status = 1;
+			$info 	= model('Passport')->getSuccess();
+			$data 	= $result;
+		}
+		
+		echo '{status:'.$status.',info:"'.$info.'",data:'.$this->JSON($data).'}';
 	}
 	
 	
