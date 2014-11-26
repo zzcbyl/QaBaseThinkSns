@@ -91,7 +91,7 @@
                         <!--<img src="images/img.jpg" />-->
                         <a href="{:U('public/Index/feed',array('feed_id'=>$eqa['feed_id'],'uid'=>$eqa['uid']))}" target="_blank" title="{$eqa.body}">{$eqa.body|getShort=20,'...'}</a>
                     </dt>
-                    <dd title="{$eqa['answer'][0]['body']}">{$eqa['answer'][0]['body']|getShort=112,'...'}</dd>
+                    <dd title="">{$eqa['answer'][0]['body']|getShort=112,'...'}</dd>
                 </dl>
             </li>
             </volist>
