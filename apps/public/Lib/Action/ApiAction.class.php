@@ -414,6 +414,17 @@ class ApiAction
 		
 		echo '{status:'.$status.',info:"'.$info.'",data:'.$this->JSON($data).'}';
 	}
+
+    public function userregist()
+    {
+        $login = $_GET['login'];
+        $pwd = $_GET['pwd'];
+        $dt = $_GET['time'];
+        $code = $_GET['code'];
+
+
+
+    }
 	
 	
 	

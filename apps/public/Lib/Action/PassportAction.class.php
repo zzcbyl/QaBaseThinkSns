@@ -1310,8 +1310,67 @@ class PassportAction extends Action
 			}	
 		}
 	}
-	
-	/**
+
+    /**
+     * 课程列表页面
+     */
+    public function course()
+    {
+        //顶级专家
+        $expertUid = C('TopExpert');
+        $TopExpert = model('user')->getUserInfo($expertUid);
+        $user_count = model ( 'UserData' )->getUserDataByUids ( array($expertUid) );
+        $this->assign ( 'TopExpert_UserCount', $user_count );
+        $this->assign('TopExpert',$TopExpert);
+
+        $map['course_state'] = 1;
+        $courseList = model('course')->getCourseList($map);
+        $this->assign('courselist', $courseList);
+
+        $this->setTitle ('课程' );
+        $this->setKeywords ('课程');
+        $this->display();
+    }
+
+    /**
+     * 课程详情页面
+     */
+    public function coursedetail()
+    {
+        $courseid = $_GET['courseid'];
+        if(!empty($courseid)) {
+
+        $course = model('course')->getCourseByID($courseid);
+        if(!empty($course)) {
+            $this->assign('course', $course);
+            $this->setTitle('课程－'.$course['course_title']);
+            $this->setKeywords('课程－'.$course['course_title']);
+        }
+    }
+$this->display();
+    }
+
+    /**
+     * 书籍页面
+     */
+    public function book()
+    {
+        //顶级专家
+        $expertUid = C('TopExpert');
+        $TopExpert = model('user')->getUserInfo($expertUid);
+        $user_count = model ( 'UserData' )->getUserDataByUids ( array($expertUid) );
+        $this->assign ( 'TopExpert_UserCount', $user_count );
+        $this->assign('TopExpert',$TopExpert);
+
+
+
+        $this->setTitle ('卢老师签名书籍' );
+        $this->setKeywords ('卢老师签名书籍');
+        $this->display();
+    }
+
+
+    /**
 	 * 报名数据
 	 *
 	 * @return $result varchar

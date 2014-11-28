@@ -4,7 +4,7 @@ img{border:none}
 input,textarea{outline:none; font-size:12px;}
 .header_box{background:#c22b2b; height:60px;}
 .header{overflow:hidden; height:60px;}
-.header .menu{float:left;width:280px; margin-left:20px}
+.header .menu{float:left;width:380px; margin-left:20px}
 .header .menu li{float:left; height:60px; line-height:60px;}
 .header .menu li a{font-size:14px; color:#fff; text-decoration:none; display:block; padding:0px 20px}
 .header .menu li a:hover,.header .menu li a.current{font-size:14px; color:#fff; text-decoration:none; background:#941d1d;}
@@ -672,4 +672,24 @@ p.FloatNew{background:url(../image/new.png) no-repeat; position:absolute; width:
 .mobilesharebg {background:url(../image/mobile_Icon1.png) no-repeat -55px 0; width:40px; height:40px;}
 .mobilecollectbg {background:url(../image/mobile_Icon1.png) no-repeat -125px 0; width:40px; height:40px;}
 .mobileanswerbg {background:url(../image/mobile_Icon2.png) no-repeat -125px 0; width:40px; height:40px;}
+
+.courseMain{padding:20px 0px; overflow:hidden}
+.courseMain ul li{margin-bottom:30px; width:auto; float:left; margin-right:8px; overflow:hidden;}
+.courseMain ul li img{float:left; width:60px; height:60px;}
+.courseMain ul li div{font-size:14px; }
+.courseMain ul li div h2.tit{font-size:14px; color:#333; padding:5px 10px; background:#d9d9d9; line-height: 20px; overflow: hidden;  }
+.courseMain ul li div h2.tit a { color:#333333; }
+.courseMain .courseContentli { color: #666; font-size: 14px; height: 72px; line-height: 24px; overflow: hidden; padding: 0 5px;}
+
+.courseTitle { font-size: 18px; font-weight: bold; text-align: center;}
+.courseContent { text-indent: 25px; line-height: 25px; font-size: 14px; margin-top: 20px;}
+.courseImg { text-align: center; margin: 10px 0;}
+.courseImg img { max-width: 800px; }
+
+.bookmain { margin-top: 20px; font-size: 13px; font-family: "微软雅黑"; line-height: 25px;}
+.bookmain li { float: left; width: 200px; margin-left: 33px; margin-bottom: 20px; }
+.bookmain li img { width: 195px; height: 195px;}
+.bookmain .bookimg { border: 1px solid #ccc; padding: 2px;}
+.bookmain .booktitle { }
+.bookmain .bookprice {  color: red;}
 
