@@ -245,6 +245,11 @@ phpinfo();
     $(document).ready(function () {
         $('.feed_img_lists').hide();
         $('.url').hide();
+        $('p').each(function(){
+           if($(this).html()==''||$(this).html()==' ') {
+               $(this).remove();
+           }
+        });
     });
 
 //    document.onclick = function() {
