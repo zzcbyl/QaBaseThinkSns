@@ -56,7 +56,7 @@ class PassportAction extends Action
 		
 		//最新问题
 		$Qwhere=' is_del = 0 AND feed_questionid=0 AND add_feedid=0 AND (is_audit=1 OR is_audit=0) ';
-		$newfeedList = model('feed')->getQuestionList($Qwhere,20);
+		$newfeedList = model('feed')->getQuestionList($Qwhere,15);
 		$newList = $newfeedList;
 		$newList['data'] = array();
 		$index = 0;
@@ -115,7 +115,13 @@ class PassportAction extends Action
 		//print(model('feed')->getLastSql());
 		//print_r($QAList['data']);
 		$this->assign('ExpertQA',$QAList);
-        
+
+        //课程
+        $map['course_state'] = 1;
+        $courseList = model('course')->getCourseList($map);
+        $this->assign('CourseList', $courseList);
+        //print_r($courseList);
+
 		$this->display('login');
 	}
 	
@@ -1364,8 +1370,8 @@ $this->display();
 
 
 
-        $this->setTitle ('卢勤签名书籍' );
-        $this->setKeywords ('卢勤签名书籍');
+        $this->setTitle ('卢勤签名著作' );
+        $this->setKeywords ('卢勤签名著作');
         $this->display();
     }
 

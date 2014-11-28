@@ -546,8 +546,8 @@ p.FloatNew{background:url(../image/new.png) no-repeat; position:absolute; width:
 .newAsk fieldset,.newUser fieldset { border:1px solid #E0E0E0; height:auto;}
 .newAsk legend,.newUser legend {  padding:0 10px; margin-left:5px; font-size:18px; font-weight:bold;  }
 .newAsk h1,.newUser h1{position:absolute; top:-10px; left:-20px; font-size:18px;}
-.newAsk_cont{margin:0px 20px 20px 20px; height:660px; overflow:hidden;}
-.newAsk_cont ul li{height:55px; overflow:hidden; margin-bottom:15px;}
+.newAsk_cont{margin:0px 20px 20px 20px; height:535px; overflow:hidden;}
+.newAsk_cont ul li{height:55px; overflow:hidden; margin-bottom:10px;}
 .newAsk_cont ul li img{float:left; width:35px; height:35px; margin:3px 15px 0px 0px}
 .newAsk_cont ul li h5{color:#333; height: 20px; overflow: hidden;}
 .newAsk_cont ul li p{ font-size:12px; color:#999; height:35px; overflow:hidden;}
@@ -692,4 +692,17 @@ p.FloatNew{background:url(../image/new.png) no-repeat; position:absolute; width:
 .bookmain .bookimg { border: 1px solid #ccc; padding: 2px;}
 .bookmain .booktitle { }
 .bookmain .bookprice {  color: red;}
+
+
+.CourseIndexModel { padding:0px 15px 0px 15px; height: 345px; overflow: hidden; width: 438px; }
+.CourseIndexModel li { margin-bottom: 10px;}
+.CourseIndexModel li h2 { line-height: 20px; height: 20px; overflow: hidden; background: #d9d9d9; color: #333; padding: 5px 10px; }
+.CourseIndexModel li div { line-height: 20px; height: 40px; overflow: hidden; font-weight: normal; padding: 0 10px;}
+
+.BookIndexModel { padding:0px 15px 0px 15px; height: 220px; overflow: hidden; width: 438px; }
+.BookIndexModel li { float: left; width: 140px; margin-left: 9px;}
+.BookIndexModel li img { width: 135px; height: 135px;}
+.BookIndexModel li .bookimg { border: 1px solid #ccc; padding: 2px;}
+.BookIndexModel li .booktitle { height: 18px; line-height: 18px; font-weight: normal; }
+.BookIndexModel li .bookprice {  color: red; font-weight: normal;}
 

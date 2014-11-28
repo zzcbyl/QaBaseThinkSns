@@ -44,7 +44,8 @@
                 <li>
                     <div>
                         <h2 class="tit">
-                            <a href="{:U('public/Passport/coursedetail',array('courseid'=>$course['course_id']))}" target="_blank" >{$course.course_title|getShort=28,'...'}</a>
+                            <a href="{:U('public/Passport/coursedetail',array('courseid'=>$course['course_id']))}" target="_blank" >
+                                {$course.course_title|getShort=100,'...'}</a>
                         </h2>
                         <div class="courseContentli" >
                             <php>

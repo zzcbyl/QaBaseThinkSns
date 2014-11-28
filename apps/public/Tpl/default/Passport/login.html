@@ -92,7 +92,47 @@ phpinfo();
                  </ul>
                  <div style="clear:both;"></div>
             </div>
-        </fieldset> 
+        </fieldset>
+        <div style="margin-top:20px;">
+            <fieldset>
+                <legend>卢勤签名著作</legend>
+                <div class="BookIndexModel" >
+                    <div style="text-align:right; clear:both; padding:0 10px 10px 0;"><a href="{:U('public/Passport/book')}" target="_blank">更多>></a></div>
+                    <ul>
+                        <li style="margin-left: 0px;">
+                            <div>
+                                <div class="bookimg">
+                                    <a target="_blank" href="http://shop110957917.taobao.com/search.htm?spm=a1z10.1.0.0.PIG5Rt&search=y&v=1">
+                                        <img src="__THEME__/image/book/book5.jpg"></a>
+                                </div>
+                                <div class="booktitle">卢勤著作：《女孩梦》 </div>
+                                <div class="bookprice"><span style="color: #666; font-weight: normal;">￥</span>35.00</div>
+                            </div>
+                        </li>
+                        <li>
+                            <div>
+                                <div class="bookimg">
+                                    <a target="_blank" href="http://shop110957917.taobao.com/search.htm?spm=a1z10.1.0.0.PIG5Rt&search=y&v=1">
+                                        <img src="__THEME__/image/book/book4.jpg"></a>
+                                </div>
+                                <div class="booktitle">卢勤著作：《男孩梦》 </div>
+                                <div class="bookprice"><span style="color: #666; font-weight: normal;">￥</span>35.00</div>
+                            </div>
+                        </li>
+                        <li>
+                            <div>
+                                <div class="bookimg">
+                                    <a target="_blank" href="http://shop110957917.taobao.com/search.htm?spm=a1z10.1.0.0.PIG5Rt&search=y&v=1">
+                                        <img src="__THEME__/image/book/book1.jpg"></a>
+                                </div>
+                                <div class="booktitle">卢勤著作：长大不容易</div>
+                                <div class="bookprice"><span style="color: #666; font-weight: normal;">￥</span>28.00</div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </fieldset>
+        </div>
         <div style="margin-top:20px;">
             <fieldset> 
             <legend>最新专家回答</legend>
@@ -119,21 +159,43 @@ phpinfo();
         </div>
     </div>
     <div class="newUser">
-        <fieldset> 
-        <legend>最新用户</legend>
-        <div class="newUser_cont">
-            <div style="text-align:right; clear:both; padding:0 10px 10px 0;"><a href="{:U('public/Passport/square')}" target="_blank">更多>></a></div>
-            <ul>
-                 <volist name="NewUserList" id="user">
-                 <li>
-                    <a target="_blank" href="{:U('public/Passport/newperson',array('uid'=>$user['uid']))}" style="height:50px;" title="{$user['uname']}"><img class="thumb" src="{$user['avatar_small']}" /></a>
-                    <a target="_blank" href="{:U('public/Passport/newperson',array('uid'=>$user['uid']))}" title="{$user['uname']}">{$user['uname']|getShort=3,'...'}</a>
-                 </li>
-                 </volist>         
-             </ul>
-             <div style="clear:both;"></div>
+        <fieldset>
+            <legend>卢勤课程</legend>
+            <div class="CourseIndexModel" >
+                <div style="text-align:right; clear:both; padding:0 10px 10px 0;"><a href="{:U('public/Passport/course')}" target="_blank">更多>></a></div>
+                <ul>
+                    <volist name="CourseList.data" id="course">
+                    <li>
+                        <h2>
+                            <a target="_blank" href="{:U('public/Passport/coursedetail',array('courseid'=>$course['course_id']))}">{$course.course_title}</a></h2>
+                        <div>
+                            <php>
+                                echo strstr($course['course_content'],'<p>');
+                            </php>
+                        </div>
+                    </li>
+                    </volist>
+                </ul>
+            </div>
+        </fieldset>
+
+        <div style="margin-top:20px;">
+            <fieldset>
+            <legend>最新用户</legend>
+            <div class="newUser_cont">
+                <div style="text-align:right; clear:both; padding:0 10px 10px 0;"><a href="{:U('public/Passport/square')}" target="_blank">更多>></a></div>
+                <ul>
+                     <volist name="NewUserList" id="user">
+                     <li>
+                        <a target="_blank" href="{:U('public/Passport/newperson',array('uid'=>$user['uid']))}" style="height:50px;" title="{$user['uname']}"><img class="thumb" src="{$user['avatar_small']}" /></a>
+                        <a target="_blank" href="{:U('public/Passport/newperson',array('uid'=>$user['uid']))}" title="{$user['uname']}">{$user['uname']|getShort=3,'...'}</a>
+                     </li>
+                     </volist>
+                 </ul>
+                 <div style="clear:both;"></div>
+            </div>
+            </fieldset>
         </div>
-        </fieldset> 
         
         <div style="margin-top:20px;">
             <fieldset>  
