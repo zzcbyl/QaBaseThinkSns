@@ -1327,8 +1327,8 @@ class PassportAction extends Action
         $courseList = model('course')->getCourseList($map);
         $this->assign('courselist', $courseList);
 
-        $this->setTitle ('课程' );
-        $this->setKeywords ('课程');
+        $this->setTitle ('卢勤课程' );
+        $this->setKeywords ('卢勤课程');
         $this->display();
     }
 
@@ -1343,8 +1343,8 @@ class PassportAction extends Action
         $course = model('course')->getCourseByID($courseid);
         if(!empty($course)) {
             $this->assign('course', $course);
-            $this->setTitle('课程－'.$course['course_title']);
-            $this->setKeywords('课程－'.$course['course_title']);
+            $this->setTitle('卢勤课程－'.$course['course_title']);
+            $this->setKeywords('卢勤课程－'.$course['course_title']);
         }
     }
 $this->display();
@@ -1364,8 +1364,8 @@ $this->display();
 
 
 
-        $this->setTitle ('卢老师签名书籍' );
-        $this->setKeywords ('卢老师签名书籍');
+        $this->setTitle ('卢勤签名书籍' );
+        $this->setKeywords ('卢勤签名书籍');
         $this->display();
     }
 
