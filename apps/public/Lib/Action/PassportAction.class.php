@@ -55,7 +55,7 @@ class PassportAction extends Action
         $this->assign('login_bg', $login_bg);
 		
 		//最新问题
-		$Qwhere=' is_del = 0 AND feed_questionid=0 AND add_feedid=0 AND (is_audit=1 OR is_audit=0) ';
+		$Qwhere='uid>0 and is_del = 0 AND feed_questionid=0 AND add_feedid=0 AND (is_audit=1 OR is_audit=0) ';
 		$newfeedList = model('feed')->getQuestionList($Qwhere,15);
 		$newList = $newfeedList;
 		$newList['data'] = array();
@@ -79,7 +79,7 @@ class PassportAction extends Action
 		while(true)
 		{
 			$i++;
-			$uwhere=' is_del = 0 and is_audit=1 and is_active=1 and is_init = 1 ';
+			$uwhere='uid>0 and is_del = 0 and is_audit=1 and is_active=1 and is_init = 1 ';
 			if($struids!='')
 				$uwhere .= ' and uid not in ('.substr($struids,0,strlen($struids)-1).')';
 			$NewUserList = model('User')->getList($uwhere, 12 ,'uid', 'ctime desc');
