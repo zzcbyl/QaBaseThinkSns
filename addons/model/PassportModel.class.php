@@ -130,7 +130,7 @@ class PassportModel {
 		$map = "login = '{$login}' AND is_del=0";
 		
 		if(!$user = model('User')->where($map)->find()) {
-			$this->error = '用户名不存在, 请您先 <a style="text-decoration:underline;" href="'.U('public/Register/Home',array('login'=>$login)).'">注册</a>';			// 帐号不存在
+			$this->error = '用户名不存在, 请您先注册';			// 帐号不存在
 			return false;
 		}
 
