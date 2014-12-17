@@ -406,6 +406,9 @@ class ApiAction
     private $_email_reg = '/[_a-zA-Z\d\-\.]+(@[_a-zA-Z\d\-\.]+\.[_a-zA-Z\d\-]+)+$/i';        // 邮箱正则规则
     private $_mobile_reg = '/^0*(13|15|18)\d{9}$/i';        // 手机号正则规则
 
+    /**
+     * 用户注册
+     */
     public function userregist()
     {
         $login = $_GET['login'];
@@ -483,5 +486,38 @@ class ApiAction
         }
 
         echo '{"status":' . $status . ',"info":"' . $returnInfo . '","data":' . $this->JSON($data) . '}';
+    }
+
+    /**
+     * 获取feed信息
+     */
+    public function getfeedbyid()
+    {
+        $feedid = $_GET['feedid'];
+        $dt = $_GET['time'];
+        $code = $_GET['code'];
+
+        /*if (!$this->isPass($feedid, $dt, $code)) {
+            echo '非法访问';
+            return;
+        }*/
+
+        $status = 0;
+        $returnInfo = '';
+        $data = '';
+
+        $result = model('feed')->get($feedid);
+        if($result)
+        {
+            $status = 1;
+            $returnInfo = '';
+            $data=$result;
+        }
+        else
+        {
+            $returnInfo = '问答不存在';
+        }
+
+        echo '{"status":' . $status . ',"info":"' . $returnInfo . '","data":[' . json_encode($data) . ']}';
     }
 }
