@@ -482,7 +482,7 @@ class MobileNewAction
         $questionData = model('Feed')->get($d['questionid']);
         if ($questionData) {
             $content='亲爱的用户：你好，有人在卢勤问答平台上回答了你提出的问题“'.$questionData['body'].'”，快去看看吧！';
-            $this->PostWxUser($d['openid'], $content);
+            $this->PostWxUser($questionData['openid'], $content);
         }
 
         // 提问来源设置
