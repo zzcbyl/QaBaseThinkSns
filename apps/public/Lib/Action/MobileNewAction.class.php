@@ -481,8 +481,10 @@ class MobileNewAction
 
         $questionData = model('Feed')->get($d['questionid']);
         if ($questionData) {
-            $content='亲爱的用户：你好，有人在卢勤问答平台上回答了你提出的问题“'.$questionData['body'].'”，快去看看吧！';
-            $this->PostWxUser($questionData['openid'], $content);
+            if ($questionData['openid'] != null && $questionData['openid'] != '') {
+                $content = '亲爱的用户：你好，有人在卢勤问答平台上回答了你提出的问题“' . $questionData['body'] . '”，快去看看吧！';
+                $this->PostWxUser($questionData['openid'], $content);
+            }
         }
 
         // 提问来源设置
@@ -517,7 +519,7 @@ class MobileNewAction
     {
         //$openid='oqrMvt6yRAWFu3DmhGe4Td0nKZRo';
         $postUrl = 'http://weixin.luqinwenda.com/send_message.aspx';
-        $param = '{fromuser:"gh_7c0c5cc0906a",touser:"' . $openid . '",msgtype:"text",text:{content:"'.$content.'"}}';
+        $param = '{fromuser:"gh_7c0c5cc0906a",touser:"' . $openid . '",msgtype:"text",text:{content:"' . $content . '"}}';
 
         $result = $this->curl_post($postUrl, $param);
     }
