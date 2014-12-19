@@ -116,6 +116,9 @@ class MobileNewAction
         $data = curl_exec($ch);
         curl_close($ch);
 
+        //$return = array('status' => 0, 'data' => $data);
+        //exit(json_encode($return));
+
         return $data;
     }
 
@@ -483,7 +486,7 @@ class MobileNewAction
         if ($questionData) {
             if ($questionData['openid'] != null && $questionData['openid'] != '') {
                 $content = '亲爱的用户：你好，有人在卢勤问答平台上回答了你提出的问题“' . $questionData['body'] . '”，快去看看吧！';
-                $this->PostWxUser($questionData['openid'], $content);
+                $this->PostWxUser($questionData['openid'], $questionData['feed_id'], $content);
             }
         }
 
@@ -515,15 +518,15 @@ class MobileNewAction
      * $openid
      * $content  内容
      */
-    public function PostWxUser($openid, $content)
+    public function PostWxUser($openid, $feedid, $content)
     {
         //$openid='oqrMvt6yRAWFu3DmhGe4Td0nKZRo';
         $postUrl = 'http://weixin.luqinwenda.com/send_message.aspx';
-        $param = '{fromuser:"gh_7c0c5cc0906a",touser:"' . $openid . '",msgtype:"text",text:{content:"' . $content . '"}}';
+        //$param = '{fromuser:"gh_7c0c5cc0906a",touser:"' . $openid . '",msgtype:"text",text:{content:"' . $content . '"}}';
+        $param = '{fromuser:"gh_7c0c5cc0906a",touser:"' . $openid . '",msgtype:"news",news:{articles: [{title:"亲爱的用户：你好，有人在卢勤问答平台上回答了你提出的问题",description:"' . $content . '",url:"http://www.luqinwenda.com/index.php?app=public&mod=MobileNew&act=feed&feed_id=' . $feedid . '&openid=' . $openid . '",picurl:"http://www.luqinwenda.com/addons/theme/stv1/_static/image/newanswer.jpg"}]}}';
 
         $result = $this->curl_post($postUrl, $param);
     }
-
 
     /**
      * 操作错误跳转的快捷方
