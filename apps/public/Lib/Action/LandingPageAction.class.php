@@ -45,12 +45,12 @@ class LandingPageAction
             return;
         }
         //判断时间
-        $date = date("Y-m-d H:i:s", strtotime("-30 minute"));
+        /*$date = date("Y-m-d H:i:s", strtotime("-30 minute"));
         //echo time().'<br>';
         if ($dt > time() || $dt < strtotime($date)) {
             echo '访问超时';
             return;
-        }
+        }*/
         //判断code
         $key = C('WXURL_KEY');
         //echo md5($openid.$dt.$key).'<br>';
@@ -63,10 +63,10 @@ class LandingPageAction
         //判断openid存在去登录,否则去注册
         $user = model('User')->getUserInfoByOpenID($openid);
 
-        if ($user['uid'] > 0) {
+        if (!empty($user) && $user['uid'] > 0) {
             $result = model('Passport')->loginLocalWhitoutPassword($user['login']);
         } else {
-            saveUser($openid, $from);
+            $this->saveUser($openid, $from);
         }
 
         if (empty($url)) {
