@@ -116,9 +116,6 @@ class MobileNewAction
         $data = curl_exec($ch);
         curl_close($ch);
 
-        //$return = array('status' => 0, 'data' => $data);
-        //exit(json_encode($return));
-
         return $data;
     }
 
@@ -486,7 +483,10 @@ class MobileNewAction
         if ($questionData) {
             if ($questionData['openid'] != null && $questionData['openid'] != '') {
                 $content = '亲爱的用户：你好，有人在卢勤问答平台上回答了你提出的问题“' . $questionData['body'] . '”，快去看看吧！';
-                $this->PostWxUser($questionData['openid'], $questionData['feed_id'], $content);
+                $usermodel = model('user')->getUserInfoByOpenID($questionData['openid']);
+                if ($usermodel && !empty($usermodel['source'])) {
+                    $this->PostWxUser($questionData['openid'], $questionData['feed_id'], $content, $usermodel['source']);
+                }
             }
         }
 
@@ -518,12 +518,18 @@ class MobileNewAction
      * $openid
      * $content  内容
      */
-    public function PostWxUser($openid, $feedid, $content)
+    public function PostWxUser($openid, $feedid, $content, $from)
     {
-        //$openid='oqrMvt6yRAWFu3DmhGe4Td0nKZRo';
+        //$openid = 'oqrMvt6yRAWFu3DmhGe4Td0nKZRo';//服务号
+        //$openid = 'o5jgRt17EmebKpmy6-Wowxvsu9v0';//订阅号
+        $fromuser = '';
+        if ($from == 4) //服务号
+            $fromuser = 'gh_7c0c5cc0906a';
+        else if ($from == 5)
+            $fromuser = 'gh_b8d1e9dcecc8';
         $postUrl = 'http://weixin.luqinwenda.com/send_message.aspx';
         //$param = '{fromuser:"gh_7c0c5cc0906a",touser:"' . $openid . '",msgtype:"text",text:{content:"' . $content . '"}}';
-        $param = '{fromuser:"gh_7c0c5cc0906a",touser:"' . $openid . '",msgtype:"news",news:{articles: [{title:"亲爱的用户：你好，有人在卢勤问答平台上回答了你提出的问题",description:"' . $content . '",url:"http://www.luqinwenda.com/index.php?app=public&mod=MobileNew&act=feed&feed_id=' . $feedid . '&openid=' . $openid . '",picurl:"http://www.luqinwenda.com/addons/theme/stv1/_static/image/newanswer.jpg"}]}}';
+        $param = '{fromuser:"' . $fromuser . '",touser:"' . $openid . '",msgtype:"news",news:{articles: [{title:"亲爱的用户：你好，有人在卢勤问答平台上回答了你提出的问题",description:"' . $content . '",url:"http://www.luqinwenda.com/index.php?app=public&mod=MobileNew&act=feed&feed_id=' . $feedid . '&openid=' . $openid . '",picurl:"http://www.luqinwenda.com/addons/theme/stv1/_static/image/newanswer.jpg"}]}}';
 
         $result = $this->curl_post($postUrl, $param);
     }
@@ -599,4 +605,26 @@ class MobileNewAction
         else
             return false;
     }
+
+    /*public function updateSource()
+{
+    $map['openid'] = array('exp', ' is not null ');;
+    $usermodel = model('user')->where($map)->findAll();
+    //print_r(count($usermodel));
+    //print_r($usermodel[0]);
+    for ($i = 0; $i < count($usermodel); $i++) {
+        echo $usermodel[$i]['openid'] . '---------------' . $this->getUserInfo($usermodel[$i]['openid']).'<br />';
+    }
+}
+
+    function getUserInfo($openid)
+    {
+        $url = 'http://weixin.luqinwenda.com/getuserinfo.aspx?openid=' . $openid;
+        $UserResult = $this->curls($url);
+        $jsonUserArr = $this->analyJson($UserResult);
+        if (intval($jsonUserArr['errcode']) > 0) {
+            return 5;
+        }
+        return 4;
+    }*/
 }

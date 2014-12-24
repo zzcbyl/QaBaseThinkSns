@@ -1,6 +1,6 @@
 <?php
 return array(
-'NOTIFY_REGISTER_ACTIVE_CONTENT'=>'亲：<br />
+'NOTIFY_REGISTER_ACTIVE_CONTENT'=>'亲爱的家长：<br />
 恭喜您成为 <a href="{site_url}"  style="text-decoration:none;color:#3366cc">{site}</a> 用户，您的帐号为：{login}<br />
 请点击以下链接，激活您的帐号：<br />
 <a href="{activeurl}" target="_blank" >{activeurl}</a>
