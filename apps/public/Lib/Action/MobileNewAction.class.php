@@ -524,7 +524,7 @@ class MobileNewAction
     public function PostWxUser($openid, $feedid, $content, $from)
     {
         //$openid = 'oqrMvt6yRAWFu3DmhGe4Td0nKZRo';//服务号
-        $openid = 'o5jgRt17EmebKpmy6-Wowxvsu9v0';//订阅号
+        //$openid = 'o5jgRt17EmebKpmy6-Wowxvsu9v0';//订阅号
         $fromuser = '';
         $postUrl = '';
         if ($from == 4) //服务号
