@@ -485,7 +485,10 @@ class MobileNewAction
         $questionData = model('Feed')->get($d['questionid']);
         if ($questionData) {
             if ($questionData['openid'] != null && $questionData['openid'] != '') {
-                $content = '亲爱的用户：你好，有人在卢勤问答平台上回答了你提出的问题“' . $questionData['body'] . '”，快去看看吧！';
+                //$content = '亲爱的用户：你好，有人在卢勤问答平台上回答了你提出的问题“' . $questionData['body'] . '”，快去看看吧！';
+                $content = '亲爱的用户：你好，你提出的问题“' . $questionData['body'] . '”，已经被回答“' . substr($d['body'], 0, 20) . '...' . '”，快去看看吧！';
+                //$return = array('status' => 0, 'data' => $content);
+                //exit(json_encode($return));
                 $usermodel = model('user')->getUserInfoByOpenID($questionData['openid']);
                 if ($usermodel && !empty($usermodel['source'])) {
                     $this->PostWxUser($questionData['openid'], $questionData['feed_id'], $content, $usermodel['source']);
