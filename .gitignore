@@ -1,6 +1,6 @@
 config/config.inc.php
 _runtime/*
-data/*
+data/upload/*
 .idea/*
 data/database/131125_c77222690c_1.php
 data/*
