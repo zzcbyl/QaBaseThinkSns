@@ -63,17 +63,17 @@ class taobao{
 		}    
 	}
 
-	//发布一条提问
+	//发布一条微博
 	public function update($text,$opt){
 		return true;
 	}
 
-	//上传一个照片，并发布一条提问
+	//上传一个照片，并发布一条微博
 	public function upload($text,$opt,$pic){
 		return true;
 	}
 
-	//转发一条提问
+	//转发一条微博
     public function transpond($transpondId,$reId,$content='',$opt=null){
 		return true;
 	}

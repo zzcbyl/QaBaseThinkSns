@@ -32,7 +32,7 @@
             <dd class="alR pb10 cGray2 right">
                 <a href="{:U('home/space/profile',array('uid'=>$uid))}">详细资料</a>
                 <php>if ($mid > 0 && !$privacy['blacklist']) {</php>
-                    <i class="vline">|</i><a href="javascript:void(0)" onclick="weibo.quickpublish('快来看看 @{$uid|getUserName} 的提问')">推荐给朋友</a>
+                    <i class="vline">|</i><a href="javascript:void(0)" onclick="weibo.quickpublish('快来看看 @{$uid|getUserName} 的微博')">推荐给朋友</a>
                 <php>}</php>
                 
                 <php>if ($mid > 0 && $privacy['message'] && $mid != $uid) {</php>

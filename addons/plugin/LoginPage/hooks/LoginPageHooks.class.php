@@ -47,7 +47,7 @@ class LoginPageHooks extends Hooks {
     			break;
     	
     	}
-    	$feeds = model( 'Feed' )->where($map)->order("publish_time desc")->limit($feedlimit)->field('feed_id')->findAll();
+    	$feeds = model( 'Feed' )->where($map)->order("feed_id desc")->limit($feedlimit)->field('feed_id')->findAll();
     	$feedids = getSubByKey( $feeds , 'feed_id' );
     	$loginlastfeed = model('Feed')->getFeeds( $feedids );
     	foreach($loginlastfeed as &$v) {

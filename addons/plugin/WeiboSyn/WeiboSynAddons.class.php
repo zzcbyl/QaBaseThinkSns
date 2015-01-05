@@ -3,8 +3,8 @@ class WeiboSynAddons extends NormalAddons{
 	protected $version = '3.0';
 	protected $author = 'thinksns';
 	protected $site = 'http://www.thinksns.com';
-	protected $info = '同步提问动态到新浪，腾讯提问等';
-	protected $pluginName = '提问动态同步';
+	protected $info = '同步微博动态到新浪，腾讯微博等';
+	protected $pluginName = '微博动态同步';
 	protected $sqlfile = '暂无';
 	protected $tsVersion = "3.0";
 	

@@ -132,7 +132,7 @@ class SourceModel {
 		$info ['source_user_info'] = model ( 'User' )->getUserInfo ( $info ['uid'] );
 		$info ['source_user'] = $info ['uid'] == $GLOBALS ['ts'] ['mid'] ? L ( 'PUBLIC_ME' ) : $info ['source_user_info'] ['space_link']; // 我
 		$info ['source_type'] = L ( 'PUBLIC_WEIBO' );
-		$info ['source_title'] = $forApi ? parseForApi ( $_info ['user_info'] ['space_link'] ) : $_info ['user_info'] ['space_link']; // 提问title暂时为空
+		$info ['source_title'] = $forApi ? parseForApi ( $_info ['user_info'] ['space_link'] ) : $_info ['user_info'] ['space_link']; // 微博title暂时为空
 		$info ['source_url'] = U ( 'public/Profile/feed', array (
 				'feed_id' => $row_id,
 				'uid' => $info ['uid'] 
@@ -169,7 +169,7 @@ class SourceModel {
 		$info ['ctime'] = $_info ['ctime'];
 		$info ['app'] = $_info ['app'];
 		$info ['sourceInfo'] = $_info ['sourceInfo'];
-		// 提问title暂时为空
+		// 微博title暂时为空
 		$info ['source_title'] = $forApi ? parseForApi ( $_info ['user_info'] ['space_link'] ) : $_info ['user_info'] ['space_link'];
 		
 		return $info;

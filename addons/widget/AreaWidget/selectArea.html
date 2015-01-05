@@ -1,15 +1,16 @@
-<select style="float:left;margin:0 10px 0 0;" name="province" id="province" onchange="changeArea_(this)"></select>
-<select style="float:left;margin:0 10px 0 0;" name="city" id="city" onchange="changeArea_(this)"></select>
-<select style="float:left;margin:0 10px 0 0;" name="area" id="area" onchange="changeArea_(this)"></select>
-<input  type="hidden" id="current" name="city_ids" value="{$selected}"/>
+<select style="float:left;margin:0 10px 0 0;" name="province" id="province" onchange="changeArea(this)"></select>
+<select style="float:left;margin:0 10px 0 0;" name="city" id="city" onchange="changeArea(this)"></select>
+<select style="float:left;margin:0 10px 0 0;" name="area" id="area" onchange="changeArea(this)"></select>
+<input event-node="input_area" type="hidden" id="current" name="city_ids" value="{$selected}"/>
 <input type="hidden" id="current_name" name="city_names" value="{$city_names}" />
+
 <script type="text/javascript">
 var json = eval({$list});			// 地区JSON数据
 var arrNodeChild = new Array();		// 子树数组
 var selected = '{$selected}';		// 默认选中的地区
 
 // 地区初始化
-var init_ = function() {
+var init = function() {
 	selected = selected == '' ? $('#current').val() : selected;
 	var arrSelect = selected.split(',');
 	// 获取树形结构的子树
@@ -44,7 +45,7 @@ var init_ = function() {
 	$('#area').append(option3);
 };
 // 改变地区方法
-var changeArea_ = function(obj) {
+var changeArea = function(obj) {
 	var id = $(obj).attr('id');
 	var val = $(obj).val();
 	switch(id) {
@@ -83,11 +84,11 @@ var changeArea_ = function(obj) {
 	typeof($('#area').val()) !== 'undefined' && current.push($('#area').val());
 	$('#current').val(current.join(','));
 	var currentName = new Array();
-//	$('#province option:selected').html() != '请选择' && currentName.push($('#province option:selected').html());
-//	$('#city option:selected').html() != '请选择' && currentName.push($('#city option:selected').html());
-//	$('#area option:selected').html() != '请选择' && currentName.push($('#area option:selected').html());
+	$('#province option:selected').html() != '请选择' && currentName.push($('#province option:selected').html());
+	$('#city option:selected').html() != '请选择' && currentName.push($('#city option:selected').html());
+	$('#area option:selected').html() != '请选择' && currentName.push($('#area option:selected').html());
 	$('#current_name').val(currentName.join(' '));
 } 
 
-init_();
+init();
 </script>

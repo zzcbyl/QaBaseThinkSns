@@ -43,7 +43,7 @@
       </div>
       <div class="MenuSub ">
 	      <span class="right pr5">共{$list.count}条</span>
-	      <a href="{:U('home/user/comments',array('type'=>$type, 'from_app'=>'weibo'))}" <eq name="from_app" value="weibo">class="on"</eq> >提问<php>if($type == 'receive' && $userCount['weibo_comment'] > 0) {</php><em> (<font color="red">{$userCount['weibo_comment']}</font>)</em><php>}</php></a> | 
+	      <a href="{:U('home/user/comments',array('type'=>$type, 'from_app'=>'weibo'))}" <eq name="from_app" value="weibo">class="on"</eq> >微博<php>if($type == 'receive' && $userCount['weibo_comment'] > 0) {</php><em> (<font color="red">{$userCount['weibo_comment']}</font>)</em><php>}</php></a> | 
 		  <a href="{:U('home/user/comments',array('type'=>$type, 'from_app'=>'other'))}" <eq name="from_app" value="other">class="on"</eq> >其它应用<php>if($type == 'receive' && $userCount['global_comment'] > 0) {</php> <em> (<font color="red">{$userCount['global_comment']}</font>)</em><php>}</php></a>
 	  </div>
       <div class="feedBox"> 
@@ -65,7 +65,7 @@
 
 			    <div class="feed_c_btm"> 
 				<php>if($vo['ismini']){</php>
-					 回复 <space uid="vo.reply_uid">{uname}</space> 的提问："{$vo.mini.content|format=true}"
+					 回复 <space uid="vo.reply_uid">{uname}</space> 的微博："{$vo.mini.content|format=true}"
 			    <php>}else{</php>
 					 回复 <space uid="vo.reply_uid">{uname}</space> 的评论: "{$vo.comment.content|formatComment=true}"
 				<php>}</php>
@@ -84,7 +84,7 @@
 
 			    <div class="feed_c_btm"> 
 				<php>if($vo['ismini']){</php>
-					 回复我的提问："{$vo.mini.content|format=true}"
+					 回复我的微博："{$vo.mini.content|format=true}"
 			    <php>}else{</php>
 					 回复我的评论: "{$vo.comment.content|formatComment=true}"
 				<php>}</php>

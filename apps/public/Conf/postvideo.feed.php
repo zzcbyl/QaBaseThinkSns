@@ -1,10 +1,10 @@
-<feed app='public' type='postvideo' info='发视频提问'>
+<feed app='public' type='postvideo' info='发视频微博'>
 	<title> 
 		<![CDATA[{$actor}]]>
 	</title>
 	<body>
 		<![CDATA[
-			{$body|t|replaceUrl|stripslashes}
+			{$body|t|replaceUrl}
 			<br/>
 			<div class="feed_img" id="video_mini_show_{$feedid}">
         <a href="javascript:void(0);" onclick="switchVideo({$feedid},'open','{$host}','{$flashvar}')">

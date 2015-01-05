@@ -1,10 +1,10 @@
-<feed app='public' type='postfile' info='发附件提问'>
+<feed app='public' type='postfile' info='发附件微博'>
 	<title> 
 		<![CDATA[{$actor}]]>
 	</title>
 	<body>
 		<![CDATA[ 
-			{$body|t|replaceUrl|stripslashes}
+			{$body|t|replaceUrl}
 			<div>
 				<php>if(empty($attachInfo)):</php>
 				<ul class="feed_file_list">

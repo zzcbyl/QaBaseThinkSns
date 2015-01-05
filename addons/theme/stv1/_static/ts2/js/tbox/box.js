@@ -1,4 +1,4 @@
-// 卢勤问答 ui.box
+// ThinkSNS ui.box
 
 jQuery.extend(ui, {
 	box:function(element, options){

@@ -1,6 +1,6 @@
 <?php
 /**
- * 卢勤问答 数据库中间层，只支持MySQL
+ * ThinkSNS 数据库中间层，只支持MySQL
  * @author  liuxiaoqing <liuxiaoqing@zhishisoft.com>
  * @version TS3.0
  */

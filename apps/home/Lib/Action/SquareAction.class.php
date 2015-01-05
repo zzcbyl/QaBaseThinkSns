@@ -3,7 +3,7 @@ class SquareAction extends Action
 {
 	public function _initialize()
 	{
-		// 验证是否允许匿名访问提问广场
+		// 验证是否允许匿名访问微博广场
 		if ($this->mid <= 0 && intval(model('Xdata')->get('siteopt:site_anonymous_square')) <= 0) {
 			redirect(U('home'));
 		}
@@ -123,7 +123,7 @@ class SquareAction extends Action
     	$uids = getSubByKey($data['topfollow'], 'uid');
     	$user_model->setUserObjectCache($uids);
 
-    	// 底部提问Tab
+    	// 底部微博Tab
     	$data['square_list_menu'] = array(
     								    '' => L('other_say'),
     									'transpond' => L('hot_transmit'),
@@ -156,7 +156,7 @@ class SquareAction extends Action
 	    $this->display();
     }
 
-    //广场-首页的提问列表
+    //广场-首页的微博列表
 	public function index_weibo(){
 		$data['type'] = $_GET['type'] ? $_GET['type'] : 'index';
 		$map = '';
@@ -247,7 +247,7 @@ class SquareAction extends Action
 		//月度话题榜 - 月度新话题提及次数
 		$data['top_monthly_topics'] = D('Topic', 'weibo')->getHot('auto',30);
 
-		//提问粉丝榜 - 根据粉丝数
+		//微博粉丝榜 - 根据粉丝数
     	$data['top_users_by_follower'] = D('Follow', 'weibo')->getTopFollowerUser();
     	$uids = getSubByKey($data['topfollow'], 'uid');
 		D('User', 'home')->setUserObjectCache($uids);

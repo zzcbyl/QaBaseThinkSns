@@ -2,7 +2,7 @@
 class DashboardModel extends Model{
     var $tableName = 'weibo_dashboard';
     
-    //获取首页提问列表
+    //获取首页微博列表
     public function getDashboardList($uid, $since=null, $row=5) {
         $uid = ($uid>0)?intval($uid):$this->mid;
         $row = $row?$row:5;
@@ -10,7 +10,7 @@ class DashboardModel extends Model{
         //先查dashboard是否有用户的相关数据.取出来.
         $dashboard = $this->_getUserDashboard($uid);
 
-        //更新dashboard数据 - 优化更新规则.不应该每次都更新.可以发提问时触发.标记更新规则.
+        //更新dashboard数据 - 优化更新规则.不应该每次都更新.可以发微博时触发.标记更新规则.
         if($dashboard['last_get_weibo_id'] < $dashboard['last_post_weibo_id']){
             $this->_updateUserDashboard($uid,$dashboard);
             $list = $this->_getDashboardData();
@@ -98,7 +98,7 @@ class DashboardModel extends Model{
         //获取当前信息.
         //$followCount = D('Follow','weibo')->getUserFollowCount($uid);
         $followCount = $dashboard['my_following'];
-        if ($followCount) { // 有关注时, 展示关注的用户的提问
+        if ($followCount) { // 有关注时, 展示关注的用户的微博
             $where =" AND ( uid IN (SELECT fid FROM ".C('DB_PREFIX')."weibo_follow WHERE uid=$uid AND type=0) OR uid={$uid})";
         }else{//无关注时.数据为空.
             $where =" AND uid = ".$uid;
@@ -113,7 +113,7 @@ class DashboardModel extends Model{
         return $weibo;
     }
 
-    //获取首页提问列表
+    //获取首页微博列表
     public function getHomeList($uid, $since=null, $row=5) {
     	$row = $row?$row:5;
 	    if ($since) {
@@ -124,7 +124,7 @@ class DashboardModel extends Model{
 
 		if($uid>0){
 			$followCount = D('Follow','weibo')->getUserFollowCount($uid);
-			if ($followCount) { // 有关注时, 展示关注的用户的提问
+			if ($followCount) { // 有关注时, 展示关注的用户的微博
 				$map.=" AND ( uid IN (SELECT fid FROM ".C('DB_PREFIX')."weibo_follow WHERE uid=$uid AND type=0) OR uid={$uid})";
 			}else{//无关注时.数据为空.
 				$map.=' AND uid = '.$uid;

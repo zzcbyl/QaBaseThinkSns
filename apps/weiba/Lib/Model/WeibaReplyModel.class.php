@@ -74,7 +74,7 @@ class WeibaReplyModel extends Model {
             $map['last_reply_time'] = $data['ctime'];
             D('weiba_post')->where('post_id='.$data['post_id'])->save($map);
             D('weiba_post')->where('post_id='.$data['post_id'])->setInc('reply_count'); //回复统计数加1
-            //同步到提问评论
+            //同步到微博评论
             //$feed_id = intval($_POST['feed_id']);
             $datas['app'] = 'weiba';
             $datas['table'] = 'feed';
@@ -130,7 +130,7 @@ class WeibaReplyModel extends Model {
             $map['last_reply_time'] = $data['ctime'];
             D('weiba_post')->where('post_id='.$data['post_id'])->save($map);
             D('weiba_post')->where('post_id='.$data['post_id'])->setInc('reply_count'); //回复统计数加1
-            //同步到提问评论
+            //同步到微博评论
             //$feed_id = intval($_POST['feed_id']);
             $datas['app'] = 'weiba';
             $datas['table'] = 'feed';

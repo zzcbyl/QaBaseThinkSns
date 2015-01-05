@@ -110,7 +110,7 @@ class TestAction extends Action{
 		dump(M('')->getLastSql());
 	}
 
-	//更新提问与话题的关联数据
+	//更新微博与话题的关联数据
 	public function updateWeiboJoinTopicData() {
 		send_http_header('utf8');
 		dump('开始');

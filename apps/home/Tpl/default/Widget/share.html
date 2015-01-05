@@ -9,7 +9,7 @@
 			<div class="logo_min"><a href="#">&nbsp;</a></div>
 		</div>
         <div class="box_shareFile clearfix">
-            <div  style="padding-bottom:10px"><span class="right lh20" id="_widget_weibo_words_count" >还可以输入<span class="f18px"><strong>{$GLOBALS['ts']['site']['length']}</strong></span>个汉字</span><span class="f14px" style="color:#008800">分享到我的提问，顺便说点什么吧</span></div>
+            <div  style="padding-bottom:10px"><span class="right lh20" id="_widget_weibo_words_count" >还可以输入<span class="f18px"><strong>{$GLOBALS['ts']['site']['length']}</strong></span>个汉字</span><span class="f14px" style="color:#008800">分享到我的微博，顺便说点什么吧</span></div>
             <div class="block_send">
               <textarea id="_widget_weibo_content" name="content" class="Share_text">{$content}</textarea>
             </div>
@@ -43,7 +43,7 @@ $(document).ready(function(){
 		clearInterval(Interval);
     	_widget_weibo_check_words_count(this, _LENGTH_);
     }).focus(function(){
-		//提问字数监控
+		//微博字数监控
 		clearInterval(Interval);
 	    Interval = setInterval(function(){
 	    	_widget_weibo_check_words_count('#_widget_weibo_content', _LENGTH_);

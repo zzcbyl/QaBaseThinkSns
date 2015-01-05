@@ -37,18 +37,14 @@ class UserModel extends Model {
 		26 => 'last_post_time',
 		27 => 'search_key',
 		28 => 'invite_code',
-		29 => 'realname',
-		30 => 'qq',
-		31 => 'weixin',
-		32 => 'tengxunVB',
-		33 => 'xinlangVB',
-		34 => 'birthday',
-		35 => 'bloodtype',
-		36 => 'idcard',
-		37 => 'linknumber',
-		38 => 'user_extend',
-		39 => 'openid',
-		40 => 'source',
+		29 => 'invite_code',
+		30 => 'realname',
+		31 => 'qq',
+		32 => 'weixin',
+		33 => 'tengxunVB',
+		34 => 'xinlangVB',
+		35 => 'birthday',
+		36 => 'bloodtype',
 		'_autoinc' => true,
 		'_pk' => 'uid' 
 		);
@@ -278,23 +274,6 @@ class UserModel extends Model {
 	}
 	
 	/**
-	* 通过OpenID查询用户相关信息
-	* 
-	* @param string $openID
-	* @return array 用户的相关信息
-	*/
-	public function getUserInfoByOpenID($openID, $map) {
-		if (empty ( $openID )) {
-			$this->error = '参数不能为空'; // 用户名不能为空
-			return false;
-		}
-		$map ['openid'] = $openID;
-		$map ['is_del'] = 0;
-		$data = $this->_getUserInfo ($map);
-		return $data;
-	}
-	
-	/**
 	 * 通过邮箱查询用户相关信息
 	 * 
 	 * @param string $email
@@ -406,14 +385,14 @@ class UserModel extends Model {
 		if (is_object ( $user )) {
 			$salt = rand ( 11111, 99999 );
 			$user->login_salt = $salt;
-			//$user->login = $user->email;
+			$user->login = $user->email;
 			$user->ctime = time ();
 			$user->reg_ip = get_client_ip ();
 			$user->password = $this->encryptPassword ( $user->password, $salt );
 		} else if (is_array ( $user )) {
 			$salt = rand ( 11111, 99999 );
 			$user ['login_salt'] = $salt;
-			//$user ['login'] = $user ['email'];
+			$user ['login'] = $user ['email'];
 			$user ['ctime'] = time ();
 			$user ['reg_ip'] = get_client_ip ();
 			$user ['password'] = $this->encryptPassword ( $user ['password'], $salt );
@@ -427,72 +406,11 @@ class UserModel extends Model {
 		} else {
 			$user ['search_key'] = $user ['uname'];
 		}
-		
 		// 添加用户操作
 		$result = $this->add ( $user );
 		if (! $result) {
 			$this->error = L ( 'PUBLIC_ADD_USER_FAIL' ); // 添加用户失败
-			return 0;
-		} else {
-			// 添加部门关联信息
-			model ( 'Department' )->updateUserDepartById ( $result, intval ( $_POST ['department_id'] ) );
-			// 添加用户组关联信息
-			if (! empty ( $_POST ['user_group'] )) {
-				model ( 'UserGroupLink' )->domoveUsergroup ( $result, implode ( ',', $_POST ['user_group'] ) );
-			}
-			// 添加用户职业关联信息
-			if (! empty ( $_POST ['user_category'] )) {
-				model ( 'UserCategory' )->updateRelateUser ( $result, $_POST ['user_category'] );
-			}
-			return $result;
-		}
-	}
-	
-	/**
-	* 添加用户
-	* 
-	* @param array|object $user
-	*        	新用户的相关信息|新用户对象
-	* @return boolean 是否添加成功
-	*/
-	public function addUserMobile($user) {
-		// 验证用户名称是否重复
-		$map ['uname'] = t ( $user ['uname'] );
-		$isExist = $this->where ( $map )->count ();
-		if ($isExist > 0) {
-			$this->error = '用户昵称已存在，请使用其他昵称';
 			return false;
-		}
-		if (is_object ( $user )) {
-			$salt = rand ( 11111, 99999 );
-			$user->login_salt = $salt;
-			//$user->login = $user->email;
-			$user->ctime = time ();
-			$user->reg_ip = get_client_ip ();
-			$user->password = $this->encryptPassword ( $user->password, $salt );
-		} else if (is_array ( $user )) {
-			$salt = rand ( 11111, 99999 );
-			$user ['login_salt'] = $salt;
-			//$user ['login'] = $user ['email'];
-			$user ['ctime'] = time ();
-			$user ['reg_ip'] = get_client_ip ();
-			$user ['password'] = $this->encryptPassword ( $user ['password'], $salt );
-		}
-		
-		// 添加昵称拼音索引
-		$user ['first_letter'] = getFirstLetter ( $user ['uname'] );
-		// 如果包含中文将中文翻译成拼音
-		if (preg_match ( '/[\x7f-\xff]+/', $user ['uname'] )) {
-			// 昵称和呢称拼音保存到搜索字段
-			$user ['search_key'] = $user ['uname'] . ' ' . model ( 'PinYin' )->Pinyin ( $user ['uname'] );
-		} else {
-			$user ['search_key'] = $user ['uname'];
-		}
-		// 添加用户操作
-		$result = $this->add ( $user );
-		if (! $result) {
-			$this->error = L ( 'PUBLIC_ADD_USER_FAIL' ); // 添加用户失败
-			return 0;
 		} else {
 			// 添加部门关联信息
 			model ( 'Department' )->updateUserDepartById ( $result, intval ( $_POST ['department_id'] ) );
@@ -504,7 +422,7 @@ class UserModel extends Model {
 			if (! empty ( $_POST ['user_category'] )) {
 				model ( 'UserCategory' )->updateRelateUser ( $result, $_POST ['user_category'] );
 			}
-			return $result;
+			return true;
 		}
 	}
 	
@@ -961,7 +879,7 @@ class UserModel extends Model {
 		}
 		// 添加用户信息
 		foreach ( $list ['data'] as &$v ) {
-			$v = $this->getUserInfoForSearch ( $v ['uid'], 'uid,uname,intro,sex,location,domain,search_key' );
+			$v = $this->getUserInfoForSearch ( $v ['uid'], 'uid,uname,sex,location,domain,search_key' );
 		}
 		
 		return $list;
@@ -998,7 +916,7 @@ class UserModel extends Model {
 		return $this->error;
 	}
 	/**
-	 * 假删除用户提问数据
+	 * 假删除用户微博数据
 	 *
 	 * @param int $uid
 	 *        	用户UID
@@ -1012,7 +930,7 @@ class UserModel extends Model {
 		$map ['is_del'] = 0;
 		$feed_id_list = model ( 'Feed' )->where ( $map )->field ( 'feed_id' )->findAll ();
 		if (empty ( $feed_id_list ))
-			return true; // 如果没有可删除的提问，直接返回
+			return true; // 如果没有可删除的微博，直接返回
 		
 		$idArr = getSubByKey ( $feed_id_list, 'feed_id' );
 		$return = model ( 'Feed' )->doEditFeed ( $idArr, 'delFeed', L ( 'PUBLIC_STREAM_DELETE' ) );
@@ -1020,7 +938,7 @@ class UserModel extends Model {
 	}
 	
 	/**
-	 * 恢复用户的提问数据
+	 * 恢复用户的微博数据
 	 *
 	 * @param int $uid
 	 *        	用户UID
@@ -1034,7 +952,7 @@ class UserModel extends Model {
 		$map ['is_del'] = 1;
 		$feed_id_list = model ( 'Feed' )->where ( $map )->field ( 'feed_id' )->findAll ();
 		if (empty ( $feed_id_list ))
-			return true; // 如果没有可恢复的提问，直接返回
+			return true; // 如果没有可恢复的微博，直接返回
 		
 		$idArr = getSubByKey ( $feed_id_list, 'feed_id' );
 		$return = model ( 'Feed' )->doEditFeed ( $idArr, 'feedRecover', L ( 'PUBLIC_RECOVER' ) );
@@ -1042,7 +960,7 @@ class UserModel extends Model {
 	}
 	
 	/**
-	 * 彻底删除用户的提问数据
+	 * 彻底删除用户的微博数据
 	 *
 	 * @param int $uid
 	 *        	用户UID
@@ -1054,7 +972,7 @@ class UserModel extends Model {
 				$uid_array 
 		);
 		
-		//删除提问
+		//删除微博
 		$feed_id_list = model ( 'Feed' )->where ( $map )->field ( 'feed_id' )->findAll ();
 		if (!empty ( $feed_id_list )){
 			$idArr = getSubByKey ( $feed_id_list, 'feed_id' );

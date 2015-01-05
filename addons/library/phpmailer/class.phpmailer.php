@@ -81,13 +81,13 @@ class PHPMailer {
    * Sets the From email address for the message.
    * @var string
    */
-  public $From              = 'customer-service@luqinwenda.com';
+  public $From              = 'root@localhost';
 
   /**
    * Sets the From name of the message.
    * @var string
    */
-  public $FromName          = 'luqinwenda';
+  public $FromName          = 'Root User';
 
   /**
    * Sets the Sender email (Return-Path) of the message.  If not empty,

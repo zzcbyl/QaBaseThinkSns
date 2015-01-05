@@ -17,9 +17,9 @@ class ChannelModel extends Model
 	{
 		// 获取资源分页结构
 		$data = $this->field('DISTINCT `feed_id`, `status`')->where($map)->order('`feed_channel_link_id` DESC')->findPage();
-		// 获取提问ID
+		// 获取微博ID
 		$feedIds = getSubByKey($data['data'], 'feed_id');
-		// 获取提问分类频道信息
+		// 获取微博分类频道信息
 		$cmap['c.feed_id'] = array('IN', $feedIds);
 		$categoryInfo = D()->table('`'.$this->tablePrefix.'channel` AS c LEFT JOIN `'.$this->tablePrefix.'channel_category` AS cc ON cc.channel_category_id = c.channel_category_id')
 						   ->field('c.`feed_id`, c.`status`, cc.channel_category_id, cc.`title`')
@@ -29,7 +29,7 @@ class ChannelModel extends Model
 		foreach($categoryInfo as $val) {
 			$categoryInfos[$val['feed_id']][] = $val;
 		}
-		// 获取提问信息
+		// 获取微博信息
 		$feedInfo = model('Feed')->getFeeds($feedIds);
 		$feedInfos = array();
 		foreach($feedInfo as $val) {
@@ -128,8 +128,8 @@ class ChannelModel extends Model
 	}
 
 	/**
-	 * 获取指定提问已经加入的频道分类
-	 * @param integer $feedId 提问ID
+	 * 获取指定微博已经加入的频道分类
+	 * @param integer $feedId 微博ID
 	 * @return array 已加入频道的分类数组
 	 */
 	public function getSelectedChannels($feedId)
@@ -140,8 +140,8 @@ class ChannelModel extends Model
 	}
 
 	/**
-	 * 添加频道与提问的关联信息
-	 * @param integer $sourceId 提问ID
+	 * 添加频道与微博的关联信息
+	 * @param integer $sourceId 微博ID
 	 * @param array $channelIds 频道分类ID数组
 	 * @param boolean $isAdmin 是否需要审核，默认为true
 	 * @return boolean 是否添加成功
@@ -154,7 +154,7 @@ class ChannelModel extends Model
 		if(empty($feedId)) {
 			return false;
 		}
-		// 删除提问的全部关联
+		// 删除微博的全部关联
 		$map['feed_id'] = $feedId;
 		$res = $this->where($map)->delete();
 		// 删除成功
@@ -240,8 +240,8 @@ class ChannelModel extends Model
 	} 
 
 	/**
-	 * 删除提问与频道的关联
-	 * @param integer $feedId 提问ID
+	 * 删除微博与频道的关联
+	 * @param integer $feedId 微博ID
 	 * @return boolean 是否删除成功
 	 */
 	public function deleteChannelLink($feedId)

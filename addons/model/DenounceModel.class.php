@@ -94,9 +94,9 @@ class DenounceModel extends Model {
 	}
 
 	/**
-	 * 获取被举报的提问ID
+	 * 获取被举报的微博ID
 	 * @param array $ids 举报ID数组
-	 * @return array 被举报的提问ID
+	 * @return array 被举报的微博ID
 	 */
 	private function _getWeiboIdsByDenounce($ids){
 	    $data = $this->where($this->_paramMaps($ids))->field('aid')->findAll();

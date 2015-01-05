@@ -1,169 +1,265 @@
-﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title> jquery弹出层效果，可随滚动条滚动 </title>
-<meta http-equiv="Content-Type" content="text/html; charset=gbk" />
-<script type="text/javascript" src="jquery-1.3.2.min.js"></script>
-<style type="text/css">
-    *{margin:0px; padding:0px; font-size:12px;}
-    a{color:#0000FF;}
-    a:hover{color:#0000FF;}
-</style>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>个人属性查询提问</title>
+<link href="css/style.css" rel="stylesheet" type="text/css" />
 </head>
- 
-<body>
-1 <br>
-1 <br>
-1 <br>
-1 <br>
-1 <br>
-1 <br>
-1 <br>
 
-1 <br>
-1 <br>
-1 <br>
-1 <br>
-1 <br>
-1 <br>
-1 <br>
-1 <br>
-1 <br>
-1 <br>
-1 <br>
-1 <br>
-1 <br>
-1 <br>
-1 <br>
-1 <br>
-1 <br>
-1 <br>
-1 <br>
-1 <br>
-1 <br>
-1 <br>
-1 <br>
-1 <br>
-1 <br>
-1 <br>
-1 <br>
-1 <br>
-1 <br>
-1 <br>
-1 <br>
-1 <br>
-1 <br>
-1 <br>
-1 <br>
-1 <br>
-1 <br>
-1 <br>
-1 <br>
-1 <br>
-1 <br>
-1 <br>
-1 <br>
-1 <br>
-1 <br>
-1 <br>
-1 <br>
-1 <br>
-1 <br>
-1 <br>
-1 <br>
-1 <br>
-1 <br>
-1 <br>
-1 <br>
-<input type="button" value="弹出" onclick="$('#popup').show();" /><br>
-1 <br>
-1 <br>
-1 <br>
-1 <br>
-1 <br>
-1 <br>
-1 <br>
-1 <br>
-1 <br>
-1 <br>
-1 <br>
-1 <br>
-1 <br>
-1 <br>
-1 <br>
-1 <br>
-1 <br>
-1 <br>
-1 <br>
-1 <br>
-1 <br>
-1 <br>
-1 <br>
-1 <br>
-1 <br>
-1 <br>
-1 <br>
-1 <br>
-1 <br>
-1 <br>
-1 <br>
-1 <br>
-1 <br>
-1 <br>
-1 <br>
-<!-- 主要部分 -->
-<div id="popup" class="popup_box" style="display:none;">
-<style type="text/css">
-    .ulogin{width:230px; height:30px; line-height:30px; border:1px solid #D5D5D5;}
-    .savetime{width:100px; height: 20px; line-height:20px; border:1px solid #DFDFDF;}
-    .savetime option {line-height:20px;}
-    .login_btn{width:300px; text-align:left;}
-    .login_btn a{margin:0px 6px; _margin:0px 0px;}
-    .login_btn .login_a{ width: 24px; height:30px; line-height:30px; padding:6px 25px; background-color:#7CDAFF; color: #DFDFDF; overflow:hidden;}
-    .popup_title{width:100%; height:30px; line-height:30px; background-color:#DFDFDF;}
-    .popup_title dt{width:95%; float:left; text-indent:1em; font-weight:bold;}
-    .popup_title dd{width:4%; float:right;}
- 
-    .popup_content{width:100%; height:30px; line-height:30px; padding:10px 0px 20px 0px; background-color:#FFF;}
-    .popup_content li{width:100%; float:left; text-indent:0.5em;  overflow:hidden;}
-    ol.popup_content li{list-style-type:lower-roman;}
-</style>
-<div id="maskLevel" style="position: absolute; top: 0px; left: 0px; text-align: center; z-index: 1000; background:#000; filter:alpha(opacity=10);  opacity: 0.1; -moz-opacity:0.1; width: 100%; height: 100%;"></div>
-<div style="position: absolute; top: 200px; left: 30%;z-index: 1001; background:#FFF; width: 410px; height: auto; border:5px solid #666666; padding-bottom:10px;">
-    <dl class="popup_title">
-        <dt>弹出标题</dt>
-        <dd><a href="javascript:;" onclick="$('#popup').hide();">X</a></dd>
-    </dl>
-    <ol class="popup_content">
-        <li><a href="http://www.5jiuai.com/?p=1182" target="_blank">js:input只能输入数字字符，并且规定输入值的大小</a></li>
-        <li><a href="http://www.5jiuai.com/?p=1122" target="_blank">php正则分析URL字符串</a></li>
-        <li><a href="http://www.5jiuai.com/?p=964" target="_blank">将赋值形式字符串转换为变量</a></li>
-        <li><a href="http://www.5jiuai.com/?p=960" target="_blank">按一维数组元素个数平均拆分数组，拆分优先满足前面的数组</a></li>
-        <li><a href="http://www.5jiuai.com/?p=955" target="_blank">建立url或者路径path的文件夹</a></li>
-        <li><a href="http://www.5jiuai.com/?p=946" target="_blank">显示默认图片，图片信息以及滚动显示图片</a></li>
-        <li><a href="http://www.5jiuai.com/?p=834" target="_blank">利用Jquery插件实现jqzoom图片放大效果</a></li>
-        <li><a href="http://www.5jiuai.com/?p=736" target="_blank">通过js获取浏览器宽高的两种方法</a></li>
-        <li><a href="http://www.5jiuai.com/?p=497" target="_blank">在win中使用mail()发邮件（sendmail配置）</a></li>
-        <li><a href="http://www.5jiuai.com/?p=338" target="_blank">php-mysql操作类(支持Ｍysql5以上版本,不需要自己写SQL语句)</a></li>
-    </ol>
-     <script language="javascript">
-     <!--
-         $(window).scroll(function () {
-             windowScrollUpload(this);
-         });
-         function windowScrollUpload(obj) {
-             $('#popup > div').eq(0).css({
-                 'top': $(obj).scrollTop() + 'px'
-             });
-
-             $('#popup > div').eq(1).css({
-                 'top': ($(obj).scrollTop() < 200 ? 200 : $(obj).scrollTop()) + 'px'
-             });
-         }
-     //-->
-     </script>
- </div>
+<body> 
+<!--//header-->
+<div class="header_box">
+	<div class="header w980">
+    	<div class="h_logo"><a href="#">卢勤问答</a></div>
+        <ul class="menu">
+        	<li><a href="#" class="current">首页</a></li>
+            <li><a href="#">广场</a></li>
+            <li><a href="#">专家</a></li>
+            <li><a href="#">活动</a></li>
+        </ul>
+        <div class="search_box">
+        <form>
+        <input type="text" class="s_inp" value="搜索">
+        <input type="submit" class="s_btn" value="">
+        </form>
+        </div>
+        <ul class="short_nav">
+        	<li><a href="#" class="h"></a></li>
+            <li><a href="#" class="v"></a></li>
+            <li><a href="#" class="a"></a></li>
+            <li><a href="#" class="p"></a></li>
+            <li><a href="#" class="s"></a></li>
+        </ul>
+    </div>
 </div>
-<!-- 主要部分 -->
+<!--//header-->
+<div class="container">
+	<div class="cont_left">
+        <div class="profile">
+            <div class="pro_img"><img src="images/thumb_img.png" /></div>
+            <div class="pro_cont">
+                <h4>网申都</h4>
+                <p><strong>简介：</strong>高级编辑 ,中国少年儿童新闻出版总社首席教育专家,中国家庭教育学会常务理事，国关心下一代工作委员会专家委员会委员，曾获中国新闻工作者最"韬奋新闻奖"...</p>
+                <p><strong>地区：</strong>华北&nbsp;&nbsp;<strong>资料：</strong>清华大学</p>
+                <p class="xz">
+                <strong>勋章：</strong>
+                <a href="#" class="x1"></a>
+                <a href="#" class="x2"></a>
+                <a href="#" class="x3"></a>
+                <a href="#" class="x4"></a>
+                </p>
+            </div>
+            <p class="comm hd">
+            <strong>获得：</strong>
+            <a href="#" class="d">131</a>
+            <a href="#" class="hx">78</a>
+            <a href="#" class="c">26</a>
+            <a href="#" class="tel">49</a>
+            <span class="hd_btn">
+            <a href="#" class="gz">关注</a>
+            <a href="#" class="gz_ed">已关注</a>
+            <a href="#" class="qx">取消</a>
+            </span>
+            </p>
+        </div>
+        
+	  <div class="table_box">
+      	<ul>
+        	<li><a href="#" class="current">全部</a></li>
+            <li><a href="#">我/TA的提问12</a></li>
+            <li><a href="#">我/TA的回答12 </a></li>
+            <li><a href="#">好友/关注/粉丝</a></li>
+            <li><a href="#">个人资料</a></li>
+        </ul>
+      </div>
+	  <div class="title">
+      	<h1>四六级不过网申都过不了 四六级存废争议</h1>
+      	<em>46分钟前</em>
+      </div>
+      <!--内容列表-->
+      <div class="conts">
+      	<div class="contTit">
+            <img class="thumb" src="images/thumb_img.png" />
+            <h2><a href="#">Karima Natasha:</a></h2>
+            <p>全国大学英语四六级考试委员会规定，大学生必须在本校报名、参加四六级考试，不接受社会人员报考。西交利物浦不设立英语四六级考点，因此，该校想参加四六级考试的学生就没了考试的机会。</p>
+            <p class="comm">
+            <a href="#" class="d">131</a>
+            <a href="#" class="c">78</a>
+            <a href="#" class="x">26</a>
+            <a href="#" class="h">49</a>
+            </p>
+		</div>
+        <!--问-->
+        <div class="comm_cont">
+        	<div class="contTop"><p class="q"></p></div>
+            <div class="contCenter">
+            	<div class="contTit">
+                    <img class="thumb" src="images/thumb_img.png" />
+                    <h2><a href="#">Karima Natasha:</a><em>20分钟前</em></h2>
+                 	<p>全国大学英语四六级考试委员会规定，大学生必须在本校报名、参加四六级考试，不接受社会人员报考。西交利物浦不设立英语四六级考点，因此，该校想参加四六级考试的学生就没了考试的机会。</p>
+                    <P class="contImg">
+                    <img src="images/img.png" width="301" height="400" />
+                    </P>
+                    <p class="comm">
+                    <a href="#" class="d">131</a>
+                    <a href="#" class="c">78</a>
+                    <a href="#" class="x">26</a>
+                    <a href="#" class="h">49</a>
+                    </p>
+                </div>
+                    <!--答-->
+                    <div class="answer">
+                        <div class="aTop"><p class="a"></p></div>
+                        <div class="aCenter">
+                            <div class="contTit">
+                                <img class="thumb" src="images/thumb_img.png" />
+                                <h2><a href="#">Karima Natasha:</a><em>45分钟前</em></h2>
+                                <p>全国大学英语四六级考试委员会规定，大学生必须在本校报名、参加四六级考试，不接受社会人员报考。西交利物浦不设立英语四六级考点，因此，该校想参加四六级考试的学生就没了考试的机会。</p>
+                                <p class="comm">
+                                <a href="#" class="d">131</a>
+                                <a href="#" class="c">78</a>
+                                <a href="#" class="x">26</a>
+                                <a href="#" class="h">49</a>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="aBottom"></div>
+                    </div>
+                    <!--//答-->
+            </div>
+            <div class="contBottom"></div>
+        </div>
+        <!--//问-->
+      </div>
+      <!--//内容列表-->
+      <!--内容列表-->
+      <div class="conts">
+      	<div class="contTit">
+            <img class="thumb" src="images/thumb_img.png" />
+            <h2><a href="#">Karima Natasha:</a></h2>
+            <p>全国大学英语四六级考试委员会规定，大学生必须在本校报名、参加四六级考试，不接受社会人员报考。西交利物浦不设立英语四六级考点，因此，该校想参加四六级考试的学生就没了考试的机会。</p>
+            <p class="comm">
+            <a href="#" class="d">131</a>
+            <a href="#" class="c">78</a>
+            <a href="#" class="x">26</a>
+            <a href="#" class="h">49</a>
+            </p>
+		</div>
+      </div>
+      <!--//内容列表-->
+      <!--加载更多-->
+      <div class="more">加载更多……</div>
+      <!--//加载更多-->
+  </div>
+  <!--right-->
+  <div class="cont_right">
+    <div class="right_conts type">
+     <h1>我/TA的关系<span></span></h1>
+     <div class="explain">我/TA的好友108<a href="#">更多</a></div>
+     <ul class="fList mb10">
+         <li class="ml">
+         <img src="images/thumb_img.png" /><br /><a href="#">吴奇隆</a>
+         </li>
+         <li>
+         <img src="images/thumb_img.png" /><br /><a href="#">吴奇隆</a>
+         </li>
+         <li>
+         <img src="images/thumb_img.png" /><br /><a href="#">吴奇隆</a>
+         </li>
+         <li>
+         <img src="images/thumb_img.png" /><br /><a href="#">吴奇隆</a>
+         </li>
+     </ul>
+     <div class="explain">共同关注36<a href="#">更多</a></div>
+     <ul class="fList mb20">
+         <li class="ml">
+         <img src="images/thumb_img.png" /><br /><a href="#">吴奇隆</a>
+         </li>
+         <li>
+         <img src="images/thumb_img.png" /><br /><a href="#">吴奇隆</a>
+         </li>
+         <li>
+         <img src="images/thumb_img.png" /><br /><a href="#">吴奇隆</a>
+         </li>
+         <li>
+         <img src="images/thumb_img.png" /><br /><a href="#">吴奇隆</a>
+         </li>
+     </ul>
+        
+     <h1>我/TA的赞同<span></span><a href="#" class="gd">更多</a></h1>
+     <ul class="tList mb20">
+         <li class="no">
+         <div class="tu"><a href="#" class="zan">200</a></div>
+         <h2><a href="#">老师解答了问题:菡萏香销翠叶残 </a></h2>
+         <p>去年今日没有原创广播去年今日没有原创广播</p>
+         </li>
+         <li>
+         <div class="tu"><a href="#" class="zan">200</a></div>
+         <h2><a href="#">老师解答了问题:菡萏香销翠叶残 </a></h2>
+         <p>去年今日没有原创广播去年今日没有原创广播</p>
+         </li>
+         <li>
+         <div class="tu"><a href="#" class="zan">200</a></div>
+         <h2><a href="#">老师解答了问题:菡萏香销翠叶残 </a></h2>
+         <p>去年今日没有原创广播去年今日没有原创广播</p>
+         </li>
+     </ul>
+        
+     <h1>我/TA的感谢<span></span><a href="#" class="gd">更多</a></h1>
+     <ul class="tList mb20">
+         <li class="no">
+         <div class="tu"><a href="#" class="ganxie">200</a></div>
+         <h2><a href="#">老师解答了问题:菡萏香销翠叶残 </a></h2>
+         <p>去年今日没有原创广播去年今日没有原创广播</p>
+         </li>
+         <li>
+         <div class="tu"><a href="#" class="ganxie">200</a></div>
+         <h2><a href="#">老师解答了问题:菡萏香销翠叶残 </a></h2>
+         <p>去年今日没有原创广播去年今日没有原创广播</p>
+         </li>
+         <li>
+         <div class="tu"><a href="#" class="ganxie">200</a></div>
+         <h2><a href="#">老师解答了问题:菡萏香销翠叶残 </a></h2>
+         <p>去年今日没有原创广播去年今日没有原创广播</p>
+         </li>
+     </ul>
+     
+     <h1>我/TA关注的问题<span></span><a href="#" class="gd">更多</a></h1>
+     <ul class="tList mb20">
+         <li class="no">
+         <div class="tu"><a href="#" class="guanz">200</a></div>
+         <h2><a href="#">老师解答了问题:菡萏香销翠叶残 </a></h2>
+         <p>去年今日没有原创广播去年今日没有原创广播</p>
+         </li>
+         <li>
+         <div class="tu"><a href="#" class="guanz">200</a></div>
+         <h2><a href="#">老师解答了问题:菡萏香销翠叶残 </a></h2>
+         <p>去年今日没有原创广播去年今日没有原创广播</p>
+         </li>
+         <li>
+         <div class="tu"><a href="#" class="guanz">200</a></div>
+         <h2><a href="#">老师解答了问题:菡萏香销翠叶残 </a></h2>
+         <p>去年今日没有原创广播去年今日没有原创广播</p>
+         </li>
+     </ul>
+     
+     <h1>我/TA关注的标签<span></span></h1>
+     <ul class="tagList">
+         <li><a href="#" class="green">教育</a></li>
+         <li><a href="#" class="orange">高考</a></li>
+         <li><a href="#" class="blue">应试教育</a></li>
+         <li><a href="#" class="red">留学</a></li>
+         <li><a href="#">小升初</a></li>
+         <li><a href="#">私立学校</a></li>
+         <li><a href="#" class="green">MBA</a></li>
+     </ul>
+
+    </div>
+  </div>
+  <!--//right-->
+</div>
+<div class="footer w980">
+Copyright &copy;2013 Inc. All Rights Reserved. 激活网络科技有限公司　版权所有
+</div>
 </body>
 </html>

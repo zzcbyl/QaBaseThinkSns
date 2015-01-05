@@ -110,7 +110,7 @@ class TaskAction extends Action{
 			$reward->medal->name && $medalname = ' 获得一枚’'.$reward->medal->name.'‘勋章<img src="'.getImageUrl ( $reward->medal->src ).'" class="ico-badge" width="100" height="100"/>';
 			
 			$content = '已完成'.$task['task_name'].$exp.$score.$medalname;
-			$button = '<span><input type="checkbox" id="taskfeed" value="1" class="checkbox"/>同时发表一条提问</span><a href="javascript:postfeed('.$id.');" class="btn-grey-white">确定</a>';
+			$button = '<span><input type="checkbox" id="taskfeed" value="1" class="checkbox"/>同时发表一条微博</span><a href="javascript:postfeed('.$id.');" class="btn-grey-white">确定</a>';
 			
 			$content = '<div class="task-box"><a href="javascript:ui.box.close();" class="ico-close right"></a><div class="content"><h3>恭喜你：</h3><p>已完成'.$task['task_name'].','.$exp.$score.$medalname.'</p>
 						'.$button.'</div></div>';
@@ -151,7 +151,7 @@ class TaskAction extends Action{
 				$task_name = model('Task')->where($map)->getField('task_name');
 				//任务奖励
 // 				if ( $level < 5 ){
-					$button = '<span><input type="checkbox" id="taskfeed" value="1" checked="checked" class="checkbox"/>同时发表一条提问</span><a href="javascript:gonext('.$type.','.$level.')" class="btn-grey-white">确定</a>';
+					$button = '<span><input type="checkbox" id="taskfeed" value="1" checked="checked" class="checkbox"/>同时发表一条微博</span><a href="javascript:gonext('.$type.','.$level.')" class="btn-grey-white">确定</a>';
 // 				}
 				$content = '<div class="task-box"><a href="javascript:ui.box.close();" class="ico-close right"></a><div class="content"><h3>恭喜你：</h3><p>已完成所有的'.$task_name.','.$exp.$score.$medalname.'</p>
 						'.$button.'</div></div>';

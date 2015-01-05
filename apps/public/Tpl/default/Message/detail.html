@@ -25,7 +25,7 @@
           <php>if(CheckPermission('core_normal','send_message')){</php>
           <div id="replay" class="replay-section clearfix">
             <div class="hd">
-              <span><a href="{:U('public/Message/index')}">{:L('PUBLIC_BACK')}?</a></span>{:L('PUBLIC_METO')}
+              <span><a href="{:U('public/Message/index')}">{:L('PUBLIC_BACK')}»</a></span>{:L('PUBLIC_METO')}
               <volist name="message.to" id="mb">
               <php>if ($i > 1) echo '、';</php>
               <a href="{$mb['user_info']['space_url']}">{$mb['user_info']['uname']}</a>
