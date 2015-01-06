@@ -87,7 +87,11 @@
             <eq name='vl.is_del' value='0'>
                 <h1 style="height:15px;">
                     <div style="float:left;">
+                        <php>if (intval($vl['uid']) > 0 ) { </php>
                         {$vl.title}
+                        <php> } else { </php>
+                        <a class="name">匿名</a>
+                        <php> } </php>
                         <!--<php> if(in_array($vl['user_info']['uid'],$followUids)){</php>
                         {:W('Remark',array('uid'=>$vl['user_info']['uid'],'remark'=>$remarkHash[$vl['user_info']['uid']],'showonly'=>1))}
                         <php>}</php>
