@@ -179,15 +179,15 @@ class TaskModel extends Model{
 			}
 		} else {
 			switch ( $excutetype ){
-					//原创提问
+					//原创微博
 				case 'weibopost':
 					$rescount = model('Feed')->where('uid='.$uid." and is_repost=0")->limit($num)->count();
 					break;
-					//转发提问
+					//转发微博
 				case 'weiborepost':
 					$rescount = model('Feed')->where('uid='.$uid." and type='repost'")->limit($num)->count();
 					break;
-					//提问评论
+					//微博评论
 				case 'weibocomment':
 					$rescount = model('Comment')->where('uid='.$uid." and `table`='feed'")->limit($num)->count();
 					break;
@@ -219,7 +219,7 @@ class TaskModel extends Model{
 				case 'followinterest':
 					$rescount = $userdata['following_count'];
 					break;
-					//发表提问通知好友
+					//发表微博通知好友
 				case 'weibotofriend':
 					$fids = D('Feed')->where('uid='.$uid)->field('feed_id')->findAll();
 					$map['row_id'] = array( 'in' , getSubByKey( $fids , 'feed_id') );
@@ -231,25 +231,25 @@ class TaskModel extends Model{
 					$credit = model('Credit')->getUserCredit($uid);
 					$rescount = $credit['level']['level'];
 					break;
-					//提问被转发
+					//微博被转发
 				case 'weibotranspost':
 					$rescount = model('Feed')->where('uid='.$uid.' and repost_count>0')->limit($num)->count();
 					break;
-					//提问被评论
+					//微博被评论
 				case 'weiboreceivecomment':
 					$rescount = model('Feed')->where('uid='.$uid.' and comment_count>0')->limit($num)->count();
 					break;
-					//单条提问被转发
+					//单条微博被转发
 				case 'weiboonetranspost':
 					$res = model('Feed')->where('uid='.$uid.' and repost_count>'.$num)->find();
 					return $res ? true : false; 
 					break;
-					//单条提问被评论
+					//单条微博被评论
 				case 'weiboonecomment':
 					$res = model('Feed')->where('uid='.$uid.' and comment_count>'.$num)->find();
 					return $res ? true : false;
 					break;
-					//转发指定提问
+					//转发指定微博
 				case 'weiboappoint':
 					$map['uid'] = $uid;
 					$map['type'] = 'repost';

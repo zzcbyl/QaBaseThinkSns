@@ -1,6 +1,6 @@
 <?php
 /**
- * 提问发布框
+ * 微博发布框
  * @example W('Share',array('sid'=>14983,'stable'=>'contact','appname'=>'contact','nums'=>10,'initHTML'=>'这里是默认的话')) 
  * @author jason
  * @version TS3.0
@@ -8,8 +8,8 @@
 class ShareToFeedWidget extends Widget{
 	
 	/**
-     * @param integer sid 资源ID,如分享小名片就是对应用户的用户ID，分享提问就是提问的ID
-     * @param string stable 资源所在的表，如小名片就是contact表，提问就是feed表
+     * @param integer sid 资源ID,如分享小名片就是对应用户的用户ID，分享微博就是微博的ID
+     * @param string stable 资源所在的表，如小名片就是contact表，微博就是feed表
      * @param string appname 资源所在的应用
      * @param integer nums 该资源被分享的次数
      * @param string initHTML 默认的内容 

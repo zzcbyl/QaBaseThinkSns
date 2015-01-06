@@ -19,13 +19,13 @@ return array (
 		'public/Profile/follower' => true,
 		'public/Profile/data' => true,
 		
-		// 提问内容
+		// 微博内容
 		'public/Profile/feed' => true,
 		
-		// 提问话题
+		// 微博话题
 		'public/Topic/index' => true,
 
-		// 提问排行榜
+		// 微博排行榜
 		'public/Rank/*' => true,
 		
 		// 频道

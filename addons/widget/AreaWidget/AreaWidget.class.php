@@ -29,7 +29,7 @@ class AreaWidget extends Widget {
 			$data['city_ids'] .=','.$data['area'];
 		}
 
-		if($data['tpl'] == 'selectArea'||$data['tpl'] == 'selectArea_br') {
+		if($data['tpl'] == 'selectArea') {
 			$selectedArea = explode(',', t($_GET['selected']));
 			if(!empty($selectedArea[0])) {
 				$data['selectedarea'] = t($_GET['selected']);

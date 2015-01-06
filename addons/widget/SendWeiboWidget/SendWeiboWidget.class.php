@@ -1,6 +1,6 @@
 <?php
 /**
- * 提问发布框
+ * 微博发布框
  * @example {:W('SendWeibo',array('send_type'=>'repost_weibo','oldUid'=>$oldInfo['source_user_info']['uid'],'space_link'=>$oldInfo['source_user_info']['space_link'],'sid'=>$shareInfo['sid'],'app_name'=>$shareInfo['appname'],'stype'=>$shareInfo['stable'],'initHtml'=>$shareInfo['initHTML'],'curid'=>$shareInfo['curid'],'curtable'=>$shareInfo['curtable'],'cancomment'=>$shareInfo['cancomment']))}
  * @author jason
  * @version TS3.0
@@ -10,14 +10,14 @@ class SendWeiboWidget extends Widget {
 	private static $rand = 1;
     
     /**
-     * 渲染提问发布框模板
+     * 渲染微博发布框模板
      * @example
-     * $data['send_type'] string 提问发送类型
-     * $data['app_name'] string 发布提问所在的应用名称
-     * $data['initHtml'] string 发布提问框中的默认内容
+     * $data['send_type'] string 微博发送类型
+     * $data['app_name'] string 发布微博所在的应用名称
+     * $data['initHtml'] string 发布微博框中的默认内容
      * $data['cancomment'] integer 是否可以评论 
      *$data['channelID']  发布到某个频道的id
-     * @param array $data 发布提问框的配置参数
+     * @param array $data 发布微博框的配置参数
      * @return string 渲染后的模板内容
      */
 	public function render($data) {
@@ -48,26 +48,6 @@ class SendWeiboWidget extends Widget {
 		foreach($type as $value) {
 			!isset($var['actions'][$value]) && $var['actions'][$value] = true; 
 		}
-		
-		$loginData = model('Login')->get($GLOBALS['ts']['mid'], 'sina');
-		if($loginData['oauth_token'] != '')
-		{
-			$var['token'] = '1';
-		}
-		$loginData = model('Login')->get($GLOBALS['ts']['mid'], 'qzone');
-		if($loginData['oauth_token'] != '')
-		{
-			$var['qqtoken'] = '1';
-		}
-		
-		//认证专家
-		$uids = model('UserGroupLink')->getUserByGroupID(8);
-		$user_count = model ( 'UserData' )->getUserDataByUids ($uids);
-		$authenticateExpert = model('user')->getUserInfoByUids($uids);
-		
-		$var['authenticateExpert_UserCount'] = $user_count;
-		$var['authenticateExpert'] = $authenticateExpert;	
-		
 	    // 渲染模版
 	    $content = $this->renderFile(dirname(__FILE__)."/SendWeibo.html", $var);
 	

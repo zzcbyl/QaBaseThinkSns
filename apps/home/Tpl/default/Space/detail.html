@@ -29,7 +29,7 @@
   <div class="user_follow_detail app_line_w">
   	<span class="app_lineR_w"><a href="{:U('home/Space/follow',array('uid'=>$mini['uid'],'type'=>'following'))}"><strong>{$spaceCount.following}</strong><br>关注</a></span>
     <span class="app_lineR_w"><a href="{:U('home/Space/follow',array('uid'=>$mini['uid'],'type'=>'follower'))}"><strong>{$spaceCount.follower}</strong><br>粉丝</a></span>
-    <span><a href="{:U('home/Space/index',array('uid'=>$mini['uid']))}"><strong>{$spaceCount.miniblog}</strong><br>提问</a></span>
+    <span><a href="{:U('home/Space/index',array('uid'=>$mini['uid']))}"><strong>{$spaceCount.miniblog}</strong><br>微博</a></span>
   </div>
   </div>
   <div class="right_box app_line_w">
@@ -67,7 +67,7 @@
                 <dd>
                     <input type="submit" class="N_but right" value="确定">
                     <span><a class="faceicon1" href="javascript:void(0)" onclick="ui.emotions(this)" target_set="comment_{$mini.weibo_id}"></a></span>
-                    <span><input type="checkbox" value="1" name="transpond" class="ck"><label>同时发一条提问</label></span>
+                    <span><input type="checkbox" value="1" name="transpond" class="ck"><label>同时发一条微博</label></span>
 			        <if condition="$mini['transpond_id']">
 			          <br /><span style="margin-left:30px"><input name="transpond_weibo_id" type="checkbox" value="{$mini['transpond_id']}" class="ck"/><label>同时评论给原文作者</label>
 			        </if>{:Addons::hook('weibo_comment_box_bottom', array($uid))}
@@ -76,7 +76,7 @@
        </div> 
 	  </form>
 <php>} else {</php>
-	  <div class="message"><div style="margin:5px">您没有权限评论此提问</div></div>
+	  <div class="message"><div style="margin:5px">您没有权限评论此微博</div></div>
 <php>}</php>
 
       <div class="feedBox"> 

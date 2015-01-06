@@ -1,15 +1,14 @@
 <include file="__THEME__/public_header" />
-<div class="container">
-<div class="cont_left pd17">
+<div class="cont_left">
     <div class="table_box">
         <ul>
             <switch name="type">
                 <case value="all">
-                <li><span><a class="current" href="{:U('public/Index/index')}" title="全部">全部</a></span></li> 
+                <li><span><a class="current" href="javascript:void(0);" title="全部">全部</a></span></li> 
                 <li><span><a href="{:U('public/Index/index',array('type'=>'question'))}" title="我的问题">我的问题</a></span></li>
                 <li><span><a href="{:U('public/Index/index',array('type'=>'answer'))}" title="我的答案">我的答案</a></span></li>
                 <li><span><a href="{:U('public/Index/index',array('type'=>'following'))}" title="我的关注">我的关注</a></span></li>
-                <li><span><a href="{:U('public/Index/inviteme')}" title="邀请我的">邀请我的</a></span></li>
+                <li><span><a href="#">邀请我的</a></span></li>
                 <!--<li><span><a href="{:U('public/Index/index')}">你的话题</a></span></li>-->
                 </case>
                 <case value="question">
@@ -17,7 +16,7 @@
                 <li><span><a class="current" href="{:U('public/Index/index',array('type'=>'question'))}" title="我的问题">我的问题</a></span></li>
                 <li><span><a href="{:U('public/Index/index',array('type'=>'answer'))}" title="我的答案">我的答案</a></span></li>
                 <li><span><a href="{:U('public/Index/index',array('type'=>'following'))}" title="我的关注">我的关注</a></span></li>
-                <li><span><a href="{:U('public/Index/inviteme')}" title="邀请我的">邀请我的</a></span></li>
+                <li><span><a href="#">邀请我的</a></span></li>
                 <!--<li><span><a href="{:U('public/Index/index')}">你的话题</a></span></li>-->
                 </case>
                 <case value="answer">
@@ -25,7 +24,7 @@
                 <li><span><a href="{:U('public/Index/index',array('type'=>'question'))}" title="我的问题">我的问题</a></span></li>
                 <li><span><a class="current" href="{:U('public/Index/index',array('type'=>'answer'))}" title="我的答案">我的答案</a></span></li>
                 <li><span><a href="{:U('public/Index/index',array('type'=>'following'))}" title="我的关注">我的关注</a></span></li>
-                <li><span><a href="{:U('public/Index/inviteme')}" title="邀请我的">邀请我的</a></span></li>
+                <li><span><a href="#">邀请我的</a></span></li>
                 <!--<li><span><a href="{:U('public/Index/index')}">你的话题</a></span></li>-->
                 </case>
                 <case value="following">
@@ -33,7 +32,7 @@
                 <li><span><a href="{:U('public/Index/index',array('type'=>'question'))}" title="我的问题">我的问题</a></span></li>
                 <li><span><a href="{:U('public/Index/index',array('type'=>'answer'))}" title="我的答案">我的答案</a></span></li>
                 <li><span><a class="current" href="{:U('public/Index/index',array('type'=>'following'))}" title="我的关注">我的关注</a></span></li>
-                <li><span><a href="{:U('public/Index/inviteme')}" title="邀请我的">邀请我的</a></span></li>
+                <li><span><a href="#">邀请我的</a></span></li>
                 <!--<li><span><a href="{:U('public/Index/index')}">你的话题</a></span></li>-->
                 </case>
             </switch>
@@ -41,19 +40,18 @@
         <a href="{:U('public/Index/postfeed')}" class="tiwen"> </a>
     </div>
     <!--内容列表-->
-    <!--{:Addons::hook('home_index_left_feedtop')}-->
+    {:Addons::hook('home_index_left_feedtop')}
     <!--feed list-->
     {:W('FeedList',array('type'=>$type,'feed_type'=>$feed_type,'feed_key'=>$feed_key,'fgid'=>t($_GET['fgid'])))}
     <!--//内容列表-->
 </div>
-
 <!--right-->
 <div class="cont_right">
     <include file="__THEME__/public_right" />
 </div>
-</div>
-<include file="__THEME__/public_footer" />
 
+<include file="__THEME__/public_footer" />
+</div>
 <script>
 
     $('ul.feed_file_list').each(function () {

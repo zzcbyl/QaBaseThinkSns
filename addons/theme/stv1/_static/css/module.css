@@ -5,7 +5,7 @@
  * Ver: Sociax Team
  */
 
-/*提问发布框表情*/
+/*微博发布框表情*/
 .acts .face, .acts .image, .acts .video, .acts .file, .acts .at, .acts .topic,.contribute{background:url(../image/icon.png) no-repeat 0 0;display:block;vertical-align:middle;_background:url(../image/icon.gif) no-repeat 0 0;overflow:hidden;}
 .acts .face-block .face{background-position:-31px -28px;_vertical-align:1px;}
 .acts .image-block .image{background-position:-31px -61px;_vertical-align:1px;}
@@ -29,8 +29,8 @@ a:hover .contribute{background-position:0 -207px;}
 .acts .image-block input, .acts .file-block input{position:absolute;right:-5px;top:-5px;outline:none;font-size:16px;cursor:pointer;filter:alpha(opacity=0); /*IE*/-moz-opacity:0; /*MOZ , FF*/opacity:0;*top:-5px;*right:5px}
 
 
-/*提问加载*/
-.feed_lists .loading{/*background:#F5F6F7;border-top:#ebebeb solid 1px*/height:16px;line-height:16px;padding:6px 0;text-align:center;color:#999; font-size:14px;}
+/*微博加载*/
+.feed_lists .loading{/*background:#F5F6F7;border-top:#ebebeb solid 1px*/height:16px;line-height:16px;padding:6px 0;text-align:center;color:#999;}
 .feed_lists .loading img{vertical-align:middle;margin:0 0 0 5px}
 
 /*feed-lists*/
@@ -68,7 +68,7 @@ a:hover .contribute{background-position:0 -207px;}
 .feed_list .faq-bg .question{padding:0 0 5px}
 .feed_list .content .faq-bg dt{margin:10px 0 0}
 
-/*提问评论*/
+/*微博评论*/
 .feed_list .repeat {background:#f9fafa;border:1px solid #eee;padding:20px;position:relative;font-size: 12px;margin: 15px 0 0 0;-webkit-border-radius: 3px;-moz-border-radius: 3px;border-radius: 3px;*zoom:1;}
 .feed_list .action{margin:5px 0 0}
 .feed_list .num{float:right;margin:-8px 0 0 0;line-height:14px;*margin:0;}
@@ -106,7 +106,7 @@ a:hover .contribute{background-position:0 -207px;}
 .feed_list a.ico-details:link,.feed_list a.ico-details:visited{color:#fff;}
 /*.triangle-l{width:0;height:0;border-color:transparent #414448 transparent transparent;border-width:4px 4px 4px 0;border-style:solid;position:absolute;left:-3px;top:4px;line-height:0;font-size:0;_border-top-color:#fff;_border-bottom-color:#fff;_filter: chroma( color =#fff);_border-width:3px 3px 3px 0;}*/
 .feed_list .comment .face{width:20px;height:20px;margin:0 10px 0 0}
-.feed_list .comment .info a{color:#46ADDB;font-size:12px;font-weight:bold;}
+.feed_list .comment .info a{color:#3366CC;font-size:12px;font-weight:bold;}
 .feed_list .content p.info{font-size: 12px;color:#999;padding:5px 0 0;overflow:hidden;*zoom:1;}
 .feed_list .content p.border{border:none 0;border-bottom:#ccc solid 1px;height:10px;overflow:hidden;margin:0 0 8px}
 .feed_list .content p.border .arrow-t{margin:3px 0 0 85px;position:absolute;}
@@ -143,7 +143,7 @@ a:hover .contribute{background-position:0 -207px;}
 .feed_list .mod-card .ico-card{float:right}
 .feed_list .mod-card .info a{float:none}
 
-/*图片提问查看大图*/
+/*图片微博查看大图*/
 .ico-pack-up, .ico-show-big, .ico-turn-left, .ico-turn-right,.ico-show-all{padding:0 0 0 15px;line-height:14px;font-size:12px}
 .ico-pack-up{background-position:0 -400px;}
 .ico-show-all{background-position:0 -365px;padding:0 0 0 19px;}
@@ -253,7 +253,7 @@ a:hover .contribute{background-position:0 -207px;}
 }
 .feed_file_list span.tips{color:#999}
 
-/*提问发布框*/
+/*微博发布框*/
 .send_weibo{margin:0 0 5px;}
 .send_weibo .title{font-size:12px;font-weight:normal; color:#535353;}
 .send_weibo .title span{}
@@ -269,9 +269,9 @@ a:hover .contribute{background-position:0 -207px;}
 .send_weibo .input .action{position:relative;*zoom:1}
 .send_weibo .input .btn-disable, .send_weibo .input .btn-send,.send_weibo .input .btn-gray, .send_weibo .input .release{float: right;}
 .send_weibo .input .release{width:auto;font-size:12px;}
-.twbq_box .input-content{overflow:hidden;*zoom:1;}
-.twbq_box .input-content .image-list{margin:-1px 0 0 0;overflow: hidden;border-left:#eee solid 1px;*zoom:1;}
-.twbq_box .input-content .image-list li{background:#fff;border: 1px solid #eee;border-left:none 0;float: left;text-align: center;width: 126px;padding:13px 0 5px;_width:125px; height:auto;}
+.send_weibo .input-content{overflow:hidden;*zoom:1;}
+.send_weibo .input-content .image-list{margin:10px 0 0 0;overflow: hidden;border-left:#eee solid 1px;*zoom:1;}
+.send_weibo .input-content .image-list li{background:#fff;border: 1px solid #eee;border-left:none 0;float: left;text-align: center;width: 126px;padding:13px 0 5px;_width:125px}
 .image-list .loading{padding:0}
 .image-list li .loads{width: 126px;height:102px;position:relative}
 .image-list li .loads img{position:absolute;left:55px;top:50px}
@@ -295,7 +295,7 @@ a:hover .contribute{background-position:0 -207px;}
 .weibo-contribute{border:1px solid #ddd;padding:10px;margin:10px 0 0 0;}
 .weibo-contribute span{margin:0 10px 0 0;}
 
-/*无权限发提问的状态*/
+/*无权限发微博的状态*/
 .box-purview{border:#eee solid 1px;padding:20px;margin:10px 20px;text-align:center;background:#f8f8f8}
 .layer-content .send_weibo .box-purview{margin:0;}
 /*.input_before{border:#ddd solid 1px;background:#fff;box-shadow:1px 1px 3px #dcdcdc inset;-moz-box-shadow:1px 1px 3px #dcdcdc inset;-khtml-box-shadow:1px 1px 3px #dcdcdc inset;*zoom:1}*/
@@ -320,7 +320,7 @@ a:hover .contribute{background-position:0 -207px;}
 .feed_list .content:hover .hover{cursor:pointer;visibility:visible;_visibility:visible;}
 *+html .feed_list:hover .content .right{visibility:visible;}
 
-/*提问列表*/
+/*微博列表*/
 .big-comment-lists dl.big-comment-list{padding:20px 0;border-bottom:1px solid #eee;overflow:hidden;*zoom:1}
 .big-comment-lists dl.big-comment-list .hover{font-style:normal;visibility:hidden;_visibility:visible}
 .big-comment-lists dl.big-comment-list:hover .hover{visibility:visible}
@@ -344,7 +344,7 @@ a:hover .contribute{background-position:0 -207px;}
 .big-comment-list .repeat .input textarea{border:#DCDCDC solid 1px;border-top-color:#B5B5B5;width:444px;height:20px;padding:4px 4px 0;overflow:hidden;_width:441px}
 .big-comment-list .repeat .commoned_list{float:left;margin:-3px 0 0}
 
-/*提问内容*/
+/*微博内容*/
 .feed_list_hover{border:none 0;margin:0;padding:0}
 .feed_list_hover .content{margin:0}
 .feed_comment{padding:0;border:none}
@@ -622,7 +622,7 @@ a:hover .contribute{background-position:0 -207px;}
 .layer-mini-info .action .btn-cancel span,.layer-content .btn-cancel span,.layer-follow-list .btn-cancel span,.weiba-manage .btn-cancel span,.form-avatar .btn-cancel span,.tipoff-manage .btn-cancel span{padding:5px 12px;_margin:-1px 0 0 0;_height:15px;}
 
 /*layer card*/
-.name-card{color:#535353;}
+.name-card{color:#535353;width:400px;}
 .name-card .name{padding:15px 15px 10px;_padding-bottom:0;}
 .name-card .name dt, .name-card .name dd, .name-card .info dt{float:left;}
 .name-card .name dt img{display:block;width:50px;height:50px;}
@@ -769,7 +769,7 @@ a:hover .contribute{background-position:0 -207px;}
 .title{font-size: 22px;font-weight: 300;color: #333}
 
 /*页码*/
-.page{padding:10px 0;text-align:right; font-size:12px;}
+.page{padding:10px 0;text-align:right}
 .page a{
 	display: inline-block;*display: inline;/* IE7 inline-block hack */*zoom: 1;padding: 4px 10px 4px;margin: 0 0 0 5px;line-height: 14px;color: #999;
 	text-align: center;
@@ -846,7 +846,7 @@ a:hover .contribute{background-position:0 -207px;}
 .ask-box-lists li{line-height:30px;border-bottom:1px dashed #eee;}
 .ask-box-lists li a{margin:0 5px;display:inline-block;}
 
-/*提问详情*/
+/*微博详情*/
 .feed_list .content.weiba-detail{font-size:12px;margin:0;margin:5px 0;border:1px solid #98c8df;padding:5px 10px;color:#666;background:#fff;}
 .feed_list .content.weiba-detail h3{font-weight:bold;font-size:14px;}
 .feed_list .content.weiba-detail .f9{margin:0 0 5px 0;padding:0 0 5px 0;border-bottom:1px solid #eee;}

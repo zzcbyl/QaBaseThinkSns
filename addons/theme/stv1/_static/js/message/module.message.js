@@ -8,7 +8,7 @@ gotoDetail: {
 	 	if(nodeName == 'A' || nodeName == "IMG"){
 	 		return true;
 	 	}else{
-            location.href = U('public/Profile/messagesdetail') + '&type=' + args.type + '&id=' + args.id;
+	 		location.href = U('public/Message/detail')+'&type='+args.type+'&id='+args.id;
 	 		return false;
 	 	}
 	}

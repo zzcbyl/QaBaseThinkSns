@@ -395,7 +395,7 @@ a.ico_diydel{ background:url(../images/ico_del.gif) no-repeat 0px 0px; height:16
 .sea_box,.sea_box1 {height:24px;+height:23px;_height:24px;}
 
 
-/*发送提问发布框*/
+/*发送微博发布框*/
 .diy-send-weibo{margin:0 auto;padding:8px 20px;border:1px solid #ccc;border-radius:2px;-webkit-border-radius:3px;-khtml-border-radius:3px;-moz-border-radius:3px;}
 .diy-send-weibo .input_tips{width:98.8%;}
 

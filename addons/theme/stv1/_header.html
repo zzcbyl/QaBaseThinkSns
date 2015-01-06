@@ -1,12 +1,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html>
 <head>
-<meta name="viewport" content="width=device-width"/>  
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title><neq name= '_title' value=''>{$_title} - {$site.site_name}<else />{$site.site_name} - {$site.site_slogan}</neq></title>
 <meta content="<neq name= '_keywords' value=''>{$_keywords}<else />{$site.site_header_keywords}</neq>" name="keywords">
 <meta content="<neq name= '_description' value=''>{$_description}<else />{$site.site_header_description}</neq>" name="description">
-<meta property="qc:admins" content="5235562777645116756416375" />
 {:Addons::hook('public_meta')}
 <link href="__THEME__/image/favicon.ico?v={$site.sys_version}" type="image/x-icon" rel="shortcut icon">
 <!-- <link href="__THEME__/css/global.css?v={$site.sys_version}" rel="stylesheet" type="text/css" />
@@ -53,12 +50,7 @@ var LANG = new Array();
 <script src="__THEME__/js/ui.draggable.js?v={$site.sys_version}"></script> -->
 <script src="__THEME__/js/js.php?t=js&f=jquery-1.7.1.min.js,jquery.form.js,common.js,core.js,module.js,module.common.js,jwidget_1.0.0.js,jquery.atwho.js,jquery.caret.js,ui.core.js,ui.draggable.js&v={$site.sys_version}.js"></script>
 <script src="__THEME__/js/plugins/core.comment.js?v={$site.sys_version}"></script>
-<script src="__THEME__/js/plugins/core.share.js?v={$site.sys_version}"></script>
-<script type="text/javascript">
-    $(document).ready(function () {
-        var url = U('public/Passport/logpv');
-        $.get(url, { pname: 'all' });
-    });
-</script>
-<meta property="qc:admins" content="52355627777645116756416375" />
+{:Addons::hook('public_head',array('uid'=>$uid))}
+<script src=" http://tjs.sjs.sinajs.cn/open/api/js/wb.js?appkey=1252918289" type="text/javascript" charset="utf-8"></script>
 </head>
+<body style="background:#F3F3F3;">

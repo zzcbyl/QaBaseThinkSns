@@ -1,13 +1,13 @@
-<feed app='public' type='postimage' info='发图片提问'>
+<feed app='public' type='postimage' info='发图片微博'>
 	<title> 
 		<![CDATA[{$actor}]]>
 	</title>
 	<body>
-		<![CDATA[{$body|t|replaceUrl|stripslashes} ]]>
+		<![CDATA[{$body|t|replaceUrl} ]]>
 	</body>
 	<description>
 		<![CDATA[ 
-			{$description|t|replaceUrl|stripslashes}
+			{$description|t|replaceUrl}
 			<br/>
 			<div class="feed_img_lists" rel='small' >
 			<ul class="small">

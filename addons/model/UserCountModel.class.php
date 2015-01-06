@@ -36,8 +36,6 @@ class UserCountModel extends Model {
 		$return['new_comment_agree_count'] = intval($user_data['new_comment_agree_count']);
 		// 新的反对数目
 		$return['new_comment_oppose_count'] = intval($user_data['new_comment_oppose_count']);
-		// 新的邀请回答数目
-		$return['new_invite_count'] = intval($user_data['new_invite_count']);
 		// 合计的未读数目
 		$return['unread_total']  = array_sum($return);
 		$group = model('App')->getAppByName('group');

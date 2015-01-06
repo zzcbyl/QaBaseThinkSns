@@ -287,7 +287,7 @@ a:active { color:#3b5999 }
 .feed_list a.ico-details:link,.feed_list a.ico-details:visited{color:#fff;}
 /*.triangle-l{width:0;height:0;border-color:transparent #414448 transparent transparent;border-width:4px 4px 4px 0;border-style:solid;position:absolute;left:-3px;top:4px;line-height:0;font-size:0;_border-top-color:#fff;_border-bottom-color:#fff;_filter: chroma( color =#fff);_border-width:3px 3px 3px 0;}*/
 .feed_list .comment .face{width:20px;height:20px;margin:0 10px 0 0}
-.feed_list .comment .info a{color:#46ADDB;font-size:12px;font-weight:bold;}
+.feed_list .comment .info a{color:#3366CC;font-size:12px;font-weight:bold;}
 .feed_list .comment .info span span{color:#999;}
 .feed_list .content p.info{font-size: 12px;color:#999;padding:5px 0 0;overflow:hidden;*zoom:1;*margin:0 -7px 0 0;}
 .feed_list .content p.border{border:none 0;border-bottom:#ccc solid 1px;height:10px;overflow:hidden;margin:0 0 8px}
@@ -304,7 +304,7 @@ a:active { color:#3b5999 }
 .feed_list .comment span.downline{color:#F9FAFA;margin:-9px 0 0;}
 .vline{font-style:normal;padding:0 5px;}
 
-/*图片提问查看大图*/
+/*图片微博查看大图*/
 .ico-pack-up, .ico-show-big, .ico-turn-left, .ico-turn-right,.ico-show-all{padding:0 0 0 15px;line-height:14px;font-size:12px}
 .ico-pack-up{background-position:0 -400px;}
 .ico-show-all{background-position:0 -365px;padding:0 0 0 19px;}
@@ -670,7 +670,7 @@ a.ico-close:hover{background-position:0 -50px;vertical-align:0;_vertical-align:2
 .app-grade ul li{float:left;margin:0 50px 0 0;}
 
 
-/*提问评论*/
+/*微博评论*/
 .feed_list{cursor:default;border-bottom:#dfdfdf dotted 1px;margin:0;padding:15px 0 10px 0;zoom:1}
 .feed_list:after{visibility:hidden;display:block;font-size:0;content:" ";clear:both;height:0;}
 .feed_list .repeat {background:#f9fafa;border:1px solid #eee;padding:20px;position:relative;font-size: 12px;margin: 15px 0 0 0;-webkit-border-radius: 3px;-moz-border-radius: 3px;border-radius: 3px;*zoom:1;}

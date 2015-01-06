@@ -28,7 +28,7 @@ function uc_auto_charset($content){
 	return ts_change_charset($content, UC_DBCHARSET, 'UTF8');
 }
 
-//添加卢勤问答与UCenter的用户映射
+//添加ThinkSNS与UCenter的用户映射
 function ts_add_ucenter_user_ref($uid,$uc_uid,$uc_username='',$uc_email=''){
 	$uc_ref_data = array(
 					   'uid' => $uid,
@@ -45,7 +45,7 @@ function ts_add_ucenter_user_ref($uid,$uc_uid,$uc_username='',$uc_email=''){
 	}
 }
 
-//更新卢勤问答与UCenter的用户映射
+//更新ThinkSNS与UCenter的用户映射
 function ts_update_ucenter_user_ref($uid,$uc_uid,$uc_username=''){
 	$uid 		 &&	$map['uid']					= intval($uid);
 	$uc_uid 	 && $map['uc_uid'] 				= intval($uc_uid);
@@ -58,7 +58,7 @@ function ts_update_ucenter_user_ref($uid,$uc_uid,$uc_username=''){
 	// M('ucenter_user_link')->where($map)->save($uc_ref_data);
 }
 
-//获取卢勤问答与UCenter的用户映射
+//获取ThinkSNS与UCenter的用户映射
 function ts_get_ucenter_user_ref($uid='',$uc_uid='',$uc_username=''){
 	$uid && $map['uid'] 				= intval($uid);
 	$uc_uid && $map['uc_uid'] 			= intval($uc_uid);
@@ -72,14 +72,14 @@ function ts_get_ucenter_user_ref($uid='',$uc_uid='',$uc_username=''){
 	// return M('ucenter_user_link')->where($map)->find();
 }
 
-//获取卢勤问答用户信息
+//获取ThinkSNS用户信息
 function ts_get_user($uid){
 	$uid = intval($uid);
 	$result = $GLOBALS['tsdb']->fetch_first("SELECT uid,uname,email,login,is_active FROM ".TS_DBTABLEPRE."user WHERE uid='{$uid}'");
 	return $result;
 }
 
-//获取卢勤问答站点Key（用于区别同一台机器安装的两个TS系统）
+//获取ThinkSNS站点Key（用于区别同一台机器安装的两个TS系统）
 function ts_get_site_key(){
 	global $tsconfig;
     return md5($tsconfig['SECURE_KEY'].$tsconfig['SECURE_CODE'].$tsconfig['COOKIE_PREFIX']);
@@ -137,7 +137,7 @@ function ts_add_user($uc_user){
 	// }
 }
 
-//同步登录卢勤问答
+//同步登录ThinkSNS
 function ts_synclogin($user){
 	session_start();
 	$uid = $user['uid'];
@@ -165,7 +165,7 @@ function ts_synclogin($user){
 	return true;
 }
 
-//同步退出卢勤问答
+//同步退出ThinkSNS
 function ts_synclogout(){
 	session_start();
 	unset($_SESSION['mid'],$_SESSION['SITE_KEY']); // 注销session

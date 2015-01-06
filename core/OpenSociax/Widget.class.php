@@ -1,6 +1,6 @@
 <?php
 /**
- * 卢勤问答 Widget类 抽象类
+ * ThinkSNS Widget类 抽象类
  * @author liuxiaoqing <liuxiaoqing@zhishisoft.com>,liu21st <liu21st@gmail.com>
  * @version TS3.0 only
  */

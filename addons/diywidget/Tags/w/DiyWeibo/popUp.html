@@ -14,13 +14,13 @@
                     </div>
                     <div class="c2">
                         <label>
-                            <input name="source" rel="not_input" type="radio" value="all" checked="checked" class="param_post radio_select in_mr5" />全部提问
+                            <input name="source" rel="not_input" type="radio" value="all" checked="checked" class="param_post radio_select in_mr5" />全部微博
                         </label>&nbsp;
                         <label>
-                            <input name="source" rel="user_input" class="param_post radio_select in_mr5" type="radio" value="user"/>指定用户提问
+                            <input name="source" rel="user_input" class="param_post radio_select in_mr5" type="radio" value="user"/>指定用户微博
                         </label>&nbsp;
                         <label>
-                            <input name="source" rel="topic_input" class="param_post radio_select in_mr5" type="radio" value="topic"/>话题提问
+                            <input name="source" rel="topic_input" class="param_post radio_select in_mr5" type="radio" value="topic"/>话题微博
                         </label>&nbsp;
                         <div id="user_input" class="param_select" style="display:none;">
                            {:W('SearchUser', array('uids'=>$attr['users'], 'name'=>'searchuid','follow'=>0, 'max'=>0,'noself'=>0))}

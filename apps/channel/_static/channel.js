@@ -282,7 +282,7 @@ channel.upFigures = function(inc)
 };
 /**
  * 管理弹窗显示
- * @param integer feedId 提问ID
+ * @param integer feedId 微博ID
  * @param integer channelId 频道分类ID
  * @return void
  */

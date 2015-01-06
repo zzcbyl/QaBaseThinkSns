@@ -357,15 +357,6 @@ M.addEventFns({
         click: function () {	//点击评论的时候
             var attrs = M.getEventArgs(this);
             var comment_list = this.parentModel.childModels['comment_detail'][0];
-            if (attrs.comment_type == 2 && $("div[commenttype=1]").length > 0) {
-                $(this.parentModel).find('div[commenttype=1]').hide();
-            }
-            else if (attrs.comment_type == 1 && $("div[commenttype=2]").length > 0) {
-                $(this.parentModel).find('div[commenttype=2]').hide();
-            }
-            $(comment_list).attr("commenttype", attrs.comment_type);
-
-            //alert(comment_list.style.display);
 
             //			if("undefined" == typeof(core.comment)){
             //				core.plugInit('comment',attrs,comment_list);
@@ -397,10 +388,6 @@ M.addEventFns({
     comment_del: {
         click: function () {
             var attrs = M.getEventArgs(this);
-            var comment_list = this.parentModel.parentModel.parentModel.childModels['comment_detail'][0];
-            core.comment.init(attrs, comment_list);
-            //alert($(comment_list).html())
-            //return;
             $(this.parentModel).fadeOut();
             if ("undefined" == typeof (core.comment)) {
                 core.plugFunc('comment', function () {
@@ -416,12 +403,12 @@ M.addEventFns({
             if (this.noreply == 1) {
                 return;
             }
-
             var attrs = M.getEventArgs(this);
             attrs.to_comment_id = $(this).attr('to_comment_id');
             attrs.to_uid = $(this).attr('to_uid');
             attrs.to_comment_uname = $(this).attr('to_comment_uname');
             attrs.addToEnd = $(this).attr('addtoend');
+
             var comment_list = this.parentModel.parentModel;
             core.comment.init(attrs, comment_list);
 
@@ -430,13 +417,16 @@ M.addEventFns({
                 $(_this).attr('to_uid', '0');
                 $(_this).attr('to_comment_id', '0');
                 $(_this).attr('to_comment_uname', '');
-                ui.success(L('PUBLIC_CENTSUCCESS'));
+                if (attrs.closeBox == 1) {
+                    ui.box.close();
+                    ui.success(L('PUBLIC_CENTSUCCESS'));
+                }
             }
             core.comment.addComment(after, this);
             this.noreply = 1;
             setTimeout(function () {
                 _this.noreply = 0;
-            }, 3000);
+            }, 5000);
         },
         load: function () {
             var attrs = M.getEventArgs(this);
@@ -491,10 +481,10 @@ var share=function(sid,stable,initHTML,curid,curtable,appname,cancomment,is_repo
 var follow = {
     // 按钮样式
     btnClass: {
-        doFollow: "tgz",
-        unFollow: "cgz",
-        haveFollow: "tgzed",
-        eachFollow: "hgz"
+        doFollow: "gz",
+        unFollow: "qx",
+        haveFollow: "gz_ed",
+        eachFollow: "gz_ed"
     },
     // 按钮图标
     flagClass: {
@@ -580,27 +570,23 @@ var follow = {
                 M.removeListener(node);
                 M(node);
                 _this.updateFollowCount(1);
-                if (txt.data.following == "1" && txt.data.follower == "1") {
-                    _this.updateFriendCount(1);
-                }
+                _this.updateFriendCount(1);
                 updateUserData('follower_count', 1, args.uid);
-                return;
-                ui.success("关注成功");
-                //                if ("following_right" == args.refer) {
-                //                    var item = node.parentModel;
-                //                    // item.parentNode.removeChild(item);
-                //                    $(item).slideUp('normal', function () {
-                //                        $(this).remove();
-                //                    });
-                //                    $.post(U('widget/RelatedUser/changeRelate'), { uid: args.uid, limit: 1 }, function (msg) {
-                //                        var _model = M.getModels("related_list");
-                //                        $(_model[0]).append(msg);
-                //                        M(_model[0]);
-                //                    }, 'json');
-                //                    ui.success("关注成功");
-                //                } else {
-                //                    followGroupSelectorBox(args.uid, args.isrefresh);
-                //                }
+                if ("following_right" == args.refer) {
+                    var item = node.parentModel;
+                    // item.parentNode.removeChild(item);
+                    $(item).slideUp('normal', function () {
+                        $(this).remove();
+                    });
+                    $.post(U('widget/RelatedUser/changeRelate'), { uid: args.uid, limit: 1 }, function (msg) {
+                        var _model = M.getModels("related_list");
+                        $(_model[0]).append(msg);
+                        M(_model[0]);
+                    }, 'json');
+                    ui.success("关注成功");
+                } else {
+                    followGroupSelectorBox(args.uid, args.isrefresh);
+                }
             } else {
                 ui.error(txt.info);
             }
@@ -634,10 +620,9 @@ var follow = {
                     core.facecard.deleteUser(args.uid);
                 }
                 if ("following_list" == args.refer) {
-                    //var item = node.parentModel;
+                    var item = node.parentModel;
                     // 移除
-                    //item.parentNode.removeChild(item);
-                    $(node).parent().parent().parent().remove();
+                    item.parentNode.removeChild(item);
                 } else {
                     node.setAttribute("event-node", "doFollow");
                     node.setAttribute("href", [U('public/Follow/doFollow'), '&fid=', args.uid].join(""));
@@ -646,9 +631,7 @@ var follow = {
                     M(node);
                 }
                 _this.updateFollowCount(-1);
-                if (txt.data.follower == "1") {
-                    _this.updateFriendCount(-1);
-                }
+                _this.updateFriendCount(-1);
                 updateUserData('follower_count', -1, args.uid);
                 if (args.isrefresh == 1) location.reload();
             } else {
@@ -662,18 +645,14 @@ var follow = {
     * @return void
     */
     updateFollowCount: function (num) {
-        if (parseInt($('#gzCount a').html()) > 0) {
-            $('#gzCount a').html(parseInt($('#gzCount a').html()) + num);
+        var l;
+        var following_count = M.getEvents("following_count");
+        if (following_count) {
+            l = following_count.length;
+            while (l-- > 0) {
+                following_count[l].innerHTML = parseInt(following_count[l].innerHTML) + num;
+            }
         }
-
-        //        var l;
-        //        var following_count = M.getEvents("following_count");
-        //        if (following_count) {
-        //            l = following_count.length;
-        //            while (l-- > 0) {
-        //                following_count[l].innerHTML = parseInt(following_count[l].innerHTML) + num;
-        //            }
-        //        }
     },
     /**
     * 更新好友数目
@@ -681,18 +660,14 @@ var follow = {
     * @return void
     */
     updateFriendCount: function (num) {
-        if (parseInt($('#hyCount a').html()) >= 0) {
-            $('#hyCount a').html(parseInt($('#hyCount a').html()) + num);
+        var l;
+        var friend_count = M.getEvents("friend_count");
+        if (friend_count) {
+            l = friend_count.length;
+            while (l-- > 0) {
+                friend_count[l].innerHTML = parseInt(friend_count[l].innerHTML) + num;
+            }
         }
-
-        //        var l;
-        //        var friend_count = M.getEvents("friend_count");
-        //        if (friend_count) {
-        //            l = friend_count.length;
-        //            while (l-- > 0) {
-        //                friend_count[l].innerHTML = parseInt(friend_count[l].innerHTML) + num;
-        //            }
-        //        }
     }
 };
 /**
@@ -774,4 +749,3 @@ var setFollowGroupTab = function(gid)
 	gid = gid ? '&gid='+gid : '';
 	ui.box.load(U('public/FollowGroup/setGroupTab') + gid, title);
 };
-
