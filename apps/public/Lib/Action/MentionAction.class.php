@@ -7,7 +7,7 @@
 class MentionAction extends Action {
 		
 	/**
-	 * 提到我的微博页面
+	 * 提到我的提问页面
 	 */
 	public function index()
 	{
@@ -39,7 +39,7 @@ class MentionAction extends Action {
 		// 设置应用名称与表名称
 		$app_name = isset($_GET['app_name']) ? t($_GET['app_name']) : 'public';
 		// $app_table = isset($_GET['app_table']) ? t($_GET['app_table']) : '';
-		// 获取@Me微博列表
+		// 获取@Me提问列表
 		$at_list = model('Atme')->setAppName($app_name)->setAppTable($app_table)->getAtmeList($map);
 
 		// 赞功能
@@ -80,7 +80,7 @@ class MentionAction extends Action {
 			//解析数据成网页端显示格式(@xxx  加链接)
 			$val['source_content'] = parse_html($val['source_content']);
 		}
-		// 获取微博设置
+		// 获取提问设置
 		$weiboSet = model('Xdata')->get('admin_Config:feed');
 		$this->assign($weiboSet);
 		// 用户@Me未读数目重置

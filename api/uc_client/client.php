@@ -637,7 +637,7 @@ function uc_auto_charset($content){
 	return ts_change_charset($content, UC_DBCHARSET, 'UTF8');
 }
 
-//添加ThinkSNS与UCenter的用户映射
+//添加卢勤问答与UCenter的用户映射
 function ts_add_ucenter_user_ref($uid,$uc_uid,$uc_username='',$uc_email=''){
 	$uc_ref_data = array(
 					   'uid' => $uid,
@@ -648,7 +648,7 @@ function ts_add_ucenter_user_ref($uid,$uc_uid,$uc_username='',$uc_email=''){
 	return M('ucenter_user_link')->add($uc_ref_data);
 }
 
-//更新ThinkSNS与UCenter的用户映射
+//更新卢勤问答与UCenter的用户映射
 function ts_update_ucenter_user_ref($uid,$uc_uid,$uc_username=''){
 	$uid 		 &&	$map['uid']					= intval($uid);
 	$uc_uid 	 && $map['uc_uid'] 				= intval($uc_uid);
@@ -661,7 +661,7 @@ function ts_update_ucenter_user_ref($uid,$uc_uid,$uc_username=''){
 	return M('ucenter_user_link')->where($map)->save($uc_ref_data);
 }
 
-//获取ThinkSNS与UCenter的用户映射
+//获取卢勤问答与UCenter的用户映射
 function ts_get_ucenter_user_ref($uid='',$uc_uid='',$uc_username=''){
 	$uid && $map['uid'] 				= intval($uid);
 	$uc_uid && $map['uc_uid'] 			= intval($uc_uid);

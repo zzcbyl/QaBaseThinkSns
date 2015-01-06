@@ -1,0 +1,16 @@
+SELECT * FROM `wb_feed_data` WHERE `feed_id` in (select `feed_id` from `wb_feed` where `uid` = 1020 and `feed_questionid`>0);
+
+SELECT * FROM `wb_feed_data` WHERE `feed_id` = 6510;
+SELECT * FROM `wb_feed` WHERE `feed_id` = 6510;
+
+SELECT * FROM `wb_user_data` WHERE `uid` = 312 and `key` = 'answer_count';
+
+SELECT * FROM `wb_user_data` WHERE `uid` = 312 and `key` = 'weibo_count';
+SELECT * FROM `wb_user_data` WHERE `uid` = 312 and `key` = 'feed_count';
+
+update `wb_user_data` set `value` = `value` - 1 WHERE `uid` = 1020 and `key` = 'answer_count';
+update `wb_user_data` set `value` = `value` - 1 WHERE `uid` = 1089 and `key` = 'weibo_count';
+update `wb_user_data` set `value` = `value` - 1 WHERE `uid` = 1089 and `key` = 'feed_count';
+
+delete FROM `wb_feed_data` WHERE `feed_id` = 6529;
+delete FROM `wb_feed` WHERE `feed_id` = 6529;

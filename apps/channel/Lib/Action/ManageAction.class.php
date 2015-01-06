@@ -12,13 +12,13 @@ class ManageAction extends Action
 	 */
     public function getAdminBox()
     {
-    	// 获取微博ID
+    	// 获取提问ID
     	$data['feedId'] = intval($_REQUEST['feed_id']);
         // 频道分类ID
         $data['channelId'] = empty($_REQUEST['channel_id']) ? 0 : intval($_REQUEST['channel_id']);
     	// 获取全部频道列表
         $data['categoryList'] = model('CategoryTree')->setTable('channel_category')->getCategoryList();
-        // 获取该微博已经选中的频道
+        // 获取该提问已经选中的频道
         $data['selectedChannels'] = D('Channel', 'channel')->getSelectedChannels($data['feedId']);
         // 是否有动态效果
         $data['clear'] = empty($_REQUEST['clear']) ? 0 : intval($_REQUEST['clear']);
@@ -28,12 +28,12 @@ class ManageAction extends Action
     }
 
     /**
-     * 添加微博进入频道
+     * 添加提问进入频道
      * @return json 操作后的相关信息数据
      */
     public function doAddChannel()
     {
-    	// 微博ID
+    	// 提问ID
     	$feedId = intval($_POST['feedId']);
         // 判断资源是否删除
         $fmap['feed_id'] = $feedId;
@@ -54,7 +54,7 @@ class ManageAction extends Action
     		$res['info'] = '推荐失败';
     		exit(json_encode($res));
     	}
-    	// 添加微博进入频道
+    	// 添加提问进入频道
     	$result = D('Channel', 'channel')->setChannel($feedId, $channelIds);
     	if($result) {
             if(!empty($channelIds)) {

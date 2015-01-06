@@ -1,6 +1,6 @@
 <?php
 /**
- * 微博列表
+ * 提问列表
  * @example {:W('FeedList',array('type'=>'space','feed_type'=>$feed_type,'feed_key'=>$feed_key,'loadnew'=>0,'gid'=>$gid))}
  * @author jason
  * @version TS3.0
@@ -11,9 +11,9 @@ class FeedListWidget extends Widget {
 	private $limitnums   = 10;
 
     /**
-     * @param string type 获取哪类微博 following:我关注的 space：
-     * @param string feed_type 微博类型
-     * @param string feed_key 微博关键字
+     * @param string type 获取哪类提问 following:我关注的 space：
+     * @param string feed_type 提问类型
+     * @param string feed_key 提问关键字
      * @param integer fgid 关注的分组id
      * @param integer gid 群组id
      * @param integer loadnew 是否加载更多 1:是  0:否
@@ -59,28 +59,45 @@ class FeedListWidget extends Widget {
 		return $content['html'];
     }
     /**
-     * 显示更多微博
-     * @return  array 更多微博信息、状态和提示
+     * 显示更多提问
+     * @return  array 更多提问信息、状态和提示
      */
     public function loadMore() {
         // 获取GET与POST数据
     	$_REQUEST = $_GET + $_POST;
         // 查询是否有分页
-    	if(!empty($_REQUEST['p']) || intval($_REQUEST['load_count']) == 4) {
+		if(!empty($_REQUEST['p']) || intval($_REQUEST['load_count']) == 4) {
+			unset($_REQUEST['loadId']);
+			$this->limitnums = 40;
+		} else {
+			$return = array('status'=>-1,'msg'=>L('PUBLIC_LOADING_ID_ISNULL'));
+			$_REQUEST['loadId'] = intval($_REQUEST['loadId']);
+			$this->limitnums = 10;
+		}
+		
+    	/*if(!empty($_REQUEST['p']) ) {
     		unset($_REQUEST['loadId']);
     		$this->limitnums = 40;
     	} else {
     		$return = array('status'=>-1,'msg'=>L('PUBLIC_LOADING_ID_ISNULL'));
             $_REQUEST['loadId'] = intval($_REQUEST['loadId']);
     		$this->limitnums = 10;
-    	}
+    	}*/
         // 查询是否有话题ID
         if($_REQUEST['topic_id']) { 
             $content = $this->getTopicData($_REQUEST,'_FeedList.html');
         } else {
     	    $content = $this->getData($_REQUEST,'_FeedList.html');
         }
+		
+		/*$return = array('status'=>1,'msg'=>L('PUBLIC_SUCCESS_LOAD'));
+		$return['html'] = '||'.json_encode($content).'||';
+		exit(json_encode($return));*/
+		
         // 查看是否有更多数据
+
+
+
     	if(empty($content['html'])) {
             // 没有更多的
     		$return = array('status'=>0,'msg'=>L('PUBLIC_WEIBOISNOTNEW'));
@@ -95,8 +112,8 @@ class FeedListWidget extends Widget {
     }
 
     /**
-     * 显示最新微博
-     * @return  array 最新微博信息、状态和提示
+     * 显示最新提问
+     * @return  array 最新提问信息、状态和提示
      */
     public function loadNew() {
     	$return = array('status'=>-1,'msg'=>'');
@@ -117,10 +134,10 @@ class FeedListWidget extends Widget {
     }
     
     /**
-     * 获取微博数据，渲染微博显示页面
-     * @param array $var 微博数据相关参数
+     * 获取提问数据，渲染提问显示页面
+     * @param array $var 提问数据相关参数
      * @param string $tpl 渲染的模板
-     * @return array 获取微博相关模板数据
+     * @return array 获取提问相关模板数据
      */
     private function getData($var, $tpl = 'FeedList.html') {
     	$var['feed_key'] = t($var['feed_key']);
@@ -128,12 +145,12 @@ class FeedListWidget extends Widget {
         $var['cancomment'] = isset($var['cancomment']) ? $var['cancomment'] : 1;
         //$var['cancomment_old_type'] = array('post','repost','postimage','postfile');
         $var['cancomment_old_type'] = array('post','repost','postimage','postfile','weiba_post','weiba_repost');
-        // 获取微博配置
+        // 获取提问配置
         $weiboSet = model('Xdata')->get('admin_Config:feed');
         $var = array_merge($var, $weiboSet);
     	$var['remarkHash'] = model('Follow')->getRemarkHash($GLOBALS['ts']['mid']);
     	$map = $list = array();
-    	$type = $var['new'] ? 'new'.$var['type'] : $var['type'];	// 最新的微博与默认微博类型一一对应
+    	$type = $var['new'] ? 'new'.$var['type'] : $var['type'];	// 最新的提问与默认提问类型一一对应
 		switch($type) {
 			case 'following':// 我关注的
 				if(!empty($var['feed_key'])){
@@ -146,7 +163,7 @@ class FeedListWidget extends Widget {
 					$LoadWhere = '';
 					if($var['loadId'] > 0){ //非第一次
 						//$where .=" AND a.feed_id < '".intval($var['loadId'])."'";
-						$LoadWhere = "feed_id < '".intval($var['loadId'])."'";
+						$LoadWhere = "publish_time < '".intval($var['loadId'])."'";
 					}
 					if(!empty($var['feed_type'])){
 						if ( $var['feed_type'] == 'post' ){
@@ -164,13 +181,9 @@ class FeedListWidget extends Widget {
 					//关键字匹配 采用搜索引擎兼容函数搜索 后期可能会扩展为搜索引擎
 					$list = model('Feed')->searchFeed($var['feed_key'],'all',$var['loadId'],$this->limitnums);
 				}else{
-<<<<<<< HEAD
 					$where =' is_audit=1 AND is_del = 0 AND feed_questionid=0 AND add_feedid=0 ';
-=======
-					$where =' (is_audit=1 OR is_audit=0 AND uid='.$GLOBALS['ts']['mid'].') AND is_del = 0 AND feed_questionid=0 AND add_feedid=0 ';
->>>>>>> origin/develop
 					if($var['loadId'] > 0){ //非第一次
-						$where .=" AND feed_id < '".intval($var['loadId'])."'";
+						$where .=" AND `last_updtime` < '".intval($var['loadId'])."'";
 					}
 					if(!empty($var['feed_type'])){
 						if ( $var['feed_type'] == 'post' ){
@@ -179,59 +192,45 @@ class FeedListWidget extends Widget {
 							$where .=" AND type = '".t($var['feed_type'])."'";
 						}
 					}
-<<<<<<< HEAD
 					$list = model('Feed')->getQuestionAndAnswer($where, $this->limitnums);
 					//print($where.' and `openid` is null');
 					//print_r($list);
 				}
 				break;
 			case 'newfollowing'://关注的人的最新提问  (检查使用的地方)
-=======
-					$list = model('Feed')->getQuestionAndAnswer($where,$this->limitnums);
-					//print_r($list);
-				}
-				break;
-			case 'newfollowing'://关注的人的最新微博
->>>>>>> origin/develop
 				$where = ' a.is_del = 0 and a.is_audit = 1 and a.uid != '.$GLOBALS['ts']['uid'].' and a.feed_questionid=0 AND a.add_feedid=0 ';
 				if($var['maxId'] > 0){
-					$where .=" AND a.feed_id > '".intval($var['maxId'])."'";
+					$where .=" AND a.publish_time > '".intval($var['maxId'])."'";
 					$list = model('Feed')->getFollowingFeed($where);
 					$content['count'] = $list['count'];
 				}		
 				break;
-			case 'newall':	//所有人最新微博 -- 正在发生的
+			case 'newall':	//所有人最新提问 -- 正在发生的 (检查使用的地方)
 				if($var['maxId'] > 0){
 					$map['feed_questionid'] = 0;
 					$map['add_feedid'] = 0;
-					$map['feed_id'] = array('gt',intval($var['maxId']));
+					$map['publish_time'] = array('gt',intval($var['maxId']));
 					$map['is_del'] = 0;
 					$map['is_audit'] = 1;
-<<<<<<< HEAD
 					//$map['openid']  = array('exp',' is NULL');
-=======
->>>>>>> origin/develop
 					$map['uid']   = array('neq',$GLOBALS['ts']['uid']);
 					$list = model('Feed')->getList($map);    
 					$content['count'] = $list['count'];
 				}
 				break;
-			case 'space':	//用户个人空间
+			case 'space':	//用户个人空间 (检查使用的地方)
 				if(!empty($var['feed_key'])){
 					//关键字匹配 采用搜索引擎兼容函数搜索 后期可能会扩展为搜索引擎
 					$list = model('Feed')->searchFeed($var['feed_key'],'space',$var['loadId'],$this->limitnums,'',$var['feed_type']);
 				}else{
 					if($var['loadId']>0){
-						$map['feed_id'] = array('lt',intval($var['loadId']));
+						$map['publish_time'] = array('lt',intval($var['loadId']));
 					}
 					$map['feed_questionid'] = 0;
 					$map['add_feedid'] = 0;
 					$map['is_del'] = 0;
-<<<<<<< HEAD
                     $map['is_audit'] = 1;
 					//$map['openid']  = array('exp',' is NULL');
-=======
->>>>>>> origin/develop
 					if($GLOBALS['ts']['mid'] != $GLOBALS['ts']['uid']) $map['is_audit'] = 1;
 					$list = model('Feed')->getUserList($map,$GLOBALS['ts']['uid'],  $var['feedApp'], $var['feed_type'],$this->limitnums);
 					//print_r($list);
@@ -240,7 +239,7 @@ class FeedListWidget extends Widget {
 			case 'channel':
 				$where = ' c.is_audit=1 AND c.is_del = 0 AND c.feed_questionid=0 AND c.add_feedid=0 ';
 				if($var['loadId'] > 0) { //非第一次
-					$where .= " AND c.feed_id < '".intval($var['loadId'])."'";
+					$where .= " AND c.publish_time < '".intval($var['loadId'])."'";
 				}
 				if(!empty($var['feed_type'])) {
 					$where .= " AND c.type = '".t($var['feed_type'])."'";
@@ -255,15 +254,11 @@ class FeedListWidget extends Widget {
 				}else{
 					if($var['loadId'] > 0){ //非第一次
 						//$where .=" AND a.feed_id < '".intval($var['loadId'])."'";
-						$LoadWhere = "AND feed_id < '".intval($var['loadId'])."'";
+						$LoadWhere = "AND publish_time < '".intval($var['loadId'])."'";
 					}
 					$current_uid=$GLOBALS['ts']['mid'];
 					if($var['uid']!=null&&$var['uid']!='0') $current_uid = $var['uid'];
-<<<<<<< HEAD
 					$where =' uid='.$current_uid.' AND is_del = 0 AND feed_questionid=0 AND add_feedid=0 AND is_audit=1 '.$LoadWhere;
-=======
-					$where =' uid='.$current_uid.' AND is_del = 0 AND feed_questionid=0 AND add_feedid=0 AND (is_audit=1 OR is_audit=0) '.$LoadWhere;
->>>>>>> origin/develop
 					$list = model('Feed')->getQuestionAndAnswer($where, $this->limitnums);
 					//print_r($list);
 				}
@@ -275,23 +270,18 @@ class FeedListWidget extends Widget {
 				}else{
 					$LoadWhere='';
 					if($var['loadId'] > 0){ //非第一次
-						//$where .=" AND a.feed_id < '".intval($var['loadId'])."'";
-						$LoadWhere = "AND feed_id < '".intval($var['loadId'])."'";
+						$LoadWhere = "AND publish_time < '".intval($var['loadId'])."'";
 					}
 					$current_uid=$GLOBALS['ts']['mid'];
 					if($var['uid']!=null&&$var['uid']!='0') $current_uid = $var['uid'];
-<<<<<<< HEAD
 					$where =' uid='.$current_uid.' AND is_del = 0 AND feed_questionid!=0 AND add_feedid=0 AND is_audit=1 '.$LoadWhere;
-=======
-					$where =' uid='.$current_uid.' AND is_del = 0 AND feed_questionid!=0 AND add_feedid=0 AND (is_audit=1 OR is_audit=0) '.$LoadWhere;
->>>>>>> origin/develop
 					$list = model('Feed')->getAnswerList($where, $this->limitnums);
 					//print_r($list);
 				}
 				break;
-			case 'collection':	//个人收藏列表
+			case 'collection':	//个人收藏列表 ------------
 				if($var['loadId'] > 0){ //非第一次
-					$LoadWhere = "feed_id < '".intval($var['loadId'])."'";
+					$LoadWhere = "collection_id < '".intval($var['loadId'])."'";
 					$map['source_id'] = array('lt',intval($var['loadId']));
 				}
 				$map['uid'] = $GLOBALS['ts']['uid'];
@@ -303,7 +293,7 @@ class FeedListWidget extends Widget {
 				/*$current_uid=$GLOBALS['ts']['mid'];
 				if($var['uid']!=null&&$var['uid']!='0') $current_uid = $var['uid'];
 				$where =' uid='.$current_uid.' AND is_del = 0 AND feed_questionid!=0 AND (is_audit=1 OR is_audit=0) ';
-				$list = model('Feed')->getAnswerList($where, $this->limitnums);*/
+				$list = model('Feed')->getAnswerList($where.' and `openid` is null', $this->limitnums);*/
 				//print_r($list);
 				break;
 			case 'agree':	//个人赞同列表
@@ -312,7 +302,6 @@ class FeedListWidget extends Widget {
 				}
 				$current_uid=$GLOBALS['ts']['mid'];
 				if($var['uid']!=null && $var['uid']!='0') $current_uid = $var['uid'];
-<<<<<<< HEAD
 				$where =" `is_audit`=1 AND `uid` = $current_uid AND `feed_questionid` != 0 AND `add_feedid`=0 and `comment_count` > 0";
 				$list = model('Feed')->getCommentFeedList($where, $this->limitnums,$LoadWhere);
 				//print_r($list);
@@ -324,35 +313,24 @@ class FeedListWidget extends Widget {
 				$current_uid=$GLOBALS['ts']['mid'];
 				if($var['uid']!=null && $var['uid']!='0') $current_uid = $var['uid'];
 				$where =" `is_audit`=1 AND `uid` = $current_uid AND `feed_questionid` != 0 AND `add_feedid`=0 and `disapprove_count` > 0";
-=======
-				$where =" `uid` = $current_uid AND `feed_questionid` != 0 AND `add_feedid`=0 and `comment_count` > 0";
->>>>>>> origin/develop
 				$list = model('Feed')->getCommentFeedList($where, $this->limitnums,$LoadWhere);
 				//print_r($list);
 				break;
 			case 'newanswer':	//消息答案列表
 				$LoadWhere='';
 				if($var['loadId'] > 0){ //非第一次
-					$LoadWhere = "AND feed_id < '".intval($var['loadId'])."'";
+					$LoadWhere = "AND publish_time < '".intval($var['loadId'])."'";
 				}
-<<<<<<< HEAD
 				$where =" is_audit=1 AND is_del = 0 AND feed_quid = ".$GLOBALS['ts']['mid']." AND feed_questionid != 0 AND add_feedid=0 ".$LoadWhere;
 				$list = model('Feed')->getAnswerList($where, $this->limitnums, 'publish_time desc', $var['newcount']);
-=======
-				$where ="(is_audit=1 OR is_audit=0) AND is_del = 0 AND feed_quid = ".$GLOBALS['ts']['mid']." AND feed_questionid != 0 AND add_feedid=0 ".$LoadWhere;
-				$list = model('Feed')->getAnswerList($where, $this->limitnums, 'feed_id DESC', $var['newcount']);
->>>>>>> origin/develop
 				//print_r($list);
 				break;	
 			case 'newagreecomment':		//消息赞同列表
 				$map['app_uid']=$GLOBALS['ts']['mid'];
 				$map['comment_type']=1;
 				$map['is_del']=0;
-<<<<<<< HEAD
                 $map['is_audit'] = 1;
 				//$map['openid']  = array('exp',' is NULL');
-=======
->>>>>>> origin/develop
 				if($var['loadId'] > 0){ //非第一次
 					$map['comment_id'] = array('lt', intval($var['loadId']));
 				}
@@ -363,11 +341,8 @@ class FeedListWidget extends Widget {
 				$map['app_uid']=$GLOBALS['ts']['mid'];
 				$map['comment_type']=2;
 				$map['is_del']=0;
-<<<<<<< HEAD
                 $map['is_audit'] = 1;
 				//$map['openid']  = array('exp',' is NULL');
-=======
->>>>>>> origin/develop
 				if($var['loadId'] > 0){ //非第一次
 					$map['comment_id'] = array('lt', intval($var['loadId']));
 				}
@@ -378,11 +353,8 @@ class FeedListWidget extends Widget {
 				$map['app_uid']=$GLOBALS['ts']['mid'];
 				$map['comment_type']=0;
 				$map['is_del']=0;
-<<<<<<< HEAD
                 $map['is_audit'] = 1;
 				//$map['openid']  = array('exp',' is NULL');
-=======
->>>>>>> origin/develop
 				if($var['loadId'] > 0){ //非第一次
 					$map['comment_id'] = array('lt', intval($var['loadId']));
 				}
@@ -394,12 +366,12 @@ class FeedListWidget extends Widget {
 				if($var['uid']!=null && $var['uid']!='0') $current_uid = $var['uid'];
 				$where =" `is_audit`=1 AND `uid` = ".$current_uid." AND `feed_questionid` != 0 and `add_feedid`=0 and `thank_count` > 0 ";
 				if($var['loadId']>0){
-					$where = $where.'feed_id < '.intval($var['loadId']);
+					$where = $where.' publish_time < '.intval($var['loadId']);
 				}
 				$list = model('Feed')->getAnswerList($where, $this->limitnums);
 				//print_r($list);
 				break;
-			case 'feedfollowing':	//感谢列表
+			case 'feedfollowing':	
 				$current_uid=$GLOBALS['ts']['mid'];
 				if($var['uid']!=null && $var['uid']!='0') $current_uid = $var['uid'];
 				$where =" `uid` = ".$current_uid;
@@ -407,7 +379,6 @@ class FeedListWidget extends Widget {
 					$where = $where.' and ctime < '.intval($var['loadId']);
 				}
 				$list = model('FeedFollowing')->getFeedFollowingList($where, $this->limitnums);
-<<<<<<< HEAD
 				//print_r($list);
 				break;
 			case 'invite':	//邀请我的
@@ -416,17 +387,28 @@ class FeedListWidget extends Widget {
 					$LoadWhere = "invite_answer_id < '".intval($var['loadId'])."'";
 				}
 				$list =  model('Feed')->getInviteList($current_uid, $this->limitnums, $LoadWhere, $var['newcount']);
-=======
->>>>>>> origin/develop
 				//print_r($list);
 				break;
 		}
     	// 分页的设置
         isset($list['html']) && $var['html'] = $list['html'];
+
+
 		$feedlist = array();
     	if(!empty($list['data'])) {
 			switch($type) {
+				case 'collection':
+					$content['firstId'] = $var['firstId'] = $list['data'][0]['collection']['collection_id'];
+					$content['lastId'] = $var['lastId'] = $list['data'][(count($list['data'])-1)]['collection']['collection_id'];
+					break;
+				case 'answer':
+				case 'newanswer':
+				case 'thank':
+					$content['firstId'] = $var['firstId'] = $list['data'][0]['answer'][0]['publish_time'];
+					$content['lastId'] = $var['lastId'] = $list['data'][(count($list['data'])-1)]['answer'][0]['publish_time'];
+					break;
 				case 'agree':
+				case 'oppose':
 					$content['firstId'] = $var['firstId'] = $list['data'][0]['answer'][0]['comment_count'];
 					$content['lastId'] = $var['lastId'] = $list['data'][(count($list['data'])-1)]['answer'][0]['comment_count'];
 					break;
@@ -446,9 +428,17 @@ class FeedListWidget extends Widget {
 						$index++;
 					}
 					break;
+				case 'invite':	//邀请我的
+					$content['firstId'] = $var['firstId'] = $list['data'][0]['invite']['invite_answer_id'];
+					$content['lastId'] = $var['lastId'] = $list['data'][(count($list['data'])-1)]['invite']['invite_answer_id'];
+					break;
+				case 'all':
+					$content['firstId'] = $var['firstId'] = $list['data'][0]['last_updtime'];
+					$content['lastId'] = $var['lastId'] = $list['data'][(count($list['data'])-1)]['last_updtime'];
+					break;	
 				default:
-					$content['firstId'] = $var['firstId'] = $list['data'][0]['feed_id'];
-					$content['lastId'] = $var['lastId'] = $list['data'][(count($list['data'])-1)]['feed_id'];
+					$content['firstId'] = $var['firstId'] = $list['data'][0]['publish_time'];
+					$content['lastId'] = $var['lastId'] = $list['data'][(count($list['data'])-1)]['publish_time'];
 					break;	
 			}
 			
@@ -489,16 +479,31 @@ class FeedListWidget extends Widget {
 		//print_r($var);
 		
     	$content['pageHtml'] = $list['html'];
+		//print(dirname(__FILE__));
 	    // 渲染模版
-	    $content['html'] = $this->renderFile(dirname(__FILE__)."/".$tpl, $var);
+		
+		$loginData = model('Login')->get($GLOBALS['ts']['mid'], 'sina');
+		if($loginData['oauth_token'] != '')
+		{
+			$var['token'] = '1';
+		}
+		
+		$loginData = model('Login')->get($GLOBALS['ts']['mid'], 'qzone');
+		if($loginData['oauth_token'] != '')
+		{
+			$var['qqtoken'] = '1';
+		}
+
+		$content['html'] = $this->renderFile(dirname(__FILE__)."/".$tpl, $var);
+
 	    return $content;
     }
 
     /**
-     * 获取话题微博数据，渲染微博显示页面
-     * @param array $var 微博数据相关参数
+     * 获取话题提问数据，渲染提问显示页面
+     * @param array $var 提问数据相关参数
      * @param string $tpl 渲染的模板
-     * @return array 获取微博相关模板数据
+     * @return array 获取提问相关模板数据
      */
     private function getTopicData($var,$tpl='FeedList.html') {
         $var['cancomment'] = isset($var['cancomment']) ? $var['cancomment'] : 1;
@@ -508,7 +513,7 @@ class FeedListWidget extends Widget {
         $var = array_merge($var,$weiboSet);
         $var['remarkHash'] = model('Follow')->getRemarkHash($GLOBALS['ts']['mid']);
         $map = $list = array();
-        $type = $var['new'] ? 'new'.$var['type'] : $var['type'];    //最新的微博与默认微博类型一一对应
+        $type = $var['new'] ? 'new'.$var['type'] : $var['type'];    //最新的提问与默认提问类型一一对应
 
         if($var['loadId'] > 0){ //非第一次
             $topics['topic_id'] = $var['topic_id'];

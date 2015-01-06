@@ -77,7 +77,7 @@
 				</div>
 
 			    <div class="feed_c_btm lh18" style=" padding-top:5px; ">
-		      <php>if($vo['mini']){</php><div>最近微博 {$vo.mini.ctime|friendlyDate} </div><php>}</php>
+		      <php>if($vo['mini']){</php><div>最近提问 {$vo.mini.ctime|friendlyDate} </div><php>}</php>
                     <div><a href="{:U('home/space/detail',array('id'=>$vo['mini']['weibo_id']))}">{$vo.mini.content}</a></div>
                     <php>if($vo['user']['location']){</php><div>{$vo.user.location}</div><php>}</php>
                     <div class="pt5"><span ><a href="{:U('home/space/follow',array('type'=>'following','uid'=>$vo['fid']))}">关注<strong>{$vo.following}</strong>人</a></span><span class="pl10"><a href="{:U('home/space/follow',array('type'=>'follower','uid'=>$vo['fid']))}">粉丝<strong>{$vo.follower}</strong>人</a></span></div>

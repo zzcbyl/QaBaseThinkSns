@@ -21,9 +21,9 @@ class TopicUserWidget extends Widget {
             $var['topic_user'] = array_slice(explode(',',$topic['topic_user']), 0, 12);
         }
         if($data['type']==2){
-            $feedTopicId = getSubByKey(D('feed_topic_link')->where('topic_id='.$data['topic_id'])->order('feed_id desc')->field('feed_id')->findAll(),'feed_id');
+            $feedTopicId = getSubByKey(D('feed_topic_link')->where('topic_id='.$data['topic_id'])->order('publish_time desc')->field('feed_id')->findAll(),'feed_id');
             $map['feed_id'] = array('in', $feedTopicId);
-            $topic_user = array_unique(getSubByKey(D('feed')->where($map)->field('uid')->order('feed_id desc')->findAll(),'uid'));
+            $topic_user = array_unique(getSubByKey(D('feed')->where($map)->field('uid')->order('publish_time desc')->findAll(),'uid'));
             $var['topic_user'] = array_slice($topic_user,0,$limit);
         }
         $var['user'] = model('User')->getUserInfoByUids($var['topic_user']);

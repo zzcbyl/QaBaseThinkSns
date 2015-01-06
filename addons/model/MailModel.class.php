@@ -63,6 +63,7 @@ class MailModel {
 
 		if($this->option['email_sendtype'] =='smtp') {
 			$mail->Mailer = "smtp";
+			$mail->FromName = '卢勤问答';
 			$mail->Host	= $this->option['email_host'];	// sets GMAIL as the SMTP server
 			$mail->Port	= $this->option['email_port'];	// set the SMTP port
 
@@ -77,7 +78,7 @@ class MailModel {
 		}
 		
 		$mail->Sender = $this->option['email_account']; 			// 真正的发件邮箱
-
+		
 		$mail->SetFrom($sender_email, $sender_name, 0);				// 设置发件人信息
 
 		$mail->CharSet = "UTF-8"; 									// 这里指定字符集！
@@ -97,7 +98,7 @@ class MailModel {
 		$mail->Body = $body;			// 邮件内容
 		$mail->AltBody = "text/html";
 		$mail->SMTPDebug = false;
-
+		
 		$result = $mail->Send();
 
 		$this->setMessage($mail->ErrorInfo);

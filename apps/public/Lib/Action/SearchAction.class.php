@@ -38,14 +38,14 @@ class SearchAction extends Action
 	 * @return void
 	 */
 	public function index() {
-		if ( !CheckPermission('core_normal','search_info') ){
+		/*if ( !CheckPermission('core_normal','search_info') ){
 			$this->error('对不起，您没有权限进行该操作！');
-		}
+		}*/
 		$this->setTitle( '搜索'.$this->key );
 		$this->setKeywords( '搜索'.$this->key );
 		$this->setDescription( '搜索'.$this->key );
 
-		if($this->curType == 2){     //搜索微博
+		if($this->curType == 2){     //搜索提问
 			if($this->key != ""){
 				if(t($_GET['Stime']) && t($_GET['Etime'])){
 					$Stime = strtotime(t($_GET['Stime']));
@@ -56,14 +56,14 @@ class SearchAction extends Action
 				//关键字匹配 采用搜索引擎兼容函数搜索 后期可能会扩展为搜索引擎
 				$feed_type = !empty($_GET['feed_type']) ? t($_GET['feed_type']) : '';
 				$list = model('Feed')->searchFeeds($this->key, $feed_type, 20, $Stime, $Etime);
-				
+				//print_r($list);
 				//赞功能
 				$feed_ids = getSubByKey($list['data'],'feed_id');
 				$diggArr = model('FeedDigg')->checkIsDigg($feed_ids, $GLOBALS['ts']['mid']);
 				$this->assign('diggArr', $diggArr);
 				
 				$this->assign('feed_type',$feed_type);
-				$this->assign('searchResult',$list);				 //搜索微博
+				$this->assign('searchResult',$list);				 //搜索提问
 				$weiboSet = model('Xdata')->get('admin_Config:feed');
 				$this->assign('weibo_premission',$weiboSet['weibo_premission']);
 			}
@@ -82,13 +82,13 @@ class SearchAction extends Action
 					$map['is_active'] = 1;
 					$map['is_audit'] = 1;
 					$map['is_init'] = 1;
-					$userlist = D('user')->where($map)->field('uid')->findpage(10);
+					$userlist = D('user')->where($map)->field('uid')->findpage(20);
 					foreach($userlist['data'] as &$v){
 						$v = model('User')->getUserInfo($v['uid']);
 						unset($v);
 					}
 				}else{
-					$userlist = model('User')->searchUser($this->key, 0, 100, '' , '', 0, 10);
+					$userlist = model('User')->searchUser($this->key, 0, 100, '' , '', 0, 20);
 				}
 				$uids = getSubByKey( $userlist['data'] , 'uid' );
 				$usercounts = model('UserData')->getUserDataByUids( $uids );
@@ -113,6 +113,7 @@ class SearchAction extends Action
 					//关注状态
 					$userlist['data'][$k]['follow_state'] = $followstatus[ $v['uid'] ];
 				}
+				
 				$this->assign('searchResult',$userlist);
 			}
 

@@ -2,14 +2,14 @@
 <root>
 <app type='core' info='核心'>
 	<module type="normal" info="普通权限">  
-		<rule type="feed_view" info="浏览微博"></rule>
-		<rule type="feed_post" info="发表微博"></rule>
-		<rule type="feed_comment" info="评论微博"></rule>
-		<rule type="feed_report" info="举报微博"></rule>
-		<rule type="feed_share" info="分享微博"></rule>	
+		<rule type="feed_view" info="浏览提问"></rule>
+		<rule type="feed_post" info="发表提问"></rule>
+		<rule type="feed_comment" info="评论提问"></rule>
+		<rule type="feed_report" info="举报提问"></rule>
+		<rule type="feed_share" info="分享提问"></rule>	
 	</module>  
 	<module type="admin" info="管理权限">	
-		<rule type="feed_del" info="删除微博"></rule>
+		<rule type="feed_del" info="删除提问"></rule>
 		<rule type="comment_del" info="删除评论"></rule>
 		<rule type="message_del" info="删除私信"></rule>
 	</module>

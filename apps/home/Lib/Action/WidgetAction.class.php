@@ -96,7 +96,7 @@ class WidgetAction extends Action
 		}
 	}
 
-	// 发微博
+	// 发提问
 	public function weibo() {
 		// 解析参数
 		$_REQUEST['param']	= unserialize(urldecode($_REQUEST['param']));
@@ -120,7 +120,7 @@ class WidgetAction extends Action
 	}
 
 	/**
-	 * 站外资源分享到微博
+	 * 站外资源分享到提问
 	 *
 	 * 须提供以下$_GET参数:
 	 * <code>
@@ -218,18 +218,18 @@ class WidgetAction extends Action
 	}
 
 	/*
-	 * 微博秀
+	 * 提问秀
 	 */
 	public function weiboShow()
 	{
-    	// 微博秀样式
+    	// 提问秀样式
     	$data['style']['width']  = $_GET['width'] < 190 ? 190 : ($_GET['width'] > 1024 ? 1024 : intval($_GET['width']));
     	$data['style']['height'] = $_GET['height'] < 75 ? 75 : ($_GET['height'] > 800 ? 800 : intval($_GET['height']));
     	$data['style']['skin']   = t($_GET['skin']);
 
 		// 用户基本信息
 		$data['user'] = D('User', 'home')->getUserByIdentifier($this->uid);
-		// 微博列表
+		// 提问列表
 		$user_data['user_id'] = $this->uid;
 		$data['weibolist'] = api('Statuses')->data($user_data)->user_timeline();
     	// 粉丝列表
@@ -248,11 +248,11 @@ class WidgetAction extends Action
 		if (!$url) {
 			exit('URL参数不可为空');
 		}
-		// 获取已生成的包含该地址的微博ID
+		// 获取已生成的包含该地址的提问ID
 		$hash = md5($url);
 		$webpage_model = M('webpage');
 		$webpage_info = $webpage_model->where("`hash`='{$hash}'")->find();
-		// 若不存在对应的微博，则创建之
+		// 若不存在对应的提问，则创建之
 		if (!$webpage_info) {
 			$content = file_get_contents($url);
 			// 抓取内容失败，则退出
@@ -262,16 +262,16 @@ class WidgetAction extends Action
 			// 网页标题
 			preg_match("/<title>\s*(.+)\s*<\/title>/i", $content, $title);
 			$title = $title[1];
-			// 拼装微博内容
+			// 拼装提问内容
 			$weibo_content = array(
 				'content' => $title . ' ' . $url,
 			);
 			// // 评论箱UID
 			// $uid = 10315;
-			// // 生成微博
+			// // 生成提问
 			// $weibo_id = D('Weibo', 'weibo')->publish(10315, $weibo_content);
 			// if (false == $weibo_id) {
-			// 	exit('添加微博失败');
+			// 	exit('添加提问失败');
 			// }
 			// 保存信息
 			$webpage_info = array(
@@ -286,7 +286,7 @@ class WidgetAction extends Action
 			$webpage_info['webpage_id'] = $webpage_id;
 		}
 
-    	// 微博秀样式
+    	// 提问秀样式
     	$data['style']['width']  = $_GET['width'] < 190 ? 190 : ($_GET['width'] > 1024 ? 1024 : intval($_GET['width']));
     	$data['style']['skin']   = t($_GET['skin']);
 
@@ -313,7 +313,7 @@ class WidgetAction extends Action
 		// 过滤不存在的uid
 		$user_list = array_diff($_user_list, $uids);
 
-    	// 微博秀样式
+    	// 提问秀样式
     	$data['style']['width']  = $_GET['width'] < 190 ? 190 : ($_GET['width'] > 1024 ? 1024 : intval($_GET['width']));
     	$data['style']['skin']   = t($_GET['skin']);
 

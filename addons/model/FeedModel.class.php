@@ -1,28 +1,28 @@
 <?php
 /**
- * 微博模型 - 数据对象模型
+ * 提问模型 - 数据对象模型
  * @author jason <yangjs17@yeah.net>
  * @version TS3.0
  */
 class FeedModel extends Model {
 
 	protected $tableName = 'feed';
-	protected $fields = array('feed_id','uid','type','app','app_row_id','app_row_table','publish_time','is_del','from','comment_count','repost_count','comment_all_count','digg_count','is_repost','is_audit','feed_questionid','feed_quid','answer_count','disapprove_count','feed_pv','thank_count','add_feedid','following_count','_pk'=>'feed_id');
+	protected $fields = array('feed_id','uid','type','app','app_row_id','app_row_table','publish_time','is_del','from','comment_count','repost_count','comment_all_count','digg_count','is_repost','is_audit','feed_questionid','feed_quid','answer_count','disapprove_count','feed_pv','thank_count','add_feedid','following_count','invite_count','isInviteAnswer','last_updtime','openid','_pk'=>'feed_id');
 
 	public $templateFile = '';			// 模板文件
 
 	/**
-	 * 添加微博
+	 * 添加提问
 	 * @param integer $uid 操作用户ID
-	 * @param string $app 微博应用类型，默认为public
-	 * @param string $type 微博类型，
-	 * @param array $data 微博相关数据
+	 * @param string $app 提问应用类型，默认为public
+	 * @param string $type 提问类型，
+	 * @param array $data 提问相关数据
 	 * @param integer $app_id 应用资源ID，默认为0
 	 * @param string $app_table 应用资源表名，默认为feed
 	 * @param array  $extUid 额外用户ID，默认为null
 	 * @param array $lessUids 去除的用户ID，默认为null
 	 * @param boolean $isAtMe 是否为进行发送，默认为true
-	 * @return mix 添加失败返回false，成功返回新的微博ID
+	 * @return mix 添加失败返回false，成功返回新的提问ID
 	 */
 	public function put($uid, $app = 'public', $type = '', $data = array(), $app_id = 0, $app_table = 'feed', $extUid = null, $lessUids = null, $isAtMe = true, $is_repost = 0) {
 		// 判断数据的正确性
@@ -33,7 +33,7 @@ class FeedModel extends Model {
 		if ( strpos( $type , 'postvideo' ) !== false ){
 			$type = 'postvideo';
 		}
-		//微博类型合法性验证 - 临时解决方案
+		//提问类型合法性验证 - 临时解决方案
 		if ( !in_array( $type , array('post','repost','postvideo','postfile','postimage','weiba_post','weiba_repost') )){
 			$type = 'post';
 		}
@@ -52,9 +52,14 @@ class FeedModel extends Model {
 		$data['app_row_id'] = $app_id;
 		$data['app_row_table'] = $app_table;
 		$data['publish_time'] = time();
+		$data['last_updtime'] = time();
 		$data['from'] = isset($data['from']) ? intval($data['from']) : getVisitorClient();
 		$data['is_del'] = $data['comment_count'] = $data['repost_count'] = $data['disapprove_count'] = 0;
 		$data['is_repost'] = $is_repost;
+		if($data['inviteid'] != 0)
+		{
+			$data['isInviteAnswer'] = 1;
+		}
 		if($data['isadd']=="0")
 		{
 			if($data['questionid']==null || $data['questionid'] == 0){
@@ -74,12 +79,13 @@ class FeedModel extends Model {
 		//判断是否先审后发
 		$weiboSet = model('Xdata')->get('admin_Config:feed');
         $weibo_premission = $weiboSet['weibo_premission'];
-		if(in_array('audit',$weibo_premission) || CheckPermission('core_normal','feed_audit')){
+		//if(in_array('audit',$weibo_premission) || CheckPermission('core_normal','feed_audit')){
+		if(in_array('audit',$weibo_premission)){
 			$data['is_audit'] = 0;
 		}else{
 			$data['is_audit'] = 1;
 		}
-		// 微博内容处理
+		// 提问内容处理
         if(Addons::requireHooks('weibo_publish_content')){
         	Addons::hook("weibo_publish_content",array(&$data));
         }else{
@@ -87,7 +93,7 @@ class FeedModel extends Model {
 			$data['body'] = str_replace(SITE_URL, '[SITE_URL]', preg_html($data['body']));
 			// 获取用户发送的内容，仅仅以//进行分割
 			$scream = explode('//', $data['body']);
-			// 截取内容信息为微博内容字数 - 重点
+			// 截取内容信息为提问内容字数 - 重点
 			//$feedConf = model('Xdata')->get('admin_Config:feed');
 			//$feedNums = $feedConf['weibo_nums'];
 			$feedNums = 43;
@@ -107,11 +113,11 @@ class FeedModel extends Model {
 			$data['content'] = trim($scream[0]);
         }
 
-        //分享到微博的应用资源，加入原资源链接
+        //分享到提问的应用资源，加入原资源链接
         $data['body'] .= $data['source_url'];
         $data['content'] .= $data['source_url'];
 		
-        // 微博类型插件钩子
+        // 提问类型插件钩子
 		// if($type){
 		// 	$addonsData = array();
 		// 	Addons::hook("weibo_type",array("typeId"=>$type,"typeData"=>$type_data,"result"=>&$addonsData));
@@ -126,7 +132,7 @@ class FeedModel extends Model {
         	}
         		
         }	
-		// 添加微博信息
+		// 添加提问信息
 		$feed_id =  $this->data($data)->add();
 		if(!$feed_id) return false;
 		
@@ -136,6 +142,7 @@ class FeedModel extends Model {
 		{
 			$feed_Qid=model('feed')->where('feed_id='.$feed_id)->getField('feed_questionid');
 			$updData['answer_count']=model('feed')->where('feed_questionid='.$feed_Qid.' and is_del=0')->count();
+			$updData['last_updtime'] = time();
 			model('feed')->where('feed_id='.$feed_Qid)->save($updData);
 			$this->	cleanCache(array($feed_Qid));
 			$this->	updateFeedCache($feed_Qid,'update');
@@ -161,15 +168,14 @@ class FeedModel extends Model {
 		
 		// 添加关联数据
 		$feed_data = D('FeedData')->data(array('feed_id'=>$feed_id,'feed_data'=>serialize($data),'client_ip'=>get_client_ip(),'feed_content'=>$data['body'],'feed_description'=>$data['description']))->add();
-
-		// 添加微博成功后
+		// 添加提问成功后
 		if($feed_id && $feed_data) {
-			//微博发布成功后的钩子
+			//提问发布成功后的钩子
 			//Addons::hook("weibo_publish_after",array('weibo_id'=>$feed_id,'post'=>$data));
 
 			// 发送通知消息 - 重点 - 需要简化把上节点的信息去掉.
 			if($data['is_repost'] == 1) {
-				// 转发微博
+				// 转发提问
 				$isAtMe && $content = $data['content'];									// 内容用户
 				$extUid[] = $data['sourceInfo']['transpond_data']['uid'];				// 资源作者用户
 				if($isAtMe && !empty($data['curid'])) {
@@ -178,7 +184,7 @@ class FeedModel extends Model {
 					$extUid[] = $appRowData['uid'];
 				}	
 			} else {
-				// 其他微博
+				// 其他提问
 				$content = $data['content'];
 				//更新最近@的人
 				model( 'Atme' )->updateRecentAt( $content );								// 内容用户
@@ -202,7 +208,7 @@ class FeedModel extends Model {
 			else
 			{
 				model('UserData')->setUid($uid)->updateKey('feed_count', 1);
-				// if($app =='public'){ //TODO 微博验证条件
+				// if($app =='public'){ //TODO 提问验证条件
 				model('UserData')->setUid($uid)->updateKey('weibo_count', 1);
 				// }
 			}
@@ -218,9 +224,9 @@ class FeedModel extends Model {
 	}
 
 	/**
-	 * 获取指定微博的信息
-	 * @param integer $feed_id 微博ID
-	 * @return mix 获取失败返回false，成功返回微博信息
+	 * 获取指定提问的信息
+	 * @param integer $feed_id 提问ID
+	 * @return mix 获取失败返回false，成功返回提问信息
 	 */
 	public function get($feed_id) {
 		$feed_list = $this->getFeeds(array($feed_id));
@@ -233,10 +239,10 @@ class FeedModel extends Model {
 	}
 
 	/**
-	 * 获取指定微博的信息，用于资源模型输出???
-	 * @param integer $id 微博ID
+	 * 获取指定提问的信息，用于资源模型输出???
+	 * @param integer $id 提问ID
 	 * @param boolean $forApi 是否提供API数据，默认为false
-	 * @return array 指定微博数据
+	 * @return array 指定提问数据
 	 */
 	public function getFeedInfo($id, $forApi = false) {
 		$data = model( 'Cache' )->get( 'feed_info_'.$id );
@@ -246,7 +252,7 @@ class FeedModel extends Model {
 
 		$map['a.feed_id'] = $id;
 		
-		// //过滤已删除的微博 wap 版收藏
+		// //过滤已删除的提问 wap 版收藏
 		// if($forApi){
 		// 	$map['a.is_del'] = 0;
 		// }
@@ -267,7 +273,7 @@ class FeedModel extends Model {
 		$data['avatar_small']  = $userInfo['avatar_small'];
 		unset($data['feed_data']);
 		
-		// 微博转发
+		// 提问转发
 		if($data['type'] == 'repost'){
 			$data['transpond_id'] = $data['app_row_id'];
 			$data['transpond_data'] = $this->getFeedInfo($data['transpond_id'], $forApi);
@@ -305,7 +311,7 @@ class FeedModel extends Model {
 
 		$data['feedType'] = $data['type'];
 		
-		// 是否收藏微博
+		// 是否收藏提问
 		if($forApi) {
 			$data['iscoll'] = model('Collection')->getCollection($data['feed_id'],'feed');
 			if(empty($data['iscoll'])) {
@@ -315,7 +321,7 @@ class FeedModel extends Model {
 			}
 		}
 
-		// 微博详细信息
+		// 提问详细信息
 		$feedInfo = $this->get($id);
 		$data['source_body'] = $feedInfo['body'];
 		$data['api_source'] = $feedInfo['api_source'];
@@ -330,12 +336,12 @@ class FeedModel extends Model {
 	}
 
 	/**
-	 * 获取微博列表
+	 * 获取提问列表
 	 * @param array $map 查询条件
 	 * @param integer $limit 结果集数目，默认为10
-	 * @return array 微博列表数据
+	 * @return array 提问列表数据
 	 */
-	public function getList($map, $limit = 10 , $order = 'feed_id DESC') {
+	public function getList($map, $limit = 10 , $order = 'publish_time desc') {
 		$feedlist = $this->field('feed_id')->where($map)->order($order)->findPage($limit); 
 		$feed_ids = getSubByKey($feedlist['data'], 'feed_id');
 		$feedlist['data'] = $this->getFeeds($feed_ids);
@@ -344,7 +350,89 @@ class FeedModel extends Model {
 		foreach( $feedlist["data"] as $v => $vv )
 		{
 			$AnswerWhere='feed_questionid='.$vv['feed_id'].' and uid!='.$vv['uid'].' and (uid='.$GLOBALS['ts']['mid'].' or uid in (SELECT `fid` FROM `wb_user_follow` WHERE `uid` = '.$GLOBALS['ts']['mid'].'))';
-			$AnswerFeed = $this->field('feed_id')->where($AnswerWhere)->order("feed_id DESC")->findPage(1);				
+			$AnswerFeed = $this->field('feed_id')->where($AnswerWhere)->order("publish_time desc")->findPage(1);				
+			$AnswerFeed_id = getSubByKey($AnswerFeed['data'], 'feed_id');
+			$AnswerFeedData = $this->getFeeds($AnswerFeed_id);
+			
+			$vv["answer"] = $AnswerFeedData;
+			$feedlist["data"][$v]=$vv;
+			
+			/*print_r($vv);
+			print('<br /><br /><br /><br />');*/
+		}
+		
+		return $feedlist;
+	}
+	
+	
+	/**
+	 * 获取答案和答案的补充列表
+	 * @param array $map 查询条件
+	 * @param integer $limit 结果集数目，默认为10
+	 * @return array 提问列表数据
+	 */
+	public function getAnswerAndSupplementList($map, $limit = 10 , $order = 'publish_time desc') {
+		$feedlist = $this->getList($map, $limit, $order);
+		//print_r($feedlist);
+		//增加要求补充的列表
+		if(!empty($feedlist['data'])) {
+			foreach	($feedlist['data'] as $k=>$v)
+			{
+				$supplementwhere = 'add_feedid = '.$v['feed_id'];
+				$supplementlist = $this->getQuestionList( $supplementwhere, 100 );
+				$v['supplementList'] = $supplementlist['data'];
+				$feedlist['data'][$k] = $v;
+			}
+		}
+		
+		return $feedlist;
+	}
+	
+	/**
+	 * 获取问题和答案列表
+	 * @param array $map 查询条件
+	 * @param integer $limit 结果集数目，默认为10
+	 * @return array 提问列表数据
+	 */
+	public function getQuestionAndAnswerBySearchID($feed_ids) {
+		$feedlist = array();
+		$feedlist['data'] = $this->getFeeds($feed_ids);
+		
+		//增加答案块
+		foreach( $feedlist["data"] as $v => $vv )
+		{
+			$AnswerWhere='feed_questionid='.$vv['feed_id'];
+			$AnswerFeed = $this->field('feed_id')->where($AnswerWhere)->order("publish_time desc")->findPage(1);				
+			$AnswerFeed_id = getSubByKey($AnswerFeed['data'], 'feed_id');
+			$AnswerFeedData = $this->getFeeds($AnswerFeed_id);
+			
+			$vv["answer"] = $AnswerFeedData;
+			$feedlist["data"][$v]=$vv;
+			
+			/*print_r($vv);
+			print('<br /><br /><br /><br />');*/
+		}
+		
+		return $feedlist;
+	}
+	
+	
+	/**
+	 * 获取问题和答案列表
+	 * @param array $map 查询条件
+	 * @param integer $limit 结果集数目，默认为10
+	 * @return array 提问列表数据
+	 */
+	public function getQuestionAndAnswer($map, $limit = 10 , $order = 'last_updtime desc') {
+		$feedlist = $this->field('feed_id')->where($map)->order($order)->findPage($limit); 
+		$feed_ids = getSubByKey($feedlist['data'], 'feed_id');
+		$feedlist['data'] = $this->getFeeds($feed_ids);
+		
+		//增加答案块
+		foreach( $feedlist["data"] as $v => $vv )
+		{
+			$AnswerWhere='feed_questionid='.$vv['feed_id'];
+			$AnswerFeed = $this->field('feed_id')->where($AnswerWhere)->order("publish_time desc")->findPage(1);				
 			$AnswerFeed_id = getSubByKey($AnswerFeed['data'], 'feed_id');
 			$AnswerFeedData = $this->getFeeds($AnswerFeed_id);
 			
@@ -359,12 +447,12 @@ class FeedModel extends Model {
 	}
 	
 	/**
-	 * 获取问题和答案列表
+	 * 获取问题和卢老师的回答列表
 	 * @param array $map 查询条件
 	 * @param integer $limit 结果集数目，默认为10
-	 * @return array 微博列表数据
+	 * @return array 提问列表数据
 	 */
-	public function getQuestionAndAnswer($map, $limit = 10 , $order = 'feed_id DESC') {
+	public function getQuestionAndLLSAnswer($map, $limit = 10, $openid , $order = 'last_updtime desc') {
 		$feedlist = $this->field('feed_id')->where($map)->order($order)->findPage($limit); 
 		$feed_ids = getSubByKey($feedlist['data'], 'feed_id');
 		$feedlist['data'] = $this->getFeeds($feed_ids);
@@ -372,8 +460,8 @@ class FeedModel extends Model {
 		//增加答案块
 		foreach( $feedlist["data"] as $v => $vv )
 		{
-			$AnswerWhere='feed_questionid='.$vv['feed_id'];
-			$AnswerFeed = $this->field('feed_id')->where($AnswerWhere)->order("feed_id DESC")->findPage(1);				
+			$AnswerWhere='feed_questionid='.$vv['feed_id'].' and openid='.$openid;
+			$AnswerFeed = $this->field('feed_id')->where($AnswerWhere)->order("publish_time desc")->findPage(1);				
 			$AnswerFeed_id = getSubByKey($AnswerFeed['data'], 'feed_id');
 			$AnswerFeedData = $this->getFeeds($AnswerFeed_id);
 			
@@ -391,7 +479,7 @@ class FeedModel extends Model {
 	* 获取问题列表
 	* $where 查询条件
 	* $limit 结果集数目，默认为10
-	* @return array 微博列表数据
+	* @return array 提问列表数据
 	**/
 	public function getQuestionList($where, $limit=10, $order=' `feed_id` DESC ')
 	{
@@ -406,12 +494,15 @@ class FeedModel extends Model {
 		* 获取回答列表
 		* $where 查询条件
 		* $limit 结果集数目，默认为10
-		* @return array 微博列表数据
+		* @return array 提问列表数据
 	**/
-	public function getAnswerList($where, $limit=10, $order='feed_id DESC', $newCount=0)
+	public function getAnswerList($where, $limit=10, $order='publish_time desc', $newCount=0)
 	{
 		$feedlist = $this->field('feed_id')->where($where)->order($order)->findPage($limit); 
+		//print($this->getLastSql());
 		$feed_ids = getSubByKey($feedlist['data'], 'feed_id');
+		
+		//print_r($feed_ids);
 		$feedlist['data'] = $this->getFeeds($feed_ids, false);
 		
 		//根据答案取问题,调换数组位置
@@ -424,7 +515,7 @@ class FeedModel extends Model {
 			{
 				$AnswerFeedData[0]['answer'][0]=$vv;;
 				if($index<$newCount){
-					$AnswerFeedData[0]['newCount']='1';
+					$AnswerFeedData[0]['newcount']='1';
 					$index++;
 				}
 				$feedlist["data"][$v]=$AnswerFeedData[0];
@@ -434,14 +525,40 @@ class FeedModel extends Model {
 		return $feedlist;
 	}
 	
+	/**
+		* 根据回答ID获取问题和回答块
+		* $where 查询条件
+		* $limit 结果集数目，默认为10
+		* @return array 提问列表数据
+	**/
+	public function getAnswerModel($answer_ID)
+	{
+		$feedlist = $this->field('feed_id')->where('feed_id='.$answer_ID)->select(); 
+		$feed_ids = getSubByKey($feedlist, 'feed_id');
+		$feedlist = $this->getFeeds($feed_ids, false);
+		
+		
+		//根据答案取问题,调换数组位置
+		$index=0;
+		
+		$questionID=Array($feedlist[0]['feed_questionid']);
+		$AnswerFeedData = $this->getFeeds($questionID);
+		if(is_array($AnswerFeedData))
+		{
+			$AnswerFeedData[0]['answer'][0]=$feedlist[0];;
+			$feedlist[0]=$AnswerFeedData[0];
+		}		
+		return $feedlist[0];
+	}
+	
 
 	/**
-	 * 获取指定用户所关注人的所有微博，默认为当前登录用户
+	 * 获取指定用户所关注人的所有提问，默认为当前登录用户
 	 * @param string $where 查询条件
 	 * @param integer $limit 结果集数目，默认为10
 	 * @param integer $uid 指定用户ID，默认为空
 	 * @param integer $fgid 关组组ID，默认为空
-	 * @return array 指定用户所关注人的所有微博，默认为当前登录用户
+	 * @return array 指定用户所关注人的所有提问，默认为当前登录用户
 	 */
 	public function getFollowingFeed($where = '', $limit = 10, $uid = '', $fgid = '', $LoadWhere = '') {
 		$buid = empty($uid) ? $_SESSION['mid'] : $uid;
@@ -468,7 +585,7 @@ class FeedModel extends Model {
 		$table .= ") tt group by feed_id) tab";
 		//print($table);
 		//$feedlist = $this->table($table)->where($_where)->field('a.feed_id')->order('a.publish_time DESC')->findPage($limit);
-		$feedlist = $this->table($table)->where($_LoadWhere)->order('tab.feed_id DESC')->findPage($limit);
+		$feedlist = $this->table($table)->where($_LoadWhere)->order('tab.publish_time desc')->findPage($limit);
 		//print($this->getLastSql());
 		//print_r($feedlist);
 		$feed_ids = getSubByKey($feedlist['data'], 'feed_id');
@@ -485,28 +602,18 @@ class FeedModel extends Model {
 		//查询到的数据
 		$feedlist['data'] = $this->getFeeds($feed_ids);
 		
+		
 		//存放结果
 		$result = $feedlist;
+		
 		$result['data'] = Array();
 		//增加答案块/评论块
 		foreach( $feedlist["data"] as $v => $vv )
-		{			
-			//答案
-			/*$AnswerWhere='';
-			$AnswerFeed=Array();
-			$AnswerFeed_id=Array();
-			$AnswerFeedData=Array();
-			$AnswerWhere='feed_questionid='.$vv['feed_id'].' and (uid='.$GLOBALS['ts']['mid'].' or uid in (SELECT `fid` FROM `'.$this->tablePrefix.'user_follow` WHERE `uid` = '.$GLOBALS['ts']['mid'].'))';
-			$AnswerFeed = $this->field('feed_id')->where($AnswerWhere)->order("feed_id DESC")->findPage(1);				
-			$AnswerFeed_id = getSubByKey($AnswerFeed['data'], 'feed_id');
-			$AnswerFeedData = $this->getFeeds($AnswerFeed_id);
-						
-			$vv["answer"] = $AnswerFeedData;
-			$feedlist["data"][$v]=$vv;*/
-			
+		{
 			//$AnswerTable = '(SELECT max(feed_id) answer_id FROM `wb_feed` WHERE `feed_questionid` = '.$vv['feed_id'].' and (uid='.$GLOBALS['ts']['mid'].' or uid in (SELECT `fid` FROM `'.$this->tablePrefix.'user_follow` WHERE `uid` = '.$GLOBALS['ts']['mid'].')) group by uid) tt';
-			$AnswerTable = '(SELECT feed_id FROM `wb_feed` WHERE `feed_questionid` = '.$vv['feed_id'].' order by feed_id desc limit 1) tt';
-			$AnswerList = $this->table($AnswerTable)->order('feed_id DESC')->select();
+			$AnswerTable = '(SELECT feed_id FROM `wb_feed` WHERE `feed_questionid` = '.$vv['feed_id'].' order by publish_time desc limit 1) tt';
+			$AnswerList = $this->table($AnswerTable)->order('feed_id desc')->select();
+			
 			if(is_array($AnswerList)&&count($AnswerList)>0)
 			{
 				foreach( $AnswerList as $a => $aa )
@@ -515,82 +622,14 @@ class FeedModel extends Model {
 					$AnswerFeed_id = Array($aa['feed_id']);
 					$AnswerFeedData = $this->getFeeds($AnswerFeed_id);
 					$vv["answer"] = $AnswerFeedData;
-					
-					/*//对答案的评论
-					$CommentTable = '(SELECT max(comment_id) comment_id FROM `wb_comment` WHERE `row_id` = '.$aa['answer_id'].' and `is_del`= 0 and (uid='.$GLOBALS['ts']['mid'].' or uid in (SELECT `fid` FROM `'.$this->tablePrefix.'user_follow` WHERE `uid` = '.$GLOBALS['ts']['mid'].'))  group by uid) atab';
-					$CommentList = $this->table($CommentTable)->order('comment_id DESC')->select();
-					
-					//对问题的评论
-					$QCommentTable = '(SELECT comment_id FROM `wb_comment` WHERE `row_id` = '.$vv['feed_id'].' and `is_del`= 0 and (uid='.$GLOBALS['ts']['mid'].' or uid in (SELECT `fid` FROM `'.$this->tablePrefix.'user_follow` WHERE `uid` = '.$GLOBALS['ts']['mid'].'))  ) atab';
-					$QCommentList = $this->table($QCommentTable)->order('comment_id DESC')->select();
-					
-					if(is_array($CommentList) && count($CommentList) > 0)
-					{
-						foreach($CommentList as $c => $cc )
-						{
-							$CommentFeedData = model('Comment')->getCommentInfo($cc['comment_id']);
-							$vv["comment"] = $CommentFeedData;
-							$result["data"][count($result["data"])]=$vv;
-						}
-					}
-					else if(is_array($QCommentList) && count($QCommentList) > 0)
-					{
-						foreach( $QCommentList as $c => $cc )
-						{
-							$CommentFeedData = model('Comment')->getCommentInfo($cc['comment_id']);
-							$vv["comment"] = $CommentFeedData;
-							$result["data"][count($result["data"])]=$vv;
-						}
-					}
-					else
-					{
-						$result["data"][count($result["data"])]=$vv;
-					}*/
-					
+
 					$result["data"][count($result["data"])]=$vv;
 				}
 			}
 			else
 			{
-				/*//对问题的评论
-				$CommentTable = '(SELECT comment_id FROM `wb_comment` WHERE `row_id` = '.$vv['feed_id'].' and `is_del`= 0 and (uid='.$GLOBALS['ts']['mid'].' or uid in (SELECT `fid` FROM `'.$this->tablePrefix.'user_follow` WHERE `uid` = '.$GLOBALS['ts']['mid'].')) ) atab';
-				$CommentList = $this->table($CommentTable)->order('comment_id DESC')->select();
-				if(is_array($CommentList) && count($CommentList) > 0)
-				{
-					foreach( $CommentList as $c => $cc )
-					{
-						$CommentFeedData = model('Comment')->getCommentInfo($cc['comment_id']);
-						$vv["comment"] = $CommentFeedData;
-						$result["data"][count($result["data"])]=$vv;
-					}
-				}
-				else
-				{
-					$result["data"][count($result["data"])]=$vv;
-				}*/
 				$result["data"][count($result["data"])]=$vv;
 			}
-			
-			/*print_r($result["data"]);
-			print_r($vv);
-			print('<br /><br /><br /><br />');*/
-			
-			
-			//评论
-			/*$CommentWhere='';
-			$CommentFeed=Array();
-						
-			$CommentWhere='row_id='.$vv['feed_id'].' and (uid='.$GLOBALS['ts']['mid'].' or uid in (SELECT `fid` FROM `'.$this->tablePrefix.'user_follow` WHERE `uid` = '.$GLOBALS['ts']['mid'].'))';
-			$CommentFeed = model('Comment')->field('comment_id')->where($CommentWhere)->order("comment_id DESC")->findPage(1);	
-			if(is_array($CommentFeed['data']) && count($CommentFeed['data']) > 0)
-			{
-				$CommentFeedData = model('Comment')->getCommentInfo($CommentFeed['data'][0]['comment_id']);
-				//print_r($CommonFeedData);
-				$vv["comment"] = $CommentFeedData;
-				$feedlist["data"][$v]=$vv;
-				//print_r($vv);
-			}*/
-			
 		}
 		
 		return $result;
@@ -719,11 +758,11 @@ class FeedModel extends Model {
 	
 
 	/**
-	 * 获取指定用户收藏的微博列表，默认为当前登录用户
+	 * 获取指定用户收藏的提问列表，默认为当前登录用户
 	 * @param array $map 查询条件
 	 * @param integer $limit 结果集数目，默认为10
 	 * @param integer $uid 指定用户ID，默认为空
-	 * @return array 指定用户收藏的微博列表，默认为当前登录用户
+	 * @return array 指定用户收藏的提问列表，默认为当前登录用户
 	 */
 	public function getCollectionFeed($map, $limit = 10, $uid = '') {
 		$map['uid'] = empty($uid) ? $_SESSION['mid'] : $uid;
@@ -737,13 +776,13 @@ class FeedModel extends Model {
 	}
 
 	/**
-	 * 获取指定用户所关注人的微博列表
+	 * 获取指定用户所关注人的提问列表
 	 * @param array $map 查询条件
 	 * @param integer $uid 用户ID
 	 * @param string $app 应用名称
 	 * @param integer $type 应用类型
 	 * @param integer $limit 结果集数目，默认为10
-	 * @return array 指定用户所关注人的微博列表
+	 * @return array 指定用户所关注人的提问列表
 	 */
 	public function getFollowingList($map,$uid, $app, $type, $limit = 10) {
 		// 读取列表
@@ -767,13 +806,13 @@ class FeedModel extends Model {
 	}
 
 	/**
-	 * 查看指定用户的微博列表
+	 * 查看指定用户的提问列表
 	 * @param array $map 查询条件
 	 * @param integer $uid 用户ID
 	 * @param string $app 应用类型
-	 * @param string $type 微博类型
+	 * @param string $type 提问类型
 	 * @param integer $limit 结果集数目，默认为10
-	 * @return array 指定用户的微博列表数据
+	 * @return array 指定用户的提问列表数据
 	 */
 	public function getUserList($map, $uid, $app, $type, $limit = 10) {
 		if(!$uid) {
@@ -793,9 +832,9 @@ class FeedModel extends Model {
 	}
 
 	/**
-	 * 获取指定用户的最后一条微博数据
+	 * 获取指定用户的最后一条提问数据
 	 * @param array $uids 用户ID
-	 * @return array 指定用户的最后一条微博数据
+	 * @return array 指定用户的最后一条提问数据
 	 */
 	public function  getLastFeed($uids) {
 		if(empty($uids)) {
@@ -821,9 +860,9 @@ class FeedModel extends Model {
 	}
 
 	/**
-	 * 获取给定微博ID的微博信息
-	 * @param array $feed_ids 微博ID数组
-	 * @return array 给定微博ID的微博信息
+	 * 获取给定提问ID的提问信息
+	 * @param array $feed_ids 提问ID数组
+	 * @return array 给定提问ID的提问信息
 	 */
 	public function getFeeds($feed_ids, $isfilter=true) {
 		$feedlist = array();
@@ -849,8 +888,8 @@ class FeedModel extends Model {
 	}
 
 	/**
-	 * 清除指定用户指定微博的列表缓存
-	 * @param array $feed_ids 微博ID数组，默认为空
+	 * 清除指定用户指定提问的列表缓存
+	 * @param array $feed_ids 提问ID数组，默认为空
 	 * @param integer $uid 用户ID，默认为空
 	 * @return void
 	 */
@@ -874,8 +913,8 @@ class FeedModel extends Model {
 	}
 
 	/**
-	 * 更新指定微博的缓存
-	 * @param array $feed_ids 微博ID数组，默认为空
+	 * 更新指定提问的缓存
+	 * @param array $feed_ids 提问ID数组，默认为空
 	 * @param string $type 操作类型，默认为update
 	 * @return bool true
 	 */
@@ -892,9 +931,9 @@ class FeedModel extends Model {
 	}
 
 	/**
-	 * 生成指定微博的缓存
-	 * @param array $value 微博相关数据
-	 * @param array $feed_id 微博ID数组
+	 * 生成指定提问的缓存
+	 * @param array $value 提问相关数据
+	 * @param array $feed_id 提问ID数组
 	 */
 	private function setFeedCache($value = array(), $feed_id = array()) {
 		if(!empty($feed_id)) {
@@ -941,9 +980,9 @@ class FeedModel extends Model {
 	}
 
 	/**
-	 * 解析微博模板标签
-	 * @param array $_data 微博的原始数据
-	 * @return array 解析微博模板后的微博数据
+	 * 解析提问模板标签
+	 * @param array $_data 提问的原始数据
+	 * @return array 解析提问模板后的提问数据
 	 */
 	private function __paseTemplate($_data) {
 		// 获取作者信息
@@ -977,9 +1016,9 @@ class FeedModel extends Model {
 		$var["actor_uid"] = $user['uid'];
 		$var["actor_uname"]	= $user['uname'];
 		$var['feedid'] = $_data['feed_id'];   
-		//微吧类型微博用到
+		//微吧类型提问用到
 		// $var["actor_groupData"] = model('UserGroupLink')->getUserGroupData($user['uid']);
-		//需要获取资源信息的微博：所有类型的微博，只要有资源信息就获取资源信息并赋值模版变量，交给模版解析处理
+		//需要获取资源信息的提问：所有类型的提问，只要有资源信息就获取资源信息并赋值模版变量，交给模版解析处理
 		if(!empty($_data['app_row_id'])) {
 			empty($_data['app_row_table']) && $_data['app_row_table'] = 'feed';
 			$var['sourceInfo'] = model('Source')->getSourceInfo($_data['app_row_table'], $_data['app_row_id'], false, $_data['app']);
@@ -1001,7 +1040,7 @@ class FeedModel extends Model {
 		$return["userInfo"]  = $user;
 		$return["actor_groupData"] = $var["actor_groupData"];
 		$return['title'] = trim((string) $result[0]->title);
-	    $return['body'] =  trim((string) $result[0]->body);
+		$return['body'] = str_replace('<p> </p>', '', trim((string) $result[0]->body));
 		$return['description'] =  trim((string) $result[0]->description);
 		// $return['sbody'] = trim((string) $result[0]->sbody);
 	    $return['info'] =  trim((string) $result[0]['info']);
@@ -1035,9 +1074,9 @@ class FeedModel extends Model {
 	}
 
 	/**
-	 * 获取所有微博节点列表 - 预留后台查看、编辑微博模板文件
-	 * @param boolean $ignore 从微博设置里面获取，默认为false
-	 * @return array 所有微博节点列表
+	 * 获取所有提问节点列表 - 预留后台查看、编辑提问模板文件
+	 * @param boolean $ignore 从提问设置里面获取，默认为false
+	 * @return array 所有提问节点列表
 	 */
 	public function getNodeList($ignore = false) {
 		if(false===($feedNodeList=S('FeedNodeList'))){
@@ -1083,9 +1122,9 @@ class FeedModel extends Model {
 	}
 
 	/**
-	 * 获取微博模板的XML文件路径
-	 * @param boolean $set 是否重新生成微博模板XML文件
-	 * @return string 微博模板的XML文件路径
+	 * 获取提问模板的XML文件路径
+	 * @param boolean $set 是否重新生成提问模板XML文件
+	 * @return string 提问模板的XML文件路径
 	 */
 	public function _getFeedXml($set = false) {
 		if($set || !file_exists(SITE_PATH.'/config/feeds.xml')) {
@@ -1110,31 +1149,31 @@ class FeedModel extends Model {
 	}
 
 	/**
-	 * 微博操作，彻底删除、假删除、回复
-	 * @param integer $feed_id 微博ID
-	 * @param string $type 微博操作类型，deleteFeed：彻底删除，delFeed：假删除，feedRecover：恢复
+	 * 提问操作，彻底删除、假删除、回复
+	 * @param integer $feed_id 提问ID
+	 * @param string $type 提问操作类型，deleteFeed：彻底删除，delFeed：假删除，feedRecover：恢复
 	 * @param string $title 日志内容，目前没没有该功能
-	 * @param string $uid 删除微博的用户ID（区别超级管理员）
-	 * @return array 微博操作后的结果信息数组
+	 * @param string $uid 删除提问的用户ID（区别超级管理员）
+	 * @return array 提问操作后的结果信息数组
 	 */
 	public function doEditFeed($feed_id, $type, $title ,$uid = null) {
 		$return = array('status'=>'0');
 		if(empty($feed_id)) {
-			//$return['data'] = '微博ID不能为空！';
+			//$return['data'] = '提问ID不能为空！';
 		} else {
 			$map['feed_id'] = is_array($feed_id) ? array('IN', $feed_id) : intval($feed_id);
 			$save['is_del'] = $type =='delFeed' ? 1 : 0;
 
 			if($type == 'deleteFeed') {
 				$feedArr = is_array($feed_id) ? $feed_id : explode(',', $feed_id);
-				// 取消微博收藏
+				// 取消提问收藏
 				foreach ($feedArr as $sid) {
 					$feed = $this->where('feed_id='.$sid)->find();
 					model('Collection')->delCollection($sid, 'feed', $feed['uid']);
 				}
-				// 彻底删除微博
+				// 彻底删除提问
 				$res = $this->where($map)->delete();
-				// 删除微博相关信息
+				// 删除提问相关信息
 				if($res) {
 					$this->_deleteFeedAttach($feed_id, 'deleteAttach');
 				}
@@ -1143,25 +1182,33 @@ class FeedModel extends Model {
 				$feedList = $this->getFeeds($ids);
 				$res = $this->where($map)->save($save);
 				if($type == 'feedRecover'){
-					// 添加微博数
+					// 添加提问数或回答数
 					foreach($feedList as $v) {
-						model('UserData')->setUid($v['user_info']['uid'])->updateKey('feed_count', 1);
-						model('UserData')->setUid($v['user_info']['uid'])->updateKey('weibo_count', 1);
+						if($v['feed_questionid'] == 0) {
+							model('UserData')->setUid($v['user_info']['uid'])->updateKey('feed_count', 1);
+							model('UserData')->setUid($v['user_info']['uid'])->updateKey('weibo_count', 1);
+						}
+						else
+							model('UserData')->setUid($v['user_info']['uid'])->updateKey('answer_count', 1);
 					}
 					$this->_deleteFeedAttach($ids, 'recoverAttach');
 				} else {
-					// 减少微博数
+					// 减少提问数或回答数
 					foreach($feedList as $v) {
-						model('UserData')->setUid($v['user_info']['uid'])->updateKey('feed_count', -1);
-						model('UserData')->setUid($v['user_info']['uid'])->updateKey('weibo_count', -1);
+						if($v['feed_questionid'] == 0) {
+							model('UserData')->setUid($v['user_info']['uid'])->updateKey('feed_count', -1);
+							model('UserData')->setUid($v['user_info']['uid'])->updateKey('weibo_count', -1);
+						}
+						else
+							model('UserData')->setUid($v['user_info']['uid'])->updateKey('answer_count', -1);
 					}
 					$this->_deleteFeedAttach($ids, 'delAttach');
-					// 删除频道相应微博
+					// 删除频道相应提问
 					$channelMap['feed_id'] = array('IN', $ids);
 					D('channel')->where($channelMap)->delete();
 				}
-				$this->cleanCache($ids); 		// 删除微博缓存信息
-				// 资源微博缓存相关微博
+				$this->cleanCache($ids); 		// 删除提问缓存信息
+				// 资源提问缓存相关提问
 				$sids = $this->where('app_row_id='.$feed_id)->getAsFieldArray('feed_id');
 				$this->cleanCache($sids);
 			}
@@ -1198,14 +1245,14 @@ class FeedModel extends Model {
 	}
 
 	/**
-	 * 删除微博相关附件数据
-	 * @param array $feedIds 微博ID数组
+	 * 删除提问相关附件数据
+	 * @param array $feedIds 提问ID数组
 	 * @param string $type 删除附件类型
 	 * @return void
 	 */
 	private function _deleteFeedAttach($feedIds, $type)
 	{
-		// 查询微博内是否存在附件
+		// 查询提问内是否存在附件
 		$feeddata = $this->getFeeds($feedIds);
 		$feedDataInfo = getSubByKey($feeddata, 'feed_data');
 		$attachIds = array();
@@ -1219,14 +1266,14 @@ class FeedModel extends Model {
 	}
 
 	/**
-	 * 审核通过微博
-	 * @param integer $feed_id 微博ID
-	 * @return array 微博操作后的结果信息数组
+	 * 审核通过提问
+	 * @param integer $feed_id 提问ID
+	 * @return array 提问操作后的结果信息数组
 	 */
 	public function doAuditFeed($feed_id){
 		$return = array('status'=>'0');
 		if(empty($feed_id)) {
-			$return['data'] = '请选择微博！';
+			$return['data'] = '请选择提问！';
 		} else {
 			$map['feed_id'] = is_array($feed_id) ? array('IN', $feed_id) : intval($feed_id);
 			$save['is_audit'] = 1;
@@ -1243,13 +1290,13 @@ class FeedModel extends Model {
 	
 	/*** 搜索引擎使用 ***/
 	/**
-	 * 搜索微博
+	 * 搜索提问
 	 * @param string $key 关键字
 	 * @param string $type 搜索类型，following、all、space
-	 * @param integer $loadId 载入微博ID，从此微博ID开始搜索
+	 * @param integer $loadId 载入提问ID，从此提问ID开始搜索
 	 * @param integer $limit 结果集数目
 	 * @param boolean $forApi 是否返回API数据，默认为false
-	 * @return array 搜索后的微博数据
+	 * @return array 搜索后的提问数据
 	 */
 	public function searchFeed($key, $type, $loadId, $limit, $forApi = false,$feed_type) {
 		switch($type){
@@ -1318,16 +1365,17 @@ class FeedModel extends Model {
 	}
 
 	/**
-	 * 数据库搜索微博
+	 * 数据库搜索提问
 	 * @param string $key 关键字
-	 * @param string $type 微博类型，post、repost、postimage、postfile
+	 * @param string $type 提问类型，post、repost、postimage、postfile
 	 * @param integer $limit 结果集数目
 	 * @param boolean $forApi 是否返回API数据，默认为false
-	 * @return array 搜索后的微博数据
+	 * @return array 搜索后的提问数据
 	 */
 	public function searchFeeds($key, $feed_type, $limit, $Stime, $Etime) {	
 		$map['a.is_del'] = 0;
 		$map['a.is_audit'] = 1;
+		$map['a.feed_questionid'] = 0;
 		$map['b.feed_content'] = array('LIKE', '%'.t($key).'%');
 		if($feed_type){
 			$map['a.type'] = $feed_type;
@@ -1360,13 +1408,13 @@ class FeedModel extends Model {
 
 	/*** API使用 ***/
 	/**
-	 * 获取全站最新的微博
-	 * @param string $type 微博类型,原创post,转发repost,图片postimage,附件postfile,视频postvideo
-	 * @param integer $since_id 微博ID，从此微博ID开始，默认为0
-	 * @param integer $max_id 最大微博ID，默认为0
+	 * 获取全站最新的提问
+	 * @param string $type 提问类型,原创post,转发repost,图片postimage,附件postfile,视频postvideo
+	 * @param integer $since_id 提问ID，从此提问ID开始，默认为0
+	 * @param integer $max_id 最大提问ID，默认为0
 	 * @param integer $limit 结果集数目，默认为20
 	 * @param integer $page 分页数，默认为1
-	 * @return array 全站最新的微博
+	 * @return array 全站最新的提问
 	 */
 	public function public_timeline($type, $since_id = 0, $max_id = 0 ,$limit = 20 ,$page = 1) {
 		$since_id = intval($since_id);
@@ -1384,19 +1432,19 @@ class FeedModel extends Model {
 		}
 		$start = ($page - 1) * $limit;
 		$end = $limit;
-		$feed_ids = $this->where($where)->field('feed_id')->limit("{$start},{$end}")->order('feed_id DESC')->getAsFieldArray('feed_id');
+		$feed_ids = $this->where($where)->field('feed_id')->limit("{$start},{$end}")->order('publish_time desc')->getAsFieldArray('feed_id');
 		return $this->formatFeed($feed_ids,true);
 	}
 
 	/**
-	 * 获取登录用户所关注人的最新微博
-	 * @param string $type 微博类型,原创post,转发repost,图片postimage,附件postfile,视频postvideo
+	 * 获取登录用户所关注人的最新提问
+	 * @param string $type 提问类型,原创post,转发repost,图片postimage,附件postfile,视频postvideo
 	 * @param integer $mid 用户ID
-	 * @param integer $since_id 微博ID，从此微博ID开始，默认为0
-	 * @param integer $max_id 最大微博ID，默认为0
+	 * @param integer $since_id 提问ID，从此提问ID开始，默认为0
+	 * @param integer $max_id 最大提问ID，默认为0
 	 * @param integer $limit 结果集数目，默认为20
 	 * @param integer $page 分页数，默认为1
-	 * @return array 登录用户所关注人的最新微博
+	 * @return array 登录用户所关注人的最新提问
 	 */
 	public function friends_timeline($type, $mid, $since_id = 0, $max_id = 0, $limit = 20, $page = 1) {
 		$since_id = intval($since_id);
@@ -1417,21 +1465,21 @@ class FeedModel extends Model {
 		$table = "{$this->tablePrefix}feed AS a LEFT JOIN {$this->tablePrefix}user_follow AS b ON a.uid=b.fid AND b.uid = {$mid}";
 		// 加上自己的信息，若不需要此数据，请屏蔽下面语句
 		$where = "(a.uid = '{$mid}' OR b.uid = '{$mid}') AND ($where)";
-		$feed_ids = $this->where($where)->table($table)->field('a.feed_id')->limit("{$start},{$end}")->order('a.feed_id DESC')->getAsFieldArray('feed_id');
+		$feed_ids = $this->where($where)->table($table)->field('a.feed_id')->limit("{$start},{$end}")->order('a.publish_time desc')->getAsFieldArray('feed_id');
 		
 		return $this->formatFeed($feed_ids, true);
 	}
 
 	/**
-	 * 获取指定用户发布的微博列表
-	 * @param string $type 微博类型,原创post,转发repost,图片postimage,附件postfile,视频postvideo
+	 * 获取指定用户发布的提问列表
+	 * @param string $type 提问类型,原创post,转发repost,图片postimage,附件postfile,视频postvideo
 	 * @param integer $user_id 指定用户ID
 	 * @param string $user_name 指定用户名称
-	 * @param integer $since_id 微博ID，从此微博ID开始，默认为0
-	 * @param integer $max_id 最大微博ID，默认为0
+	 * @param integer $since_id 提问ID，从此提问ID开始，默认为0
+	 * @param integer $max_id 最大提问ID，默认为0
 	 * @param integer $limit 结果集数目，默认为20
 	 * @param integer $page 分页数，默认为1
-	 * @return array 指定用户发布的微博列表
+	 * @return array 指定用户发布的提问列表
 	 */
 	public function user_timeline($type, $user_id , $user_name , $since_id = 0 , $max_id = 0 , $limit = 20 , $page = 1) {
 		if(empty($user_id) && empty($user_name)) {
@@ -1467,13 +1515,13 @@ class FeedModel extends Model {
 	}
 
 	/**
-	 * 获取某条微博的被转发列表
-	 * @param string $row_id 被转发微博ID
-	 * @param integer $since_id 微博ID，从此微博ID开始，默认为0
-	 * @param integer $max_id 最大微博ID，默认为0
+	 * 获取某条提问的被转发列表
+	 * @param string $row_id 被转发提问ID
+	 * @param integer $since_id 提问ID，从此提问ID开始，默认为0
+	 * @param integer $max_id 最大提问ID，默认为0
 	 * @param integer $limit 结果集数目，默认为20
 	 * @param integer $page 分页数，默认为1
-	 * @return array 全站最新的微博
+	 * @return array 全站最新的提问
 	 */
 	public function repost_timeline($row_id, $since_id = 0, $max_id = 0 ,$limit = 20 ,$page = 1) {
 		$row_id = intval($row_id);
@@ -1492,15 +1540,15 @@ class FeedModel extends Model {
 		}
 		$start = ($page - 1) * $limit;
 		$end = $limit;
-		$feed_ids = $this->where($where)->field('feed_id')->limit("{$start},{$end}")->order('feed_id DESC')->getAsFieldArray('feed_id');
+		$feed_ids = $this->where($where)->field('feed_id')->limit("{$start},{$end}")->order('publish_time desc')->getAsFieldArray('feed_id');
 		return $this->formatFeed($feed_ids,true);
 	}
 
 	/**
-	 * 格式化微博数据
-	 * @param array $feed_ids 微博ID数组
+	 * 格式化提问数据
+	 * @param array $feed_ids 提问ID数组
 	 * @param boolean $forApi 是否为API数据，默认为false
-	 * @return array 格式化后的微博数据
+	 * @return array 格式化后的提问数据
 	 */
 	public function formatFeed($feed_ids, $forApi = false) {
 		if(empty($feed_ids)) {
@@ -1519,11 +1567,11 @@ class FeedModel extends Model {
 	}
 
 	/**
-	 * 同步到微博
+	 * 同步到提问
 	 * @param string content 内容
 	 * @param integer uid 发布者uid
 	 * @param mixed attach_ids 附件ID  
-	 * @return integer feed_id 微博ID
+	 * @return integer feed_id 提问ID
 	 */
 	public function syncToFeed($content,$uid,$attach_ids,$from) {	
 		$d['content'] = '';
@@ -1540,20 +1588,20 @@ class FeedModel extends Model {
 	}
 
 	/**
-	 * 分享到微博
+	 * 分享到提问
 	 * @param string content 内容
 	 * @param integer uid 分享者uid
 	 * @param mixed attach_ids 附件ID  
-	 * @return integer feed_id 微博ID
+	 * @return integer feed_id 提问ID
 	 */
 	public function shareToFeed($content,$uid,$attach_ids,$from) {	
 		$d['content'] = '';
 		$d['body'] = $content.'&nbsp;';
 		$d['from'] = 0; //TODO
-		if($attach_ids){
+		if($attach_ids) {
 			$type = 'postimage';
 			$d['attach_id'] = $attach_ids;
-		}else{
+		} else {
 			$type = 'post';
 		}
 		$feed = model('Feed')->put($uid, 'public', $type, $d, '', 'feed');
@@ -1569,6 +1617,21 @@ class FeedModel extends Model {
 	{
 		$feed = model('Feed')->field('feed_pv')->where('feed_id='.$feedid)->select();
 		$updData['feed_pv']=$feed[0]['feed_pv'] + 1;
+		model('Feed')->where('feed_id='.$feedid)->save($updData);
+		$feedids=array($feedid);
+		$this->cleanCache($feedids);
+	}
+	
+	/**
+	 * 修改邀请回答数
+	 * $feedid 问题ID
+	 * $addcount 增加的邀请数(默认1)
+	 * @return void
+	 */
+	public function UpdateInviteCount($feedid, $addcount = 1)
+	{
+		$feed = model('Feed')->field('invite_count')->where('feed_id='.$feedid)->select();
+		$updData['invite_count']=$feed[0]['invite_count'] + $addcount;
 		model('Feed')->where('feed_id='.$feedid)->save($updData);
 		$feedids=array($feedid);
 		$this->cleanCache($feedids);
@@ -1611,6 +1674,37 @@ class FeedModel extends Model {
 		return $return;
 	}
 	
+	public function getInviteList($uid, $limit = 10, $LoadWhere, $newCount = 0)
+	{
+		$where = 'invite_uid = '.$uid;
+		if(!empty($LoadWhere))
+			$where .= ' and '.$LoadWhere;
+		$inviteResult = model('InviteAnswer')->getInviteAnswerList($where, $limit, 'invite_answer_id desc');
+		$index = 0;
+		foreach($inviteResult['data'] as $k => $v)
+		{
+			$feed = $this->getFeeds(array(intval($v['questionid'])));
+			$feed[0]['invite'] = $v;
+			if($index<$newCount){
+				$feed[0]['newcount']='1';
+				$index++;
+			}
+			$inviteResult['data'][$k] = $feed[0];
+		}
+		
+		return $inviteResult;
+	}
+	
+	/**
+	 * 获取追问信息
+	 *
+	 * @return array
+	 *
+	 */	
+	public function getAddQuestion($feed_id)
+	{
+		
+	}
 	
 	
 }

@@ -1,0 +1,115 @@
+<include file="__THEME__/public_header" />
+<style type="text/css">
+    table{ border-top:1px solid #ccc; border-right:1px solid #ccc; margin-top:20px; }
+    td { border-bottom:1px solid #ccc; border-left:1px solid #ccc; height:20px; line-height:20px; padding:2px 5px; min-width:50px; }
+</style>
+<div class="container" style="background:#fff; border:0;">
+<div style="padding:20px;">
+    
+    <div>
+        选择日期：<input id="dt1" type="text" value="{$dt1}" style="width:120px; height:20px; line-height:20px; padding:2px 5px; color:#666; font-size:14px;" readonly="readonly" onfocus="core.rcalendar(this,'');" /> 至 
+        <input id="dt2" type="text" value="{$dt2}" style="width:120px; height:20px; line-height:20px; padding:2px 5px; color:#666; font-size:14px;" readonly="readonly" onfocus="core.rcalendar(this,'');" />　
+        <input type="button" value="确 定" onclick="ShowTotal();" style="height:25px;  width:50px;" />　　<span style="color:Red;">{$error}</span>
+    </div>
+    <div style="margin:20px 0;">
+        {$dt1} 至 {$dt2}数据统计
+    </div>
+    <table cellpadding="0" cellspacing="0">
+        <tr>
+            <td style="width:120px;"></td>
+            <volist name="dtTitle" id="dt">
+                <td style="width:70px;">{$dt}</td>
+            </volist>
+        </tr>
+        <tr>
+            <td>邀请码填写页面PV</td>
+            <volist name="pv1" id="p1">
+                <td>{$p1}</td>
+            </volist>
+        </tr>
+        <tr>
+            <td>填写注册信息页面PV</td>
+            <volist name="pv2" id="p2">
+                <td>{$p2}</td>
+            </volist>
+        </tr>
+        <tr>
+            <td>邮箱激活成功页面PV</td>
+            <volist name="pv3" id="p3">
+                <td>{$p3}</td>
+            </volist>
+        </tr>
+        <tr>
+            <td>网站总PV</td>
+            <volist name="pv4" id="p4">
+                <td>{$p4}</td>
+            </volist>
+        </tr>
+        <tr>
+            <td>独立IP数</td>
+            <volist name="ip" id="p">
+                <td>{$p}</td>
+            </volist>
+        </tr>
+        <tr>
+            <td>新增用户数</td>
+            <volist name="addUser" id="user">
+                <td>{$user}</td>
+            </volist>
+        </tr>
+        <tr>
+            <td>登录用户数</td>
+            <volist name="loginUser" id="lu">
+                <td>{$lu}</td>
+            </volist>
+        </tr>
+    </table>
+    <volist name="data2" id='da'>
+        <table>
+            <tr>
+                <td style="width:120px;">{$da['date']}</td><td>0-2点</td><td>2-10点</td><td>10-12点</td><td>12-14点</td><td>14-16点</td><td>16-18点</td><td>18-20点</td><td>20-22点</td><td>22-24点</td>
+            </tr>
+            <tr>
+                <td>登陆用户数</td>
+                <volist name="da['Login']" id="login">
+                    <td>{$login}</td>
+                </volist>
+            </tr>
+            <tr>
+                <td>注册用户数</td>
+                <volist name="da['Regist']" id="regist">
+                    <td>{$regist}</td>
+                </volist>
+            </tr>
+            <tr>
+                <td>提问数</td>
+                <volist name="da['Question']" id="question">
+                    <td>{$question}</td>
+                </volist>
+            </tr>
+            <tr>
+                <td>回答数</td>
+                <volist name="da['Answer']" id="answer">
+                    <td>{$answer}</td>
+                </volist>
+            </tr>
+        </table>
+    </volist>
+    <table>
+        <tr><td>截止到现在的问题总数</td><td>{$QAllCount}</td></tr>
+        <tr><td>截止到现在的回答总数</td><td>{$AAllCount}</td></tr>
+        <tr><td>截止到现在的评论总数</td><td>{$CommentCount}</td></tr>
+        <tr><td>截止到现在的感谢总数</td><td>{$ThankCount}</td></tr>
+    </table>
+</div>
+
+<include file="__THEME__/public_footer" />
+
+<script type="text/javascript">
+    function ShowTotal() {
+        var url = U('public/Passport/total');
+        url += '&dt1=' + $('#dt1').val() + '&dt2=' + $('#dt2').val();
+        location.href = url;
+    }
+</script>
+</div>

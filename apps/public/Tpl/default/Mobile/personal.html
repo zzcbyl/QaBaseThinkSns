@@ -1,0 +1,53 @@
+<include file="__THEME__/mobile_header" />
+<div class="container" style="width:auto; background:#fff;">
+    <include file="_top"/>   
+
+    <php>if($userPrivacy['space'] != 1){</php>
+        
+        <div class="mod-data" style="padding:0 5px;">
+
+            {:W('UserBaseInfo',array('mid'=>0, 'uid'=>$uid, 'followstate'=>2))}
+
+            {:W('UserProfessionInfo',array('mid'=>0, 'uid'=>$uid, 'followstate'=>2))}
+
+            {:W('UserEducationInfo',array('mid'=>0, 'uid'=>$uid, 'followstate'=>2))}
+
+            <volist name='ProfileType' id='vo'>
+                <div class="profile-datalist">
+                    <h4><php>if($uid==$mid){</php><a href="{:U('public/Account/'.$vo['field_key'])}" class="right f12" style="font-weight:normal;" >编辑</a><php>}</php>{$vo['field_name']}</h4>
+                    <ul class="info">
+                        <volist name='user_profile_setting' id='ups'>
+                            <php>if(!empty($user_profile[$uid][$ups['field_id']]) && $ups['field_type'] == $vo['field_id'] && !empty($user_profile[$uid][$ups['field_id']]['field_data'])){</php>
+                                <li>
+                                    <label class="info-l">{$ups['field_name']}：</label>
+                                    <label class="info-r">
+                                        <php> 
+                                            $d = $user_profile[$uid][$ups['field_id']]['field_data'];
+                                            if(!empty($d)){
+                                                if($key == 'department') $d = trim($d,'|');
+                                                if($key == 'work_director') $d = $user_info[$d]['space_link'];
+                                            }
+                                            if($ups['form_type'] == 'date') $d = date('Y-m-d',$d);
+                                            echo $d;      
+                                        </php>
+                                    </label>
+                                    &nbsp;
+                                </li>
+                            <php>}</php>
+                        </volist>
+                    </ul>
+                </div>
+            </volist>
+        </div>
+
+    <php>}else{</php>
+        <p class="extend">-_-。sorry！根据对方隐私设置，您无权查看TA的主页</p>
+    <php>}</php>
+</div>
+
+
+
+<script src="__THEME__/js/module.weibo_mobile.js"></script>
+<script src="__THEME__/js/module.form.js"></script>
+
+<include file="__THEME__/mobile_footer" />

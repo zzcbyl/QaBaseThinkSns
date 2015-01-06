@@ -4,17 +4,20 @@
         </div>
         <div class="myinfo">
         	<a href="{$userInfo.space_url}"><h4>{$userInfo.uname}</h4></a>
+        	{$userInfo['group_icon']}
+                
             <p>{$userInfo.intro}</p>
         </div>
     </div>
     <ul class="info">
-        <li><a href="{:U('public/Profile/following')}">{$userData.following_count|default=0}</a><br />关注</li>
-        <li><a href="{:U('public/Profile/friend')}">{$userData.friend_count|default=0}</strong></a><br />好友</li>
-        <li><a href="{:U('public/Profile/follower')}">{$userData.follower_count|default=0}</strong></a><br />粉丝</li>
-        <li><a href="{:U('public/Profile/question')}">{$userData.weibo_count|default=0}</strong></a><br />提问</li>
-        <li class="nbor"><a href="{:U('public/Profile/answer')}">{$userData.answer_count|default=0}</strong></a><br />回答</li>
+        <li id="gzCount"><a href="{:U('public/Profile/following')}">{$userData.following_count|default=0}</a><br />关注</li>
+        <li id="hyCount"><a href="{:U('public/Profile/friend')}">{$userData.friend_count|default=0}</strong></a><br />好友</li>
+        <li id="fsCount"><a href="{:U('public/Profile/follower')}">{$userData.follower_count|default=0}</strong></a><br />粉丝</li>
+        <li id="twCount"><a href="{:U('public/Profile/question')}">{$userData.weibo_count|default=0}</strong></a><br />提问</li>
+        <li id="hdCount" class="nbor"><a href="{:U('public/Profile/answer')}">{$userData.answer_count|default=0}</strong></a><br />回答</li>
+        <div style="clear:both;"></div>    
     </ul>
-    <div style="clear:both;"></div>
+    
 
 
 

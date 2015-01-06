@@ -10,7 +10,8 @@ class RegisterModel extends Model {
 	private $_user_model;																// 用户模型对象字段
 	private $_error;																	// 错误信息字段
 	private $_email_reg = '/[_a-zA-Z\d\-\.]+(@[_a-zA-Z\d\-\.]+\.[_a-zA-Z\d\-]+)+$/i';		// 邮箱正则规则
-	private $_name_reg = "/^[\x{4e00}-\x{9fa5}A-Za-z0-9_]+$/u";							// 昵称正则规则
+	private $_mobile_reg = '/^0*(13|15|18)\d{9}$/i';										// 手机号正则规则
+	private $_name_reg = '/^[\x{4e00}-\x{9fa5}A-Za-z0-9_]+$/u';							// 昵称正则规则
 
 	/**
 	 * 初始化操作，获取注册配置信息；实例化用户模型对象 
@@ -66,10 +67,50 @@ class RegisterModel extends Model {
 			!$res && $this->_error = '该邮箱后缀不允许注册';				// 邮箱后缀不允许注册
 		}
 		if($res && ($email != $old_email) && $this->_user_model->where('`email`="'.mysql_escape_string($email).'"')->find()) {
-			$this->_error = L('PUBLIC_EMAIL_REGISTER');			// 该Email已被注册
+			$this->_error = '该Email已存在';			// 该Email已被注册
 			$res = false;
 		}
 
+		return (boolean)$res;
+	}
+	
+	/**
+	 * 验证帐号的正确性
+	 * @param string $account 输入帐号的信息
+	 * @param string $old_account 原始帐号的信息
+	 * @return boolean 是否验证成功
+	 */
+	public function isValidAccount($account, $old_account = null)
+	{
+		if($account=='')
+		{
+			$this->_error = '帐号不能为空';
+			return;
+		}
+		$res = preg_match($this->_email_reg, $account, $matches) !== 0;
+		
+		$res_mobile = preg_match($this->_mobile_reg, $account, $matches) !== 0;
+		
+		if(!$res && !$res_mobile) {
+			$this->_error = '无效的帐号';
+		}
+		else
+		{
+			$res=true;
+		}
+		
+		if($res && !empty($this->_config['email_suffix']))
+		{
+			$res = in_array($matches['1'], explode(',', $this->_config['email_suffix']));
+			// !$res && $this->_error = $matches['1'].L('PUBLIC_EMAIL_SUFFIX_FORBIDDEN');				// 邮箱后缀不允许注册
+			!$res && $this->_error = '该邮箱后缀不允许注册';				// 邮箱后缀不允许注册
+		}
+		
+		if($res && ($account != $old_account) && $this->_user_model->where('`login`="'.mysql_escape_string($account).'"')->find()) {
+			$this->_error = '该帐号已被注册';		
+			$res = false;
+		}
+		
 		return (boolean)$res;
 	}
 
@@ -87,7 +128,7 @@ class RegisterModel extends Model {
 		if($name=='')
 		{
 			$this->_error = '昵称不能为空';
-			return ;
+			return false ;
 		}
 		$res = preg_match($this->_name_reg, $name) !== 0;
 		if($res) {
@@ -105,7 +146,7 @@ class RegisterModel extends Model {
 			return $res;
 		}
 		if(!$res) {
-			$this->_error = L('PUBLIC_NICKNAME_LIMIT', array('nums'=>'2-10'));			// 昵称长度必须在2-10个汉字之间
+			$this->_error = L('PUBLIC_NICKNAME_LIMIT', array('nums'=>'4-20','nums1'=>'2-10'));			// 昵称长度必须在2-10个汉字之间
 			return $res;
 		}
 		if(($name != $old_name) && $this->_user_model->where('`uname`="'.mysql_escape_string($name).'"')->find()) {
@@ -186,7 +227,7 @@ class RegisterModel extends Model {
 	public function sendActivationEmail($uid, $node ='register_active') {
 		$map['uid'] = $uid;
 		$user_info = $this->_user_model->where($map)->find();
-
+		
 		if(!$user_info) {
 			$this->_error = L('PUBLI_USER_NOTEXSIT');			// 用户不存在
 			return false;
@@ -195,9 +236,13 @@ class RegisterModel extends Model {
 				$config['activeurl'] = $GLOBALS['ts']['site']['home_url'];
 			}else{
 				$code = $this->getActivationCode($user_info);
+				//$config['activeurl'] = U('public/Register/activate', array('uid'=>$uid, 'code'=>$code));
 				$config['activeurl'] = U('public/Register/activate', array('uid'=>$uid, 'code'=>$code));
 			}
+			
 			$config['name'] = $user_info['uname']; 	
+			$config['login'] = $user_info['login']; 	
+			
 			model('Notify')->sendNotify($uid, $node, $config);
 			$this->_error = '发送成功';		// 系统已将一封激活邮件发送至您的邮箱，请立即查收邮件激活帐号
 			return true;
@@ -303,14 +348,14 @@ class RegisterModel extends Model {
 		$res = (boolean)$res;
 		if($res) {
 			// 获取用户信息
-			$receiverInfo = model('User')->getUserInfo($uid);
+			//$receiverInfo = model('User')->getUserInfo($uid);
 			// 获取发起邀请用户ID
-			$inviteUid = model('Invite')->where("code='{$receiverInfo['invite_code']}'")->getField('inviter_uid');
+			//$inviteUid = model('Invite')->where("code='{$receiverInfo['invite_code']}'")->getField('inviter_uid');
 			// 邀请人积分操作
-            model('Credit')->setUserCredit($inviteUid, 'invite_friend');
+            //model('Credit')->setUserCredit($inviteUid, 'invite_friend');
 			// 相互关注操作
-			model('Follow')->doFollow($uid, intval($inviteUid));
-			model('Follow')->doFollow(intval($inviteUid), $uid);
+			//model('Follow')->doFollow($uid, intval($inviteUid));
+			//model('Follow')->doFollow(intval($inviteUid), $uid);
 		    // 清除用户缓存
 		    $this->_user_model->cleanCache($uid);
 			// 发送通知

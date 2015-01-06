@@ -18,7 +18,7 @@ class qzone{
 					.'&client_id='.QZONE_KEY
 					.'&redirect_uri='.$this->getCallback('qzone', $callbackurl)
 					.'&state='.$_SESSION['state']
-					.'&scope=get_user_info,add_share';
+					.'&scope=get_user_info,add_t';
 		
 		return $loginUrl;
 	}
@@ -125,7 +125,7 @@ class qzone{
 		return true;
 	}
 
-	//发布一条微博
+	//发布一条提问
 	public function update($text,$opt){
 
 	    $share_url = "https://graph.qq.com/share/add_share?"
@@ -149,13 +149,13 @@ class qzone{
 		return true;
 	}
 
-	//上传一个照片，并发布一条微博
+	//上传一个照片，并发布一条提问
 	public function upload($text,$opt,$pic){
 		$this->update($text,$opt);
 		return true;
 	}
 
-	//转发一条微博
+	//转发一条提问
     public function transpond($transpondId,$reId,$content='',$opt=null){
 		return true;
 	}

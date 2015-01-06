@@ -96,12 +96,12 @@ class ChannelFollowModel extends Model
 	}
 
 	/**
-	 * 获取指定用户所关注频道的所有微博，默认为当前登录用户
+	 * 获取指定用户所关注频道的所有提问，默认为当前登录用户
 	 * @param string $where 查询条件
 	 * @param integer $limit 结果集数目，默认为10
 	 * @param integer $uid 指定用户ID，默认为空
 	 * @param integer $fgid 关注频道ID，默认为空
-	 * @return array 指定用户所关注频道的所有微博，默认为当前登录用户
+	 * @return array 指定用户所关注频道的所有提问，默认为当前登录用户
 	 */
 	public function getFollowingFeed($where = '', $limit = 10, $uid = '', $fgid = '')
 	{

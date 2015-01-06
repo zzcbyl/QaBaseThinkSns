@@ -1,6 +1,6 @@
 <?php
 /**
- * ThinkSNS API接口抽象类
+ * 卢勤问答 API接口抽象类
  * @author lenghaoran
  * @version TS3.0
  */

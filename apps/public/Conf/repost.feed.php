@@ -1,10 +1,10 @@
-<feed app='public' type='repost' info='转发微博'>
+<feed app='public' type='repost' info='转发提问'>
 	<title> 
 		<![CDATA[{$actor}]]>
 	</title>
 	<body>
 		<![CDATA[
-		<eq name='body' value=''> 微博分享 </eq> 
+		<eq name='body' value=''> 提问分享 </eq> 
 		{$body|t|replaceUrl}
 		<dl class="comment">
 			<dt class="arrow bgcolor_arrow"><em class="arrline">◆</em><span class="downline">◆</span></dt>
@@ -16,7 +16,7 @@
 				{* 转发原文 *}
 				{$sourceInfo.source_content|t|replaceUrl}
 				<php>if(!empty($sourceInfo['attach'])):</php>
-				{* 附件微博 *}
+				{* 附件提问 *}
 				<eq name='sourceInfo.feedType' value='postfile'>
 				<ul class="feed_file_list">
 					<volist name='sourceInfo.attach' id='vo'>
@@ -29,7 +29,7 @@
 					</volist>			
 				</ul>		
 				</eq>
-				{* 图片微博 *}
+				{* 图片提问 *}
 				<eq name='sourceInfo.feedType' value='postimage'>
 				<div class="feed_img_lists" rel='small' >
 					<ul class="small">
@@ -51,7 +51,7 @@
 				</div>
 				</eq>
 				<php>endif;</php>
-				{* 视频微博 *}
+				{* 视频提问 *}
 				<eq name='sourceInfo.feedType' value='postvideo'>
 				<div class="feed_img" id="video_mini_show_{$feedid}">
 				  <a href="javascript:void(0);" onclick="switchVideo({$feedid},'open','{$sourceInfo.host}','{$sourceInfo.flashvar}')">

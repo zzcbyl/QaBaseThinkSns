@@ -1,6 +1,6 @@
 <?php
 /**
- * ThinkSNS App基类
+ * 卢勤问答 App基类
  * @author  liuxiaoqing <liuxiaoqing@zhishisoft.com>
  * @version TS3.0
  */

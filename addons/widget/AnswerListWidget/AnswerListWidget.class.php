@@ -1,6 +1,6 @@
 <?php
 /**
- * 微博列表
+ * 提问列表
  * @example {:W('FeedList',array('type'=>'space','feed_type'=>$feed_type,'feed_key'=>$feed_key,'loadnew'=>0,'gid'=>$gid))}
  * @author jason
  * @version TS3.0
@@ -11,9 +11,9 @@ class AnswerListWidget extends Widget {
 	private $limitnums   = 10;
 
     /**
-     * @param string type 获取哪类微博 following:我关注的 space：
-     * @param string feed_type 微博类型
-     * @param string feed_key 微博关键字
+     * @param string type 获取哪类提问 following:我关注的 space：
+     * @param string feed_type 提问类型
+     * @param string feed_key 提问关键字
      * @param integer fgid 关注的分组id
      * @param integer gid 群组id
      * @param integer loadnew 是否加载更多 1:是  0:否
@@ -57,8 +57,8 @@ class AnswerListWidget extends Widget {
 		return $content['html'];
     }
     /**
-     * 显示更多微博
-     * @return  array 更多微博信息、状态和提示
+     * 显示更多提问
+     * @return  array 更多提问信息、状态和提示
      */
     public function loadMore() {
         // 获取GET与POST数据
@@ -93,8 +93,8 @@ class AnswerListWidget extends Widget {
     }
 
     /**
-     * 显示最新微博
-     * @return  array 最新微博信息、状态和提示
+     * 显示最新提问
+     * @return  array 最新提问信息、状态和提示
      */
     public function loadNew() {
     	$return = array('status'=>-1,'msg'=>'');
@@ -115,28 +115,28 @@ class AnswerListWidget extends Widget {
     }
     
     /**
-     * 获取微博数据，渲染微博显示页面
-     * @param array $var 微博数据相关参数
+     * 获取提问数据，渲染提问显示页面
+     * @param array $var 提问数据相关参数
      * @param string $tpl 渲染的模板
-     * @return array 获取微博相关模板数据
+     * @return array 获取提问相关模板数据
      */
     private function getData($var, $tpl = 'FeedList.html') {
     	$var['feed_key'] = t($var['feed_key']);
         $var['cancomment'] = isset($var['cancomment']) ? $var['cancomment'] : 1;
         //$var['cancomment_old_type'] = array('post','repost','postimage','postfile');
         $var['cancomment_old_type'] = array('post','repost','postimage','postfile','weiba_post','weiba_repost');
-        // 获取微博配置
+        // 获取提问配置
         $weiboSet = model('Xdata')->get('admin_Config:feed');
         $var = array_merge($var, $weiboSet);
     	$var['remarkHash'] = model('Follow')->getRemarkHash($GLOBALS['ts']['mid']);
     	$map = $list = array();
-    	$type = $var['new'] ? 'new'.$var['type'] : $var['type'];	// 最新的微博与默认微博类型一一对应
+    	$type = $var['new'] ? 'new'.$var['type'] : $var['type'];	// 最新的提问与默认提问类型一一对应
 
 		switch($type) {
 			case 'answer'://所有的 --正在发生的
 				$where =' (is_audit=1 OR is_audit=0) AND is_del = 0 And feed_questionid='.$var['feed_id'];
 				if($var['loadId'] > 0){ //非第一次
-					$where .=" AND feed_id < '".intval($var['loadId'])."'";
+					$where .=" AND publish_time < '".intval($var['loadId'])."'";
 				}
 				if(!empty($var['feed_type'])){
 					if ( $var['feed_type'] == 'post' ){
@@ -145,15 +145,15 @@ class AnswerListWidget extends Widget {
 						$where .=" AND type = '".t($var['feed_type'])."'";
 					}
 				}
-				$list = model('Feed')->getList($where,$this->limitnums,'feed_id DESC');
+				$list = model('Feed')->getAnswerAndSupplementList($where,$this->limitnums,'publish_time desc');
 				//print_r($list);
 				break;
 		}
     	// 分页的设置
         isset($list['html']) && $var['html'] = $list['html'];
     	if(!empty($list['data'])) {
-    		$content['firstId'] = $var['firstId'] = $list['data'][0]['feed_id'];
-    		$content['lastId'] = $var['lastId'] = $list['data'][(count($list['data'])-1)]['feed_id'];
+			$content['firstId'] = $var['firstId'] = $list['data'][0]['publish_time'];
+			$content['lastId'] = $var['lastId'] = $list['data'][(count($list['data'])-1)]['publish_time'];
             $var['data'] = $list['data'];
 
             //赞功能
@@ -192,10 +192,10 @@ class AnswerListWidget extends Widget {
     }
 
     /**
-     * 获取话题微博数据，渲染微博显示页面
-     * @param array $var 微博数据相关参数
+     * 获取话题提问数据，渲染提问显示页面
+     * @param array $var 提问数据相关参数
      * @param string $tpl 渲染的模板
-     * @return array 获取微博相关模板数据
+     * @return array 获取提问相关模板数据
      */
     private function getTopicData($var,$tpl='FeedList.html') {
         $var['cancomment'] = isset($var['cancomment']) ? $var['cancomment'] : 1;
@@ -205,7 +205,7 @@ class AnswerListWidget extends Widget {
         $var = array_merge($var,$weiboSet);
         $var['remarkHash'] = model('Follow')->getRemarkHash($GLOBALS['ts']['mid']);
         $map = $list = array();
-        $type = $var['new'] ? 'new'.$var['type'] : $var['type'];    //最新的微博与默认微博类型一一对应
+        $type = $var['new'] ? 'new'.$var['type'] : $var['type'];    //最新的提问与默认提问类型一一对应
 
         if($var['loadId'] > 0){ //非第一次
             $topics['topic_id'] = $var['topic_id'];

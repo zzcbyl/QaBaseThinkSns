@@ -1050,7 +1050,7 @@ class ConfigAction extends AdministratorAction {
 	}
 	
 	/**
-	 * 系统配置 - 微博配置
+	 * 系统配置 - 提问配置
 	 */
 	public function feed() {
 		$this->pageKeyList = array (
@@ -1715,7 +1715,7 @@ class ConfigAction extends AdministratorAction {
 		$names = array (
 				'登录页',
 				'话题页',
-				'微博详情页',
+				'提问详情页',
 				'个人主页' 
 		);
 		foreach ( $keys as $k => $v ) {
@@ -1775,10 +1775,10 @@ class ConfigAction extends AdministratorAction {
 				$detail ['note'] = '{topicName}:话题名称，{topicNote}:话题注释，{topicDes}:话题描述，{lastTopic}:最近一条话题';
 				break;
 			case 'feed_detail' :
-				$detail ['note'] = '{content}:微博内容，{uname}:用户昵称';
+				$detail ['note'] = '{content}:提问内容，{uname}:用户昵称';
 				break;
 			case 'user_profile' :
-				$detail ['note'] = '{uname}:用户昵称，{lastFeed}:最后一条微博';
+				$detail ['note'] = '{uname}:用户昵称，{lastFeed}:最后一条提问';
 				break;
 			default :
 				$detail ['note'] = '';

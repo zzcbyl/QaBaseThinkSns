@@ -3,13 +3,15 @@
       elseif(ACTION_NAME=='newfollower'|| ACTION_NAME=='newfriend'){ $tabClass['public_newfollower'] = 'current'; }
       elseif(ACTION_NAME=='invite'){ $tabClass['public_invite'] = 'current'; }
       elseif(ACTION_NAME=='collection'){ $tabClass['public_collection'] = 'current'; }
+      elseif(ACTION_NAME=='messages' || ACTION_NAME=='messagesdetail'){ $tabClass['public_messages'] = 'current'; }
 	  else{ $tabClass[$type] = 'current'; }
 </php>
-<div class="tab-menu">
+<div class="table_box">
   <ul>
     <li><a class="{$tabClass.new_answer}" href="{:U('public/Profile/newanswerinfo')}">消息</a></li>
     <li><a class="{$tabClass.public_invite}" href="{:U('public/Profile/invite')}">邀请我的</a></li>
     <li><a class="{$tabClass.public_newfollower}" href="{:U('public/Profile/newfollower')}">新增关系</a></li>
     <li><a class="{$tabClass.public_collection}" href="{:U('public/Profile/collection')}">收藏</a></li>
+    <li><a class="{$tabClass.public_messages}" href="{:U('public/Profile/messages')}">私信</a></li>
   </ul>
 </div>

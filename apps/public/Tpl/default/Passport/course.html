@@ -1,0 +1,64 @@
+<include file="__THEME__/public_header" />
+<div class="container experts">
+    <!--顶级专家-->
+    <div class="dj_experts">
+        <div class="zhuanjia_left" style="width: auto;">
+            <div class="profile">
+                <div class="pro_img">
+                    <a href="{$TopExpert['space_url']}"><img src="{$TopExpert['avatar_big']}" event-node="face_card" uid="{$TopExpert['uid']}" /></a>
+                </div>
+                <div class="pro_cont">
+                    <h4><a href="{$TopExpert['space_url']}" event-node="face_card" uid="{$TopExpert['uid']}">{$TopExpert['uname']}</a></h4>
+                    <p style="height:auto;"><strong>简介：</strong>{$TopExpert['intro']}</p>
+                    <p class="comm hd pt0" style="height:auto; padding:0;">
+                        <strong>获得：</strong>
+                        <a title="赞同数" href="javascript:void(0);" class="d"><php>if(empty($TopExpert_UserCount[$TopExpert['uid']]['comment_agree_count'])) echo '0'; else echo $TopExpert_UserCount[$TopExpert['uid']]['comment_agree_count'];</php></a>
+                        <a title="感谢数" href="javascript:void(0);" class="hx"><php>if(empty($TopExpert_UserCount[$TopExpert['uid']]['tothanked_count'])) echo '0'; else echo $TopExpert_UserCount[$TopExpert['uid']]['tothanked_count'];</php></a>
+                        <a title="反对数" href="javascript:void(0);" class="c"><php>if(empty($TopExpert_UserCount[$TopExpert['uid']]['comment_oppose_count'])) echo '0'; else echo $TopExpert_UserCount[$TopExpert['uid']]['comment_oppose_count'];</php></a>
+                        <a title="邀请数" href="javascript:void(0);" class="tel"><php>if(empty($TopExpert_UserCount[$TopExpert['uid']]['be_invited_count'])) echo '0'; else echo $TopExpert_UserCount[$TopExpert['uid']]['be_invited_count'];</php></a>
+                    </p>
+                    <p class="xz">
+                        <php>if(count($TopExpert['user_group'])>0){</php>
+                        <strong>勋章：</strong>
+                        <volist name="TopExpert['user_group']" id="ui2">
+                            <img style="width:auto;height:auto;display:inline;cursor:pointer;" src="{$ui2['user_group_icon_url']}" title="{$ui2['user_group_name']}" />&nbsp;
+                        </volist>
+                        <!--<a href="#" class="x1"></a>
+                        <a href="#" class="x2"></a>
+                        <a href="#" class="x3"></a>
+                        <a href="#" class="x4"></a>-->
+                        <php>}</php>
+                    </p>
+                </div>
+
+            </div>
+        </div>
+        <div style="clear:both;"></div>
+    </div>
+    <!--顶级专家-->
+
+    <div class="courseMain">
+        <div>
+            <ul>
+                <volist name="courselist.data" id="course">
+                <li>
+                    <div>
+                        <h2 class="tit">
+                            <a href="{:U('public/Passport/coursedetail',array('courseid'=>$course['course_id']))}" target="_blank" >
+                                {$course.course_title|getShort=100,'...'}</a>
+                        </h2>
+                        <div class="courseContentli" >
+                            <php>
+                                echo strstr($course['course_content'],'<p>');
+                            </php>
+                            <!--{$course.course_content|getShort=800,'...'}-->
+                        </div>
+                    </div>
+                </li>
+                </volist>
+            </ul>
+        </div>
+    </div>
+
+
+    <include file="__THEME__/public_footer" />

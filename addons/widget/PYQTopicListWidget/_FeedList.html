@@ -1,0 +1,54 @@
+<volist name='data' id='vl'>
+<div id="topiclist_{$vl['topic_id']}" class="newTopicList" style="padding:5px 0; border-bottom:1px solid #efefef;">
+    <div style="float:left;">
+        <a href="{:U('public/mobile/mytopic',array('uid'=>$vl['userinfo']['uid']))}"><img src="{$vl['userinfo']['avatar_small']}" style="height:50px; width:50px;" /></a>
+    </div>
+    <div style="padding-left:55px;">
+        <div>
+            <a href="{:U('public/mobile/mytopic',array('uid'=>$vl['userinfo']['uid']))}">{$vl['userinfo']['uname']}</a>
+            <php>if($vl['topic_uid']==$GLOBALS['ts']['mid']) { </php>
+                <a class="ico-close2" style="float:right; margin-right:5px;" title="删除" href="javascript:void(0);" onclick="delTopic({$vl['topic_id']});"></a>
+            <php>}</php>
+        </div>
+        <div style="margin-top:5px;"><php>echo nl2br($vl['topic_content']);</php></div>
+        <div class="contentImg">
+            <volist name ="vl.topicImage" id="vlimg">
+                <a href="javascript:openBig({$vl['topic_id']}, {$i}, '{$vlimg['img']}', '{$vlimg['suolvimg']}');"><img id="contentImg{$vl['topic_id']}{$i}" src="{$vlimg['suolvimg']}" /></a>
+            </volist>
+        </div>
+    </div>
+    <div style="float:right; margin:5px 10px 0 0;"><a href="{:U('public/mobile/topiccomment',array('topicid'=>$vl['topic_id']))}">评论
+        <neq name="vl['topic_commentcount']" value="0">({$vl['topic_commentcount']})</neq></a>
+    </div>
+    <div style="clear:both;"></div>
+</div>
+</volist>
+<script type="text/javascript">
+    function openBig(topicid, index, src, suoimg) {
+        if ($('#contentImg' + topicid + index).attr('src') == suoimg) {
+            $('#contentImg' + topicid + index).css('width', $(document.body).width() - 50);
+            $('#contentImg' + topicid + index).attr('src', src);
+        }
+        else {
+            $('#contentImg' + topicid + index).attr('src', suoimg);
+            $('#contentImg' + topicid + index).css('width', 'auto');
+        }
+    }
+
+    function delTopic(topicid) {
+        //alert(U('widget/PYQTopicList/delTopic'));
+        if (confirm('确定要删除吗?')) {
+            $.get(U('widget/PYQTopicList/delTopic'), { 'topicID': topicid }, function (msg) {
+                if (msg.status == "0" || msg.status == "-1") {
+                    ui.error(msg.data);
+                    return;
+                }
+                if (msg.status == "1" && parseInt(msg.data) > 0) {
+                    ui.success('删除成功');
+                    $('#topiclist_' + topicid).hide();
+                }
+            }, 'json');
+        }
+    }
+</script>
+

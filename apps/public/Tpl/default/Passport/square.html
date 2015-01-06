@@ -1,7 +1,7 @@
-﻿<include file="__THEME__/public_header" />
-
-<div class="cont_left">
-    <div class="g_adimg"><img src="__THEME__/image/adimg.png" /></div>
+<include file="__THEME__/public_header" />
+<div class="container">
+<div class="cont_left pd17">
+    <div class="g_adimg"><a href="http://item.taobao.com/item.htm?spm=a1z10.1.w4004-7262783863.12.o1f6Pi&id=42685318065" target="_blank"><img src="__THEME__/image/act_xjp670.gif" /></a></div>
     <!--排行-->
     <div class="g_paihang">
         <div class="g_wtpaihang">
@@ -9,7 +9,10 @@
             <div class="g_cont">
                 <volist name="HotTopicList" id="htl" key="k" >
                     <dl>
-                        <dt><a href="{:U('public/Index/feed',array('feed_id'=>$htl['feed_id'],'uid'=>$htl['uid']))}" target="_blank">{$htl.body}</a><span>{$htl.answer_count}个回答</span></dt>
+                        <dt class="t{$k}">
+                            <a href="{:U('public/Passport/newquestion',array('feed_id'=>$htl['feed_id']))}" target="_blank" title="{$htl['body']}">
+                                <php> if(strlen($htl['body'])>48) echo utf_substr($htl['body'], 32).'...'; else echo $htl['body'];</php>
+                            </a><span>{$htl.answer_count}个回答</span></dt>
                         <php>if($k < 3) {</php>
                         <dd>{$htl.description}</dd>
                         <php>}</php>
@@ -22,9 +25,9 @@
         <div class="g_cont">
             <ul>
                 <volist name="HotUserList" id="hul">
-                    <li>
-                        <a href="{$hul['space_url']}" target="_blank"><img class="thumb" src="{$hul['avatar_small']}" width="35" height="35" event-node="face_card" uid="{$hul['uid']}" /></a>
-                        <h5>{$hul['space_link']}</h5>
+                    <li class="t{$i}">
+                        <a href="{:U('public/Passport/newperson',array('uid'=>$hul['uid']))}" target="_blank"><img class="thumb" src="{$hul['avatar_tiny']}" width="35" height="35" event-node="face_card" uid="{$hul['uid']}" /></a>
+                        <h5><a href="{:U('public/Passport/newperson',array('uid'=>$hul['uid']))}" target="_blank">{$hul['uname']}</a></h5>
                         <p>{$hul['userdata']['value']}个回答</p>
                         <!--<div class="xz">
                             <a href="#" class="x1"></a>
@@ -46,9 +49,10 @@
         <ul>
             <volist name="NewQuestion" id="nq">
                 <li>
-                    <a href="{:U('public/Index/feed',array('feed_id'=>$nq['feed_id'],'uid'=>$nq['uid']))}" target="_blank">{$nq.body}</a>
+                    <a href="{:U('public/Passport/newquestion',array('feed_id'=>$nq['feed_id']))}" target="_blank">{$nq.body}</a>
                     <span class="g_com">{$nq.answer_count}个回答</span>
-                    <span class="g_nic">{$nq['user_info']['space_link']}</span>
+                    <span class="g_nic" title ="{$nq['user_info']['uname']}">
+                        <a target="_blank" href="{:U('public/Passport/newperson',array('uid'=>$nq['uid']))}">{$nq['user_info']['uname']}</a></span>
                 </li>
             </volist>
         </ul>
@@ -60,57 +64,14 @@
         <div class="g_user1">
             <h1>得到邀请最多的用户</h1>
             <div class="g_cont" style="height:400px;">
-            <ul>
-                <li>
-                    <img src="images/thumb_img.png" width="35" height="35" />
-                    <h5>四叶草</h5>
-                    <p>678</p>
-                </li>
-                <li>
-                    <img src="images/thumb_img.png" width="35" height="35" />
-                    <h5>四叶草</h5>
-                    <p>678</p>
-                </li>
-                <li>
-                    <img src="images/thumb_img.png" width="35" height="35" />
-                    <h5>四叶草</h5>
-                    <p>678</p>
-                </li>
-                <li>
-                    <img src="images/thumb_img.png" width="35" height="35" />
-                    <h5>四叶草</h5>
-                    <p>678</p>
-                </li>
-                <li>
-                    <img src="images/thumb_img.png" width="35" height="35" />
-                    <h5>四叶草</h5>
-                    <p>678</p>
-                </li>
-                <li>
-                    <img src="images/thumb_img.png" width="35" height="35" />
-                    <h5>四叶草</h5>
-                    <p>678</p>
-                </li>
-                <li>
-                    <img src="images/thumb_img.png" width="35" height="35" />
-                    <h5>四叶草</h5>
-                    <p>678</p>
-                </li>
-                <li>
-                    <img src="images/thumb_img.png" width="35" height="35" />
-                    <h5>四叶草</h5>
-                    <p>678</p>
-                </li>
-                <li>
-                    <img src="images/thumb_img.png" width="35" height="35" />
-                    <h5>四叶草</h5>
-                    <p>678</p>
-                </li>
-                <li>
-                    <img src="images/thumb_img.png" width="35" height="35" />
-                    <h5>四叶草</h5>
-                    <p>678</p>
-                </li>
+                <ul>
+                    <volist name="InviteUserInfoList" id="iuil">
+                        <li>
+                            <a href="{:U('public/Passport/newperson',array('uid'=>$iuil['uid']))}" target="_blank"><img class="thumb" src="{$iuil['userinfo'][$iuil['uid']]['avatar_tiny']}" width="35" height="35" event-node="face_card" uid="{$iuil['uid']}" /></a>
+                            <h5><a href="{:U('public/Passport/newperson',array('uid'=>$iuil['uid']))}" target="_blank">{$iuil['userinfo'][$iuil['uid']]['uname']}</a></h5>
+                            <p>{$iuil['value']}</p>
+                        </li>
+                    </volist>
                 </ul>
             </div>
         </div>
@@ -120,8 +81,8 @@
                 <ul>
                     <volist name="AgreeUserInfoList" id="auil">
                         <li>
-                            <a href="{$auil['userinfo'][$auil['uid']]['space_url']}" target="_blank"><img class="thumb" src="{$auil['userinfo'][$auil['uid']]['avatar_small']}" width="35" height="35" event-node="face_card" uid="{$auil['uid']}" /></a>
-                            <h5>{$auil['userinfo'][$auil['uid']]['space_link']}</h5>
+                            <a href="{:U('public/Passport/newperson',array('uid'=>$auil['uid']))}" target="_blank"><img class="thumb" src="{$auil['userinfo'][$auil['uid']]['avatar_tiny']}" width="35" height="35" event-node="face_card" uid="{$auil['uid']}" /></a>
+                            <h5><a href="{:U('public/Passport/newperson',array('uid'=>$auil['uid']))}" target="_blank">{$auil['userinfo'][$auil['uid']]['uname']}</a></h5>
                             <p>{$auil['value']}</p>
                         </li>
                     </volist>
@@ -134,8 +95,8 @@
                 <ul>
                     <volist name="ThankUserInfoList" id="tuil">
                         <li>
-                            <a href="{$tuil['userinfo'][$tuil['uid']]['space_url']}" target="_blank"><img class="thumb" src="{$tuil['userinfo'][$tuil['uid']]['avatar_small']}" width="35" height="35" event-node="face_card" uid="{$tuil['uid']}" /></a>
-                            <h5>{$tuil['userinfo'][$tuil['uid']]['space_link']}</h5>
+                            <a href="{:U('public/Passport/newperson',array('uid'=>$tuil['uid']))}" target="_blank"><img class="thumb" src="{$tuil['userinfo'][$tuil['uid']]['avatar_tiny']}" width="35" height="35" event-node="face_card" uid="{$tuil['uid']}" /></a>
+                            <h5><a href="{:U('public/Passport/newperson',array('uid'=>$tuil['uid']))}" target="_blank">{$tuil['userinfo'][$tuil['uid']]['uname']}</a></h5>
                             <p>{$tuil['value']}</p>
                         </li>
                     </volist>
@@ -146,49 +107,21 @@
     <!--//用户-->
     <!--最新专家点评-->
     <div class="g_new_dp">
-    <h1>最新专家点评</h1>
+    <h1>最新专家回答</h1>
     <div class="g_cont">
         <ul>
+            <volist name="answerList.data" id="feed">
             <li>
-                <img src="images/thumb_img.png" />
+                <a target="_blank" href="{:U('public/Passport/newperson',array('uid'=>$feed['answer'][0]['user_info']['uid']))}"><img class="thumb" src="{$feed['answer'][0]['user_info']['avatar_small']}"  event-node="face_card" uid='{$feed['answer'][0]['user_info']['uid']}'></a>
                 <div>
-                    <h2 class="tit">化学平衡移动在什么条件下向什么方向移？正逆方向是什么? </h2>
-                    <p class="name"><a href="#" class="nic">四叶草</a><a href="#" class="dp">点评</a><span>2013-12-19 12:00</span></p>
+                    <h2 class="tit"><a target="_blank" href="{:U('public/Passport/newquestion',array('feed_id'=>$feed['feed_id']))}" target="_blank">{$feed.body}</a></h2>
+                    <p class="name"><a target="_blank" href="{:U('public/Passport/newperson',array('uid'=>$feed['answer'][0]['user_info']['uid']))}">{$feed['answer'][0]['user_info']['uname']}</a><a class="dp">回答</a><span>{$feed['answer'][0]['publish_time']|friendlyDate}</span></p>
                     <p class="cont">
-                    学平衡的移动方向的因素有浓度、压强、温度等因素。判断化学平衡移动的方向可以用勒夏特列原理来判断：增大反应物的浓度、减小生成物的浓度正方向移动；增大压强平衡会向气体系数减小的方向移动；升高温度平衡会向吸热的方向移动。
+                        {$feed['answer'][0]['body']}
                     </p>
                 </div>
             </li>
-            <li>
-                <img src="images/thumb_img.png" />
-                <div>
-                    <h2 class="tit">化学平衡移动在什么条件下向什么方向移？正逆方向是什么? </h2>
-                    <p class="name"><a href="#" class="nic">四叶草</a><a href="#" class="dp">点评</a><span>2013-12-19 12:00</span></p>
-                    <p class="cont">
-                    学平衡的移动方向的因素有浓度、压强、温度等因素。判断化学平衡移动的方向可以用勒夏特列原理来判断：增大反应物的浓度、减小生成物的浓度正方向移动；增大压强平衡会向气体系数减小的方向移动；升高温度平衡会向吸热的方向移动。
-                    </p>
-                </div>
-            </li>
-            <li>
-                <img src="images/thumb_img.png" />
-                <div>
-                    <h2 class="tit">化学平衡移动在什么条件下向什么方向移？正逆方向是什么? </h2>
-                    <p class="name"><a href="#" class="nic">四叶草</a><a href="#" class="dp">点评</a><span>2013-12-19 12:00</span></p>
-                    <p class="cont">
-                    学平衡的移动方向的因素有浓度、压强、温度等因素。判断化学平衡移动的方向可以用勒夏特列原理来判断：增大反应物的浓度、减小生成物的浓度正方向移动；增大压强平衡会向气体系数减小的方向移动；升高温度平衡会向吸热的方向移动。
-                    </p>
-                </div>
-            </li>
-            <li>
-                <img src="images/thumb_img.png" />
-                <div>
-                    <h2 class="tit">化学平衡移动在什么条件下向什么方向移？正逆方向是什么? </h2>
-                    <p class="name"><a href="#" class="nic">四叶草</a><a href="#" class="dp">点评</a><span>2013-12-19 12:00</span></p>
-                    <p class="cont">
-                    学平衡的移动方向的因素有浓度、压强、温度等因素。判断化学平衡移动的方向可以用勒夏特列原理来判断：增大反应物的浓度、减小生成物的浓度正方向移动；增大压强平衡会向气体系数减小的方向移动；升高温度平衡会向吸热的方向移动。
-                    </p>
-                </div>
-            </li>
+            </volist>
         </ul>
     </div>
     </div>
@@ -196,12 +129,16 @@
 </div>
 <!--right-->
 <div class="cont_right" style="_width:250px;">
-    <div class="right_conts">
+    <div class="right_conts" style="padding-top:10px;">
         <h1 class="hot">今日十大关注问题<span></span></h1>
         <ul class="g_list mb20">
             <volist name="FollowingQuestion" id="fq" key="k">
             <li>
-            <h2><span class="top">{$k}</span><a href="{:U('public/Index/feed',array('feed_id'=>$fq['feed_id'],'uid'=>$fq['uid']))}" target="_blank">{$fq.body}</a><div style="clear:both;"></div></h2>
+            <h2><span class="top">{$k}</span>
+                <a href="{:U('public/Passport/newquestion',array('feed_id'=>$fq['feed_id']))}" target="_blank" title="{$fq.body}">
+                    
+                    <php>if(strlen($fq['body'])>45) echo utf_substr($fq['body'], 30).'...'; else echo $fq['body'];</php>
+                </a><div style="clear:both;"></div></h2>
             <p>{$fq.description}</p>
             </li>
             </volist>
@@ -211,23 +148,29 @@
         <ul class="g_yh mb20">
             <volist name="NewUserList" id="nul">
                 <li>
-                    <a href="{$nul['space_url']}"><img class="thumb" src="{$nul['avatar_small']}" width="35" height="35" event-node="face_card" uid="{$nul['uid']}" /></a>
+                    <a target="_blank" href="{:U('public/Passport/newperson',array('uid'=>$nul['uid']))}"><img class="thumb" src="{$nul['avatar_small']}" width="35" height="35" event-node="face_card" uid="{$nul['uid']}" /></a>
                     <br />
-                    {$nul['space_link']}
+                    <span title="{$nul['uname']}" style="width:60px; display:block; height:22px; line-height:22px; overflow:hidden;">
+                        <a target="_blank" href="{:U('public/Passport/newperson',array('uid'=>$nul['uid']))}">{$nul['uname']}</a></span>
                 </li>
             </volist>
         </ul>
         
-        <h1 class="hd">最新活动<span></span></h1>
+        <!--<h1 class="hd">最新活动<span></span></h1>
         <ul class="contList">
             <li><a href="#">雷人规定：迟到罚亲嘴，男同事嗨了</a></li>
             <li><a href="#">8秒小电影，和木子美老师来PK</a></li>
             <li><a href="#">男朋友标准？会织毛衣的必须嫁</a></li>
-        </ul>
+        </ul>-->
 
     </div>
 </div>
 <!--//right-->
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.feed_img_lists').hide();
 
+    });
+</script>
 
 <include file="__THEME__/public_footer" />

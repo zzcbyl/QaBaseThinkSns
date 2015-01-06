@@ -53,7 +53,7 @@ class ProfileAction extends Action {
 		$userPrivacy = $this->privacy ( $this->uid );
 		if ($userPrivacy ['space'] !== 1) {
 			$this->_sidebar ();
-			// 加载微博筛选信息
+			// 加载提问筛选信息
 			$d ['feed_type'] = t ( $_REQUEST ['feed_type'] ) ? t ( $_REQUEST ['feed_type'] ) : '';
 			$d ['feed_key'] = t ( $_REQUEST ['feed_key'] ) ? t ( $_REQUEST ['feed_key'] ) : '';
 			$d ['type'] = t ( $_REQUEST ['type'] ) ? t ( $_REQUEST ['type'] ) : 'following';
@@ -66,22 +66,28 @@ class ProfileAction extends Action {
 		model ( 'Credit' )->setUserCredit ( $this->uid, 'space_access' );
 		
 		$this->assign ( 'userPrivacy', $userPrivacy );
-		// seo
-		$seo = model ( 'Xdata' )->get ( "admin_Config:seo_user_profile" );
-		$replace ['uname'] = $user_info ['uname'];
-		if ($feed_id = model ( 'Feed' )->where ( 'uid=' . $this->uid )->order ( 'publish_time desc' )->limit ( 1 )->getField ( 'feed_id' )) {
-			$replace ['lastFeed'] = D ( 'feed_data' )->where ( 'feed_id=' . $feed_id )->getField ( 'feed_content' );
+		
+		
+		if($_GET['type'] == 'thank')
+		{
+			$this->setTitle ( $user_info ['uname'] . '的感谢' );
+			$this->setKeywords ( $user_info ['uname'] . '的感谢' );
 		}
-		$replaces = array_keys ( $replace );
-		foreach ( $replaces as &$v ) {
-			$v = "{" . $v . "}";
+		else if($_GET['type'] == 'feedfollowing')
+		{
+			$this->setTitle ( $user_info ['uname'] . '关注的问题' );
+			$this->setKeywords ( $user_info ['uname'] . '关注的问题' );
 		}
-		$seo ['title'] = str_replace ( $replaces, $replace, $seo ['title'] );
-		$seo ['keywords'] = str_replace ( $replaces, $replace, $seo ['keywords'] );
-		$seo ['des'] = str_replace ( $replaces, $replace, $seo ['des'] );
-		! empty ( $seo ['title'] ) && $this->setTitle ( $seo ['title'] );
-		! empty ( $seo ['keywords'] ) && $this->setKeywords ( $seo ['keywords'] );
-		! empty ( $seo ['des'] ) && $this->setDescription ( $seo ['des'] );
+		else if($_GET['type'] == 'agree')
+		{
+			$this->setTitle ( $user_info ['uname'] . '的赞同' );
+			$this->setKeywords ( $user_info ['uname'] . '的赞同' );
+		}
+		else
+		{
+			$this->setTitle ( $user_info ['uname'] . '的主页' );
+			$this->setKeywords ( $user_info ['uname'] . '的主页' );
+		}
 		$this->display ();
 	}
 	
@@ -104,7 +110,7 @@ class ProfileAction extends Action {
 		$userPrivacy = $this->privacy ( $this->uid );
 		if ($userPrivacy ['space'] !== 1) {
 			$this->_sidebar ();
-			// 加载微博筛选信息
+			// 加载提问筛选信息
 			$d ['feed_type'] = t ( $_REQUEST ['feed_type'] ) ? t ( $_REQUEST ['feed_type'] ) : '';
 			$d ['feed_key'] = t ( $_REQUEST ['feed_key'] ) ? t ( $_REQUEST ['feed_key'] ) : '';
 			$this->assign ( $d );
@@ -117,7 +123,7 @@ class ProfileAction extends Action {
 		
 		$this->assign ( 'userPrivacy', $userPrivacy );
 		// seo
-		$seo = model ( 'Xdata' )->get ( "admin_Config:seo_user_profile" );
+		/*$seo = model ( 'Xdata' )->get ( "admin_Config:seo_user_profile" );
 		$replace ['uname'] = $user_info ['uname'];
 		if ($feed_id = model ( 'Feed' )->where ( 'uid=' . $this->uid )->order ( 'publish_time desc' )->limit ( 1 )->getField ( 'feed_id' )) {
 			$replace ['lastFeed'] = D ( 'feed_data' )->where ( 'feed_id=' . $feed_id )->getField ( 'feed_content' );
@@ -131,7 +137,9 @@ class ProfileAction extends Action {
 		$seo ['des'] = str_replace ( $replaces, $replace, $seo ['des'] );
 		! empty ( $seo ['title'] ) && $this->setTitle ( $seo ['title'] );
 		! empty ( $seo ['keywords'] ) && $this->setKeywords ( $seo ['keywords'] );
-		! empty ( $seo ['des'] ) && $this->setDescription ( $seo ['des'] );
+		! empty ( $seo ['des'] ) && $this->setDescription ( $seo ['des'] );*/
+		$this->setTitle ( $user_info ['uname'] . '的回答' );
+		$this->setKeywords ( $user_info ['uname'] . '的回答' );
 		$this->display ();
 	}
 	
@@ -155,7 +163,7 @@ class ProfileAction extends Action {
 		$userPrivacy = $this->privacy ( $this->uid );
 		if ($userPrivacy ['space'] !== 1) {
 			$this->_sidebar ();
-			// 加载微博筛选信息
+			// 加载提问筛选信息
 			$d ['feed_type'] = t ( $_REQUEST ['feed_type'] ) ? t ( $_REQUEST ['feed_type'] ) : '';
 			$d ['feed_key'] = t ( $_REQUEST ['feed_key'] ) ? t ( $_REQUEST ['feed_key'] ) : '';
 			$this->assign ( $d );
@@ -168,7 +176,7 @@ class ProfileAction extends Action {
 		
 		$this->assign ( 'userPrivacy', $userPrivacy );
 		// seo
-		$seo = model ( 'Xdata' )->get ( "admin_Config:seo_user_profile" );
+		/*$seo = model ( 'Xdata' )->get ( "admin_Config:seo_user_profile" );
 		$replace ['uname'] = $user_info ['uname'];
 		if ($feed_id = model ( 'Feed' )->where ( 'uid=' . $this->uid )->order ( 'publish_time desc' )->limit ( 1 )->getField ( 'feed_id' )) {
 			$replace ['lastFeed'] = D ( 'feed_data' )->where ( 'feed_id=' . $feed_id )->getField ( 'feed_content' );
@@ -182,7 +190,9 @@ class ProfileAction extends Action {
 		$seo ['des'] = str_replace ( $replaces, $replace, $seo ['des'] );
 		! empty ( $seo ['title'] ) && $this->setTitle ( $seo ['title'] );
 		! empty ( $seo ['keywords'] ) && $this->setKeywords ( $seo ['keywords'] );
-		! empty ( $seo ['des'] ) && $this->setDescription ( $seo ['des'] );
+		! empty ( $seo ['des'] ) && $this->setDescription ( $seo ['des'] );*/
+		$this->setTitle ( $user_info ['uname'] . '的提问' );
+		$this->setKeywords ( $user_info ['uname'] . '的提问' );
 		$this->display ();
 	}
 	
@@ -237,8 +247,6 @@ class ProfileAction extends Action {
 				$this->uid
 		) );
 		$this->setDescription ( t ( $user_category . $user_info ['location'] . ',' . implode ( ',', $user_tag [$this->uid] ) . ',' . $user_info ['intro'] ) );
-		
-		
 		$this->display ();
 	}
 	
@@ -286,8 +294,6 @@ class ProfileAction extends Action {
 		{
 			$followState=2;//关注的人
 		}
-		/*print('<br /><br /><br /><br />');
-		print_r($state);*/
 		
 		$this->assign ( 'followstate', $followState );
 		// 获取用户信息
@@ -343,16 +349,16 @@ class ProfileAction extends Action {
 			$this->error ( L ( 'PUBLIC_INFO_ALREADY_DELETE_TIPS' ) );
 		}
 	
-		//获取微博信息
+		//获取提问信息
 		$feedInfo = model ( 'Feed' )->get ( $feed_id );
 
 		if (!$feedInfo){
-			$this->error ( '该微博不存在或已被删除' );
+			$this->error ( '该提问不存在或已被删除' );
 			exit();
 		}
 			
 		if ($feedInfo ['is_audit'] == '0' && $feedInfo ['uid'] != $this->mid) {
-			$this->error ( '此微博正在审核' );
+			$this->error ( '此提问正在审核' );
 			exit();
 		}
 
@@ -435,10 +441,11 @@ class ProfileAction extends Action {
 		$this->_top ();
 		// 判断隐私设置
 		$userPrivacy = $this->privacy ( $this->uid );
-		if ($userPrivacy ['space'] !== 1) {
+		if ($userPrivacy ['space'] !== 1) {			
+			$following_list = model ( 'Follow' )->getFollowingList ( $this->uid, t ( $_GET ['gid'] ), 20 );
+			//print(model ( 'Follow' )->getLastSql());
 			$this->_sidebar ();
 			
-			$following_list = model ( 'Follow' )->getFollowingList ( $this->uid, t ( $_GET ['gid'] ), 20 );
 			$fids = getSubByKey ( $following_list ['data'], 'fid' );
 			if ($fids) {
 				$uids = array_merge ( $fids, array (
@@ -466,12 +473,8 @@ class ProfileAction extends Action {
 		}
 		$this->assign ( 'userPrivacy', $userPrivacy );
 		
-		$this->setTitle ( L ( 'PUBLIC_TA_FOLLOWING', array (
-				'user' => $GLOBALS ['ts'] ['_user'] ['uname'] 
-		) ) );
-		$this->setKeywords ( L ( 'PUBLIC_TA_FOLLOWING', array (
-				'user' => $GLOBALS ['ts'] ['_user'] ['uname'] 
-		) ) );
+		$this->setTitle ( $user_info['uname'].'的关注' );
+		$this->setKeywords ($user_info['uname'].'的关注');
 		$this->display ();
 	}
 	
@@ -492,9 +495,8 @@ class ProfileAction extends Action {
 		// 判断隐私设置
 		$userPrivacy = $this->privacy ( $this->uid );
 		if ($userPrivacy ['space'] !== 1) {
-			$this->_sidebar ();
-			
 			$follower_list = model ( 'Follow' )->getFollowerList ( $this->uid, 20 );
+			$this->_sidebar ();
 			$fids = getSubByKey ( $follower_list ['data'], 'fid' );
 			if ($fids) {
 				$uids = array_merge ( $fids, array (
@@ -524,14 +526,11 @@ class ProfileAction extends Action {
 		}
 		$this->assign ( 'userPrivacy', $userPrivacy );
 		
-		$this->setTitle ( L ( 'PUBLIC_TA_FOLLWER', array (
-				'user' => $GLOBALS ['ts'] ['_user'] ['uname'] 
-		) ) );
-		$this->setKeywords ( L ( 'PUBLIC_TA_FOLLWER', array (
-				'user' => $GLOBALS ['ts'] ['_user'] ['uname'] 
-		) ) );
+		$this->setTitle ( $user_info['uname'].'的粉丝' );
+		$this->setKeywords ($user_info['uname'].'的粉丝');
 		$this->display ();
 	}
+	
 	
 	
 	/**
@@ -552,9 +551,8 @@ class ProfileAction extends Action {
 		// 判断隐私设置
 		$userPrivacy = $this->privacy ( $this->uid );
 		if ($userPrivacy ['space'] !== 1) {
-			$this->_sidebar ();
-			
 			$following_list = model ( 'Follow' )->getFriendList ( $this->uid, 20 );
+			$this->_sidebar ();
 			$fids = getSubByKey ( $following_list ['data'], 'fid' );
 			if ($fids) {
 				$uids = array_merge ( $fids, array (
@@ -581,14 +579,65 @@ class ProfileAction extends Action {
 		}
 		$this->assign ( 'userPrivacy', $userPrivacy );
 		
-		$this->setTitle ( L ( 'PUBLIC_TA_FOLLOWING', array (
-			'user' => $GLOBALS ['ts'] ['_user'] ['uname'] 
-			) ) );
-		$this->setKeywords ( L ( 'PUBLIC_TA_FOLLOWING', array (
-			'user' => $GLOBALS ['ts'] ['_user'] ['uname'] 
-			) ) );
+		$this->setTitle ( $user_info['uname'].'的好友' );
+		$this->setKeywords ($user_info['uname'].'的好友');
 		$this->display ();
 	}
+	
+	/**
+	* 获取用户共同关注列表
+	* 
+	* @return void
+	*/
+	public function followingcommon() {
+		// 获取用户信息
+		$user_info = model ( 'User' )->getUserInfo ( $this->uid );
+		// 用户为空，则跳转用户不存在
+		if (empty ( $user_info )) {
+			$this->error ( L ( 'PUBLIC_USER_NOEXIST' ) );
+		}
+		// 个人空间头部
+		$this->_top ();
+		// 判断隐私设置
+		$userPrivacy = $this->privacy ( $this->uid );
+		if ($userPrivacy ['space'] !== 1) {			
+			$common_following_list = model ( 'Follow' )->getCommonFollowingList ($this->mid, $this->uid, 20 );
+			//print(model ( 'Follow' )->getLastSql());
+			$this->_sidebar ();
+			$fids = getSubByKey ( $common_following_list['data'], 'fid' );
+			if ($fids) {
+				$uids = array_merge ( $fids, array (
+					$this->uid 
+					) );
+			} else {
+				$uids = array (
+					$this->uid 
+					);
+			}
+			// 获取用户组信息
+			$userGroupData = model ( 'UserGroupLink' )->getUserGroupData ( $uids );
+			$this->assign ( 'userGroupData', $userGroupData );
+			$this->_assignFollowState ( $uids );
+			$this->_assignUserInfo ( $uids );
+			$this->_assignUserProfile ( $uids );
+			$this->_assignUserTag ( $uids );
+			$this->_assignUserCount ( $fids );
+			// 关注分组
+			($this->mid == $this->uid) && $this->_assignFollowGroup ( $fids );
+			
+			$this->assign ( 'common_following_list', $common_following_list );
+			
+		} else {
+			$this->_assignUserInfo ( $this->uid );
+		}
+		$this->assign ( 'userPrivacy', $userPrivacy );
+		
+		$this->setTitle ( '我和'.$user_info['uname'].'的共同关注' );
+		$this->setKeywords ( '我和'.$user_info['uname'].'的共同关注');
+		$this->display ();
+	}
+	
+	
 	
 	/**
 	 * 批量获取用户的相关信息加载
@@ -678,7 +727,7 @@ class ProfileAction extends Action {
 	}
 	
 	/**
-	 * 获取用户最后一条微博数据
+	 * 获取用户最后一条提问数据
 	 * 
 	 * @param
 	 *        	mix uids 用户uid
@@ -831,13 +880,9 @@ class ProfileAction extends Action {
 		$this->assign ( 'thanklist', $tlist );
 		
 		//我的关注
-		$fwhere =" `uid` = ".$this->uid;
-		$flist = model('FeedFollowing')->getFeedFollowingList1($fwhere, 3);
-		$this->assign ( 'feedfollowinglist', $flist );
-		
-		/*print('<br /><br /><br /><br />');
-		print_r($list);*/
-		
+		$feedwhere =" `uid` = ".$this->uid;
+		$feedfollowinglist = model('FeedFollowing')->getFeedFollowingList1($feedwhere, 3);
+		$this->assign ( 'feed_followinglist', $feedfollowinglist );		
 	}
 	
 	/**
@@ -878,6 +923,8 @@ class ProfileAction extends Action {
 		} else {
 			$this->_assignUserInfo ( $this->uid );
 		}
+		$this->setTitle ( $user_info['uname'].'的收藏' );
+		$this->setKeywords ($user_info['uname'].'的收藏');
 		$this->display ();
 	}
 	
@@ -914,6 +961,9 @@ class ProfileAction extends Action {
 		} else {
 			$this->_assignUserInfo ( $this->uid );
 		}
+		
+		$this->setTitle ( $user_info['uname'].'的新答案' );
+		$this->setKeywords ($user_info['uname'].'的新答案');
 		$this->display ();
 	}
 	
@@ -950,6 +1000,8 @@ class ProfileAction extends Action {
 		} else {
 			$this->_assignUserInfo ( $this->uid );
 		}
+		$this->setTitle ( $user_info['uname'].'的新评论' );
+		$this->setKeywords ($user_info['uname'].'的新评论');
 		$this->display ();
 	}
 	
@@ -987,6 +1039,8 @@ class ProfileAction extends Action {
 		} else {
 			$this->_assignUserInfo ( $this->uid );
 		}
+		$this->setTitle ( $user_info['uname'].'的新赞同评论' );
+		$this->setKeywords ($user_info['uname'].'的新赞同评论');
 		$this->display ();
 	}
 	
@@ -1024,6 +1078,8 @@ class ProfileAction extends Action {
 		} else {
 			$this->_assignUserInfo ( $this->uid );
 		}
+		$this->setTitle ( $user_info['uname'].'的新反对评论' );
+		$this->setKeywords ($user_info['uname'].'的新反对评论');
 		$this->display ();
 	}
 	
@@ -1052,6 +1108,8 @@ class ProfileAction extends Action {
 		} else {
 			$this->_assignUserInfo ( $this->uid );
 		}
+		$this->setTitle ( $user_info['uname'].'的活动信息' );
+		$this->setKeywords ($user_info['uname'].'的活动信息');
 		$this->display ();
 	}
 	/**
@@ -1074,51 +1132,53 @@ class ProfileAction extends Action {
 		// 判断隐私设置
 		$userPrivacy = $this->privacy ( $this->uid );
 		if ($userPrivacy ['space'] !== 1) {
+			// 获取用户的粉丝列表
+			$followerList = model('Follow')->getFollowerList($this->mid, 20);
+			$fids = getSubByKey($followerList['data'], 'fid');
 			$this->_sidebar ();
+			
+			// 清空新粉丝提醒数字
+			$newCount=0;
+			if($this->uid == $this->mid){
+				$udata = model('UserData')->getUserData($this->mid);
+				$newCount=$udata['new_folower_count'];
+				$udata['new_folower_count'] > 0 && model('UserData')->setKeyValue($this->mid,'new_folower_count',0);	
+			}
+			
+			// 获取用户信息
+			$followerUserInfo = model('User')->getUserInfoByUids($fids);
+			// 获取用户统计数目
+			$userData = model('UserData')->getUserDataByUids($fids);
+			// 获取用户标签
+			$this->_assignUserTag($fids);
+			// 获取用户用户组信息
+			$userGroupData = model('UserGroupLink')->getUserGroupData($fids);
+			$this->assign('userGroupData',$userGroupData);
+			// 获取用户的最后提问数据
+			//$lastFeedData = model('Feed')->getLastFeed($fids);
+			// 获取用户的关注信息状态
+			$followState = model('Follow')->getFollowStateByFids($this->mid, $fids);
+			// 组装数据
+			$index=0;
+			foreach($followerList['data'] as $key => $value) {
+				$followerList['data'][$key] = array_merge($followerList['data'][$key], $followerUserInfo[$value['fid']]);
+				$followerList['data'][$key] = array_merge($followerList['data'][$key], $userData[$value['fid']]);
+				$followerList['data'][$key] = array_merge($followerList['data'][$key], array('feedInfo'=>$lastFeedData[$value['fid']]));
+				$followerList['data'][$key] = array_merge($followerList['data'][$key], array('followState'=>$followState[$value['fid']]));
+				if($index<$newCount)
+				{
+					$followerList['data'][$key] = array_merge($followerList['data'][$key], array('newCount'=>1));
+					$index++;
+				}
+			}
+			
+			$this->assign($followerList);
 
 		} else {
 			$this->_assignUserInfo ( $this->uid );
 		}
-		
-		// 清空新粉丝提醒数字
-		$newCount=0;
-		if($this->uid == $this->mid){
-			$udata = model('UserData')->getUserData($this->mid);
-			$newCount=$udata['new_folower_count'];
-			$udata['new_folower_count'] > 0 && model('UserData')->setKeyValue($this->mid,'new_folower_count',0);	
-		}
-		// 获取用户的粉丝列表
-		$followerList = model('Follow')->getFollowerList($this->mid, 20);
-		$fids = getSubByKey($followerList['data'], 'fid');
-		// 获取用户信息
-		$followerUserInfo = model('User')->getUserInfoByUids($fids);
-		// 获取用户统计数目
-		$userData = model('UserData')->getUserDataByUids($fids);
-		// 获取用户标签
-		$this->_assignUserTag($fids);
-		// 获取用户用户组信息
-		$userGroupData = model('UserGroupLink')->getUserGroupData($fids);
-		$this->assign('userGroupData',$userGroupData);
-		// 获取用户的最后微博数据
-		//$lastFeedData = model('Feed')->getLastFeed($fids);
-		// 获取用户的关注信息状态
-		$followState = model('Follow')->getFollowStateByFids($this->mid, $fids);
-		// 组装数据
-		$index=0;
-		foreach($followerList['data'] as $key => $value) {
-			$followerList['data'][$key] = array_merge($followerList['data'][$key], $followerUserInfo[$value['fid']]);
-			$followerList['data'][$key] = array_merge($followerList['data'][$key], $userData[$value['fid']]);
-			$followerList['data'][$key] = array_merge($followerList['data'][$key], array('feedInfo'=>$lastFeedData[$value['fid']]));
-			$followerList['data'][$key] = array_merge($followerList['data'][$key], array('followState'=>$followState[$value['fid']]));
-			if($index<$newCount)
-			{
-				$followerList['data'][$key] = array_merge($followerList['data'][$key], array('newCount'=>1));
-				$index++;
-			}
-		}
-		//print_r($followerList);
-		$this->assign($followerList);
-		
+		$this->setTitle ( $user_info['uname'].'的新增粉丝' );
+		$this->setKeywords ($user_info['uname'].'的新增粉丝');
 		$this->display ();
 	}
 	/**
@@ -1141,51 +1201,52 @@ class ProfileAction extends Action {
 		// 判断隐私设置
 		$userPrivacy = $this->privacy ( $this->uid );
 		if ($userPrivacy ['space'] !== 1) {
+			
+			// 清空新好友提醒数字
+			$newCount=0;
+			if($this->uid == $this->mid){
+				$udata = model('UserData')->getUserData($this->mid);
+				$newCount=$udata['new_friend_count'];
+				$udata['new_friend_count'] > 0 && model('UserData')->setKeyValue($this->mid,'new_friend_count',0);	
+			}
+			// 获取用户的好友列表
+			$followerList = model('Follow')->getFriendList($this->mid, 20);
+			$fids = getSubByKey($followerList['data'], 'fid');
+			
+			// 获取用户信息
+			$followerUserInfo = model('User')->getUserInfoByUids($fids);
+			// 获取用户统计数目
+			$userData = model('UserData')->getUserDataByUids($fids);
+			// 获取用户标签
+			$this->_assignUserTag($fids);
+			// 获取用户用户组信息
+			$userGroupData = model('UserGroupLink')->getUserGroupData($fids);
+			$this->assign('userGroupData',$userGroupData);
+			// 获取用户的最后提问数据
+			//$lastFeedData = model('Feed')->getLastFeed($fids);
+			// 获取用户的关注信息状态
+			$followState = model('Follow')->getFollowStateByFids($this->mid, $fids);
+			// 组装数据
+			$index=0;
+			foreach($followerList['data'] as $key => $value) {
+				$followerList['data'][$key] = array_merge($followerList['data'][$key], $followerUserInfo[$value['fid']]);
+				$followerList['data'][$key] = array_merge($followerList['data'][$key], $userData[$value['fid']]);
+				$followerList['data'][$key] = array_merge($followerList['data'][$key], array('feedInfo'=>$lastFeedData[$value['fid']]));
+				$followerList['data'][$key] = array_merge($followerList['data'][$key], array('followState'=>$followState[$value['fid']]));
+				if($index<$newCount)
+				{
+					$followerList['data'][$key] = array_merge($followerList['data'][$key], array('newCount'=>1));
+					$index++;
+				}
+			}
+			$this->assign($followerList);
 			$this->_sidebar ();
 
 		} else {
 			$this->_assignUserInfo ( $this->uid );
-		}
-		
-		// 清空新好友提醒数字
-		$newCount=0;
-		if($this->uid == $this->mid){
-			$udata = model('UserData')->getUserData($this->mid);
-			$newCount=$udata['new_friend_count'];
-			$udata['new_friend_count'] > 0 && model('UserData')->setKeyValue($this->mid,'new_friend_count',0);	
-		}
-		// 获取用户的好友列表
-		$followerList = model('Follow')->getFriendList($this->mid, 20);
-		$fids = getSubByKey($followerList['data'], 'fid');
-		// 获取用户信息
-		$followerUserInfo = model('User')->getUserInfoByUids($fids);
-		// 获取用户统计数目
-		$userData = model('UserData')->getUserDataByUids($fids);
-		// 获取用户标签
-		$this->_assignUserTag($fids);
-		// 获取用户用户组信息
-		$userGroupData = model('UserGroupLink')->getUserGroupData($fids);
-		$this->assign('userGroupData',$userGroupData);
-		// 获取用户的最后微博数据
-		//$lastFeedData = model('Feed')->getLastFeed($fids);
-		// 获取用户的关注信息状态
-		$followState = model('Follow')->getFollowStateByFids($this->mid, $fids);
-		// 组装数据
-		$index=0;
-		foreach($followerList['data'] as $key => $value) {
-			$followerList['data'][$key] = array_merge($followerList['data'][$key], $followerUserInfo[$value['fid']]);
-			$followerList['data'][$key] = array_merge($followerList['data'][$key], $userData[$value['fid']]);
-			$followerList['data'][$key] = array_merge($followerList['data'][$key], array('feedInfo'=>$lastFeedData[$value['fid']]));
-			$followerList['data'][$key] = array_merge($followerList['data'][$key], array('followState'=>$followState[$value['fid']]));
-			if($index<$newCount)
-			{
-				$followerList['data'][$key] = array_merge($followerList['data'][$key], array('newCount'=>1));
-				$index++;
-			}
-		}
-		$this->assign($followerList);
-		
-		
+		}		
+		$this->setTitle ( $user_info['uname'].'的新增好友' );
+		$this->setKeywords ($user_info['uname'].'的新增好友');
 		$this->display ();
 	}
 	
@@ -1203,6 +1264,14 @@ class ProfileAction extends Action {
 		if (empty ( $user_info )) {
 			$this->error ( L ( 'PUBLIC_USER_NOEXIST' ) );
 		}
+		
+		// 清空新回答提醒数字
+		if($this->uid == $this->mid){
+			$udata = model('UserData')->getUserData($this->mid);
+			$this->assign ( 'new_invite_count', $udata['new_invite_count']);
+			$udata['new_invite_count'] > 0 && model('UserData')->setKeyValue($this->mid,'new_invite_count',0);	
+		}
+		
 		// 个人空间头部
 		$this->_top ();
 		
@@ -1214,6 +1283,272 @@ class ProfileAction extends Action {
 		} else {
 			$this->_assignUserInfo ( $this->uid );
 		}
+		$this->setTitle ( $user_info['uname'].'收到的邀请' );
+		$this->setKeywords ( $user_info['uname'].'收到的邀请');
 		$this->display ();
+	}
+	
+	/**
+	* 
+	*好友(弹框)
+	* 
+	* @return array
+	*/
+	public function invitefriend()
+	{
+		$topUserID = C('TopExpert');
+		$friendList = model('Follow')->getFriendList($GLOBALS['ts']['mid'], 18);	
+		$fids = getSubByKey ( $friendList ['data'], 'fid' );
+		$this->_assignUserInfo ( $fids );
+		
+		$uids = model('UserGroupLink')->getUserByGroupID(8, 4);
+		$user_count = model ( 'UserData' )->getUserDataByUids ($uids);
+		$authenticateExpert = model('user')->getUserInfoByUids($uids);
+		
+		$newuserList = array();
+		foreach($friendList['data'] as $k=>$v)
+		{
+			if(!array_key_exists($v['fid'], $authenticateExpert) && $v['fid'] != $topUserID )
+			{
+				$newuserList[$k] = $v;
+			}
+		}
+		
+		$friendList['data'] = $newuserList;
+		
+		$this->assign('friendList',$friendList);
+		
+		$this->display ();
+	}
+	
+	/**
+	 * 邀请回答
+	 *
+	 * @return array
+	 *
+	 */	
+	public function invitefriendanswer()
+	{
+		$return  = array('status'=>0,'data'=>L('邀请失败'));
+		if(empty($_POST['InviteUids']) || empty($_POST['QuestionID'])){
+			$return['data'] = L('参数错误');
+			echo json_encode($return);exit();
+		} 
+		$InviteUids = $_POST ['InviteUids'];
+		$QuestionID = intval ( $_POST ['QuestionID'] );
+		$uids = explode(",", $InviteUids); 
+		$InviteResult = '<br />';
+		$successCount = 0;
+		foreach	($uids as $k => $v)
+		{
+			if($v != '')
+			{
+				$user_info = model ( 'User' )->getUserInfo ($v);
+				$index = 0;
+				$map['uid'] = $this->uid;
+				$map['invite_uid'] = $v;
+				$map['questionid'] = $QuestionID;
+				$datalist = model('InviteAnswer')->getInviteAnswerList($map);
+				if($datalist['count'] != 0)
+				{
+					$index = 1;
+					$InviteResult .= "已经邀请过“".$user_info['uname']."”<br />";
+					continue;	
+				}
+				
+				$result = model('InviteAnswer')->addInvite($this->mid, $v, $QuestionID);
+				if(!$result)
+				{
+					$index = 1;
+					$InviteResult .= "邀请“".$user_info['uname']."”失败<br />";
+					continue;
+				}
+				if($index == 0)
+				{
+					$InviteResult .= "邀请“".$user_info['uname']."”成功<br />";
+					$successCount++;
+					model('UserData')->setUid($v)->updateKey('invite_count', 1, true);
+					model('UserData')->setUid($v)->updateKey('new_invite_count', 1, true);
+				}
+			}
+		}
+		//给问题增加邀请回答的数量
+		if($successCount > 0)
+		{
+			model('feed')->UpdateInviteCount($QuestionID, $successCount);
+		}
+
+		$return  = array('status'=>0,'data'=>L($InviteResult));
+		echo json_encode($return);exit();
+	}
+	
+	public function getInviteAnswerList()
+	{
+		$return  = array('status'=>0,'data'=>L('邀请失败'));
+		if(empty($_POST['QuestionID'])){
+			$return['data'] = L('参数错误');
+			echo json_encode($return);exit();
+		} 
+		$questionid = intval($_POST['QuestionID']);
+		$datalist = model('InviteAnswer')->getInviteAnswerModel($questionid);
+		$josnList = json_encode($datalist['data']);
+		echo json_encode($josnList);exit();	
+	}
+	
+	/**
+	 * 头像设置页面
+	 */
+	public function avatar() {	
+		
+		$followState = 0; //没关系
+		if($this->uid == $this->mid)
+		{
+			$followState=1; //自己
+		}
+		$state = model('Follow')->getFollowState($this->mid, $this->uid);
+		if($state['follower']==1)
+		{
+			$followState=2;//关注的人
+		}
+		
+		$this->assign ( 'followstate', $followState );
+		// 获取用户信息
+		$user_info = model ( 'User' )->getUserInfo ( $this->uid );
+		// 用户为空，则跳转用户不存在
+		if (empty ( $user_info )) {
+			$this->error ( L ( 'PUBLIC_USER_NOEXIST' ) );
+		}
+		// 个人空间头部
+		$this->_top ();
+		$this->_tab_menu();
+		
+		// 判断隐私设置
+		$userPrivacy = $this->privacy ( $this->uid );
+		if ($userPrivacy ['space'] !== 1) {
+			$this->_sidebar ();
+			// 档案类型
+			$ProfileType = model ( 'UserProfile' )->getCategoryList ();
+			$this->assign ( 'ProfileType', $ProfileType );
+			// 个人资料
+			$this->_assignUserProfile ( $this->uid );
+			// 获取用户职业信息
+			$userCategory = model ( 'UserCategory' )->getRelatedUserInfo ( $this->uid );
+			if (! empty ( $userCategory )) {
+				foreach ( $userCategory as $value ) {
+					$user_category .= '<a href="#" class="link btn-cancel"><span>' . $value ['title'] . '</span></a>&nbsp;&nbsp;';
+				}
+			}
+			$this->assign ( 'user_category', $user_category );
+		} else {
+			$this->_assignUserInfo ( $this->uid );
+		}
+		$this->assign ( 'userPrivacy', $userPrivacy );
+		
+		$this->setTitle ( $user_info ['uname'] . '的资料' );
+		$this->setKeywords ( $user_info ['uname'] . '的资料' );
+		$user_tag = model ( 'Tag' )->setAppName ( 'User' )->setAppTable ( 'user' )->getAppTags ( array (
+			$this->uid 
+			) );
+		$this->setDescription ( t ( $user_category . $user_info ['location'] . ',' . implode ( ',', $user_tag [$this->uid] ) . ',' . $user_info ['intro'] ) );
+
+		
+		model('User')->cleanCache($this->mid);
+		$user_info = model('User')->getUserInfo($this->mid);
+		$this->assign('user_info_avatar', $user_info);
+
+		$this->setTitle( L('PUBLIC_IMAGE_SETTING') );			// 个人设置
+		$this->setKeywords( L('PUBLIC_IMAGE_SETTING') );
+		// 获取用户职业信息
+		$userCategory = model('UserCategory')->getRelatedUserInfo($this->mid);
+		$userCateArray = array();
+		if(!empty($userCategory)) {
+			foreach($userCategory as $value) {
+				$user_info['category'] .= '<a href="#" class="link btn-cancel"><span>'.$value['title'].'</span></a>&nbsp;&nbsp;';
+			}
+		}
+		$user_tag = model('Tag')->setAppName('User')->setAppTable('user')->getAppTags(array($this->mid));
+		$this->setDescription(t($user_info['category'].$user_info['location'].','.implode(',', $user_tag[$this->mid]).','.$user_info['intro']));
+		$this->display();
+	}
+	
+	public function messages()
+	{
+		// 获取用户信息
+		$user_info = model ( 'User' )->getUserInfo ( $this->mid );
+		// 用户为空，则跳转用户不存在
+		if (empty ( $user_info )) {
+			$this->error ( L ( 'PUBLIC_USER_NOEXIST' ) );
+		}
+
+		// 个人空间头部
+		$this->_top ();
+		
+		// 判断隐私设置
+		$userPrivacy = $this->privacy ( $this->uid );
+		if ($userPrivacy ['space'] !== 1) {
+			$this->_sidebar ();
+
+		} else {
+			$this->_assignUserInfo ( $this->uid );
+		}
+		
+		$dao = model('Message');
+		$list = $dao->getMessageListByUid($this->mid, array(MessageModel::ONE_ON_ONE_CHAT, MessageModel::MULTIPLAYER_CHAT));
+		$this->assign($list);
+		// 设置信息已读(在右上角提示去掉),
+		model('Message')->setMessageIsRead(t($POST['id']), $this->mid, 1);
+		$this->setTitle( L('PUBLIC_MESSAGE_INDEX') );
+		$userInfo = model('User')->getUserInfo($this->mid);
+		
+		$this->setTitle ( $userInfo['uname'].'的私信' );
+		$this->setKeywords ($userInfo['uname'].'的私信');
+
+		$this->display();
+	}
+	
+	public function messagesdetail()
+	{
+		// 获取用户信息
+		$user_info = model ( 'User' )->getUserInfo ( $this->mid );
+		// 用户为空，则跳转用户不存在
+		if (empty ( $user_info )) {
+			$this->error ( L ( 'PUBLIC_USER_NOEXIST' ) );
+		}
+		
+		// 个人空间头部
+		$this->_top ();
+		
+		// 判断隐私设置
+		$userPrivacy = $this->privacy ( $this->uid );
+		if ($userPrivacy ['space'] !== 1) {
+			$this->_sidebar ();
+
+		} else {
+			$this->_assignUserInfo ( $this->uid );
+		}
+		
+		$message = model('Message')->isMember(t($_GET['id']), $this->mid, true);
+
+		// 验证数据
+		if(empty($message)) {			
+			$this->error(L('PUBLIC_PRI_MESSAGE_NOEXIST'));
+		}
+		$message['member'] = model('Message')->getMessageMembers(t($_GET['id']), 'member_uid');
+		$message['to'] = array();
+		// 添加发送用户ID
+		foreach($message['member'] as $v) {
+			$this->mid != $v['member_uid'] && $message['to'][] = $v;
+		}
+		// 设置信息已读(私信列表页去掉new标识)
+		model('Message')->setMessageIsRead(t($_GET['id']), $this->mid, 0);
+		$message['since_id'] = model('Message')->getSinceMessageId($message['list_id'],$message['message_num']);
+		
+		$this->assign('message', $message);
+		$this->assign('type', intval($_GET['type']));
+
+		$this->setTitle('与'.$message['to'][0]['user_info']['uname'].'的私信对话');
+		$this->setKeywords('与'.$message['to'][0]['user_info']['uname'].'的私信对话');
+
+		$this->display();
 	}
 }

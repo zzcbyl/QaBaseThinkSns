@@ -26,7 +26,7 @@ var weibo = $.weibo({
           </volist>
         </ul>
       </div>
-      <!-- 个人主页微博分类 -->
+      <!-- 个人主页提问分类 -->
           <eq name="type" value="weibo">
           <div class="MenuSub" id="MenuSub">
           <volist name="weibo_menu" id="vo">
@@ -34,7 +34,7 @@ var weibo = $.weibo({
           </volist>
           </div>   
           </eq>
-      <!-- /个人主页微博分类 -->
+      <!-- /个人主页提问分类 -->
       <if condition="$list">
 	      <div class="feedBox">
 			{:W('WeiboList', array('mid'=>$mid, 'list'=>$list['data'], 'insert'=>0, 'hidden_user'=>1))}

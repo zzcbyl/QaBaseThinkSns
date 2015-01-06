@@ -21,10 +21,10 @@ class ContentWidget extends Widget
 		// $var['loadId'] = intval($data['loadId']);
 		// $var['loadLimit'] = intval($data['loadLimit']);
 		$var['cid'] = intval($data['cid']);
-		// 获取微博数据
+		// 获取提问数据
 		if($template == 'list') {
 			$var['list'] = $this->getListData($var['cid']);
-			// 微博配置
+			// 提问配置
 			$weiboSet = model('Xdata')->get('admin_Config:feed');
 			$var['weibo_premission'] = $weiboSet['weibo_premission'];
 		}
@@ -67,14 +67,14 @@ class ContentWidget extends Widget
 
     public function getData($cid, $loadLimit, $loadId)
     {
-		// 获取微博数据
+		// 获取提问数据
 		$list = D('Channel', 'channel')->getDataWithCid($cid, $loadId, $loadLimit);
     	// 分页的设置
     	if(!empty($list['data'])) {
     		$content['firstId'] = $var['firstId'] = $list['data'][0]['feed_channel_link_id'];
     		$content['lastId'] = $list['data'][(count($list['data'])-1)]['feed_channel_link_id'];
             $var['data'] = $this->_formatContent($list['data']);
-            // 微博配置
+            // 提问配置
 			$weiboSet = model('Xdata')->get('admin_Config:feed');
 			$var['weibo_premission'] = $weiboSet['weibo_premission'];
     	}
@@ -87,15 +87,15 @@ class ContentWidget extends Widget
     }
 
 	/**
-	 * 处理微博附件数据
+	 * 处理提问附件数据
 	 * @param array $data 频道关联数组信息
-	 * @return array 处理后的微博数据
+	 * @return array 处理后的提问数据
 	 */
 	private function _formatContent($data)
 	{
-		// 组装微博信息
+		// 组装提问信息
 		foreach($data as &$value) {
-			// 获取微博信息
+			// 获取提问信息
 			$feedInfo = model('Feed')->get($value['feed_id']);
 			$value = array_merge($value, $feedInfo);
 			switch($value['type']) {

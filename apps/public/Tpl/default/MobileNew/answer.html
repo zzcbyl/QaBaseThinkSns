@@ -1,0 +1,60 @@
+<include file="__THEME__/mobile_header" />
+<div class="container" style="background:#ddd; width:auto; margin:0px; padding:0px;">
+    <!--内容列表-->
+    <div class="contsNum" style="margin:10px 5px 5px 5px; padding:0;">
+        <!--问-->
+        <div class="contTwo">
+            <div class="contCenter2" model-node='feed_list' style="width:auto; border:none; padding:0px; background:#fff;">
+                <div class="contTit" style="padding:0 5px 5px 5px; background:#fff6e4; border-bottom:4px solid #ddd; ">
+                    <h2 style="padding-left:0px; border-bottom:1px dashed #ddd;"><a style="font-size:18px;" href="javascript:void(0);">{$feedInfo.body|format=true}</a></h2>
+                    <div style="padding-top:5px;">
+                        <php>
+                            $descriptionTxt = $feedInfo['description'];
+                            $descriptionImg = "";
+                            if(strpos($feedInfo['description'],'<div') > 0)
+                            {
+                                $descriptionTxt = substr($feedInfo['description'], 0, strpos($feedInfo['description'],'<div'));
+                                $descriptionImg = substr($feedInfo['description'], strpos($feedInfo['description'],'<div'), strrpos($feedInfo['description'],'div>'));
+                            }
+                        if(strlen($descriptionTxt) > 279) {
+                        </php>
+                        <div id="feedSubData{$feedInfo['comment'].comment_id}{$feedInfo.feed_id}{$feedInfo['answer'][0].feed_id}">
+                            <p style="padding-left:0px; text-indent:20px; font-size:16px;">
+                                <php> print(utf_substr(str_replace('<br />',' ',$descriptionTxt),185).'... '); </php>
+                                <div style="margin-top: 5px;"><a style="font-size:14px; cursor:pointer;" onclick="showContentAll('feed','{$feedInfo['comment'].comment_id}{$feedInfo.feed_id}{$feedInfo['answer'][0].feed_id}');">查看全文</a></div>
+                                <php>print($descriptionImg);</php>
+                            </p>
+                        </div>
+                        <div id="feedAll{$feedInfo['comment'].comment_id}{$feedInfo.feed_id}{$feedInfo['answer'][0].feed_id}" style="display:none;">
+                            <p style="padding-left:0px; text-indent:20px; font-size:16px;">
+                                <php> print($descriptionTxt); </php>
+                                <div style="margin-top: 5px;" ><a style="font-size:14px; cursor:pointer;" onclick="showContentAll('feed','{$feedInfo['comment'].comment_id}{$feedInfo.feed_id}{$feedInfo['answer'][0].feed_id}');">收起</a></div>
+                                <div style="clear:both;"></div>
+                                <php>print($descriptionImg);</php>
+                            </p>
+                        </div>        
+                        <php> } else {  print('<p style="padding-left:0px; text-indent:20px; font-size:16px;">'.$descriptionTxt.$descriptionImg.'</p>'); } </php>
+                    </div>
+                </div>
+                <div>
+                    {:W('AnswerMobileNoFace',array('title'=>'回答', 'feedID'=>$feedInfo['feed_id'], 'openid'=>$openid))}    
+                    <div style="clear:both;"></div>
+                </div>
+            </div>
+        </div>
+        <!--//问-->
+    </div>
+    <!--//内容列表-->
+    <input type="hidden" id="feed_questionid" value="{$feedInfo['feed_id']}" />
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.input_tips').focus();
+    });
+</script>
+<include file="__THEME__/mobile_footer" />
+
+<link href="__THEME__/css/reveal.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="__THEME__/js/jquery.reveal.js"></script>
+<script type="text/javascript" src="__THEME__/js/home/module.home.js"></script>
+<script type="text/javascript" src="__THEME__/js/module.weibo_mobile.js"></script>

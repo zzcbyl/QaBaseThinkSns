@@ -22,7 +22,7 @@ class MessageAction extends Action
 		$list = $dao->getMessageListByUid($this->mid, array(MessageModel::ONE_ON_ONE_CHAT, MessageModel::MULTIPLAYER_CHAT));
 		$this->assign($list);
 		// 设置信息已读(在右上角提示去掉),
-		model('Message')->setMessageIsRead(t($POST['id']), $this->mid, 1);
+		//model('Message')->setMessageIsRead(t($POST['id']), $this->mid, 1);
 		$this->setTitle( L('PUBLIC_MESSAGE_INDEX') );
 		$userInfo = model('User')->getUserInfo($this->mid);
 		$this->setKeywords($userInfo['uname'].'的私信');
