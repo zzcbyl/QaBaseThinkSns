@@ -12,10 +12,20 @@
             </div>
             <div class="contCenter2" model-node='feed_list'>
                 <div class="contTit" >
+                    <!--<a href="{$feedInfo['user_info']['space_url']}"><img class="thumb" src="{$feedInfo['user_info']['avatar_small']}"  event-node="face_card" uid='{$feedInfo['user_info']['uid']}' /></a>-->
+                    <php>if (intval($feedInfo['user_info']['uid']) > 0 ) { </php>
                     <a href="{$feedInfo['user_info']['space_url']}"><img class="thumb" src="{$feedInfo['user_info']['avatar_small']}"  event-node="face_card" uid='{$feedInfo['user_info']['uid']}' /></a>
+                    <php> } else { </php>
+                    <a><img class="thumb" src="__THEME__/image/noavatar/small.jpg"  /></a>
+                    <php> } </php>
                     <h1 style="height:15px;">
                         <div style="float:left;">
-                        <a href="{$feedInfo['user_info']['space_url']}">{$feedInfo.title}</a>
+                        <!--<a href="{$feedInfo['user_info']['space_url']}">{$feedInfo.title}</a>-->
+                        <php>if (intval($feedInfo['user_info']['uid']) > 0 ) { </php>
+                            <a href="{$feedInfo['user_info']['space_url']}">{$feedInfo.title}</a>
+                        <php> } else { </php>
+                            <a>匿名</a>
+                        <php> } </php>
 	                    <php> if(in_array($feedInfo['user_info']['uid'],$followUids)){</php>
 	                    {:W('Remark',array('uid'=>$feedInfo['user_info']['uid'],'remark'=>$remarkHash[$feedInfo['user_info']['uid']],'showonly'=>1))}
 	                    <php>}</php>

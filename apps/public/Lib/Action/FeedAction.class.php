@@ -103,6 +103,15 @@ class FeedAction extends Action {
 			$d['attach_id'] = explode('|', $d['attach_id']);
 			array_map( 'intval' , $d['attach_id'] );
 		}
+
+        //获取用户
+        $openid = '';
+        $user = model('user')->getUserInfo($this->uid);
+        if (isset($user)) {
+            $openid = $user['openid'];
+        }
+        $d['openid'] = $openid;
+
 		// 发送提问的类型
 		$type = t($_POST['type']);
 		// 所属应用名称
