@@ -59,12 +59,12 @@ class qq{
 		$_SESSION['open_platform_type'] = 'qq';
 	}
 
-	//发布一条提问
+	//发布一条微博
 	function update($text,$opt){
 		return $this->doClient($opt)->t_add($text);
 	}
 
-	//上传一个照片，并发布一条提问
+	//上传一个照片，并发布一条微博
 	function upload($text,$opt,$pic){
 		if(file_exists($pic)){
 			return $this->doClient($opt)->t_add_pic($text,$pic);

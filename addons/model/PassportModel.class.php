@@ -107,35 +107,6 @@ class PassportModel {
 			return false;
 		}
 	}
-	
-	/**
-	 * 检查用户名
-	 *
-	 * @param 登录名
-	 * @return bool
-	 *
-	 */	
-	public function CheckLocalUser($login) {
-		$login = t($login);
-		if(empty($login)) {
-			$this->error = '请输入您的用户名';			// 帐号不能为空
-			return false;
-		}
-
-		if(!$this->isValidEmail($login) && !$this->isValidMobile($login)){
-			$this->error = '用户名只能是邮箱或者手机号';			
-			return false;
-		}
-
-		$map = "login = '{$login}' AND is_del=0";
-		
-		if(!$user = model('User')->where($map)->find()) {
-			$this->error = '用户名不存在, 请您先注册';			// 帐号不存在
-			return false;
-		}
-
-		return true;
-	}
 
 	/**
 	 * 根据标示符（email或uid）和未加密的密码获取本地用户（密码为null时不参与验证）
@@ -145,30 +116,19 @@ class PassportModel {
 	 */
 	public function getLocalUser($login, $password) {
 		$login = t($login);
-		if(empty($login)) {
-			$this->error = '请输入您的用户名';			// 帐号不能为空
-			return false;
-		}
-		if(!$this->isValidEmail($login) && !$this->isValidMobile($login)){
-			$this->error = '用户名只能是邮箱或者手机号';			
+		if(empty($login) || empty($password)) {
+			$this->error = L('PUBLIC_ACCOUNT_EMPTY');			// 帐号或密码不能为空
 			return false;
 		}
 
-		/*if($this->isValidEmail($login)){
+		if($this->isValidEmail($login)){
 			$map = "(login = '{$login}' or email='{$login}') AND is_del=0";
 		}else{
 			$map = "(login = '{$login}' or uname='{$login}') AND is_del=0";
-		}*/
-		
-		$map = "login = '{$login}' AND is_del=0";
-		
-		if(!$user = model('User')->where($map)->find()) {
-			$this->error = '用户名不存在, 请您先 <a style="text-decoration:underline;" href="'.U('public/Register/Home',array('login'=>$login)).'">注册</a>';			// 帐号不存在
-			return false;
 		}
 		
-		if(empty($password)) {
-			$this->error = '请输入您的密码';			// 密码不能为空
+		if(!$user = model('User')->where($map)->find()) {
+			$this->error = L('PUBLIC_ACCOUNT_NOEXIST');			// 帐号不存在
 			return false;
 		}
 
@@ -176,15 +136,15 @@ class PassportModel {
 		// 记录登陆日志，首次登陆判断
 		$this->rel = D('LoginRecord')->where("uid = ".$uid)->field('locktime')->find();
 
-		/*$login_error_time = cookie('login_error_time');
+		$login_error_time = cookie('login_error_time');
 
 		if($this->rel['locktime'] > time()) {
 			$this->error = L('PUBLIC_ACCOUNT_LOCKED');			// 您的帐号已经被锁定，请稍后再登录
 			return false;
-		}*/
+		}
 		
 		if($password && md5(md5($password).$user['login_salt']) != $user['password']) {
-			/*$login_error_time = intval($login_error_time) + 1;
+			$login_error_time = intval($login_error_time) + 1;
 			cookie('login_error_time', $login_error_time);
 
 			$this->error = '密码输入错误，您还可以输入'.(6 - $login_error_time).'次';			// 密码错误
@@ -207,8 +167,7 @@ class PassportModel {
 				} else {
 					D('')->table(C('DB_PREFIX').'login_record')->where($m)->save($save);
 				}
-			}*/
-			$this->error = '密码输入错误';
+			}
 			return false;
 		} else {
 			$logData['uid'] = $uid;
@@ -350,15 +309,6 @@ class PassportModel {
 	 */
 	public function isValidEmail($email) {
 		return preg_match("/[_a-zA-Z\d\-\.]+@[_a-zA-Z\d\-]+(\.[_a-zA-Z\d\-]+)+$/i", $email) !== 0;
-	}
-	
-	/**
-	* 判断手机号是否合法
-	* @param string $mobile 手机号
-	* @return boolean 手机号是否合法
-	*/
-	public function isValidMobile($mobile) {
-		return preg_match("/^0*(13|15|18)\d{9}$/i", $mobile) !== 0;
 	}
 
 	/**
@@ -598,5 +548,4 @@ class PassportModel {
 		include_once SITE_PATH.'/api/uc_client/client.php';
 		return uc_user_synlogout();
 	}
-
 }

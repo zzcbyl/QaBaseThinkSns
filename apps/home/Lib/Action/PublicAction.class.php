@@ -188,7 +188,7 @@ class PublicAction extends Action{
 		$data['is_active']    = 1;
 		$data['is_init']      = 1;
 		$data['ctime']      = time();
-		$data['is_synchronizing']  = ($type == 'sina') ? '1' : '0'; // 是否同步新浪提问. 目前仅能同步新浪提问
+		$data['is_synchronizing']  = ($type == 'sina') ? '1' : '0'; // 是否同步新浪微博. 目前仅能同步新浪微博
 
 		if ( $id = M('user')->add($data) ) {
 			// 记录至同步登录表
@@ -322,7 +322,7 @@ class PublicAction extends Action{
 
 		if($result) {
 			if(UC_SYNC && $result['reg_from_ucenter']){
-				//从UCenter导入卢勤问答，跳转至帐号修改页
+				//从UCenter导入ThinkSNS，跳转至帐号修改页
 				$refer_url = U('home/Public/userinfo');
 			}elseif ( $_SESSION['refer_url'] != '' ) {
 				//跳转至登录前输入的url

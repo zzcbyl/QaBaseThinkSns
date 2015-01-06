@@ -114,8 +114,6 @@ core.uploadFile = {
                 }
             });
 
-            $('#uploadImgDiv .tpCont').hide();
-
             //验证附件上传个数 不能大于4个
             if (_this.limit != 0 && $(_this.resultDiv).find('li').size() > (_this.limit - 1)) {
                 ui.error('最多只能上传' + _this.limit + '个附件');
@@ -304,7 +302,6 @@ core.uploadFile = {
         }
         //});
         this.filehash[id] = '';
-        $('#uploadImgDiv .tpCont').show();
     },
     //private 默认为父DIV的上一层div
     getParentDiv: function (_parent) {

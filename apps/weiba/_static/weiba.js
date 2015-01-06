@@ -204,7 +204,7 @@ M.addEventFns({
 			if("undefined" != typeof(this.addComment) && (this.addComment == true)) {
 				return false;	//不要重复评论
 			}
-			// 如果转发到自己的提问
+			// 如果转发到自己的微博
 			var ischecked = $(this.comment_textarea).find("input[name='shareFeed']").get(0).checked;
 			if(ischecked == true) {
 				var ifShareFeed = 1;

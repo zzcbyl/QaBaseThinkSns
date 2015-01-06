@@ -1,6 +1,0 @@
-1、语言配置-》添加配置： 
-		
-	语言KEY	        		应用名称 	文件类型	 简体	         繁体		英文
-
-	PUBLIC_NEWINVITECOUNT_REMIND	 PUBLIC		PHP文件	 	 查看新邀请	 查看新邀請	 View		
-	PUBLIC_SYSTEM_NEWINVITECOUNT	 PUBLIC	 	JavaScript文件	 个新邀请	 個新邀請	 new invites

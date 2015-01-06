@@ -10,7 +10,7 @@
                           
                            <ul>
                              <li>
-                               <a class="current" href="{:U('public/Rank/weibo')}">提问排行榜<span class="triangle"></span></a><i class="line"></i>  
+                               <a class="current" href="{:U('public/Rank/weibo')}">微博排行榜<span class="triangle"></span></a><i class="line"></i>  
                              </li>
                              <li>
                                <a href="{:U('public/Rank/topic')}">话题排行榜</a><i class="line"></i>  
@@ -145,7 +145,7 @@ function addDigg(feed_id){
 	
 	<em class="hover">
 	<eq name='vl.actions.delete' value='true'>
-	<!-- 做普通删除权限 和 管理删除权限 判断 & 只有提问可以被删除  -->
+	<!-- 做普通删除权限 和 管理删除权限 判断 & 只有微博可以被删除  -->
 	<php>if(($vl['user_info']['uid'] == $GLOBALS['ts']['mid'] && CheckPermission('core_normal','feed_del')) || CheckPermission('core_admin','feed_del')){</php>
 		<a href="javascript:void(0)" event-node ='delFeed' event-args='feed_id={$vl.feed_id}&uid={$vl.user_info.uid}'>{:L('PUBLIC_STREAM_DELETE')}</a>
 	<php>}</php>

@@ -19,7 +19,7 @@
             <!--<div class="app-tab-menu clearfix">
                                                       
                     <dl>
-                        <dt><a href="{:U('public/Profile/index',array('type'=>$type,'feed_type'=>'','uid'=>$uid))}" class="current">提问</a><a href="{:U('public/Profile/data',array('uid'=>$uid))}">资料</a></dt>
+                        <dt><a href="{:U('public/Profile/index',array('type'=>$type,'feed_type'=>'','uid'=>$uid))}" class="current">微博</a><a href="{:U('public/Profile/data',array('uid'=>$uid))}">资料</a></dt>
                     </dl>
                 </div>-->
         </div>
@@ -102,7 +102,7 @@
                                         <php>}</php>
                                         <i class="vline"></i>
                                         <eq name='feedInfo.actions.delete' value='true'>
-                        <!-- 做普通删除权限 和 管理删除权限 判断 & 只有提问可以被删除  -->
+                        <!-- 做普通删除权限 和 管理删除权限 判断 & 只有微博可以被删除  -->
                         <php>if(($feedInfo['uid'] == $GLOBALS['ts']['mid']) ) {</php>
                         <a href="javascript:void(0)" event-node ='delFeed' event-args='feed_id={$feedInfo.feed_id}&uid={$feedInfo.uid}&isrefresh=1'>{:L('PUBLIC_STREAM_DELETE')}</a>
                         <php>}</php>
@@ -185,7 +185,7 @@
             </div>
             <php>}else{</php>
             <p class="extend">
-                -_-。sorry！根据对方隐私设置，您无权查看TA的提问</p>
+                -_-。sorry！根据对方隐私设置，您无权查看TA的微博</p>
             <php>}</php>
         </div>
     </div>

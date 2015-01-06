@@ -26,7 +26,7 @@
 							<p class="hd"><space uid="vl.source_user_info.uid">{uname}</space></p>
 							<p>
 								<eq name="vl.is_del" value="0">{$vl.source_data.body|format=true}</eq>
-								<eq name="vl.is_del" value="1"><span style="color:red;">（提示：原提问已被删除，你可以取消收藏）</span></eq></p>
+								<eq name="vl.is_del" value="1"><span style="color:red;">（提示：原微博已被删除，你可以取消收藏）</span></eq></p>
 							<p class="info">
 							<span class="right">{:W('Collection',array('type'=>'collection','sid'=>$vl['source_id'],'stable'=>$vl['source_table_name'],'sapp'=>$vl['source_app']))}
 

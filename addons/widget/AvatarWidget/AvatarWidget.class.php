@@ -20,7 +20,7 @@ class AvatarWidget extends Widget {
 		$var['attach_max_size'] = $attachConf['attach_max_size'];
 
  		is_array($data) && $var = array_merge($var,$data);
-		
+
 		$content = $this->renderFile(dirname(__FILE__)."/default.html", $var);
 		
 		return $content;
@@ -32,7 +32,7 @@ class AvatarWidget extends Widget {
 	public function getflashHtml(){
 		$password   = time();
 		$userinfo   = model('User')->getUserInfo($GLOBALS['ts']['mid']);
-		$defaultImg = $userinfo['avatar_original'];
+		$defaultImg = $userinfo['avatar_big'];
 		$uploadUrl  = urlencode(U('public/Account/doSaveUploadAvatar')); 
 		echo ' <embed src="'.THEME_PUBLIC_URL.'/image/face.swf" quality="high" wmode="opaque" 
 			FlashVars="uploadServerUrl='.$uploadUrl.'&defaultImg='.$defaultImg.'" 

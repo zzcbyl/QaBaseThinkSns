@@ -39,7 +39,7 @@ $(document).ready(function(){
 	//名人推荐
 	star_list();
 
-	//提问列表
+	//微博列表
 	$("#square_list_tab a").click(function(){
 		var $a = $(this);
 		if(!$a.hasClass("on")){
@@ -129,7 +129,7 @@ $(document).ready(function(){
 		<php>}</php>
         <div class="laSOSO">
            <div class="sosobox">
-            <input type="text" id="s_keyword" class="text mr5 left" style="width:300px;"><input type="button" onclick="s_search('topic')" value="搜提问" class="btn_b mr5"><input type="button" onclick="s_search('user')" value="搜人" class="btn_b"></div>
+            <input type="text" id="s_keyword" class="text mr5 left" style="width:300px;"><input type="button" onclick="s_search('topic')" value="搜微博" class="btn_b mr5"><input type="button" onclick="s_search('user')" value="搜人" class="btn_b"></div>
         </div><!--搜索框-->
         <if condition="$hotUser">
           <div class="tab-menu">
@@ -179,7 +179,7 @@ $(document).ready(function(){
 			</volist>
           </ul>
         </div><!--tabmenu-->
-        <div id="square_list"><img src="__THEME__/images/icon_waiting.gif" width="20" style="margin:33px 50% 0 50%;" /></div><!--提问列表-->
+        <div id="square_list"><img src="__THEME__/images/icon_waiting.gif" width="20" style="margin:33px 50% 0 50%;" /></div><!--微博列表-->
         </div>
     </div>
 </div>

@@ -94,19 +94,19 @@
 ]]>
 </action>
 
-<action type="editFeedNode" info="修改提问节点">
+<action type="editFeedNode" info="修改微博节点">
 <![CDATA[ 
-修改提问模板属性,应用:{$appname},提问类型:{$nodetype}（{$nodeinfo}）
+修改微博模板属性,应用:{$appname},微博类型:{$nodetype}（{$nodeinfo}）
 ]]>
 </action>
-<action type="delFeedNode" info="删除提问节点">
+<action type="delFeedNode" info="删除微博节点">
 <![CDATA[ 
-删除提问模板。
+删除微博模板。
 ]]>
 </action>
-<action type="addFeedNode" info="添加提问节点">
+<action type="addFeedNode" info="添加微博节点">
 <![CDATA[ 
-添加提问模板,应用:{$appname},提问类型:{$nodetype}（{$nodeinfo}）
+添加微博模板,应用:{$appname},微博类型:{$nodetype}（{$nodeinfo}）
 ]]>
 </action>
 

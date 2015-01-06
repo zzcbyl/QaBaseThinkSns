@@ -107,7 +107,7 @@ core.groupcomment = {
 			return false;
 		}
 		
-		// 如果转发到自己的提问
+		// 如果转发到自己的微博
 		if(this.canrepost == 1){
 			var ischecked = $(this.comment_textarea).find("input[name='shareFeed']").get(0).checked;
 			if(ischecked == true) {

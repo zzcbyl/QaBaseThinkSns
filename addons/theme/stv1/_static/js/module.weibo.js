@@ -1,5 +1,5 @@
 /**
- * 	本js内为提问关的JS函数及监听
+ * 	本js内为微博关的JS函数及监听
  *	TODO 需要优化重构 重构方式参考 core.comment 和 core.searchUser
  */
 
@@ -20,7 +20,7 @@ if("undefinde" == typeof(firstId)){
 	var firstId = 0;
 }
 if("undefined" == typeof(feedType)){
-	var feedType = 'following';	// 默认的提问类型(关注的)
+	var feedType = 'following';	// 默认的微博类型(关注的)
 }
 if("undefined" == typeof(feed_type)){
 	var feed_type ='';
@@ -110,7 +110,7 @@ M.addEventFns({
             }
         }
     },
-    post_feed: {	//发布普通|图片提问 
+    post_feed: {	//发布普通|图片微博 
         click: function () {
             if (feedbtnlock == 0) {
                 feedbtnlock = 1;
@@ -135,13 +135,10 @@ M.addEventFns({
             var questionid_editor = this.parentModel.parentModel.childModels['mini_editor'][0];
             var questionid = $(mini_editor).find('input').get(0);
 
-            var inviteObj = this.parentModel;
-            var inviteList = $(inviteObj).find('input').get(2);
-
-            core.weibo.post_feed(_this, mini_editor, textarea, description_editor, description, questionid, false, '', 0, inviteList);
+            core.weibo.post_feed(_this, mini_editor, textarea, description_editor, description, questionid);
         }
     },
-    post_addask: {	//追问
+    post_addask: {	//发布普通|图片微博 
         click: function () {
             if (feedbtnlock == 0) {
                 feedbtnlock = 1;
@@ -162,32 +159,7 @@ M.addEventFns({
 
             var questionid_editor = this.parentModel.parentModel.childModels['mini_editor'][0];
             var questionid = $(mini_editor).find('input').get(0);
-            core.weibo.post_feed(_this, mini_editor, textarea, null, null, questionid, false, "", true);
-        }
-    },
-    post_supplementanswer: {	//补充回答
-        click: function () {
-            if (feedbtnlock == 0) {
-                feedbtnlock = 1;
-                setTimeout(function () {
-                    feedbtnlock = 0;
-                }, 1500);
-            } else {
-                ui.error('正在发布请勿重复点击！');
-                return false;
-            }
-            if ($('.upload_tips').length > 0) {
-                ui.error(L('PUBLIC_ATTACH_UPLOADING_NOSENT'));
-                return false;
-            }
-            var _this = this;
-            var mini_editor = this.parentModel.parentModel.childModels['mini_editor'][0];
-            var textarea = $(mini_editor).find('textarea').get(0);
 
-            var questionid_editor = this.parentModel.parentModel.childModels['mini_editor'][0];
-            var questionid = $(mini_editor).find('input').get(0);
-//            alert(textarea.value);
-//            alert(questionid.value);
             core.weibo.post_feed(_this, mini_editor, textarea, null, null, questionid, false, "", true);
         }
     },
@@ -273,7 +245,7 @@ M.addEventFns({
                             $(_this.parentModel).fadeOut();
                         }
                         updateUserData('weibo_count', -1, attrs.uid);
-                        if (attrs.isrefresh == 1) {    //在提问详情页删除后跳转到首页
+                        if (attrs.isrefresh == 1) {    //在微博详情页删除后跳转到首页
                             window.location.href = SITE_URL;
                         }
                     } else {
@@ -381,7 +353,7 @@ M.addEventFns({
                 $(this).css('display', 'block');
             }
         },
-        // 显示与隐藏提问操作弹窗
+        // 显示与隐藏微博操作弹窗
         click: function () {
             $('#weibo_admin_box').remove();
             var _this = this;
@@ -417,7 +389,7 @@ M.addEventFns({
             M(document.getElementById('weibo_admin_box'));
         }
     },
-    // 提问内容输入框
+    // 微博内容输入框
     mini_editor_textarea: {
         click: function () {
             if ($(this).attr('texttype') == undefined || $(this).attr('texttype') == "") {
@@ -516,7 +488,7 @@ M.addEventFns({
             removeClass(this, 'focus');
         }
     },
-    // 提问内容输入框
+    // 微博内容输入框
     mini_editor_textarea: {
 }
 });
@@ -532,7 +504,7 @@ var getAdminBox = function(feedId, channelId, clear)
 };
 /**
  * 添加微事务窗口
- * @param integer feedId 提问ID
+ * @param integer feedId 微博ID
  * @return void
  */
 var addToVtask = function(feedId) {

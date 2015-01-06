@@ -20,7 +20,7 @@ SET FOREIGN_KEY_CHECKS=0;
 DROP TABLE IF EXISTS `ts_channel`;
 CREATE TABLE `ts_channel` (
   `feed_channel_link_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
-  `feed_id` int(11) NOT NULL COMMENT '提问ID',
+  `feed_id` int(11) NOT NULL COMMENT '微博ID',
   `channel_category_id` int(11) NOT NULL COMMENT '频道分类ID',
   `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '审核状态 1审核 0未审核',
   `width` int(11) NOT NULL DEFAULT '0' COMMENT '图片宽度',

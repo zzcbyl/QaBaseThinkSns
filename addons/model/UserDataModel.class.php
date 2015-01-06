@@ -31,8 +31,8 @@ class UserDataModel extends Model {
 	/**
 	 * 更新某个用户的指定Key值的统计数目
 	 * Key值：
-	 * feed_count：提问总数
-	 * weibo_count：提问数
+	 * feed_count：微博总数
+	 * weibo_count：微博数
 	 * favorite_count：收藏数
 	 * following_count：关注数
 	 * follower_count：粉丝数
@@ -155,12 +155,12 @@ class UserDataModel extends Model {
 		return $rearray;
 	}
 	/**
-	 * 手动统计更新用户数据，提问、关注、粉丝、收藏
+	 * 手动统计更新用户数据，微博、关注、粉丝、收藏
 	 * @return void
 	 */
 	public function updateUserData() {
 		set_time_limit(0);
-		// 总提问数目和未假删除的提问数目
+		// 总微博数目和未假删除的微博数目
 		$sql = 'SELECT uid, count(feed_id) as total, SUM(is_del) as delSum FROM '.C('DB_PREFIX').'feed GROUP BY uid';
 		$list = M()->query($sql);
 		foreach ($list as $vo){
@@ -219,18 +219,5 @@ class UserDataModel extends Model {
 	public function getlist( $map, $order='', $limit = 10){
 		$list = $this->where($map)->order($order)->findPage($limit);
 		return $list['data'];
-	}
-	
-	/**
-	 * 清除缓存
-	 *
-	 * @param int $uid 用户Id
-	 * @return void
-	 *
-	 */	
-	public function clearCache($uid)
-	{
-		// 清掉该用户的缓存
-		model('Cache')->rm('UserData_'.$uid);	
 	}
 }

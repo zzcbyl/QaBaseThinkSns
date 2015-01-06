@@ -1,18 +1,18 @@
 <?php
 /**
- * 发布提问Widget
+ * 发布微博Widget
  *
  * @author daniel <desheng.young@gmail.com>
  */
 class WeiboWidget extends Widget {
 
 	/**
-	 * 发布提问Widget, 用法包括分享等
+	 * 发布微博Widget, 用法包括分享等
 	 *
 	 * $data接受的参数:
 	 * <code>
 	 * array(
-	 * 	'page_title'(可选)	=> '弹出窗标题',		 // 默认为"分享到我的提问"
+	 * 	'page_title'(可选)	=> '弹出窗标题',		 // 默认为"分享到我的微博"
 	 * 	'button_title'(可选)	=> '弹出窗内按钮的标题', // 默认为"发布"
 	 * 	'tpl_name'(必须)		=> '模版名称',		 // 管理后台配置的模版的名称
 	 * )

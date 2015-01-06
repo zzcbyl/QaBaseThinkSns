@@ -17,7 +17,7 @@ class InviteModel extends Model
 	 * @param boolean $isAdmin 是否为管理员邀请操作，默认为false
 	 * @return boolean|string 成功返回邀请码，失败返回false
 	 */
-	public function createInviteCode($uid, $type, $num = 5, $limitedCount = 1, $areaID = 0, $prefix = '', $isAdmin = false)
+	public function createInviteCode($uid, $type, $num = 5, $isAdmin = false)
 	{
 		$adminVal = $isAdmin ? 1 : 0;
 		// 验证数据
@@ -29,45 +29,19 @@ class InviteModel extends Model
 		// 生成邀请码清单
 		$codes = array();
 		for($i = 1; $i <= $num; $i++) {
-			$inviteCode = $prefix.tsmd5($uid.microtime(true).rand(1111,9999).$i);
+			$inviteCode = tsmd5($uid.microtime(true).rand(1111,9999).$i);
 			$inviteCodes[] = $inviteCode;
-			$codes[] = "($uid, '$inviteCode', 0, '$type', $adminVal, $limitedCount, $areaID)";
+			$codes[] = "($uid, '$inviteCode', 0, '$type', $adminVal)";
 		}
 		// 插入数据库
 		if(!empty($codes)) {
-			$sql = "INSERT INTO {$this->tablePrefix}{$this->tableName} (`inviter_uid`, `code`, `is_used`, `type`, `is_admin`, `limited_count`, `area_id`) VALUES ".implode(',', $codes);
+			$sql = "INSERT INTO {$this->tablePrefix}{$this->tableName} (`inviter_uid`, `code`, `is_used`, `type`, `is_admin`) VALUES ".implode(',', $codes);
 			$this->execute($sql);
 			return $inviteCodes;
 		}
 
 		return false;
 	}
-	
-	/**
-	* 根据条件获取邀请码列表---分页
-	* @param string/array $where 条件
-	* @param int $pageNums 分页
-	* @return array 后台邀请码列表
-	*/
-	public function getPageInviteCodeByWhere($where, $pageNums = 10)
-	{
-		$list = $this->where($where)->findPage($pageNums);
-
-		return $list;
-	}
-	
-	/**
-	* 根据条件获取邀请码列表---全部
-	* @param string/array $where 条件
-	* @return array 后台邀请码列表
-	*/
-	public function getInviteCodeByWhere($where)
-	{
-		$list = $this->where($where)->findAll();
-
-		return $list;
-	}
-	
 
 	/**
 	 * 获取指定用户的邀请码列表 - 链接邀请使用
@@ -117,11 +91,8 @@ class InviteModel extends Model
 	{
 		$map['code'] = $code;
 		$data['is_used'] = 1;
-		if(count($receiverInfo)>0)
-		{
-			$data['receiver_uid'] = $receiverInfo['uid'];
-			$data['receiver_email'] = $receiverInfo['email'];
-		}
+		$data['receiver_uid'] = $receiverInfo['uid'];
+		$data['receiver_email'] = $receiverInfo['email'];
 		$data['ctime'] = time();
 		$result = $this->where($map)->save($data);
 		return (boolean)$result;
@@ -158,28 +129,6 @@ class InviteModel extends Model
 			$count < 0 && $count = 0;
 		}
 		return $count;
-	}
-	
-	/**
-	* 检验验证码是否可用(新)
-	* @param string $code 验证码
-	* @return integer 邀请码使用情况，0：邀请码不存在，1：邀请码可用，2：邀请码已被使用，3：邀请码限定次数已用完
-	*/
-	public function checkInviteCode_new($code)
-	{
-		$map['code'] = $code;
-		$CodeModel = $this->where($map)->select();
-		$result = 0;
-		if(!is_null($CodeModel) && count($CodeModel) > 0)
-		{
-			if($CodeModel[0]['is_used'] != '0')
-				$result = 2;
-			else if (intval($CodeModel[0]['limited_count']) <= 0)
-				$result = 3;
-			else
-				$result = 1;
-		}
-		return $result;
 	}
 
 	/**

@@ -18,7 +18,7 @@ function star_list(){
 		}
 	});
 }
-//提问翻页点击监控
+//微博翻页点击监控
 function square_index_weibo_page(){
 	$("#square_list_page a").click(function(o){
 		var $a = $(o.target);
@@ -27,15 +27,15 @@ function square_index_weibo_page(){
 		return false;
 	});
 }
-//提问列表读取
+//微博列表读取
 function square_index_weibo(url){
 	var url = url?url:U('home/square/index_weibo');
 	var $square_list = $('#square_list');
 	$square_list.html('<img src="'+_THEME_+'/images/icon_waiting.gif" width="20" style="margin:80px 50%;" />');
-	//setTimeout(function(){if($square_list.html()=='')$square_list.html('<span style="margin:100px 42%;">获取提问失败！</span>');},10000);
+	//setTimeout(function(){if($square_list.html()=='')$square_list.html('<span style="margin:100px 42%;">获取微博失败！</span>');},10000);
 	$.post(url,{},function(html){
 		if(html == -1){
-			$square_list.html('<span style="margin:100px 50%;">提问列表为空！</span>');
+			$square_list.html('<span style="margin:100px 50%;">微博列表为空！</span>');
 		}else if(html){
 			$square_list.html(html);
 			square_index_weibo_page();

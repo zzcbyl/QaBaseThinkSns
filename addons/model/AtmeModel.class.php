@@ -103,7 +103,7 @@ class AtmeModel extends Model {
 
     /**
      * 更新最近@的人
-     * @param string $content 原创提问内容
+     * @param string $content 原创微博内容
      */
 	public function updateRecentAt( $content ){
 		// 获取@用户的UID数组
@@ -149,7 +149,7 @@ class AtmeModel extends Model {
 
     /**
      * 更新最近@的人
-     * @param string $content 原创提问内容
+     * @param string $content 原创微博内容
      */
     public function updateRecentAtForApi( $content ,$row_id){
         // 获取@用户的UID数组
@@ -260,7 +260,7 @@ class AtmeModel extends Model {
                 if($isEmail['value'] == 0){
     				$content = model('Source')->getSourceInfo($v['table'],$v['row_id'],false,$v['app']);
     				//model('Mail')->send_email($toUser['email'],'atme','',array('content'=>parse_html($content['source_content'])));
-                    model('Mail')->send_email($toUser['email'],$author['uname'].'在提问中@提到了您',parse_html($content['source_content']));
+                    model('Mail')->send_email($toUser['email'],$author['uname'].'在微博中@提到了您',parse_html($content['source_content']));
                 }
                 unset($map);
                 unset($isEmail);

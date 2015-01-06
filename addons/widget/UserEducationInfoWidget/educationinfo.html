@@ -1,4 +1,4 @@
-
+﻿
 <div id="UserEducationDiv" class="profile-datalist">
     <h4>
         <php>if($uid==$mid){</php><a href="javascript:void(0);" onclick="UpdEducationUser(this);" class="right f12" style="font-weight: normal;">编辑</a><php>}</php>
@@ -10,7 +10,7 @@
             <tr><td class="td_title"><span class="redSpan">*</span>学校名称：</td><td class="td_content"><input type="text" event-node="schoolname" id="schoolName" class="s-txt" onblur="checkSchoolName();" /><span id="errorSchoolName" style="margin-left:5px;"></span></td><td></td></tr>
             <tr><td class="td_title">入学时间：</td><td class="td_content"><select id="enterTime"><option value="">请选择</option><volist name="enterYear" id="by"><option>{$by.val}</option></volist></select></td><td></td></tr>
             <tr><td class="td_title">院系：</td><td class="td_content" colspan="2"><input type="text" event-node="department" id="department" class="s-txt" /></td></tr>
-            <tr><td colspan="2"><a class="inputbtn-red" style="margin-left:80px;" onclick="SaveEducation()" href="javascript:void(0);">确定</a>　<a class="inputbtn-gray" onclick="CancelEducation()" href="javascript:void(0);">取消</a></td></tr>
+            <tr><td colspan="2"><a style="margin-left:80px;" onclick="SaveEducation()" href="javascript:void(0);">确定</a>　<a onclick="CancelEducation()" href="javascript:void(0);">取消</a></td></tr>
             <tr><td colspan="3" style="height:10px; line-height:10px;">&nbsp;</td></tr>
         </table>
     </div>

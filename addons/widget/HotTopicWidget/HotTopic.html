@@ -1,9 +1,7 @@
 <h1 class="hot">今日热门问题<span></span></h1>
-<ul class="contList">
+<ul class="contList mb20">
 <volist name="data" id="vl">
-    <li><a target="_blank" href="{:U('public/Index/feed',array('feed_id'=>$vl['feed_id'],'uid'=>$vl['uid']))}" title="{$vl['body']}">
-            <php>if(strlen($vl['body'])>42) echo utf_substr($vl['body'],30).'...'; else echo $vl['body'];</php>
-        </a>
+    <li><a href="{:U('public/Index/feed',array('feed_id'=>$vl['feed_id'],'uid'=>$vl['uid']))}">{$vl.body|format=true}</a>
         <span>{$vl.answer_count|format=true}</span>
     </li>
 </volist>

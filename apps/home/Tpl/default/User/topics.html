@@ -83,7 +83,7 @@
           </ul>
         </div>
         <div class="MenuSub alR">
-        	<span class="left cGray">该话题共有"<span class="cRed">{$list.count}</span>"条相关提问</span>
+        	<span class="left cGray">该话题共有"<span class="cRed">{$list.count}</span>"条相关微博</span>
 	        <volist name="weibo_menu" id="vo"><php>if ($i > 1) {</php>|<php>}</php><a
 	        href="{:U('home/user/topics', array('k'=>urlencode($search_key),'type'=>$key))}" 
 	        <eq name="type" value="$key">class="on"</eq>>{$vo}</a></volist>

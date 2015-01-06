@@ -41,7 +41,7 @@ core.face = {
 
         var pos = $(this.faceObj).offset();
 
-        $('#emotions').css({ top: (pos.top + 5) + "px", left: (pos.left + 10) + "px", "z-index": 1001 });
+        $('#emotions').css({ top: (pos.top + 5) + "px", left: (pos.left - 5) + "px", "z-index": 1001 });
 
 
         core.createImageHtml();
@@ -91,7 +91,7 @@ core.face = {
         //				this.textarea.focus();
         //			}
 
-
+        
         return false;
     }
 };
