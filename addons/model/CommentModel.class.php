@@ -188,6 +188,17 @@ class CommentModel extends Model {
 			{
 				D($add['table'])->setInc('disapprove_count', "`{$pk}`={$add['row_id']}", 1);
 			}
+			
+			//修改问题的更新时间
+			$UpdFeedData['last_updtime'] = time();
+			$feed_Qid=D($add['table'])->where("`{$pk}`={$add['row_id']}")->getField('feed_questionid');
+			if($feed_Qid != 0) {
+				model($add['table'])->where('feed_id='.$feed_Qid)->save($UpdFeedData);
+			}
+			else {
+				D($add['table'])->where("`{$pk}`={$add['row_id']}")->save($UpdFeedData);
+			}
+			
 			//兼容旧版本app
 			D($add['table'])->setInc('commentCount', "`{$pk}`={$add['row_id']}", 1);
 			D($add['table'])->setInc('comment_all_count', "`{$pk}`={$add['row_id']}", 1);
@@ -224,7 +235,7 @@ class CommentModel extends Model {
 					
 				} else {
 					// 评论
-					$config['comment_type'] = '评论 我 的微博:';
+					$config['comment_type'] = '评论 我 的提问:';
 					if(!empty($add['app_uid'])) {
 						model('Notify')->sendNotify($add['app_uid'], 'comment', $config);
 					}
@@ -283,7 +294,7 @@ class CommentModel extends Model {
         $ids = is_array($ids) ? $ids : explode(',', $ids);
         $map = array();
     	$map['comment_id'] = array('IN', $ids);
-        $comments = $this->field('comment_id, app,`table`, row_id, app_uid, uid')->where($map)->findAll();
+		$comments = $this->field('comment_id, app,`table`, row_id, app_uid, uid, comment_type')->where($map)->findAll();
         if(empty($comments)) {
 		    return false;
         }
@@ -318,7 +329,32 @@ class CommentModel extends Model {
         $res = $this->where($map)->save($data);
 
         if($res) {
-           	// 更新统计数目
+			foreach($comments as $c_k => $c_v) {
+				
+				$pk = D($c_v['table'])->getPk();
+				if($c_v['comment_type']==0||$c_v['comment_type']==1)
+				{
+					D($c_v['table'])->setInc('comment_count', "`{$pk}`={$c_v['row_id']}", -1);
+				}
+				else
+				{
+					D($c_v['table'])->setInc('disapprove_count', "`{$pk}`={$c_v['row_id']}", -1);
+				}
+				
+				//用户增加评论统计
+				if($c_v['comment_type']=='1') {//赞同
+					model('UserData')->setUid($c_v['app_uid'])->updateKey('comment_agree_count', 1, false);
+				}
+				else if($c_v['comment_type']=='2') {//反对
+					model('UserData')->setUid($c_v['app_uid'])->updateKey('comment_oppose_count', 1, false);
+				}
+
+				//总评论数
+				model('UserData')->setUid($c_v['app_uid'])->updateKey('comment_count', 1, false);
+				
+			}
+			
+           	/*// 更新统计数目
            	foreach($_comments as $_c_k => $_c_v) {
                 foreach($_c_v as $_c_v_k => $_c_v_v) {
                     // 应用表格“评论统计”统一使用comment_count字段名
@@ -334,7 +370,7 @@ class CommentModel extends Model {
                         model($_c_k)->cleanCache($_c_v_k);
                     }
                 }
-            }
+            }*/
 
             //添加积分
             if($app_name == 'weiba'){
@@ -396,7 +432,7 @@ class CommentModel extends Model {
         $save['is_del'] = 0;
         if($this->where($map)->save($save)) {
             D($comment['table'])->setInc('comment_count', "`".$comment['table']."_id`=".$comment['row_id']);
-            // 删除微博缓存
+            // 删除提问缓存
             switch($comment['table']) {
                 case 'feed':
                     $feedIds = $this->where($map)->getAsFieldArray('row_id');

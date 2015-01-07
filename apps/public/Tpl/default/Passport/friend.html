@@ -1,0 +1,98 @@
+<include file="__THEME__/public_header" />
+<div class="container">
+<div class="cont_left pd17">
+    <include file="_top"/>   
+    <div class="table_box">
+      	<include file="_tab_menu"/>  
+    </div>
+    <include file="_tab_menu2"/>
+    <div class="search-main clearfix">
+        <php>if($following_list['data']){</php>
+        <!--搜索列表-->
+        <div class="sperson-feedlist<php> echo t($_GET['show']);</php> clearfix">
+            <volist name="following_list.data" id="_following">
+                <php> $img = !empty($_GET['show']) ? $user_info[$_following['fid']]['avatar_big']:$user_info[$_following['fid']]['avatar_small']; </php>
+
+                <div class="profile hyList">
+                    <div class="pro_img"><a href="{$user_info[$_following['fid']]['space_url']}"><img src="{$img}" event-node='face_card' uid='{$_following['fid']}' ></a></div>
+                    <div class="pro_cont">
+                        <h4><a href="{$user_info[$_following['fid']]['space_url']}" event-node='face_card' uid='{$_following['fid']}' style="font-size:14px">{$user_info[$_following['fid']]['uname']}</a>
+                            <i>{$user_info[$_following['fid']]['location']}</i></h4>
+                        <p class="hy_jianjie"><strong>简介：</strong>{$user_info[$_following['fid']]['intro']}</p>
+                        <p class="xz">
+                            <php>if(count($user_info[$_following['fid']]['user_group'])>0){</php>
+                                <strong>勋章：</strong>
+                                <volist name="user_info[$_following['fid']]['user_group']" id="ui2">
+                                    <img style="width:auto;height:auto;display:inline;cursor:pointer;" src="{$ui2['user_group_icon_url']}" title="{$ui2['user_group_name']}" />&nbsp;
+                                </volist>
+                                <!--<a href="#" class="x1"></a>
+                                <a href="#" class="x2"></a>
+                                <a href="#" class="x3"></a>
+                                <a href="#" class="x4"></a>-->
+                            <php>}</php>
+                        </p>
+                    </div>
+                    <p class="comm hd">
+                    <strong><a href="{:U('public/Profile/follower', array('uid'=>$_following['fid']))}">粉丝：{:(int)$user_count[$_following['fid']]['follower_count']}</a></strong>
+                    <a class="a" href="{:U('public/Profile/question', array('uid'=>$_following['fid']))}">{:(int)$user_count[$_following['fid']]['weibo_count']}</a>
+                    <a class="t" href="{:U('public/Profile/answer', array('uid'=>$_following['fid']))}">{:(int)$user_count[$_following['fid']]['answer_count']}</a>
+
+                    <a href="#" class="d">{:(int)$user_count[$_following['fid']]['comment_agree_count']}</a>
+                    <a href="#" class="hx">{:(int)$user_count[$_following['fid']]['tothanked_count']}</a>
+
+                    <span class="hd_btn">
+                        <!--<a href="#" class="gz">关注</a>
+                        <if condition="$mid && $mid eq $uid">
+                            {:W('FollowGroup', array('uid'=>$_following['uid'], 'fid'=>$_following['fid'], 'follow_group_status' => $follow_group_status[$_following['fid']], 'tpl'=>'btn'))}
+                        </if>-->
+                        <php>if($mid){</php>
+                            <if condition="$mid neq $_following['fid']">
+                                {:W('FollowBtn', array('fid'=>$_following['fid'], 'uname'=>$user_info[$_following['fid']]['uname'], 'refer'=> $uid == $mid ? 'following_list' : '', 'follow_state'=>$follow_state[$_following['fid']], 'type'=>'normal'))}
+                            </if>
+                        <php>}</php>
+                    </span>
+                    </p>
+             </div>
+
+            </volist>
+        </div>
+        <!--搜索列表/end-->
+        <!--页码-->
+        <div id="page" class="page">
+            {$following_list.html}</div>
+        <!--页码/end-->
+        <php>}else{</php>
+        <p style="margin-top:20px;">
+            TA还没有任何好友</p>
+        <php>}</php>
+    </div>
+</div>
+<div class="cont_right">
+    <include file ="_login" />
+</div>
+
+<include file="_popdiv"/> 
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        zdylink();
+    });
+    function zdylink() {
+        var link = $(".search-main a");
+        for (var i = 0; i < link.length; i++) {
+           if (typeof ($(link[i]).attr('href')) != 'undefined' && $(link[i]).attr('href').toLowerCase().indexOf('index.php?app=public&mod=profile&act=index&uid=') > 0) {
+                var newuid = $(link[i]).attr('href').substring($(link[i]).attr('href').indexOf('uid=') + 4);
+                $(link[i]).attr('target', '_blank');
+                $(link[i]).attr('href', "{:U('public/Passport/newperson', array('uid'=>'" + newuid + "'))}");
+            }
+            else {
+                $(link[i]).attr('href', 'javascript:void(0);');
+                $(link[i]).removeAttr('target');
+                $(link[i]).removeAttr('event-node');
+                $(link[i]).attr('onclick', 'jumpDiv();');
+            }
+        }
+    }
+</script>
+
+<include file="__THEME__/public_footer" />

@@ -35,24 +35,24 @@ body{background:url(body_bg1.jpg) repeat;width:100%;}
 .header_box .person li.hover .dropmenu a:hover{background-color: #dbf2d0;text-decoration: none;display:block}
 .header_box .person li a.fb14:hover{background-color:#89CB74;text-decoration:none;white-space:nowrap;display: block}
 
-.user_app .user_follow strong{color:#3366cc}
+.user_app .user_follow strong{color:#46ADDB}
 .user_app .user_follow span{margin:0}
-.user_app .celerity_menu a:link,.user_app .celerity_menu a:visited {color:#3366cc}
-.user_app .celerity_menu a:hover {background-color:#C8E1CA;color:#3366cc}
+.user_app .celerity_menu a:link,.user_app .celerity_menu a:visited {color:#46ADDB}
+.user_app .celerity_menu a:hover {background-color:#C8E1CA;color:#46ADDB}
 .user_app .celerity_menu a.on,.user_app .celerity_menu a.on:visited {background-color:#4F9F55;color:#fff}
 .user_app_box .app_line_w{background:none}
-.user_app .userinfo .user_name h2, .user_app .userinfo .user_name h2 a{color:#3366cc}
+.user_app .userinfo .user_name h2, .user_app .userinfo .user_name h2 a{color:#46ADDB}
 .wrap_index_r .app_line{border-bottom: 0 none;border-top: 1px solid #DDDDDD;padding: 10px 0 0;}
 .user_app .app_line, .tab_square .app_line{background:url(app_line.jpg) repeat-x left top}
 .lineS_btm{border-bottom:#9BC482 solid 1px}
 .app_lineL {background:none;border-left:#9BC482 solid 1px}
 
 /*---链接样式--- */
-a{ color:#3366cc; text-decoration:none; }
-a:hover { color:#3366cc; text-decoration:underline; }
+a{ color:#46ADDB; text-decoration:none; }
+a:hover { color:#46ADDB; text-decoration:underline; }
 .btn_b, a.btn_b, a.btn_b:hover, a.btn_b:visited {color: #FFFFFF;}
 a.add_atn,a.add_atn:visited{color:#fff}
-.btn_w, a.btn_w, a.btn_w:hover, a.btn_w:visited {color: #3366cc;}
+.btn_w, a.btn_w, a.btn_w:hover, a.btn_w:visited {color: #46ADDB;}
 .feed_list .feed_quote .q_con .comment a:link,.feed_list .feed_quote .q_con .comment a:visited{color:#7498C0}
 .feed_list .feed_quote .q_con .comment a:hover{color:#BA2636}
 
@@ -88,7 +88,7 @@ a.add_atn,a.add_atn:visited{color:#fff}
 .club-type a.current:link,.club-type a.current:visited{margin:0 10px 10px 0;color:#414448;}
 
 /*搜索页面*/
-.search-input{border:1px solid #414448;background:#fff;position:relative;width:528px;float:left;}
+.search-input{border:1px solid #414448;background:#fff;position:relative;width:480px;float:left;}
 .search-input #mod-search .search-box{background:#fff;border:1px solid #414448;_border:none;_border-top:1px solid #414448;}
 .search-input .btn-search{background:#414448;width:80px;height:28px;position:absolute;right:0;}
 .search-content p{font-size:20px;margin:3px 20px 0 0;font-family:"微软雅黑";color:#414448;}
@@ -99,7 +99,7 @@ a.add_atn,a.add_atn:visited{color:#fff}
 /*推荐频道弹窗*/
 /*.channel-layer .content .btn-cancel.current,.channel-layer .content .btn-cancel.current span{background:#414448;color:#fff;}*/
 
-/*微博新消息*/
+/*提问新消息*/
 .feed_lists a.notes{height:18px;line-height:18px;display:block;padding:5px 0;margin:10px 0 5px 0;text-align:center;background-color:#f3f3f3;color:#36c;border:1px solid #e5e5e5;}
 
 /*微吧、任务、勋章头部导航*/

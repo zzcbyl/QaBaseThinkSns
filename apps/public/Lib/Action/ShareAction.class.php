@@ -38,7 +38,7 @@ class ShareAction extends Action
 			addLang($shareInfo['appname']);
 		}	
 		if(empty($shareInfo['initHTML']) && !empty($shareInfo['curid'])){
-			//判断是否为转发的微博
+			//判断是否为转发的提问
 			if($shareInfo['curid'] != $shareInfo['sid'] && $shareInfo['is_repost']==1){
 				$app = $curtable == $shareInfo['stable'] ? $shareInfo['appname'] :'public';
 				$curInfo = model('Source')->getSourceInfo($shareInfo['curtable'],$shareInfo['curid'],false,$app);
@@ -96,7 +96,7 @@ class ShareAction extends Action
 	}
 
 	/**
-	 * 分享到微博
+	 * 分享到提问
 	 */
 	public function shareToFeed(){
 		$var = array();

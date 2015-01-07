@@ -7,7 +7,7 @@
 class IndexAction extends Action {
 	
 	/**
-	 * 我的首页 - 微博页面
+	 * 我的首页 - 提问页面
 	 * @return void
 	 */
 	public function index(){
@@ -43,7 +43,7 @@ class IndexAction extends Action {
 		$this->assign($d);
 		// 设置默认话题
 		$weiboSet = model('Xdata')->get('admin_Config:feed');
-		$initHtml = $weiboSet['weibo_default_topic'];		// 微博框默认话题
+		$initHtml = $weiboSet['weibo_default_topic'];		// 提问框默认话题
 		if($initHtml){
 			$initHtml = '#'.$initHtml.'#';
 		}
@@ -71,11 +71,33 @@ class IndexAction extends Action {
 				$this->setKeywords('我关注的频道');
 				break;
 			default:
-				$this->setTitle(L('PUBLIC_INDEX_INDEX'));
-				$this->setKeywords(L('PUBLIC_INDEX_INDEX'));
+				$this->setTitle('我的首页');
+				$this->setKeywords('我的首页');
 		}
-
 		$this->display();
+	}
+	
+	
+	
+	/**
+	 * 邀请我的
+	 *
+	 * @return void
+	 *
+	 */	
+	public function inviteme()
+	{
+		// 安全过滤
+		$d['type'] = 'invite';
+		$d['feed_type'] = t($_GET['feed_type']) ? t($_GET['feed_type']) : '';
+		$d['feed_key'] = t($_GET['feed_key']) ? t($_GET['feed_key']) : '';
+		$this->assign($d);
+		
+		// 设置标题与关键字信息
+		$this->setTitle('邀请我的');
+		$this->setKeywords('邀请我的');
+
+		$this->display();	
 	}
 	
 	
@@ -85,26 +107,28 @@ class IndexAction extends Action {
 	* @return void
 	*/
 	public function feed() {
-		
 		$feed_id = intval ( $_GET ['feed_id'] );
 		
-		if (empty ( $feed_id )) {
-			$this->error ( L ( 'PUBLIC_INFO_ALREADY_DELETE_TIPS' ) );
+		if (empty($feed_id)) {
+			$this->error( L ( 'PUBLIC_INFO_ALREADY_DELETE_TIPS' ) );
 		}
 		
-		//增加浏览数
-		model ( 'Feed' )->UpdatePV($feed_id);
+		$invite_id = intval($_GET['invite_id']);
+		$this->assign('inviteid', $invite_id);
 		
-		//获取微博信息
+		//增加浏览数
+		model ('Feed')->UpdatePV($feed_id);
+		
+		//获取提问信息
 		$feedInfo = model ( 'Feed' )->get ( $feed_id );
 
 		if (!$feedInfo){
-			$this->error ( '该微博不存在或已被删除' );
+			$this->error ( '该提问不存在或已被删除' );
 			exit();
 		}
 		
 		if ($feedInfo ['is_audit'] == '0' && $feedInfo ['uid'] != $this->mid) {
-			$this->error ( '此微博正在审核' );
+			$this->error ( '此提问正在审核' );
 			exit();
 		}
 
@@ -149,33 +173,218 @@ class IndexAction extends Action {
 		} else {
 			$this->_assignUserInfo ( $this->uid );
 		}
-		// seo
-		$feedContent = unserialize ( $feedInfo ['feed_data'] );
-		$seo = model ( 'Xdata' )->get ( "admin_Config:seo_feed_detail" );
-		$replace ['content'] = $feedContent ['content'];
-		$replace ['uname'] = $feedInfo ['user_info'] ['uname'];
-		$replaces = array_keys ( $replace );
-		foreach ( $replaces as &$v ) {
-			$v = "{" . $v . "}";
-		}
-		$seo ['title'] = str_replace ( $replaces, $replace, $seo ['title'] );
-		$seo ['keywords'] = str_replace ( $replaces, $replace, $seo ['keywords'] );
-		$seo ['des'] = str_replace ( $replaces, $replace, $seo ['des'] );
-		! empty ( $seo ['title'] ) && $this->setTitle ( $seo ['title'] );
-		! empty ( $seo ['keywords'] ) && $this->setKeywords ( $seo ['keywords'] );
-		! empty ( $seo ['des'] ) && $this->setDescription ( $seo ['des'] );
-		$this->assign ( 'userPrivacy', $userPrivacy );
-		// 赞功能
-		$diggArr = model ( 'FeedDigg' )->checkIsDigg ( $feed_id, $this->mid );
-		$this->assign ( 'diggArr', $diggArr );
 		
-		//追问
-		$addwhere = 'add_feedid = '.$feed_id;
-		$addfeedlist = model('Feed')->getQuestionList( $addwhere, 20 );
-		//print_r($addfeedlist);
-		$this->assign ( 'addquestionlist', $addfeedlist['data'] );
+		//认证专家
+		$uids = model('UserGroupLink')->getUserByGroupID(8);
+		$user_count = model ( 'UserData' )->getUserDataByUids ($uids);
+		$authenticateExpert = model('user')->getUserInfoByUids($uids);
+		//print_r($authenticateExpert);
+		$this->assign ( 'authenticateExpert_UserCount', $user_count );
+		$this->assign('authenticateExpert',$authenticateExpert);	
+		
+		//获取追问信息
+		$addFeed =	model('feed')->getQuestionList('add_feedid = '.$feed_id.' and is_del = 0 and (is_audit=1 OR is_audit=0)');
+		$this->assign('addquestionlist', $addFeed['data']);
+		
+		$loginData = model('Login')->get($GLOBALS['ts']['mid'], 'sina');
+		if($loginData['oauth_token'] != '')
+		{
+			$this->assign('token', '1');
+		}
+		
+		$loginData = model('Login')->get($GLOBALS['ts']['mid'], 'qzone');
+		if($loginData['oauth_token'] != '')
+		{
+			$this->assign('qqtoken', '1');
+		}
+	
+		$this->setTitle($feedInfo['body']);
+		$this->setKeywords($feedInfo['body']);
 		
 		$this->display ();
+	}
+	
+	
+	/**
+	* 邀请和评论详情页
+	* 
+	* @return void
+	*/
+	public function invitelist() {
+		
+		$type =  $_GET ['Type'];
+		
+		$feed_id = intval ( $_GET ['feed_id'] );
+		
+		if (empty($feed_id)) {
+			$this->error( L ( 'PUBLIC_INFO_ALREADY_DELETE_TIPS' ) );
+		}
+		
+		//获取提问信息
+		$feedInfo = model ( 'Feed' )->get ( $feed_id );
+
+		if (!$feedInfo){
+			$this->error ( '该提问不存在或已被删除' );
+			exit();
+		}
+		
+		if ($feedInfo ['is_audit'] == '0' && $feedInfo ['uid'] != $this->mid) {
+			$this->error ( '此提问正在审核' );
+			exit();
+		}
+
+		if ($feedInfo ['is_del'] == '1') {
+			$this->error ( L ( 'PUBLIC_NO_RELATE_WEIBO' ) );
+			exit();
+		}
+		
+		//判断用户是否已经回答过
+		$feedlist = model ( 'Feed' )->getAnswerList('feed_questionid='.$feed_id.' and uid='.$GLOBALS['ts']['mid'].' and is_del = 0 and (is_audit=1 OR is_audit=0)');
+		if((is_array($feedlist) && is_array($feedlist['data']) && count($feedlist['data'])>0) || ($feedInfo['uid']==$this->mid))
+		{
+			$this->assign ( 'hasAnswer', '1' );
+		}
+
+		// 获取用户信息
+		$user_info = model ( 'User' )->getUserInfo ( $feedInfo['uid'] );
+		
+		// 个人空间头部
+		//$this->_top ();
+		
+		// 判断隐私设置
+		$userPrivacy = $this->privacy ( $this->uid );
+		if ($userPrivacy ['space'] !== 1) {
+			//$this->_sidebar ();	
+			
+			$weiboSet = model ( 'Xdata' )->get ( 'admin_Config:feed' );
+			$a ['initNums'] = $weiboSet ['weibo_nums'];
+			$a ['weibo_type'] = $weiboSet ['weibo_type'];
+			$a ['weibo_premission'] = $weiboSet ['weibo_premission'];
+			$this->assign ( $a );
+			switch ($feedInfo ['app']) {
+				case 'weiba' :
+					$feedInfo ['from'] = getFromClient ( 0, $feedInfo ['app'], '微吧' );
+					break;
+				default :
+					$feedInfo ['from'] = getFromClient ( $from, $feedInfo ['app'] );
+					break;
+			}
+			// $feedInfo['from'] = getFromClient( $feedInfo['from'] , $feedInfo['app']);
+			$this->assign ( 'feedInfo', $feedInfo );
+		} else {
+			$this->_assignUserInfo ( $this->uid );
+		}
+		
+		
+		$this->assign('urlType',$type);
+		if($type == 'comment')
+		{
+			$this->setTitle('评论详情'.'-'.$feedInfo['body']);
+			$this->setKeywords('评论详情'.'-'.$feedInfo['body']);
+		}
+		else{
+			//邀请回答列表
+			$invitedatalist = model('InviteAnswer')->getInviteAnswerModel($feed_id);
+			//print_r($invitedatalist);
+			$this->assign('invitelist',$invitedatalist);
+			
+			$this->setTitle('邀请回答记录'.'-'.$feedInfo['body']);
+			$this->setKeywords('邀请回答记录'.'-'.$feedInfo['body']);
+		}
+		$this->display();
+	}
+	
+	/**
+	 * 赞同或者反对的详情
+	 *
+	 * @return void
+	 *
+	 */	
+	public function answercomment()
+	{
+		$type =  $_GET ['commentType'];
+		$feed_id = intval ( $_GET ['feed_id'] );
+		
+		if (empty($feed_id)) {
+			$this->error( L ( 'PUBLIC_INFO_ALREADY_DELETE_TIPS' ) );
+		}
+
+		//获取提问信息
+		$feedInfo = model ( 'Feed' )->getAnswerModel ( $feed_id );
+		//return;
+		if (!$feedInfo){
+			$this->error ( '该提问不存在或已被删除' );
+			exit();
+		}
+		//print_r($feedInfo);
+		if ($feedInfo ['is_audit'] == '0' && $feedInfo ['uid'] != $this->mid) {
+			$this->error ( '此提问正在审核' );
+			exit();
+		}
+
+		if ($feedInfo ['is_del'] == '1') {
+			$this->error ( L ( 'PUBLIC_NO_RELATE_WEIBO' ) );
+			exit();
+		}
+		
+		//判断用户是否已经回答过
+		/*$feedlist = model ( 'Feed' )->getAnswerList('feed_questionid='.$feed_id.' and uid='.$GLOBALS['ts']['mid'].' and is_del = 0 and (is_audit=1 OR is_audit=0)');
+		if((is_array($feedlist) && is_array($feedlist['data']) && count($feedlist['data'])>0) || ($feedInfo['uid']==$this->mid))
+		{
+			$this->assign ( 'hasAnswer', '1' );
+		}*/
+
+		// 获取用户信息
+		$user_info = model ( 'User' )->getUserInfo ( $feedInfo['uid'] );
+		
+		// 个人空间头部
+		//$this->_top ();
+		
+		// 判断隐私设置
+		$userPrivacy = $this->privacy ( $this->uid );
+		if ($userPrivacy ['space'] !== 1) {
+			//$this->_sidebar ();	
+			
+			$weiboSet = model ( 'Xdata' )->get ( 'admin_Config:feed' );
+			$a ['initNums'] = $weiboSet ['weibo_nums'];
+			$a ['weibo_type'] = $weiboSet ['weibo_type'];
+			$a ['weibo_premission'] = $weiboSet ['weibo_premission'];
+			$this->assign ( $a );
+			switch ($feedInfo ['app']) {
+				case 'weiba' :
+					$feedInfo ['from'] = getFromClient ( 0, $feedInfo ['app'], '微吧' );
+					break;
+				default :
+					$feedInfo ['from'] = getFromClient ( $from, $feedInfo ['app'] );
+					break;
+			}
+			// $feedInfo['from'] = getFromClient( $feedInfo['from'] , $feedInfo['app']);
+			$this->assign ( 'feedInfo', $feedInfo );
+		} else {
+			$this->_assignUserInfo ( $this->uid );
+		}
+		
+		
+		$map = array();
+		$map['app'] 	= 'public';
+		$map['table']	= 'feed';
+		$map['row_id']	= $feed_id;	//必须存在
+		$map['comment_type']	= $type;
+		$CommentList = model('Comment')->getCommentList($map,'comment_id DESC',20);
+		$this->assign('CommentList',$CommentList);
+		
+	
+		if($type == '1')
+		{
+			$this->setTitle('赞同评论详情'.'-'.$feedInfo['body']);
+			$this->setKeywords('赞同评论详情'.'-'.$feedInfo['body']);
+		}
+		else if($type == '2'){
+			$this->setTitle('反对评论详情'.'-'.$feedInfo['body']);
+			$this->setKeywords('反对评论详情'.'-'.$feedInfo['body']);
+		}
+		$this->display ();	
+		
 	}
 	
 	/**
@@ -197,13 +406,13 @@ class IndexAction extends Action {
 	}
 
 	/**
-	 * 我的微博页面
+	 * 我的提问页面
 	 */
 	public function myFeed() {
 		// 获取用户统计数目
 		$userData = model('UserData')->getUserData($this->mid);
 		$this->assign('feedCount', $userData['weibo_count']);
-		// 微博过滤内容
+		// 提问过滤内容
 		$feedType = t($_GET['feed_type']);
 		$this->assign('feedType', $feedType);
 		// 是否有返回按钮
@@ -220,7 +429,7 @@ class IndexAction extends Action {
 		// 获取用户统计数目
 		$userData = model('UserData')->getUserData($this->mid);
 		$this->assign('answerCount', $userData['answer_count']);
-		// 微博过滤内容
+		// 提问过滤内容
 		$feedType = t($_GET['feed_type']);
 		$this->assign('feedType', $feedType);
 		// 是否有返回按钮
@@ -254,6 +463,7 @@ class IndexAction extends Action {
 				$followGroupList = model('FollowGroup')->getUsersByGroupPage($this->mid, $gid);
 		}
 		$fids = getSubByKey($followGroupList['data'], 'fid');
+		//print_r(model('Follow')->getLastSql());
 		// 获取用户信息
 		$followUserInfo = model('User')->getUserInfoByUids($fids);
 		// 获取用户的统计数目
@@ -261,7 +471,7 @@ class IndexAction extends Action {
 		// 获取用户用户组信息
 		$userGroupData = model('UserGroupLink')->getUserGroupData($fids);
 		$this->assign('userGroupData',$userGroupData);
-		// 获取用户的最后微博数据
+		// 获取用户的最后提问数据
 		//$lastFeedData = model('Feed')->getLastFeed($fids);
 		// 获取用户的关注信息状态值
 		$followState = model('Follow')->getFollowStateByFids($this->mid, $fids);
@@ -334,7 +544,7 @@ class IndexAction extends Action {
 		// 获取用户用户组信息
 		$userGroupData = model('UserGroupLink')->getUserGroupData($fids);
 		$this->assign('userGroupData',$userGroupData);
-		// 获取用户的最后微博数据
+		// 获取用户的最后提问数据
 		//$lastFeedData = model('Feed')->getLastFeed($fids);
 		// 获取用户的关注信息状态
 		$followState = model('Follow')->getFollowStateByFids($this->mid, $fids);
@@ -380,7 +590,7 @@ class IndexAction extends Action {
 		// 获取用户用户组信息
 		$userGroupData = model('UserGroupLink')->getUserGroupData($fids);
 		$this->assign('userGroupData',$userGroupData);
-		// 获取用户的最后微博数据
+		// 获取用户的最后提问数据
 		//$lastFeedData = model('Feed')->getLastFeed($fids);
 		// 获取用户的关注信息状态
 		$followState = model('Follow')->getFollowStateByFids($this->mid, $fids);
@@ -531,7 +741,7 @@ class IndexAction extends Action {
 	}
 
 	/**
-	 * 弹窗发布微博
+	 * 弹窗发布提问
 	 * @return void
 	 */
 	public function sendFeedBox()

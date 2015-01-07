@@ -16,7 +16,7 @@ class CommentAction extends Action {
 			$keyword = '发出';
 			$map['uid'] = $this->uid;	
 		} else {
-			// 微博配置
+			// 提问配置
 			$weiboSet = model('Xdata')->get('admin_Config:feed');
 			$this->assign('weibo_premission', $weiboSet['weibo_premission']);
 			$keyword = '收到';
@@ -74,7 +74,7 @@ class CommentAction extends Action {
 		$rowData = model('Feed')->get(intval($var['commentInfo']['row_id']));
 		$appRowData = model('Feed')->get($rowData['app_row_id']);
 		$var['user_info'] = $appRowData['user_info'];
-		// 微博类型
+		// 提问类型
 		$var['feedtype'] = $rowData['type'];
 		// $var['cancomment_old'] = ($var['commentInfo']['uid'] != $var['commentInfo']['app_uid'] && $var['commentInfo']['app_uid'] != $this->uid) ? 1 : 0;
 		$var['initHtml'] = L('PUBLIC_STREAM_REPLY').'@'.$var['commentInfo']['user_info']['uname'].' ：';		// 回复

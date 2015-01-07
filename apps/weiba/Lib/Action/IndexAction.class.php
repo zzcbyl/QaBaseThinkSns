@@ -297,7 +297,7 @@ class IndexAction extends Action {
 		$res = D('weiba_post')->add($data);
 		if($res){
 			D('weiba')->where('weiba_id='.$data['weiba_id'])->setInc('thread_count');
-			//同步到微博
+			//同步到提问
 			$feed_id = D('weibaPost')->syncToFeed($res,$data['title'],t($checkContent),$this->mid);
 			D('weiba_post')->where('post_id='.$res)->setField('feed_id',$feed_id);
 			//$this->assign('jumpUrl', U('weiba/Index/postDetail',array('post_id'=>$res)));
@@ -477,7 +477,7 @@ class IndexAction extends Action {
 			if(intval($_POST['log'])==1){
 				D('log')->writeLog($post_detail['weiba_id'],$this->mid,'编辑了帖子“<a href="'.U('weiba/Index/postDetail',array('post_id'=>$post_id)).'" target="_blank">'.$post_detail['title'].'</a>”','posts');
 			}
-			//同步到微博
+			//同步到提问
 			$feedInfo = D('feed_data')->where('feed_id='.$post_detail['feed_id'])->find();
 			$datas = unserialize($feedInfo['feed_data']);
 			$datas['content'] = '【'.$data['title'].'】'.getShort(t($checkContent),100).'&nbsp;';

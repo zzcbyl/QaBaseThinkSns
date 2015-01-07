@@ -160,7 +160,8 @@ class AccountAction extends Action
 		if(!empty($_POST['sex'])) {
 			$save['sex']  = 1 == intval($_POST['sex']) ? 1 : 2;
 			//	$save['lang'] = t($_POST['lang']);
-			$save['intro'] = t($_POST['intro']);
+			$save['intro'] = str_replace("\n","<br />",$_POST['intro']);
+			//str_replace(chr(13),'<br />',$_POST['intro']);
 			$save['realname'] = t($_POST['realname']);
 			$save['birthday'] = t($_POST['birthday']);
 			//$save['bloodtype'] = t($_POST['bloodtype']);
@@ -234,8 +235,16 @@ class AccountAction extends Action
 				$this->error('QQ格式不正确');
 			}
 		}
-		$save['qq'] = t($_POST['qq']);
 		
+		if(t($_POST['mobile'])!='')
+		{
+			if(!preg_match("/^0*(13|15|18)\d{9}$/",t($_POST['mobile'])))
+			{
+				$this->error('手机号格式不正确');
+			}
+		}
+		$save['qq'] = t($_POST['qq']);
+		$save['linknumber'] = t($_POST['mobile']);
 		$save['weixin'] = t($_POST['weixin']);
 		$save['tengxunVB'] = t($_POST['tengxuvb']);
 		$save['xinlangVB'] = t($_POST['xinlangvb']);
@@ -258,6 +267,7 @@ class AccountAction extends Action
 			model('Feed')->cleanCache($feed_ids,$this->mid);
 		}
 		
+		$permissions['mobile'] = t($_POST['sel_mobile']);
 		$permissions['qq'] = t($_POST['sel_qq']);
 		$permissions['weixin'] = t($_POST['sel_weixin']);
 		$permissions['tengxunVB'] = t($_POST['sel_tengxunVB']);
@@ -406,7 +416,7 @@ class AccountAction extends Action
         }
         model('User')->cleanCache($this->mid);
         $user_feeds = model('Feed')->where('uid='.$this->mid)->field('feed_id')->findAll();
-		if($user_feeds){
+		if($user_feeds) {
 			$feed_ids = getSubByKey($user_feeds, 'feed_id');
 			model('Feed')->cleanCache($feed_ids,$this->mid);
 		}

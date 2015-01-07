@@ -17,9 +17,9 @@ class WeiboSynHooks extends Hooks{
 	private static $validPublish = array('sina', 'qq', 'qzone', 'renren');
 	//应用名称
 	private static $validAlias   = array(
-			'sina'      => '新浪微博',
+			'sina'      => '新浪提问',
 			'qzone'     => "QQ互联",
-			'qq'        => '腾讯微博',
+			'qq'        => '腾讯提问',
 			'renren'    => "人人网",
 			'douban'    => "豆瓣",
 			'baidu'     => "百度",

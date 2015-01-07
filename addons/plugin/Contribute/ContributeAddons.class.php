@@ -9,7 +9,7 @@ class ContributeAddons extends NormalAddons{
 	protected $author = 'thinksns';
 	protected $site = 'http://www.thinksns.com';
 	protected $info = '向频道管理员投稿';
-	protected $pluginName = '微博投稿';
+	protected $pluginName = '提问投稿';
 	protected $sqlfile = '暂无';
 	protected $tsVersion = "3.0";
 	public function getHooksInfo() {

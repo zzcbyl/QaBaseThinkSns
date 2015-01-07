@@ -92,9 +92,9 @@ class AvatarModel {
 	    	$avatar_url['avatar_small'] = getImageUrl($original_file_name,50,50).'?v'.$filemtime;
 	    	$avatar_url['avatar_tiny'] = getImageUrl($original_file_name,30,30).'?v'.$filemtime;*/
 			$avatar_url['avatar_big'] = getImageUrl($original_file_name,90,90).'?v'.$filemtime;
-			$avatar_url['avatar_middle'] = getImageUrl($original_file_name,75,75).'?v'.$filemtime;
+			$avatar_url['avatar_middle'] = getImageUrl($original_file_name,80,80).'?v'.$filemtime;
 			$avatar_url['avatar_small'] = getImageUrl($original_file_name,60,60).'?v'.$filemtime;
-			$avatar_url['avatar_tiny'] = getImageUrl($original_file_name,50,50).'?v'.$filemtime;
+			$avatar_url['avatar_tiny'] = getImageUrl($original_file_name,35,35).'?v'.$filemtime;
     	}
 
 		return $avatar_url;
@@ -123,9 +123,9 @@ class AvatarModel {
 			getThumbImage($original_file_name,50,50,true,true);
 			getThumbImage($original_file_name,30,30,true,true);*/
 			getThumbImage($original_file_name,90,90,true,true);
-			getThumbImage($original_file_name,75,75,true,true);
+			getThumbImage($original_file_name,80,80,true,true);
 			getThumbImage($original_file_name,60,60,true,true);
-			getThumbImage($original_file_name,50,50,true,true);
+			getThumbImage($original_file_name,35,35,true,true);
         }
 
         if(!$res){
@@ -145,13 +145,16 @@ class AvatarModel {
 		$data['attach_type'] = 'avatar';
         $data['upload_type'] = 'image';
         $info = model('Attach')->upload($data);
+
         //Log::write(var_export($info,true));
     	if($info['status']){
+
     		$data = $info['info'][0];
     		$image_url = getImageUrl($data['save_path'].$data['save_name']);
     		$image_info = getimagesize($image_url);
     		//如果不支持获取远程图片信息，使用如下方法
     		if(!$image_info){
+
 		  		$cloud = model('CloudImage');
 		        if($cloud->isOpen()){
 		        	$cinfo = $cloud->getFileInfo($data['save_path'].$data['save_name']);
@@ -165,6 +168,20 @@ class AvatarModel {
 		        }
 		    }
     		if($image_info){
+
+                $width = intval($image_info[0]) ;
+                $height = intval($image_info[1]);
+                $scale = 0;
+                if ($width>$height){
+                    $scale = $height;
+                }else{
+                    $scale = $width;
+                }
+                require_once SITE_PATH.'/addons/library/phpthumb/ThumbLib.inc.php';
+                $thumb = PhpThumbFactory::create(UPLOAD_PATH.'/'.$data['save_path'].$data['save_name']);
+                $thumb->crop(0, 0, $scale, $scale);
+                $thumb->save(UPLOAD_PATH.'/'.$data['save_path'].$data['save_name']);
+
     			unset($return);
     			$return['data']['picwidth'] = $image_info[0];
     			$return['data']['picheight'] = $image_info[1];
@@ -200,7 +217,7 @@ class AvatarModel {
     	//header("Content-type: image/jpeg"); 
     	//Log::write(var_export($facedata,true));
 		$picWidth = intval($facedata['picwidth']); //原图的宽度
-		$scale = $picWidth/300;	//缩放比例
+		$scale = $picWidth/200;	//缩放比例
 		$x1 = intval($facedata['x1'])*$scale;		// 选择区域左上角x轴坐标
 		$y1 = intval($facedata['y1'])*$scale;		// 选择区域左上角y轴坐标
 		$x2 = intval($facedata['x2'])*$scale;		// 选择区域右下角x轴坐标
@@ -261,14 +278,16 @@ class AvatarModel {
         	}
 			$thumb->save(UPLOAD_PATH.$original_file_name);
 			unset($return);
+
 			/*$return['data']['big'] 		= getImageUrl($original_file_name,200,200,true,true).'?v'.$filemtime;
 			$return['data']['middle'] 	= getImageUrl($original_file_name,100,100,true,true).'?v'.$filemtime;
 			$return['data']['small'] 	= getImageUrl($original_file_name,50,50,true,true).'?v'.$filemtime;
 			$return['data']['tiny'] 	= getImageUrl($original_file_name,30,30,true,true).'?v'.$filemtime;*/
-			$return['data']['big'] 		= getImageUrl($original_file_name,90,90,true,true).'?v'.$filemtime;
-			$return['data']['middle'] 	= getImageUrl($original_file_name,75,75,true,true).'?v'.$filemtime;
+			$return['data']['original'] = getImageUrl($original_file_name,200,200,true,true).'?v'.$filemtime;
+			$return['data']['big'] = getImageUrl($original_file_name,90,90,true,true).'?v'.$filemtime;
+			$return['data']['middle'] 	= getImageUrl($original_file_name,80,80,true,true).'?v'.$filemtime;
 			$return['data']['small'] 	= getImageUrl($original_file_name,60,60,true,true).'?v'.$filemtime;
-			$return['data']['tiny'] 	= getImageUrl($original_file_name,50,50,true,true).'?v'.$filemtime;
+			$return['data']['tiny'] 	= getImageUrl($original_file_name,35,35,true,true).'?v'.$filemtime;
 		    $return['status'] = 1;
         }
         die(json_encode($return));
@@ -334,9 +353,9 @@ class AvatarModel {
 			$return['data']['small'] 	= getImageUrl($original_file_name,50,50,true,true).'?v'.$filemtime;
 			$return['data']['tiny'] 	= getImageUrl($original_file_name,30,30,true,true).'?v'.$filemtime;*/
 			$return['data']['big'] 		= getImageUrl($original_file_name,90,90,true,true).'?v'.$filemtime;
-			$return['data']['middle'] 	= getImageUrl($original_file_name,75,75,true,true).'?v'.$filemtime;
+			$return['data']['middle'] 	= getImageUrl($original_file_name,80,80,true,true).'?v'.$filemtime;
 			$return['data']['small'] 	= getImageUrl($original_file_name,60,60,true,true).'?v'.$filemtime;
-			$return['data']['tiny'] 	= getImageUrl($original_file_name,50,50,true,true).'?v'.$filemtime;
+			$return['data']['tiny'] 	= getImageUrl($original_file_name,35,35,true,true).'?v'.$filemtime;
 		    $return['status'] = 1;
         }
         return $return;

@@ -1,5 +1,6 @@
 <include file="__THEME__/public_header" />
-<div class="cont_left">
+<div class="container">
+<div class="cont_left pd17">
     <include file="_top"/>   
     <div class="table_box">
       	<include file="_tab_menu"/>  
@@ -29,7 +30,7 @@
                 </ul>
             </div>-->
 
-            {:W('UserBaseInfo',array('uid'=>$uid, 'followstate'=>$followstate))}
+            {:W('UserBaseInfo',array('mid'=>$mid, 'uid'=>$uid, 'followstate'=>$followstate))}
 
             {:W('UserProfessionInfo',array('mid'=>$mid, 'uid'=>$uid, 'followstate'=>$followstate))}
 

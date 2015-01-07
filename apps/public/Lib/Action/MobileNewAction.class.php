@@ -474,10 +474,16 @@ class MobileNewAction
         // 发送提问的类型
         $type = t($_POST['type']);
 
+        //获取用户
+        $uid = -1;
+        $user = model('user')->getUserInfoByOpenID($d['openid']);
+        if (isset($user)) {
+            $uid = $user['uid'];
+        }
 
         // 所属应用名称
         $app = isset($_POST['app_name']) ? t($_POST['app_name']) : APP_NAME;            // 当前动态产生所属的应用
-        if (!$data = model('Feed')->put(-1, $app, $type, $d)) {
+        if (!$data = model('Feed')->put($uid, $app, $type, $d)) {
             $return = array('status' => 0, 'data' => model('Feed')->getError());
             exit(json_encode($return));
         }
@@ -485,7 +491,10 @@ class MobileNewAction
         $questionData = model('Feed')->get($d['questionid']);
         if ($questionData) {
             if ($questionData['openid'] != null && $questionData['openid'] != '') {
-                $content = '亲爱的用户：你好，有人在卢勤问答平台上回答了你提出的问题“' . $questionData['body'] . '”，快去看看吧！';
+                //$content = '亲爱的用户：你好，有人在卢勤问答平台上回答了你提出的问题“' . $questionData['body'] . '”，快去看看吧！';
+                $content = '亲爱的用户：你好，你提出的问题“' . $questionData['body'] . '”，已经被回答“' . substr($d['body'], 0, 20) . '...' . '”，快去看看吧！';
+                //$return = array('status' => 0, 'data' => $content);
+                //exit(json_encode($return));
                 $usermodel = model('user')->getUserInfoByOpenID($questionData['openid']);
                 if ($usermodel && !empty($usermodel['source'])) {
                     $this->PostWxUser($questionData['openid'], $questionData['feed_id'], $content, $usermodel['source']);

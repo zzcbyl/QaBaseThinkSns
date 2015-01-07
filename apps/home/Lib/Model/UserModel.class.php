@@ -334,7 +334,7 @@ class UserModel extends Model {
 			//粉丝数
 			$count['follower']  = M('weibo_follow')->where("fid={$uid} AND type=0")->count();
 			$userInfo['follower'] = $count['follower'];
-			//微博数
+			//提问数
 			$count['miniNum'] = M('weibo')->where("uid={$uid} AND isdel=0")->count();
 			$userInfo['miniNum'] = $count['miniNum'];
 			S('S_userInfo_'.$uid, $userInfo);

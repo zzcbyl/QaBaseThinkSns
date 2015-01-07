@@ -1,6 +1,6 @@
 <?php
 /**
- * 系统微博类
+ * 系统提问类
  * @author Stream
  *
  */
@@ -55,12 +55,12 @@ class DiyWeibo extends TagsAbstract{
 			$order = $attr['order'];
 		}
 		switch ( $attr['source'] ){
-			case 'user'://指定用户微博
+			case 'user'://指定用户提问
     			if ( !empty($attr['user']) ){
     				$map['uid'] = array ( 'in' , explode(',' , $attr['user']  ) );
     			}
     			break;
-    		case 'topic'://指定话题微博
+    		case 'topic'://指定话题提问
     			if ( !empty( $attr['topic'] ) ){
     				$fids = model( 'FeedTopic' )->getFeedIdByTopic ( $attr['topic'] );
     				$map['feed_id'] = array( 'in' , $fids );
@@ -70,7 +70,7 @@ class DiyWeibo extends TagsAbstract{
 		$list = model('Feed')->getList( $map , $limit , $order );
 		$attr['data'] = $list['data'];
 		$attr['list'] = $list;
-		// 获取微博配置
+		// 获取提问配置
 		$weiboSet = model('Xdata')->get('admin_Config:feed');
 		$attr = array_merge($attr, $weiboSet);
 		$attr['remarkHash'] = model('Follow')->getRemarkHash($GLOBALS['ts']['mid']);

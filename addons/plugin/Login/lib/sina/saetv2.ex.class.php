@@ -14,9 +14,9 @@ class SaeTOAuthException extends Exception {
 
 
 /**
- * 新浪微博 OAuth 认证类(OAuth2)
+ * 新浪提问 OAuth 认证类(OAuth2)
  *
- * 授权机制说明请大家参考微博开放平台文档：{@link http://open.weibo.com/wiki/Oauth2}
+ * 授权机制说明请大家参考提问开放平台文档：{@link http://open.weibo.com/wiki/Oauth2}
  *
  * @package sae
  * @author Elmer Zhang
@@ -489,7 +489,7 @@ class SaeTOAuthV2 {
 
 
 /**
- * 新浪微博操作类V2
+ * 新浪提问操作类V2
  *
  * 使用前需要先手工调用saetv2.ex.class.php <br />
  *
@@ -503,8 +503,8 @@ class SaeTClientV2
 	 * 构造函数
 	 * 
 	 * @access public
-	 * @param mixed $akey 微博开放平台应用APP KEY
-	 * @param mixed $skey 微博开放平台应用APP SECRET
+	 * @param mixed $akey 提问开放平台应用APP KEY
+	 * @param mixed $skey 提问开放平台应用APP SECRET
 	 * @param mixed $access_token OAuth认证返回的token
 	 * @param mixed $refresh_token OAuth认证返回的token secret
 	 * @return void
@@ -517,7 +517,7 @@ class SaeTClientV2
 	/**
 	 * 开启调试信息
 	 *
-	 * 开启调试信息后，SDK会将每次请求微博API所发送的POST Data、Headers以及请求信息、返回内容输出出来。
+	 * 开启调试信息后，SDK会将每次请求提问API所发送的POST Data、Headers以及请求信息、返回内容输出出来。
 	 *
 	 * @access public
 	 * @param bool $enable 是否开启调试信息
@@ -531,7 +531,7 @@ class SaeTClientV2
 	/**
 	 * 设置用户IP
 	 *
-	 * SDK默认将会通过$_SERVER['REMOTE_ADDR']获取用户IP，在请求微博API时将用户IP附加到Request Header中。但某些情况下$_SERVER['REMOTE_ADDR']取到的IP并非用户IP，而是一个固定的IP（例如使用SAE的Cron或TaskQueue服务时），此时就有可能会造成该固定IP达到微博API调用频率限额，导致API调用失败。此时可使用本方法设置用户IP，以避免此问题。
+	 * SDK默认将会通过$_SERVER['REMOTE_ADDR']获取用户IP，在请求提问API时将用户IP附加到Request Header中。但某些情况下$_SERVER['REMOTE_ADDR']取到的IP并非用户IP，而是一个固定的IP（例如使用SAE的Cron或TaskQueue服务时），此时就有可能会造成该固定IP达到提问API调用频率限额，导致API调用失败。此时可使用本方法设置用户IP，以避免此问题。
 	 *
 	 * @access public
 	 * @param string $ip 用户IP
@@ -548,7 +548,7 @@ class SaeTClientV2
 	}
 
 	/**
-	 * 获取最新的公共微博消息
+	 * 获取最新的公共提问消息
 	 *
 	 * 对应API：{@link http://open.weibo.com/wiki/2/statuses/public_timeline statuses/public_timeline}
 	 *
@@ -568,16 +568,16 @@ class SaeTClientV2
 	}
 
 	/**
-	 * 获取当前登录用户及其所关注用户的最新微博消息。
+	 * 获取当前登录用户及其所关注用户的最新提问消息。
 	 *
-	 * 获取当前登录用户及其所关注用户的最新微博消息。和用户登录 http://weibo.com 后在“我的首页”中看到的内容相同。同friends_timeline()
+	 * 获取当前登录用户及其所关注用户的最新提问消息。和用户登录 http://weibo.com 后在“我的首页”中看到的内容相同。同friends_timeline()
 	 * <br />对应API：{@link http://open.weibo.com/wiki/2/statuses/home_timeline statuses/home_timeline}
 	 * 
 	 * @access public
-	 * @param int $page 指定返回结果的页码。根据当前登录用户所关注的用户数及这些被关注用户发表的微博数，翻页功能最多能查看的总记录数会有所不同，通常最多能查看1000条左右。默认值1。可选。
+	 * @param int $page 指定返回结果的页码。根据当前登录用户所关注的用户数及这些被关注用户发表的提问数，翻页功能最多能查看的总记录数会有所不同，通常最多能查看1000条左右。默认值1。可选。
 	 * @param int $count 每次返回的记录数。缺省值50，最大值200。可选。
-	 * @param int $since_id 若指定此参数，则只返回ID比since_id大的微博消息（即比since_id发表时间晚的微博消息）。可选。
-	 * @param int $max_id 若指定此参数，则返回ID小于或等于max_id的微博消息。可选。
+	 * @param int $since_id 若指定此参数，则只返回ID比since_id大的提问消息（即比since_id发表时间晚的提问消息）。可选。
+	 * @param int $max_id 若指定此参数，则返回ID小于或等于max_id的提问消息。可选。
 	 * @param int $base_app 是否只获取当前应用的数据。0为否（所有数据），1为是（仅当前应用），默认为0。
 	 * @param int $feature 过滤类型ID，0：全部、1：原创、2：图片、3：视频、4：音乐，默认为0。
 	 * @return array
@@ -602,18 +602,18 @@ class SaeTClientV2
 	}
 
 	/**
-	 * 获取当前登录用户及其所关注用户的最新微博消息。
+	 * 获取当前登录用户及其所关注用户的最新提问消息。
 	 *
-	 * 获取当前登录用户及其所关注用户的最新微博消息。和用户登录 http://weibo.com 后在“我的首页”中看到的内容相同。同home_timeline()
+	 * 获取当前登录用户及其所关注用户的最新提问消息。和用户登录 http://weibo.com 后在“我的首页”中看到的内容相同。同home_timeline()
 	 * <br />对应API：{@link http://open.weibo.com/wiki/2/statuses/friends_timeline statuses/friends_timeline}
 	 * 
 	 * @access public
-	 * @param int $page 指定返回结果的页码。根据当前登录用户所关注的用户数及这些被关注用户发表的微博数，翻页功能最多能查看的总记录数会有所不同，通常最多能查看1000条左右。默认值1。可选。
+	 * @param int $page 指定返回结果的页码。根据当前登录用户所关注的用户数及这些被关注用户发表的提问数，翻页功能最多能查看的总记录数会有所不同，通常最多能查看1000条左右。默认值1。可选。
 	 * @param int $count 每次返回的记录数。缺省值50，最大值200。可选。
-	 * @param int $since_id 若指定此参数，则只返回ID比since_id大的微博消息（即比since_id发表时间晚的微博消息）。可选。
-	 * @param int $max_id 若指定此参数，则返回ID小于或等于max_id的微博消息。可选。
-	 * @param int $base_app 是否基于当前应用来获取数据。1为限制本应用微博，0为不做限制。默认为0。可选。
-	 * @param int $feature 微博类型，0全部，1原创，2图片，3视频，4音乐. 返回指定类型的微博信息内容。转为为0。可选。
+	 * @param int $since_id 若指定此参数，则只返回ID比since_id大的提问消息（即比since_id发表时间晚的提问消息）。可选。
+	 * @param int $max_id 若指定此参数，则返回ID小于或等于max_id的提问消息。可选。
+	 * @param int $base_app 是否基于当前应用来获取数据。1为限制本应用提问，0为不做限制。默认为0。可选。
+	 * @param int $feature 提问类型，0全部，1原创，2图片，3视频，4音乐. 返回指定类型的提问信息内容。转为为0。可选。
 	 * @return array
 	 */
 	function friends_timeline( $page = 1, $count = 50, $since_id = 0, $max_id = 0, $base_app = 0, $feature = 0 )
@@ -622,18 +622,18 @@ class SaeTClientV2
 	}
 
 	/**
-	 * 获取用户发布的微博信息列表
+	 * 获取用户发布的提问信息列表
 	 *
-	 * 返回用户的发布的最近n条信息，和用户微博页面返回内容是一致的。此接口也可以请求其他用户的最新发表微博。
+	 * 返回用户的发布的最近n条信息，和用户提问页面返回内容是一致的。此接口也可以请求其他用户的最新发表提问。
 	 * <br />对应API：{@link http://open.weibo.com/wiki/2/statuses/user_timeline statuses/user_timeline}
 	 * 
 	 * @access public
 	 * @param int $page 页码
 	 * @param int $count 每次返回的最大记录数，最多返回200条，默认50。
-	 * @param mixed $uid 指定用户UID或微博昵称
-	 * @param int $since_id 若指定此参数，则只返回ID比since_id大的微博消息（即比since_id发表时间晚的微博消息）。可选。
-	 * @param int $max_id 若指定此参数，则返回ID小于或等于max_id的提到当前登录用户微博消息。可选。
-	 * @param int $base_app 是否基于当前应用来获取数据。1为限制本应用微博，0为不做限制。默认为0。
+	 * @param mixed $uid 指定用户UID或提问昵称
+	 * @param int $since_id 若指定此参数，则只返回ID比since_id大的提问消息（即比since_id发表时间晚的提问消息）。可选。
+	 * @param int $max_id 若指定此参数，则返回ID小于或等于max_id的提到当前登录用户提问消息。可选。
+	 * @param int $base_app 是否基于当前应用来获取数据。1为限制本应用提问，0为不做限制。默认为0。
 	 * @param int $feature 过滤类型ID，0：全部、1：原创、2：图片、3：视频、4：音乐，默认为0。
 	 * @param int $trim_user 返回值中user信息开关，0：返回完整的user信息、1：user字段仅返回uid，默认为0。
 	 * @return array
@@ -661,20 +661,20 @@ class SaeTClientV2
 	
 	
 	/**
-	 * 获取用户发布的微博信息列表
+	 * 获取用户发布的提问信息列表
 	 *
-	 * 返回用户的发布的最近n条信息，和用户微博页面返回内容是一致的。此接口也可以请求其他用户的最新发表微博。
+	 * 返回用户的发布的最近n条信息，和用户提问页面返回内容是一致的。此接口也可以请求其他用户的最新发表提问。
 	 * <br />对应API：{@link http://open.weibo.com/wiki/2/statuses/user_timeline statuses/user_timeline}
 	 * 
 	 * @access public
-	 * @param string $screen_name 微博昵称，主要是用来区分用户UID跟微博昵称，当二者一样而产生歧义的时候，建议使用该参数 
+	 * @param string $screen_name 提问昵称，主要是用来区分用户UID跟提问昵称，当二者一样而产生歧义的时候，建议使用该参数 
 	 * @param int $page 页码
 	 * @param int $count 每次返回的最大记录数，最多返回200条，默认50。
-	 * @param int $since_id 若指定此参数，则只返回ID比since_id大的微博消息（即比since_id发表时间晚的微博消息）。可选。
-	 * @param int $max_id 若指定此参数，则返回ID小于或等于max_id的提到当前登录用户微博消息。可选。
+	 * @param int $since_id 若指定此参数，则只返回ID比since_id大的提问消息（即比since_id发表时间晚的提问消息）。可选。
+	 * @param int $max_id 若指定此参数，则返回ID小于或等于max_id的提到当前登录用户提问消息。可选。
 	 * @param int $feature 过滤类型ID，0：全部、1：原创、2：图片、3：视频、4：音乐，默认为0。
 	 * @param int $trim_user 返回值中user信息开关，0：返回完整的user信息、1：user字段仅返回uid，默认为0。
-	 * @param int $base_app 是否基于当前应用来获取数据。1为限制本应用微博，0为不做限制。默认为0。
+	 * @param int $base_app 是否基于当前应用来获取数据。1为限制本应用提问，0为不做限制。默认为0。
 	 * @return array
 	 */
 	function user_timeline_by_name( $screen_name = NULL , $page = 1 , $count = 50 , $since_id = 0, $max_id = 0, $feature = 0, $trim_user = 0, $base_app = 0 )
@@ -759,12 +759,12 @@ class SaeTClientV2
 
 
 	/**
-	 * 返回一条原创微博消息的最新n条转发微博消息。本接口无法对非原创微博进行查询。 
+	 * 返回一条原创提问消息的最新n条转发提问消息。本接口无法对非原创提问进行查询。 
 	 *
 	 * 对应API：{@link http://open.weibo.com/wiki/2/statuses/repost_timeline statuses/repost_timeline}
 	 * 
 	 * @access public
-	 * @param int $sid 要获取转发微博列表的原创微博ID。
+	 * @param int $sid 要获取转发提问列表的原创提问ID。
 	 * @param int $page 返回结果的页码。 
 	 * @param int $count 单页返回的最大记录数，最多返回200条，默认50。可选。
 	 * @param int $since_id 若指定此参数，则只返回ID比since_id大的记录（比since_id发表时间晚）。可选。
@@ -792,7 +792,7 @@ class SaeTClientV2
 	}
 
 	/**
-	 * 获取当前用户最新转发的n条微博消息
+	 * 获取当前用户最新转发的n条提问消息
 	 *
 	 * 对应API：{@link http://open.weibo.com/wiki/2/statuses/repost_by_me statuses/repost_by_me}
 	 * 
@@ -819,19 +819,19 @@ class SaeTClientV2
 	}
 
 	/**
-	 * 获取@当前用户的微博列表
+	 * 获取@当前用户的提问列表
 	 *
-	 * 返回最新n条提到登录用户的微博消息（即包含@username的微博消息）
+	 * 返回最新n条提到登录用户的提问消息（即包含@username的提问消息）
 	 * <br />对应API：{@link http://open.weibo.com/wiki/2/statuses/mentions statuses/mentions}
 	 * 
 	 * @access public
 	 * @param int $page 返回结果的页序号。
 	 * @param int $count 每次返回的最大记录数（即页面大小），不大于200，默认为50。
-	 * @param int $since_id 若指定此参数，则只返回ID比since_id大的微博消息（即比since_id发表时间晚的微博消息）。可选。
-	 * @param int $max_id 若指定此参数，则返回ID小于或等于max_id的提到当前登录用户微博消息。可选。
+	 * @param int $since_id 若指定此参数，则只返回ID比since_id大的提问消息（即比since_id发表时间晚的提问消息）。可选。
+	 * @param int $max_id 若指定此参数，则返回ID小于或等于max_id的提到当前登录用户提问消息。可选。
 	 * @param int $filter_by_author 作者筛选类型，0：全部、1：我关注的人、2：陌生人，默认为0。
-	 * @param int $filter_by_source 来源筛选类型，0：全部、1：来自微博、2：来自微群，默认为0。
-	 * @param int $filter_by_type 原创筛选类型，0：全部微博、1：原创的微博，默认为0。
+	 * @param int $filter_by_source 来源筛选类型，0：全部、1：来自提问、2：来自微群，默认为0。
+	 * @param int $filter_by_type 原创筛选类型，0：全部提问、1：原创的提问，默认为0。
 	 * @return array
 	 */
 	function mentions( $page = 1, $count = 50, $since_id = 0, $max_id = 0, $filter_by_author = 0, $filter_by_source = 0, $filter_by_type = 0 )
@@ -854,13 +854,13 @@ class SaeTClientV2
 
 
 	/**
-	 * 根据ID获取单条微博信息内容
+	 * 根据ID获取单条提问信息内容
 	 *
-	 * 获取单条ID的微博信息，作者信息将同时返回。
+	 * 获取单条ID的提问信息，作者信息将同时返回。
 	 * <br />对应API：{@link http://open.weibo.com/wiki/2/statuses/show statuses/show}
 	 * 
 	 * @access public
-	 * @param int $id 要获取已发表的微博ID, 如ID不存在返回空
+	 * @param int $id 要获取已发表的提问ID, 如ID不存在返回空
 	 * @return array
 	 */
 	function show_status( $id )
@@ -872,11 +872,11 @@ class SaeTClientV2
 	}
 
 	/**
-	 * 根据微博id号获取微博的信息
+	 * 根据提问id号获取提问的信息
 	 *
 	 * 对应API：{@link http://open.weibo.com/wiki/2/statuses/show_batch statuses/show_batch}
 	 *
-	 * @param string $ids 需要查询的微博ID，用半角逗号分隔，最多不超过50个。
+	 * @param string $ids 需要查询的提问ID，用半角逗号分隔，最多不超过50个。
 	 * @return array
 	 */
     function show_batch( $ids )
@@ -894,12 +894,12 @@ class SaeTClientV2
 	}
 
 	/**
-	 * 通过微博（评论、私信）ID获取其MID
+	 * 通过提问（评论、私信）ID获取其MID
 	 *
 	 * 对应API：{@link http://open.weibo.com/wiki/2/statuses/querymid statuses/querymid}
 	 *
-	 * @param int|string $id  需要查询的微博（评论、私信）ID，批量模式下，用半角逗号分隔，最多不超过20个。
-	 * @param int $type  获取类型，1：微博、2：评论、3：私信，默认为1。
+	 * @param int|string $id  需要查询的提问（评论、私信）ID，批量模式下，用半角逗号分隔，最多不超过20个。
+	 * @param int $type  获取类型，1：提问、2：评论、3：私信，默认为1。
 	 * @param int $is_batch 是否使用批量模式，0：否、1：是，默认为0。
 	 * @return array
 	 */
@@ -913,12 +913,12 @@ class SaeTClientV2
 	}
 
 	/**
-	 * 通过微博（评论、私信）MID获取其ID
+	 * 通过提问（评论、私信）MID获取其ID
 	 *
 	 * 对应API：{@link http://open.weibo.com/wiki/2/statuses/queryid statuses/queryid}
 	 *
-	 * @param int|string $mid  需要查询的微博（评论、私信）MID，批量模式下，用半角逗号分隔，最多不超过20个。
-	 * @param int $type  获取类型，1：微博、2：评论、3：私信，默认为1。
+	 * @param int|string $mid  需要查询的提问（评论、私信）MID，批量模式下，用半角逗号分隔，最多不超过20个。
+	 * @param int $type  获取类型，1：提问、2：评论、3：私信，默认为1。
 	 * @param int $is_batch 是否使用批量模式，0：否、1：是，默认为0。
 	 * @param int $inbox  仅对私信有效，当MID类型为私信时用此参数，0：发件箱、1：收件箱，默认为0 。
 	 * @param int $isBase62 MID是否是base62编码，0：否、1：是，默认为0。
@@ -936,7 +936,7 @@ class SaeTClientV2
 	}
 
 	/**
-	 * 按天返回热门微博转发榜的微博列表
+	 * 按天返回热门提问转发榜的提问列表
 	 *
 	 * 对应API：{@link http://open.weibo.com/wiki/2/statuses/hot/repost_daily statuses/hot/repost_daily}
 	 *
@@ -953,7 +953,7 @@ class SaeTClientV2
 	}
 
 	/**
-	 * 按周返回热门微博转发榜的微博列表
+	 * 按周返回热门提问转发榜的提问列表
 	 *
 	 * 对应API：{@link http://open.weibo.com/wiki/2/statuses/hot/repost_weekly statuses/hot/repost_weekly}
 	 *
@@ -970,7 +970,7 @@ class SaeTClientV2
 	}
 
 	/**
-	 * 按天返回热门微博评论榜的微博列表
+	 * 按天返回热门提问评论榜的提问列表
 	 *
 	 * 对应API：{@link http://open.weibo.com/wiki/2/statuses/hot/comments_daily statuses/hot/comments_daily}
 	 *
@@ -987,7 +987,7 @@ class SaeTClientV2
 	}
 
 	/**
-	 * 按周返回热门微博评论榜的微博列表
+	 * 按周返回热门提问评论榜的提问列表
 	 *
 	 * 对应API：{@link http://open.weibo.com/wiki/2/statuses/hot/comments_weekly statuses/hot/comments_weekly}
 	 *
@@ -1005,15 +1005,15 @@ class SaeTClientV2
 
 
 	/**
-	 * 转发一条微博信息。
+	 * 转发一条提问信息。
 	 *
 	 * 可加评论。为防止重复，发布的信息与最新信息一样话，将会被忽略。
 	 * <br />对应API：{@link http://open.weibo.com/wiki/2/statuses/repost statuses/repost}
 	 * 
 	 * @access public
-	 * @param int $sid 转发的微博ID
+	 * @param int $sid 转发的提问ID
 	 * @param string $text 添加的评论信息。可选。
-	 * @param int $is_comment 是否在转发的同时发表评论，0：否、1：评论给当前微博、2：评论给原微博、3：都评论，默认为0。
+	 * @param int $is_comment 是否在转发的同时发表评论，0：否、1：评论给当前提问、2：评论给原提问、3：都评论，默认为0。
 	 * @return array
 	 */
 	function repost( $sid, $text = NULL, $is_comment = 0 )
@@ -1029,13 +1029,13 @@ class SaeTClientV2
 	}
 
 	/**
-	 * 删除一条微博
+	 * 删除一条提问
 	 * 
-	 * 根据ID删除微博消息。注意：只能删除自己发布的信息。
+	 * 根据ID删除提问消息。注意：只能删除自己发布的信息。
 	 * <br />对应API：{@link http://open.weibo.com/wiki/2/statuses/destroy statuses/destroy}
 	 * 
 	 * @access public
-	 * @param int $id 要删除的微博ID
+	 * @param int $id 要删除的提问ID
 	 * @return array
 	 */
 	function delete( $id )
@@ -1044,13 +1044,13 @@ class SaeTClientV2
 	}
 
 	/**
-	 * 删除一条微博
+	 * 删除一条提问
 	 *
-	 * 删除微博。注意：只能删除自己发布的信息。
+	 * 删除提问。注意：只能删除自己发布的信息。
 	 * <br />对应API：{@link http://open.weibo.com/wiki/2/statuses/destroy statuses/destroy}
 	 * 
 	 * @access public
-	 * @param int $id 要删除的微博ID
+	 * @param int $id 要删除的提问ID
 	 * @return array
 	 */
 	function destroy( $id )
@@ -1063,18 +1063,18 @@ class SaeTClientV2
 
 	
 	/**
-	 * 发表微博
+	 * 发表提问
 	 *
-	 * 发布一条微博信息。
-	 * <br />注意：lat和long参数需配合使用，用于标记发表微博消息时所在的地理位置，只有用户设置中geo_enabled=true时候地理位置信息才有效。
-	 * <br />注意：为防止重复提交，当用户发布的微博消息与上次成功发布的微博消息内容一样时，将返回400错误，给出错误提示：“40025:Error: repeated weibo text!“。 
+	 * 发布一条提问信息。
+	 * <br />注意：lat和long参数需配合使用，用于标记发表提问消息时所在的地理位置，只有用户设置中geo_enabled=true时候地理位置信息才有效。
+	 * <br />注意：为防止重复提交，当用户发布的提问消息与上次成功发布的提问消息内容一样时，将返回400错误，给出错误提示：“40025:Error: repeated weibo text!“。 
 	 * <br />对应API：{@link http://open.weibo.com/wiki/2/statuses/update statuses/update}
 	 * 
 	 * @access public
-	 * @param string $status 要更新的微博信息。信息内容不超过140个汉字, 为空返回400错误。
-	 * @param float $lat 纬度，发表当前微博所在的地理位置，有效范围 -90.0到+90.0, +表示北纬。可选。
+	 * @param string $status 要更新的提问信息。信息内容不超过140个汉字, 为空返回400错误。
+	 * @param float $lat 纬度，发表当前提问所在的地理位置，有效范围 -90.0到+90.0, +表示北纬。可选。
 	 * @param float $long 经度。有效范围-180.0到+180.0, +表示东经。可选。
-	 * @param mixed $annotations 可选参数。元数据，主要是为了方便第三方应用记录一些适合于自己使用的信息。每条微博可以包含一个或者多个元数据。请以json字串的形式提交，字串长度不超过512个字符，或者数组方式，要求json_encode后字串长度不超过512个字符。具体内容可以自定。例如：'[{"type2":123}, {"a":"b", "c":"d"}]'或array(array("type2"=>123), array("a"=>"b", "c"=>"d"))。
+	 * @param mixed $annotations 可选参数。元数据，主要是为了方便第三方应用记录一些适合于自己使用的信息。每条提问可以包含一个或者多个元数据。请以json字串的形式提交，字串长度不超过512个字符，或者数组方式，要求json_encode后字串长度不超过512个字符。具体内容可以自定。例如：'[{"type2":123}, {"a":"b", "c":"d"}]'或array(array("type2"=>123), array("a"=>"b", "c"=>"d"))。
 	 * @return array
 	 */
 	function update( $status, $lat = NULL, $long = NULL, $annotations = NULL )
@@ -1097,16 +1097,16 @@ class SaeTClientV2
 	}
 
 	/**
-	 * 发表图片微博
+	 * 发表图片提问
 	 *
-	 * 发表图片微博消息。目前上传图片大小限制为<5M。 
-	 * <br />注意：lat和long参数需配合使用，用于标记发表微博消息时所在的地理位置，只有用户设置中geo_enabled=true时候地理位置信息才有效。
+	 * 发表图片提问消息。目前上传图片大小限制为<5M。 
+	 * <br />注意：lat和long参数需配合使用，用于标记发表提问消息时所在的地理位置，只有用户设置中geo_enabled=true时候地理位置信息才有效。
 	 * <br />对应API：{@link http://open.weibo.com/wiki/2/statuses/upload statuses/upload}
 	 * 
 	 * @access public
-	 * @param string $status 要更新的微博信息。信息内容不超过140个汉字, 为空返回400错误。
+	 * @param string $status 要更新的提问信息。信息内容不超过140个汉字, 为空返回400错误。
 	 * @param string $pic_path 要发布的图片路径, 支持url。[只支持png/jpg/gif三种格式, 增加格式请修改get_image_mime方法]
-	 * @param float $lat 纬度，发表当前微博所在的地理位置，有效范围 -90.0到+90.0, +表示北纬。可选。
+	 * @param float $lat 纬度，发表当前提问所在的地理位置，有效范围 -90.0到+90.0, +表示北纬。可选。
 	 * @param float $long 可选参数，经度。有效范围-180.0到+180.0, +表示东经。可选。
 	 * @return array
 	 */
@@ -1127,11 +1127,11 @@ class SaeTClientV2
 
 
 	/**
-	 * 指定一个图片URL地址抓取后上传并同时发布一条新微博
+	 * 指定一个图片URL地址抓取后上传并同时发布一条新提问
 	 *
 	 * 对应API：{@link http://open.weibo.com/wiki/2/statuses/upload_url_text statuses/upload_url_text}
 	 *
-	 * @param string $status  要发布的微博文本内容，内容不超过140个汉字。
+	 * @param string $status  要发布的提问文本内容，内容不超过140个汉字。
 	 * @param string $url    图片的URL地址，必须以http开头。
 	 * @return array
 	 */
@@ -1147,7 +1147,7 @@ class SaeTClientV2
 	/**
 	 * 获取表情列表
 	 *
-	 * 返回新浪微博官方所有表情、魔法表情的相关信息。包括短语、表情类型、表情分类，是否热门等。
+	 * 返回新浪提问官方所有表情、魔法表情的相关信息。包括短语、表情类型、表情分类，是否热门等。
 	 * <br />对应API：{@link http://open.weibo.com/wiki/2/emotions emotions}
 	 * 
 	 * @access public
@@ -1165,11 +1165,11 @@ class SaeTClientV2
 
 
 	/**
-	 * 根据微博ID返回某条微博的评论列表
+	 * 根据提问ID返回某条提问的评论列表
 	 *
 	 * 对应API：{@link http://open.weibo.com/wiki/2/comments/show comments/show}
 	 *
-	 * @param int $sid 需要查询的微博ID。
+	 * @param int $sid 需要查询的提问ID。
 	 * @param int $page 返回结果的页码，默认为1。
 	 * @param int $count 单页返回的记录条数，默认为50。
 	 * @param int $since_id 若指定此参数，则返回ID比since_id大的评论（即比since_id时间晚的评论），默认为0。
@@ -1206,7 +1206,7 @@ class SaeTClientV2
 	 * @param int $max_id 若指定此参数，则返回ID小于或等于max_id的评论，默认为0。
 	 * @param int $count  单页返回的记录条数，默认为50。
 	 * @param int $page 返回结果的页码，默认为1。
-	 * @param int $filter_by_source 来源筛选类型，0：全部、1：来自微博的评论、2：来自微群的评论，默认为0。
+	 * @param int $filter_by_source 来源筛选类型，0：全部、1：来自提问的评论、2：来自微群的评论，默认为0。
 	 * @return array
 	 */
 	function comments_by_me( $page = 1 , $count = 50, $since_id = 0, $max_id = 0,  $filter_by_source = 0 )
@@ -1236,7 +1236,7 @@ class SaeTClientV2
 	 * @param int $count 单页返回的记录条数，默认为50。
 	 * @param int $page 返回结果的页码，默认为1。
 	 * @param int $filter_by_author 作者筛选类型，0：全部、1：我关注的人、2：陌生人，默认为0。
-	 * @param int $filter_by_source 来源筛选类型，0：全部、1：来自微博的评论、2：来自微群的评论，默认为0。
+	 * @param int $filter_by_source 来源筛选类型，0：全部、1：来自提问的评论、2：来自微群的评论，默认为0。
 	 * @return array
 	 */ 
 	function comments_to_me( $page = 1 , $count = 50, $since_id = 0, $max_id = 0, $filter_by_author = 0, $filter_by_source = 0)
@@ -1296,7 +1296,7 @@ class SaeTClientV2
 	 * @param int $count 单页返回的记录条数，默认为50。
 	 * @param int $page 返回结果的页码，默认为1。
 	 * @param int $filter_by_author  作者筛选类型，0：全部、1：我关注的人、2：陌生人，默认为0。
-	 * @param int $filter_by_source 来源筛选类型，0：全部、1：来自微博的评论、2：来自微群的评论，默认为0。
+	 * @param int $filter_by_source 来源筛选类型，0：全部、1：来自提问的评论、2：来自微群的评论，默认为0。
 	 * @return array
 	 */ 
 	function comments_mentions( $page = 1, $count = 50, $since_id = 0, $max_id = 0, $filter_by_author = 0, $filter_by_source = 0)
@@ -1336,13 +1336,13 @@ class SaeTClientV2
 
 
 	/**
-	 * 对一条微博进行评论
+	 * 对一条提问进行评论
 	 *
 	 * 对应API：{@link http://open.weibo.com/wiki/2/comments/create comments/create}
 	 *
 	 * @param string $comment 评论内容，内容不超过140个汉字。
-	 * @param int $id 需要评论的微博ID。
-	 * @param int $comment_ori 当评论转发微博时，是否评论给原微博，0：否、1：是，默认为0。
+	 * @param int $id 需要评论的提问ID。
+	 * @param int $comment_ori 当评论转发提问时，是否评论给原提问，0：否、1：是，默认为0。
 	 * @return array
 	 */
 	function send_comment( $id , $comment , $comment_ori = 0)
@@ -1356,9 +1356,9 @@ class SaeTClientV2
 	}
 
 	/**
-	 * 删除当前用户的微博评论信息。
+	 * 删除当前用户的提问评论信息。
 	 *
-	 * 注意：只能删除自己发布的评论，发部微博的用户不可以删除其他人的评论。
+	 * 注意：只能删除自己发布的评论，发部提问的用户不可以删除其他人的评论。
 	 * <br />对应API：{@link http://open.weibo.com/wiki/2/statuses/comment_destroy statuses/comment_destroy}
 	 * 
 	 * @access public
@@ -1376,7 +1376,7 @@ class SaeTClientV2
 	/**
 	 * 根据评论ID批量删除评论
 	 *
-	 * 注意：只能删除自己发布的评论，发部微博的用户不可以删除其他人的评论。
+	 * 注意：只能删除自己发布的评论，发部提问的用户不可以删除其他人的评论。
 	 * <br />对应API：{@link http://open.weibo.com/wiki/2/comments/destroy_batch comments/destroy_batch}
 	 *
 	 * @access public
@@ -1405,11 +1405,11 @@ class SaeTClientV2
 	 * <br />对应API：{@link http://open.weibo.com/wiki/2/comments/reply comments/reply}
 	 * 
 	 * @access public
-	 * @param int $sid 微博id
+	 * @param int $sid 提问id
 	 * @param string $text 评论内容。
 	 * @param int $cid 评论id
 	 * @param int $without_mention 1：回复中不自动加入“回复@用户名”，0：回复中自动加入“回复@用户名”.默认为0.
-     * @param int $comment_ori	  当评论转发微博时，是否评论给原微博，0：否、1：是，默认为0。
+     * @param int $comment_ori	  当评论转发提问时，是否评论给原提问，0：否、1：是，默认为0。
 	 * @return array
 	 */
 	function reply( $sid, $text, $cid, $without_mention = 0, $comment_ori = 0 )
@@ -1430,7 +1430,7 @@ class SaeTClientV2
 	/**
 	 * 根据用户UID或昵称获取用户资料
 	 *
-	 * 按用户UID或昵称返回用户资料，同时也将返回用户的最新发布的微博。
+	 * 按用户UID或昵称返回用户资料，同时也将返回用户的最新发布的提问。
 	 * <br />对应API：{@link http://open.weibo.com/wiki/2/users/show users/show}
 	 * 
 	 * @access public
@@ -1451,7 +1451,7 @@ class SaeTClientV2
 	/**
 	 * 根据用户UID或昵称获取用户资料
 	 *
-	 * 按用户UID或昵称返回用户资料，同时也将返回用户的最新发布的微博。
+	 * 按用户UID或昵称返回用户资料，同时也将返回用户的最新发布的提问。
 	 * <br />对应API：{@link http://open.weibo.com/wiki/2/users/show users/show}
 	 * 
 	 * @access public
@@ -1467,7 +1467,7 @@ class SaeTClientV2
 	}
 
 	/**
-	 * 通过个性化域名获取用户资料以及用户最新的一条微博
+	 * 通过个性化域名获取用户资料以及用户最新的一条提问
 	 *
 	 * 对应API：{@link http://open.weibo.com/wiki/2/users/domain_show users/domain_show}
 	 * 
@@ -1847,8 +1847,8 @@ class SaeTClientV2
 	 * <br />对应API：{@link http://open.weibo.com/wiki/2/friendships/show friendships/show}
 	 * 
 	 * @access public
-	 * @param mixed $target_name 目标用户的微博昵称
-	 * @param mixed $source_name 源用户的微博昵称，可选，默认为当前的用户
+	 * @param mixed $target_name 目标用户的提问昵称
+	 * @param mixed $source_name 源用户的提问昵称，可选，默认为当前的用户
 	 * @return array
 	 */
 	function is_followed_by_name( $target_name, $source_name = NULL )
@@ -2111,7 +2111,7 @@ class SaeTClientV2
 	 * @access public
 	 * @param int $uid 用户UID
 	 * @param string $text 要发生的消息内容，文本大小必须小于300个汉字。
-	 * @param int $id 需要发送的微博ID。
+	 * @param int $id 需要发送的提问ID。
 	 * @return array
 	 */
 	function send_dm_by_id( $uid, $text, $id = NULL )
@@ -2136,7 +2136,7 @@ class SaeTClientV2
 	 * @access public
 	 * @param string $screen_name 用户昵称
 	 * @param string $text 要发生的消息内容，文本大小必须小于300个汉字。
-	 * @param int $id 需要发送的微博ID。
+	 * @param int $id 需要发送的提问ID。
 	 * @return array
 	 */
 	function send_dm_by_name( $screen_name, $text, $id = NULL )
@@ -2502,7 +2502,7 @@ class SaeTClientV2
 	 * 
 	 * @param array $privacy_settings 要修改的隐私设置。格式：array('key1'=>'value1', 'key2'=>'value2', .....)。
 	 * 支持设置的项：
-	 *  - comment	int	是否可以评论我的微博，0：所有人、1：关注的人，默认为0。
+	 *  - comment	int	是否可以评论我的提问，0：所有人、1：关注的人，默认为0。
 	 *  - geo		int	是否开启地理信息，0：不开启、1：开启，默认为1。
 	 *  - message	int	是否可以给我发私信，0：所有人、1：关注的人，默认为0。
 	 *  - realname	int	是否可以通过真名搜索到我，0：不可以、1：可以，默认为0。
@@ -2598,12 +2598,12 @@ class SaeTClientV2
 
 
 	/**
-	 * 收藏一条微博信息
+	 * 收藏一条提问信息
 	 *
 	 * 对应API：{@link http://open.weibo.com/wiki/2/favorites/create favorites/create}
 	 * 
 	 * @access public
-	 * @param int $sid 收藏的微博id
+	 * @param int $sid 收藏的提问id
 	 * @return array
 	 */
 	function add_to_favorites( $sid )
@@ -2616,12 +2616,12 @@ class SaeTClientV2
 	}
 
 	/**
-	 * 删除微博收藏。
+	 * 删除提问收藏。
 	 *
 	 * 对应API：{@link http://open.weibo.com/wiki/2/favorites/destroy favorites/destroy}
 	 * 
 	 * @access public
-	 * @param int $id 要删除的收藏微博信息ID.
+	 * @param int $id 要删除的收藏提问信息ID.
 	 * @return array
 	 */
 	function remove_from_favorites( $id )
@@ -2634,7 +2634,7 @@ class SaeTClientV2
 
 
 	/**
-	 * 批量删除微博收藏。
+	 * 批量删除提问收藏。
 	 *
 	 * 批量删除当前登录用户的收藏。出现异常时，返回HTTP400错误。
 	 * <br />对应API：{@link http://open.weibo.com/wiki/2/favorites/destroy_batch favorites/destroy_batch}
@@ -2999,7 +2999,7 @@ class SaeTClientV2
 
 
 	/**
-	 * 搜索微博时的联想搜索建议
+	 * 搜索提问时的联想搜索建议
 	 *
 	 * 对应API：{@link http://open.weibo.com/wiki/2/search/suggestions/statuses search/suggestions/statuses}
 	 *
@@ -3079,7 +3079,7 @@ class SaeTClientV2
 
 
 	/**
-	 * 搜索与指定的一个或多个条件相匹配的微博
+	 * 搜索与指定的一个或多个条件相匹配的提问
 	 *
 	 * 对应API：{@link http://open.weibo.com/wiki/2/search/statuses search/statuses}
 	 *
@@ -3087,7 +3087,7 @@ class SaeTClientV2
 	 *  - q				string	搜索的关键字，必须进行URLencode。
 	 *  - filter_ori	int		过滤器，是否为原创，0：全部、1：原创、2：转发，默认为0。
 	 *  - filter_pic	int		过滤器。是否包含图片，0：全部、1：包含、2：不包含，默认为0。
-	 *  - fuid			int		搜索的微博作者的用户UID。
+	 *  - fuid			int		搜索的提问作者的用户UID。
 	 *  - province		int		搜索的省份范围，省份ID。
 	 *  - city			int		搜索的城市范围，城市ID。
 	 *  - starttime		int		开始时间，Unix时间戳。
@@ -3187,12 +3187,12 @@ class SaeTClientV2
 	}
 
 	/**
-	 * 根据一段微博正文推荐相关微博用户。 
+	 * 根据一段提问正文推荐相关提问用户。 
 	 *
 	 * 对应API：{@link http://open.weibo.com/wiki/2/suggestions/users/by_status suggestions/users/by_status}
 	 * 
 	 * @access public
-	 * @param string $content 微博正文内容。
+	 * @param string $content 提问正文内容。
 	 * @param int $num 返回结果数目，默认为10。
 	 * @return array
 	 */

@@ -55,7 +55,7 @@
                                         <a href="#" event-node="post_del" event-args='post_id={$post_detail['post_id']}&weiba_id={$post_detail['weiba_id']}&log=0'>删除</a>
                                         <i class="vline">|</i>
                                         <php>}</php>
-                                      <a event-args="sid={$post_detail['post_id']}&stable=weiba_post&curtable=feed&curid={$post_detail['feed_id']}&initHTML=&appname=weiba&cancomment=1&feedtype=weiba_post" href="javascript:void(0)" event-node="share">转发到微博</a>
+                                      <a event-args="sid={$post_detail['post_id']}&stable=weiba_post&curtable=feed&curid={$post_detail['feed_id']}&initHTML=&appname=weiba&cancomment=1&feedtype=weiba_post" href="javascript:void(0)" event-node="share">转发到提问</a>
                                         <i class="vline">|</i>
                                       <php>if($post_detail['favorite']==1){</php>
                                         <a event-args="post_id={$post_detail['post_id']}&weiba_id={$post_detail['weiba_id']}&post_uid={$post_detail['post_uid']}" href="javascript:void(0)" event-node="post_unfavorite" id="favorite">取消收藏</a>
@@ -88,7 +88,7 @@
                                     <i class="vline">|</i>
                                     <php>}</php>
                                   
-                                  <a event-args="sid={$post_detail['post_id']}&stable=weiba_post&curtable=feed&curid={$post_detail['feed_id']}&initHTML=&appname=weiba&cancomment=1&feedtype=weiba_post" href="javascript:void(0)" event-node="share">转发到微博</a>
+                                  <a event-args="sid={$post_detail['post_id']}&stable=weiba_post&curtable=feed&curid={$post_detail['feed_id']}&initHTML=&appname=weiba&cancomment=1&feedtype=weiba_post" href="javascript:void(0)" event-node="share">转发到提问</a>
                                   <i class="vline">|</i>
                                   <php>if($post_detail['favorite']==1){</php>
                                     <a event-args="post_id={$post_detail['post_id']}&weiba_id={$post_detail['weiba_id']}&post_uid={$post_detail['post_uid']}" href="javascript:void(0)" event-node="post_unfavorite" id="favorite">取消收藏</a>

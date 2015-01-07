@@ -1056,3 +1056,32 @@ allowed = (((allowed || "") + "").toLowerCase().match(/<[a-z][a-z0-9]*>/g) || []
         return allowed.indexOf('<' + $1.toLowerCase() + '>') > -1 ? $0 : '';
     });
 }
+
+//获取url参数值
+function getQueryString(name) {
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+    var r = window.location.search.substr(1).match(reg);
+    if (r != null) return unescape(r[2]); return null;
+}
+
+String.prototype.Trim = function () {
+    return this.replace(/(^\s*)|(\s*$)/g, "");
+}
+String.prototype.LTrim = function () {
+    return this.replace(/(^\s*)/g, "");
+}
+String.prototype.RTrim = function () {
+    return this.replace(/(\s*$)/g, "");
+}
+
+
+function showContentAll(strid, feedid) {
+    if ($("#" + strid + "All" + feedid).css("display") == "none") {
+        $("#" + strid + "SubData" + feedid).hide();
+        $("#" + strid + "All" + feedid).show();
+    }
+    else {
+        $("#" + strid + "SubData" + feedid).show();
+        $("#" + strid + "All" + feedid).hide();
+    }
+}

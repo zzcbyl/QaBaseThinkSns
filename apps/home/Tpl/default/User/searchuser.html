@@ -25,11 +25,11 @@
         <div class="tab-menu">
           <gt name="mid" value="0">
           <div class="right">
-            <input name="" class="btn_b pt5" value="发微博" maxlength="30" onclick="weibo.quickpublish('')" type="button" />
+            <input name="" class="btn_b pt5" value="发提问" maxlength="30" onclick="weibo.quickpublish('')" type="button" />
           </div>
           </gt>
           <ul>
-			<li><a feed_item" href="{:U('home/user/search',array('k'=>urlencode($search_key)))}"><span>搜微博</span></a></li>
+			<li><a feed_item" href="{:U('home/user/search',array('k'=>urlencode($search_key)))}"><span>搜提问</span></a></li>
             <li><a class="on" class="feed_item" href="{:U('home/user/searchuser',array('k'=>urlencode($search_key)))}"><span>搜人({$list.count})</span></a></li>
             <li><a class="feed_item" href="{:U('home/user/searchtag',array('k'=>urlencode($search_key)))}"><span>标签</span></a></li>
           </ul>
@@ -75,7 +75,7 @@
                 </div>
                 <div style="padding-top: 5px;" class="feed_c_btm lh18">
 				<php>if($vo['mini']){</php>
-                 <div>最近微博 {$vo.mini.ctime|friendlyDate='mohu'} </div>
+                 <div>最近提问 {$vo.mini.ctime|friendlyDate='mohu'} </div>
                   <div><a href="{:U('home/space/detail',array('id'=>$vo['mini']['weibo_id']))}">{$vo.mini.content}</a></div>
 				  <php>}</php>
                   <div class="pt5">

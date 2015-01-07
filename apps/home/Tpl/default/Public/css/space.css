@@ -57,7 +57,7 @@
 .pop_Set_group dd{background-color: #FFFEBD;border: 1px solid #C8C8C8;padding: 10px}
 .pop_Set_group .ck{vertical-align:middle;margin:-2px 0 0 0}
 .message_text{padding:5px}
-/*微博回复列表*/
+/*提问回复列表*/
 .comment_Box{padding:0 20px}
 .comment_list{padding:10px 0;margin:0;overflow: hidden;clear: both;border-bottom:1px dashed #D8D8D8;_zoom: 1}
 .comment_list dt{float: left;display: inline;width: 50px;padding: 3px 0 0}

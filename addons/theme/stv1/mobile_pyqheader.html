@@ -1,0 +1,27 @@
+<include file="__THEME__/_header_mobile" />
+<body style="background:#fff; font-size:14px;">
+<style>
+    .fontSize { font-size:12p width:100%;}
+</style>
+<div class="fontSize">
+<!--登录后-->
+    <div class="header_box">
+	    <div class="header" style="width:100%;">
+    	    <div class="h_logo">
+                <a href="{:U('public/Mobile/topiclist')}"  <php>if(strpos($_SERVER['HTTP_USER_AGENT'],'MSIE 6.0') !== false):</php>style="_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='{$site.logo}', sizingMethod='crop');_background:none;"<php>else:</php>style="background:url({$site.logo}) no-repeat center;"<php>endif;</php>> </a></div>
+           
+            <!--<ul class="menu">
+        	    <li><a class="{$tabClass.index}" href="{:SITE_URL}">首页</a></li>
+                <li><a class="{$tabClass.square}" href="{:U('public/Passport/square')}">广场</a></li>
+                <li><a class="{$tabClass.expert}" href="{:U('public/Passport/expert')}">专家</a></li>
+                <li><!--<a href="#">活动</a></li>
+            </ul>-->
+            <session name="mid">
+                <php>
+                    $userModel = model('user')->getUserInfo($mid);
+                </php>
+                <div style="float:right; margin-right:10px;"><a href="{:U('public/Mobile/mytopic',array('uid'=>$mid))}" title="{$userModel['uname']}"><img style="height:38px; padding:10px;" src="{$userModel['avatar_small']}" /></a></div>
+            </session>
+        </div>
+    </div>
+    

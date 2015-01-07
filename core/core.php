@@ -8,7 +8,7 @@
 if (!defined('SITE_PATH')) exit();
 
 ini_set('magic_quotes_runtime', 0);
-date_default_timezone_set('UTC');
+date_default_timezone_set('PRC');
 
 $time_include_start = microtime(TRUE);
 $mem_include_start = memory_get_usage();

@@ -1,0 +1,122 @@
+<div class="profile">
+    <div class="pro_img">
+        <a href="javascript:void(0);" title="{$user_info[$uid]['uname']}"><img src="{$user_info[$uid]['avatar_big']}" /></a>
+    </div>
+    <div class="pro_cont">
+        <h4><a href="javascript:void(0);">{$user_info[$uid]['uname']}</a></h4>        
+        <div class="profile_intro">
+            <php>if(!empty($user_info[$uid]['intro'])){</php>
+            <div style="float:left;"><strong>简介：</strong></div>
+            <div style="float:left;">{$user_info[$uid]['intro']|getShort=100}</div>
+            <div style="clear:both;"></div>
+            <php>}</php>
+        </div>
+        
+        <div style="clear:both;"></div>
+        <p style="padding-top:5px; height:auto;"><strong>地区：</strong>{$user_info[$uid]['location']}&nbsp;&nbsp;<!--<strong>资料：</strong>清华大学--></p>
+        <p class="xz">
+            <php>if(count($user_info[$uid]['user_group'])>0){</php>
+            <strong>勋章：</strong>
+            <volist name="user_info[$uid]['user_group']" id="ui2">
+                <img style="width:auto;height:auto;display:inline;cursor:pointer;" src="{$ui2['user_group_icon_url']}" title="{$ui2['user_group_name']}" />&nbsp;
+            </volist>
+            <!--<a href="#" class="x1"></a>
+            <a href="#" class="x2"></a>
+            <a href="#" class="x3"></a>
+            <a href="#" class="x4"></a>-->
+            <php>}</php>
+        </p>
+    </div>
+    <p class="comm hd">
+    <strong>获得：</strong>
+    <include file="_countdata"/>   
+    <span class="hd_btn">
+        <php>if($mid != $user_info[$uid]['uid'] && $mid && count($user_info[$uid]['user_group'])==0){</php>
+            {:W('FollowBtn', array('fid'=>$user_info[$uid]['uid'], 'uname'=>$user_info[$uid]['uname'], 'follow_state'=>$follow_state[$user_info[$uid]['uid']], 'isrefresh'=>1))}
+            <!--<php>if(CheckPermission('core_normal','send_message')){</php>
+            <eq name='userPrivacy.message' value='0'>
+            <a onclick="ui.sendmessage({$user_info[$uid]['uid']}, 0)" href="javascript:void(0)" event-node="postMsg" class="ml5 btn-cancel"><span>发私信</span></a>
+            </eq>&nbsp;
+            <php>}</php>-->
+        <php>}</php>
+
+        <!--<a href="#" class="gz">关注</a>
+        <a href="#" class="gz_ed">已关注</a>
+        <a href="#" class="qx">取消</a>-->
+    </span>
+    </p>
+</div>
+
+
+
+
+<script type="text/javascript">
+// 事件监听
+M.addEventFns({
+    ico_level_right: {
+        load: function() {
+            var offset = $(this).offset();
+            var top = offset.top + 23;
+            var left = offset.left - 10;
+            var html = '<div id="layer_level_right" class="layer-open experience" style="display:none;position:absolute;top:'+top+'px;left:'+left+'px;">\
+                        <dl>\
+                        <dd>{:L('PUBLIC_USER_LEVEL')}：{$userCredit.level.name}</dd>\
+                        <dd>{:L('PUBLIC_USER_POINTS_CALCULATION',array('num'=>$userCredit['credit']['experience']['value'],'experience'=>$userCredit['creditType'][$userCredit['level']['level_type']]))}</dd>\
+                        <dd class="textb">{:L('PUBLI_USER_UPGRADE_TIPS',array('num'=>$userCredit['level']['nextNeed'],'experience'=>$userCredit['creditType'][$userCredit['level']['level_type']]))}</dd>\
+                        </dl>\
+                        </div>';
+            $("body").append(html);
+
+            this._model = document.getElementById("layer_level_right");
+        },
+        mouseenter: function() {
+            $(this._model).css('display', 'block');
+        },
+        mouseleave: function() {
+            $(this._model).css('display', 'none');
+        }
+    },
+    ico_wallet_right: {
+        load: function() {
+            var offset = $(this).offset();
+            var top = offset.top + 23;
+            var left = offset.left - 20;
+            var html = '<div id="layer_wallet_right" class="layer-open scale" style="display:none;position:absolute;top:'+top+'px;left:'+left+'px;">\
+                        <dl>\
+                        <dt></dt>\
+                        <dd>{:L('PUBLIC_USER_POINTS_CALCULATION',array('num'=>intval($userCredit['credit']['score']['value']),'experience'=>$userCredit['creditType']['score']))}</dd>\
+                        </dl>\
+                        </div>';
+            $("body").append(html);
+            this._model = document.getElementById("layer_wallet_right");
+        },
+        mouseenter: function() {
+            $(this._model).css('display', 'block');
+        },
+        mouseleave: function() {
+            $(this._model).css('display', 'none');
+        }
+    },
+    more_operation: {
+        load: function() {
+            var offset = $(this).offset();
+            $('#more_operation').css({'left': 8 + 'px','top': 13 + 'px','padding-top': 0 + 'px', 'position':'absolute', 'width':'85px', 'z-index':5});
+        },
+        click: function() {
+            if($('#more_operation').css('display') == 'none') {
+                $('#more_operation').css('display', '');
+            } else {
+                $('#more_operation').css('display', 'none');
+            }
+            $('body').bind('click', function(event) {
+                if($(event.target).attr('event-node') != 'more_operation' && $(event.target).attr('id') != 'blacklist') {
+                    setTimeout("$('#more_operation').css('display', 'none')",500);
+                }
+            });
+        }
+        // mouseleave: function(){
+        //     $('#more_operation').css('display', 'none');
+        // }
+    }
+}); 
+</script>

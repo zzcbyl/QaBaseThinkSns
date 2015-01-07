@@ -26,15 +26,15 @@ class ContentAction extends AdministratorAction
 	public $pageTitle = array();
 	//TODO  要移位置
 	public $from = array(0=>'网站',1=>'手机网页版',2=>'android',3=>'iphone');
-	
+
 	public function feed($isRec = 0, $is_audit = 1){
 		//搜索区别
 		$_POST['rec'] = $isRec = isset($_REQUEST['rec']) ? t($_REQUEST['rec']) : $isRec;
 		if(!$isRec){
 			$_POST['is_audit'] = $isRec = isset($_REQUEST['is_audit']) ? t($_REQUEST['is_audit']) : $isRec;
 		}
-		 
-		$this->pageKeyList = array('feed_id','uid','uname','data','publish_time','type','from','DOACTION');
+		
+		$this->pageKeyList = array('feed_id','uid','uname','body','description','publish_time','type','from','DOACTION');
 		$this->searchKey = array('feed_id','uid','type','rec');
 		$this->opt['type'] = array('0'=>L('PUBLIC_ALL_STREAM'),'post'=>L('PUBLIC_ORDINARY_WEIBO'),'repost'=>L('PUBLIC_SHARE_WEIBO'),'postimage'=>L('PUBLIC_PICTURE_WEIBO'),'postfile'=>L('PUBLIC_ATTACHMENT_WEIBO'));	//TODO 临时写死
 		
@@ -63,13 +63,17 @@ class ContentAction extends AdministratorAction
 		!empty($_POST['uid']) && $map['uid'] = array('in',explode(',',$_POST['uid']));
 		!empty($_POST['type']) && $map['type'] = t($_POST['type']);
 
-
+		$map['feed_questionid'] = '0';
+		$map['add_feedid'] = '0';
+		//$map['openid'] = array('exp','is null');
 		$listData = model('Feed')->getList($map,20);
 		foreach($listData['data'] as &$v){
 			$v['uname']    = $v['user_info']['space_link'];
 			$v['type']	   = $this->opt['type'][$v['type']]; 
 			$v['from']     = $this->from[$v['from']];
-			$v['data']	   = '<div style="width:500px;line-height:22px" model-node="feed_list" class="feed_list">'.$v['body'].'  <a target="_blank" href="'.U('public/Profile/feed',array('feed_id'=>$v['feed_id'],'uid'=>$v['uid'])).'">'.L('PUBLIC_VIEW_DETAIL').'&raquo;</a></div>';
+			//$v['data']	   = '<div style="width:500px;line-height:22px" model-node="feed_list" class="feed_list">'.$v['body'].'  <a target="_blank" href="'.U('public/Profile/feed',array('feed_id'=>$v['feed_id'],'uid'=>$v['uid'])).'">'.L('PUBLIC_VIEW_DETAIL').'&raquo;</a></div>';
+			$v['body']	   = '<div style="width:200px;line-height:22px" model-node="feed_list" class="feed_list">'.$v['body'].'　<br /><a target="_blank" href="'.U('public/Index/feed',array('feed_id'=>$v['feed_id'],'uid'=>$v['uid'])).'">'.L('PUBLIC_VIEW_DETAIL').'&raquo;</a>&nbsp;&nbsp;&nbsp;&nbsp;<a target="_blank" href ="'.U('admin/Content/answer',array('feed_id'=>$v['feed_id'])).'">查看回答('.$v['answer_count'].')&raquo;</a></div>';
+			$v['description']	   = '<div style="width:500px;line-height:22px" model-node="feed_list" class="feed_list">'.getShort($v['description'],100,'...').'  </div>';
 			$v['publish_time'] = date('Y-m-d H:i:s',$v['publish_time']);
 			//$v['DOACTION'] = $isRec==0 ? "<a href='javascript:void(0)' onclick='admin.ContentEdit({$v['feed_id']},\"delFeed\",\"".L('PUBLIC_STREAM_DELETE')."\",\"".L('PUBLIC_DYNAMIC')."\")'>".L('PUBLIC_STREAM_DELETE')."</a>"
 			//							:"<a href='javascript:void(0)' onclick='admin.ContentEdit({$v['feed_id']},\"feedRecover\",\"".L('PUBLIC_RECOVER')."\",\"".L('PUBLIC_DYNAMIC')."\")'>".L('PUBLIC_RECOVER')."</a>";
@@ -82,22 +86,101 @@ class ContentAction extends AdministratorAction
 			}
 		}
 		$this->_listpk = 'feed_id';
+		//print_r($listData);
+		$this->displayList($listData);
+	}
+
+	public function answer($isRec = 0, $is_audit = 1){
+		$questionID = $_GET['feed_id'];
+		$map['add_feedid'] = '0';
+		$map['feed_questionid'] = $questionID;
+		//搜索区别
+		$_POST['rec'] = $isRec = isset($_REQUEST['rec']) ? t($_REQUEST['rec']) : $isRec;
+		if(!$isRec){
+			$_POST['is_audit'] = $isRec = isset($_REQUEST['is_audit']) ? t($_REQUEST['is_audit']) : $isRec;
+		}
+		
+		$this->pageKeyList = array('feed_id','uid','uname','body','publish_time','from','DOACTION');
+		$this->searchKey = array('feed_id','uid','rec');
+		$this->opt['type'] = array('0'=>L('PUBLIC_ALL_STREAM'),'post'=>L('PUBLIC_ORDINARY_WEIBO'),'repost'=>L('PUBLIC_SHARE_WEIBO'),'postimage'=>L('PUBLIC_PICTURE_WEIBO'),'postfile'=>L('PUBLIC_ATTACHMENT_WEIBO'));	//TODO 临时写死
+		
+		$this->pageTab[] = array('title'=>'回答管理','tabHash'=>'list','url'=>U('admin/Content/answer',array('feed_id'=>$questionID)));
+		$this->pageTab[] = array('title'=>'待审列表','tabHash'=>'unAudit','url'=>U('admin/Content/answerUnAudit',array('feed_id'=>$questionID)));
+		$this->pageTab[] = array('title'=>L('PUBLIC_RECYCLE_BIN'),'tabHash'=>'rec','url'=>U('admin/Content/answerRec',array('feed_id'=>$questionID)));
+		
+		$this->pageButton[] = array('title'=>'搜索回答','onclick'=>"admin.fold('search_form')");
+		if($isRec == 0 && $is_audit == 1){
+			$this->pageButton[] = array('title'=>'删除回答','onclick'=>"admin.ContentEdit('','delFeed','".L('PUBLIC_STREAM_DELETE')."','".L('PUBLIC_DYNAMIC')."')");
+		}else if($is_Rec==0 && $is_audit == 0){
+			$this->pageButton[] = array('title'=>'通过','onclick'=>"admin.ContentEdit('','auditFeed','".'通过'."','".L('PUBLIC_DYNAMIC')."')");
+			$this->pageButton[] = array('title'=>'删除','onclick'=>"admin.ContentEdit('','delFeed','".L('PUBLIC_STREAM_DELETE')."','".L('PUBLIC_DYNAMIC')."')");
+		}else{
+			$this->pageButton[] = array('title'=>L('PUBLIC_REMOVE_COMPLETELY'),'onclick'=>"admin.ContentEdit('','deleteFeed','".L('PUBLIC_REMOVE_COMPLETELY')."','".L('PUBLIC_DYNAMIC')."')");
+		}
+		
+		$isRec == 1 &&  $_REQUEST['tabHash'] = 'rec';
+		$is_audit == 0 && $_REQUEST['tabHash'] = 'unAudit';
+		$this->assign('pageTitle',$isRec ? L('PUBLIC_RECYCLE_BIN'):'回答管理');
+		$map['is_del'] = $isRec==1 ? 1 :0; 
+		if(!$isRec){
+			$map['is_audit'] = $is_audit==1 ? 1 :0; 
+		}
+		!empty($_POST['feed_id']) && $map['feed_id'] = array('in',explode(',',$_POST['feed_id']));
+		!empty($_POST['uid']) && $map['uid'] = array('in',explode(',',$_POST['uid']));
+		!empty($_POST['type']) && $map['type'] = t($_POST['type']);
+
+		$listData = model('Feed')->getList($map,20);
+		foreach($listData['data'] as &$v){
+			$v['uname']    = $v['user_info']['space_link'];
+			$v['type']	   = $this->opt['type'][$v['type']]; 
+			$v['from']     = $this->from[$v['from']];
+			//$v['data']	   = '<div style="width:500px;line-height:22px" model-node="feed_list" class="feed_list">'.$v['body'].'  <a target="_blank" href="'.U('public/Profile/feed',array('feed_id'=>$v['feed_id'],'uid'=>$v['uid'])).'">'.L('PUBLIC_VIEW_DETAIL').'&raquo;</a></div>';
+			$v['body']	   = '<div style="width:600px;line-height:22px" model-node="feed_list" class="feed_list">'.$v['body'].'</div>';
+			$v['publish_time'] = date('Y-m-d H:i:s',$v['publish_time']);
+			//$v['DOACTION'] = $isRec==0 ? "<a href='javascript:void(0)' onclick='admin.ContentEdit({$v['feed_id']},\"delFeed\",\"".L('PUBLIC_STREAM_DELETE')."\",\"".L('PUBLIC_DYNAMIC')."\")'>".L('PUBLIC_STREAM_DELETE')."</a>"
+			//							:"<a href='javascript:void(0)' onclick='admin.ContentEdit({$v['feed_id']},\"feedRecover\",\"".L('PUBLIC_RECOVER')."\",\"".L('PUBLIC_DYNAMIC')."\")'>".L('PUBLIC_RECOVER')."</a>";
+			if($isRec == 0 && $is_audit == 1){
+				$v['DOACTION'] = "<a href='javascript:void(0)' onclick='admin.ContentEdit({$v['feed_id']},\"delFeed\",\"".L('PUBLIC_STREAM_DELETE')."\",\"".L('PUBLIC_DYNAMIC')."\")'>".L('PUBLIC_STREAM_DELETE')."</a>";
+			}else if($isRec==0 && $is_audit == 0){
+				$v['DOACTION'] = "<a href='javascript:void(0)' onclick='admin.ContentEdit({$v['feed_id']},\"auditFeed\",\"".'通过'."\",\"".L('PUBLIC_DYNAMIC')."\")'>".'通过'."</a>&nbsp;|&nbsp;"."<a href='javascript:void(0)' onclick='admin.ContentEdit({$v['feed_id']},\"delFeed\",\"".L('PUBLIC_STREAM_DELETE')."\",\"".L('PUBLIC_DYNAMIC')."\")'>".L('PUBLIC_STREAM_DELETE')."</a>";;
+			}else{
+				$v['DOACTION'] = "<a href='javascript:void(0)' onclick='admin.ContentEdit({$v['feed_id']},\"feedRecover\",\"".L('PUBLIC_RECOVER')."\",\"".L('PUBLIC_DYNAMIC')."\")'>".L('PUBLIC_RECOVER')."</a>";
+			}
+		}
+		$this->_listpk = 'feed_id';
+		$this->searchPostUrl = $this->searchPostUrl.'&feed_id='.$questionID;
+		//print_r($listData);
 		$this->displayList($listData);
 	}
 
 	//待审列表
 	public function feedUnAudit(){
 		$this->pageKey = APP_NAME.'_'.MODULE_NAME.'_feed';
-        $this->searchPageKey = 'S_'.$this->pageKey ;
+		$this->searchPageKey = 'S_'.$this->pageKey ;
 		$this->feed(0 , 0);
 	}
 
 	//回收站
 	public function feedRec(){
 		$this->pageKey = APP_NAME.'_'.MODULE_NAME.'_feed';
-        $this->searchPageKey = 'S_'.$this->pageKey ;
+		$this->searchPageKey = 'S_'.$this->pageKey ;
 		$this->feed(1);
 	}
+
+	//回答待审列表
+	public function answerUnAudit(){
+		$this->pageKey = APP_NAME.'_'.MODULE_NAME.'_feed';
+		$this->searchPageKey = 'S_'.$this->pageKey ;
+		$this->answer(0 , 0);
+	}
+
+	//回答回收站
+	public function answerRec(){
+		$this->pageKey = APP_NAME.'_'.MODULE_NAME.'_feed';
+		$this->searchPageKey = 'S_'.$this->pageKey ;
+		$this->answer(1);
+	}
+
 	//恢复
 	public function feedRecover(){
 		
@@ -110,7 +193,7 @@ class ContentAction extends AdministratorAction
 		echo json_encode($return);exit();
 		
 	}
-	//微博通过审核
+	//提问通过审核
 	public function auditFeed(){
 
 		$return =  model('Feed')->doAuditFeed($_POST['id']);
@@ -143,7 +226,7 @@ class ContentAction extends AdministratorAction
 		echo json_encode($return);exit();
 		
 	}
-	
+
 	/**
 	 * 评论管理
 	 * @param boolean $isRec 是否是回收站列表
@@ -153,7 +236,7 @@ class ContentAction extends AdministratorAction
 	{
 		// 搜索区别
 		$_POST['rec'] = $isRec = isset($_REQUEST['rec']) ? t($_REQUEST['rec']) : $isRec;
-		 
+		
 		$this->pageKeyList = array('comment_id','uid','app_uid','source_type','content','ctime','client_type','DOACTION');
 		$this->searchKey = array('comment_id','uid','app_uid');
 		
@@ -192,7 +275,7 @@ class ContentAction extends AdministratorAction
 			$v['client_type']     = $this->from[$v['client_type']];
 			$v['ctime']    = date('Y-m-d H:i:s',$v['ctime']);
 			$v['DOACTION'] = $isRec==0 ? "<a href='".$v['sourceInfo']['source_url']."' target='_blank'>".L('PUBLIC_VIEW')."</a> <a href='javascript:void(0)' onclick='admin.ContentEdit({$v['comment_id']},\"delComment\",\"".L('PUBLIC_STREAM_DELETE')."\",\"".L('PUBLIC_STREAM_COMMENT')."\")'>".L('PUBLIC_STREAM_DELETE')."</a>"
-										:"<a href='javascript:void(0)' onclick='admin.ContentEdit({$v['comment_id']},\"CommentRecover\",\"".L('PUBLIC_RECOVER')."\",\"".L('PUBLIC_STREAM_COMMENT')."\")'>".L('PUBLIC_RECOVER')."</a>";
+				:"<a href='javascript:void(0)' onclick='admin.ContentEdit({$v['comment_id']},\"CommentRecover\",\"".L('PUBLIC_RECOVER')."\",\"".L('PUBLIC_STREAM_COMMENT')."\")'>".L('PUBLIC_RECOVER')."</a>";
 			if($isRec == 0 && $is_audit == 1){
 				$v['DOACTION'] = "<a href='".$v['sourceInfo']['source_url']."' target='_blank'>".L('PUBLIC_VIEW')."</a> <a href='javascript:void(0)' onclick='admin.ContentEdit({$v['comment_id']},\"delComment\",\"".L('PUBLIC_STREAM_DELETE')."\",\"".L('PUBLIC_STREAM_COMMENT')."\")'>".L('PUBLIC_STREAM_DELETE')."</a>";
 			}else if($isRec==0 && $is_audit == 0){
@@ -208,14 +291,14 @@ class ContentAction extends AdministratorAction
 	//待审列表
 	public function commentUnAudit(){
 		$this->pageKey = APP_NAME.'_'.MODULE_NAME.'_comment';
-        $this->searchPageKey = 'S_'.$this->pageKey ;
+		$this->searchPageKey = 'S_'.$this->pageKey ;
 		$this->comment(0 , 0);
 	}
-	
+
 	//回收站
 	public function commentRec(){
 		$this->pageKey = APP_NAME.'_'.MODULE_NAME.'_comment';
-        $this->searchPageKey = 'S_'.$this->pageKey ;
+		$this->searchPageKey = 'S_'.$this->pageKey ;
 		$this->comment(1);
 	}
 
@@ -245,7 +328,7 @@ class ContentAction extends AdministratorAction
 	public function deleteComment(){
 		echo json_encode( model('Comment')->doEditComment($_POST['id'],'deleteComment', '评论彻底删除成功'));
 	}
-	
+
 	/**
 	 * 私信管理列表
 	 * @param integer $isRec [description]
@@ -302,17 +385,17 @@ class ContentAction extends AdministratorAction
 			$v['content']  = '<div style="width:500px">'.getShort($v['content'],120,'...').'</div>';// 截取120字
 			$v['mtime']    = date('Y-m-d H:i:s',$v['mtime']);
 			$v['DOACTION'] = $isRec==0 ? "<a href='javascript:void(0)' onclick='admin.ContentEdit({$v['message_id']},\"delMessage\",\"".L('PUBLIC_STREAM_DELETE')."\",\"".L('PUBLIC_PRIVATE_MESSAGE')."\");'>".L('PUBLIC_STREAM_DELETE')."</a>"
-										:"<a href='javascript:void(0)' onclick='admin.ContentEdit({$v['message_id']},\"MessageRecover\",\"".L('PUBLIC_RECOVER')."\",\"".L('PUBLIC_PRIVATE_MESSAGE')."\")'>".L('PUBLIC_RECOVER')."</a>";
+				:"<a href='javascript:void(0)' onclick='admin.ContentEdit({$v['message_id']},\"MessageRecover\",\"".L('PUBLIC_RECOVER')."\",\"".L('PUBLIC_PRIVATE_MESSAGE')."\")'>".L('PUBLIC_RECOVER')."</a>";
 		}
 		// 设置操作主键
 		$this->_listpk = 'message_id';
 		$this->displayList($listData);
 	}
-		
+
 	//回收站
 	public function messageRec(){
 		$this->pageKey = APP_NAME.'_'.MODULE_NAME.'_message';
-        $this->searchPageKey = 'S_'.$this->pageKey ;
+		$this->searchPageKey = 'S_'.$this->pageKey ;
 		$this->message(1);
 	}
 	//恢复
@@ -327,14 +410,14 @@ class ContentAction extends AdministratorAction
 	public function deleteMessage(){
 		echo json_encode( model('Message')->doEditMessage($_POST['id'],'deleteMessage',L('PUBLIC_REMOVE_COMPLETELY')));
 	}
-	
-	
+
+
 	public function attach($isRec = 0)
 	{
 		$this->_listpk = 'attach_id';
 		//搜索区别
 		$_POST['rec'] = $isRec = isset($_REQUEST['rec']) ? t($_REQUEST['rec']) : $isRec;
-		 
+		
 		$this->pageKeyList = array('attach_id','name','size','uid','ctime','from','DOACTION');
 		$this->searchKey = array('attach_id','name','from');
 		
@@ -357,7 +440,7 @@ class ContentAction extends AdministratorAction
 		!empty($_POST['name']) && $map['name'] = array('like','%'.t($_POST['name']).'%');
 
 		$listData = model('Attach')->getAttachList($map,'*','attach_id desc',10);
-	
+		
 		
 
 		//$listData = model('Comment')->getCommentList($map,'comment_id desc',20);
@@ -368,22 +451,22 @@ class ContentAction extends AdministratorAction
 			$user = model('User')->getUserInfo($v['uid']);
 			$v['uid'] 	   = $user['space_link']; 
 			$v['name']	   = in_array($v['extension'],$image) 
-							? '<a href="'.U('widget/Upload/down',array('attach_id'=>$v['attach_id'])).'">'.
-								"<img src='".getImageUrl($v['save_path'].$v['save_name'],225)."' width='100'><br/>{$v['name']}</a>"
-							:'<a href="'.U('widget/Upload/down',array('attach_id'=>$v['attach_id'])).'">'.$v['name'].'</a>';
+				? '<a href="'.U('widget/Upload/down',array('attach_id'=>$v['attach_id'])).'">'.
+				"<img src='".getImageUrl($v['save_path'].$v['save_name'],225)."' width='100'><br/>{$v['name']}</a>"
+				:'<a href="'.U('widget/Upload/down',array('attach_id'=>$v['attach_id'])).'">'.$v['name'].'</a>';
 			$v['size']	   = byte_format($v['size']);
 			$v['from']     = $this->from[$v['from']];
 			$v['ctime']    = date('Y-m-d H:i:s',$v['ctime']);
 			$v['DOACTION'] = $isRec==0 ? "<a href='javascript:void(0)' onclick='admin.ContentEdit({$v['attach_id']},\"delAttach\",\"".L('PUBLIC_STREAM_DELETE')."\",\"".L('PUBLIC_FILE_STREAM')."\");'>".L('PUBLIC_STREAM_DELETE')."</a>"
-										:"<a href='javascript:void(0)' onclick='admin.ContentEdit({$v['attach_id']},\"AttachRecover\",\"".L('PUBLIC_RECOVER')."\",\"".L('PUBLIC_FILE_STREAM')."\")'>".L('PUBLIC_RECOVER')."</a>";
+				:"<a href='javascript:void(0)' onclick='admin.ContentEdit({$v['attach_id']},\"AttachRecover\",\"".L('PUBLIC_RECOVER')."\",\"".L('PUBLIC_FILE_STREAM')."\")'>".L('PUBLIC_RECOVER')."</a>";
 		}
 		$this->displayList($listData);
 	}
-		
+
 	//回收站
 	public function attachRec(){
 		$this->pageKey = APP_NAME.'_'.MODULE_NAME.'_attach';
-        $this->searchPageKey = 'S_'.$this->pageKey ;
+		$this->searchPageKey = 'S_'.$this->pageKey ;
 		$this->attach(1);
 	}
 	//恢复
@@ -399,8 +482,8 @@ class ContentAction extends AdministratorAction
 		echo json_encode( model('Attach')->doEditAttach($_POST['id'],'deleteAttach',L('PUBLIC_REMOVE_COMPLETELY')) );
 	}
 	//TODO 临时放着 后面要移动到messagemodel中
-	
-	
+
+
 	/**
 	 * 举报管理
 	 */
@@ -457,7 +540,7 @@ class ContentAction extends AdministratorAction
 		//todo 记录日志
 		echo model('Denounce')->reviewDenounce( t($_POST['ids']) ) ? '1' : '0';
 	}
-	
+
 
 	/**
 	 * 话题管理
@@ -760,5 +843,108 @@ class ContentAction extends AdministratorAction
 			$result['data'] = '删除失败';
 		}
 		exit(json_encode($result));
+	}
+
+	public function friendcircle()
+	{
+		$maxid = model('user')->max('uid');
+		$user = $this->getRandUser($maxid);
+		//print_r($user);
+		$this->assign('user',$user);
+		
+		
+		if($_POST['upload']==1)
+		{
+			$ImgURL='';
+			if(empty($_POST['userid']) || empty($_POST['content']))
+			{
+				$this->assign('errorInfo','发布内容不能为空');
+				$this->display();
+				return;
+			}
+			else
+			{
+				$this->assign('errorInfo','');
+				
+				if(is_array($_FILES['fileselect']) && !empty($_FILES['fileselect']['name'][0]))
+				{
+					$imgArr = $_FILES['fileselect'];
+					$errorInfo = '';
+					foreach($imgArr['size'] as $key=>$value)
+					{
+
+						if(strpos($imgArr['type'][$key],'image') === false)
+						{
+							$errorInfo .= '文件"' . $imgArr['name'][$key] . '"不是图片<br />';
+						}
+						if($value>500000)
+						{
+							$errorInfo .= '您这张"' . $imgArr['name'][$key] . '"图片大小过大，应小于500k<br />';
+						}
+					}
+					
+					if($errorInfo!='')
+					{
+						$this->assign('errorInfo',$errorInfo);
+						$this->display();
+						return;
+					}
+
+					foreach($imgArr['name'] as $key=>$value)
+					{
+						$exname=strtolower(substr($imgArr['name'][$key],(strrpos($imgArr['name'][$key],'.')+1)));
+
+						$uploadfile = $this->getname($exname); 
+						$ImgURL .= $uploadfile.';';
+						move_uploaded_file($imgArr['tmp_name'][$key], SITE_PATH . C('PYQ_IMAGE').$uploadfile);
+						
+						$original_file_name ='/pyqimage/'.$uploadfile;
+						$thumbInfo = getThumbImage($original_file_name,50,50,true,true);
+					}
+				}
+				
+				$map['topic_content'] = $_POST['content'];// str_replace(array("\r\n", "\r", "\n"),"<br />",$_POST['content']);
+				$map['topic_dt'] = time();
+				$map['topic_img'] = $ImgURL;
+				$map['topic_uid'] = $_POST['userid'];
+				$map['topic_state'] = 1;
+				
+				$data = model('Topic')->add($map);
+				//print_r($data);
+				$this->redirect('admin/Content/friendcircle');
+			}
+		}
+		
+		
+		$this->display();
+	}
+	
+	public function getRandUser($maxid)
+	{
+		$userid = rand(1, $maxid);
+		$user = model('user')->getUserInfo($userid);
+		//print($user['uid']);
+		//print("<br /><br /><br />");
+		if(empty($user))
+		{
+			$user = $this->getRandUser($maxid);
+		}
+		return $user;	
+	}
+	
+	public function getname($exname){
+		$fileName = time().rand(1,10000000).'.'.$exname;
+		$dir = SITE_PATH . C('PYQ_IMAGE');
+		if(!is_dir($dir)){
+			mkdir($dir,0777);
+		}
+		while(true){
+			if(!is_file($dir.$fileName)){
+				$name=$fileName;
+				break;
+			}
+			$fileName = time().rand(1,10000000).'.'.$exname;
+		}
+		return $name;
 	}
 }

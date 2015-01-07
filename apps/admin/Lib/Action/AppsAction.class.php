@@ -14,7 +14,7 @@ class AppsAction extends AdministratorAction
 			                'onLineApp'		=> '在线应用',
 							'setCreditNode' => '积分节点设置',
 							'setPermNode'	=> '权限节点设置',
-							'setFeedNode'	=> '微博模板设置',
+							'setFeedNode'	=> '提问模板设置',
 							);
 	
 	private $appStatus = array('0'=>'关闭','1'=>'开启');	//应用状态

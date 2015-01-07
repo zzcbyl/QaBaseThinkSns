@@ -414,7 +414,7 @@ class AdminAction extends AdministratorAction {
 		$data['top'] = intval($_POST['top']);
 		$res = D('weiba_post')->where('post_id='.$post_id)->save($data);
 		if($res!==false){
-			//同步到微博
+			//同步到提问
 			$feed_id = D('weiba_post')->where('post_id='.$post_id)->getField('feed_id');
 			$feedInfo = D('feed_data')->where('feed_id='.$feed_id)->find();
 			$datas = unserialize($feedInfo['feed_data']);

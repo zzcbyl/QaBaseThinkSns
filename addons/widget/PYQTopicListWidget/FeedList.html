@@ -1,0 +1,23 @@
+<div id="feed-lists" class="contsNum">
+    <!-- <a class="notes" href="javascript:void(0)">有1条新提问</a> -->
+    {$list}
+	
+	<neq name='loadmore' value='1'>
+	<div id="page" class="page">
+		{$html}
+	</div>
+	</neq>
+</div>
+	
+<script type="text/javascript">
+var firstId = '{$firstId}';
+var loadId = '{$lastId}';
+var maxId = '{$firstId}';
+var feedType = '{$type}';
+var loadmore = '{$loadmore}';
+var loadnew = '{$loadnew}';
+var feed_type = '{$feed_type}';
+var feed_key = '{$feed_key}';
+var fgid = '{$fgid}';
+var topic_id = '{$topic_id}';
+</script>

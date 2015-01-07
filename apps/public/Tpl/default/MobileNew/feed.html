@@ -1,0 +1,106 @@
+<include file="__THEME__/mobile_header" />
+<div class="container" style="background:#ddd; width:auto; margin:0px; padding:0px;">
+    <!--内容列表-->
+    <div class="contsNum" style="margin:10px 5px 5px 5px; padding:0;">
+        <!--问-->
+        <div class="contTwo">
+            <div class="contCenter2" model-node='feed_list' style="width:auto; border:none; padding:0px; background:#fff; ">
+                <div class="contTit" style="background:#f3f3f3; border-bottom:4px solid #ddd; " >
+                    <h2 style="margin:5px 5px 0; padding-bottom:5px; border-bottom:1px dashed #ddd;"><a style="font-size:18px;" href="javascript:void(0);">{$feedInfo.body|format=true}</a></h2>
+                    <div style="padding:5px; background:#fff;">
+                        <php>
+                            $descriptionTxt = $feedInfo['description'];
+                            $descriptionImg = "";
+                            if(strpos($feedInfo['description'],'<div') > 0)
+                            {
+                                $descriptionTxt = substr($feedInfo['description'], 0, strpos($feedInfo['description'],'<div'));
+                                $descriptionImg = substr($feedInfo['description'], strpos($feedInfo['description'],'<div'), strrpos($feedInfo['description'],'div>'));
+                            }
+                        if(strlen($descriptionTxt) > 279) {
+                        </php>
+                        <div id="feedSubData{$feedInfo['comment'].comment_id}{$feedInfo.feed_id}{$feedInfo['answer'][0].feed_id}">
+                            <p style="padding-left:0px; text-indent:20px;font-size:16px;">
+                                <php> print(utf_substr(str_replace('<br />',' ',$descriptionTxt),185).'... '); </php>
+                                <div style="margin-top: 5px;"><a style="font-size:14px; cursor:pointer;" onclick="showContentAll('feed','{$feedInfo['comment'].comment_id}{$feedInfo.feed_id}{$feedInfo['answer'][0].feed_id}');">查看全文</a></div>
+                                <php>print($descriptionImg);</php>
+                            </p>
+                        </div>
+                        <div id="feedAll{$feedInfo['comment'].comment_id}{$feedInfo.feed_id}{$feedInfo['answer'][0].feed_id}" style="display:none;">
+                            <p style="padding-left:0px; text-indent:20px;font-size:16px;">
+                                <php> print($descriptionTxt); </php>
+                                <div style="margin-top: 5px;" ><a style="font-size:14px; cursor:pointer;" onclick="showContentAll('feed','{$feedInfo['comment'].comment_id}{$feedInfo.feed_id}{$feedInfo['answer'][0].feed_id}');">收起</a></div>
+                                <div style="clear:both;"></div>
+                                <php>print($descriptionImg);</php>
+                            </p>
+                        </div>        
+                        <php> } else {  print('<p style="padding-left:0px; text-indent:20px;font-size:16px;">'.$descriptionTxt.$descriptionImg.'</p>'); } </php>
+                        <div class="info_gz" >
+                            <p class="gz_info" style="padding-left:0px;">
+                                <i>{$feedInfo.publish_time|friendlyDate}</i></p>
+                        </div>
+                    </div>
+                </div>
+                <div style="margin-top:5px;">
+                <!--答案列表-->
+                {:W('AnswerListMobileNoFace',array('type'=>'answer','feed_id'=>t($_GET['feed_id'])))}
+                <!--答案列表-->
+                </div>
+            </div>
+            
+        </div>
+        <!--//问-->
+        <div style="width: 100%; background: #f3f3f3; line-height: 40px; height:40px; border: 2px solid #ddd; border-bottom: 4px solid #ddd; position:fixed; z-index:99; bottom:0; left:0;">
+            <div style="float: left; width: 33%; height:40px; text-align:left; border-right: 2px solid #ddd;  ">
+                <a class="mobilecommentbg" href="javascript:void(0);" style="margin:0px 0 0 20px;  display:block; float:left;"></a>
+                <div style="float:left;">&nbsp;<neq name='feedInfo.answer_count' value='0'><span style="font-size:16px;">{$feedInfo.answer_count}</span></neq></div>
+            </div>
+            <div style="float: left; width: 22%;  height:40px; border-right: 2px solid #ddd;">
+                <a class="mobileanswerbg" href="{:U('public/MobileNew/answer',array('feed_id'=>$feedInfo['feed_id'],'openid'=>$openid))}" style="margin:0px auto; display:block; "></a>
+            </div>
+            <div style="float: left; width: 22%;  height:40px;border-right: 2px solid #ddd; ">
+                <a class="mobilesharebg" href="javascript:void(0);" onclick="shareWeiXin('{$feedInfo.body|format=true}','{:U('public/MobileNew/feed',array('feed_id'=>$feedInfo['feed_id'],'openid'=>$openid))}');" style="margin:0px auto; display:block; "></a>
+            </div>
+            <div style="float: left; width: 21%;  height:40px;">
+                <a class="mobilecollectbg" href="javascript:void(0);" onclick="shareWeiXin('{$feedInfo.body|format=true}','{:U('public/MobileNew/feed',array('feed_id'=>$feedInfo['feed_id'],'openid'=>$openid))}');" style="margin:0px auto; display:block; "></a>
+            </div>
+            <div style="clear: both;"></div>
+        </div>
+    </div>
+    <!--//内容列表-->
+    <input type="hidden" id="feed_questionid" value="{$feedInfo['feed_id']}" />
+    
+</div>
+<div id="showShare" style="display:none; z-index:10;" onclick="javascript:document.getElementById('showShare').style.display='none';">
+    <div id="coverAll" style="width:100%; height:100%; background:#ccc; color:#000; position:absolute; top:0px; left:0px; text-align:center; filter:alpha(opacity=90); -moz-opacity:0.9;-khtml-opacity: 0.9; opacity: 0.9;  z-index:9;"></div>
+    <div id="jiantouDiv" style="width:170px; height:200px;  color:#000; position:absolute;  right:2pt; top:10pt; z-index:10; font-size:20pt;  background:url(__THEME__/image/jiantou.png) no-repeat"></div>
+    <div id="shareText" style="width:149px; height:200px;  color:#000; position:absolute; top:60pt; margin-left:70pt; z-index:20; font-size:15pt; line-height:30pt; text-align:center;">点击右上角“┇”<br />分享到朋友圈</div>
+</div>
+<script language="javascript">
+    $(window).scroll(function () {
+        windowScrollUpload(this);
+    });
+    function windowScrollUpload(obj) {
+        $('#coverAll').css({
+            'top': $(obj).scrollTop() + 'px'
+        })
+
+        $('#jiantouDiv').css({
+            'top': ($(obj).scrollTop() < 10 ? 10 : $(obj).scrollTop()) + 10 + 'px'
+        });
+        $('#shareText').css({
+            'top': ($(obj).scrollTop() < 10 ? 10 : $(obj).scrollTop()) + 60 + 'px'
+        });
+    }
+</script>
+<include file="__THEME__/mobile_footer" />
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#topcontrol').css('bottom', '60px');
+
+    });
+</script>
+
+<link href="__THEME__/css/reveal.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="__THEME__/js/jquery.reveal.js"></script>
+<script type="text/javascript" src="__THEME__/js/home/module.home.js"></script>
+<script type="text/javascript" src="__THEME__/js/module.weibo_mobile.js"></script>

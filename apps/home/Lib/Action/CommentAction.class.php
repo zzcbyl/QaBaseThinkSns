@@ -84,7 +84,7 @@
 					$setCredit->setUserCredit($this->mid,'add_comment');
 					$setCredit->setUserCredit($data['to_uid'],'is_commented');
 				}
-        		// 同时发一条微博
+        		// 同时发一条提问
         		if ( intval($_POST['with_new_weibo']) ) {
         			$from_data = array('app_type'=>'local_app', 'app_name'=>$data['type'], 'title'=>$callback_data['title'], 'url'=>$callback_data['url']);
         			$from_data = serialize($from_data);
@@ -159,7 +159,7 @@
 					$setCredit->setUserCredit($this->mid,'add_comment');
 					$setCredit->setUserCredit($map['to_uid'],'is_commented');
 				}
-        		// 发表微博
+        		// 发表提问
         		if ($_POST['with_new_weibo']) {
         			$from_data = array('app_type'=>'local_app', 'app_name'=>$_POST['type'], 'title'=>$_POST['title'], 'url'=>$_POST['url']);
         			$from_data = serialize($from_data);

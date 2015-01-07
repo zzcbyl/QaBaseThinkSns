@@ -1,43 +1,39 @@
+<div class="answer2">
+    <div class="aTop511">
+        <p class="icon2" <php>if($comment_type == 1)  echo 'style="right:85px"'; else if($comment_type == 2)  echo 'style="right:45px"'; else echo 'style="right:45px"';</php>>
+        </p>
+    </div>
+    <div class="aCenter2" style="width: 452px;">
+        <!--提问框-->
+        <php>if($GLOBALS['ts']['mid'] != $app_uid) {</php>
+            <div class="tiwenK" model-node="comment_textarea" style="<php>if($hasAnswerComment == '1') { echo 'display:none;'; } else { echo 'display:block;'; }</php>">
+                <div class="tiwen_area" model-node="mini_editor">
+                    <textarea class="input_tips" style="width: 390px;" texttype="comment" id="comment_inputor" event-node="mini_editor_textarea" hidefocus="true" model-args='t=comment'></textarea>
+                </div>
+                <div class="tiwenB">
+                    <ul>
+                        <li><a href="javascript:;" class="biaoqing" event-node="comment_insert_face"></a></li>
+                        <li><!--<a href="#" class="tupian"></a>--></li>
+                        <li><!--<a href="#" class="shipin"></a>--></li>
+                        <li>
+                            <a href="javascript:void(0);" class="tijiao" event-node="do_comment" event-args='row_id={$row_id}&app_uid={$app_uid}&app_row_id={$app_row_id}&app_row_table={$app_row_table}&app_name={$app_name}&table={$table}&canrepost={$canrepost}&comment_type={$comment_type}' addtoend ="1"  to_comment_id="0" to_uid="0" to_comment_uname="" > </a>
+                        </li>
+                    </ul>
+                    <div model-node="faceDiv"></div>
+                </div>
+            </div>
+        <php>}</php>
+        <!--提问框-->
+        
+        <div id="commentlist_{$row_id}" style="width:454px;">
+        </div>
 
-<!--<div class="arrow arrow-t"></div>-->
-<!--评论列表-->
-<!--评论框-->
-<eq name='cancomment' value = "1">
-<!--<div class="action clearfix mb10">
-	<div class="num"  model-node="numsLeft">{:L('PUBLIC_INPUT_CHARACTER_LIMIT',array('num'=>'<span>'.$initNums.'</span>'))}</div>
-</div>-->
-<div class="input" model-node="comment_textarea">
-<div class="input_before1" model-node="mini_editor">
-<textarea class="input_tips" texttype="comment" id="comment_inputor" event-node="mini_editor_textarea" hidefocus="true" model-args='t=comment'></textarea>
-</div>
-<div class="action clearfix">
-<div><a href="javascript:void(0);" class="btn-green-small right" event-node="do_comment" 
-event-args='row_id={$row_id}&app_uid={$app_uid}&app_row_id={$app_row_id}&app_row_table={$app_row_table}&app_name={$app_name}&table={$table}&canrepost={$canrepost}&comment_type={$comment_type}' addtoend ="1"  to_comment_id="0" to_uid="0" to_comment_uname="" ><span>{:L('PUBLIC_STREAM_REPLY')}</span></a></div> 
- 
-<div class="acts">
-    <a class="face-block" href="javascript:;" event-node="comment_insert_face"><i class="face"></i>表情</a>
-</div>
-<div class="clear"></div>
-<div model-node="faceDiv"></div>    
-<eq name='canrepost' value="1">    
-<p><label><input type="checkbox" class="checkbox" name="shareFeed" value="1">{:L('PUBLIC_SHARETO_STREAM')}</label></p>     
-</eq>
-<php>if($feedtype == 'repost' && $cancomment == 1 || $feedtype == 'weiba_repost' && $cancomment == 1):</php>
-<p><label><input type="checkbox" class="checkbox" name="comment" value="1" />同时评论给原文作者&nbsp;{$user_info.space_link_no}</label></p>
-<php>endif;</php>
-           
-</div>
+    </div>
+    <div class="aBottom511">
+    </div>
 </div>
 
-<script>
-var initNums = '{$initNums}';
-</script>
 
-<else />
-{:L('PUBLIC_CONCENT_ISNULL')}
-</eq>
 
-<div id="commentlist_{$row_id}">
 
-</div>
 

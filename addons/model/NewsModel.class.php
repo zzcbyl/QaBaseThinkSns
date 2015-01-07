@@ -160,7 +160,8 @@ class NewsModel extends Model
 	        {
 	            $childs[] = $type;
 	            $map['type_id'] = array('in',$childs);
-	        }else 
+	        }
+			else 
 	        {
 	            $map['type_id'] = $type ;
 	        }
@@ -170,11 +171,11 @@ class NewsModel extends Model
 	    {
 	        $list = $this->findPage($limit);
 	        $data = $list['data'];
-	    }else
-	    {
-	        $data = $this->findAll(array('limit' => $limit));
-	        
 	    }
+		else
+		{
+			$data = $this->findAll(array('limit' => $limit));	
+		}
 	    foreach ($data as $k => $v)
 	    {
 	        $thumb = APPS_URL.'/'.APP_NAME.'/_static/nopic.jpg';
@@ -196,7 +197,8 @@ class NewsModel extends Model
 	    {
 	        $list['data'] = $data ;
 	        return $list ;
-	    }else
+	    }
+		else
 	    {
 	        return $data ;
 	    }

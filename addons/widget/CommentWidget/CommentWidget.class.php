@@ -36,25 +36,30 @@ class CommentWidget extends Widget
 		$_REQUEST['p'] = intval($_GET['p']) ? intval($_GET['p']) : intval($_POST['p']);
 		empty($data) && $data = $_POST;
 		is_array($data) && $var = array_merge($var,$data);
-
+		$var['hasAnswerComment'] = '0';
 		//对答案只能赞成或者反对一次
 		if($var['comment_type'] == 1 || $var['comment_type'] == 2)
 		{
-			$Commentwhere='`app`=\''.t($var['app_name']).'\' and `table`=\''.t($var['table']).'\' and `row_id`='.intval($var['row_id']).' and `uid`='.$this->mid.' and (`comment_type`=1 or `comment_type`=2)';
+			$Commentwhere='`app`=\''.t($var['app_name']).'\' and `table`=\''.t($var['table']).'\' and `row_id`='.intval($var['row_id']).' and `uid`='.$this->mid.' and `is_del` = 0 and (`comment_type`=1 or `comment_type`=2)';
 			$hasComment=model('Comment')->hasComment($Commentwhere);
 			if($hasComment)
 			{
-				$return = array('status'=>2,'data'=>'<div id="commentlist_'.intval($var['row_id']).'"></div>');
-				return $var['isAjax'] == 1 ?  json_encode($return) : $return['data'];
+				$var['hasAnswerComment'] = '1';
+				/*$returnData = '<div class="answer2"><div class="aTop511"><p class="icon2" style="right:85px"></p></div><div class="aCenter2" style="width: 452px;"><div id="commentlist_'.intval($var['row_id']).'"></div></div><div class="aBottom511"></div></div>';
+				if($var['comment_type'] == 2)
+					$returnData = '<div class="answer2"><div class="aTop511"><p class="icon2" style="right:45px"></p></div><div class="aCenter2" style="width: 452px;"><div id="commentlist_'.intval($var['row_id']).'"></div></div><div class="aBottom511"></div></div>';	
+				
+				$return = array('status'=>2,'data'=>$returnData);
+				return $var['isAjax'] == 1 ?  json_encode($return) : $return['data'];*/
 			}
 		}
-
+		
 		//评论自己的内容
-		if($this->mid == $var['app_uid'])
+		/*if($this->mid == $var['app_uid'])
 		{
-			$return = array('status'=>2,'data'=>'<div id="commentlist_'.intval($var['row_id']).'"></div>');
+			$return = array('status'=>2,'data'=>'<div class="answer2"><div class="aTop2"><p class="icon2"></p></div><div class="aCenter2"><div id="commentlist_'.intval($var['row_id']).'"><div style="text-align:center; color: #999999;">暂无评论</div></div></div><div class="aBottom2"></div></div>');
 			return $var['isAjax'] == 1 ?  json_encode($return) : $return['data'];
-		}
+		}*/
 		
         if($var['table'] == 'feed' && $this->mid != $var['app_uid']){
             $userPrivacy =  model('UserPrivacy')->getPrivacy($this->mid,$var['app_uid']);
@@ -73,6 +78,7 @@ class CommentWidget extends Widget
 			if(!empty($map['row_id'])){	
 				//分页形式数据
 				$var['list'] = model('Comment')->getCommentList($map,'comment_id '.$var['order'],$var['limit']);
+				//print_r($map);
 			}
 		}//渲染模版
         // 获取源资源作者用户信息
@@ -100,6 +106,7 @@ class CommentWidget extends Widget
         if ( !CheckPermission('core_normal','feed_share') || !in_array( 'repost' , $weiboSet['weibo_premission'] ) ){
         	$var['canrepost'] = 0;
         }
+		//print_r($var);
 	    $content = $this->renderFile(dirname(__FILE__)."/".$var['tpl'].'.html',$var);
 		self::$rand ++;
         $ajax = $var['isAjax'];
@@ -119,6 +126,7 @@ class CommentWidget extends Widget
 		$map['comment_type']	= t($_POST['comment_type']);
     	if(!empty($map['row_id'])){
     		//分页形式数据
+			$var['comment_type'] = t($_POST['comment_type']);
     		$var['limit'] 	 = 10;
     		$var['order']	 = 'DESC';
     		$var['cancomment'] = $_POST['cancomment'];
@@ -193,6 +201,19 @@ class CommentWidget extends Widget
             $return['data'] = '内容已被删除，评论失败';
             exit(json_encode($return));
         }
+		
+		//对答案只能赞成或者反对一次
+		if($data['comment_type'] == 1 || $data['comment_type'] == 2)
+		{
+			$Commentwhere='`app`=\''.t($data['app_name']).'\' and `table`=\''.t($data['table']).'\' and `row_id`='.intval($data['row_id']).' and `uid`='.$this->mid.' and `is_del` = 0 and (`comment_type`=1 or `comment_type`=2)';
+			$hasComment=model('Comment')->hasComment($Commentwhere);
+			if($hasComment)
+			{
+				$return['status'] = 0;
+				$return['data'] = '每个答案每人只能赞同或者反对一次';
+				exit(json_encode($return));
+			}
+		}
     	// 添加评论操作
         // dump($data['comment_id'] = model('Comment')->addComment($data));
         // dump(model('Comment')->getlastsql());exit;
@@ -226,7 +247,7 @@ class CommentWidget extends Widget
 
             $oldInfo = model('Source')->getSourceInfo($data['table'], !empty($data['app_row_id']) ? $data['app_row_id'] : $data['row_id'],false,$data['app']);
     		
-            // 转发到我的微博
+            // 转发到我的提问
     		if($_POST['ifShareFeed'] == 1) {
                 $commentInfo  = model('Source')->getSourceInfo($data['table'], $data['row_id'], false, $data['app']);
                 $oldInfo = isset($commentInfo['sourceInfo']) ? $commentInfo['sourceInfo'] : $commentInfo; 
@@ -259,7 +280,7 @@ class CommentWidget extends Widget
                 if(!empty($data['to_uid'])) {
                     $lessUids[] = $data['to_uid'];
                 }
-                // 如果为原创微博，不给原创用户发送@信息
+                // 如果为原创提问，不给原创用户发送@信息
                 if($commentInfo['feedType'] == 'post' && empty($data['to_uid'])) {
                     $lessUids[] = $oldInfo['uid'];
                 }
@@ -307,26 +328,39 @@ class CommentWidget extends Widget
         $comment = model('Comment')->getCommentInfo($comment_id);
         // 不存在时
         if(!$comment){
-            return false;
+			$return['status'] = 0;
+			$return['data'] = '评论不存在';
+			exit(json_encode($return));
         }
+		$return['comment_type'] = $comment['comment_type'];
         // 非作者时
         if($comment['uid']!=$this->mid){
             // 没有管理权限不可以删除
             if(!CheckPermission('core_admin','comment_del')){
-                return false;
+				$return['status'] = 0;
+				$return['data'] = '删除失败';
+				exit(json_encode($return));
             }
         // 是作者时
         }else{
             // 没有前台权限不可以删除
             if(!CheckPermission('core_normal','comment_del')){
-                return false;
+				$return['status'] = 0;
+				$return['data'] = '删除失败';
+				exit(json_encode($return));
             }
         }
-
     	if(!empty($comment_id)) {
-    		return model('Comment')->deleteComment($comment_id,$this->mid);
+			$result = model('Comment')->deleteComment($comment_id,$this->mid);
+			model('Feed')->cleanCache(array(intval($comment['row_id'])));
+			
+			$return['status'] = 1;
+			$return['data'] = '删除成功';
+			exit(json_encode($return));
     	}
-    	return false;
+		$return['status'] = 0;
+		$return['data'] = '删除失败';
+		exit(json_encode($return));
     }
     
     /**

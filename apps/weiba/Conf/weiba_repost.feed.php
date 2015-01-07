@@ -4,7 +4,7 @@
 	</title>
 	<body>
 		<![CDATA[
-		<eq name='body' value=''>微博分享<else />{$body|t|replaceUrl}</eq>
+		<eq name='body' value=''>提问分享<else />{$body|t|replaceUrl}</eq>
 		<dl class="comment">
 			<dt class="arrow bgcolor_arrow"><em class="arrline">◆</em><span class="downline">◆</span></dt>
 			<dd class="name">

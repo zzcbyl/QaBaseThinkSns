@@ -1,6 +1,6 @@
 <php>if(CheckPermission('weiba_normal','weiba_reply')){</php>
 <!--评论框-->
-<eq name='cancomment' value = "1">
+
 <div class="action clearfix mb10">
 	<div class="num"  model-node="numsLeft">{:L('PUBLIC_INPUT_CHARACTER_LIMIT',array('num'=>'<span>'.$initNums.'</span>'))}</div>
 </div>
@@ -34,9 +34,7 @@ setTimeout(function() {
 }, 1000);
 </script>
 
-<else />
-{:L('PUBLIC_CONCENT_ISNULL')}
-</eq>
+
 <php>}</php>
 <!--评论列表-->
 <eq name='showlist' value="1"> 

@@ -1,6 +1,6 @@
 <?php
 /**
- * 微博控制器
+ * 提问控制器
  * @author liuxiaoqing <liuxiaoqing@zhishisoft.com>
  * @version TS3.0
  */
@@ -67,8 +67,8 @@ class FeedAction extends Action {
 		exit($res);
 	}
 	/**
-	 * 发布微博操作，用于AJAX
-	 * @return json 发布微博后的结果信息JSON数据
+	 * 发布提问操作，用于AJAX
+	 * @return json 发布提问后的结果信息JSON数据
 	 */
 	public function PostFeed()
 	{	
@@ -84,12 +84,17 @@ class FeedAction extends Action {
 		$d['questionid'] = filter_keyword($_POST['questionid']);		
 		// 是否追问
 		$d['isadd'] = filter_keyword($_POST['addask']);	
+		$d['inviteid'] = 0;
+		if(intval($_POST['inviteid']) > 0)
+		{
+			$d['inviteid'] = intval($_POST['inviteid']);
+		}
 	
 		// 安全过滤
 		foreach($_POST as $key => $val) {
 			$_POST[$key] = t($_POST[$key]);
 		}
-		$d['source_url'] = urldecode($_POST['source_url']);  //应用分享到微博，原资源链接
+		$d['source_url'] = urldecode($_POST['source_url']);  //应用分享到提问，原资源链接
 		// 滤掉话题两端的空白
 		$d['body'] = preg_replace("/#[\s]*([^#^\s][^#]*[^#^\s])[\s]*#/is",'#'.trim("\${1}").'#',$d['body']);	
 		// 附件信息
@@ -98,9 +103,6 @@ class FeedAction extends Action {
 			$d['attach_id'] = explode('|', $d['attach_id']);
 			array_map( 'intval' , $d['attach_id'] );
 		}
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
 
         //获取用户
         $openid = '';
@@ -110,11 +112,7 @@ class FeedAction extends Action {
         }
         $d['openid'] = $openid;
 
->>>>>>> parent of 4e1f3cf... 提交错误操作
 		// 发送提问的类型
-=======
-		// 发送微博的类型
->>>>>>> origin/develop
 		$type = t($_POST['type']);
 		// 所属应用名称
 		$app = isset($_POST['app_name']) ? t($_POST['app_name']) : APP_NAME;			// 当前动态产生所属的应用
@@ -122,12 +120,43 @@ class FeedAction extends Action {
 			$return = array('status'=>0,'data'=>model('Feed')->getError());
 			exit(json_encode($return));
 		}
+		
+		//分享到新浪微博
+		if($_POST['ShareSina'] == "1")
+		{
+			$WBTxt = $data['body'].'　'.$data['description'];
+			$description = $WBTxt;
+			if(strlen($WBTxt) > 200)
+				$description = utf_substr($WBTxt, 200).'...';
+			
+			$WBcontent = $description.' @知心姐姐卢勤 '.SITE_URL.'/index.php%3Fapp=public%26mod=Passport%26act=newquestion%26feed_id='.$data['feed_id'];
+			$this->shareWeiBo($this->mid, $data['feed_id'], $WBcontent, 'sina');
+			
+			//$contentTxt = utf_substr($data['description'], 180).'...　请 @卢勤问答网站 @知心姐姐卢勤 来帮帮我。'.SITE_URL.'/index.php%3Fapp=public%26mod=Passport%26act=newquestion%26feed_id='.$data['feed_id'];
+			//$this->shareWeiBo($data['uid'], $data['feed_id'], $contentTxt);
+		}
+		
+		//分享到腾讯微博
+		if($_POST['ShareQQ'] == "1")
+		{
+			$WBTxt = $data['body'].'　'.$data['description'];
+			$description = $WBTxt;
+			if(strlen($WBTxt) > 200)
+				$description = utf_substr($WBTxt, 200).'...';
+			
+			$WBcontent = $description.' @卢勤 '.SITE_URL.'/index.php%3Fapp=public%26mod=Passport%26act=newquestion%26feed_id='.$data['feed_id'];
+			$this->shareWeiBo($this->mid, $data['feed_id'], $WBcontent, 'qzone');
+			//$contentTxt = utf_substr($data['description'], 180).'...　请 @卢勤问答网站 @知心姐姐卢勤 来帮帮我。'.SITE_URL.'/index.php%3Fapp=public%26mod=Passport%26act=newquestion%26feed_id='.$data['feed_id'];
+			//$this->shareWeiBo($data['uid'], $data['feed_id'], $contentTxt);
+		}
+
+		
 		// 发布邮件之后添加积分
 		model ( 'Credit' )->setUserCredit ( $this->uid, 'add_weibo' );
-		// 微博来源设置
+		// 提问来源设置
 		$data ['from'] = getFromClient ( $data ['from'], $data ['app'] );
 		$this->assign ( $data );
-		// 微博配置
+		// 提问配置
 		$weiboSet = model ( 'Xdata' )->get ( 'admin_Config:feed' );
 		$this->assign ( 'weibo_premission', $weiboSet ['weibo_premission'] );
 		
@@ -139,12 +168,19 @@ class FeedAction extends Action {
 			$return ['data'] = $this->fetch();
 		}
 		
-		// 微博ID
+		//填充邀请回答表中的答案ID字段
+		if(intval($_POST['inviteid']) > 0)
+		{
+			$InviteMap['answerid'] = $data ['feed_id'];
+			model('InviteAnswer')->where('invite_answer_id = '.$_POST['inviteid'])->save($InviteMap);
+		}
+		
+		// 提问ID
 		$return ['feedId'] = $data ['feed_id'];
 		$return ['is_audit'] = $data ['is_audit'];
 		// 添加话题
 		model ( 'FeedTopic' )->addTopic ( html_entity_decode ( $d ['body'], ENT_QUOTES ), $data ['feed_id'], $type );
-		// 更新用户最后发表的微博
+		// 更新用户最后发表的提问
 		$last ['last_feed_id'] = $data ['feed_id'];
 		$last ['last_post_time'] = $_SERVER ['REQUEST_TIME'];
 		model ( 'User' )->where ( 'uid=' . $this->uid )->save ( $last );
@@ -154,7 +190,7 @@ class FeedAction extends Action {
 		if (! $isOpenChannel) {
 			exit ( json_encode ( $return ) );
 		}
-		// 添加微博到投稿数据中
+		// 添加提问到投稿数据中
 		$channelId = t ( $_POST ['channel_id'] );
 		
 		// 绑定用户
@@ -187,20 +223,11 @@ class FeedAction extends Action {
 		exit(json_encode($return));
 	}
 	
-<<<<<<< HEAD
 	/**
 	 * 分享到腾讯微博(js)
 	 *
 	 * @return mixed This is the return value description
 	 *
-=======
-<<<<<<< HEAD
-	/**
-	 * 分享到腾讯微博(js)
-	 *
-	 * @return mixed This is the return value description
-	 *
->>>>>>> parent of 4e1f3cf... 提交错误操作
 	 */
 	public function shareTengXun()
 	{
@@ -282,11 +309,9 @@ class FeedAction extends Action {
 	
 	
 	
-=======
->>>>>>> origin/develop
 	/**
-	 * 分享/转发微博操作，需要传入POST的值
-	 * @return json 分享/转发微博后的结果信息JSON数据
+	 * 分享/转发提问操作，需要传入POST的值
+	 * @return json 分享/转发提问后的结果信息JSON数据
 	 */
 	public function shareFeed()
 	{
@@ -321,19 +346,19 @@ class FeedAction extends Action {
 			// 添加积分
 			if($app_name == 'public'){
 				model('Credit')->setUserCredit($this->uid,'forward_weibo');
-				//微博被转发
+				//提问被转发
 				$suid =  model('Feed')->where($map)->getField('uid');
 				model('Credit')->setUserCredit($suid,'forwarded_weibo');
 			}
 			if($app_name == 'weiba'){
 				model('Credit')->setUserCredit($this->uid,'forward_topic');
-				//微博被转发
+				//提问被转发
 				$suid =  D('Feed')->where('feed_id='.$map['feed_id'])->getField('uid');
 				model('Credit')->setUserCredit($suid,'forwarded_topic');
 			}
 			
 			$this->assign($return['data']);
-			// 微博配置
+			// 提问配置
 			$weiboSet = model('Xdata')->get('admin_Config:feed');
 			$this->assign('weibo_premission', $weiboSet['weibo_premission']);
 			$return['data'] =  $this->fetch('PostFeed');
@@ -342,8 +367,8 @@ class FeedAction extends Action {
 	}
 
 	/**
-	 * 删除微博操作，用于AJAX
-	 * @return json 删除微博后的结果信息JSON数据
+	 * 删除提问操作，用于AJAX
+	 * @return json 删除提问后的结果信息JSON数据
 	 */	
 	public function removeFeed() {
 		$return = array('status'=>0,'data'=>L('PUBLIC_DELETE_FAIL'));			// 删除失败

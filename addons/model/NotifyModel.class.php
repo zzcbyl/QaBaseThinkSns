@@ -159,7 +159,7 @@ class NotifyModel extends Model {
 	public function sendNotify($toUid, $node, $config, $from) {
 		empty($config) && $config = array();
 		$config = array_merge($this->_config,$config);
-
+		
 		$nodeInfo = $this->getNode($node);
 		if(!$nodeInfo) {
 			return false;
@@ -172,10 +172,12 @@ class NotifyModel extends Model {
 		$data['appname'] = $nodeInfo['appname'];
 		$data['title'] = L($nodeInfo['title_key'], $config);
 		$data['body'] = L($nodeInfo['content_key'], $config);
+		
 		foreach($userInfo as $v) {
 			$data['uid'] = $v['uid'];
 			!empty($nodeInfo['send_message']) && $this->sendMessage($data);
 			$data['email'] = $v['email'];
+			
 			if(!empty($nodeInfo['send_email'])){
 				if(in_array($node,array('atme','comment','new_message'))){
 					$map['key'] = $node.'_email';
@@ -229,6 +231,7 @@ class NotifyModel extends Model {
 			// TODO:邮箱格式验证
 			return false;
 		} 
+
 		// TODO:用户隐私设置判断
 		$s['uid'] = intval($data['uid']);
 		$s['node'] = t($data['node']);
@@ -238,15 +241,49 @@ class NotifyModel extends Model {
 		$s['title'] = t($data['title']);
 		$body = html_entity_decode($data['body']);
 		$site = model('Xdata')->get('admin_Config:site');
-		$s['body']= '<style>a.email_btn,a.email_btn:link,a.email_btn:visited{background:#0F8CA8;padding:5px 10px;color:#fff;width:80px;text-align:center;}</style><div style="width:540px;border:#0F8CA8 solid 2px;margin:0 auto"><div style="color:#bbb;background:#0f8ca8;padding:5px;overflow:hidden;zoom:1"><div style="float:right;height:15px;line-height:15px;padding:10px 0;display:none">2012年07月15日</div>
+		$s['body']= '<style>a.email_btn,a.email_btn:link,a.email_btn:visited{background:#0F8CA8;padding:5px 10px;color:#fff;width:80px;text-align:center;}</style><div style="width:700px;border:#C22B2B solid 2px;margin:0 auto; line-height:30px;"><div style="color:#bbb;background:#C22B2B;padding:10px;overflow:hidden;zoom:1">
 					<div style="float:left;overflow:hidden;position:relative"><a><img style="border:0 none" src="'.$GLOBALS['ts']['site']['logo'].'"></a></div></div>
 					<div style="background:#fff;padding:20px;min-height:300px;position:relative">		<div style="font-size:14px;">			
-						            	<p style="padding:0 0 20px;margin:0;font-size:12px">'.$body.'</p>
+						            	<p style="padding:0;margin:0;font-size:14px">'.$body.'</p>
 						            </div></div><div style="background:#fff;">
-			            <div style="text-align:center;height:18px;line-height:18px;color:#999;padding:6px 0;font-size:12px">若不想再收到此类邮件，请点击<a href="'.U('public/Account/notify').'" style="text-decoration:none;color:#3366cc">设置</a></div>
-			            <div style="line-height:18px;text-align:center"><p style="color:#999;font-size:12px">'.$site['site_footer'].'</p></div>
+			            <div style="line-height:18px;text-align:center; height:35px;"><p style="color:#999;font-size:12px">'.$site['site_footer'].'</p></div>
 			        </div></div>';
 		$s['ctime'] = time();
+		
+		model('Mail')->send_email($s['email'],$s['title'],$s['body']);
+		return D('')->table($this->tablePrefix.'notify_email')->add($s);
+	}
+	
+	/**
+	 * 发送邮件，添加到消息队列数据表中
+	 * @param array $data 消息的相关数据
+	 * @return mix 添加失败返回false，添加成功返回新数据的ID
+	 */
+	public function sendActivityEmail($data) {
+		if(empty($data['email'])) {
+			// TODO:邮箱格式验证
+			return false;
+		} 
+
+		// TODO:用户隐私设置判断
+		$s['uid'] = intval($data['uid']);
+		$s['node'] = t($data['node']);
+		$s['email'] = t($data['email']);
+		$s['appname'] = t($data['appname']);
+		$s['is_send'] = $s['sendtime'] = 0;
+		$s['title'] = t($data['title']);
+		$body = html_entity_decode($data['body']);
+		$site = model('Xdata')->get('admin_Config:site');
+		$s['body']= '<style>a.email_btn,a.email_btn:link,a.email_btn:visited{background:#0F8CA8;padding:5px 10px;color:#fff;width:80px;text-align:center;}</style><div style="width:700px;border:#C22B2B solid 2px;margin:0 auto; line-height:30px;"><div style="color:#bbb;background:#C22B2B;padding:10px;overflow:hidden;zoom:1">
+					<div style="float:left;overflow:hidden;position:relative"><a><img style="border:0 none" src="'.$GLOBALS['ts']['site']['logo'].'"></a></div></div>
+					<div><img src="http://www.luqinwenda.com/addons/theme/stv1/_static/image/quna_20140501.jpg"></div>
+					<div style="background:#fff;padding:20px;min-height:300px;position:relative">		<div style="font-size:16px;">			
+						            	<p style="padding:0;margin:0;font-size:16px">'.$body.'</p>
+						            </div></div><div style="background:#fff;">
+			            <div style="line-height:18px;text-align:center; height:35px;"><p style="color:#999;font-size:12px">'.$site['site_footer'].'</p></div>
+			        </div></div>';
+		$s['ctime'] = time();
+		
 		model('Mail')->send_email($s['email'],$s['title'],$s['body']);
 		return D('')->table($this->tablePrefix.'notify_email')->add($s);
 	}

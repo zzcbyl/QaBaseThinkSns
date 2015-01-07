@@ -5,7 +5,7 @@ function isSetAvatar($uid){
     return is_file( SITE_PATH.'/data/uploads/avatar/'.$uid.'/small.jpg');
 }
 
-//获取微博条数
+//获取提问条数
 function getMiniNum($uid){
 	return M('weibo')->where('uid=' . $uid . ' AND isdel=0')->count();
 }
@@ -22,7 +22,7 @@ function getContentUrl($url) {
 	return getShortUrl( $url[1] ).' ';
 }
 
-// 登录页微博表情解析
+// 登录页提问表情解析
 function login_emot_format($content)
 {
     return preg_replace_callback('/(?:#[^#]*[^#^\s][^#]*#|(\[.+?\]))/is', 'replaceEmot', $content);

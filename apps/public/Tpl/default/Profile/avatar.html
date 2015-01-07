@@ -1,0 +1,23 @@
+<include file="__THEME__/public_header" />
+<link href="__APP__/account.css" rel="stylesheet" type="text/css" />
+<div class="container">
+    <div class="cont_left pd17">
+        <include file="_top"/>   
+        <div class="table_box">
+      	    <include file="_tab_menu"/>  
+        </div>
+        <div class="extend minh" style="position:relative">
+            <div class="set-hd"><h3>头像设置</h3></div>
+            {:W('Avatar',array('avatar'=>$user_info_avatar,'defaultImg'=>$user_info_avatar['avatar_big']))}
+        </div>
+    </div>
+    <div class="cont_right">
+        <include file="_sidebar"/>
+    </div>
+
+
+
+<script src="__THEME__/js/module.weibo.js"></script>
+<script src="__THEME__/js/module.form.js"></script>
+<include file="__THEME__/public_footer" />
+

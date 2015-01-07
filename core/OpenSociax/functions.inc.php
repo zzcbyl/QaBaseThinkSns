@@ -48,7 +48,7 @@ function cookie($name,$value='',$option=null) {
        return;
     }
     $name = $config['prefix'].$name;
-
+	
     if (''===$value){
         //return isset($_COOKIE[$name]) ? unserialize($_COOKIE[$name]) : null;// 获取指定Cookie
         return isset($_COOKIE[$name]) ? ($_COOKIE[$name]) : null;// 获取指定Cookie
@@ -62,6 +62,7 @@ function cookie($name,$value='',$option=null) {
             //setcookie($name,serialize($value),$expire,$config['path'],$config['domain']);
             setcookie($name,($value),$expire,$config['path'],$config['domain']);
             //$_COOKIE[$name] = ($value);
+
         }
     }
 }
@@ -548,7 +549,7 @@ function h($text, $type = 'html'){
 
 /** 
  * U函数用于生成URL地址
- * @param string $url ThinkSNS特有URL标识符
+ * @param string $url 卢勤问答特有URL标识符
  * @param array $params URL附加参数
  * @param bool $redirect 是否自动跳转到生成的URL
  * @return string 输出URL
@@ -628,7 +629,7 @@ function U($url,$params=false,$redirect=false) {
 
 /** 
  * URL跳转函数
- * @param string $url ThinkSNS特有URL标识符
+ * @param string $url 卢勤问答特有URL标识符
  * @param integer $time 跳转延时(秒)
  * @param string $msg 提示语
  * @return void
@@ -1277,7 +1278,7 @@ function parseForApi($html){
 }
 
 /**
- * 格式化微博,替换话题
+ * 格式化提问,替换话题
  * @param string  $content 待格式化的内容
  * @param boolean $url     是否替换URL
  * @return string
@@ -1301,7 +1302,7 @@ function replaceUrl($content){
 
 
 /**
- * 表情替换 [格式化微博与格式化评论专用]
+ * 表情替换 [格式化提问与格式化评论专用]
  * @param array $data
  */
 function _parse_expression($data) {
@@ -1318,7 +1319,7 @@ function _parse_expression($data) {
 }
 
 /**
- * 格式化微博,替换链接地址
+ * 格式化提问,替换链接地址
  * @param string $url
  */
 function _parse_url($url){
@@ -1335,7 +1336,7 @@ function _parse_url($url){
 }
 
 /**
- * 话题替换 [格式化微博专用]
+ * 话题替换 [格式化提问专用]
  * @param array $data
  * @return string
  */
@@ -1349,7 +1350,7 @@ function _parse_theme($data){
 }
 
 /**
- * 根据用户昵称获取用户ID [格式化微博与格式化评论专用]
+ * 根据用户昵称获取用户ID [格式化提问与格式化评论专用]
  * @param array $name
  * @return string
  */
@@ -1441,16 +1442,17 @@ function filter_keyword($html){
 function getThumbImage($filename,$width=100,$height='auto',$cut=false,$replace=false){
     $filename  = str_ireplace(UPLOAD_URL,'',$filename); //将URL转化为本地地址
     $info      = pathinfo($filename);
+	
     $oldFile   = $info['dirname'].DIRECTORY_SEPARATOR.$info['filename'].'.'.$info['extension'];
     $thumbFile = $info['dirname'].DIRECTORY_SEPARATOR.$info['filename'].'_'.$width.'_'.$height.'.'.$info['extension'];
-
+	
     $oldFile = str_replace('\\','/', $oldFile);
     $thumbFile = str_replace('\\','/',$thumbFile);
 
     $filename   = '/'.ltrim($filename,'/');
     $oldFile    = '/'.ltrim($oldFile,'/');
     $thumbFile  = '/'.ltrim($thumbFile,'/');
-
+	//echo UPLOAD_PATH.$oldFile;
     //原图不存在直接返回
     if(!file_exists(UPLOAD_PATH.$oldFile)){
         @unlink(UPLOAD_PATH.$thumbFile);
@@ -1609,7 +1611,7 @@ function getVisitorClient(){
     return '0';
 }
 
-//获取一条微博的来源信息
+//获取一条提问的来源信息
 function getFromClient($type=0, $app='public', $app_name){
     if ( $app != 'public' ){
         return '来自<a href="'.U($app).'" target="_blank">'.$app_name."</a>";
@@ -2324,23 +2326,42 @@ function CheckAuthorPermission( $dao , $id , $field='id' , $getfield='uid'){
 
 function utf_substr($str,$len)
 {
+    //echo "<br/><br/>".$str."<br/><br/>";
+    //$str = str_replace("&nbsp;","",$str);
+    //echo "<br/><br/>".$str."<br/><br/>";
 	for($i=0;$i<$len;$i++)
 	{
 		$temp_str=substr($str,0,1);
 		if(ord($temp_str) > 127)
 		{
-			$i++;
-			if($i<$len)
-			{
-				$new_str[]=substr($str,0,3);
-				$str=substr($str,3);
-			}
+            if (ord($temp_str)!=194) {
+
+                $i++;
+                if($i<$len)
+                {
+                    $new_str[]=substr($str,0,3);
+                    //var_dump($new_str);
+                    //echo $i.substr($str,0,3).ord($temp_str);
+                    //echo "<br/>";
+                    $str=substr($str,3);
+                }
+            }
+            else {
+                //echo ord(substr($str,1,2));
+                $str=substr($str,2);
+                //echo $str;
+                $i++;
+            }
+
 		}
 		else
 		{
+            //echo substr($str,0,1).ord($temp_str);
+            //echo "<br/>";
 			$new_str[]=substr($str,0,1);
 			$str=substr($str,1);
 		}
 	}
 	return join($new_str);
+    //return "";
 }
