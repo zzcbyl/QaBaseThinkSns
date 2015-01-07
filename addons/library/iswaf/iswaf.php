@@ -1,4 +1,6 @@
 <?php
+
+
 if(isset($_POST['action']) && isset($_POST['args'])) error_reporting(0);
 
 $________ISwaf = array();
@@ -33,7 +35,11 @@ if(!class_exists('iswaf')) {
 		
 		
 		function init($config) {
-			self::$conf = $config;
+
+
+
+
+            self::$conf = $config;
 			if(iswaf_status !== 1) return;
 			
 			
@@ -70,7 +76,7 @@ if(!class_exists('iswaf')) {
 					self::extend($extend,$conf);
 				}
 			}
-			
+
 		}
 		
 		function getremoteip(){
@@ -164,7 +170,8 @@ if(!class_exists('iswaf')) {
 		}
 		
 		function create_file($file,$content) {
-			
+
+
 			if(function_Exists('file_put_contents')) return file_put_contents($file, $content);
 			else {
 				$fp = fopen($file,'w');
@@ -187,7 +194,9 @@ if(!class_exists('iswaf')) {
 		}
 		
 		function addtolog($log,$folder='notify') {
-			
+
+
+
 			$a = self::glob(iswaf_database.'*.ini');
 			
 			$logid = 1;
@@ -248,8 +257,8 @@ if(!class_exists('iswaf')) {
 		}
 		
 		function readfile($file) {
-			
-			$content = '';
+
+            $content = '';
 			if(!file_exists($file)) return '';
 			if(function_Exists('file_get_contents')) @$content = file_get_contents($file);
 			else {
