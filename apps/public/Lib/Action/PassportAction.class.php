@@ -121,8 +121,25 @@ class PassportAction extends Action
         $this->assign('CourseList', $courseList);
         //print_r($courseList);
 
+
         $this->display('login');
     }
+
+    public function wx_checklogin()
+    {
+        $logincode = $_SESSION['wx_logincode'];
+        $url = 'http://weixin.luqinwenda.com/check_login_qrcode_scan.aspx?logincode='.$logincode;
+        $result = $this->curls($url);
+        $loginInfo = $this->analyJson($result);
+
+        if(!empty($loginInfo['openid']))
+        {
+            model('Passport')->loginLocalWhitoutPassword($loginInfo['openid']);
+
+            echo '{"status":1,"info":"ok"}';
+        }
+    }
+
 
     /**
      * 快速登录
@@ -1755,6 +1772,23 @@ class PassportAction extends Action
         //exit(json_encode($return));
 
         return $data;
+    }
+
+    public function curls($url, $timeout = '1000')
+    {
+        // 1. 初始化
+        $ch = curl_init();
+        // 2. 设置选项，包括URL
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_TIMEOUT, $timeout);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_HEADER, 0);
+        // 3. 执行并获取HTML文档内容
+        $info = curl_exec($ch);
+        // 4. 释放curl句柄
+        curl_close($ch);
+
+        return $info;
     }
 
     /**
