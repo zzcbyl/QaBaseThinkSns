@@ -48,7 +48,7 @@
 			</dd>				
 		</dl>
 		<ul class="person-info-b clearfix">
-			<li><a href="{:U('public/Profile/index',array('type'=>$type,'feed_type'=>'','uid'=>$uid))}"><span>提问</span><strong event-node="weibo_count" event-args="uid={$uid}">{$userData.weibo_count|default=0}</strong></a></li>
+			<li><a href="{:U('public/Profile/index',array('type'=>$type,'feed_type'=>'','uid'=>$uid))}"><span>微博</span><strong event-node="weibo_count" event-args="uid={$uid}">{$userData.weibo_count|default=0}</strong></a></li>
 			<li><a href="{:U('public/Profile/following',array('uid'=>$user_info[$uid]['uid']))}"><span>关注</span><strong event-node="<php>if($user_info[$uid]['uid']==$mid){</php>following<php>}</php>_count" event-args="uid={$user_info[$uid]['uid']}">{$userData.following_count|default=0}</a></strong></li>
 			<li class="no-border"><a href="{:U('public/Profile/follower',array('uid'=>$user_info[$uid]['uid']))}"><span>粉丝</span><strong event-node="<php>if($user_info[$uid]['uid']!=$mid){</php>following<php>}</php>_count" event-args="uid={$user_info[$uid]['uid']}">{$userData.follower_count|default=0}</a></strong></li>
 		</ul>

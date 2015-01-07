@@ -72,7 +72,7 @@ $ip = "Unknown";
         return $this->oauth->get('http://open.t.qq.com/api/statuses/user_timeline',$param); 
     } 
 
-   // @提到我的提问时间线
+   // @提到我的微博时间线
    function  mentions_timeline($pageflag=0,$pagetime=0,$reqnum=20,$format='json')
 	   {
     	$param['format']=$format;
@@ -116,10 +116,10 @@ $ip = "Unknown";
 
 
 //--------------------------------------------------------------------//
-//***************************提问相关*********************************//
+//***************************微博相关*********************************//
 //--------------------------------------------------------------------//
 
-//1.t/show 获取一条提问数据
+//1.t/show 获取一条微博数据
     function t_show($id,$format='json') 
     { 
         $param['id'] =$id; 
@@ -127,7 +127,7 @@ $ip = "Unknown";
         return $this->oauth->get( 'http://open.t.qq.com/api/t/show' ,$param); 
     } 
 
-//2.t/add 发表一条提问
+//2.t/add 发表一条微博
     function t_add($content='',$jing='',$wei='',$format='json') 
     { 
         $param['content'] =$content; 
@@ -138,7 +138,7 @@ $ip = "Unknown";
         return $this->oauth->post( 'http://open.t.qq.com/api/t/add' ,$param); 
     } 
 
-//3.t/del 删除一条提问
+//3.t/del 删除一条微博
     function t_del($id,$format='json') 
     { 
         $param['id'] =$id; 
@@ -146,7 +146,7 @@ $ip = "Unknown";
         return $this->oauth->post( 'http://open.t.qq.com/api/t/del' ,$param); 
     } 
 
-//4.t/re_add 转播一条提问
+//4.t/re_add 转播一条微博
     function t_re_add($reid,$content='',$jing='',$wei='',$format='json') 
     { 
         $param['content'] =$content; 
@@ -158,7 +158,7 @@ $ip = "Unknown";
         return $this->oauth->post( 'http://open.t.qq.com/api/t/re_add' ,$param); 
     } 
 
-//5.t/reply 回复一条提问
+//5.t/reply 回复一条微博
     function t_reply($reid,$content='',$jing='',$wei='',$format='json') 
     { 
         $param['content'] =$content; 
@@ -170,7 +170,7 @@ $ip = "Unknown";
         return $this->oauth->post( 'http://open.t.qq.com/api/t/reply' ,$param); 
     } 
 
-//6.t/add_pic 发表一条带图片的提问
+//6.t/add_pic 发表一条带图片的微博
     function t_add_pic($content='',$pic_data='',$jing='',$wei='',$format='json') 
     { 
         $param['content']=$content;
@@ -182,7 +182,7 @@ $ip = "Unknown";
         return $this->oauth->post( 'http://open.t.qq.com/api/t/add_pic',$param,true); //采用multi form-data方式提交
     } 
 
-//7.t/re_count 转播数  参数 $ids 的格式为: "第1条提问id,第2条提问id,第3条提问id,........."   最多30个
+//7.t/re_count 转播数  参数 $ids 的格式为: "第1条微博id,第2条微博id,第3条微博id,........."   最多30个
     function t_re_count($ids,$format='json') 
     { 
         $param['ids'] =$ids; 
@@ -190,7 +190,7 @@ $ip = "Unknown";
         return $this->oauth->get( 'http://open.t.qq.com/api/t/re_count' ,$param); 
     } 
 
-//8.t/re_list 获取单条提问的转发或点评列表  Flag:标识0 转播列表，1点评列表 2 点评与转播列表
+//8.t/re_list 获取单条微博的转发或点评列表  Flag:标识0 转播列表，1点评列表 2 点评与转播列表
    function  t_re_list($flag,$rootid,$pageflag=0,$pagetime=0,$reqnum=20,$twitterid=0,$format='json')
 	   {
     	$param['format']=$format;
@@ -203,7 +203,7 @@ $ip = "Unknown";
         return $this->oauth->get('http://open.t.qq.com/api/t/re_list',$param);    
       }
 
-//9.t/comment 点评一条提问
+//9.t/comment 点评一条微博
     function t_comment($reid,$content='',$jing='',$wei='',$format='json') 
     { 
         $param['content'] =$content; 
@@ -443,7 +443,7 @@ $ip = "Unknown";
         return $this->oauth->get( 'http://open.t.qq.com/api/search/user' ,$param); 
     } 
 
-//2.Search/t 搜索提问
+//2.Search/t 搜索微博
     function search_t($keyword,$page=1,$pagesize=10,$format='json')
 	   {
     	$param['format']=$format;
@@ -453,7 +453,7 @@ $ip = "Unknown";
         return $this->oauth->get( 'http://open.t.qq.com/api/search/t' ,$param); 
     } 
 
-//3.Search/userbytag 搜索提问
+//3.Search/userbytag 搜索微博
     function search_by_tag($keyword,$page=1,$pagesize=10,$format='json')
 	   {
     	$param['format']=$format;
@@ -517,7 +517,7 @@ $ip = "Unknown";
 //--------------------------------------------------------------------//
 //********************       数据收藏       **************************//
 //--------------------------------------------------------------------//
-//1.fav/addt 收藏一条提问
+//1.fav/addt 收藏一条微博
     function fav_add_t($id,$format='json') 
     { 
 		$param['id'] =$id; 
@@ -531,7 +531,7 @@ $ip = "Unknown";
         $param['format']=$format;
         return $this->oauth->post( 'http://open.t.qq.com/api/fav/delt' ,$param); 
     } 
-//3.fav/list_t 获取收藏的提问列表
+//3.fav/list_t 获取收藏的微博列表
     function fav_list_t($pageflag=0,$pagetime=0,$reqnum=20,$format='json')
 	   {
     	$param['format']=$format;
@@ -592,7 +592,7 @@ function kownperson($ip=false,$format='json')
 		return $this->oauth->get( 'http://open.t.qq.com/api/other/kownperson' ,$param); 
     }
 
-	//发表提问
+	//发表微博
 
 	//我的信息
     function getinfo($format='json') 
@@ -601,7 +601,7 @@ function kownperson($ip=false,$format='json')
         return $this->oauth->get( 'http://open.t.qq.com/api/user/info' ,$param); 
     } 
     
-  	//发表带图片提问
+  	//发表带图片微博
 
 
 

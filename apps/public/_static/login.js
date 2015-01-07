@@ -79,80 +79,38 @@ loginCheck.inputChecked = function(objDiv, objInput, objLabel, blurObjInput) {
         }
     });
 };
-// 绑定验证事件(new)
-loginCheck.NewbindKeyEvent = function (objInput, blurObjInput) {
-    objInput.bind('keydown', function (event) {
-        if (event.which == 13) {
-            var aLen = blurObjInput.val().length;
-            var pLen = objInput.val().length;
-            if (aLen == 0) {
-                objInput.blur()
-                blurObjInput.focus();
-            } else if (aLen != 0 && pLen == 0) {
-                objInput.focus();
-            } else if (aLen != 0 && pLen != 0) {
-                $('#ajax_login_form').submit();
-            }
-        }
-    });
-}
-// 输入框验证(new)
-loginCheck.NewinputChecked = function (objInput, blurObjInput) {
-    objInput.bind({
-        focus: function () {
-            var len = $(this).val().length;
-            len == 0 && objDiv.attr('class', 'input1');
-            typeof (blurObjInput) != "undefined" && loginCheck.NewbindKeyEvent(objInput, blurObjInput);
-        },
-        keydown: function () {
-            objLabel.css('display', 'none');
-        },
-        keyup: function () {
-            var len = $(this).val().length;
-            len == 0 && objLabel.css('display', '');
-        },
-        blur: function () {
-            var len = $(this).val().length;
-            if (len == 0) {
-                //objDiv.attr('class', 'input');
-                //objLabel.css('display', '');
-            }
-        }
-    });
-};
 // 事件监听
 M.addModelFns({
     login_input: {
         load: function() {
             // 账号输入框
-            var jAccount = $(this).find('div').eq(0);
-            //var jADiv = jAccount.find('div').eq(0);
-            //jADiv.attr('class', 'input');
+            var jAccount = $(this).find('li').eq(0);
+            var jADiv = jAccount.find('div').eq(0);
+            jADiv.attr('class', 'input');
             var jAInput = jAccount.find('input').eq(0);
             jAInput.val('');
-            //var jALabel = jAccount.find('label').eq(0);
-            //jALabel.css('display', '');
-            loginCheck.NewinputChecked(jAInput);
-
+            var jALabel = jAccount.find('label').eq(0);
+            jALabel.css('display', '');
+            loginCheck.inputChecked(jADiv, jAInput, jALabel);
             // 密码输入框
             var jPwd = jAccount.next();
-            //var jPDiv = jPwd.find('div').eq(0);
-            //jPDiv.attr('class', 'input');
+            var jPDiv = jPwd.find('div').eq(0);
+            jPDiv.attr('class', 'input');
             var jPInput = jPwd.find('input').eq(0);
             // 动态改变密码域，IE6
             if(!$.browser.msie) {
                 jPInput[0].type = 'password';
             }
             jPInput.val('');
-            //var jPLabel = jPwd.find('label').eq(0);
-            //jPLabel.css('display', '');
-            loginCheck.NewinputChecked(jPInput, jAInput);
+            var jPLabel = jPwd.find('label').eq(0);
+            jPLabel.css('display', '');
+            loginCheck.inputChecked(jPDiv, jPInput, jPLabel, jAInput);
             // 联想框
-//            $('#account_input').changeTips({
-//                divTip: ".on-changes",
-//                focusInput: jAInput,
-//                nextFocus: jPInput
-//            });
+            $('#account_input').changeTips({
+                divTip: ".on-changes",
+                focusInput: jAInput,
+                nextFocus: jPInput
+            });
         }
     }
 });

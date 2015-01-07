@@ -1,25 +1,44 @@
 <include file="__THEME__/_header" />
-<body style="background:#f3f3f3;">
-<!--未登录时-->
+{* 未登录时 *}
 <nosession name="mid">
     <div class="header_box">
 	    <div class="header w980">
     	    <div class="h_logo">
-                <a href="{:SITE_URL}" <php>if(strpos($_SERVER['HTTP_USER_AGENT'],'MSIE 6.0') !== false):</php>style="_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='{$site.logo}', sizingMethod='crop');_background:none;"<php>else:</php>style="background:url({$site.logo}) no-repeat center; "<php>endif;</php>> </a></div>
+                <a href="{:SITE_URL}" <php>if(strpos($_SERVER['HTTP_USER_AGENT'],'MSIE 6.0') !== false):</php>style="_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='{$site.logo}', sizingMethod='crop');_background:none;"<php>else:</php>style="background:url({$site.logo}) no-repeat;"<php>endif;</php>> </a></div>
             <php> 
-                  if(ACTION_NAME=='square'){ $tabClass['square'] = 'current'; $tabClass['index'] = '';$tabClass['expert'] = ''; $tabClass['course'] = ''; }
-	              else if(ACTION_NAME=='expert') { $tabClass['expert'] = 'current'; $tabClass['square'] = ''; $tabClass['index'] = '';$tabClass['course'] = ''; }
-                  else if(ACTION_NAME=='course') { $tabClass['course'] = 'current'; $tabClass['square'] = ''; $tabClass['index'] = '';  $tabClass['expert'] =''; }
-                  else{ $tabClass['index'] = 'current'; $tabClass['square'] = ''; $tabClass['expert'] = '';$tabClass['course'] = ''; }
+                  if(ACTION_NAME=='square'){ $tabClass['square'] = 'current'; $tabClass['index'] = '';  }
+	              else{ $tabClass['index'] = 'current'; $tabClass['square'] = '';  }
             </php>
-            <ul class="menu" style="display:none;">
+            <ul class="menu">
         	    <li><a class="{$tabClass.index}" href="{:SITE_URL}">首页</a></li>
                 <li><a class="{$tabClass.square}" href="{:U('public/Passport/square')}">广场</a></li>
-                <li><a class="{$tabClass.expert}" href="{:U('public/Passport/expert')}">专家</a></li>
-                <li><a class="{$tabClass.course}" href="{:U('public/Passport/course')}">课程</a></li>
+                <li><a href="#">专家</a></li>
                 <li><a href="#">活动</a></li>
             </ul>
-            <div class="person" style="float:right; display:none;">
+
+
+            <div id="wb_connect_btn"></div>
+            <script type="text/javascript" >
+
+                WB2.anyWhere(function(W){
+                    W.widget.connectButton({
+                        id: "wb_connect_btn",
+                        type: '3,2',
+                        callback : {
+                            login:function(o){
+                                alert(o.screen_name+"，欢迎和知心姐姐交流。")
+                            },
+                            logout:function(){
+                                alert('再见');
+                            }
+                        }
+                    });
+                });
+
+            </script>
+
+
+            <div class="person" style="float:right;">
                 <ul class="short_nav">
         	        <li><a href="#" class="h"></a></li>
                     <li model-node="notice"><a href="javascript:void(0);" class="v"></a>
@@ -33,29 +52,28 @@
                     </li>
                 </ul>
             </div>
+        
         </div>
+
     </div>
+    <div class="container">
+
 </nosession>
-<!--登录后-->
+{* 登录后 *}
 <session name="mid">
     <div class="header_box">
 	    <div class="header w980">
     	    <div class="h_logo">
-                <a href="{:SITE_URL}" <php>if(strpos($_SERVER['HTTP_USER_AGENT'],'MSIE 6.0') !== false):</php>style="_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='{$site.logo}', sizingMethod='crop');_background:none;"<php>else:</php>style="background:url({$site.logo}) no-repeat center;"<php>endif;</php>> </a></div>
-            <php>
-                if(ACTION_NAME=='square'){ $tabClass['square'] = 'current'; $tabClass['index'] = '';$tabClass['expert'] = ''; $tabClass['course'] = ''; $tabClass['book'] = ''; }
-                else if(ACTION_NAME=='expert') { $tabClass['expert'] = 'current'; $tabClass['square'] = ''; $tabClass['index'] = '';$tabClass['course'] = ''; $tabClass['book'] = ''; }
-                else if(ACTION_NAME=='course'||ACTION_NAME=='coursedetail') { $tabClass['course'] = 'current'; $tabClass['square'] = ''; $tabClass['index'] = '';  $tabClass['expert'] =''; $tabClass['book'] = ''; }
-                else if(ACTION_NAME=='book') { $tabClass['book'] = 'current'; $tabClass['square'] = ''; $tabClass['index'] = '';  $tabClass['expert'] =''; $tabClass['course'] = '';  }
-                else{ $tabClass['index'] = 'current'; $tabClass['square'] = ''; $tabClass['expert'] = '';$tabClass['course'] = ''; $tabClass['book'] = ''; }
+                <a href="{:SITE_URL}" <php>if(strpos($_SERVER['HTTP_USER_AGENT'],'MSIE 6.0') !== false):</php>style="_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='{$site.logo}', sizingMethod='crop');_background:none;"<php>else:</php>style="background:url({$site.logo}) no-repeat;"<php>endif;</php>> </a></div>
+            <php> 
+                  if(ACTION_NAME=='square'){ $tabClass['square'] = 'current'; $tabClass['index'] = '';  }
+	              else{ $tabClass['index'] = 'current'; $tabClass['square'] = '';  }
             </php>
             <ul class="menu">
-                <li><a class="{$tabClass.index}" href="{:SITE_URL}">首页</a></li>
+        	    <li><a class="{$tabClass.index}" href="{:SITE_URL}">首页</a></li>
                 <li><a class="{$tabClass.square}" href="{:U('public/Passport/square')}">广场</a></li>
-                <li><a class="{$tabClass.expert}" href="{:U('public/Passport/expert')}">专家</a></li>
-                <li><a class="{$tabClass.course}" href="{:U('public/Passport/course')}">课程</a></li>
-                <li><a class="{$tabClass.book}" href="{:U('public/Passport/book')}">著作</a></li>
-                <!--<li><a href="#">活动</a></li>-->
+                <li><a href="#">专家</a></li>
+                <li><a href="#">活动</a></li>
             </ul>
             <div class="search_box">
                 <div class="search">
@@ -66,8 +84,8 @@
                         <input type="hidden" name="t" value="2"/>
                         <input type="hidden" name="a" value="public"/>
                         <dl>
-                            <dt class="clearfix"><input id="search_input" style="height:25px; line-height:25px; padding-top:0px; padding-bottom:0;" class="s_inp"  type="text" value="搜提问 / 昵称" onfocus="this.value=''" onblur="setTimeout(function(){ $('#search-box').remove();} , 200);if(this.value=='') this.value='搜提问 / 昵称';" event-node="searchKey" name='k'  autocomplete="off">
-                                <input type="submit" class="s_btn" value="" onclick="if(getLength($('#search_input').val()) && $('#search_input').val()!=='搜提问 / 昵称'){ $('#search_feed').submit(); return false;}" />
+                            <dt class="clearfix"><input id="search_input" style="height:25px; line-height:25px; padding-top:0px; padding-bottom:0;" class="s_inp"  type="text" value="搜微博 / 昵称" onfocus="this.value=''" onblur="setTimeout(function(){ $('#search-box').remove();} , 200);if(this.value=='') this.value='搜微博 / 昵称';" event-node="searchKey" name='k'  autocomplete="off">
+                                <input type="submit" class="s_btn" value="" onclick="if(getLength($('#search_input').val()) && $('#search_input').val()!=='搜微博 / 昵称'){ $('#search_feed').submit(); return false;}" />
                             </dt>
                         </dl>
                     </form>
@@ -76,11 +94,8 @@
             </div>
             <div class="person" style="float:right;">
                 <ul class="short_nav">
-                    <li><a href="{:U('public/Index/postfeed')}" class="h" title="提问"></a></li>
-                    <li><a href="{:U('public/Profile/collection')}" class="c" title="收藏夹"></a></li>
-                    <li model-node="notice" style="position:relative;">
-                        <a id="noticeCount" style="position:absolute; background:none; top:-10px; right:2px; color:#fff;"></a>
-                        <a href="{:U('public/Profile/newanswerinfo')}" class="v" title="消息"></a>
+        	        <li><a href="#" class="h"></a></li>
+                    <li model-node="notice"><a href="{:U('public/Profile/newanswerinfo')}" class="v"></a>
                         <!--<div class="dropmenu" model-node="drop_menu_list" style="z-index:9999;">
                             <dl class="acc-list W-message" style="width:100px;" >
                                 <dd><a  href="{:U('public/Mention/index')}">@提到我的</a></dd>
@@ -97,11 +112,11 @@
                             </dl>
                         </div>-->
                     </li>
-                    <!--<li><a href="#" class="a"></a></li>-->
-                    <li model-node="account"><a href="javascript:void(0);" class="p" title="个人中心"></a>
+                    <li><a href="#" class="a"></a></li>
+                    <li model-node="account"><a href="javascript:void(0);" class="p"></a>
                         <div model-node="drop_menu_list" class="dropmenu" style="width:100px; z-index:9999;">
                             <dl class="acc-list">    
-                            <!--<php>if(CheckTaskSwitch()):</php>
+                            <php>if(CheckTaskSwitch()):</php>
                             <dd><a href="{:U('public/Task/index')}">任务中心</a></dd>
                             <dd><a href="{:U('public/Medal/index')}">勋章馆</a></dd>
                             <php>endif;</php>
@@ -110,8 +125,8 @@
                             <php>if(isInvite() && CheckPermission('core_normal','invite_user')):</php>
                             <dd><a href="{:U('public/Invite/invite')}">{:L('PUBLIC_INVITE_COLLEAGUE')}</a></dd>
                             <php>endif;</php>
-                            <!-- 个人设置菜单钩子 
-                            {:Addons::hook('header_account_dropmenu')}-->
+                            <!-- 个人设置菜单钩子 -->
+                            {:Addons::hook('header_account_dropmenu')}
                             <php>if(CheckPermission('core_admin','admin_login')){</php>
                             <dd><a href="{:U('admin')}">{:L('PUBLIC_SYSTEM_MANAGEMENT')}</a></dd>
                             <php>}</php>
@@ -121,34 +136,31 @@
                             </dl>
                         </div>
                     </li>
-                    <!--<li>
-                        <!--<a href="{:U('public/Account/index')}" class="s" ></a>
-                        <a href="javascript:void(0);" class="s" ></a>
-                    </li>-->
+                    <li>
+                        <a href="{:U('public/Account/index')}" class="s" ></a>
+                    </li>
                 </ul>
 
                 <ul class="message_list_container message_list_new"  style="display:none;">
-                    <li rel="new_invite_count" style="display:none"><span></span>，<a href="{:U('public/Profile/invite',array('uid'=>$mid))}">{:L('PUBLIC_NEWINVITECOUNT_REMIND')}</a></li>
                     <li rel="new_answer_count" style="display:none"><span></span>，<a href="{:U('public/Profile/newanswerinfo',array('uid'=>$mid))}">{:L('PUBLIC_NEWANSWER_REMIND')}</a></li>
                     <li rel="new_comment_count" style="display:none"><span></span>，<a href="{:U('public/Profile/newcommentinfo',array('uid'=>$mid))}">{:L('PUBLIC_NEWCOMMENT_REMIND')}</a></li>
                     <li rel="new_comment_agree_count" style="display:none"><span></span>，<a href="{:U('public/Profile/newagreeinfo',array('uid'=>$mid))}">{:L('PUBLIC_NEWAGREECOMMENT_REMIND')}</a></li>
                     <li rel="new_comment_oppose_count" style="display:none"><span></span>，<a href="{:U('public/Profile/newopposeinfo',array('uid'=>$mid))}">{:L('PUBLIC_NEWOPPOSECOMMENT_REMIND')}</a></li>
                     <li rel="new_friend_count" style="display:none"><span></span>，<a href="{:U('public/Profile/newfriend',array('uid'=>$mid))}">{:L('PUBLIC_FRIENDS_REMIND')}</a></li>
                     <li rel="new_folower_count" style="display:none"><span></span>，<a href="{:U('public/Profile/newfollower',array('uid'=>$mid))}">{:L('PUBLIC_FOLLOWERS_REMIND')}</a></li>
-                    <li rel="unread_message" style="display:none"><span></span>，<a href="{:U('public/Profile/messages')}" >{:L('PUBLIS_MESSAGE_REMIND')}</a></li>
-                    <!--<li rel="unread_comment" style="display:none"><span></span>，<a href="{:U('public/Comment/index',array('type'=>'receive'))}">{:L('PUBLIS_MESSAGE_REMIND')}</a></li>
+                    <li rel="unread_comment" style="display:none"><span></span>，<a href="{:U('public/Comment/index',array('type'=>'receive'))}">{:L('PUBLIS_MESSAGE_REMIND')}</a></li>
+                    <li rel="unread_message" style="display:none"><span></span>，<a href="{:U('public/Message')}" >{:L('PUBLIS_MESSAGE_REMIND')}</a></li>
                     <li rel="unread_atme" style="display:none"><span></span>，<a href="{:U('public/Mention')}">{:L('PUBLIS_MESSAGE_REMIND')}</a></li>
                     <li rel="unread_notify" style="display:none"><span></span>，<a href="{:U('public/Message/notify')}">{:L('PUBLIS_MESSAGE_REMIND')}</a></li>
                     <li rel="unread_group_atme" style="display:none"><span></span>，<a href="{:U('group/SomeOne/index')}">{:L('PUBLIS_MESSAGE_REMIND')}</a></li>
-     	            <li rel="unread_group_comment" style="display:none"><span></span>，<a href="{:U('group/SomeOne/index')}">{:L('PUBLIS_MESSAGE_REMIND')}</a></li>-->       
+     	            <li rel="unread_group_comment" style="display:none"><span></span>，<a href="{:U('group/SomeOne/index')}">{:L('PUBLIS_MESSAGE_REMIND')}</a></li>       
                 </ul>
             </div>
         
         </div>
-        <!--<div style="position:fixed; z-index:99; right:100px; top:70px;">
-            <a href="{:U('public/Passport/activity_bj')}" target="_blank"><img src="__THEME__/image/right_0523.gif" /></a>
-         </div>-->
+
     </div>
+    <div class="container">
 
     <script type="text/javascript">
         $(document).ready(function () {
@@ -166,3 +178,23 @@
         });
     </script>
 </session>
+<php>
+//出现注册提示的页面
+$show_register_tips = array('public/Profile','public/Topic','weiba/Index');
+if(!$mid && in_array(APP_NAME.'/'.MODULE_NAME,$show_register_tips)){
+</php>
+<php>$registerConf = model('Xdata')->get('admin_Config:register');</php>
+<!--未登录前-->
+<div class="login-no-bg">
+    <div class="login-no-box boxShadow clearfix">
+        <div class="login-reg right">
+            <php>if($registerConf['register_type'] == 'open'){</php>
+            <a href="{:U('public/Register/index')}" class="btn-reg">立即注册</a>
+            <php>}</php>
+            <span>已有帐号？<a href="javascript:quickLogin()">立即登录</a></span>
+        </div>
+        <p class="left">
+            <span>欢迎来到{$site.site_name}</span>赶紧注册与朋友们分享快乐点滴吧！</p>
+    </div>
+</div>
+<php>}</php>

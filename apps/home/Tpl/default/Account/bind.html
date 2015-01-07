@@ -69,7 +69,7 @@
                   <h2><img src="{$vo.ico}" width="24" height="24"  class="alM"/> {$vo.name}({$bindInfo})</h2>
                 </div>
                 <div  class="setItemsInfo">
-                  <div class="data"><!-- 新浪提问绑定 begin  -->
+                  <div class="data"><!-- 新浪微博绑定 begin  -->
                     <php>if($vo['isBind']){</php>
                     <ul>
                       <li>您已绑定{$vo.name}</li>
@@ -81,7 +81,7 @@
                       <li><a class="btn_b" href="{:Addons::createAddonShow($vo['addon'],$vo['bind_hook'],array('type'=>$vo['type'],'do'=>'bind'))}">开始绑定</a></li>
                     </ul>
                     <php>}</php>  
-                  </div><!-- 新浪提问绑定 end  -->
+                  </div><!-- 新浪微博绑定 end  -->
                 </div>
               </div>		  
               </volist>

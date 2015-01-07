@@ -1,10 +1,10 @@
 <?php
 error_reporting(0);
 
-// 卢勤问答系统根目录路径
+// ThinkSNS系统根目录路径
 define('SITE_PATH', dirname(dirname(__FILE__)));
 
-// 卢勤问答与UCenter集成的必要方法
+// ThinkSNS与UCenter集成的必要方法
 require_once SITE_PATH.'/api/uc_client/common.php';
 
 define('IN_DISCUZ', TRUE);
@@ -39,7 +39,7 @@ defined('MAGIC_QUOTES_GPC') || define('MAGIC_QUOTES_GPC', get_magic_quotes_gpc()
 
 require_once SITE_PATH.'/config/uc_config.inc.php';
 
-//载入卢勤问答配置
+//载入ThinkSNS配置
 $tsconfig1 = require_once SITE_PATH.'/config/config.inc.php';
 $tsconfig2 = require_once SITE_PATH.'/core/OpenSociax/convention.php';
 $tsconfig = array_merge($tsconfig2,$tsconfig1);

@@ -1,6 +1,6 @@
 <IfModule mod_rewrite.c>
 # .htaccess
-# 卢勤问答
+# ThinkSNS
 #
 # 为了正常启用URL Rewrite，请将apache配置文件中“LoadModule rewrite_module modules/mod_rewrite.so”
 # 前的注释去掉，并将apache的DocumentRoot开启AllowOverride

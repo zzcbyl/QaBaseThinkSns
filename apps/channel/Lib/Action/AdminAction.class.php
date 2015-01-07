@@ -153,13 +153,13 @@ class AdminAction extends AdministratorAction
 	 */
     public function editAdminBox()
     {
-    	// 获取提问ID
+    	// 获取微博ID
     	$data['feedId'] = intval($_REQUEST['feed_id']);
         // 频道分类ID
         $data['channelId'] = empty($_REQUEST['channel_id']) ? 0 : intval($_REQUEST['channel_id']);
     	// 获取全部频道列表
         $data['categoryList'] = $this->_model_category->getCategoryList();
-        // 获取该提问已经选中的频道
+        // 获取该微博已经选中的频道
         $data['selectedChannels'] = D('Channel', 'channel')->getSelectedChannels($data['feedId']);
 
         $this->assign($data);

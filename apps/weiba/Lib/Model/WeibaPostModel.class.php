@@ -16,12 +16,12 @@ class WeibaPostModel extends Model {
 						);
 
 	/**
-	 * 发帖同步到提问
+	 * 发帖同步到微博
 	 * @param integer post_id 帖子ID
 	 * @param string title 帖子标题
 	 * @param string content 帖子内容
 	 * @param integer uid 发布者uid
-	 * @return integer feed_id 提问ID
+	 * @return integer feed_id 微博ID
 	 */
 	public function syncToFeed($post_id,$title,$content,$uid) {	
 		$d['content'] = '';
@@ -47,7 +47,7 @@ class WeibaPostModel extends Model {
 		$res = D('weiba_post')->add($data);
 		if($res){
 			D('weiba')->where('weiba_id='.$data['weiba_id'])->setInc('thread_count');
-			//同步到提问
+			//同步到微博
 			$feed_id = $this->syncToFeed($res,$data['title'],$data['content'],$data['post_uid']);
 			D('weiba_post')->where('post_id='.$res)->setField('feed_id',$feed_id);
 			return true;
@@ -99,7 +99,7 @@ class WeibaPostModel extends Model {
 		$info['source_user_info'] = model('User')->getUserInfo($info['post_uid']);
 		$info['source_user'] = $info['post_uid'] == $GLOBALS['ts']['mid'] ? L('PUBLIC_ME'): $info['source_user_info']['space_link'];			// 我
 		$info['source_type'] = L('PUBLIC_WEIBA');
-		$info['source_title'] = $forApi ? parseForApi($info['source_user_info']['space_link']) : $info['source_user_info']['space_link'];	//提问title暂时为空
+		$info['source_title'] = $forApi ? parseForApi($info['source_user_info']['space_link']) : $info['source_user_info']['space_link'];	//微博title暂时为空
 		$info['source_url'] = U('weiba/Index/postDetail', array('post_id'=>$row_id));
 		$info['ctime'] = $info['post_time'];
 		$feed = D('feed_data')->field('feed_id,feed_content')->find($info['feed_id']);

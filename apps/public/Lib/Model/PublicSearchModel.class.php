@@ -117,7 +117,7 @@ class PublicSearchModel extends Model {
 	}
 
 	/**
-	 * 初始化数据，用户数据与提问数据
+	 * 初始化数据，用户数据与微博数据
 	 * @return void
 	 */
 	public function initData() {
@@ -174,7 +174,7 @@ class PublicSearchModel extends Model {
 			}
 			$list['data'] = $data;
 		} else {
-			// 提问数据
+			// 微博数据
 			$data = model('Feed')->getFeeds($pkIds);
 			foreach($data as &$v) {
 				$v['search_info'] = $dataHash[$v['feed_id']];
@@ -255,7 +255,7 @@ class PublicSearchModel extends Model {
 	}
 
 	/**
-	 * 初始化提问数据
+	 * 初始化微博数据
 	 * 搜索引擎参数说明
 	 * string01:动态title
 	 * int01: 0 表示应用为核心
@@ -267,7 +267,7 @@ class PublicSearchModel extends Model {
 	 * int07: is_del 是否删除
 	 * int08: from 数据来源（客户端还是网站）
 	 * content :用户配置数据组合进来
-	 * @return array 初始化提问数据
+	 * @return array 初始化微博数据
 	 */
 	private function initFeed() {
 		// 更新删除的内容

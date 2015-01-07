@@ -5,7 +5,7 @@ class SquareAction extends Action{
 		header("Content-Type:text/html; charset=UTF8");
 	}
 
-	//全站提问
+	//全站微博
 	public function index(){		
 		$map['count'] = 2;
 		$result = api('WeiboStatuses')->data($map)->public_timeline();
@@ -13,7 +13,7 @@ class SquareAction extends Action{
 		
 	}
 
-	//频道提问
+	//频道微博
 	public function channel(){
 		$map['category_id'] = intval($_GET['cid']);
 		$map['count'] = 2;
@@ -23,7 +23,7 @@ class SquareAction extends Action{
 		dump($result);
 	}
 
-	//话题提问
+	//话题微博
 	public function topic(){
 		$topic = 'test';
 		$feed_ids = model('FeedTopic')->getFeedIdByTopic($topic);

@@ -35,17 +35,17 @@ class UserAction extends Action {
         //SamPeng 2011.12.15重构整个方法
         $install_app = $ts['install_apps'];
 
-        $index_type = intval( $_GET ['type'] );  //0=我关注的、1=群组提问、2=正在发生
-        $weibo_type = h( $_GET ['weibo_type'] ); //orignal=原创、0=提问、1=图片提问、2=视频
+        $index_type = intval( $_GET ['type'] );  //0=我关注的、1=群组微博、2=正在发生
+        $weibo_type = h( $_GET ['weibo_type'] ); //orignal=原创、0=微博、1=图片微博、2=视频
         //$weibo_config = model ( 'Xdata' )->lget ( 'weibo' );
 
-        //判断是动态还是提问,兼容1.6的代码
+        //判断是动态还是微博,兼容1.6的代码
 
         //if (($show_feed = $weibo_config['openDynamic'] && intval($_COOKIE['feed']))) {
         //  $data = $this->__getDynamic($index_type); //显示动态
         //  $data['show_feed'] = $show_feed;
         //} else {
-            $data = $this->__getWeiboList($install_app, $index_type, $weibo_type); //显示提问列表
+            $data = $this->__getWeiboList($install_app, $index_type, $weibo_type); //显示微博列表
             $data['type'] = $index_type;
             $data['weibo_type'] = $weibo_type;
         //}
@@ -120,7 +120,7 @@ class UserAction extends Action {
         $data ['type'] = ($_GET ['type'] == 'send') ? 'send' : 'receive';
         $data ['from_app'] = ($_GET ['from_app'] == 'other') ? 'other' : 'weibo';
 
-        // 优先展示提问，优先展示有未读from_app
+        // 优先展示微博，优先展示有未读from_app
         if (model ( 'UserCount' )->getUnreadCount ( $this->mid, 'comment' ) <= 0 && model ( 'GlobalComment' )->getUnreadCount ( $this->mid ) > 0)
             $data ['from_app'] = 'other';
 
@@ -216,12 +216,12 @@ class UserAction extends Action {
         $data['other_following'] = D('Follow', 'weibo')->field('uid')
                                     ->where("uid<>{$this->mid} AND fid={$data['search_key_id']} AND type=1")
                                     ->limit(9)->findAll();
-        // 提问列表
+        // 微博列表
         $data['type'] = h ( $_GET ['type'] );
         $data['list'] = D ( 'Operate', 'weibo' )->doSearchWithTopic ( "#{$data['topics']['name']}#", $data ['type']);
 //      $data['list'] = D ( 'Operate', 'weibo' )->doSearch ( "#{$data['topics']['name']}#", $data ['type'] );
 //      $data['list']['count'] = D ( 'Operate', 'weibo' )->where("content LIKE '%#{$data['topics']['name']}#%' AND isdel=0")->count();
-        // 提问Tab
+        // 微博Tab
 
         $data['weibo_menu'] = array(
                                 ''  => L('all'),
@@ -247,7 +247,7 @@ class UserAction extends Action {
         $data ['followTopic'] = D ( 'Follow', 'weibo' )->getTopicList ( $this->mid );
         $data ['search_key_id'] = D ( 'Topic', 'weibo' )->getTopicId ( $data ['search_key'] );
         $data ['search_key'] = h ( t ( $data ['search_key'] ) );
-        // 提问Tab
+        // 微博Tab
         $data['weibo_menu'] = array(
                                         ''  => L('all'),
                                 'original' => L('original'),
@@ -507,7 +507,7 @@ class UserAction extends Action {
         }
 
 		if($data['list']['data']){
-			// 最新一条提问的Id (countNew时使用)
+			// 最新一条微博的Id (countNew时使用)
 			$_last_weibo = reset($data ['list'] ['data']);
 			$data ['lastId'] = $_last_weibo['weibo_id'];
 			$_since_weibo = end($data ['list'] ['data']);

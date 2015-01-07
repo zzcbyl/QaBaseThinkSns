@@ -82,7 +82,7 @@ a.add_atn,a.add_atn:visited{color:#fff}
 .club-type a.current:link,.club-type a.current:visited{margin:0 10px 10px 0;color:#0F8CA8;}
 
 /*搜索页面*/
-.search-input{border:1px solid #0F8CA8;background:#fff;position:relative;width:480px;float:left;}
+.search-input{border:1px solid #0F8CA8;background:#fff;position:relative;;width:528px;float:left;}
 .search-input #mod-search .search-box{background:#fff;border:1px solid #0F8CA8;_border:none;_border-top:1px solid #0F8CA8;}
 .search-input .btn-search{background:#0F8CA8;width:80px;height:28px;position:absolute;right:0;}
 .search-content p{font-size:20px;margin:3px 20px 0 0;font-family:"微软雅黑";color:#0F8CA8;}
@@ -93,7 +93,7 @@ a.add_atn,a.add_atn:visited{color:#fff}
 /*推荐频道弹窗*/
 /*.channel-layer .content a.current{background:#0F8CA8;}*/
 
-/*提问新消息*/
+/*微博新消息*/
 .feed_lists a.notes{height:18px;line-height:18px;display:block;padding:5px 0;margin:10px 0 5px 0;text-align:center;background-color:#f3f3f3;color:#0078B6;border:1px solid #e5e5e5;}
 
 /*微吧、任务、勋章头部导航*/

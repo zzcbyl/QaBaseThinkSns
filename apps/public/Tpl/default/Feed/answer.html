@@ -1,53 +1,68 @@
-<div class="answer12 mt20" model-node='feed_list' style="border-top: 1px dotted #DFDFDF; padding-top:30px;">
-    <div class="aTop2">
-        <p class="icon">
-        </p>
-        <p class="a">
-        </p>
-    </div>
-    <div class="aCenter2">
-        <div class="contTit">
-            <a title="{$user_info.uname}" href="{$user_info.space_url}"><img class="thumb" src="{$user_info.avatar_small}" event-node="face_card" uid='{$user_info.uid}' /></a>
-            <h2 style="width: 540px">
-                {$title}
+<div style="position:absolute; margin-left:-40px; margin-top:-5px; "><img src="__THEME__/image/answer_small.jpg"  /></div>
+<dt class="face">
+	<a title="{$user_info.uname}" href="{$user_info.space_url}"><img src="{$user_info.avatar_small}" /></a>
+</dt>
+<dd class="content">
+	<span event-node="show_admin" event-args="feed_id={$feed_id}&uid={$uid}&feed_del={:CheckPermission('core_admin','feed_del')}&channel_recommend={:CheckPermission('channel_admin','channel_recommend')}" href="javascript:;" class="right f12 hover f9" style="display:none;cursor:pointer">管理</span>
 
+	<p class="hd">{$title}
+		<volist name="GroupData[$user_info['uid']]" id="v2">
+        	<img style="width:auto;height:auto;display:inline;cursor:pointer" src="{$v2['user_group_icon_url']}" title="{$v2['user_group_name']}" />&nbsp;
+    	</volist>
+	</p>
+	<table width="589px" style="line-height:22px;">
+	    <tr>
+	        <td style="width:589px; display:block;"><span class="contents">{$body|format=true}</span></td>
+	    </tr>
+	    
+	</table>
+	<!--<span class="contents"><neq name="body" value="">{$body|format=true}</neq></span>-->
+	<p class="info">
+		<span class="right">
+	<!--<span id='digg{$feed_id}' rel='0'>
+	   <a href="javascript:void(0)" onclick="addDigg({$feed_id})" >赞</a>
+  </span>
+	<i class="vline">|</i>
+			
+			<php>if(in_array('repost',$weibo_premission)):</php>
+			<eq name='actions.repost' value='true'>
+			<php>if(CheckPermission('core_normal','feed_share')){</php>
+			<php>$sid = !empty($app_row_id)? $app_row_id : $feed_id;</php>
+			{:W('Share',array('sid'=>$sid,'stable'=>$app_row_table,'initHTML'=>'','current_table'=>'feed','current_id'=>$feed_id,'nums'=>$repost_count,'appname'=>$app,'is_repost'=>$is_repost))}
+			<i class="vline">|</i>
+			<php>}</php>
+			</eq>
+			<php>endif;</php>
 
-                <p class="xz">
-                    <volist name="GroupData[$user_info['uid']]" id="v2">
-        	            <img style="width:auto;height:auto;display:inline;cursor:pointer" src="{$v2['user_group_icon_url']}" title="{$v2['user_group_name']}" />&nbsp;
-    	            </volist>
-                    <!--<a href="#" class="x1"></a><a href="#" class="x2"></a><a href="#" class="x3"></a>
-                    <a href="#" class="x4"></a>-->
-                </p>
-                    
-            </h2>
-            <p>{$body|format=true}</p>
-            <div class="info_gz" style="margin-top:10px;">
-                <p class="gz_info">
-                    <i>刚刚</i></p>
-                <p class="comm">
-                    <php>if(in_array('comment',$weibo_premission)):</php>
-	                    <eq name='vl.actions.comment' value='true'>
-                            <a class="d" event-node="comment" href="javascript:void(0)" event-args="row_id={$feed_id}&app_uid={$uid}&app_row_id={$app_row_id}&app_row_table={$app_row_table}&to_comment_id=0&to_uid=0&app_name={$app}&table=feed&cancomment={$cancomment}&cancomment_old={$cancomment_old_answer}&comment_type=1"><neq name="comment_count" value='0'>({$comment_count})<else/>&nbsp;</neq></a>
-                            <a class="c" event-node="comment" href="javascript:void(0)" event-args="row_id={$feed_id}&app_uid={$uid}&app_row_id={$app_row_id}&app_row_table={$app_row_table}&to_comment_id=0&to_uid=0&app_name={$app}&table=feed&cancomment={$cancomment}&cancomment_old={$cancomment_old_answer}&comment_type=2"><neq name="disapprove_count" value='0'>({$disapprove_count})<else/>&nbsp;</neq></a>
-	                    </eq>
-	                <php>endif;</php>
-
-                    <!--<a href="#" class="gxBtn"></a>&nbsp; <a href="#" class="jxzw"></a><a href="#" class="d">
-                        131</a> <a href="#" class="c">78</a> <a href="#" class="x">26</a> <a href="#" class="h">
-                            49</a>-->
-                </p>
-            </div>
-
-            <div model-node="comment_detail" class="repeat clearfix" style="display:none;"></div>
-
-            <input type="hidden" id="answer_publish_time" value="{$publish_time}" />
-        </div>
-    </div>
-    <div class="aBottom2">
-    </div>
-</div>
-
-
-
-
+			<eq name='actions.favor' value='true'>
+			
+			{:W('Collection',array('sid'=>$feed_id,'stable'=>'feed','sapp'=>$app))}
+			</eq>
+            <i class="vline">|</i>
+            -->
+			<php>if(in_array('comment',$weibo_premission)):</php>
+			<eq name='actions.comment' value='true'>
+			<php>$cancomment_old = empty($app_row_id) ? 0 : 1;</php>
+			<php> $cancomment = intval(CheckPermission('core_normal','feed_comment')); </php>
+			
+			<!--<a event-node="comment" href="javascript:void(0)" event-args='row_id={$feed_id}&app_uid={$uid}&to_comment_id=0&to_uid=0&app_name={$app}&table=feed&app_row_id={$app_row_id}&app_row_table={$app_row_table}&cancomment={$cancomment}&cancomment_old={$cancomment_old}'>{:L('PUBLIC_STREAM_COMMENT')}</a>-->
+            <a event-node="comment" href="javascript:void(0)" event-args="row_id={$feed_id}&app_uid={$uid}&to_comment_id=0&to_uid=0&app_name={$app}&table=feed&app_row_id={$app_row_id}&app_row_table={$app_row_table}&cancomment={$cancomment}&cancomment_old={$cancomment_old}&comment_type=1">赞同</a>
+            <i class="vline">|</i>
+            <a event-node="comment" href="javascript:void(0)" event-args="row_id={$feed_id}&app_uid={$uid}&to_comment_id=0&to_uid=0&app_name={$app}&table=feed&app_row_id={$app_row_id}&app_row_table={$app_row_table}&cancomment={$cancomment}&cancomment_old={$cancomment_old}&comment_type=2">反对</a>
+			</eq>
+			<php>endif;</php>
+		</span>
+		<span>
+			<a class="date" date="{:time()}" href="{:U('public/Profile/feed', array('feed_id'=>$feed_id, 'uid'=>$uid))}">刚刚</a>
+			<!--<span>{$from}</span>-->
+			<php>if(CheckPermission('core_normal','feed_del')){</php>
+			<em class="hover">
+				<eq name='actions.delete' value='true'>
+			    <a href="javascript:void(0)" event-node ='delFeed' event-args='feed_id={$feed_id}&uid={$uid}'>{:L('PUBLIC_STREAM_DELETE')}</a>
+			    </eq>
+			</em>
+			<php>}</php>
+		</span>
+	</p>
+	<div model-node="comment_detail" class="repeat clearfix" style="display:none;"></div>
+</dd>

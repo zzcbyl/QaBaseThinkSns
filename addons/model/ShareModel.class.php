@@ -7,14 +7,14 @@
 class ShareModel {
 	
 	/**
-	 * 分享到提问
+	 * 分享到微博
 	 * @example
 	 * 需要传入的$data值
-	 * sid：转发的提问/资源ID
+	 * sid：转发的微博/资源ID
 	 * app_name：app名称
 	 * content：转发时的内容信息，有时候会有某些标题的资源
 	 * body：转发时，自定义写入的内容
-	 * type：提问类型
+	 * type：微博类型
 	 * comment：是否给原作者评论
 	 * @param array $data 分享的相关数据
 	 * @param string $from 是否发@给资源作者，默认为share
@@ -31,7 +31,7 @@ class ShareModel {
 		}
 		// type是资源所在的表名
 		$type = t($data['type']);
-		// 当前产生提问所属的应用
+		// 当前产生微博所属的应用
 		$app = isset($data['app_name']) ? $data['app_name'] : APP_NAME;
 		// 是否为接口形式
 		$forApi = $data['forApi'] ? true : false;
@@ -61,7 +61,7 @@ class ShareModel {
 		$isOther = ($from == 'comment') ? false : true;
 		// 获取上个节点资源ID
 		$d['curid'] = $data['curid'];
-		// 获取转发原提问信息
+		// 获取转发原微博信息
 		if($oldInfo['app_row_id'] == 0) {
 			$appId = $oldInfo['source_id'];
 			$appTable = $oldInfo['source_table'];
@@ -150,11 +150,11 @@ class ShareModel {
 	 * @example
 	 * 需要传入的$data值
 	 * uid：同事用户ID
-	 * sid：转发的提问/资源ID
+	 * sid：转发的微博/资源ID
 	 * app_name：app名称
 	 * content：转发时的内容信息，有时候会有某些标题的资源
 	 * body：转发时，自定义写入的内容
-	 * type：提问类型
+	 * type：微博类型
 	 * comment：是否给原作者评论
 	 * @param array $data 分享的相关数据
 	 * @return array 分享操作后，相关反馈信息数据

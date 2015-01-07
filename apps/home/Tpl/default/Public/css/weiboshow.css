@@ -937,7 +937,7 @@ a.add_atn:link, a.add_atn:visited,a.add_atn:active {
     font-size: 12px;
 }
 
-/*提问秀页面样式*/
+/*微博秀页面样式*/
 .side_basicSet h4,.side_basicPreview h4{line-height:30px;font-size:14px;font-weight:bold;padding:0 10px;}
 .side_basicSet{margin-right:420px;}
 .side_basicPreview{float:right;width:380px;}

@@ -9,26 +9,26 @@
             <volist name="sidebar_following_list['data']" id="vo" key="k">
                 <li <eq name="k" value="1"> class="ml"</eq> >
                     <a href="{:U('public/Profile/index',array('uid'=>$vo['fid']))}" uid="{$vo['fid']}" event-node="face_card">
-                        <img src="{$following_user_info[$vo['fid']]['avatar_small']}" /></a><br />
-                    <a title="{$following_user_info[$vo['fid']]['uname']}" style="width:50px; overflow:hidden; height:18px; display:block;" href="{:U('public/Profile/index',array('uid'=>$vo['fid']))}" uid="{$vo['fid']}" event-node="face_card">
+                        <img src="{$following_user_info[$vo['fid']]['avatar_tiny']}" /></a><br />
+                    <a style="width:50px; overflow:hidden; height:18px; display:block;" href="{:U('public/Profile/index',array('uid'=>$vo['fid']))}" uid="{$vo['fid']}" event-node="face_card">
                         {$following_user_info[$vo['fid']]['uname']|getShort=4}</a>
                 </li>
             </volist>
          </ul>
      <php>}</php>
-     <php>if($user_info[$uid]['uid']!=$mid){</php>
+
      <php>if($sidebar_follower_list['data']){</php>
-     <div class="explain">共同关注(<php>echo $sidebar_follower_list['count']</php>)<a href="{:U('public/Profile/followingcommon',array('uid'=>$user_info[$uid]['uid']))}" class="right f12">更多</a></div>
+     <div class="explain">共同关注(<php>echo $sidebar_follower_list['count']</php>)<a href="{:U('public/Profile/follower',array('uid'=>$user_info[$uid]['uid']))}" class="right f12">更多</a></div>
      <ul class="fList mb20">
         <volist name="sidebar_follower_list['data']" id="vo" key="k"> 
             <li <eq name="k" value="1"> class="ml"</eq>>
                 <a href="{:U('public/Profile/index',array('uid'=>$vo['fid']))}">
-                    <img src="{$follower_user_info[$vo['fid']]['avatar_small']}" uid="{$vo['fid']}" event-node="face_card" /></a><br />
-                <a title="{$follower_user_info[$vo['fid']]['uname']}" style="width:50px; overflow:hidden; height:18px; display:block;" href="{:U('public/Profile/index',array('uid'=>$vo['fid']))}" uid="{$vo['fid']}" event-node="face_card">{$follower_user_info[$vo['fid']]['uname']|getShort=4}</a>
+                <img src="{$follower_user_info[$vo['fid']]['avatar_tiny']}" uid="{$vo['fid']}" event-node="face_card" /></a><br />
+                <a style="width:50px; overflow:hidden; height:18px; display:block;" href="{:U('public/Profile/index',array('uid'=>$vo['fid']))}" uid="{$vo['fid']}" event-node="face_card">{$follower_user_info[$vo['fid']]['uname']|getShort=4}</a>
             </li>
         </volist>
      </ul>
-     <php>} }</php>
+     <php>}</php>
 
      <php>if($aggreelist['data']){</php>
      <h1><php>if($user_info[$uid]['uid']==$mid){</php>我<php>}else{</php>TA<php>}</php>的赞同<span></span><a href="{:U('public/Profile/index',array('uid'=>$user_info[$uid]['uid'], 'type'=>'agree'))}" class="gd">更多</a></h1>
@@ -56,10 +56,10 @@
      </ul>
      <php>}</php>
      
-     <php>if($feed_followinglist['data']){</php>
+     <php>if($feedfollowinglist['data']){</php>
      <h1><php>if($user_info[$uid]['uid']==$mid){</php>我<php>}else{</php>TA<php>}</php>关注的问题<span></span><a href="{:U('public/Profile/index',array('uid'=>$user_info[$uid]['uid'], 'type'=>'feedfollowing'))}" class="gd">更多</a></h1>
      <ul class="tList mb20">
-        <volist name="feed_followinglist['data']" id="flist" key="k"> 
+        <volist name="feedfollowinglist['data']" id="flist" key="k"> 
             <li <eq name="k" value="1">class="no"</eq>>
             <div class="tu"><a class="guanz">{$flist['following_count']}</a></div>
             <h2><a href="{:U('public/Index/feed',array('feed_id'=>$flist['feed_id'],'uid'=>$flist['uid']))}">{$flist['body']}</a></h2>

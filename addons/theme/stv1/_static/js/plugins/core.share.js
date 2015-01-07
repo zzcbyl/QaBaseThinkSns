@@ -69,32 +69,5 @@ core.share = {
             obj.parentModel.parentModel.parentModel.childModels['numsLeft'][0].innerHTML = html;
             return false;
         }
-    },
-    //分享到新浪(zhangzc)
-    ShareSina: function (feedid) {
-        $.post(U('public/Feed/shareSina'), { feed_id: feedid },
-			function (msg) {
-			    if (msg.status == 1) {
-			        ui.success(msg.data);
-			        //alert(msg.data);
-			    } else {
-			        ui.error(msg.data);
-			    }
-			}, 'json');
-        ui.box.close();
-    },
-    //分享到腾讯微博(zhangzc)
-    ShareTengXun: function (feedid) {
-        $.post(U('public/Feed/shareTengXun'), { feed_id: feedid },
-			function (msg) {
-			    if (msg.status == 1) {
-			        ui.success(msg.data);
-			        //alert(msg.data);
-			    } else {
-			        ui.error(msg.data);
-			    }
-			}, 'json');
-        ui.box.close();
     }
-
 };

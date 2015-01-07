@@ -53,7 +53,6 @@ class UserAction extends AdministratorAction {
 		$this->_initUserListAdminMenu('index');
 		// 数据的格式化与listKey保持一致
 		$listData = $this->_getUserList('20', $map, 'index');
-		//print_r($listData);
 		// 列表批量操作按钮
 		$this->pageButton[] = array('title'=>L('PUBLIC_SEARCH_USER'),'onclick'=>"admin.fold('search_form')");
 		$this->pageButton[] = array('title'=>L('PUBLIC_TRANSFER_USER_GROUP'),'onclick'=>"admin.changeUserGroup()");
@@ -233,7 +232,7 @@ class UserAction extends AdministratorAction {
 		switch(strtolower($type)) {
 			case 'index':
 			case 'dellist':
-				$this->pageKeyList = array('uid','uname','user_group','location','is_audit','is_active','is_init','linknumber','ctime','reg_ip','DOACTION');
+				$this->pageKeyList = array('uid','uname','user_group','location','is_audit','is_active','is_init','ctime','reg_ip','DOACTION');
 				break;
 			case 'pending':
 				$this->pageKeyList = array('uid','uname','location','ctime','reg_ip','DOACTION');

@@ -14,7 +14,7 @@ class WeibaReplyWidget extends Widget{
      * @param integer weiba_id 微吧ID
      * @param integer post_id 帖子ID
      * @param integer post_uid 帖子发布者
-     * @param integer feed_id 对应的提问ID
+     * @param integer feed_id 对应的微博ID
      * @param integer limit 每页显示条数
      * @param string order 回复排列顺序，默认ASC
      * @param boolean addtoend 新回复是否添加到尾部 0：否，1：是
@@ -87,7 +87,7 @@ class WeibaReplyWidget extends Widget{
             D('weiba_post')->where('post_id='.$data['post_id'])->save($map);
             D('weiba_post')->where('post_id='.$data['post_id'])->setInc('reply_count'); //回复统计数加1
             D('weiba_post')->where('post_id='.$data['post_id'])->setInc('reply_all_count'); //总回复统计数加1
-            //同步到提问评论
+            //同步到微博评论
             //$feed_id = intval($_POST['feed_id']);
             $datas['app'] = 'weiba';
             $datas['table'] = 'feed';
@@ -109,7 +109,7 @@ class WeibaReplyWidget extends Widget{
                 }
                 model('Feed')->cleanCache($datas['row_id']);
             }
-            //转发到我的提问
+            //转发到我的微博
             if($_POST['ifShareFeed'] == 1) {
                 $commentInfo  = model('Source')->getSourceInfo($datas['table'], $datas['row_id'], false, $datas['app']);
                 $oldInfo = isset($commentInfo['sourceInfo']) ? $commentInfo['sourceInfo'] : $commentInfo; 
@@ -141,7 +141,7 @@ class WeibaReplyWidget extends Widget{
                 if(!empty($data['to_uid'])) {
                     $lessUids[] = $data['to_uid'];
                 }
-                // 如果为原创提问，不给原创用户发送@信息
+                // 如果为原创微博，不给原创用户发送@信息
                 if($oldInfo['feedtype'] == 'post' && empty($data['to_uid'])) {
                     $lessUids[] = $oldInfo['uid'];
                 }
@@ -157,7 +157,7 @@ class WeibaReplyWidget extends Widget{
     }	
 
     /**
-     * 删除回复(在提问评论删除中同步删除微吧回复)
+     * 删除回复(在微博评论删除中同步删除微吧回复)
      * @return bool true or false
      */
     public function delReply(){
@@ -206,7 +206,7 @@ class WeibaReplyWidget extends Widget{
       $rowData = model('Feed')->get(intval($var['commentInfo']['row_id']));
       $appRowData = model('Feed')->get($rowData['app_row_id']);
       $var['user_info'] = $appRowData['user_info'];
-      // 提问类型
+      // 微博类型
       $var['feedtype'] = $rowData['type'];
       // $var['cancomment_old'] = ($var['commentInfo']['uid'] != $var['commentInfo']['app_uid'] && $var['commentInfo']['app_uid'] != $this->uid) ? 1 : 0;
       $var['initHtml'] = L('PUBLIC_STREAM_REPLY').'@'.$var['commentInfo']['user_info']['uname'].' ：';   // 回复
