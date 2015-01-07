@@ -159,7 +159,7 @@ class FeedListWidget extends Widget {
 				}else{
 					$current_uid=$GLOBALS['ts']['mid'];
 					if($var['uid']!=null&&$var['uid']!='0') $current_uid = $var['uid'];
-					$where =' a.is_audit=1 AND a.uid='.$current_uid.' AND a.is_del = 0 AND a.feed_questionid=0 AND a.add_feedid=0 ';
+					$where =' (a.is_audit=1 OR a.is_audit=0 AND a.uid='.$current_uid.') AND a.is_del = 0 AND a.feed_questionid=0 AND a.add_feedid=0 ';
 					$LoadWhere = '';
 					if($var['loadId'] > 0){ //非第一次
 						//$where .=" AND a.feed_id < '".intval($var['loadId'])."'";
@@ -172,7 +172,7 @@ class FeedListWidget extends Widget {
 							$where .=" AND a.type = '".t($var['feed_type'])."'";
 						}
 					}
-					$list =  model('Feed')->getFollowingFeed($where,$this->limitnums,$current_uid,$var['fgid'],$LoadWhere);
+					$list =  model('Feed')->getFollowingFeed($where.' and `openid` is null',$this->limitnums,$current_uid,$var['fgid'],$LoadWhere);
 					//print_r($list);
 				}
 				break;
@@ -181,7 +181,7 @@ class FeedListWidget extends Widget {
 					//关键字匹配 采用搜索引擎兼容函数搜索 后期可能会扩展为搜索引擎
 					$list = model('Feed')->searchFeed($var['feed_key'],'all',$var['loadId'],$this->limitnums);
 				}else{
-					$where =' is_audit=1 AND is_del = 0 AND feed_questionid=0 AND add_feedid=0 ';
+					$where =' (is_audit=1 OR is_audit=0) AND is_del = 0 AND feed_questionid=0 AND add_feedid=0 ';
 					if($var['loadId'] > 0){ //非第一次
 						$where .=" AND `last_updtime` < '".intval($var['loadId'])."'";
 					}
@@ -192,13 +192,13 @@ class FeedListWidget extends Widget {
 							$where .=" AND type = '".t($var['feed_type'])."'";
 						}
 					}
-					$list = model('Feed')->getQuestionAndAnswer($where, $this->limitnums);
+					$list = model('Feed')->getQuestionAndAnswer($where.' and `openid` is null',$this->limitnums);
 					//print($where.' and `openid` is null');
 					//print_r($list);
 				}
 				break;
 			case 'newfollowing'://关注的人的最新提问  (检查使用的地方)
-				$where = ' a.is_del = 0 and a.is_audit = 1 and a.uid != '.$GLOBALS['ts']['uid'].' and a.feed_questionid=0 AND a.add_feedid=0 ';
+				$where = ' a.is_del = 0 and a.is_audit = 1 and a.uid != '.$GLOBALS['ts']['uid'].' and a.feed_questionid=0 AND a.add_feedid=0 and `openid` is null ';
 				if($var['maxId'] > 0){
 					$where .=" AND a.publish_time > '".intval($var['maxId'])."'";
 					$list = model('Feed')->getFollowingFeed($where);
@@ -212,7 +212,7 @@ class FeedListWidget extends Widget {
 					$map['publish_time'] = array('gt',intval($var['maxId']));
 					$map['is_del'] = 0;
 					$map['is_audit'] = 1;
-					//$map['openid']  = array('exp',' is NULL');
+					$map['openid']  = array('exp',' is NULL');
 					$map['uid']   = array('neq',$GLOBALS['ts']['uid']);
 					$list = model('Feed')->getList($map);    
 					$content['count'] = $list['count'];
@@ -229,15 +229,14 @@ class FeedListWidget extends Widget {
 					$map['feed_questionid'] = 0;
 					$map['add_feedid'] = 0;
 					$map['is_del'] = 0;
-                    $map['is_audit'] = 1;
-					//$map['openid']  = array('exp',' is NULL');
+					$map['openid']  = array('exp',' is NULL');
 					if($GLOBALS['ts']['mid'] != $GLOBALS['ts']['uid']) $map['is_audit'] = 1;
 					$list = model('Feed')->getUserList($map,$GLOBALS['ts']['uid'],  $var['feedApp'], $var['feed_type'],$this->limitnums);
 					//print_r($list);
 				}
 				break;
 			case 'channel':
-				$where = ' c.is_audit=1 AND c.is_del = 0 AND c.feed_questionid=0 AND c.add_feedid=0 ';
+				$where = ' (c.is_audit=1 OR c.is_audit=0) AND c.is_del = 0 AND c.feed_questionid=0 AND c.add_feedid=0 ';
 				if($var['loadId'] > 0) { //非第一次
 					$where .= " AND c.publish_time < '".intval($var['loadId'])."'";
 				}
@@ -245,7 +244,7 @@ class FeedListWidget extends Widget {
 					$where .= " AND c.type = '".t($var['feed_type'])."'";
 				}
 
-				$list = D('ChannelFollow', 'channel')->getFollowingFeed($where, $this->limitnums, '' ,$var['fgid']);
+				$list = D('ChannelFollow', 'channel')->getFollowingFeed($where.' and `openid` is null', $this->limitnums, '' ,$var['fgid']);
 				break;
 			case 'question':// 我问题
 				if(!empty($var['feed_key'])){
@@ -258,8 +257,8 @@ class FeedListWidget extends Widget {
 					}
 					$current_uid=$GLOBALS['ts']['mid'];
 					if($var['uid']!=null&&$var['uid']!='0') $current_uid = $var['uid'];
-					$where =' uid='.$current_uid.' AND is_del = 0 AND feed_questionid=0 AND add_feedid=0 AND is_audit=1 '.$LoadWhere;
-					$list = model('Feed')->getQuestionAndAnswer($where, $this->limitnums);
+					$where =' uid='.$current_uid.' AND is_del = 0 AND feed_questionid=0 AND add_feedid=0 AND (is_audit=1 OR is_audit=0) '.$LoadWhere;
+					$list = model('Feed')->getQuestionAndAnswer($where.' and `openid` is null', $this->limitnums);
 					//print_r($list);
 				}
 				break;
@@ -274,8 +273,8 @@ class FeedListWidget extends Widget {
 					}
 					$current_uid=$GLOBALS['ts']['mid'];
 					if($var['uid']!=null&&$var['uid']!='0') $current_uid = $var['uid'];
-					$where =' uid='.$current_uid.' AND is_del = 0 AND feed_questionid!=0 AND add_feedid=0 AND is_audit=1 '.$LoadWhere;
-					$list = model('Feed')->getAnswerList($where, $this->limitnums);
+					$where =' uid='.$current_uid.' AND is_del = 0 AND feed_questionid!=0 AND add_feedid=0 AND (is_audit=1 OR is_audit=0) '.$LoadWhere;
+					$list = model('Feed')->getAnswerList($where.' and `openid` is null', $this->limitnums);
 					//print_r($list);
 				}
 				break;
@@ -302,8 +301,8 @@ class FeedListWidget extends Widget {
 				}
 				$current_uid=$GLOBALS['ts']['mid'];
 				if($var['uid']!=null && $var['uid']!='0') $current_uid = $var['uid'];
-				$where =" `is_audit`=1 AND `uid` = $current_uid AND `feed_questionid` != 0 AND `add_feedid`=0 and `comment_count` > 0";
-				$list = model('Feed')->getCommentFeedList($where, $this->limitnums,$LoadWhere);
+				$where =" `uid` = $current_uid AND `feed_questionid` != 0 AND `add_feedid`=0 and `comment_count` > 0";
+				$list = model('Feed')->getCommentFeedList($where.' and `openid` is null', $this->limitnums,$LoadWhere);
 				//print_r($list);
 				break;
 			case 'oppose':	//个人反对列表
@@ -312,8 +311,8 @@ class FeedListWidget extends Widget {
 				}
 				$current_uid=$GLOBALS['ts']['mid'];
 				if($var['uid']!=null && $var['uid']!='0') $current_uid = $var['uid'];
-				$where =" `is_audit`=1 AND `uid` = $current_uid AND `feed_questionid` != 0 AND `add_feedid`=0 and `disapprove_count` > 0";
-				$list = model('Feed')->getCommentFeedList($where, $this->limitnums,$LoadWhere);
+				$where =" `uid` = $current_uid AND `feed_questionid` != 0 AND `add_feedid`=0 and `disapprove_count` > 0";
+				$list = model('Feed')->getCommentFeedList($where.' and `openid` is null', $this->limitnums,$LoadWhere);
 				//print_r($list);
 				break;
 			case 'newanswer':	//消息答案列表
@@ -321,16 +320,15 @@ class FeedListWidget extends Widget {
 				if($var['loadId'] > 0){ //非第一次
 					$LoadWhere = "AND publish_time < '".intval($var['loadId'])."'";
 				}
-				$where =" is_audit=1 AND is_del = 0 AND feed_quid = ".$GLOBALS['ts']['mid']." AND feed_questionid != 0 AND add_feedid=0 ".$LoadWhere;
-				$list = model('Feed')->getAnswerList($where, $this->limitnums, 'publish_time desc', $var['newcount']);
+				$where ="(is_audit=1 OR is_audit=0) AND is_del = 0 AND feed_quid = ".$GLOBALS['ts']['mid']." AND feed_questionid != 0 AND add_feedid=0 ".$LoadWhere;
+				$list = model('Feed')->getAnswerList($where.' and `openid` is null', $this->limitnums, 'publish_time desc', $var['newcount']);
 				//print_r($list);
 				break;	
 			case 'newagreecomment':		//消息赞同列表
 				$map['app_uid']=$GLOBALS['ts']['mid'];
 				$map['comment_type']=1;
 				$map['is_del']=0;
-                $map['is_audit'] = 1;
-				//$map['openid']  = array('exp',' is NULL');
+				$map['openid']  = array('exp',' is NULL');
 				if($var['loadId'] > 0){ //非第一次
 					$map['comment_id'] = array('lt', intval($var['loadId']));
 				}
@@ -341,8 +339,7 @@ class FeedListWidget extends Widget {
 				$map['app_uid']=$GLOBALS['ts']['mid'];
 				$map['comment_type']=2;
 				$map['is_del']=0;
-                $map['is_audit'] = 1;
-				//$map['openid']  = array('exp',' is NULL');
+				$map['openid']  = array('exp',' is NULL');
 				if($var['loadId'] > 0){ //非第一次
 					$map['comment_id'] = array('lt', intval($var['loadId']));
 				}
@@ -353,8 +350,7 @@ class FeedListWidget extends Widget {
 				$map['app_uid']=$GLOBALS['ts']['mid'];
 				$map['comment_type']=0;
 				$map['is_del']=0;
-                $map['is_audit'] = 1;
-				//$map['openid']  = array('exp',' is NULL');
+				$map['openid']  = array('exp',' is NULL');
 				if($var['loadId'] > 0){ //非第一次
 					$map['comment_id'] = array('lt', intval($var['loadId']));
 				}
@@ -364,11 +360,11 @@ class FeedListWidget extends Widget {
 			case 'thank':	//感谢列表
 				$current_uid=$GLOBALS['ts']['mid'];
 				if($var['uid']!=null && $var['uid']!='0') $current_uid = $var['uid'];
-				$where =" `is_audit`=1 AND `uid` = ".$current_uid." AND `feed_questionid` != 0 and `add_feedid`=0 and `thank_count` > 0 ";
+				$where =" `uid` = ".$current_uid." AND `feed_questionid` != 0 and `add_feedid`=0 and `thank_count` > 0 ";
 				if($var['loadId']>0){
 					$where = $where.' publish_time < '.intval($var['loadId']);
 				}
-				$list = model('Feed')->getAnswerList($where, $this->limitnums);
+				$list = model('Feed')->getAnswerList($where.' and `openid` is null', $this->limitnums);
 				//print_r($list);
 				break;
 			case 'feedfollowing':	
@@ -378,7 +374,7 @@ class FeedListWidget extends Widget {
 				if($var['loadId']>0){
 					$where = $where.' and ctime < '.intval($var['loadId']);
 				}
-				$list = model('FeedFollowing')->getFeedFollowingList($where, $this->limitnums);
+				$list = model('FeedFollowing')->getFeedFollowingList($where.' and `openid` is null', $this->limitnums);
 				//print_r($list);
 				break;
 			case 'invite':	//邀请我的
@@ -386,7 +382,7 @@ class FeedListWidget extends Widget {
 				if($var['loadId'] > 0){ //非第一次
 					$LoadWhere = "invite_answer_id < '".intval($var['loadId'])."'";
 				}
-				$list =  model('Feed')->getInviteList($current_uid, $this->limitnums, $LoadWhere, $var['newcount']);
+				$list =  model('Feed')->getInviteList($current_uid, $this->limitnums, $LoadWhere.' and `openid` is null', $var['newcount']);
 				//print_r($list);
 				break;
 		}

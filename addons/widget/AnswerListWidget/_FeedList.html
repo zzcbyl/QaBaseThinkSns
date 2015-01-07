@@ -43,19 +43,10 @@ $admintaskrecom = CheckPermission('vtask_admin','vtask_recommend');
         <eq name='vl.is_del' value='0'>
             <div class="aCenter2">
                 <div class="contTit">
-                    <!--<a href="{$vl['user_info']['space_url']}"><img class="thumb" src="{$vl['user_info']['avatar_small']}"  event-node="face_card" uid='{$vl['user_info']['uid']}' /></a>-->
-                    <php>if (intval($vl['user_info']['uid']) > 0 ) { </php>
                     <a href="{$vl['user_info']['space_url']}"><img class="thumb" src="{$vl['user_info']['avatar_small']}"  event-node="face_card" uid='{$vl['user_info']['uid']}' /></a>
-                    <php> } else { </php>
-                    <a><img class="thumb" src="__THEME__/image/noavatar/small.jpg"  /></a>
-                    <php> } </php>
                     <h2 style="width: 540px; height:25px;">
                         <div style="float:left;">
-                            <php>if (intval($vl['user_info']['uid']) > 0 ) { </php>
-                            {$vl.title}
-                            <php> } else { </php>
-                            <a class="name">匿名</a>
-                            <php> } </php>
+                        {$vl.title}
 	                    <php> if(in_array($vl['user_info']['uid'],$followUids)){</php>
 	                    {:W('Remark',array('uid'=>$vl['user_info']['uid'],'remark'=>$remarkHash[$vl['user_info']['uid']],'showonly'=>1))}
 	                    <php>}</php>

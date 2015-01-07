@@ -474,16 +474,10 @@ class MobileNewAction
         // 发送提问的类型
         $type = t($_POST['type']);
 
-        //获取用户
-        $uid = -1;
-        $user = model('user')->getUserInfoByOpenID($d['openid']);
-        if (isset($user)) {
-            $uid = $user['uid'];
-        }
 
         // 所属应用名称
         $app = isset($_POST['app_name']) ? t($_POST['app_name']) : APP_NAME;            // 当前动态产生所属的应用
-        if (!$data = model('Feed')->put($uid, $app, $type, $d)) {
+        if (!$data = model('Feed')->put(-1, $app, $type, $d)) {
             $return = array('status' => 0, 'data' => model('Feed')->getError());
             exit(json_encode($return));
         }

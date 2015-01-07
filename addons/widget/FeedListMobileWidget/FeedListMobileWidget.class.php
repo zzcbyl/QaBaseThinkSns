@@ -159,7 +159,7 @@ class FeedListMobileWidget extends Widget {
 				}else{
 					$current_uid=$GLOBALS['ts']['mid'];
 					if($var['uid']!=null&&$var['uid']!='0') $current_uid = $var['uid'];
-					$where =' a.is_audit=1 AND a.uid='.$current_uid.' AND a.is_del = 0 AND a.feed_questionid=0 AND a.add_feedid=0 ';
+					$where =' (a.is_audit=1 OR a.is_audit=0 AND a.uid='.$current_uid.') AND a.is_del = 0 AND a.feed_questionid=0 AND a.add_feedid=0 ';
 					$LoadWhere = '';
 					if($var['loadId'] > 0){ //非第一次
 						//$where .=" AND a.feed_id < '".intval($var['loadId'])."'";
@@ -181,7 +181,7 @@ class FeedListMobileWidget extends Widget {
 					//关键字匹配 采用搜索引擎兼容函数搜索 后期可能会扩展为搜索引擎
 					$list = model('Feed')->searchFeed($var['feed_key'],'all',$var['loadId'],$this->limitnums);
 				}else{
-					$where =' is_audit=1 AND is_del = 0 AND feed_questionid=0 AND add_feedid=0 ';
+					$where =' (is_audit=1 OR is_audit=0) AND is_del = 0 AND feed_questionid=0 AND add_feedid=0 ';
 					if($var['loadId'] > 0){ //非第一次
 						$where .=" AND `last_updtime` < '".intval($var['loadId'])."'";
 					}
@@ -227,7 +227,6 @@ class FeedListMobileWidget extends Widget {
 					}
 					$map['feed_questionid'] = 0;
 					$map['add_feedid'] = 0;
-                    $map['is_audit'] = 1;
 					$map['is_del'] = 0;
 					if($GLOBALS['ts']['mid'] != $GLOBALS['ts']['uid']) $map['is_audit'] = 1;
 					$list = model('Feed')->getUserList($map,$GLOBALS['ts']['uid'],  $var['feedApp'], $var['feed_type'],$this->limitnums);
@@ -235,7 +234,7 @@ class FeedListMobileWidget extends Widget {
 				}
 				break;
 			case 'channel':
-				$where = ' c.is_audit=1 AND c.is_del = 0 AND c.feed_questionid=0 AND c.add_feedid=0 ';
+				$where = ' (c.is_audit=1 OR c.is_audit=0) AND c.is_del = 0 AND c.feed_questionid=0 AND c.add_feedid=0 ';
 				if($var['loadId'] > 0) { //非第一次
 					$where .= " AND c.publish_time < '".intval($var['loadId'])."'";
 				}
@@ -256,7 +255,7 @@ class FeedListMobileWidget extends Widget {
 					}
 					$current_uid=$GLOBALS['ts']['mid'];
 					if($var['uid']!=null&&$var['uid']!='0') $current_uid = $var['uid'];
-					$where =' uid='.$current_uid.' AND is_del = 0 AND feed_questionid=0 AND add_feedid=0 AND is_audit=1 '.$LoadWhere;
+					$where =' uid='.$current_uid.' AND is_del = 0 AND feed_questionid=0 AND add_feedid=0 AND (is_audit=1 OR is_audit=0) '.$LoadWhere;
 					$list = model('Feed')->getQuestionAndAnswer($where, $this->limitnums);
 					//print_r($list);
 				}
@@ -272,7 +271,7 @@ class FeedListMobileWidget extends Widget {
 					}
 					$current_uid=$GLOBALS['ts']['mid'];
 					if($var['uid']!=null&&$var['uid']!='0') $current_uid = $var['uid'];
-					$where =' uid='.$current_uid.' AND is_del = 0 AND feed_questionid!=0 AND add_feedid=0 AND is_audit=1 '.$LoadWhere;
+					$where =' uid='.$current_uid.' AND is_del = 0 AND feed_questionid!=0 AND add_feedid=0 AND (is_audit=1 OR is_audit=0) '.$LoadWhere;
 					$list = model('Feed')->getAnswerList($where, $this->limitnums);
 					//print_r($list);
 				}
@@ -300,7 +299,7 @@ class FeedListMobileWidget extends Widget {
 				}
 				$current_uid=$GLOBALS['ts']['mid'];
 				if($var['uid']!=null && $var['uid']!='0') $current_uid = $var['uid'];
-				$where =" `is_audit`=1 AND `uid` = $current_uid AND `feed_questionid` != 0 AND `add_feedid`=0 and `comment_count` > 0";
+				$where =" `uid` = $current_uid AND `feed_questionid` != 0 AND `add_feedid`=0 and `comment_count` > 0";
 				$list = model('Feed')->getCommentFeedList($where, $this->limitnums,$LoadWhere);
 				//print_r($list);
 				break;
@@ -310,7 +309,7 @@ class FeedListMobileWidget extends Widget {
 				}
 				$current_uid=$GLOBALS['ts']['mid'];
 				if($var['uid']!=null && $var['uid']!='0') $current_uid = $var['uid'];
-				$where =" `is_audit`=1 AND `uid` = $current_uid AND `feed_questionid` != 0 AND `add_feedid`=0 and `disapprove_count` > 0";
+				$where =" `uid` = $current_uid AND `feed_questionid` != 0 AND `add_feedid`=0 and `disapprove_count` > 0";
 				$list = model('Feed')->getCommentFeedList($where, $this->limitnums,$LoadWhere);
 				//print_r($list);
 				break;
@@ -319,7 +318,7 @@ class FeedListMobileWidget extends Widget {
 				if($var['loadId'] > 0){ //非第一次
 					$LoadWhere = "AND publish_time < '".intval($var['loadId'])."'";
 				}
-				$where ="is_audit=1 AND is_del = 0 AND feed_quid = ".$GLOBALS['ts']['mid']." AND feed_questionid != 0 AND add_feedid=0 ".$LoadWhere;
+				$where ="(is_audit=1 OR is_audit=0) AND is_del = 0 AND feed_quid = ".$GLOBALS['ts']['mid']." AND feed_questionid != 0 AND add_feedid=0 ".$LoadWhere;
 				$list = model('Feed')->getAnswerList($where, $this->limitnums, 'publish_time desc', $var['newcount']);
 				//print_r($list);
 				break;	
@@ -327,7 +326,6 @@ class FeedListMobileWidget extends Widget {
 				$map['app_uid']=$GLOBALS['ts']['mid'];
 				$map['comment_type']=1;
 				$map['is_del']=0;
-                $map['is_audit'] = 1;
 				if($var['loadId'] > 0){ //非第一次
 					$map['comment_id'] = array('lt', intval($var['loadId']));
 				}
@@ -338,7 +336,6 @@ class FeedListMobileWidget extends Widget {
 				$map['app_uid']=$GLOBALS['ts']['mid'];
 				$map['comment_type']=2;
 				$map['is_del']=0;
-                $map['is_audit'] = 1;
 				if($var['loadId'] > 0){ //非第一次
 					$map['comment_id'] = array('lt', intval($var['loadId']));
 				}
@@ -349,7 +346,6 @@ class FeedListMobileWidget extends Widget {
 				$map['app_uid']=$GLOBALS['ts']['mid'];
 				$map['comment_type']=0;
 				$map['is_del']=0;
-                $map['is_audit'] = 1;
 				if($var['loadId'] > 0){ //非第一次
 					$map['comment_id'] = array('lt', intval($var['loadId']));
 				}
@@ -359,7 +355,7 @@ class FeedListMobileWidget extends Widget {
 			case 'thank':	//感谢列表
 				$current_uid=$GLOBALS['ts']['mid'];
 				if($var['uid']!=null && $var['uid']!='0') $current_uid = $var['uid'];
-				$where =" `is_audit`=1 AND `uid` = ".$current_uid." AND `feed_questionid` != 0 and `add_feedid`=0 and `thank_count` > 0 ";
+				$where =" `uid` = ".$current_uid." AND `feed_questionid` != 0 and `add_feedid`=0 and `thank_count` > 0 ";
 				if($var['loadId']>0){
 					$where = $where.' publish_time < '.intval($var['loadId']);
 				}
@@ -379,10 +375,9 @@ class FeedListMobileWidget extends Widget {
 			case 'invite':	//邀请我的
 				$current_uid=$GLOBALS['ts']['mid'];
 				if($var['loadId'] > 0){ //非第一次
-					$LoadWhere = " AND invite_answer_id < '".intval($var['loadId'])."'";
+					$LoadWhere = "invite_answer_id < '".intval($var['loadId'])."'";
 				}
-                $where =" is_audit=1 AND is_del = 0 ".$LoadWhere;
-				$list =  model('Feed')->getInviteList($current_uid, $this->limitnums, $where, $var['newcount']);
+				$list =  model('Feed')->getInviteList($current_uid, $this->limitnums, $LoadWhere, $var['newcount']);
 				//print_r($list);
 				break;
 				

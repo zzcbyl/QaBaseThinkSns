@@ -386,7 +386,7 @@ class PassportAction extends Action
     public function square()
     {
         //热门问题
-        $where = ' `is_audit`=1 AND `is_del` = 0 AND `feed_questionid`=0 AND `add_feedid` = 0  ';
+        $where = ' `uid`>0 AND (`is_audit`=1 OR `is_audit`=0) AND `is_del` = 0 AND `feed_questionid`=0 AND `add_feedid` = 0  ';
         $list = model('Feed')->getList($where, 10, 'answer_count desc, publish_time desc');
         $HotTopicList = $list['data'];
         $this->assign('HotTopicList', $HotTopicList);
@@ -409,7 +409,7 @@ class PassportAction extends Action
         //print_r($NewQuestion['data']);
 
         //今日十大关注问题
-        $FQWhere = ' `is_audit`=1 AND `is_del` = 0 AND `feed_questionid`=0 AND `add_feedid` = 0  ';
+        $FQWhere = ' `uid`>0 AND (`is_audit`=1 OR `is_audit`=0) AND `is_del` = 0 AND `feed_questionid`=0 AND `add_feedid` = 0  ';
         $FollowingQuestion = model('Feed')->getQuestionList($where, 10, '`publish_time` desc, `feed_pv` desc, `feed_id` desc');
         $this->assign('FollowingQuestion', $FollowingQuestion['data']);
         //print_r($FollowingQuestion['data']);
@@ -458,7 +458,7 @@ class PassportAction extends Action
         //最新专家点评
         $Euids = model('UserGroupLink')->getUserByGroupID(8, 50);
         $struid = implode(',', $Euids);
-        $answerWhere = ' is_del = 0 AND feed_questionid!=0 AND add_feedid=0 AND is_audit=1 AND uid in (' . $struid . ')';
+        $answerWhere = ' `uid`>0 AND is_del = 0 AND feed_questionid!=0 AND add_feedid=0 AND (is_audit=1 OR is_audit=0) AND uid in (' . $struid . ')';
         $answerList = model('Feed')->getAnswerList($answerWhere, 4, ' publish_time desc');
         $this->assign('answerList', $answerList);
         //print_r($answerList);
@@ -494,7 +494,7 @@ class PassportAction extends Action
         $this->assign('NewsList', $NewsList);
 
         //专家问答
-        $ExpertWhere = 'is_audit=1 AND uid=' . $expertUid . ' AND is_del = 0 AND feed_questionid !=0 AND add_feedid=0 ';
+        $ExpertWhere = '(is_audit=1 OR is_audit=0) AND uid=' . $expertUid . ' AND is_del = 0 AND feed_questionid !=0 AND add_feedid=0 ';
         $QAList = model('feed')->getAnswerList($ExpertWhere, 10);
         //print_r($QAList['data']);
         $this->assign('ExpertQA', $QAList);
@@ -508,7 +508,7 @@ class PassportAction extends Action
         $this->assign('authenticateExpert', $authenticateExpert);
 
         $struid = implode(',', $uids);
-        $answerWhere = ' is_del = 0 AND feed_questionid!=0 AND add_feedid=0 AND is_audit=1 AND uid in (' . $struid . ')';
+        $answerWhere = ' is_del = 0 AND feed_questionid!=0 AND add_feedid=0 AND (is_audit=1 OR is_audit=0) AND uid in (' . $struid . ')';
         $answerList = model('Feed')->getAnswerList($answerWhere, 8);
         $this->assign('answerList', $answerList);
 
