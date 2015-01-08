@@ -127,17 +127,34 @@ class PassportAction extends Action
 
     public function wx_checklogin()
     {
+        $status = 0;
         $logincode = $_SESSION['wx_logincode'];
-        $url = 'http://weixin.luqinwenda.com/check_login_qrcode_scan.aspx?logincode='.$logincode;
+        $url = 'http://weixin.luqinwenda.com/check_login_qrcode_scan.aspx?logincode=' . $logincode;
         $result = $this->curls($url);
         $loginInfo = $this->analyJson($result);
 
-        if(!empty($loginInfo['openid']))
-        {
-            model('Passport')->loginLocalWhitoutPassword($loginInfo['openid']);
+        if (!empty($loginInfo['openid'])) {
+            //$loginInfo['openid'] = 'oqrMvt6yRAWFu3DmhGe4Td0nKZRo';
+            //判断openid存在去登录,否则去注册
+            $user = model('User')->getUserInfoByOpenID($loginInfo['openid']);
+            if (!empty($user) && $user['uid'] > 0) {
+                model('Passport')->loginLocalWhitoutPassword($user['login']);
+                $status = 1;
+            } else {
+                $regResult = model('user')->addUserByWeixin($loginInfo['openid'], 1);
 
-            echo '{"status":1,"info":"ok"}';
+                if ($regResult) {
+                    model('Passport')->loginLocalWhitoutPassword($loginInfo['openid']);
+                    $status = 1;
+                } else {
+                    $status = 0;
+                }
+            }
+        } else {
+            $status = 0;
         }
+
+        echo '{"status":' . $status . ',"info":"ok"}';
     }
 
 
@@ -1728,7 +1745,7 @@ class PassportAction extends Action
                 }
             } else {
 
-                $openid = 'o5jgRt9kSF2T3tx9Ds14QQTxiewA';
+                $openid = 'oqrMvt_AYtvhUxaJ-4ijUjk62NwI';
                 $this->postInfo($openid, $item);
 
                 $openid = 'oqrMvt6yRAWFu3DmhGe4Td0nKZRo';

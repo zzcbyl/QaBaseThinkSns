@@ -63,10 +63,11 @@
                         <span>其它帐号登录：</span>{:Addons::hook('login_input_footer')}
                     </div>
                     <php>endif;</php>
-                    <div><a class="ico-weixin" href="javascript:weixinLogin();"></a></div>
+                    <div><a class="ico-weixin" href="javascript:weixinLogin();"></a><!--{$_SESSION['wx_logincode']}-->
+                    </div>
                 </div>
                 <div id="weixinCodeDiv"
-                     style="display: none; margin:2px 0 0 45px; width: 150px; border: 1px solid #ccc; background: #fff; z-index: 999; position: relative; text-align: center;">
+                     style="display:none; margin:2px 0 0 45px; width: 150px; border: 1px solid #ccc; background: #fff; z-index: 999; position: relative; text-align: center;">
                     <img src="../pic.php" style="width: 150px; height: 150px;"/>
 
                     <div style="margin-bottom :5px;" onclick="javascript:checkwxLogin();">扫描以上二维码进行登录</div>
@@ -336,23 +337,27 @@ phpinfo();
     //    document.onclick = function() {
     //        $('#js_login_input').hide();
     //    };
+    var index = 0;
 
     function checkwxLogin() {
 
         var url = U('public/Passport/wx_checklogin');
-        $.post(url, {random: Math.random()}, function (msg) {
-            if (msg.status == 1) {
-                location.href = U('public/Index/index');
-            }
-        }, 'json');
+        if (index == 0) {
+            index = 1;
+            $.post(url, {random: Math.random()}, function (msg) {
+                if (msg.status == 1) {
+                    location.href = U('public/Index/index');
+                }
+                index = 0;
+            }, 'json');
+        }
     }
 
     function weixinLogin() {
         $("#weixinCodeDiv").show();
 
-        window.setInterval("checkwxLogin()",3000);
+        window.setInterval("checkwxLogin()", 5000);
     }
-
 
 
 </script>

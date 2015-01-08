@@ -66,7 +66,10 @@ class LandingPageAction
         if (!empty($user) && $user['uid'] > 0) {
             $result = model('Passport')->loginLocalWhitoutPassword($user['login']);
         } else {
-            $this->saveUser($openid, $from);
+            $regResult = $this->saveUser($openid, $from);
+            if($regResult) {
+                model('Passport')->loginLocalWhitoutPassword($openid);
+            }
         }
 
         if (empty($url)) {
@@ -242,8 +245,6 @@ class LandingPageAction
                 model('Register')->overUserInit($uid);
                 model('User')->cleanCache(array($uid));
 
-                model('Passport')->loginLocalWhitoutPassword($user['login']);
-                //$result = model('Passport')->loginLocalWhitoutPassword($user['login']);
                 $result = true;
             }
         }

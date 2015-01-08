@@ -2365,3 +2365,39 @@ function utf_substr($str,$len)
 	return join($new_str);
     //return "";
 }
+
+
+function curls_lqwd($url, $timeout = '1000')
+{
+    // 1. 初始化
+    $ch = curl_init();
+    // 2. 设置选项，包括URL
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_TIMEOUT, $timeout);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_HEADER, 0);
+    // 3. 执行并获取HTML文档内容
+    $info = curl_exec($ch);
+    // 4. 释放curl句柄
+    curl_close($ch);
+
+    return $info;
+}
+
+/**
+ * 解析json串
+ * @param type $json_str
+ * @return type
+ */
+function analyJson_lqwd($json_str)
+{
+    $json_str = str_replace('＼＼', '', $json_str);
+    $out_arr = array();
+    preg_match('/{.*}/', $json_str, $out_arr);
+    if (!empty($out_arr)) {
+        $result = json_decode($out_arr[0], TRUE);
+    } else {
+        return FALSE;
+    }
+    return $result;
+}
