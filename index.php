@@ -1,10 +1,7 @@
 <?php
 error_reporting(E_ERROR);
 define('APP_DEBUG',TRUE);
-<<<<<<< HEAD
 
-/** ///调试、找错时请去掉///前空格
-=======
 /* ///调试、找错时请去掉///前空格
 >>>>>>> develop
 ini_set('display_errors',true);
