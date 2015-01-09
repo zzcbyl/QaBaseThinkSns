@@ -130,8 +130,8 @@ class PassportAction extends Action
         $status = 0;
         $logincode = $_SESSION['wx_logincode'];
         $url = 'http://weixin.luqinwenda.com/check_login_qrcode_scan.aspx?logincode=' . $logincode;
-        $result = $this->curls($url);
-        $loginInfo = $this->analyJson($result);
+        $result = curls_lqwd($url);
+        $loginInfo = analyJson_lqwd($result);
 
         if (!empty($loginInfo['openid'])) {
             //$loginInfo['openid'] = 'oqrMvt6yRAWFu3DmhGe4Td0nKZRo';
@@ -142,7 +142,6 @@ class PassportAction extends Action
                 $status = 1;
             } else {
                 $regResult = model('user')->addUserByWeixin($loginInfo['openid'], 1);
-
                 if ($regResult) {
                     model('Passport')->loginLocalWhitoutPassword($loginInfo['openid']);
                     $status = 1;
@@ -1768,63 +1767,11 @@ class PassportAction extends Action
         $result = $this->curl_post($postUrl, $param);
     }
 
-
-    /**
-     * Curl版本, post方法
-     * 使用方法：
-     * $post_string = "app=request&version=beta";
-     * curl_post('http://facebook.cn/restServer.php',$post_string);
-     */
-    function curl_post($remote_server, $post_string)
+    public function  bootstrap()
     {
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $remote_server);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $post_string);
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        $data = curl_exec($ch);
-        curl_close($ch);
-
-        //$return = array('status' => 0, 'data' => $data);
-        //exit(json_encode($return));
-
-        return $data;
+        $this->display();
     }
 
-    public function curls($url, $timeout = '1000')
-    {
-        // 1. 初始化
-        $ch = curl_init();
-        // 2. 设置选项，包括URL
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_TIMEOUT, $timeout);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_HEADER, 0);
-        // 3. 执行并获取HTML文档内容
-        $info = curl_exec($ch);
-        // 4. 释放curl句柄
-        curl_close($ch);
-
-        return $info;
-    }
-
-    /**
-     * 解析json串
-     * @param type $json_str
-     * @return type
-     */
-    function analyJson($json_str)
-    {
-        $json_str = str_replace('＼＼', '', $json_str);
-        $out_arr = array();
-        preg_match('/{.*}/', $json_str, $out_arr);
-        if (!empty($out_arr)) {
-            $result = json_decode($out_arr[0], TRUE);
-        } else {
-            return FALSE;
-        }
-        return $result;
-    }
 }
 
 ?>

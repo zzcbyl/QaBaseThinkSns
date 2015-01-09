@@ -1,11 +1,10 @@
 <?php
 error_reporting(E_ERROR);
-
 define('APP_DEBUG',TRUE);
-///调试、找错时请去掉///前空格
+/* ///调试、找错时请去掉///前空格
 ini_set('display_errors',true);
 error_reporting(E_ALL); 
-set_time_limit(0);
+set_time_limit(0);*/
 
 
 //安装检查开始：如果您已安装过卢勤问答，可以删除本段代码
