@@ -30,37 +30,39 @@ class App
      */
     static public function run() {
 
+
         App::init();
 
         //检查服务器是否开启了zlib拓展
         //if(extension_loaded('zlib') && function_exists('ob_gzhandler')){
-            //ob_start('ob_gzhandler');
+        //ob_start('ob_gzhandler');
         //}
 
         //API控制器
         if(APP_NAME=='api'){
             App::execApi();
 
-        //Widget控制器
+            //Widget控制器
         }elseif(APP_NAME=='widget'){
             App::execWidget();
 
-        //Plugin控制器
+            //Plugin控制器
         }elseif(APP_NAME=='plugin'){
             App::execPlugin();
 
-        //APP控制器
+            //APP控制器
         }else{
             App::execApp();
+
         }
-        
+
         if(C('LOG_RECORD')){
             Log::save();
         }
 
         //输出buffer中的内容，即压缩后的css文件
         //if(extension_loaded('zlib') && function_exists('ob_gzhandler')){
-            //ob_end_flush();
+        //ob_end_flush();
         //}
         return ;
     }
@@ -91,7 +93,8 @@ class App
             //if (isMobile() && !isiPad() && model( 'App' )->isAppNameOpen('wap') ) // 其他手机跳转至WAP版
                 //U('wap/Index/index', '', true);
         //}
-        
+
+
         // 加载所有插件
         if(C('APP_PLUGIN_ON')) {
             tsload(CORE_LIB_PATH.'/addons.class.php');
@@ -100,8 +103,12 @@ class App
             tsload(CORE_LIB_PATH.'/addons/NormalAddons.class.php');
             tsload(CORE_LIB_PATH.'/addons/SimpleAddons.class.php');
             tsload(CORE_LIB_PATH.'/addons/TagsAbstract.class.php');
+
+
+
             Addons::loadAllValidAddons();
         }
+
 
         //创建Action控制器实例
         $className =  MODULE_NAME.'Action';

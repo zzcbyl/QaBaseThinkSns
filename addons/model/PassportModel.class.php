@@ -252,7 +252,7 @@ class PassportModel {
 			return false;
 		}
 
-		$user = D('User')->where(array('login'=>$login))->find();
+		$user = D('User')->where(array('login'=>$login,'is_del'=>0))->find();
 
 		if(!$user) {
 			$this->error = L('PUBLIC_ACCOUNT_NOEXIST');				// 帐号不存在

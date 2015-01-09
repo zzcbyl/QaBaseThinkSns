@@ -143,6 +143,7 @@ class Addons
      */
     public static function loadAllValidAddons()
     {
+
         self::$validHooks = S('system_addons_list');
         if(empty(self::$validHooks)) {
             self::$validHooks = model('Addon')->resetAddonCache();
