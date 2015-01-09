@@ -2385,6 +2385,28 @@ function curls_lqwd($url, $timeout = '1000')
 }
 
 /**
+ * Curl版本, post方法
+ * 使用方法：
+ * $post_string = "app=request&version=beta";
+ * curl_post('http://facebook.cn/restServer.php',$post_string);
+ */
+function curl_post_lqwd($remote_server, $post_string)
+{
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $remote_server);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $post_string);
+    curl_setopt($ch, CURLOPT_POST, 1);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    $data = curl_exec($ch);
+    curl_close($ch);
+
+    /*$return = array('status' => 1, 'data' => $data);
+    exit(json_encode($return));*/
+
+    return $data;
+}
+
+/**
  * 解析json串
  * @param type $json_str
  * @return type

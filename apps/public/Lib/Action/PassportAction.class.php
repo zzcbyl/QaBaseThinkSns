@@ -1734,8 +1734,8 @@ class PassportAction extends Action
 
             if ($_POST['isTest'] == '0') {
                 $url = 'http://weixin.luqinwenda.com/get_active_user.aspx';
-                $Result = $this->curl_post($url, '');
-                $jsonArr = $this->analyJson($Result);
+                $Result = curl_post_lqwd($url, '');
+                $jsonArr = analyJson_lqwd($Result);
                 for ($i = 0; $i < count($jsonArr['openid']); $i++) {
                     //echo $jsonArr['openid'][$i];
                     //echo '<br />';
@@ -1764,7 +1764,7 @@ class PassportAction extends Action
         sleep(1);
         $postUrl = 'http://weixin.luqinwenda.com/send_message.aspx';
         $param = '{fromuser:"gh_7c0c5cc0906a",touser:"' . $openid . '",msgtype:"news",news:{articles:[' . $item . ']}}';
-        $result = $this->curl_post($postUrl, $param);
+        $result = curl_post_lqwd($postUrl, $param);
     }
 
 
