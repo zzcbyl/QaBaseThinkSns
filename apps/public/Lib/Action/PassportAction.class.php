@@ -1767,10 +1767,6 @@ class PassportAction extends Action
         $result = $this->curl_post($postUrl, $param);
     }
 
-    public function  bootstrap()
-    {
-        $this->display();
-    }
 
 }
 

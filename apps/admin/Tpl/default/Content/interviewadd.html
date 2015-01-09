@@ -1,0 +1,62 @@
+<include file="__THEME__/admin_header" />
+<style>
+    table { width:800px; border-bottom:1px solid #e3e6eb; border-right:1px solid #e3e6eb; margin:10px 0;}
+    table td { border-top:1px solid #e3e6eb; border-left:1px solid #e3e6eb; border-bottom:0;}
+    .list table td { border-bottom:0;}
+
+</style>
+<div class="so_main">
+    <div class="page_tit">
+        卢勤访谈</div>
+    <div class="tit_tab">
+        <ul>
+            <li><a href="{:U('admin/Content/interview')}">访谈列表</a></li>
+            <li><a class="on" href="{:U('admin/Content/interviewadd')}">添加访谈</a></li>
+        </ul>
+    </div>
+    <div class="Toolbar_inbox">
+    </div>
+    <div class="list">
+        <form id="uploadForm" action="{:U('admin/Content/interviewadd')}" method="post" enctype="multipart/form-data">
+            <table cellpadding=0 cellspacing=0>
+                <tr>
+                    <td style="width:100px; text-align:right;">访谈标题：</td>
+                    <td>
+                        <input type="text" name="name" style="width: 300px;"  />
+                        <span style="margin-left: 20px; color: red;">{$errorinfo}</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width:100px; text-align:right;">访谈描述：</td>
+                    <td>
+                        <textarea name="content" id="content" class="input_tips" style="line-height:25px; width:400px; display:inline; height:100px;"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width:100px; text-align:right;">访谈时间：</td>
+                    <td>
+                        <input type="text" id="startdt" class="s-txt" name="startdt" style="width:150px;" readonly="readonly" onfocus="core.rcalendar(this,'full');" onblur="this.className='s-txt'" value="" />－
+                        <input type="text" id="enddt" class="s-txt" name="enddt" style="width:150px;" readonly="readonly" onfocus="core.rcalendar(this,'full');" onblur="this.className='s-txt'" value="" />
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width:100px; text-align:right;">访谈对象ID：</td>
+                    <td>
+                        <input type="text" name="objectid" style="width: 200px;"  />
+                        （专家id以“,”分割，卢勤ID:1901）
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="text-align: center; height: 40px;">
+                        <input type="submit" value="确定" style="width: 50px;" />
+                        <input type="hidden" name="hidSubmit" value="1" />
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+    <div class="Toolbar_inbox">
+    </div>
+</div>
+
+<include file="__THEME__/admin_footer" />
