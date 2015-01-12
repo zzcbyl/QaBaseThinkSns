@@ -1,9 +1,83 @@
 <include file="__THEME__/public_header" />
+<style type="text/css">
+    .answerTab { border: 1px solid #D5EEFB; margin-top: 15px;}
+    .answerTabTitle { background: #E4F2F9; height: 35px; line-height: 35px; padding: 0 10px;  font-size: 14px; color: #0363A0;}
+    .answerTabTitle a { display:inline-block; background: #69ADDD; height: 22px; line-height: 22px; padding: 0 5px; color:#fff; }
+    .answerTabContent { background: #F1FAFD;}
+    .userAnswerTab { margin-top: 20px; border: 1px solid #E8E8E8;}
+    .userAnswerTabTitle { background: #F7F7F7; height: 35px; line-height: 35px; padding: 0 10px;  font-size: 14px; color: #333;}
+    .answerTabContent { background: #fff; padding-left: 2px; height: 700px; overflow: scroll;}
+
+    .righthead { text-align: center; font-size: 14px; line-height: 25px; height: 100px; padding-top: 30px;}
+    .rightObject { margin: 20px 10px; border: 1px solid #FDDBC7; }
+    .rightObjectTitle { background: #FFE7C3; height: 35px; line-height: 35px; padding: 0 10px; font-size: 14px; font-weight: bold; color: #CC3300; }
+    .rightObjectContent { background:#FFFBEB; padding: 10px 20px; line-height: 18px;}
+    .rightObjectContent img { width: 50px; height: 50px;}
+
+    .compereTab { margin: 20px 10px; border: 1px solid #D7D7D7;}
+    .compereTabTitle { background: #F2F2F2; height: 35px; line-height: 35px; padding: 0 10px; font-size: 14px; font-weight: bold; color: #666;}
+    .compereTabContent { background:#fff; padding: 10px 20px; line-height: 18px;}
+    .compereTabContent img { width: 50px; height: 50px;}
+
+</style>
 <div class="container" style="background: #fff; border: none;">
-    <div class="cont_left pd17">
-
+    <div class="cont_left" style="border: none; padding: 20px 15px; width: 697px;">
+        <h2>访谈简介</h2>
+        <div style="margin-top: 10px; line-height: 18px; text-indent: 2em; padding: 0 15px;">
+           {$InterView['iv_content']}
+        </div>
+        <div class="answerTab">
+            <div class="answerTabTitle">
+                <div style="float: left;"><b>访谈内容</b>　<input type="checkbox" id="autoFlash" /> 自动刷新　<a href="javascript:void();">刷新</a></div>
+                <div style="float: right;">我要提问　查看网友提问</div>
+                <div class="clear"></div>
+            </div>
+            <div class="answerTabContent">
+                {:W('FeedList',array('type'=>'interviewQA','feed_type'=>$feed_type,'feed_key'=>$feed_key,'expert'=>$InterView['iv_object'],'startdt'=>strtotime($InterView['iv_startdt']),'enddt'=>strtotime($InterView['iv_enddt'])))}
+            </div>
+        </div>
+        <div class="userAnswerTab">
+            <div class="userAnswerTabTitle">
+                <div style="float: left;"><b>网友提问</b>　<span style="color: #999;">(共123个问题)</span></div>
+                <div style="float: right;">我要提问</div>
+                <div class="clear"></div>
+            </div>
+            <div class="userAnswerTabContent">
+                {:W('FeedList',array('type'=>'interviewQ','feed_type'=>$feed_type,'feed_key'=>$feed_key,'expert'=>$InterView['iv_object'],'startdt'=>strtotime($InterView['iv_startdt']),'enddt'=>strtotime($InterView['iv_enddt'])))}
+            </div>
+        </div>
     </div>
-    <div class="cont_right" style="border: none;">
-
+    <div class="cont_right" style="border: none; width: 251px;">
+        <div class="righthead">
+            <div>{$InterViewState}</div>
+            <div>访谈时间：<br />{$InterView['iv_startdt']}<br />{$InterView['iv_enddt']}</div>
+        </div>
+        <div class="rightObject">
+            <div class="rightObjectTitle">
+                访谈嘉宾
+            </div>
+            <div class="rightObjectContent">
+                <div style="float: left; "><a href="{$TopExpert['space_url']}"><img src="{$TopExpert['avatar_big']}" event-node="face_card" uid="{$TopExpert['uid']}" /></a></div>
+                <div style="float: left; margin-left: 10px; font-size: 14px;"><a href="{$TopExpert['space_url']}" event-node="face_card" uid="{$TopExpert['uid']}">{$TopExpert['uname']}</a></div>
+                <div class="clear"></div>
+                <p style="margin-top: 10px;">
+                    <strong>简介：</strong>{$TopExpert['intro']}
+                </p>
+            </div>
+        </div>
+        <div class="compereTab">
+            <div class="compereTabTitle">
+                访谈主持人
+            </div>
+            <div class="compereTabContent">
+                <div style="float: left; "><a href="http://www.luqinwenda.com" target="_blank"><img src="__THEME__/image/logo1.png" /></a></div>
+                <div style="float: left; margin-left: 10px; font-size: 14px;"><a href="http://www.luqinwenda.com" target="_blank">卢勤问答平台</a></div>
+                <div class="clear"></div>
+                <p style="margin-top: 10px;">
+                    <strong>简介：</strong>撒旦发射点发生的发送到而且为人妻为人妻为人妻为人妻为人妻为人奇维尔请问
+                </p>
+            </div>
+        </div>
+    </div>
     </div>
 <include file="__THEME__/public_footer" />

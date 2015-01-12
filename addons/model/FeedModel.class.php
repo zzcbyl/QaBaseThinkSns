@@ -423,26 +423,27 @@ class FeedModel extends Model {
 	 * @param integer $limit 结果集数目，默认为10
 	 * @return array 提问列表数据
 	 */
-	public function getQuestionAndAnswer($map, $limit = 10 , $order = 'last_updtime desc') {
-		$feedlist = $this->field('feed_id')->where($map)->order($order)->findPage($limit); 
-		$feed_ids = getSubByKey($feedlist['data'], 'feed_id');
-		$feedlist['data'] = $this->getFeeds($feed_ids);
-		
-		//增加答案块
-		foreach( $feedlist["data"] as $v => $vv )
-		{
-			$AnswerWhere='feed_questionid='.$vv['feed_id'];
-			$AnswerFeed = $this->field('feed_id')->where($AnswerWhere)->order("publish_time desc")->findPage(1);				
-			$AnswerFeed_id = getSubByKey($AnswerFeed['data'], 'feed_id');
-			$AnswerFeedData = $this->getFeeds($AnswerFeed_id);
-			
-			$vv["answer"] = $AnswerFeedData;
-			$feedlist["data"][$v]=$vv;
-			
-			/*print_r($vv);
-			print('<br /><br /><br /><br />');*/
-		}
-		
+	public function getQuestionAndAnswer($map, $limit = 10 , $order = 'last_updtime desc', $isAnswer=true)
+    {
+        $feedlist = $this->field('feed_id')->where($map)->order($order)->findPage($limit);
+        $feed_ids = getSubByKey($feedlist['data'], 'feed_id');
+        $feedlist['data'] = $this->getFeeds($feed_ids);
+
+        //增加答案块
+        if ($isAnswer) {
+            foreach ($feedlist["data"] as $v => $vv) {
+                $AnswerWhere = 'feed_questionid=' . $vv['feed_id'];
+                $AnswerFeed = $this->field('feed_id')->where($AnswerWhere)->order("publish_time desc")->findPage(1);
+                $AnswerFeed_id = getSubByKey($AnswerFeed['data'], 'feed_id');
+                $AnswerFeedData = $this->getFeeds($AnswerFeed_id);
+
+                $vv["answer"] = $AnswerFeedData;
+                $feedlist["data"][$v] = $vv;
+
+                /*print_r($vv);
+                print('<br /><br /><br /><br />');*/
+            }
+        }
 		return $feedlist;
 	}
 	
