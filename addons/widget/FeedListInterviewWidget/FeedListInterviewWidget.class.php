@@ -173,6 +173,7 @@ class FeedListInterviewWidget extends Widget
                 }
                 $where = " is_del = 0 AND feed_questionid!=0 AND add_feedid=0 AND is_audit=1 and last_updtime>='" . $var['startdt'] . "' " . $LoadWhere . " and `uid` in (" . $var['expert'] . ")";
                 $list = model('Feed')->getAnswerList($where, $this->limitnums);
+                //print_r(model('Feed')->getLastSql());
                 break;
             case 'interviewQ': //所有的 --正在发生的
                 $LoadWhere='';
@@ -181,7 +182,7 @@ class FeedListInterviewWidget extends Widget
                 } else {
                     $LoadWhere = "AND last_updtime < '" . $var['enddt'] . "'";
                 }
-                $where = " is_audit=1 AND is_del = 0 AND feed_questionid=0 AND add_feedid=0  and last_updtime>='" . $var['startdt'] . "' " . $LoadWhere . " and `uid` in (" . $var['expert'] . ")";
+                $where = " is_audit=1 AND is_del = 0 AND feed_questionid=0 AND add_feedid=0  and last_updtime>='" . $var['startdt'] . "' " . $LoadWhere ;
                 $list = model('Feed')->getQuestionAndAnswer($where, $this->limitnums,'last_updtime desc',false);
                 //print($where);
                 break;

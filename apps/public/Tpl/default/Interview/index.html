@@ -2,55 +2,63 @@
 <style type="text/css">
     .answerTab { border: 1px solid #D5EEFB; margin-top: 15px;}
     .answerTabTitle { background: #E4F2F9; height: 35px; line-height: 35px; padding: 0 10px;  font-size: 14px; color: #0363A0;}
-    .answerTabTitle a { display:inline-block; background: #69ADDD; height: 22px; line-height: 22px; padding: 0 5px; color:#fff; }
+    .answerTabTitle #f5flash { display:inline-block; background: #69ADDD; height: 22px; line-height: 22px; padding: 0 5px; color:#fff; }
     .answerTabContent { background: #F1FAFD;}
-    .userAnswerTab { margin-top: 20px; border: 1px solid #E8E8E8;}
+    .userAnswerTab { margin-top: 30px; border: 1px solid #E8E8E8;}
     .userAnswerTabTitle { background: #F7F7F7; height: 35px; line-height: 35px; padding: 0 10px;  font-size: 14px; color: #333;}
-    .answerTabContent { background: #fff; padding-left: 2px; height: 700px; overflow: scroll;}
+    .answerTabContent,.userAnswerTabContent { background: #fff; padding-left: 7px; height: 700px; overflow-y: scroll;}
 
     .righthead { text-align: center; font-size: 14px; line-height: 25px; height: 100px; padding-top: 30px;}
     .rightObject { margin: 20px 10px; border: 1px solid #FDDBC7; }
     .rightObjectTitle { background: #FFE7C3; height: 35px; line-height: 35px; padding: 0 10px; font-size: 14px; font-weight: bold; color: #CC3300; }
-    .rightObjectContent { background:#FFFBEB; padding: 10px 20px; line-height: 18px;}
+    .rightObjectContent { background:#FFFBEB; padding: 10px 15px; line-height: 18px;}
     .rightObjectContent img { width: 50px; height: 50px;}
 
     .compereTab { margin: 20px 10px; border: 1px solid #D7D7D7;}
     .compereTabTitle { background: #F2F2F2; height: 35px; line-height: 35px; padding: 0 10px; font-size: 14px; font-weight: bold; color: #666;}
-    .compereTabContent { background:#fff; padding: 10px 20px; line-height: 18px;}
+    .compereTabContent { background:#fff; padding: 10px 15px; line-height: 18px;}
     .compereTabContent img { width: 50px; height: 50px;}
+
+    .contTop2 p.q { right: 7px;}
 
 </style>
 <div class="container" style="background: #fff; border: none;">
-    <div class="cont_left" style="border: none; padding: 20px 15px; width: 697px;">
+    <div style="border: 1px solid #ccc; height: 100px;"></div>
+    <div class="cont_left" style="border: none; padding: 20px 0 20px 15px; width: 707px;">
         <h2>访谈简介</h2>
         <div style="margin-top: 10px; line-height: 18px; text-indent: 2em; padding: 0 15px;">
            {$InterView['iv_content']}
         </div>
         <div class="answerTab">
             <div class="answerTabTitle">
-                <div style="float: left;"><b>访谈内容</b>　<input type="checkbox" id="autoFlash" /> 自动刷新　<a href="javascript:void();">刷新</a></div>
-                <div style="float: right;">我要提问　查看网友提问</div>
+                <div style="float: left;"><b>访谈内容</b>　<input type="checkbox" id="autoFlash" /> 自动刷新　<a id="f5flash" href="javascript:roundTab1();">刷新</a></div>
+                <div style="float: right;">我要提问　<a href="#userAsk">查看网友提问</a></div>
                 <div class="clear"></div>
             </div>
             <div class="answerTabContent">
-                {:W('FeedList',array('type'=>'interviewQA','feed_type'=>$feed_type,'feed_key'=>$feed_key,'expert'=>$InterView['iv_object'],'startdt'=>strtotime($InterView['iv_startdt']),'enddt'=>strtotime($InterView['iv_enddt'])))}
+            </div>
+            <div id="page" class="page" style="text-align: center; margin-top: 10px;">
+                <a id="prePage" href="javascript:jumpPrePage();">上一页</a>
+                <span><span id="pageNum"></span>/{$page1}</span>
+                <a id="nextPage" href="javascript:jumpnextPage();">下一页</a>
             </div>
         </div>
         <div class="userAnswerTab">
+            <a name="userAsk"></a>
             <div class="userAnswerTabTitle">
-                <div style="float: left;"><b>网友提问</b>　<span style="color: #999;">(共123个问题)</span></div>
+                <div style="float: left;"><b>网友提问</b>　<span style="color: #999;">(共{$dataCount}个问题)</span></div>
                 <div style="float: right;">我要提问</div>
                 <div class="clear"></div>
             </div>
             <div class="userAnswerTabContent">
-                {:W('FeedList',array('type'=>'interviewQ','feed_type'=>$feed_type,'feed_key'=>$feed_key,'expert'=>$InterView['iv_object'],'startdt'=>strtotime($InterView['iv_startdt']),'enddt'=>strtotime($InterView['iv_enddt'])))}
+
             </div>
         </div>
     </div>
     <div class="cont_right" style="border: none; width: 251px;">
         <div class="righthead">
             <div>{$InterViewState}</div>
-            <div>访谈时间：<br />{$InterView['iv_startdt']}<br />{$InterView['iv_enddt']}</div>
+            <div>访谈时间：<br /><php> echo date('Y-m-d H:i',$InterView['iv_startdt']);</php><br /><php> echo date('Y-m-d H:i',$InterView['iv_enddt']);</php></div>
         </div>
         <div class="rightObject">
             <div class="rightObjectTitle">
@@ -80,4 +88,37 @@
         </div>
     </div>
     </div>
+<script type="text/javascript">
+    var sdt = '{$InterView.iv_startdt}';
+    var edt = '{$InterView.iv_enddt}';
+    var url = U('public/Interview/qafeedlist');
+    var totalpage1 =parseInt('{$page1}');
+    var page1=1;
+    $(document).ready(function(){
+        initTab1();
+    });
+
+    function initTab1() {
+        $('#pageNum').html(page1);
+        $.get(url,{startdt : sdt, enddt : edt, limit:page1-1 },function(msg){
+            $('.answerTabContent').html(msg);
+        });
+    }
+
+    function jumpPrePage() {
+        if (page1 - 1 >= 1) {
+            page1 = page1 - 1;
+            initTab1();
+        }
+    }
+    function jumpnextPage() {
+        if (page1 + 1 <= totalpage1) {
+            page1 = page1 + 1;
+            initTab1();
+        }
+    }
+
+
+
+</script>
 <include file="__THEME__/public_footer" />
