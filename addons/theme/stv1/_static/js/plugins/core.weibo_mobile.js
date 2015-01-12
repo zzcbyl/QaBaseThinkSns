@@ -7,11 +7,11 @@ core.weibo_mobile = {
     init: function (agrs) {
         this.initNums = agrs.initNums; 	// 提问字数
         this.maxId = args.maxId, 		// 最大提问ID
-		this.loadId = args.loadId, 		// 载入的提问ID
-		this.feedType = args.feedType, 	// 提问类型
-		this.loadmore = args.loadmore, 	// 是否载入更多
-		this.uid = args.uid, 			// 当前提问列表对应的UID
-		this.loadnew = args.loadnew; 	// 是否载入最新
+            this.loadId = args.loadId, 		// 载入的提问ID
+            this.feedType = args.feedType, 	// 提问类型
+            this.loadmore = args.loadmore, 	// 是否载入更多
+            this.uid = args.uid, 			// 当前提问列表对应的UID
+            this.loadnew = args.loadnew; 	// 是否载入最新
         this.feed_type = args.feed_type;
         this.feed_key = args.feed_key;
         this.firstId = args.firstId;
@@ -69,7 +69,18 @@ core.weibo_mobile = {
         _this.canLoading = false;
         //return;
         // 获取提问数据
-        $.get(U('widget/FeedListMobileNoFace/loadMore'), { 'loadId': _this.loadId, 'type': _this.feedType, 'uid': _this.uid, 'feed_type': _this.feed_type, 'feed_key': _this.feed_key, 'fgid': fgid, 'topic_id': _this.topic_id, 'load_count': _this.loadCount, 'gid': _this.gid, 'openid': _this.openid }, function (msg) {
+        $.get(U('widget/FeedListMobileNoFace/loadMore'), {
+            'loadId': _this.loadId,
+            'type': _this.feedType,
+            'uid': _this.uid,
+            'feed_type': _this.feed_type,
+            'feed_key': _this.feed_key,
+            'fgid': fgid,
+            'topic_id': _this.topic_id,
+            'load_count': _this.loadCount,
+            'gid': _this.gid,
+            'openid': _this.openid
+        }, function (msg) {
             //alert(msg.html);
             // 加载失败
             if (msg.status == "0" || msg.status == "-1") {
@@ -138,7 +149,18 @@ core.weibo_mobile = {
         var _this = this;
         _this.canLoading = false;
         // 获取提问数据
-        $.get(U('widget/AnswerListMobileNoFace/loadMore'), { 'feed_id': answerid, 'loadId': _this.loadId, 'type': _this.feedType, 'uid': _this.uid, 'feed_type': _this.feed_type, 'feed_key': _this.feed_key, 'fgid': fgid, 'topic_id': _this.topic_id, 'load_count': _this.loadCount, 'gid': _this.gid }, function (msg) {
+        $.get(U('widget/AnswerListMobileNoFace/loadMore'), {
+            'feed_id': answerid,
+            'loadId': _this.loadId,
+            'type': _this.feedType,
+            'uid': _this.uid,
+            'feed_type': _this.feed_type,
+            'feed_key': _this.feed_key,
+            'fgid': fgid,
+            'topic_id': _this.topic_id,
+            'load_count': _this.loadCount,
+            'gid': _this.gid
+        }, function (msg) {
             // 加载失败
             if (msg.status == "0" || msg.status == "-1") {
                 $('#loadMore').remove();
@@ -231,7 +253,12 @@ core.weibo_mobile = {
                 return false;
             }
             // 加载最新的数据
-            $.post(U('widget/FeedListMobileNoFace/loadNew'), { maxId: _this.firstId, type: 'new' + _this.feedType, uid: _this.uid, openid: _this.openid }, function (msg) {
+            $.post(U('widget/FeedListMobileNoFace/loadNew'), {
+                maxId: _this.firstId,
+                type: 'new' + _this.feedType,
+                uid: _this.uid,
+                openid: _this.openid
+            }, function (msg) {
                 if (msg.status == 1 && msg.count > 0) {
                     _this.showNew(msg.count);
                     _this.tempHtml = msg.html;
@@ -245,9 +272,9 @@ core.weibo_mobile = {
     // 提示有多少新提问数据
     showNew: function (nums) {
         if ($('#feed-lists').find('.notes').length > 0) {
-            $('#feed-lists').find('.notes').html(L('PUBLIC_WEIBO_NUM', { 'sum': nums }));
+            $('#feed-lists').find('.notes').html(L('PUBLIC_WEIBO_NUM', {'sum': nums}));
         } else {
-            var html = '<a href="javascript:core.weibo_mobile.showNewList()" class="notes">' + L('PUBLIC_WEIBO_NUM', { 'sum': nums }) + '</a>';
+            var html = '<a href="javascript:core.weibo_mobile.showNewList()" class="notes">' + L('PUBLIC_WEIBO_NUM', {'sum': nums}) + '</a>';
             $('#feed-lists').prepend(html);
         }
     },
@@ -263,7 +290,8 @@ core.weibo_mobile = {
         if (topicHtml == '') {
             textarea.value = '';
             if (description != undefined)
-                description.value = ''; ;
+                description.value = '';
+            ;
         } else {
             textarea.value = topicHtml;
         }
@@ -446,7 +474,7 @@ core.weibo_mobile = {
             }
             // 获取剩余字数
             if (leftNums >= 0) {
-                var html = (leftNums == initNums) ? L('PUBLIC_INPUT_TIPES', { 'sum': '<span>' + leftNums + '</span>' }) : L('PUBLIC_PLEASE_INPUT_TIPES', { 'sum': '<span>' + leftNums + '</span>' });
+                var html = (leftNums == initNums) ? L('PUBLIC_INPUT_TIPES', {'sum': '<span>' + leftNums + '</span>'}) : L('PUBLIC_PLEASE_INPUT_TIPES', {'sum': '<span>' + leftNums + '</span>'});
                 obj.parentModel.parentModel.parentModel.childModels['numsLeft'][0].innerHTML = html;
                 $(obj).removeClass('fb');
                 if (leftNums == initNums && $(obj).find('img').size() == 0) {
@@ -460,7 +488,7 @@ core.weibo_mobile = {
                 }
                 return true;
             } else {
-                var html = L('PUBLIC_INPUT_ERROR_TIPES', { 'sum': '<span style="color:red">' + Math.abs(leftNums) + '</span>' });
+                var html = L('PUBLIC_INPUT_ERROR_TIPES', {'sum': '<span style="color:red">' + Math.abs(leftNums) + '</span>'});
                 $(obj).addClass('fb');
                 obj.parentModel.parentModel.parentModel.childModels['numsLeft'][0].innerHTML = html;
                 if (typeof (objInput) == 'object') {
@@ -477,7 +505,7 @@ core.weibo_mobile = {
             inviteList = inviteList.substring(0, inviteList.length - 1);
         //alert(url);
         //alert(inviteList);
-        $.post(url, { QuestionID: feedID, InviteUids: inviteList }, function (msg) {
+        $.post(url, {QuestionID: feedID, InviteUids: inviteList}, function (msg) {
             ui.showMessage(msg.data, 2, 3);
             $("#InvitedFriend").html('');
         }, 'json');
@@ -594,7 +622,24 @@ core.weibo_mobile = {
         if (openid)
             Oid = openid.value;
         // 发布提问
-        $.post(url, { body: data, type: type, app_name: app_name, content: '', attach_id: attach_id, videourl: videourl, channel_id: channel_id, source_url: attrs.source_url, gid: attrs.gid, description: txtVal, questionid: Qid, addask: int_isadd, inviteid: inviteid, ShareSina: sinaShare, ShareQQ: qqShare, Openid: Oid }, function (msg) {
+        $.post(url, {
+            body: data,
+            type: type,
+            app_name: app_name,
+            content: '',
+            attach_id: attach_id,
+            videourl: videourl,
+            channel_id: channel_id,
+            source_url: attrs.source_url,
+            gid: attrs.gid,
+            description: txtVal,
+            questionid: Qid,
+            addask: int_isadd,
+            inviteid: inviteid,
+            ShareSina: sinaShare,
+            ShareQQ: qqShare,
+            Openid: Oid
+        }, function (msg) {
             //alert(msg.data);
             obj.isposting = false;
             //_this.className = 'btn-grey-white';
@@ -622,7 +667,11 @@ core.weibo_mobile = {
                     location.href = U('public/MobileNew/myquestion&openid=' + Oid);
                 }
                 if (Qid != undefined && Qid != '') {
-                    location.href = U('public/MobileNew/feed&feed_id=' + Qid);
+                    if (Oid != undefined && Oid != '') {
+                        location.href = U('public/MobileNew/feed&feed_id=' + Qid + '&openid=' + Oid);
+                    } else {
+                        location.href = U('public/MobileNew/feed&feed_id=' + Qid);
+                    }
                 }
 
                 //邀请回答

@@ -476,9 +476,13 @@ class MobileNewAction
 
         //获取用户
         $uid = -1;
-        $user = model('user')->getUserInfoByOpenID($d['openid']);
-        if (isset($user)) {
-            $uid = $user['uid'];
+        if(!empty($d['openid'])) {
+            $user = model('user')->getUserInfoByOpenID($d['openid']);
+            if ($user) {
+                $uid = $user['uid'];
+            } else {
+                $uid = $d['openid'];
+            }
         }
 
         // 所属应用名称
