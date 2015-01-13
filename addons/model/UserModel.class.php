@@ -482,7 +482,7 @@ class UserModel extends Model {
             $user["is_audit"] = 1;
             $user["is_init"] = 1;
             $user["linknumber"] = '';
-            $user["email"] = t($openid);
+            //$user["email"] = substr(t($openid),10);
             $user["realname"] = '';
             $user["idcard"] = '';
             $user["openid"] = t($openid);
@@ -499,6 +499,7 @@ class UserModel extends Model {
             $user["intro"] = '';
             $user["domain"] = '';
             $uid = $this->addUserMobile($user);
+            //return model('User')->getLastSql();
             //print(model('User')->getLastSql());
             if ($uid) {
                 // 添加积分

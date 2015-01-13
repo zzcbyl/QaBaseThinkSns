@@ -345,7 +345,7 @@ phpinfo();
         if (index == 0) {
             index = 1;
             $.post(url, {random: Math.random()}, function (msg) {
-                //alert(msg.status);
+                //alert(msg.info);
                 if (msg.status == 1) {
                     location.href = U('public/Index/index');
                 }
