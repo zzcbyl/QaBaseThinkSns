@@ -1,7 +1,5 @@
-<div id="feed-lists" class="contsNum">
-
-
-<volist name='data' id='vl'>
+<php>if(count($list['data'])>0) { </php>
+<volist name='list.data' id='vl'>
 <div class="conts">
 
 <!--问-->
@@ -46,8 +44,9 @@
                     </div>
                     <div style="clear:both;"></div>
                 </h1>
+                <!--h2内的注释不可删除-->
                 <h2><a target="_blank" href="{:U('public/Index/feed',array('feed_id'=>$vl['feed_id'],'uid'=>$vl['uid']))}">
-                    <!--{$vl.feed_id|format=true}-->{$vl.body|format=true}</a></h2>
+                    <!--{$vl.last_updtime}-->{$vl.body|format=true}</a></h2>
 
                 <php>
                     $descriptionTxt = $vl['description'];
@@ -260,6 +259,20 @@
 </div>
 </volist>
 
+<script type="text/javascript">
+    var dataindex = '{$dataindex}';
+    $(document).ready(function(){
+        //获取最新回答id
+        if(dataindex=='0') {
+            var conts = $('.conts').get(0);
+            if(conts!=undefined && conts!=null) {
+                conts = $(conts).find('h2').get(0);
+                var astr = $(conts).html();
+                astr = astr.substring(astr.indexOf("\<!--") + 4);
+                newdata1 = astr.substring(0, astr.indexOf("--\>"));
+            }
+        }
+    });
+</script>
 
-
-</div>
+<php>}</php>

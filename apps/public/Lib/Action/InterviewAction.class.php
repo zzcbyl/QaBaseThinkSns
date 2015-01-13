@@ -21,24 +21,26 @@ class InterviewAction extends Action
             $data = $InterView['data'][0];
             $data['iv_startdt'] = strtotime($data['iv_startdt']);
             $data['iv_enddt'] = strtotime($data['iv_enddt']);
-            $this->assign('InterViewState', $this->getState($data['iv_startdt'], $data['iv_enddt']));
+            //$this->assign('InterViewState', $this->getState($data['iv_startdt'], $data['iv_enddt']));
+            $this->getState($data['iv_startdt'], $data['iv_enddt']);
             $this->assign('InterView', $data);
 
             $where = " is_del = 0 AND feed_questionid!=0 AND add_feedid=0 AND is_audit=1 and publish_time>='"
                 . $data['iv_startdt'] . "' AND publish_time < '" . $data['iv_enddt'] . "' and `uid` in (" . $data['iv_object'] . ")";
-            $list = model('Feed')->getQuestionAndAnswer($where, 10, 'last_updtime desc', false);
+            $list = model('Feed')->getQuestionAndAnswer($where, 10, 'publish_time desc', false);
             //print_r($list);
             $this->assign('page1', $list['totalPages']);
 
-            $where = " is_audit=1 AND is_del = 0 AND feed_questionid=0 AND add_feedid=0  and last_updtime>='" .
-                $data['iv_startdt'] . "' AND last_updtime < '" . $data['iv_enddt'] . "'";
-            $list = model('Feed')->getQuestionAndAnswer($where, 1, 'last_updtime desc', false);
+            $where = " is_audit=1 AND is_del = 0 AND feed_questionid=0 AND add_feedid=0  and publish_time>='" .
+                $data['iv_startdt'] . "' AND publish_time < '" . $data['iv_enddt'] . "'";
+            $list = model('Feed')->getQuestionAndAnswer($where, 10, 'publish_time desc', false);
+            //print_r($list);
             $this->assign('dataCount', $list['count']);
+            $this->assign('page2', $list['totalPages']);
 
         } else {
             $this->error("访谈数据错误");
         }
-
 
         //顶级专家
         $expertUid = C('TopExpert');
@@ -50,40 +52,58 @@ class InterviewAction extends Action
 
     private function getState($startdt, $enddt)
     {
-        $startdt = strtotime($startdt);
-        $enddt = strtotime($enddt);
-        $currentdt = time();
-        if ($startdt > $currentdt)
-            return '未开始';
-        else if ($enddt < $currentdt)
-            return '已结束';
-        else
-            return '进行中...';
+        $str = '';
+        $stateInt = 0;
+        $currentdt = intval(time());
+        if ($startdt > $currentdt) {
+            $str = '未开始';
+            $stateInt = 0;
+        } else if ($enddt < $currentdt) {
+            $str = '已结束';
+            $stateInt = 2;
+        } else {
+            $str = '进行中...';
+            $stateInt = 1;
+        }
+        $this->assign('InterViewState', $str);
+        $this->assign('stateInt', $stateInt);
     }
 
 
     public function qafeedlist()
     {
+        $flansh = $_GET['flansh'];
         $startdt = intval($_GET['startdt']);
         $enddt = intval($_GET['enddt']);
         $expert = C('TopExpert');
-        $limitnums = intval($_GET['limit'])*10;
-        $where = " is_del = 0 AND feed_questionid!=0 AND add_feedid=0 AND is_audit=1 and publish_time>='"
-            . $startdt . "' AND publish_time < '" . $enddt . "' and `uid` in (" . $expert . ")";
-        $list = model('Feed')->getAnswerListbyInterview($where, $limitnums.',10');
+        $limitnums = intval($_GET['limit']) * 10;
+        $fuhao = '>=';
+        if ($flansh == '1') {
+            $fuhao = '>';
+        }
+        $where = " is_del = 0 AND feed_questionid!=0 AND add_feedid=0 AND is_audit=1 and last_updtime " . $fuhao . " '"
+            . $startdt . "' AND last_updtime < '" . $enddt . "' and `uid` in (" . $expert . ")";
+        //echo $where;
+        //return;
+        $list = model('Feed')->getAnswerListbyInterview($where, $limitnums . ',10');
+        $this->assign('list', $list);
+        $dataindex = $_GET['dataindex'];
+        $this->assign('dataindex', $dataindex);
+        $this->display();
+    }
+
+    public function qfeedlist()
+    {
+        $startdt = intval($_GET['startdt']);
+        $enddt = intval($_GET['enddt']);
+        $expert = C('TopExpert');
+        $limitnums = intval($_GET['limit']) * 10;
+        $where = " is_del = 0 AND is_audit=1 AND feed_questionid=0 AND add_feedid=0 AND publish_time>='"
+            . $startdt . "' AND publish_time < '" . $enddt . "'";
+        $list = model('Feed')->getQuestionAndAnswerByInterview($where, $limitnums . ',10', 'publish_time desc', false);
 
         $this->assign('data', $list['data']);
         $this->display();
-
-        /*if(intval($list['count'])>0) {
-            $this->assign('qalastid', $list['data'][(count($list['data']) - 1)]['publish_time']);
-            $this->assign('data', $list['data']);
-            $this->display();
-        }
-        else
-        {
-            return '';
-        }*/
     }
 
 }

@@ -602,6 +602,14 @@ core.weibo = {
                 }
                 var postOk = mini_editor.childModels['post_ok'][0];
                 $(postOk).fadeIn('fast');
+                if($('.answerTab').html() != null) {
+                    $('.reveal-modal').animate({
+                        "opacity": 0
+                    }, 1000, function() {
+                        $('.reveal-modal').css({ 'visibility': 'hidden'});
+                    });
+                    $('.reveal-modal-bg').fadeOut(1000);
+                }
                 core.weibo.afterPost(mini_editor, textarea, attrs.topicHtml, description_editor, description, false, Qid, int_isadd);
                 if (!isbox) {
                     core.weibo.insertToList(msg.data, msg.feedId, questionid, int_isadd);
