@@ -142,6 +142,8 @@ class PassportAction extends Action
                 $status = 1;
             } else {
                 $regResult = model('user')->addUserByWeixin($loginInfo['openid'], 1);
+                //echo '{"status":' . $status . ',"info":"'.$regResult.'"}';
+                //return;
                 if ($regResult) {
                     model('Passport')->loginLocalWhitoutPassword($loginInfo['openid']);
                     $status = 1;
