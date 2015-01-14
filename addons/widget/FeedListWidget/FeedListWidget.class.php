@@ -266,7 +266,8 @@ class FeedListWidget extends Widget
                     }
                     $current_uid = $GLOBALS['ts']['mid'];
                     if ($var['uid'] != null && $var['uid'] != '0') $current_uid = $var['uid'];
-                    $where = ' uid=' . $current_uid . ' AND is_del = 0 AND feed_questionid=0 AND add_feedid=0 AND is_audit=1 ' . $LoadWhere;
+                    $user = model('user')->getUserInfo($current_uid);
+                    $where = ' is_del = 0 AND feed_questionid=0 AND add_feedid=0 AND is_audit=1 ' . $LoadWhere . ' and openid = \'' . $user['openid'] . '\'';
                     $list = model('Feed')->getQuestionAndAnswer($where, $this->limitnums);
                     //print_r($list);
                 }

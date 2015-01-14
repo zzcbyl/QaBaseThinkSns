@@ -33,7 +33,7 @@
             <div class="answerTabTitle">
                 <div style="float: left;"><b>访谈内容</b>　<input type="checkbox" id="autoFlash" checked="true" /> 自动刷新　
                     <a id="f5flash" href="javascript:autoflansh(1);">刷新</a></div>
-                <div style="float: right;"><a data-reveal-id="myModal" data-animation="fade" href="#">我要提问</a>　<a href="#userAsk">查看网友提问</a></div>
+                <div style="float: right;"><a id="answeraskdiv" data-reveal-id="myModal" data-animation="fade" href="#">我要提问</a>　<a href="#userAsk">查看网友提问</a></div>
                 <div class="clear"></div>
             </div>
             <div class="answerTabContent">
@@ -49,7 +49,7 @@
             <a name="userAsk"></a>
             <div class="userAnswerTabTitle">
                 <div style="float: left;"><b>网友提问</b>　<span style="color: #999;">(共{$dataCount}个问题)</span></div>
-                <div style="float: right;"><a data-reveal-id="myModal" data-animation="fade" href="#">我要提问</a></div>
+                <div id="useraskdiv" style="float: right;"><a data-reveal-id="myModal" data-animation="fade" href="#">我要提问</a></div>
                 <div class="clear"></div>
             </div>
             <div class="userAnswerTabContent">
@@ -98,13 +98,13 @@
 
     <div class="reveal-modal" id="myModal">
         <div class="msg_yq">
-            <div class="msg_yq_top">
+            <div class="msg_yq_top1">
                 <a href="javascript:void(0);" class="close close-reveal-modal"></a>
             </div>
             <div class="msg_yq_cont">
                 <div class="reg_five" style="width: 683px; padding-top: 0;">
                     <!--发布框-->
-                    {:W('SendWeibo',array('title'=>$title, 'topicHtml'=>$initHtml))}
+                    {:W('SendWeiboInterview',array('title'=>$title, 'topicHtml'=>$initHtml))}
                 </div>
             </div>
         </div>
@@ -123,11 +123,17 @@
     var page2=1;
     var stateInt = '{$stateInt}';
     $(document).ready(function(){
+        initTab1(0);
+        initTab2();
+        //进行中的访谈自动刷新
         if(stateInt=='1') {
-            initTab1(0);
-            initTab2();
             setInterval('autoflansh(0)',5000);
-            //autoflansh();
+        }
+        else
+        {
+            //已结束或者未开始的不可提问
+            $('#answeraskdiv').remove();
+            $('#useraskdiv').remove();
         }
     });
 

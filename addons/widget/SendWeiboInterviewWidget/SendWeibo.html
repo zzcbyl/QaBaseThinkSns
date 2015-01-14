@@ -1,0 +1,100 @@
+<!--提问-->
+
+<div class="tw_box"  model-node="weibo_post_box">
+    <div id="sendWeiboTab" model-node="mini_editor" model-args="prompt={$prompt}" style="position: relative;">
+        <h1>
+            一句话描述您的疑问</h1>
+        <div class="tw_input">
+            <textarea id="inputor{$time}" wrap="off" name="at" class="input_tips" style="word-wrap:normal; padding-right:60px; overflow:hidden; height:30px; line-height:30px; display:inline; color:#999; width:504px;" event-node="mini_editor_textarea" model-args='t=feed'>请用一句话描述您的困惑</textarea>
+            <div style="position:absolute; margin:-23px 530px 0; color:#999; width:60px; font-size:12px;"><span id="numsLeft">{$initNums}</span>/{$initNums}</div>
+        </div>
+        <h2>
+            问题描述<span>(选填)</span></h2>
+        <div class="tw_area">
+            <textarea style="width:559px; height:200px; line-height:20px; font-size: 14px; padding:5px; overflow-y:auto; background: none repeat scroll 0 0 #FFFFFF; border: 1px solid #DDDDDD; box-shadow: 1px 1px 3px #DCDCDC inset;color:#999;" ><if condition="trim($topicHtml) neq ''">{$topicHtml} </if>您可以在这里继续补充问题细节</textarea>
+        </div>
+        <div model-node="post_ok" style="display:none;text-align:center;position:absolute;left:45%;top:45%;width:100px"><i class="ico-ok"></i>{:L('PUBLIC_SHARE_SUCCESS')}</div>
+    </div>
+    <div class="tw_B" model-node="send_action">
+        <ul>
+            <li>
+                <input type="checkbox" name="noname" id="noname" value="111" style="vertical-align: middle;" /><label style="margin-left: 5px; vertical-align: middle" for="noname">匿名</label>
+            </li>
+            <li>
+
+            </li>
+            <!--<li><a href="#" class="twsp"></a></li>-->
+            <li>
+
+            </li>
+            <li></li>
+            <li>
+                <a class="tiwen_btn" event-node='{$post_event}' event-args='type={$type}&app_name={$app_name}&topicHtml={$initHtml}' value=""></a>
+
+                <input type="hidden" id="LSInviteUid" value="" />
+                <input type="hidden" id="InviteUid" value="" />
+                <input type="hidden" id="LSInviteUidLi" value="" />
+                <input type="hidden" id="InviteUidLi" value="" />
+                <input type="hidden" id="ExpertUid" value="" />
+            </li>
+        </ul>
+        
+    </div>
+
+    <div id="InvitedFriend" class="pengyou" style="display:none;"></div>
+</div>
+
+<script type="text/javascript" src="__THEME__/js/home/module.home.js"></script>
+<script type="text/javascript">
+var initNums = '{$initNums}';
+var shareNums = '{$shareNums}';
+var initHtml = '{$initHtml}';
+core.loadFile(THEME_URL+'/js/plugins/core.at.js');
+$(function (){
+	$('#change_weibo_tab').click(function (){
+		$('div[type="weibotab"]').hide();
+	});
+	if ( $('#inputor{$time}').get(0) != undefined ){
+		setTimeout(function (){
+			if ( initHtml ){
+				$('#inputor{$time}').focus();
+				$('#inputor{$time}').html(initHtml);
+			}
+		} , 300)
+	}
+	//$('#message_inputor').inputToEnd(initHtml);
+});
+setTimeout(function() {
+	atWho($('#inputor{$time}'));
+	atWho($('#message_inputor'));
+}, 1000);
+
+$(document).ready(function () {
+    var editor = $("#sendWeiboTab textarea");
+    $(editor[0]).focus(function () {
+        $(this).css("color", "#000");
+        if (this.value == "请用一句话描述您的困惑") {
+            this.value = "";
+        }
+    });
+    $(editor[0]).blur(function () {
+        if (this.value == "") {
+            $(this).css("color", "#999");
+            this.value = "请用一句话描述您的困惑";
+        }
+    });
+    $(editor[1]).focus(function () {
+        $(this).css("color", "#000");
+        if (this.value == "您可以在这里继续补充问题细节") {
+            this.value = "";
+        }
+    });
+    $(editor[1]).blur(function () {
+        if (this.value == "") {
+            $(this).css("color", "#999");
+            this.value = "您可以在这里继续补充问题细节";
+        }
+    });
+});
+
+</script>

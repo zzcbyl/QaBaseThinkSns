@@ -137,8 +137,9 @@ M.addEventFns({
 
             var inviteObj = this.parentModel;
             var inviteList = $(inviteObj).find('input').get(2);
+            var noname = $(inviteObj).find('input').get(0);
 
-            core.weibo.post_feed(_this, mini_editor, textarea, description_editor, description, questionid, false, '', 0, inviteList);
+            core.weibo.post_feed(_this, mini_editor, textarea, description_editor, description, questionid, false, '', 0, inviteList, noname.checked);
         }
     },
     post_addask: {	//追问

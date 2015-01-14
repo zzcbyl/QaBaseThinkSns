@@ -152,11 +152,12 @@ M.addEventFns({
             var questionid = $(mini_editor).find('input').get(0);
 
             var inviteObj = this.parentModel;
-            var inviteList = $(inviteObj).find('input').get(2);
+            var inviteList = $(inviteObj).find('input').get(3);
 
-            var openid = $(inviteObj).find('input').get(5);
+            var openid = $(inviteObj).find('input').get(6);
+            var noname = $(inviteObj).find('input').get(0);
 
-            core.weibo_mobile.post_feed(_this, mini_editor, textarea, description_editor, description, questionid, false, '', 0, inviteList, openid);
+            core.weibo_mobile.post_feed(_this, mini_editor, textarea, description_editor, description, questionid, false, '', 0, inviteList, openid, noname.checked);
         }
     },
     post_addask: {	//追问
