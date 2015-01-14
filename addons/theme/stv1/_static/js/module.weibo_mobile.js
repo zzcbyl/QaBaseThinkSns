@@ -49,6 +49,15 @@ if("undefinde" == typeof(gid)){
 if ("undefinde" == typeof (openid)) {
     var openid = '';
 }
+if ("undefinde" == typeof (expert)) {
+    var expert = '';
+}
+if ("undefinde" == typeof (startdt)) {
+    var startdt = '';
+}
+if ("undefinde" == typeof (enddt)) {
+    var enddt = '';
+}
 var _doc = document;
 var feedbtnlock = 0;
 var args = new Array();
@@ -66,6 +75,9 @@ args['feed_key']	= feed_key;
 args['topic_id'] 	= topic_id;
 args['gid'] = gid;
 args['openid'] = openid;
+args['expert'] = expert;
+args['startdt'] = startdt;
+args['enddt'] = enddt;
 
 if("undefined" == typeof(core.weibo_mobile)){	//只init一次
 	core.plugFunc('weibo_mobile',function(){

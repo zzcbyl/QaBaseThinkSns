@@ -21,6 +21,9 @@ core.weibo_mobile = {
         //alert(agrs.feedid);
         this.answerid = agrs.answerid;
         this.openid = agrs.openid;
+        this.expert = agrs.expert;
+        this.startdt = agrs.startdt;
+        this.enddt = agrs.enddt;
 
         //this.pre_page = "undefined" == typeof(pre_page) ? 1 :pre_page;//分页用到的前一页
         if ("undefined" == typeof (this.loadCount)) {
@@ -69,7 +72,7 @@ core.weibo_mobile = {
         _this.canLoading = false;
         //return;
         // 获取提问数据
-        $.get(U('widget/FeedListMobileNoFace/loadMore'), { 'loadId': _this.loadId, 'type': _this.feedType, 'uid': _this.uid, 'feed_type': _this.feed_type, 'feed_key': _this.feed_key, 'fgid': fgid, 'topic_id': _this.topic_id, 'load_count': _this.loadCount, 'gid': _this.gid, 'openid': _this.openid }, function (msg) {
+        $.get(U('widget/FeedListMobileNoFace/loadMore'), { 'loadId': _this.loadId, 'type': _this.feedType, 'uid': _this.uid, 'feed_type': _this.feed_type, 'feed_key': _this.feed_key, 'fgid': fgid, 'topic_id': _this.topic_id, 'load_count': _this.loadCount, 'gid': _this.gid, 'openid': _this.openid, 'startdt': _this.startdt, 'enddt': _this.enddt, 'expert': _this.expert }, function (msg) {
             //alert(msg.html);
             // 加载失败
             if (msg.status == "0" || msg.status == "-1") {
@@ -619,7 +622,14 @@ core.weibo_mobile = {
                     }
                 }
                 if (Oid != undefined && Oid != '') {
-                    location.href = U('public/MobileNew/myquestion&openid=' + Oid);
+                    //location.href = U('public/MobileNew/myquestion&openid=' + Oid);
+                    setTimeout(function () {
+                        var refurl = document.referrer;
+                        if(refurl)
+                            location.href = refurl;
+                        else
+                            location.href = U('public/MobileNew/myquestion&openid=' + Oid);
+                    }, 1000);
                 }
                 if (Qid != undefined && Qid != '') {
                     location.href = U('public/MobileNew/feed&feed_id=' + Qid);

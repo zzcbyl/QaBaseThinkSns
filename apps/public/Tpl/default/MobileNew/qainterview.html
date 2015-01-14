@@ -4,13 +4,25 @@
 </style>
 <div class="fontSize">
     <div class="container" style="width:auto; background:#fff; margin-top:0;">
-        {:W('FeedListMobileNoFace',array('type'=>$type,'expert'=>$expert,'openid'=>$openid))}
+        {:W('FeedListMobileNoFace',array('type'=>$type,'expert'=>$expert,'openid'=>$openid,'startdt'=>$startdt,'enddt'=>$enddt))}
     </div>
 </div>
 <div id="showShare" style="display:none; z-index:10;" onclick="javascript:document.getElementById('showShare').style.display='none';">
     <div id="coverAll" style="width:100%; height:100%; background:#ccc; color:#000; position:absolute; top:0px; left:0px; text-align:center; filter:alpha(opacity=90); -moz-opacity:0.9;-khtml-opacity: 0.9; opacity: 0.9;  z-index:9;"></div>
     <div id="jiantouDiv" style="width:170px; height:200px;  color:#000; position:absolute;  right:2pt; top:10pt; z-index:10; font-size:20pt;  background:url(__THEME__/image/jiantou.png) no-repeat"></div>
     <div id="shareText" style="width:149px; height:200px;  color:#000; position:absolute; top:60pt; margin-left:70pt; z-index:20; font-size:15pt; line-height:30pt; text-align:center;">点击右上角“┇”<br />分享到朋友圈</div>
+</div>
+<div style="width: 100%; background: #f3f3f3; line-height: 40px; height:40px; border: 2px solid #ddd; border-bottom: 4px solid #ddd; position:fixed; z-index:99; bottom:0; left:0; font-size: 14px;">
+    <div style="float: left; width: 33%; height:40px; text-align:center; border-right: 2px solid #ddd;">
+        <a href="{:U('public/MobileNew/qainterview',array('openid'=>$openid))}" style="margin:0px 0 0 20px;  display:block;">访谈内容</a>
+    </div>
+    <div style="float: left; width: 33%;  height:40px; text-align: center;border-right: 2px solid #ddd;">
+        <a href="{:U('public/MobileNew/qinterview',array('openid'=>$openid))}" style="margin:0px auto; display:block; ">网友提问</a>
+    </div>
+    <div style="float: left; width: 32%;  height:40px; text-align: center;">
+        <a href="{:U('public/MobileNew/quickask',array('openid'=>$openid))}" style="margin:0px auto; display:block; ">我要提问</a>
+    </div>
+    <div style="clear: both;"></div>
 </div>
 <script language="javascript">
     $(window).scroll(function () {
@@ -19,7 +31,7 @@
     function windowScrollUpload(obj) {
         $('#coverAll').css({
             'top': $(obj).scrollTop() + 'px'
-        })
+        });
 
         $('#jiantouDiv').css({
             'top': ($(obj).scrollTop() < 10 ? 10 : $(obj).scrollTop()) + 10 + 'px'

@@ -378,6 +378,62 @@ class MobileNewAction
     }
 
     /**
+     * 卢老师的回答(访谈内容)
+     *
+     * @return void
+     *
+     */
+    public function qainterview()
+    {
+        $InterView = model('Interview')->getInterView('iv_state=1', 1);
+        if (!empty($InterView) && !empty($InterView['data'][0])) {
+
+            $data = $InterView['data'][0];
+            $d['startdt'] = strtotime($data['iv_startdt']);
+            $d['enddt'] = strtotime($data['iv_enddt']);
+
+            //安全过滤
+            $d['type'] = 'qainterview';
+            $d['expert'] = C('TopExpert');
+            $d['openid'] = $_GET['openid'];
+            $this->assign($d);
+
+            $this->setTitle($data['iv_name']);
+            $this->setKeywords($data['iv_content']);
+
+        }
+        $this->display();
+    }
+
+    /**
+     * 网友提问(访谈)
+     *
+     * @return void
+     *
+     */
+    public function qinterview()
+    {
+        $InterView = model('Interview')->getInterView('iv_state=1', 1);
+        if (!empty($InterView) && !empty($InterView['data'][0])) {
+
+            $data = $InterView['data'][0];
+            $d['startdt'] = strtotime($data['iv_startdt']);
+            $d['enddt'] = strtotime($data['iv_enddt']);
+
+            //安全过滤
+            $d['type'] = 'qinterview';
+            $d['expert'] = C('TopExpert');
+            $d['openid'] = $_GET['openid'];
+            $this->assign($d);
+
+            $this->setTitle($data['iv_name']);
+            $this->setKeywords($data['iv_content']);
+
+        }
+        $this->display();
+    }
+
+    /**
      * 我的问答
      *
      * @return void
