@@ -43,11 +43,12 @@
     	    <div class="h_logo">
                 <a href="{:SITE_URL}" <php>if(strpos($_SERVER['HTTP_USER_AGENT'],'MSIE 6.0') !== false):</php>style="_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='{$site.logo}', sizingMethod='crop');_background:none;"<php>else:</php>style="background:url({$site.logo}) no-repeat center;"<php>endif;</php>> </a></div>
             <php>
-                if(ACTION_NAME=='square'){ $tabClass['square'] = 'current'; $tabClass['index'] = '';$tabClass['expert'] = ''; $tabClass['course'] = ''; $tabClass['book'] = ''; }
-                else if(ACTION_NAME=='expert') { $tabClass['expert'] = 'current'; $tabClass['square'] = ''; $tabClass['index'] = '';$tabClass['course'] = ''; $tabClass['book'] = ''; }
-                else if(ACTION_NAME=='course'||ACTION_NAME=='coursedetail') { $tabClass['course'] = 'current'; $tabClass['square'] = ''; $tabClass['index'] = '';  $tabClass['expert'] =''; $tabClass['book'] = ''; }
-                else if(ACTION_NAME=='book') { $tabClass['book'] = 'current'; $tabClass['square'] = ''; $tabClass['index'] = '';  $tabClass['expert'] =''; $tabClass['course'] = '';  }
-                else{ $tabClass['index'] = 'current'; $tabClass['square'] = ''; $tabClass['expert'] = '';$tabClass['course'] = ''; $tabClass['book'] = ''; }
+                if(ACTION_NAME=='square'){ $tabClass['square'] = 'current'; $tabClass['index'] = '';$tabClass['expert'] = ''; $tabClass['course'] = ''; $tabClass['book'] = ''; $tabClass['interview'] = ''; }
+                else if(ACTION_NAME=='expert') { $tabClass['expert'] = 'current'; $tabClass['square'] = ''; $tabClass['index'] = '';$tabClass['course'] = ''; $tabClass['book'] = ''; $tabClass['interview'] = ''; }
+                else if(ACTION_NAME=='course'||ACTION_NAME=='coursedetail') { $tabClass['course'] = 'current'; $tabClass['square'] = ''; $tabClass['index'] = '';  $tabClass['expert'] =''; $tabClass['book'] = ''; $tabClass['interview'] = ''; }
+                else if(ACTION_NAME=='book') { $tabClass['book'] = 'current'; $tabClass['square'] = ''; $tabClass['index'] = '';  $tabClass['expert'] =''; $tabClass['course'] = ''; $tabClass['interview'] = '';  }
+                else if(ACTION_NAME=='index' && MODULE_NAME=='Interview') { $tabClass['interview'] = 'current'; $tabClass['square'] = ''; $tabClass['index'] = '';$tabClass['expert'] = ''; $tabClass['course'] = ''; $tabClass['book'] = '';}
+                else{ $tabClass['index'] = 'current'; $tabClass['square'] = ''; $tabClass['expert'] = '';$tabClass['course'] = ''; $tabClass['book'] = ''; $tabClass['interview'] = ''; }
             </php>
             <ul class="menu">
                 <li><a class="{$tabClass.index}" href="{:SITE_URL}">首页</a></li>
@@ -55,6 +56,7 @@
                 <li><a class="{$tabClass.expert}" href="{:U('public/Passport/expert')}">专家</a></li>
                 <li><a class="{$tabClass.course}" href="{:U('public/Passport/course')}">课程</a></li>
                 <li><a class="{$tabClass.book}" href="{:U('public/Passport/book')}">著作</a></li>
+                <li><a class="{$tabClass.interview}" href="{:U('public/interview/index')}">访谈</a></li>
                 <!--<li><a href="#">活动</a></li>-->
             </ul>
             <div class="search_box">

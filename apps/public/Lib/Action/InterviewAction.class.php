@@ -35,6 +35,7 @@ class InterviewAction extends Action
                 $data['iv_startdt'] . "' AND publish_time < '" . $data['iv_enddt'] . "'";
             $list = model('Feed')->getQuestionAndAnswer($where, 10, 'publish_time desc', false);
             //print_r($list);
+
             $this->assign('dataCount', $list['count']);
             $this->assign('page2', $list['totalPages']);
 

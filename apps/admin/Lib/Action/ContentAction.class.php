@@ -241,7 +241,6 @@ class ContentAction extends AdministratorAction
         }
         echo json_encode($return);
         exit();
-
     }
 
     /**
