@@ -39,11 +39,13 @@
             <div class="answerTabContent">
                 <div id="feed-lists1" class="contsNum"></div>
             </div>
+            <php>if($page1!=0){</php>
             <div id="page" class="page" style="text-align: center; margin-top: 10px;">
                 <a id="prePage" href="javascript:jumpPrePage1();">上一页</a>
                 <span style="margin-left: 5px;"><span id="pageNum1"></span>/{$page1}</span>
                 <a id="nextPage" href="javascript:jumpnextPage1();">下一页</a>
             </div>
+            <php>}</php>
         </div>
         <div class="userAnswerTab">
             <a name="userAsk"></a>
@@ -55,11 +57,13 @@
             <div class="userAnswerTabContent">
                 <div id="feed-lists2" class="contsNum"></div>
             </div>
+            <php>if($page2!=0){</php>
             <div id="page2" class="page" style="text-align: center; margin-top: 10px;">
                 <a id="prePage2" href="javascript:jumpPrePage2();">上一页</a>
                 <span style="margin-left: 5px;"><span id="pageNum2"></span>/{$page2}</span>
                 <a id="nextPage2" href="javascript:jumpnextPage2();">下一页</a>
             </div>
+            <php>}</php>
         </div>
     </div>
     <div class="cont_right" style="border: none; width: 251px;">
