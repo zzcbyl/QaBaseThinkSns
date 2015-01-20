@@ -74,6 +74,8 @@ class InterviewAction extends Action
     {
         $flansh = $_GET['flansh'];
         $startdt = intval($_GET['startdt']);
+        //echo $startdt;
+        //return;
         $enddt = intval($_GET['enddt']);
         $expert = C('TopExpert');
         $limitnums = intval($_GET['limit']) * 10;
