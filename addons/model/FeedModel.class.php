@@ -7,7 +7,7 @@
 class FeedModel extends Model {
 
 	protected $tableName = 'feed';
-	protected $fields = array('feed_id','uid','type','app','app_row_id','app_row_table','publish_time','is_del','from','comment_count','repost_count','comment_all_count','digg_count','is_repost','is_audit','feed_questionid','feed_quid','answer_count','disapprove_count','feed_pv','thank_count','add_feedid','following_count','invite_count','isInviteAnswer','last_updtime','openid','_pk'=>'feed_id');
+	protected $fields = array('feed_id','uid','type','app','app_row_id','app_row_table','publish_time','is_del','from','comment_count','repost_count','comment_all_count','digg_count','is_repost','is_audit','feed_questionid','feed_quid','answer_count','disapprove_count','feed_pv','thank_count','add_feedid','following_count','invite_count','isInviteAnswer','last_updtime','openid','interview_audit','_pk'=>'feed_id');
 
 	public $templateFile = '';			// 模板文件
 
@@ -1763,6 +1763,31 @@ class FeedModel extends Model {
 		
 		return $inviteResult;
 	}
+
+    /**
+     * 审核访谈提问
+     * @param integer $feed_id 提问ID
+     * @return array 操作后的结果信息数组
+     */
+    public function doAuditInterview($feed_id)
+    {
+        $return = array('status'=>'0');
+        if(empty($feed_id)) {
+            $return['data'] = '请选择提问！';
+        } else {
+            $map['feed_id'] = is_array($feed_id) ? array('IN', $feed_id) : intval($feed_id);
+            $save['interview_audit'] = 1;
+            $res = $this->where($map)->save($save);
+            if($res) {
+                $return = array('status'=>1);
+            }
+
+            //更新缓存
+            $this->cleanCache($feed_id);
+        }
+        return $return;
+
+    }
 	
 	/**
 	 * 获取追问信息

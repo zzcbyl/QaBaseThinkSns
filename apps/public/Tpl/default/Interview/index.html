@@ -108,7 +108,7 @@
             <div class="msg_yq_cont">
                 <div class="reg_five" style="width: 683px; padding-top: 0;">
                     <!--发布框-->
-                    {:W('SendWeiboInterview',array('title'=>$title, 'topicHtml'=>$initHtml))}
+                    {:W('SendWeiboInterview',array('title'=>$title, 'topicHtml'=>$initHtml, 'Interview'=>'1'))}
                 </div>
             </div>
         </div>
@@ -150,12 +150,11 @@
         $('#pageNum1').html(page1);
         $('#feed-lists1').html("<div style='margin-top: 50px; text-align: center;'>数据加载中 <img src='__THEME__/image/loadingAnimation.gif' /></div>");
         $.get(url1,{startdt : sdt, enddt : edt, limit:page1-1, dataindex:newdataindex },function(msg){
-            if(msg == '')
-            {
+            if(msg == '') {
                 $('#feed-lists1').html('<div style="text-align: center; margin-top: 20px;">暂无数据</div>');
             }
             else
-            $('#feed-lists1').html(msg);
+                $('#feed-lists1').html(msg);
             //alert(newdata1);
         });
     }
@@ -164,7 +163,11 @@
         $('#pageNum2').html(page2);
         $('#feed-lists2').html("<div style='margin-top: 50px; text-align: center;'>数据加载中 <img src='__THEME__/image/loadingAnimation.gif' /></div>");
         $.get(url2,{startdt : sdt, enddt : edt, limit:page2-1 },function(msg){
-            $('#feed-lists2').html(msg);
+            if(msg == '') {
+                $('#feed-lists2').html('<div style="text-align: center; margin-top: 20px;">暂无数据</div>');
+            }
+            else
+                $('#feed-lists2').html(msg);
         });
     }
 

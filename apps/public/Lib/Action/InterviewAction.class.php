@@ -25,13 +25,13 @@ class InterviewAction extends Action
             $this->getState($data['iv_startdt'], $data['iv_enddt']);
             $this->assign('InterView', $data);
 
-            $where = " is_del = 0 AND feed_questionid!=0 AND add_feedid=0 AND is_audit=1 and publish_time>='"
+            $where = " is_del = 0 AND feed_questionid!=0 AND add_feedid=0 AND is_audit=1 and interview_audit=1 and publish_time>='"
                 . $data['iv_startdt'] . "' AND publish_time < '" . $data['iv_enddt'] . "' and `uid` in (" . $data['iv_object'] . ")";
             $list = model('Feed')->getQuestionAndAnswer($where, 10, 'publish_time desc', false);
             //print_r($list);
             $this->assign('page1', $list['totalPages']);
 
-            $where = " is_audit=1 AND is_del = 0 AND feed_questionid=0 AND add_feedid=0  and publish_time>='" .
+            $where = " is_audit=1 AND is_del = 0 AND feed_questionid=0 AND add_feedid=0 and interview_audit=1 and publish_time>='" .
                 $data['iv_startdt'] . "' AND publish_time < '" . $data['iv_enddt'] . "'";
             $list = model('Feed')->getQuestionAndAnswer($where, 10, 'publish_time desc', false);
             //print_r($list);
@@ -83,7 +83,7 @@ class InterviewAction extends Action
         if ($flansh == '1') {
             $fuhao = '>';
         }
-        $where = " is_del = 0 AND feed_questionid!=0 AND add_feedid=0 AND is_audit=1 and last_updtime " . $fuhao . " '"
+        $where = " is_del = 0 AND feed_questionid!=0 AND add_feedid=0 AND is_audit=1 and interview_audit=1 and last_updtime " . $fuhao . " '"
             . $startdt . "' AND last_updtime < '" . $enddt . "' and `uid` in (" . $expert . ")";
         //echo $where;
         //return;
@@ -100,7 +100,7 @@ class InterviewAction extends Action
         $enddt = intval($_GET['enddt']);
         $expert = C('TopExpert');
         $limitnums = intval($_GET['limit']) * 10;
-        $where = " is_del = 0 AND is_audit=1 AND feed_questionid=0 AND add_feedid=0 AND publish_time>='"
+        $where = " is_del = 0 AND is_audit=1 AND feed_questionid=0 AND add_feedid=0 AND interview_audit=1 AND publish_time>='"
             . $startdt . "' AND publish_time < '" . $enddt . "'";
         $list = model('Feed')->getQuestionAndAnswerByInterview($where, $limitnums . ',10', 'publish_time desc', false);
 
