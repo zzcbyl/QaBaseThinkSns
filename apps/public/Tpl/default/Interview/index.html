@@ -112,7 +112,6 @@
 </div>
 
 <script type="text/javascript">
-    var newdata1=''; //最新回答数据id
     var sdt = '{$InterView.iv_startdt}';
     var edt = '{$InterView.iv_enddt}';
     var url1 = U('public/Interview/qafeedlist');
@@ -122,6 +121,7 @@
     var page1=1;
     var page2=1;
     var stateInt = '{$stateInt}';
+    var newdata1=sdt; //最新回答数据id
     $(document).ready(function(){
         initTab1(0);
         initTab2();
@@ -142,6 +142,7 @@
      * @param newdataindex 是否获取最新发布时间 0获取,1不获取
      */
     function initTab1(newdataindex) {
+        //alert(sdt);
         $('#pageNum1').html(page1);
         $('#feed-lists1').html("<div style='margin-top: 50px; text-align: center;'>数据加载中 <img src='__THEME__/image/loadingAnimation.gif' /></div>");
         $.get(url1,{startdt : sdt, enddt : edt, limit:page1-1, dataindex:newdataindex },function(msg){
