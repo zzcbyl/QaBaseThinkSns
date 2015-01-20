@@ -185,7 +185,7 @@
     }
 
     function autoflansh(set) {
-        if ($('#autoFlash').attr('checked') || set == 1) {
+        if (($('#autoFlash').attr('checked') || set == 1) && newdata1 != sdt) {
             $.get(url1,{startdt : newdata1, enddt : edt, limit:0, dataindex:0, flansh:1, random:Math.round() },function(msg){
                 //alert(newdata1);
                 $('#feed-lists1').prepend(msg);
