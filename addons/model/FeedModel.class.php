@@ -342,7 +342,8 @@ class FeedModel extends Model {
 	 * @return array 提问列表数据
 	 */
 	public function getList($map, $limit = 10 , $order = 'publish_time desc') {
-		$feedlist = $this->field('feed_id')->where($map)->order($order)->findPage($limit); 
+		$feedlist = $this->field('feed_id')->where($map)->order($order)->findPage($limit);
+        //echo $this->getLastSql();
 		$feed_ids = getSubByKey($feedlist['data'], 'feed_id');
 		$feedlist['data'] = $this->getFeeds($feed_ids);
 		
@@ -1778,6 +1779,11 @@ class FeedModel extends Model {
             $map['feed_id'] = is_array($feed_id) ? array('IN', $feed_id) : intval($feed_id);
             $save['interview_audit'] = 1;
             $res = $this->where($map)->save($save);
+
+            $map1['feed_questionid'] = is_array($feed_id) ? array('IN', $feed_id) : intval($feed_id);
+            $save['interview_audit'] = 1;
+            $res1 = $this->where($map1)->save($save);
+
             if($res) {
                 $return = array('status'=>1);
             }

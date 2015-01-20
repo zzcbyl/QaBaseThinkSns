@@ -129,10 +129,15 @@ class FeedAction extends Action
         }
 
         //根据配置设置访谈内容是否需要审核
-        if (C('AuditInterview') == 0)
+        if (intval($d['questionid']) <= 0) {
+            if (C('AuditInterview') == 0)
+                $d['interview_audit'] = 1;
+            else
+                $d['interview_audit'] = 0;
+        } else {
+            //回答不需要审核
             $d['interview_audit'] = 1;
-        else
-            $d['interview_audit'] = 0;
+        }
 
         if (!$data = model('Feed')->put($uid, $app, $type, $d)) {
             $return = array('status' => 0, 'data' => model('Feed')->getError());

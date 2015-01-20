@@ -954,10 +954,10 @@ admin.checkProfile = function(form){
     if(form.field_key.value=='' || getLength(form.field_key.value) < 1){
         ui.error( L('PUBLIC_KEY_ISNULL') );return false;
     }
-    if(form.field_name.value==''　|| getLength(form.field_name.value) < 1 ){
+    if(form.field_name.value==''|| getLength(form.field_name.value) < 1 ){
         ui.error( L('PUBLIC_NAME_ISNULL') );return false;
     }
-    if(form.field_type.value==''　|| getLength(form.field_type.value) < 1 ){
+    if(form.field_type.value==''|| getLength(form.field_type.value) < 1 ){
         ui.error( '字段类型不能为空' );return false;
     }
     return true;
@@ -1030,7 +1030,7 @@ admin.configWidget = function(id){
 };
 
 admin.checkAddArticle = function(form){
-    if(form.title.value == '' ||　getLength(form.title.value) < 1 ){
+    if(form.title.value == '' ||getLength(form.title.value) < 1 ){
         ui.error( L('PUBLIC_TITLE_ISNULL') );return false;
     }
 

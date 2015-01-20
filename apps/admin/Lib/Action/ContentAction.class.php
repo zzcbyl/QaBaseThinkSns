@@ -46,7 +46,7 @@ class ContentAction extends AdministratorAction
         $this->pageButton[] = array('title' => L('PUBLIC_DYNAMIC_SEARCH'), 'onclick' => "admin.fold('search_form')");
         if ($isRec == 0 && $is_audit == 1) {
             $this->pageButton[] = array('title' => L('PUBLIC_DYNAMIC_DELETE'), 'onclick' => "admin.ContentEdit('','delFeed','" . L('PUBLIC_STREAM_DELETE') . "','" . L('PUBLIC_DYNAMIC') . "')");
-        } else if ($is_Rec == 0 && $is_audit == 0) {
+        } else if ($isRec == 0 && $is_audit == 0) {
             $this->pageButton[] = array('title' => '通过', 'onclick' => "admin.ContentEdit('','auditFeed','" . '通过' . "','" . L('PUBLIC_DYNAMIC') . "')");
             $this->pageButton[] = array('title' => '删除', 'onclick' => "admin.ContentEdit('','delFeed','" . L('PUBLIC_STREAM_DELETE') . "','" . L('PUBLIC_DYNAMIC') . "')");
         } else {
@@ -113,7 +113,7 @@ class ContentAction extends AdministratorAction
         $this->pageButton[] = array('title' => '搜索回答', 'onclick' => "admin.fold('search_form')");
         if ($isRec == 0 && $is_audit == 1) {
             $this->pageButton[] = array('title' => '删除回答', 'onclick' => "admin.ContentEdit('','delFeed','" . L('PUBLIC_STREAM_DELETE') . "','" . L('PUBLIC_DYNAMIC') . "')");
-        } else if ($is_Rec == 0 && $is_audit == 0) {
+        } else if ($isRec == 0 && $is_audit == 0) {
             $this->pageButton[] = array('title' => '通过', 'onclick' => "admin.ContentEdit('','auditFeed','" . '通过' . "','" . L('PUBLIC_DYNAMIC') . "')");
             $this->pageButton[] = array('title' => '删除', 'onclick' => "admin.ContentEdit('','delFeed','" . L('PUBLIC_STREAM_DELETE') . "','" . L('PUBLIC_DYNAMIC') . "')");
         } else {
@@ -264,7 +264,7 @@ class ContentAction extends AdministratorAction
         $this->pageButton[] = array('title' => L('PUBLIC_SEARCH_COMMENT'), 'onclick' => "admin.fold('search_form')");
         if ($isRec == 0 && $is_audit == 1) {
             $this->pageButton[] = array('title' => L('PUBLIC_DELETE_COMMENT'), 'onclick' => "admin.ContentEdit('','delComment','" . L('PUBLIC_STREAM_DELETE') . "','" . L('PUBLIC_STREAM_COMMENT') . "')");
-        } else if ($is_Rec == 0 && $is_audit == 0) {
+        } else if ($isRec == 0 && $is_audit == 0) {
             $this->pageButton[] = array('title' => '通过', 'onclick' => "admin.ContentEdit('','auditComment','" . '通过' . "','" . L('PUBLIC_DYNAMIC') . "')");
             $this->pageButton[] = array('title' => '删除', 'onclick' => "admin.ContentEdit('','delComment','" . L('PUBLIC_STREAM_DELETE') . "','" . L('PUBLIC_DYNAMIC') . "')");
         } else {
@@ -651,7 +651,7 @@ class ContentAction extends AdministratorAction
             $this->assign('jumpUrl', U('admin/Content/topic'));
             $this->success(L('PUBLIC_ADD_SUCCESS'));
         } else {
-            $this->error($user->getLastError());
+            $this->error(model('FeedTopicAdmin')->getLastError());
         }
     }
 
@@ -767,7 +767,7 @@ class ContentAction extends AdministratorAction
             $this->assign('jumpUrl', U('admin/Content/topic'));
             $this->success(L('PUBLIC_SYSTEM_MODIFY_SUCCESS'));
         } else {
-            $this->error($user->getLastError());
+            $this->error(D('feed_topic')->getLastError());
         }
     }
 
@@ -991,11 +991,12 @@ class ContentAction extends AdministratorAction
         $this->_listpk = 'iv_id';
         $this->pageTab[] = array('title' => '访谈列表', 'tabHash' => 'list', 'url' => U('admin/Content/interview'));
         $this->pageTab[] = array('title' => '添加访谈', 'tabHash' => 'interviewadd', 'url' => U('admin/Content/interviewadd'));
-        $this->pageKeyList = array('iv_id', 'iv_name', 'iv_content', 'iv_startdt', 'iv_enddt', 'iv_state', 'iv_object', 'iv_crt');
+        $this->pageKeyList = array('iv_id', 'iv_name', 'iv_content', 'iv_startdt', 'iv_enddt', 'iv_state', 'iv_object', 'iv_crt', 'operate');
         $listData = model('Interview')->getInterView();
         foreach ($listData['data'] as &$v) {
-            $v['iv_name'] = '<div style="width: 150px; padding: 0 5px;">'.$v['iv_name'].'</div>';
-            $v['iv_content'] = '<div style="width: 300px; padding: 0 5px;">'.$v['iv_content'].'</div>';
+            $v['operate'] = "<a href='" . U('admin/Content/InterviewFeedUnAudit', array('pagetitle' => $v['iv_name'], 'sdt' => strtotime($v['iv_startdt']), 'edt' => strtotime($v['iv_enddt']))) . "' >待审列表</a>";
+            $v['iv_name'] = '<div style="width: 150px; padding: 0 5px;">' . $v['iv_name'] . '</div>';
+            $v['iv_content'] = '<div style="width: 300px; padding: 0 5px;">' . $v['iv_content'] . '</div>';
         }
         $this->displayList($listData);
 
@@ -1017,9 +1018,7 @@ class ContentAction extends AdministratorAction
 
             if (!$result) {
                 $errorinfo = model('Interview')->getError();
-            }
-            else
-            {
+            } else {
                 $errorinfo = '添加成功';
             }
         }
@@ -1027,6 +1026,46 @@ class ContentAction extends AdministratorAction
         $this->assign('errorinfo', $errorinfo);
 
         $this->display();
+    }
+
+    public function InterviewFeedUnAudit()
+    {
+        $sdt = $_GET['sdt'];
+        $edt = $_GET['edt'];
+        $this->assign('pageTitle', $_GET['pagetitle']);
+        $this->pageKeyList = array('feed_id', 'uid', 'uname', 'body', 'description', 'publish_time', 'type', 'from');
+        $this->pageTab[] = array('title' => '待审列表', 'tabHash' => 'unAudit', 'url' => '#');
+        $this->pageTab[] = array('title' => '访谈列表', 'tabHash' => 'list', 'url' => U('admin/Content/interview'));
+        $this->pageButton[] = array('title' => '通过', 'onclick' => "admin.ContentEdit('','InterviewAuditFeed','" . '通过' . "','" . L('PUBLIC_DYNAMIC') . "')");
+
+        $where = ' is_del = 0 and is_audit = 1 and interview_audit = 0 and feed_questionid = 0 and add_feedid = 0 and last_updtime>= ' . $sdt . ' and last_updtime <' . $edt;
+        $listData = model('Feed')->getList($where, 20);
+        foreach ($listData['data'] as &$v) {
+            $v['uname'] = $v['user_info']['space_link'];
+            $v['type'] = $this->opt['type'][$v['type']];
+            $v['from'] = $this->from[$v['from']];
+            $v['body'] = '<div style="width:200px;line-height:22px" model-node="feed_list" class="feed_list">' . $v['body'] . '　<br /><a target="_blank" href="' . U('public/Index/feed', array('feed_id' => $v['feed_id'], 'uid' => $v['uid'])) . '">' . L('PUBLIC_VIEW_DETAIL') . '&raquo;</a>&nbsp;&nbsp;&nbsp;&nbsp;<a target="_blank" href ="' . U('admin/Content/answer', array('feed_id' => $v['feed_id'])) . '">查看回答(' . $v['answer_count'] . ')&raquo;</a></div>';
+            $v['description'] = '<div style="width:500px;line-height:22px" model-node="feed_list" class="feed_list">' . getShort($v['description'], 100, '...') . '  </div>';
+            $v['publish_time'] = date('Y-m-d H:i:s', $v['publish_time']);
+        }
+        $this->_listpk = 'feed_id';
+        //print_r($listData);
+        $this->displayList($listData);
+    }
+
+
+    //访谈提问通过审核
+    public function InterviewAuditFeed()
+    {
+
+        $return = model('Feed')->doAuditInterview($_POST['id']);
+        if ($return['status'] == 0) {
+            $return['data'] = L('PUBLIC_ADMIN_OPRETING_ERROR');
+        } else {
+            $return['data'] = L('PUBLIC_ADMIN_OPRETING_SUCCESS');
+        }
+        echo json_encode($return);
+        exit();
     }
 
 }
