@@ -146,6 +146,11 @@
         $('#pageNum1').html(page1);
         $('#feed-lists1').html("<div style='margin-top: 50px; text-align: center;'>数据加载中 <img src='__THEME__/image/loadingAnimation.gif' /></div>");
         $.get(url1,{startdt : sdt, enddt : edt, limit:page1-1, dataindex:newdataindex },function(msg){
+            if(msg == '')
+            {
+                $('#feed-lists1').html('<div style="text-align: center; margin-top: 20px;">暂无数据</div>');
+            }
+            else
             $('#feed-lists1').html(msg);
             //alert(newdata1);
         });
@@ -185,7 +190,7 @@
     }
 
     function autoflansh(set) {
-        if (($('#autoFlash').attr('checked') || set == 1) && newdata1 != sdt) {
+        if (($('#autoFlash').attr('checked') || set == 1)) {
             $.get(url1,{startdt : newdata1, enddt : edt, limit:0, dataindex:0, flansh:1, random:Math.round() },function(msg){
                 //alert(newdata1);
                 $('#feed-lists1').prepend(msg);
