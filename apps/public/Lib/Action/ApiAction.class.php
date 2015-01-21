@@ -429,7 +429,7 @@ class ApiAction
 
         $account = t($login);
 
-        if(!model("Register")->isValidAccount($account)) {
+        if (!model("Register")->isValidAccount($account)) {
             echo '{"status":0,"info":"' . model("Register")->getLastError() . '","data":""}';
             return;
         }
@@ -507,17 +507,35 @@ class ApiAction
         $data = '';
 
         $result = model('feed')->get($feedid);
-        if($result)
-        {
+        if ($result) {
             $status = 1;
             $returnInfo = '';
-            $data=$result;
-        }
-        else
-        {
+            $data = $result;
+        } else {
             $returnInfo = '问答不存在';
         }
 
         echo '{"status":' . $status . ',"info":"' . $returnInfo . '","data":[' . json_encode($data) . ']}';
+    }
+
+    public function getInterviewFeed()
+    {
+        if (intval($_GET['p']) > 0) {
+            $InterView = model('Interview')->getInterView('iv_state=1', 1);
+            if (!empty($InterView) && !empty($InterView['data'][0])) {
+                $data = $InterView['data'][0];
+                $startdt = strtotime($data['iv_startdt']);
+                $enddt = strtotime($data['iv_enddt']);
+                $expert = C('TopExpert');
+                $limitnums = (intval($_GET['p']) - 1) * 10;
+                $where = " is_del = 0 AND feed_questionid!=0 AND add_feedid=0 AND is_audit=1 and interview_audit=1 and last_updtime >='"
+                    . $startdt . "' AND last_updtime < '" . $enddt . "' and `uid` in (" . $expert . ")";
+                $list = model('Feed')->getAnswerListbyInterview($where, $limitnums . ',10');
+                //echo json_encode($list['data']);
+                echo '{"status":1,"info":"","data":' . json_encode($list['data']) . '}';
+                return;
+            }
+        }
+        echo '{"status":0,"info":"暂无访谈内容","data":}';
     }
 }
