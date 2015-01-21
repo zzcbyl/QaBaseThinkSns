@@ -991,7 +991,7 @@ class ContentAction extends AdministratorAction
         $this->pageTab[] = array('title' => '访谈列表', 'tabHash' => 'list', 'url' => U('admin/Content/interview'));
         $this->pageTab[] = array('title' => '添加访谈', 'tabHash' => 'interviewadd', 'url' => U('admin/Content/interviewadd'));
         $this->pageKeyList = array('iv_id', 'iv_name', 'iv_content', 'iv_startdt', 'iv_enddt', 'iv_state', 'iv_object', 'iv_crt', 'operate');
-        $listData = model('Interview')->getInterView();
+        $listData = model('Interview')->getInterViewPage();
         foreach ($listData['data'] as &$v) {
             $v['operate'] = "<a href='" . U('admin/Content/InterviewFeedUnAudit', array('pagetitle' => $v['iv_name'], 'sdt' => strtotime($v['iv_startdt']), 'edt' => strtotime($v['iv_enddt']))) . "' >待审列表</a>";
             $v['iv_name'] = '<div style="width: 150px; padding: 0 5px;">' . $v['iv_name'] . '</div>';

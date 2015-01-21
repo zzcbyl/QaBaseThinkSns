@@ -379,8 +379,17 @@ class MobileNewAction
 
     public function interviewlist()
     {
-
+        if(empty($_GET['openid']))
+        {
+            return;
+        }
+        $this->assign('openid', $_GET['openid']);
+        $InterView = model('Interview')->getInterView('', 20);
+        $this->assign('InterView', $InterView);
+        $this->setTitle("卢勤问答访谈汇总");
+        $this->display();
     }
+
 
     /**
      * 卢老师的回答(访谈内容)
@@ -390,7 +399,11 @@ class MobileNewAction
      */
     public function qainterview()
     {
-        $InterView = model('Interview')->getInterView('iv_state=1', 1);
+        if(empty($_GET['interview_id']))
+        {
+            return;
+        }
+        $InterView = model('Interview')->getInterView('iv_id='.$_GET['interview_id'], 1);
         if (!empty($InterView)) {
 
             $data = $InterView[0];
@@ -418,7 +431,11 @@ class MobileNewAction
      */
     public function qinterview()
     {
-        $InterView = model('Interview')->getInterView('iv_state=1', 1);
+        if(empty($_GET['interview_id']))
+        {
+            return;
+        }
+        $InterView = model('Interview')->getInterView('iv_id='.$_GET['interview_id'], 1);
         if (!empty($InterView)) {
 
             $data = $InterView[0];
@@ -538,7 +555,7 @@ class MobileNewAction
         //获取用户
         $uid = -1;
 
-        if ($_POST['IsNoName']=='false') {
+        if ($_POST['IsNoName'] == 'false') {
             if (!empty($d['openid'])) {
                 $user = model('user')->getUserInfoByOpenID($d['openid']);
                 if ($user) {

@@ -43,16 +43,31 @@ class InterviewModel extends Model
         return true;
     }
 
-
-    public function getInterView($where = '', $limit = 20, $format = true)
+    public function getInterViewPage($where = '', $limit, $format = true)
     {
-        $list = D('interview')->where($where)->order('iv_id desc')->limit($limit)->select();
+        $list = D('interview')->where($where)->order('iv_id desc')->findPage($limit);
         //数据格式化
         if($format) {
-            foreach ($list as $k => $v) {
+            foreach ($list['data'] as $k => $v) {
                 $v['iv_startdt'] = date('Y-m-d H:i:s', $v['iv_startdt']);
                 $v['iv_enddt'] = date('Y-m-d H:i:s', $v['iv_enddt']);
                 $v['iv_state'] = $v['iv_state'] == 1 ? '正常' : '已结束';
+                $v['iv_crt'] = date('Y-m-d H:i:s', $v['iv_crt']);
+                $list['data'][$k] = $v;
+            }
+        }
+        return $list;
+    }
+
+    public function getInterView($where = '', $limit, $format = true)
+    {
+        $list = D('interview')->where($where)->order('iv_id desc')->limit($limit)->select();
+        //数据格式化
+        if ($format) {
+            foreach ($list as $k => $v) {
+                $v['iv_state'] = $this->getState($v['iv_startdt'], $v['iv_enddt']);
+                $v['iv_startdt'] = date('Y-m-d H:i:s', $v['iv_startdt']);
+                $v['iv_enddt'] = date('Y-m-d H:i:s', $v['iv_enddt']);
                 $v['iv_crt'] = date('Y-m-d H:i:s', $v['iv_crt']);
                 $list[$k] = $v;
             }
@@ -60,6 +75,19 @@ class InterviewModel extends Model
         return $list;
     }
 
+    private function getState($startdt, $enddt)
+    {
+        $str = '';
+        $currentdt = intval(time());
+        if ($startdt > $currentdt) {
+            $str = '未开始';
+        } else if ($enddt < $currentdt) {
+            $str = '已结束';
+        } else {
+            $str = '进行中...';
+        }
+        return $str;
+    }
 
 
 }
