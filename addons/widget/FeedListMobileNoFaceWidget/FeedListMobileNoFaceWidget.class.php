@@ -247,7 +247,9 @@ class FeedListMobileNoFaceWidget extends Widget
                 $where = " is_del = 0 AND feed_questionid!=0 AND add_feedid=0 AND is_audit=1 and interview_audit=1 and last_updtime >= '" . $startdt . "' " . $LoadWhere . " and `uid` in (" . $var['expert'] . ")";
                 $list = model('Feed')->getAnswerList($where, $this->limitnums, 'last_updtime desc');
                 //print_r(model('Feed')->getLastSql());
-                //print($where);
+                //print_r($list);
+                //echo $list['data'][(count($list['data']) - 1)]['last_updtime'];
+                //return model('Feed')->getLastSql();
                 break;
             case 'qinterview':    //网友提问(访谈)
                 $startdt = $var['startdt'];
@@ -304,9 +306,15 @@ class FeedListMobileNoFaceWidget extends Widget
                     $content['firstId'] = $var['firstId'] = $list['data'][0]['invite']['invite_answer_id'];
                     $content['lastId'] = $var['lastId'] = $list['data'][(count($list['data']) - 1)]['invite']['invite_answer_id'];
                     break;
-                case 'qinterview':
-                case 'lls_answer':
                 case 'qainterview':
+                    $content['firstId'] = $var['firstId'] = $list['data'][0]['answer'][0]['last_updtime'];
+                    $content['lastId'] = $var['lastId'] = $list['data'][(count($list['data']) - 1)]['answer'][0]['last_updtime'];
+                    break;
+                case 'qinterview':
+                    $content['firstId'] = $var['firstId'] = $list['data'][0]['last_updtime'];
+                    $content['lastId'] = $var['lastId'] = $list['data'][(count($list['data']) - 1)]['last_updtime'];
+                break;
+                case 'lls_answer':
                 case 'all':
                     $content['firstId'] = $var['firstId'] = $list['data'][0]['last_updtime'];
                     $content['lastId'] = $var['lastId'] = $list['data'][(count($list['data']) - 1)]['last_updtime'];

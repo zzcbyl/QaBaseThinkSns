@@ -71,6 +71,7 @@ core.weibo_mobile = {
         var _this = this;
         _this.canLoading = false;
         //return;
+        //alert(_this.loadId);
         // 获取提问数据
         $.get(U('widget/FeedListMobileNoFace/loadMore'), { 'loadId': _this.loadId, 'type': _this.feedType, 'uid': _this.uid, 'feed_type': _this.feed_type, 'feed_key': _this.feed_key, 'fgid': fgid, 'topic_id': _this.topic_id, 'load_count': _this.loadCount, 'gid': _this.gid, 'openid': _this.openid, 'startdt': _this.startdt, 'enddt': _this.enddt, 'expert': _this.expert }, function (msg) {
             //alert(msg.html);

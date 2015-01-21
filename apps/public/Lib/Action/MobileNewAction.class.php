@@ -391,9 +391,9 @@ class MobileNewAction
     public function qainterview()
     {
         $InterView = model('Interview')->getInterView('iv_state=1', 1);
-        if (!empty($InterView) && !empty($InterView['data'][0])) {
+        if (!empty($InterView)) {
 
-            $data = $InterView['data'][0];
+            $data = $InterView[0];
             $d['startdt'] = strtotime($data['iv_startdt']);
             $d['enddt'] = strtotime($data['iv_enddt']);
 
@@ -419,9 +419,9 @@ class MobileNewAction
     public function qinterview()
     {
         $InterView = model('Interview')->getInterView('iv_state=1', 1);
-        if (!empty($InterView) && !empty($InterView['data'][0])) {
+        if (!empty($InterView)) {
 
-            $data = $InterView['data'][0];
+            $data = $InterView[0];
             $d['startdt'] = strtotime($data['iv_startdt']);
             $d['enddt'] = strtotime($data['iv_enddt']);
 
