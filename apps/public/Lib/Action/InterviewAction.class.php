@@ -89,7 +89,7 @@ class InterviewAction extends Action
         //echo $where;
         //return;
         $list = model('Feed')->getAnswerListbyInterview($where, $limitnums . ',10');
-        echo model('Feed')->getLastSql();
+        //echo model('Feed')->getLastSql();
         $this->assign('list', $list);
         $dataindex = $_GET['dataindex'];
         $this->assign('dataindex', $dataindex);
