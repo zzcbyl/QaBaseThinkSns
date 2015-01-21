@@ -16,9 +16,9 @@ class InterviewAction extends Action
         $this->assign($d);
 
         $InterView = model('Interview')->getInterView('iv_state=1', 1);
-        if (!empty($InterView) && !empty($InterView['data'][0])) {
+        if (!empty($InterView)) {
             //print_r($InterView['data'][0]);
-            $data = $InterView['data'][0];
+            $data = $InterView[0];
             $data['iv_startdt'] = strtotime($data['iv_startdt']);
             $data['iv_enddt'] = strtotime($data['iv_enddt']);
             //$this->assign('InterViewState', $this->getState($data['iv_startdt'], $data['iv_enddt']));

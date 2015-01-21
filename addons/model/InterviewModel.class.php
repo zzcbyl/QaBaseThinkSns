@@ -46,15 +46,15 @@ class InterviewModel extends Model
 
     public function getInterView($where = '', $limit = 20, $format = true)
     {
-        $list = D('interview')->where($where)->order('iv_id desc')->findpage($limit);
+        $list = D('interview')->where($where)->order('iv_id desc')->limit($limit)->select();
         //数据格式化
         if($format) {
-            foreach ($list['data'] as $k => $v) {
+            foreach ($list as $k => $v) {
                 $v['iv_startdt'] = date('Y-m-d H:i:s', $v['iv_startdt']);
                 $v['iv_enddt'] = date('Y-m-d H:i:s', $v['iv_enddt']);
                 $v['iv_state'] = $v['iv_state'] == 1 ? '正常' : '已结束';
                 $v['iv_crt'] = date('Y-m-d H:i:s', $v['iv_crt']);
-                $list['data'][$k] = $v;
+                $list[$k] = $v;
             }
         }
         return $list;
