@@ -244,7 +244,7 @@ class FeedListMobileNoFaceWidget extends Widget
                     if ($enddt > $var['loadId'])
                         $LoadWhere = " AND last_updtime < '" . intval($var['loadId']) . "'";
                 }
-                $where = " is_del = 0 AND feed_questionid!=0 AND add_feedid=0 AND is_audit=1 and last_updtime >= '" . $startdt . "' " . $LoadWhere . " and `uid` in (" . $var['expert'] . ")";
+                $where = " is_del = 0 AND feed_questionid!=0 AND add_feedid=0 AND is_audit=1 and interview_audit=1 and last_updtime >= '" . $startdt . "' " . $LoadWhere . " and `uid` in (" . $var['expert'] . ")";
                 $list = model('Feed')->getAnswerList($where, $this->limitnums, 'last_updtime desc');
                 //print_r(model('Feed')->getLastSql());
                 //print($where);
@@ -257,7 +257,7 @@ class FeedListMobileNoFaceWidget extends Widget
                     if ($enddt > $var['loadId'])
                         $LoadWhere = " AND last_updtime < '" . intval($var['loadId']) . "'";
                 }
-                $where = " is_del = 0 AND feed_questionid=0 AND is_audit=1 and last_updtime >= '" . $startdt . "' " . $LoadWhere;
+                $where = " is_del = 0 AND feed_questionid=0 AND is_audit=1 and interview_audit=1 and last_updtime >= '" . $startdt . "' " . $LoadWhere;
                 $list = model('Feed')->getQuestionAndAnswer($where, $this->limitnums, 'last_updtime desc', false);
                 //print_r(model('Feed')->getLastSql());
                 //print($where);
@@ -304,6 +304,7 @@ class FeedListMobileNoFaceWidget extends Widget
                     $content['firstId'] = $var['firstId'] = $list['data'][0]['invite']['invite_answer_id'];
                     $content['lastId'] = $var['lastId'] = $list['data'][(count($list['data']) - 1)]['invite']['invite_answer_id'];
                     break;
+                case 'qinterview':
                 case 'lls_answer':
                 case 'qainterview':
                 case 'all':
