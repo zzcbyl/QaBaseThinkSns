@@ -377,6 +377,11 @@ class MobileNewAction
         $this->display();
     }
 
+    public function interviewlist()
+    {
+
+    }
+
     /**
      * 卢老师的回答(访谈内容)
      *

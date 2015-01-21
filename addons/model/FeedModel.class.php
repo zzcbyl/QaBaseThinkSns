@@ -534,7 +534,7 @@ class FeedModel extends Model {
 	public function getAnswerList($where, $limit=10, $order='publish_time desc', $newCount=0)
 	{
 		$feedlist = $this->field('feed_id')->where($where)->order($order)->findPage($limit); 
-		//print($this->getLastSql());
+
 		$feed_ids = getSubByKey($feedlist['data'], 'feed_id');
 		
 		//print_r($feed_ids);
@@ -559,6 +559,42 @@ class FeedModel extends Model {
 	
 		return $feedlist;
 	}
+
+    /**
+     * 获取回答列表 (访谈)
+     * $where 查询条件
+     * $limit 结果集数目，默认为10
+     * @return array 提问列表数据
+     **/
+    public function getAnswerListbyInterviewPage($where, $limit, $order='last_updtime desc', $newCount=0)
+    {
+        $feedlist = $this->field('feed_id')->where($where)->order($order)->findPage($limit);
+        //print($this->getLastSql());
+        //print_r($feedlist);
+        $feed_ids = getSubByKey($feedlist['data'], 'feed_id');
+
+        //print_r($feed_ids);
+        $feedlist['data'] = $this->getFeeds($feed_ids, false);
+
+        //根据答案取问题,调换数组位置
+        $index=0;
+        foreach($feedlist["data"] as $v => $vv )
+        {
+            $questionID=Array($vv['feed_questionid']);
+            $AnswerFeedData = $this->getFeeds($questionID);
+            if(is_array($AnswerFeedData))
+            {
+                $AnswerFeedData[0]['answer'][0]=$vv;;
+                if($index<$newCount){
+                    $AnswerFeedData[0]['newcount']='1';
+                    $index++;
+                }
+                $feedlist["data"][$v]=$AnswerFeedData[0];
+            }
+        }
+
+        return $feedlist;
+    }
 
     /**
      * 获取回答列表 (访谈)

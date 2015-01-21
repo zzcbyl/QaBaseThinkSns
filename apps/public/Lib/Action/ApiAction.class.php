@@ -527,12 +527,13 @@ class ApiAction
                 $startdt = strtotime($data['iv_startdt']);
                 $enddt = strtotime($data['iv_enddt']);
                 $expert = C('TopExpert');
-                $limitnums = (intval($_GET['p']) - 1) * 10;
+                $limitnums = intval($_GET['p']) * 10;
                 $where = " is_del = 0 AND feed_questionid!=0 AND add_feedid=0 AND is_audit=1 and interview_audit=1 and last_updtime >='"
                     . $startdt . "' AND last_updtime < '" . $enddt . "' and `uid` in (" . $expert . ")";
-                $list = model('Feed')->getAnswerListbyInterview($where, $limitnums . ',10');
-                //echo json_encode($list['data']);
-                echo '{"status":1,"info":"","data":' . json_encode($list['data']) . '}';
+                $list = model('Feed')->getAnswerListbyInterviewPage($where, $limitnums);
+                //echo model('Feed')->getLastSql();
+                //print_r($list);
+                echo '{"status":1,"info":"","data":' . json_encode($list) . '}';
                 return;
             }
         }
