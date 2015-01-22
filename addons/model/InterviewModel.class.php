@@ -47,7 +47,7 @@ class InterviewModel extends Model
     {
         $list = D('interview')->where($where)->order('iv_id desc')->findPage($limit);
         //数据格式化
-        if($format) {
+        if ($format) {
             foreach ($list['data'] as $k => $v) {
                 $v['iv_startdt'] = date('Y-m-d H:i:s', $v['iv_startdt']);
                 $v['iv_enddt'] = date('Y-m-d H:i:s', $v['iv_enddt']);
@@ -69,6 +69,13 @@ class InterviewModel extends Model
                 $v['iv_startdt'] = date('Y-m-d H:i:s', $v['iv_startdt']);
                 $v['iv_enddt'] = date('Y-m-d H:i:s', $v['iv_enddt']);
                 $v['iv_crt'] = date('Y-m-d H:i:s', $v['iv_crt']);
+                $userArr = explode(',', $v['iv_object']);
+                foreach ($userArr as $kk => $vv) {
+                    $user = model('user')->getUserInfo($vv);
+                    if (!empty($user))
+                        $userArr[$kk] = $user;
+                }
+                $v['user'] = $userArr;
                 $list[$k] = $v;
             }
         }

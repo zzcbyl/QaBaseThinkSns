@@ -15,10 +15,17 @@ class InterviewAction extends Action
         $d['feed_key'] = t($_GET['feed_key']) ? t($_GET['feed_key']) : '';
         $this->assign($d);
 
-        $InterView = model('Interview')->getInterView('iv_state=1', 1);
+        if(empty($_GET['interview_id']))
+        {
+            $this->error('参数错误');
+            return;
+        }
+
+        $InterView = model('Interview')->getInterView('iv_id='.$_GET['interview_id'], 1);
         if (!empty($InterView)) {
             //print_r($InterView['data'][0]);
             $data = $InterView[0];
+            $this->setTitle($data['iv_name']);
             $data['iv_startdt'] = strtotime($data['iv_startdt']);
             $data['iv_enddt'] = strtotime($data['iv_enddt']);
             //$this->assign('InterViewState', $this->getState($data['iv_startdt'], $data['iv_enddt']));
@@ -110,4 +117,12 @@ class InterviewAction extends Action
         $this->display();
     }
 
+    public function interviewlist()
+    {
+        $InterView = model('Interview')->getInterView('', 20);
+        //print_r($InterView);
+        $this->assign('InterView', $InterView);
+        $this->setTitle("卢勤问答访谈汇总");
+        $this->display();
+    }
 }

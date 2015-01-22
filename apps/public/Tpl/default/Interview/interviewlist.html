@@ -1,0 +1,29 @@
+<include file="__THEME__/public_header"/>
+<div class="container" style="background: #fff; border: none; padding-bottom: 20px; min-height: 600px;">
+    <div style="height: 100px; border: 1px solid #ccc; margin-bottom: 10px;"></div>
+    <div style="font-size: 18px; font-weight: bold; padding: 5px 10px; border-bottom: 1px solid #ccc;">全部访谈</div>
+    <volist name='InterView' id='vl'>
+        <div class="contTit" style="padding: 10px; border-bottom: 1px dashed #ccc;">
+            <div>
+                <php>if(count($vl['user'])>0){</php>
+                    <img class="thumb_m" src="{$vl['user'][0]['avatar_small']}"/>
+                <php>} else {</php>
+                    <img class="thumb_m" src="__THEME__/image/lulaoshi_avatar.jpg"/>
+                <php>}</php>
+            </div>
+            <div style="font-size:16px; line-height:25px; color:#424141; font-weight:bold; padding-left: 60px; padding-right: 45px;">
+                <a href="{:U('public/Interview/index',array('interview_id'=>$vl['iv_id']))}">{$vl['iv_name']}</a>
+                <span style="font-size: 12px; color: #666; font-weight: normal;">
+                    （{$vl['iv_startdt']}－{$vl['iv_enddt']}）　{$vl['iv_state']}</span>
+            </div>
+            <p style="padding-left:60px; font-size:14px;">{$vl['iv_content']}</p>
+
+            <p style="padding-left:60px; font-size:14px;">嘉宾：
+                <volist name="vl['user']" id="u">
+                    <span style="margin-right: 5px;">{$u['space_link']}</span>
+                </volist>
+            </p>
+        </div>
+    </volist>
+</div>
+<include file="__THEME__/public_footer"/>
