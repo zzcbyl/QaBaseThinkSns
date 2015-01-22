@@ -137,8 +137,9 @@ class PassportAction extends Action
             //$loginInfo['openid'] = 'oqrMvt6yRAWFu3DmhGe4Td0nKZRo';
             //判断openid存在去登录,否则去注册
             $user = model('User')->getUserInfoByOpenID($loginInfo['openid']);
+
             if (!empty($user) && $user['uid'] > 0) {
-                model('Passport')->loginLocalWhitoutPassword($user['login']);
+                $loginresult = model('Passport')->loginLocalWhitoutPassword($user['login']);
                 $status = 1;
             } else {
                 $regResult = model('user')->addUserByWeixin($loginInfo['openid'], 1);
