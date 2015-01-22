@@ -138,8 +138,9 @@ M.addEventFns({
             var inviteObj = this.parentModel;
             var inviteList = $(inviteObj).find('input').get(2);
             var int_noname = false;
+
             var noname = $(inviteObj).find('input').get(0);
-            if (noname.value == 'noname123') {
+            if (noname != undefined && noname.value == 'noname123') {
                 int_noname = noname.checked;
             }
             var interview = $(inviteObj).find('input').get(6);
@@ -147,7 +148,7 @@ M.addEventFns({
             if (interview != undefined) {
                 int_interview = interview.value;
             }
-            //return;
+
             core.weibo.post_feed(_this, mini_editor, textarea, description_editor, description, questionid, false, '', 0, inviteList, int_noname, int_interview);
         }
     },
