@@ -6,7 +6,7 @@ input,textarea{outline:none; font-size:12px;}
 .header{overflow:hidden; height:60px;}
 .header .menu{float:left;width:380px; margin-left:20px}
 .header .menu li{float:left; height:60px; line-height:60px;}
-.header .menu li a{font-size:14px; color:#fff; text-decoration:none; display:block; padding:0px 20px}
+.header .menu li a{font-size:14px; color:#fff; text-decoration:none; display:block; padding:0px 17px}
 .header .menu li a:hover,.header .menu li a.current{font-size:14px; color:#fff; text-decoration:none; background:#941d1d;}
 .header .search_box{width:280px; float:left; padding-top:18px}
 .header .search_box input{float:left}
@@ -365,7 +365,7 @@ a{text-decoration:none;}
 .contsNum{padding:0px 0px 30px 2px; border-bottom:solid 1px #d9d9d9; border:none; }
 .contTwo{margin-left:0px;}
 .pt0{padding-top:0px;}
-.contTop2,.contBottom2,.aTop2,.aBottom2,.gxBtn,.jxzw,.wenzi,.biaoqing,.tupian,.shipin,.caina,.twbq,.twtp,.twsp,.twyqhd,.msg_yq_top .close{ background:url(../image/sprite_tiwen.png) no-repeat;}
+.contTop2,.contBottom2,.aTop2,.aBottom2,.gxBtn,.jxzw,.wenzi,.biaoqing,.tupian,.shipin,.caina,.twbq,.twtp,.twsp,.twyqhd,.msg_yq_top .close,.msg_yq_top1 .close{ background:url(../image/sprite_tiwen.png) no-repeat;}
 .aTop511,.aBottom511{ background:url(../image/yuanjiao485.png) no-repeat;}
 .aTop511{background-position:0 0; height:19px; position:relative; width:485px;}
 .aBottom511{background-position:0 -21px; height:20px; overflow:hidden; width:485px;}
@@ -488,7 +488,8 @@ p.FloatNew{background:url(../image/new.png) no-repeat; position:absolute; width:
 .twps{padding:10px 0px; font-size:12px; color:#999;}
 .msg_yq{width:683px; overflow:hidden; }
 .msg_yq_top {height:44px; background:url(../image/sprite_tiwen.png) no-repeat #c12d2e 0px -237px ; position:relative}
-.msg_yq_top .close{background-position:0px -304px; width:24px; height:24px; position:absolute; right:15px; top:10px;}
+.msg_yq_top1 {height:44px; background:url(../image/sprite_tiwen.png) no-repeat #c12d2e 0px -635px ; position:relative}
+.msg_yq_top .close, .msg_yq_top1 .close{background-position:0px -304px; width:24px; height:24px; position:absolute; right:15px; top:10px;}
 .msg_yq_cont{ background:#fff;}
 .pengyou{overflow:hidden;  background:#f3f3f3; padding:20px 0px 0px 20px; height:220px;}
 .pengyou ul li{width:50px; text-align:center; float:left; font-size:12px; margin:0px 12px 10px 0px; _margin:0px 13px 20px 0px;line-height:16px;border:solid 1px #f6f6f6; cursor:pointer;}

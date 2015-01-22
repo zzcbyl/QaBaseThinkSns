@@ -1030,7 +1030,11 @@ admin.configWidget = function(id){
 };
 
 admin.checkAddArticle = function(form){
+<<<<<<< HEAD
     if(form.title.value == '' || getLength(form.title.value) < 1 ){
+=======
+    if(form.title.value == '' ||getLength(form.title.value) < 1 ){
+>>>>>>> add_interview_develop
         ui.error( L('PUBLIC_TITLE_ISNULL') );return false;
     }
 

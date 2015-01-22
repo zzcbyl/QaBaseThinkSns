@@ -7,7 +7,7 @@
 class FeedModel extends Model {
 
 	protected $tableName = 'feed';
-	protected $fields = array('feed_id','uid','type','app','app_row_id','app_row_table','publish_time','is_del','from','comment_count','repost_count','comment_all_count','digg_count','is_repost','is_audit','feed_questionid','feed_quid','answer_count','disapprove_count','feed_pv','thank_count','add_feedid','following_count','invite_count','isInviteAnswer','last_updtime','openid','_pk'=>'feed_id');
+	protected $fields = array('feed_id','uid','type','app','app_row_id','app_row_table','publish_time','is_del','from','comment_count','repost_count','comment_all_count','digg_count','is_repost','is_audit','feed_questionid','feed_quid','answer_count','disapprove_count','feed_pv','thank_count','add_feedid','following_count','invite_count','isInviteAnswer','last_updtime','openid','interview_audit','_pk'=>'feed_id');
 
 	public $templateFile = '';			// 模板文件
 
@@ -342,7 +342,8 @@ class FeedModel extends Model {
 	 * @return array 提问列表数据
 	 */
 	public function getList($map, $limit = 10 , $order = 'publish_time desc') {
-		$feedlist = $this->field('feed_id')->where($map)->order($order)->findPage($limit); 
+		$feedlist = $this->field('feed_id')->where($map)->order($order)->findPage($limit);
+        //echo $this->getLastSql();
 		$feed_ids = getSubByKey($feedlist['data'], 'feed_id');
 		$feedlist['data'] = $this->getFeeds($feed_ids);
 		
@@ -418,33 +419,67 @@ class FeedModel extends Model {
 	
 	
 	/**
-	 * 获取问题和答案列表
-	 * @param array $map 查询条件
-	 * @param integer $limit 结果集数目，默认为10
-	 * @return array 提问列表数据
-	 */
-	public function getQuestionAndAnswer($map, $limit = 10 , $order = 'last_updtime desc') {
-		$feedlist = $this->field('feed_id')->where($map)->order($order)->findPage($limit); 
-		$feed_ids = getSubByKey($feedlist['data'], 'feed_id');
-		$feedlist['data'] = $this->getFeeds($feed_ids);
-		
-		//增加答案块
-		foreach( $feedlist["data"] as $v => $vv )
-		{
-			$AnswerWhere='feed_questionid='.$vv['feed_id'];
-			$AnswerFeed = $this->field('feed_id')->where($AnswerWhere)->order("publish_time desc")->findPage(1);				
-			$AnswerFeed_id = getSubByKey($AnswerFeed['data'], 'feed_id');
-			$AnswerFeedData = $this->getFeeds($AnswerFeed_id);
-			
-			$vv["answer"] = $AnswerFeedData;
-			$feedlist["data"][$v]=$vv;
-			
-			/*print_r($vv);
-			print('<br /><br /><br /><br />');*/
-		}
-		
-		return $feedlist;
-	}
+ * 获取问题和答案列表
+ * @param array $map 查询条件
+ * @param integer $limit 结果集数目，默认为10
+ * @return array 提问列表数据
+ */
+    public function getQuestionAndAnswer($map, $limit = 10 , $order = 'last_updtime desc', $isAnswer=true)
+    {
+        $feedlist = $this->field('feed_id')->where($map)->order($order)->findPage($limit);
+        $feed_ids = getSubByKey($feedlist['data'], 'feed_id');
+        $feedlist['data'] = $this->getFeeds($feed_ids);
+
+        //增加答案块
+        if ($isAnswer) {
+            foreach ($feedlist["data"] as $v => $vv) {
+                $AnswerWhere = 'feed_questionid=' . $vv['feed_id'];
+                $AnswerFeed = $this->field('feed_id')->where($AnswerWhere)->order("publish_time desc")->findPage(1);
+                $AnswerFeed_id = getSubByKey($AnswerFeed['data'], 'feed_id');
+                $AnswerFeedData = $this->getFeeds($AnswerFeed_id);
+
+                $vv["answer"] = $AnswerFeedData;
+                $feedlist["data"][$v] = $vv;
+
+                /*print_r($vv);
+                print('<br /><br /><br /><br />');*/
+            }
+        }
+        return $feedlist;
+    }
+
+    /**
+     * 获取问题和答案列表(访谈)
+     * @param array $map 查询条件
+     * @param integer $limit 结果集数目，默认为10
+     * @return array 提问列表数据
+     */
+    public function getQuestionAndAnswerByInterview($where, $limit , $order = 'last_updtime desc', $isAnswer=true)
+    {
+        $feedlist = $this->field('feed_id')->where($where)->order($order)->limit($limit)->select();
+        //$feedlist = $this->field('feed_id')->where($map)->order($order)->findPage($limit);
+        //$feed_ids = getSubByKey($feedlist['data'], 'feed_id');
+        $feed_ids = getSubByKey($feedlist, 'feed_id');
+
+        $feedlist['data'] = $this->getFeeds($feed_ids);
+
+        //增加答案块
+        if ($isAnswer) {
+            foreach ($feedlist["data"] as $v => $vv) {
+                $AnswerWhere = 'feed_questionid=' . $vv['feed_id'];
+                $AnswerFeed = $this->field('feed_id')->where($AnswerWhere)->order("publish_time desc")->findPage(1);
+                $AnswerFeed_id = getSubByKey($AnswerFeed['data'], 'feed_id');
+                $AnswerFeedData = $this->getFeeds($AnswerFeed_id);
+
+                $vv["answer"] = $AnswerFeedData;
+                $feedlist["data"][$v] = $vv;
+
+                /*print_r($vv);
+                print('<br /><br /><br /><br />');*/
+            }
+        }
+        return $feedlist;
+    }
 	
 	/**
 	 * 获取问题和卢老师的回答列表
@@ -499,7 +534,7 @@ class FeedModel extends Model {
 	public function getAnswerList($where, $limit=10, $order='publish_time desc', $newCount=0)
 	{
 		$feedlist = $this->field('feed_id')->where($where)->order($order)->findPage($limit); 
-		//print($this->getLastSql());
+
 		$feed_ids = getSubByKey($feedlist['data'], 'feed_id');
 		
 		//print_r($feed_ids);
@@ -524,6 +559,41 @@ class FeedModel extends Model {
 	
 		return $feedlist;
 	}
+
+    /**
+     * 获取回答列表 (访谈)
+     * $where 查询条件
+     * $limit 结果集数目，默认为10
+     * @return array 提问列表数据
+     **/
+    public function getAnswerListbyInterview($where, $limit, $order='last_updtime desc', $newCount=0)
+    {
+        $feedlist = $this->field('feed_id')->where($where)->order($order)->limit($limit)->select();
+
+        $feed_ids = getSubByKey($feedlist, 'feed_id');
+
+        //print_r($feed_ids);
+        $feedlist['data'] = $this->getFeeds($feed_ids, false);
+
+        //根据答案取问题,调换数组位置
+        $index=0;
+        foreach($feedlist["data"] as $v => $vv )
+        {
+            $questionID=Array($vv['feed_questionid']);
+            $AnswerFeedData = $this->getFeeds($questionID);
+            if(is_array($AnswerFeedData))
+            {
+                $AnswerFeedData[0]['answer'][0]=$vv;;
+                if($index<$newCount){
+                    $AnswerFeedData[0]['newcount']='1';
+                    $index++;
+                }
+                $feedlist["data"][$v]=$AnswerFeedData[0];
+            }
+        }
+
+        return $feedlist;
+    }
 	
 	/**
 		* 根据回答ID获取问题和回答块
@@ -1694,6 +1764,36 @@ class FeedModel extends Model {
 		
 		return $inviteResult;
 	}
+
+    /**
+     * 审核访谈提问
+     * @param integer $feed_id 提问ID
+     * @return array 操作后的结果信息数组
+     */
+    public function doAuditInterview($feed_id)
+    {
+        $return = array('status'=>'0');
+        if(empty($feed_id)) {
+            $return['data'] = '请选择提问！';
+        } else {
+            $map['feed_id'] = is_array($feed_id) ? array('IN', $feed_id) : intval($feed_id);
+            $save['interview_audit'] = 1;
+            $res = $this->where($map)->save($save);
+
+            $map1['feed_questionid'] = is_array($feed_id) ? array('IN', $feed_id) : intval($feed_id);
+            $save['interview_audit'] = 1;
+            $res1 = $this->where($map1)->save($save);
+
+            if($res) {
+                $return = array('status'=>1);
+            }
+
+            //更新缓存
+            $this->cleanCache($feed_id);
+        }
+        return $return;
+
+    }
 	
 	/**
 	 * 获取追问信息

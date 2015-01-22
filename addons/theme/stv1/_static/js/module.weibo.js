@@ -1,72 +1,72 @@
 /**
- * 	本js内为提问关的JS函数及监听
- *	TODO 需要优化重构 重构方式参考 core.comment 和 core.searchUser
+ *    本js内为提问关的JS函数及监听
+ *    TODO 需要优化重构 重构方式参考 core.comment 和 core.searchUser
  */
 
 
-if("undefined" == typeof(initNums)){
-	var initNums = "140";
+if ("undefined" == typeof(initNums)) {
+    var initNums = "140";
 }
 if ("undefined" == typeof (shareNums)) {
     var shareNums = "140";
 }
-if("undefined" == typeof(maxId)){
-	var maxId = 0;
+if ("undefined" == typeof(maxId)) {
+    var maxId = 0;
 }
-if("undefined" == typeof(loadId)){
-	var loadId = 0;
+if ("undefined" == typeof(loadId)) {
+    var loadId = 0;
 }
-if("undefinde" == typeof(firstId)){
-	var firstId = 0;
+if ("undefinde" == typeof(firstId)) {
+    var firstId = 0;
 }
-if("undefined" == typeof(feedType)){
-	var feedType = 'following';	// 默认的提问类型(关注的)
+if ("undefined" == typeof(feedType)) {
+    var feedType = 'following';	// 默认的提问类型(关注的)
 }
-if("undefined" == typeof(feed_type)){
-	var feed_type ='';
+if ("undefined" == typeof(feed_type)) {
+    var feed_type = '';
 }
-if("undefined" == typeof(feed_key)){
-	var feed_key = '';
+if ("undefined" == typeof(feed_key)) {
+    var feed_key = '';
 }
-if("undefined" == typeof(loadmore)){
-	var loadmore = 0;
+if ("undefined" == typeof(loadmore)) {
+    var loadmore = 0;
 }
-if("undefined" == typeof(loadnew)){
-	var loadnew = 0;
-}
-
-if("undefinde" == typeof(fgid)){
-	var fgid = '';
+if ("undefined" == typeof(loadnew)) {
+    var loadnew = 0;
 }
 
-if("undefined" == typeof(topic_id)) {
-	var topic_id = 0;
+if ("undefinde" == typeof(fgid)) {
+    var fgid = '';
 }
 
-if("undefinde" == typeof(gid)){
-	var gid = 0;
+if ("undefined" == typeof(topic_id)) {
+    var topic_id = 0;
+}
+
+if ("undefinde" == typeof(gid)) {
+    var gid = 0;
 }
 var _doc = document;
 var feedbtnlock = 0;
 var args = new Array();
 args['initNums'] = initNums;
 args['shareNums'] = shareNums;
-args['maxId']		= maxId;
-args['loadId']		= loadId;
-args['firstId']		= firstId;
-args['feedType']   	= feedType;
-args['loadmore']   	= loadmore;
-args['loadnew']   	= loadnew;
-args['uid']			= UID;
-args['feed_type']   = feed_type;
-args['feed_key']	= feed_key;
-args['topic_id'] 	= topic_id;
-args['gid'] 	= gid;
+args['maxId'] = maxId;
+args['loadId'] = loadId;
+args['firstId'] = firstId;
+args['feedType'] = feedType;
+args['loadmore'] = loadmore;
+args['loadnew'] = loadnew;
+args['uid'] = UID;
+args['feed_type'] = feed_type;
+args['feed_key'] = feed_key;
+args['topic_id'] = topic_id;
+args['gid'] = gid;
 
-if("undefined" == typeof(core.weibo)){	//只init一次
-	core.plugFunc('weibo',function(){
-		core.weibo.init(args);	
-	});
+if ("undefined" == typeof(core.weibo)) {	//只init一次
+    core.plugFunc('weibo', function () {
+        core.weibo.init(args);
+    });
 }
 /**
  * 事件绑定器
@@ -137,8 +137,19 @@ M.addEventFns({
 
             var inviteObj = this.parentModel;
             var inviteList = $(inviteObj).find('input').get(2);
+            var int_noname = false;
 
-            core.weibo.post_feed(_this, mini_editor, textarea, description_editor, description, questionid, false, '', 0, inviteList);
+            var noname = $(inviteObj).find('input').get(0);
+            if (noname != undefined && noname.value == 'noname123') {
+                int_noname = noname.checked;
+            }
+            var interview = $(inviteObj).find('input').get(6);
+            var int_interview = 0;
+            if (interview != undefined) {
+                int_interview = interview.value;
+            }
+
+            core.weibo.post_feed(_this, mini_editor, textarea, description_editor, description, questionid, false, '', 0, inviteList, int_noname, int_interview);
         }
     },
     post_addask: {	//追问
@@ -250,9 +261,9 @@ M.addEventFns({
         }
     },
     /**
-    * 投稿功能
-    * @type {Object}
-    */
+     * 投稿功能
+     * @type {Object}
+     */
     insert_contribute: {
         click: function () {
             var target = this.parentModel.parentModel.childModels['mini_editor'][0];
@@ -265,7 +276,7 @@ M.addEventFns({
 
             var _this = this;
             var delFeed = function () {
-                $.post(U('public/Feed/removeFeed'), { feed_id: attrs.feed_id }, function (msg) {
+                $.post(U('public/Feed/removeFeed'), {feed_id: attrs.feed_id}, function (msg) {
                     if (msg.status == 1) {
                         if ($('#feed' + attrs.feed_id).length > 0) {
                             $('#feed' + attrs.feed_id).fadeOut();
@@ -354,8 +365,9 @@ M.addEventFns({
             var attrs = M.getEventArgs(this);
             if ($(_this).parent().parent().find('.feed_img_lists').css('display') == 'none') {
                 $(_this).parent().parent().find('.feed_img_lists').before('<dl id="loading" class="comment"><div class="loading" style="z-index:99;">加载中<img src="' + THEME_URL + '/image/load.gif" class="load"></div></dl>');
-            };
-            $.post(U('widget/FeedList/getPostDetail'), { post_id: attrs.post_id }, function (res) {
+            }
+            ;
+            $.post(U('widget/FeedList/getPostDetail'), {post_id: attrs.post_id}, function (res) {
                 html = '';
                 html += '<dl class="comment">';
                 if (res == 0) {
@@ -406,7 +418,7 @@ M.addEventFns({
             }
             html += '</ul></div>';
             $('body').append(html);
-            $('#weibo_admin_box').css({ position: 'absolute', top: offset.top + 20, left: offset.left - 50 });
+            $('#weibo_admin_box').css({position: 'absolute', top: offset.top + 20, left: offset.left - 50});
             $('#weibo_admin_box').show();
             $('body').bind('click', function (event) {
                 if ($(event.target).attr('event-node') != 'show_admin') {
@@ -517,24 +529,22 @@ M.addEventFns({
         }
     },
     // 提问内容输入框
-    mini_editor_textarea: {
-}
+    mini_editor_textarea: {}
 });
-$(".feed_img_lists li a").css("opacity","1").mouseover(function(){
-	$(this).animate({opacity:"1"},300)
-	});
-$(".feed_img_lists li a").mouseout(function(){
-	$(this).animate({opacity:"1"},10)
+$(".feed_img_lists li a").css("opacity", "1").mouseover(function () {
+    $(this).animate({opacity: "1"}, 300)
 });
-var getAdminBox = function(feedId, channelId, clear)
-{
-	ui.box.load(U('channel/Manage/getAdminBox')+'&feed_id='+feedId+'&channel_id='+channelId+'&clear='+clear, '推荐到频道');
+$(".feed_img_lists li a").mouseout(function () {
+    $(this).animate({opacity: "1"}, 10)
+});
+var getAdminBox = function (feedId, channelId, clear) {
+    ui.box.load(U('channel/Manage/getAdminBox') + '&feed_id=' + feedId + '&channel_id=' + channelId + '&clear=' + clear, '推荐到频道');
 };
 /**
  * 添加微事务窗口
  * @param integer feedId 提问ID
  * @return void
  */
-var addToVtask = function(feedId) {
-	ui.box.load(U('vtask/Index/addToVtask') + '&feed_id=' + feedId, '添加到微事务');
+var addToVtask = function (feedId) {
+    ui.box.load(U('vtask/Index/addToVtask') + '&feed_id=' + feedId, '添加到微事务');
 };

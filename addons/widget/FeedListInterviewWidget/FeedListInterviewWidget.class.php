@@ -2,11 +2,11 @@
 
 /**
  * 提问列表
- * @example {:W('FeedListMobile',array('type'=>'space','feed_type'=>$feed_type,'feed_key'=>$feed_key,'loadnew'=>0,'gid'=>$gid))}
+ * @example {:W('FeedList',array('type'=>'space','feed_type'=>$feed_type,'feed_key'=>$feed_key,'loadnew'=>0,'gid'=>$gid))}
  * @author jason
  * @version TS3.0
  */
-class FeedListMobileNoFaceWidget extends Widget
+class FeedListInterviewWidget extends Widget
 {
 
     private static $rand = 1;
@@ -25,10 +25,14 @@ class FeedListMobileNoFaceWidget extends Widget
         $var = array();
         $var['loadmore'] = 1;
         $var['loadnew'] = 1;
-        $var['tpl'] = 'FeedList.html';
 
         is_array($data) && $var = array_merge($var, $data);
-
+        if($var['type']=='interviewQ') {
+            $var['tpl'] = 'FeedList1.html';
+        }
+        else {
+            $var['tpl'] = 'FeedList.html';
+        }
         $weiboSet = model('Xdata')->get('admin_Config:feed');
         $var['initNums'] = $weiboSet['weibo_nums'];
         $var['weibo_type'] = $weiboSet['weibo_type'];
@@ -46,8 +50,7 @@ class FeedListMobileNoFaceWidget extends Widget
         // 查看是否有更多数据
         if (empty($content['html'])) {
             // 没有更多的
-            $var['list'] = "<span style='margin-left:10px; font-size:14px;'>暂无提问</span><br /><br /><br />" .
-                "<div style='text-align:center; height:40px; line-height:40px; font-size:16px;'><a href='" . U('public/MobileNew/quickask', array('openid' => $data['openid'])) . "'>立即提问</a></div>";
+            $var['list'] = L('PUBLIC_WEIBOISNOTNEW');
         } else {
             $var['list'] = $content['html'];
             $var['lastId'] = $content['lastId'];
@@ -72,9 +75,9 @@ class FeedListMobileNoFaceWidget extends Widget
         // 获取GET与POST数据
         $_REQUEST = $_GET + $_POST;
         // 查询是否有分页
-        if (!empty($_REQUEST['p']) || intval($_REQUEST['load_count']) == 400) {
+        if (!empty($_REQUEST['p']) || intval($_REQUEST['load_count']) == 4) {
             unset($_REQUEST['loadId']);
-            $this->limitnums = 400;
+            $this->limitnums = 40;
         } else {
             $return = array('status' => -1, 'msg' => L('PUBLIC_LOADING_ID_ISNULL'));
             $_REQUEST['loadId'] = intval($_REQUEST['loadId']);
@@ -105,7 +108,7 @@ class FeedListMobileNoFaceWidget extends Widget
 
         if (empty($content['html'])) {
             // 没有更多的
-            $return = array('status' => 0, 'msg' => '');
+            $return = array('status' => 0, 'msg' => L('PUBLIC_WEIBOISNOTNEW'));
         } else {
             $return = array('status' => 1, 'msg' => L('PUBLIC_SUCCESS_LOAD'));
             $return['html'] = $content['html'];
@@ -159,109 +162,28 @@ class FeedListMobileNoFaceWidget extends Widget
         $var = array_merge($var, $weiboSet);
         $var['remarkHash'] = model('Follow')->getRemarkHash($GLOBALS['ts']['mid']);
         $map = $list = array();
-        $type = $var['new'] ? 'new' . $var['type'] : $var['type'];    // 最新的提问与默认提问类型一一对应
+        $type = $var['type'];    // 最新的提问与默认提问类型一一对应
         switch ($type) {
-            case 'following':// 我关注的
-                if (!empty($var['feed_key'])) {
-                    //关键字匹配 采用搜索引擎兼容函数搜索 后期可能会扩展为搜索引擎
-                    $list = model('Feed')->searchFeed($var['feed_key'], 'following', $var['loadId'], $this->limitnums);
-                } else {
-                    $current_uid = $GLOBALS['ts']['mid'];
-                    if ($var['uid'] != null && $var['uid'] != '0') $current_uid = $var['uid'];
-                    $where = ' a.is_audit=1 AND a.uid=' . $current_uid . ' AND a.is_del = 0 AND a.feed_questionid=0 AND a.add_feedid=0 ';
-                    $LoadWhere = '';
-                    if ($var['loadId'] > 0) { //非第一次
-                        //$where .=" AND a.feed_id < '".intval($var['loadId'])."'";
-                        $LoadWhere = "publish_time < '" . intval($var['loadId']) . "'";
-                    }
-                    if (!empty($var['feed_type'])) {
-                        if ($var['feed_type'] == 'post') {
-                            $where .= " AND a.is_repost = 0";
-                        } else {
-                            $where .= " AND a.type = '" . t($var['feed_type']) . "'";
-                        }
-                    }
-                    $list = model('Feed')->getFollowingFeed($where, $this->limitnums, $current_uid, $var['fgid'], $LoadWhere);
-                    //print_r($list);
-                }
-                break;
-            case 'all'://所有的 --正在发生的
-                //$where =" (is_audit=1 OR is_audit=0) AND is_del = 0 AND feed_questionid=0 AND add_feedid=0 and openid != ''";
-                $where = " is_audit=1 AND is_del = 0 AND feed_questionid=0 AND add_feedid=0";
-                if ($var['loadId'] > 0) { //非第一次
-                    $where .= " AND `last_updtime` < '" . intval($var['loadId']) . "'";
-                }
-                if (!empty($var['feed_type'])) {
-                    if ($var['feed_type'] == 'post') {
-                        $where .= " AND is_repost = 0";
-                    } else {
-                        $where .= " AND type = '" . t($var['feed_type']) . "'";
-                    }
-                }
-                $list = model('Feed')->getQuestionAndAnswer($where, $this->limitnums);
-                //print($where);
-                break;
-            case 'manage': //管理(卢老师)
-                //$where =" (is_audit=1 OR is_audit=0) AND is_del = 0 AND feed_questionid=0 AND add_feedid=0 and openid != ''";
-                $where = " is_audit=1 AND is_del = 0 AND feed_questionid=0 AND add_feedid=0";
-                if ($var['loadId'] > 0) { //非第一次
-                    $where .= " AND `last_updtime` < '" . intval($var['loadId']) . "'";
-                }
-                if (!empty($var['feed_type'])) {
-                    if ($var['feed_type'] == 'post') {
-                        $where .= " AND is_repost = 0";
-                    } else {
-                        $where .= " AND type = '" . t($var['feed_type']) . "'";
-                    }
-                }
-                $list = model('Feed')->getQuestionAndLLSAnswer($where, $this->limitnums, $var['openid']);
-                //print($where);
-                break;
-            case 'question':// 我问题
-                if ($var['loadId'] > 0) { //非第一次
-                    //$where .=" AND a.feed_id < '".intval($var['loadId'])."'";
-                    $LoadWhere = "AND publish_time < '" . intval($var['loadId']) . "'";
-                }
-                $where = " is_del = 0 AND feed_questionid=0 AND add_feedid=0 AND is_audit=1 " . $LoadWhere . " and `openid`= '" . $var['openid'] . "'";
-                $list = model('Feed')->getQuestionAndAnswer($where, $this->limitnums);
-                //print($where);
-                break;
-            case 'lls_answer':    //卢老师回答列表
+            case 'interviewQA': //
                 $LoadWhere = '';
                 if ($var['loadId'] > 0) { //非第一次
                     $LoadWhere = "AND last_updtime < '" . intval($var['loadId']) . "'";
+                } else {
+                    $LoadWhere = "AND last_updtime < '" . $var['enddt'] . "'";
                 }
-                $where = " is_del = 0 AND feed_questionid!=0 AND add_feedid=0 AND is_audit=1 " . $LoadWhere . " and `openid`= '" . $var['expert'] . "'";
-                $list = model('Feed')->getAnswerList($where, $this->limitnums, 'last_updtime desc');
-                //print_r($list);
-                //print($where);
-                break;
-            case 'qainterview':    //卢老师回答列表(访谈内容)
-                $startdt = $var['startdt'];
-                $enddt = $var['enddt'];
-                $LoadWhere = " AND last_updtime < '" . $enddt . "'";
-                if ($var['loadId'] > 0) { //非第一次
-                    if ($enddt > $var['loadId'])
-                        $LoadWhere = " AND last_updtime < '" . intval($var['loadId']) . "'";
-                }
-                $where = " is_del = 0 AND feed_questionid!=0 AND add_feedid=0 AND is_audit=1 and interview_audit=1 and last_updtime >= '" . $startdt . "' " . $LoadWhere . " and `uid` in (" . $var['expert'] . ")";
-                $list = model('Feed')->getAnswerList($where, $this->limitnums, 'last_updtime desc');
+                $where = " is_del = 0 AND feed_questionid!=0 AND add_feedid=0 AND is_audit=1 and last_updtime>='" . $var['startdt'] . "' " . $LoadWhere . " and `uid` in (" . $var['expert'] . ")";
+                $list = model('Feed')->getAnswerList($where, $this->limitnums);
                 //print_r(model('Feed')->getLastSql());
-                //print_r($list);
-                //echo $list['data'][(count($list['data']) - 1)]['last_updtime'];
-                //return model('Feed')->getLastSql();
                 break;
-            case 'qinterview':    //网友提问(访谈)
-                $startdt = $var['startdt'];
-                $enddt = $var['enddt'];
-                $LoadWhere = " AND last_updtime < '" . $enddt . "'";
+            case 'interviewQ': //所有的 --正在发生的
+                $LoadWhere='';
                 if ($var['loadId'] > 0) { //非第一次
-                    if ($enddt > $var['loadId'])
-                        $LoadWhere = " AND last_updtime < '" . intval($var['loadId']) . "'";
+                    $LoadWhere = "AND last_updtime < '" . intval($var['loadId']) . "'";
+                } else {
+                    $LoadWhere = "AND last_updtime < '" . $var['enddt'] . "'";
                 }
-                $where = " is_del = 0 AND feed_questionid=0 AND is_audit=1 and interview_audit=1 and last_updtime >= '" . $startdt . "' " . $LoadWhere;
-                $list = model('Feed')->getQuestionAndAnswer($where, $this->limitnums, 'last_updtime desc', false);
-                //print_r(model('Feed')->getLastSql());
+                $where = " is_audit=1 AND is_del = 0 AND feed_questionid=0 AND add_feedid=0  and last_updtime>='" . $var['startdt'] . "' " . $LoadWhere ;
+                $list = model('Feed')->getQuestionAndAnswer($where, $this->limitnums,'last_updtime desc',false);
                 //print($where);
                 break;
         }
@@ -272,50 +194,11 @@ class FeedListMobileNoFaceWidget extends Widget
         $feedlist = array();
         if (!empty($list['data'])) {
             switch ($type) {
-                case 'collection':
-                    $content['firstId'] = $var['firstId'] = $list['data'][0]['collection']['collection_id'];
-                    $content['lastId'] = $var['lastId'] = $list['data'][(count($list['data']) - 1)]['collection']['collection_id'];
-                    break;
-                case 'answer':
-                case 'newanswer':
-                case 'thank':
-                    $content['firstId'] = $var['firstId'] = $list['data'][0]['answer'][0]['publish_time'];
-                    $content['lastId'] = $var['lastId'] = $list['data'][(count($list['data']) - 1)]['answer'][0]['publish_time'];
-                    break;
-                case 'agree':
-                case 'oppose':
-                    $content['firstId'] = $var['firstId'] = $list['data'][0]['answer'][0]['comment_count'];
-                    $content['lastId'] = $var['lastId'] = $list['data'][(count($list['data']) - 1)]['answer'][0]['comment_count'];
-                    break;
-                case 'newagreecomment':
-                case 'newopposecomment':
-                case 'newcomment':
-                    $content['firstId'] = $var['firstId'] = $list['data'][0]['comment']['comment_id'];
-                    $content['lastId'] = $var['lastId'] = $list['data'][(count($list['data']) - 1)]['comment']['comment_id'];
-                    break;
-                case 'feedfollowing':
-                    $content['firstId'] = $var['firstId'] = $list['data'][0]['ctime'];
-                    $content['lastId'] = $var['lastId'] = $list['data'][(count($list['data']) - 1)]['ctime'];
-                    $index = 0;
-                    foreach ($list['data'] as $k => $v) {
-                        $feedlist['data'][$index] = $v['feed_data']['data'][0];
-                        $index++;
-                    }
-                    break;
-                case 'invite':    //邀请我的
-                    $content['firstId'] = $var['firstId'] = $list['data'][0]['invite']['invite_answer_id'];
-                    $content['lastId'] = $var['lastId'] = $list['data'][(count($list['data']) - 1)]['invite']['invite_answer_id'];
-                    break;
-                case 'qainterview':
-                    $content['firstId'] = $var['firstId'] = $list['data'][0]['answer'][0]['last_updtime'];
-                    $content['lastId'] = $var['lastId'] = $list['data'][(count($list['data']) - 1)]['answer'][0]['last_updtime'];
-                    break;
-                case 'qinterview':
+                case 'interviewQA':
                     $content['firstId'] = $var['firstId'] = $list['data'][0]['last_updtime'];
                     $content['lastId'] = $var['lastId'] = $list['data'][(count($list['data']) - 1)]['last_updtime'];
-                break;
-                case 'lls_answer':
-                case 'all':
+                    break;
+                case 'interviewQ':
                     $content['firstId'] = $var['firstId'] = $list['data'][0]['last_updtime'];
                     $content['lastId'] = $var['lastId'] = $list['data'][(count($list['data']) - 1)]['last_updtime'];
                     break;

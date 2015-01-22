@@ -1,9 +1,212 @@
 <include file="__THEME__/public_header" />
+<style type="text/css">
+    .answerTab { border: 1px solid #D5EEFB; margin-top: 15px;}
+    .answerTabTitle { background: #E4F2F9; height: 35px; line-height: 35px; padding: 0 10px;  font-size: 14px; color: #0363A0;}
+    .answerTabTitle #f5flash { display:inline-block; background: #69ADDD; height: 22px; line-height: 22px; padding: 0 5px; color:#fff; }
+    .answerTabContent { background: #F1FAFD;}
+    .userAnswerTab { margin-top: 30px; border: 1px solid #E8E8E8;}
+    .userAnswerTabTitle { background: #F7F7F7; height: 35px; line-height: 35px; padding: 0 10px;  font-size: 14px; color: #333;}
+    .answerTabContent,.userAnswerTabContent { background: #fff; padding-left: 7px; height: 700px; overflow-y: scroll;}
+
+    .righthead { text-align: center; font-size: 14px; line-height: 25px; height: 100px; padding-top: 30px;}
+    .rightObject { margin: 20px 10px; border: 1px solid #FDDBC7; }
+    .rightObjectTitle { background: #FFE7C3; height: 35px; line-height: 35px; padding: 0 10px; font-size: 14px; font-weight: bold; color: #CC3300; }
+    .rightObjectContent { background:#FFFBEB; padding: 10px 15px; line-height: 18px;}
+    .rightObjectContent img { width: 50px; height: 50px;}
+
+    .compereTab { margin: 20px 10px; border: 1px solid #D7D7D7;}
+    .compereTabTitle { background: #F2F2F2; height: 35px; line-height: 35px; padding: 0 10px; font-size: 14px; font-weight: bold; color: #666;}
+    .compereTabContent { background:#fff; padding: 10px 15px; line-height: 18px;}
+    .compereTabContent img { width: 50px; height: 50px;}
+
+    .contTop2 p.q { right: 7px;}
+
+</style>
 <div class="container" style="background: #fff; border: none;">
-    <div class="cont_left pd17">
-
+    <div style="border: 1px solid #ccc; height: 100px;"></div>
+    <div class="cont_left" style="border: none; padding: 20px 0 20px 15px; width: 707px;">
+        <h2>访谈简介</h2>
+        <div style="margin-top: 10px; line-height: 18px; text-indent: 2em; padding: 0 15px;">
+           {$InterView['iv_content']}
+        </div>
+        <div class="answerTab">
+            <div class="answerTabTitle">
+                <div style="float: left;"><b>访谈内容</b>　<input type="checkbox" id="autoFlash" checked="true" /> 自动刷新　
+                    <a id="f5flash" href="javascript:autoflansh(1);">刷新</a></div>
+                <div style="float: right;"><a id="answeraskdiv" data-reveal-id="myModal" data-animation="fade" href="#">我要提问</a>　<a href="#userAsk">查看网友提问</a></div>
+                <div class="clear"></div>
+            </div>
+            <div class="answerTabContent">
+                <div id="feed-lists1" class="contsNum"></div>
+            </div>
+            <php>if($page1!=0){</php>
+            <div id="page" class="page" style="text-align: center; margin-top: 10px;">
+                <a id="prePage" href="javascript:jumpPrePage1();">上一页</a>
+                <span style="margin-left: 5px;"><span id="pageNum1"></span>/{$page1}</span>
+                <a id="nextPage" href="javascript:jumpnextPage1();">下一页</a>
+            </div>
+            <php>}</php>
+        </div>
+        <div class="userAnswerTab">
+            <a name="userAsk"></a>
+            <div class="userAnswerTabTitle">
+                <div style="float: left;"><b>网友提问</b>　<span style="color: #999;">(共{$dataCount}个问题)</span></div>
+                <div id="useraskdiv" style="float: right;"><a data-reveal-id="myModal" data-animation="fade" href="#">我要提问</a></div>
+                <div class="clear"></div>
+            </div>
+            <div class="userAnswerTabContent">
+                <div id="feed-lists2" class="contsNum"></div>
+            </div>
+            <php>if($page2!=0){</php>
+            <div id="page2" class="page" style="text-align: center; margin-top: 10px;">
+                <a id="prePage2" href="javascript:jumpPrePage2();">上一页</a>
+                <span style="margin-left: 5px;"><span id="pageNum2"></span>/{$page2}</span>
+                <a id="nextPage2" href="javascript:jumpnextPage2();">下一页</a>
+            </div>
+            <php>}</php>
+        </div>
     </div>
-    <div class="cont_right" style="border: none;">
-
+    <div class="cont_right" style="border: none; width: 251px;">
+        <div class="righthead">
+            <div>{$InterViewState}</div>
+            <div>访谈时间：<br /><php> echo date('Y-m-d H:i',$InterView['iv_startdt']);</php><br /><php> echo date('Y-m-d H:i',$InterView['iv_enddt']);</php></div>
+        </div>
+        <div class="rightObject">
+            <div class="rightObjectTitle">
+                访谈嘉宾
+            </div>
+            <div class="rightObjectContent">
+                <div style="float: left; "><a href="{$TopExpert['space_url']}"><img src="{$TopExpert['avatar_big']}" event-node="face_card" uid="{$TopExpert['uid']}" /></a></div>
+                <div style="float: left; margin-left: 10px; font-size: 14px;"><a href="{$TopExpert['space_url']}" event-node="face_card" uid="{$TopExpert['uid']}">{$TopExpert['uname']}</a></div>
+                <div class="clear"></div>
+                <p style="margin-top: 10px;">
+                    <strong>简介：</strong>{$TopExpert['intro']}
+                </p>
+            </div>
+        </div>
+        <div class="compereTab">
+            <div class="compereTabTitle">
+                访谈主持人
+            </div>
+            <div class="compereTabContent">
+                <div style="float: left; "><a href="http://www.luqinwenda.com" target="_blank"><img src="__THEME__/image/logo1.png" /></a></div>
+                <div style="float: left; margin-left: 10px; font-size: 14px;"><a href="http://www.luqinwenda.com" target="_blank">卢勤问答平台</a></div>
+                <div class="clear"></div>
+                <p style="margin-top: 10px;">	<strong>简介：</strong>卢勤问答平台是家庭教育问答互动交流平台，致力于关爱青少年成长，帮助家长解决青少年成长中出现的问题。平台聚集着以卢勤老师为代表教育专家，倾听孩子的心声，为家长提供解决孩子成长问题的方案。我们与您共同见证孩子的成长！
+                </p>
+            </div>
+        </div>
     </div>
+
+
+    <div class="reveal-modal" id="myModal">
+        <div class="msg_yq">
+            <div class="msg_yq_top1">
+                <a href="javascript:void(0);" class="close close-reveal-modal"></a>
+            </div>
+            <div class="msg_yq_cont">
+                <div class="reg_five" style="width: 683px; padding-top: 0;">
+                    <!--发布框-->
+                    {:W('SendWeiboInterview',array('title'=>$title, 'topicHtml'=>$initHtml, 'Interview'=>'1'))}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var sdt = '{$InterView.iv_startdt}';
+    var edt = '{$InterView.iv_enddt}';
+    var url1 = U('public/Interview/qafeedlist');
+    var url2 = U('public/Interview/qfeedlist');
+    var totalpage1 =parseInt('{$page1}');
+    var totalpage2 =parseInt('{$page2}');
+    var page1=1;
+    var page2=1;
+    var stateInt = '{$stateInt}';
+    var newdata1=sdt; //最新回答数据id
+    $(document).ready(function(){
+        initTab1(0);
+        initTab2();
+        //进行中的访谈自动刷新
+        if(stateInt=='1') {
+            setInterval('autoflansh(0)',5000);
+        }
+        else
+        {
+            //已结束或者未开始的不可提问
+            $('#answeraskdiv').remove();
+            $('#useraskdiv').remove();
+        }
+    });
+
+    /**
+     * 加载回答数据
+     * @param newdataindex 是否获取最新发布时间 0获取,1不获取
+     */
+    function initTab1(newdataindex) {
+        //alert(sdt);
+        $('#pageNum1').html(page1);
+        $('#feed-lists1').html("<div style='margin-top: 50px; text-align: center;'>数据加载中 <img src='__THEME__/image/loadingAnimation.gif' /></div>");
+        $.get(url1,{startdt : sdt, enddt : edt, limit:page1-1, dataindex:newdataindex },function(msg){
+            if(msg == '') {
+                $('#feed-lists1').html('<div style="text-align: center; margin-top: 20px;">暂无数据</div>');
+            }
+            else
+                $('#feed-lists1').html(msg);
+            //alert(newdata1);
+        });
+    }
+
+    function initTab2() {
+        $('#pageNum2').html(page2);
+        $('#feed-lists2').html("<div style='margin-top: 50px; text-align: center;'>数据加载中 <img src='__THEME__/image/loadingAnimation.gif' /></div>");
+        $.get(url2,{startdt : sdt, enddt : edt, limit:page2-1 },function(msg){
+            if(msg == '') {
+                $('#feed-lists2').html('<div style="text-align: center; margin-top: 20px;">暂无数据</div>');
+            }
+            else
+                $('#feed-lists2').html(msg);
+        });
+    }
+
+    function jumpPrePage1() {
+        if (page1 - 1 >= 1) {
+            page1 = page1 - 1;
+            initTab1(1);
+        }
+    }
+    function jumpnextPage1() {
+        if (page1 + 1 <= totalpage1) {
+            page1 = page1 + 1;
+            initTab1(1);
+        }
+    }
+    function jumpPrePage2() {
+        if (page2 - 1 >= 1) {
+            page2 = page2 - 1;
+            initTab2();
+        }
+    }
+    function jumpnextPage2() {
+        if (page2 + 1 <= totalpage2) {
+            page2 = page2 + 1;
+            initTab2();
+        }
+    }
+
+    function autoflansh(set) {
+        if (($('#autoFlash').attr('checked') || set == 1)) {
+            $.get(url1,{startdt : newdata1, enddt : edt, limit:0, dataindex:0, flansh:1, random:Math.round() },function(msg){
+                //alert(newdata1);
+                $('#feed-lists1').prepend(msg);
+            });
+        }
+    }
+
+</script>
+<link href="__THEME__/css/reveal.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="__THEME__/js/jquery.reveal.js"></script>
+<script type="text/javascript" src="__THEME__/js/home/module.home.js"></script>
+<script type="text/javascript" src="__THEME__/js/module.weibo.js"></script>
 <include file="__THEME__/public_footer" />

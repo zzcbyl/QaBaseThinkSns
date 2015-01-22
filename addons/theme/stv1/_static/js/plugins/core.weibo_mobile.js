@@ -21,6 +21,9 @@ core.weibo_mobile = {
         //alert(agrs.feedid);
         this.answerid = agrs.answerid;
         this.openid = agrs.openid;
+        this.expert = agrs.expert;
+        this.startdt = agrs.startdt;
+        this.enddt = agrs.enddt;
 
         //this.pre_page = "undefined" == typeof(pre_page) ? 1 :pre_page;//分页用到的前一页
         if ("undefined" == typeof (this.loadCount)) {
@@ -68,19 +71,9 @@ core.weibo_mobile = {
         var _this = this;
         _this.canLoading = false;
         //return;
+        //alert(_this.loadId);
         // 获取提问数据
-        $.get(U('widget/FeedListMobileNoFace/loadMore'), {
-            'loadId': _this.loadId,
-            'type': _this.feedType,
-            'uid': _this.uid,
-            'feed_type': _this.feed_type,
-            'feed_key': _this.feed_key,
-            'fgid': fgid,
-            'topic_id': _this.topic_id,
-            'load_count': _this.loadCount,
-            'gid': _this.gid,
-            'openid': _this.openid
-        }, function (msg) {
+        $.get(U('widget/FeedListMobileNoFace/loadMore'), { 'loadId': _this.loadId, 'type': _this.feedType, 'uid': _this.uid, 'feed_type': _this.feed_type, 'feed_key': _this.feed_key, 'fgid': fgid, 'topic_id': _this.topic_id, 'load_count': _this.loadCount, 'gid': _this.gid, 'openid': _this.openid, 'startdt': _this.startdt, 'enddt': _this.enddt, 'expert': _this.expert }, function (msg) {
             //alert(msg.html);
             // 加载失败
             if (msg.status == "0" || msg.status == "-1") {
@@ -512,7 +505,7 @@ core.weibo_mobile = {
 
     },
     // 发布提问
-    post_feed: function (_this, mini_editor, textarea, description_editor, description, questionid, isbox, url, isAdd, inviteList, openid) {
+    post_feed: function (_this, mini_editor, textarea, description_editor, description, questionid, isbox, url, isAdd, inviteList, openid, isnoname) {
         var obj = this;
         // 避免重复发送
         if ("undefined" == typeof (obj.isposting)) {
@@ -622,24 +615,7 @@ core.weibo_mobile = {
         if (openid)
             Oid = openid.value;
         // 发布提问
-        $.post(url, {
-            body: data,
-            type: type,
-            app_name: app_name,
-            content: '',
-            attach_id: attach_id,
-            videourl: videourl,
-            channel_id: channel_id,
-            source_url: attrs.source_url,
-            gid: attrs.gid,
-            description: txtVal,
-            questionid: Qid,
-            addask: int_isadd,
-            inviteid: inviteid,
-            ShareSina: sinaShare,
-            ShareQQ: qqShare,
-            Openid: Oid
-        }, function (msg) {
+        $.post(url, { body: data, type: type, app_name: app_name, content: '', attach_id: attach_id, videourl: videourl, channel_id: channel_id, source_url: attrs.source_url, gid: attrs.gid, description: txtVal, questionid: Qid, addask: int_isadd, inviteid: inviteid, ShareSina: sinaShare, ShareQQ: qqShare, Openid: Oid, IsNoName: isnoname }, function (msg) {
             //alert(msg.data);
             obj.isposting = false;
             //_this.className = 'btn-grey-white';
@@ -664,7 +640,14 @@ core.weibo_mobile = {
                     }
                 }
                 if (Oid != undefined && Oid != '') {
-                    location.href = U('public/MobileNew/myquestion&openid=' + Oid);
+                    //location.href = U('public/MobileNew/myquestion&openid=' + Oid);
+                    setTimeout(function () {
+                        var refurl = document.referrer;
+                        if(refurl)
+                            location.href = refurl;
+                        else
+                            location.href = U('public/MobileNew/myquestion&openid=' + Oid);
+                    }, 1000);
                 }
                 if (Qid != undefined && Qid != '') {
                     if (Oid != undefined && Oid != '') {

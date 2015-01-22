@@ -482,7 +482,7 @@ core.weibo = {
 
     },
     // 发布提问
-    post_feed: function (_this, mini_editor, textarea, description_editor, description, questionid, isbox, url, isAdd, inviteList) {
+    post_feed: function (_this, mini_editor, textarea, description_editor, description, questionid, isbox, url, isAdd, inviteList, isnoname, interview) {
         var obj = this;
         // 避免重复发送
         if ("undefined" == typeof (obj.isposting)) {
@@ -588,9 +588,8 @@ core.weibo = {
         var int_isadd = 0;
         if (isAdd)
             int_isadd = 1;
-
         // 发布提问
-        $.post(url, { body: data, type: type, app_name: app_name, content: '', attach_id: attach_id, videourl: videourl, channel_id: channel_id, source_url: attrs.source_url, gid: attrs.gid, description: txtVal, questionid: Qid, addask: int_isadd, inviteid: inviteid, ShareSina: sinaShare, ShareQQ: qqShare }, function (msg) {
+        $.post(url, { body: data, type: type, app_name: app_name, content: '', attach_id: attach_id, videourl: videourl, channel_id: channel_id, source_url: attrs.source_url, gid: attrs.gid, description: txtVal, questionid: Qid, addask: int_isadd, inviteid: inviteid, ShareSina: sinaShare, ShareQQ: qqShare, IsNoName: isnoname, IsInterview: interview }, function (msg) {
             //alert(msg.data);
             //return;
             obj.isposting = false;
@@ -602,6 +601,14 @@ core.weibo = {
                 }
                 var postOk = mini_editor.childModels['post_ok'][0];
                 $(postOk).fadeIn('fast');
+                if($('.answerTab').html() != null) {
+                    $('.reveal-modal').animate({
+                        "opacity": 0
+                    }, 1000, function() {
+                        $('.reveal-modal').css({ 'visibility': 'hidden'});
+                    });
+                    $('.reveal-modal-bg').fadeOut(1000);
+                }
                 core.weibo.afterPost(mini_editor, textarea, attrs.topicHtml, description_editor, description, false, Qid, int_isadd);
                 if (!isbox) {
                     core.weibo.insertToList(msg.data, msg.feedId, questionid, int_isadd);
