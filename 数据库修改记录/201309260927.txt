@@ -1,1 +1,0 @@
-给wb_feed表中增加字段answer_count表示问题的回答数量

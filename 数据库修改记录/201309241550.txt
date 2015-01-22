@@ -1,1 +1,0 @@
-把wb_feed_data中的字段feed_questionid挪到wb_feed表中 ( 为了方便关联读取 ) 

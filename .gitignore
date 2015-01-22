@@ -1,11 +1,9 @@
 config/config.inc.php
 _runtime/*
-data/upload/*
-
-.idea/*
 data/*
+.idea/*
+data/
 data/database/131125_c77222690c_1.php
-
 
 .idea/workspace.xml
 
@@ -17,4 +15,7 @@ snap_image_test.php
 
 snap_image_test.php
 web.config
-.com.apple.timemachine.supported
+
+数据库修改记录
+
+数据修改记录
