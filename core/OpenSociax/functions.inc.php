@@ -48,7 +48,7 @@ function cookie($name,$value='',$option=null) {
        return;
     }
     $name = $config['prefix'].$name;
-	
+
     if (''===$value){
         //return isset($_COOKIE[$name]) ? unserialize($_COOKIE[$name]) : null;// 获取指定Cookie
         return isset($_COOKIE[$name]) ? ($_COOKIE[$name]) : null;// 获取指定Cookie
@@ -319,7 +319,7 @@ function D($name='', $app='@', $inclueCommonFunction=true) {
     if(empty($app) || $app=='@')   $app =  APP_NAME;
 
     $name = ucfirst($name);
-        
+
     if(isset($_model[$app.$name]))
         return $_model[$app.$name];
 
@@ -336,7 +336,7 @@ function D($name='', $app='@', $inclueCommonFunction=true) {
         }
         tsload(APPS_PATH.'/'.$app.'/Lib/Model/'.$className.'.class.php');
     }
-    
+
     if(class_exists($className)) {
 
         $model = new $className();
@@ -391,7 +391,7 @@ function L($key,$data = array()){
      	  	 $notValveForKey[$key] = '?app='.APP_NAME.'&mod='.MODULE_NAME.'&act='.ACTION_NAME;
      	  }
      	  F('notValveForKey', $notValveForKey, DATA_PATH.'/develop');
-     	  
+
           return $key;
      }
      if(empty($data)){
@@ -418,7 +418,7 @@ function L($key,$data = array()){
  * </code>
  * @param string $start 开始标签
  * @param string $end 结束标签
- * @param integer|string $dec 小数位或者m 
+ * @param integer|string $dec 小数位或者m
  * @return mixed
  */
 function G($start,$end='',$dec=4) {
@@ -430,11 +430,11 @@ function G($start,$end='',$dec=4) {
         if(!isset($_info[$end])) $_info[$end]       =  microtime(TRUE);
         if(MEMORY_LIMIT_ON && $dec=='m'){
             if(!isset($_mem[$end])) $_mem[$end]     =  memory_get_usage();
-            return number_format(($_mem[$end]-$_mem[$start])/1024);          
+            return number_format(($_mem[$end]-$_mem[$start])/1024);
         }else{
             return number_format(($_info[$end]-$_info[$start]),$dec);
-        }       
-            
+        }
+
     }else{ // 记录时间和内存使用
         $_info[$start]  =  microtime(TRUE);
         if(MEMORY_LIMIT_ON) $_mem[$start]           =  memory_get_usage();
@@ -449,7 +449,7 @@ function G($start,$end='',$dec=4) {
  * N('read',1); // 记录读取次数
  * echo N('db'); // 获取当前页面数据库的所有操作次数
  * echo N('read'); // 获取当前页面读取次数
- * </code> 
+ * </code>
  * @param string $key 标识位置
  * @param integer $step 步进值
  * @return mixed
@@ -509,7 +509,7 @@ function t($text){
     return $text;
 }
 
-/** 
+/**
  * h函数用于过滤不安全的html标签，输出安全的html
  * @param string $text 待过滤的字符串
  * @param string $type 保留的标签格式
@@ -547,7 +547,7 @@ function h($text, $type = 'html'){
     return $text;
 }
 
-/** 
+/**
  * U函数用于生成URL地址
  * @param string $url 卢勤问答特有URL标识符
  * @param array $params URL附加参数
@@ -627,7 +627,7 @@ function U($url,$params=false,$redirect=false) {
     }
 }
 
-/** 
+/**
  * URL跳转函数
  * @param string $url 卢勤问答特有URL标识符
  * @param integer $time 跳转延时(秒)
@@ -784,7 +784,7 @@ function model($name,$params=array()) {
 // 调用接口服务
 function X($name,$params=array(),$domain='model') {
     static $_service = array();
-    
+
     $app =  C('DEFAULT_APP');
 
     $domain = ucfirst($domain);
@@ -1027,7 +1027,7 @@ function CheckWeibaPermission( $weiba_admin , $id , $action , $uid){
 function CheckTaskSwitch(){
 	$taskswitch = model('Xdata')->get('task_config:task_switch');
 	!$taskswitch && $taskswitch = 1;
-	
+
 	return $taskswitch == 1;
 }
 //获取当前用户的前台管理权限
@@ -1225,9 +1225,9 @@ function friendlyDate($sTime,$type = 'normal',$alt = 'false') {
 }
 
 /**
- * 
+ *
  * 正则替换和过滤内容
- * 
+ *
  * @param  $html
  * @author jason
  */
@@ -1296,7 +1296,7 @@ function replaceTheme($content){
 function replaceUrl($content){
     //$content = preg_replace_callback('/((?:https?|ftp):\/\/(?:[a-zA-Z0-9][a-zA-Z0-9\-]*)*(?:\/[^\x{2e80}-\x{9fff}\s<\'\"“”‘’,，。]*)?)/u', '_parse_url', $content);
     $content = str_replace('[SITE_URL]', SITE_URL, $content);
-    $content = preg_replace_callback('/((?:https?|mailto|ftp):\/\/([^\x{2e80}-\x{9fff}\s<\'\"“”‘’，。}]*)?)/u', '_parse_url', $content);
+    $content = preg_replace_callback('/((?:https?|mailto|ftp):\/\/([^\x{2e80}-\x{9fff}\s<\'\"“’，。}]*)?)/u', '_parse_url', $content);
     return $content;
 }
 
@@ -1324,14 +1324,15 @@ function _parse_expression($data) {
  */
 function _parse_url($url){
     $str = '<div class="url">';
-    if ( preg_match("/(youku.com|youtube.com|ku6.com|sohu.com|mofile.com|sina.com.cn|tudou.com|yinyuetai.com)/i", $url[0] , $hosts) ){
+    if ( preg_match("/(youku.ctai.com)/i", $url[0] , $hosts) ){
         $str .= '<a href="'.$url[0].'" target="_blank" event-node="show_url_detail" class="ico-url-video"></a>';
     } else if ( strpos( $url[0] , 'taobao.com') ){
         $str .= '<a href="'.$url[0].'" target="_blank" event-node="show_url_detail" class="ico-url-taobao"></a>';
     } else {
-        $str .= '<a href="'.$url[0].'" target="_blank" event-node="show_url_detail" class="ico-url-web"></a>';
+        $str .= '<a href="'.$url[0].'" target="_blank">'.$url[0].'</a>';
     }
-    $str .= '<div class="url-detail" style="display:none;">'.$url[0].'</div></div>';
+    //$str .= '<div class="url-detail" style="display:none;">'.$url[0].'</div></div>';
+    $str .= '</div>';
     return $str;
 }
 
@@ -1376,7 +1377,7 @@ function _parse_at_by_uname($name) {
 function _parse_at_by_uid($result){
     $_userInfo = explode("|",$result[1]);
     $userInfo = model('User')->getUserInfo($_userInfo[0]);
-    return '<a uid="'.$userInfo['uid'].'" event-node="face_card" data="@{uid='.$userInfo['uid'].'|'.$userInfo['uname'].'}" 
+    return '<a uid="'.$userInfo['uid'].'" event-node="face_card" data="@{uid='.$userInfo['uid'].'|'.$userInfo['uname'].'}"
             href="'.$userInfo['space_url'].'">@'.$userInfo['uname'].'</a>';
 }
 
@@ -1442,10 +1443,10 @@ function filter_keyword($html){
 function getThumbImage($filename,$width=100,$height='auto',$cut=false,$replace=false){
     $filename  = str_ireplace(UPLOAD_URL,'',$filename); //将URL转化为本地地址
     $info      = pathinfo($filename);
-	
+
     $oldFile   = $info['dirname'].DIRECTORY_SEPARATOR.$info['filename'].'.'.$info['extension'];
     $thumbFile = $info['dirname'].DIRECTORY_SEPARATOR.$info['filename'].'_'.$width.'_'.$height.'.'.$info['extension'];
-	
+
     $oldFile = str_replace('\\','/', $oldFile);
     $thumbFile = str_replace('\\','/',$thumbFile);
 
@@ -1485,7 +1486,7 @@ function getThumbImage($filename,$width=100,$height='auto',$cut=false,$replace=f
             if($cut){
                 Image::cut(UPLOAD_PATH.$filename, UPLOAD_PATH.$thumbFile, $width, $height);
             }else{
-                Image::thumb(UPLOAD_PATH.$filename, UPLOAD_PATH.$thumbFile, '', $width, $height);   
+                Image::thumb(UPLOAD_PATH.$filename, UPLOAD_PATH.$thumbFile, '', $width, $height);
             }
             //缩图不存在
             if(!file_exists(UPLOAD_PATH.$thumbFile)){
@@ -1529,7 +1530,7 @@ function getImageUrl($file,$width='0',$height='auto',$cut=false,$replace=false){
 function saveImageToLocal($url){
   if(strncasecmp($url,'http',4)!=0){
     return false;
-  } 
+  }
   $opts = array(
     'http'=>array(
       'method' => "GET",
@@ -1555,7 +1556,7 @@ function saveImageToLocal($url){
     //本地存储
     $res = file_put_contents(UPLOAD_PATH.$file_path.$file_name, $file_content);
   }
-  
+
   if($res){
     return $file_path.$file_name;
   }else{
@@ -1710,13 +1711,13 @@ function debug_start($label=''){
 }
 
 // 区间调试结束，显示指定标记到当前位置的调试
-function debug_end($label=''){   
+function debug_end($label=''){
     $GLOBALS[$label]['_endTime'] = microtime(TRUE);
     $log =  'Process '.$label.': Times '.number_format($GLOBALS[$label]['_endTime']-$GLOBALS[$label]['_beginTime'],6).'s ';
     $GLOBALS[$label]['_endMem'] = memory_get_usage();
     $log .= ' Memories '.number_format(($GLOBALS[$label]['_endMem']-$GLOBALS[$label]['_beginMem'])/1024).' k';
     $GLOBALS['logs'][$label] = $log;
-} 
+}
 
 // 全站语言设置 - PHP
 function setLang() {
@@ -1831,8 +1832,8 @@ function ShowNavMenu($apps){
                 //地址直接是cm值
                 $url = U($cm);
             }
-            
-            $html .="<dd><a href='{$url}'>{$title}</a></dd>";    
+
+            $html .="<dd><a href='{$url}'>{$title}</a></dd>";
         }
     }
     return $html;
@@ -1852,12 +1853,12 @@ function showNavProfile($apps){
             if($k == $app['app_name'] && $cm['public'] == 1){
                 //我的XXX 只会显示这类数据
                 $title = "<img width='16' src='{$app['icon_url']}'> ".L('PUBLIC_APPNAME_'.strtoupper($k));
-                $url   = U('public/Profile/appprofile',array('appname'=>$k));    
-                $html .="<dd class='profile_{$app['app_name']}'><a href='{$url}'>{$title}</a></dd>";    
+                $url   = U('public/Profile/appprofile',array('appname'=>$k));
+                $html .="<dd class='profile_{$app['app_name']}'><a href='{$url}'>{$title}</a></dd>";
             }
         }
     }
-    return $html;   
+    return $html;
 }
 
 /**
@@ -1913,7 +1914,7 @@ function showTreeCategory($data, $stable, $left, $delParam, $level = 0, $ext = '
             $html .= '<li id="sub_'.$val['id'].'" style="display:none;">';
             $html .= showTreeCategory($val['child'], $stable, $left + 15, $delParam, $level, $ext, $times + 1, $limit);
             $html .= '</li>';
-        } 
+        }
     }
     $html .= '</ul>';
 
@@ -2232,7 +2233,8 @@ function jiemi($txt, $key = null) {
 //******************************************************************************
 // 转移应用添加函数
 /**
- +----------------------------------------------------------
+ * +----------------------------------------------------------
+ * 字符串截取，支持+----------------------------------------------------------
  * 字符串截取，支持中文和其它编码
  +----------------------------------------------------------
  * @static
@@ -2242,15 +2244,15 @@ function jiemi($txt, $key = null) {
  * @param string $length 截取长度
  * @param string $charset 编码格式
  * @param string $suffix 截断显示字符
- +----------------------------------------------------------
- * @return string
+tring
  +----------------------------------------------------------
  */
 function mStr($str, $length, $charset="utf-8", $suffix=true){
     return msubstr($str, 0, $length, $charset, $suffix);
 }
 /**
- +----------------------------------------------------------
+ * +----------------------------------------------------------
+ * 字符串截取，支持+----------------------------------------------------------
  * 字符串截取，支持中文和其它编码
  +----------------------------------------------------------
  * @static
@@ -2261,8 +2263,7 @@ function mStr($str, $length, $charset="utf-8", $suffix=true){
  * @param string $length 截取长度
  * @param string $charset 编码格式
  * @param string $suffix 截断显示字符
- +----------------------------------------------------------
- * @return string
+tring
  +----------------------------------------------------------
  */
 function msubstr($str, $start=0, $length, $charset="utf-8", $suffix=true) {
