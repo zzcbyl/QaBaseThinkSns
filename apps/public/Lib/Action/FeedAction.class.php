@@ -137,6 +137,8 @@ class FeedAction extends Action
         } else {
             //回答不需要审核
             $d['interview_audit'] = 1;
+            //如果是卢勤回答,默认问题审核通过
+            model('feed')->doAuditInterview(intval($d['questionid']));
         }
 
         if (!$data = model('Feed')->put($uid, $app, $type, $d)) {
