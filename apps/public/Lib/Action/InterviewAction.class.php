@@ -120,6 +120,9 @@ class InterviewAction extends Action
     public function interviewlist()
     {
         $InterView = model('Interview')->getInterView('', 20);
+        foreach ($InterView as &$v) {
+            $v['iv_state'] = $v['iv_state'] == '未开始' ? 0 : ($v['iv_state'] == '进行中...' ? 1 : ($v['iv_state'] == '已结束' ? 2 : 0));
+        }
         //print_r($InterView);
         $this->assign('InterView', $InterView);
         $this->setTitle("卢勤问答见面会谈汇总");
