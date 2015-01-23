@@ -14,7 +14,7 @@
             <div style="font-size:16px; line-height:25px; color:#424141; font-weight:bold; padding-left: 60px; padding-right: 45px;">
                 <a href="{:U('public/Interview/index',array('interview_id'=>$vl['iv_id']))}">{$vl['iv_name']}</a>
                 <span style="font-size: 12px; color: #666; font-weight: normal;">
-                    （{$vl['iv_startdt']}－{$vl['iv_enddt']}）　{$vl['iv_state']}</span>
+                    （{$vl['iv_startdt']}－{$vl['iv_enddt']}）</span>
             </div>
             <p style="padding-left:60px; font-size:14px;">{$vl['iv_content']}</p>
 
@@ -23,6 +23,8 @@
                     <span style="margin-right: 5px;">{$u['space_link']}</span>
                 </volist>
             </p>
+            <div style="position: absolute; right: 0px; top: 0px; z-index: 9;">
+                <a style="display: block; width: 51px; height: 50px; background: url(__THEME__/image/iv_state{$vl['iv_state']}.png) no-repeat;"></a></div>
         </div>
     </volist>
 </div>
