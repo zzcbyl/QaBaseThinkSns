@@ -31,7 +31,7 @@
         </div>
         <div class="answerTab">
             <div class="answerTabTitle">
-                <div style="float: left;"><b见面会谈内容</b>　<input type="checkbox" id="autoFlash" checked="true" /> 自动刷新　
+                <div style="float: left;"><b>见面会内容</b>　<input type="checkbox" id="autoFlash" checked="true" /> 自动刷新　
                     <a id="f5flash" href="javascript:autoflansh(1);">刷新</a></div>
                 <div style="float: right;"><a id="answeraskdiv" data-reveal-id="myModal" data-animation="fade" href="#">我要提问</a>　<a href="#userAsk">查看网友提问</a></div>
                 <div class="clear"></div>
@@ -69,11 +69,11 @@
     <div class="cont_right" style="border: none; width: 251px;">
         <div class="righthead">
             <div>{$InterViewState}</div>
-            <di见面会访谈时间：<br /><php> echo date('Y-m-d H:i',$InterView['iv_startdt']);</php><br /><php> echo date('Y-m-d H:i',$InterView['iv_enddt']);</php></div>
+            <div>见面会时间：<br /><php> echo date('Y-m-d H:i',$InterView['iv_startdt']);</php><br /><php> echo date('Y-m-d H:i',$InterView['iv_enddt']);</php></div>
         </div>
         <div class="rightObject">
             <div class="rightObjectTitle">
-             见面会 访谈嘉宾
+                见面会嘉宾
             </div>
             <div class="rightObjectContent">
                 <div style="float: left; "><a href="{$TopExpert['space_url']}"><img src="{$TopExpert['avatar_big']}" event-node="face_card" uid="{$TopExpert['uid']}" /></a></div>
@@ -86,7 +86,7 @@
         </div>
         <div class="compereTab">
             <div class="compereTabTitle">
-            见面会  访谈主持人
+                见面会主持人
             </div>
             <div class="compereTabContent">
                 <div style="float: left; "><a href="http://www.luqinwenda.com" target="_blank"><img src="__THEME__/image/logo1.png" /></a></div>
@@ -128,7 +128,7 @@
     $(document).ready(function(){
         initTab1(0);
         initTab2();
-        /见面会行中的访谈自动刷新
+        //进行中的见面会自动刷新
         if(stateInt=='1') {
             setInterval('autoflansh(0)',5000);
         }
