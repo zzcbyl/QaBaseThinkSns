@@ -522,11 +522,12 @@ class ApiAction
     {
         $psize = 10;
         if (intval($_GET['p']) > 0) {
-            $InterView = model('Interview')->getInterView('iv_state=1', 1);
+            $InterView = model('Interview')->getInterView('', 1);
             if (!empty($InterView)) {
                 $data = $InterView[0];
                 $startdt = strtotime($data['iv_startdt']);
                 $enddt = strtotime($data['iv_enddt']);
+                $InterView[0]['iv_state'] = model('Interview')->getStateInt($startdt,$enddt);
                 $expert = C('TopExpert');
                 $limitnums = (intval($_GET['p']) - 1) * $psize;
                 $where = " is_del = 0 AND feed_questionid!=0 AND add_feedid=0 AND is_audit=1 and interview_audit=1 and last_updtime >='"
@@ -535,7 +536,7 @@ class ApiAction
                 //echo model('Feed')->getLastSql();
                 $count = model('Feed')->where($where)->count();
                 $page = new Page($count, $psize);
-                echo '{"status":1,"info":"","page":' . json_encode($page) . ',"data":' . json_encode($list['data']) . '}';
+                echo '{"status":1,"info":"","interview":'.json_encode($InterView[0]).',"page":' . json_encode($page) . ',"data":' . json_encode($list['data']) . '}';
                 return;
             }
         }
