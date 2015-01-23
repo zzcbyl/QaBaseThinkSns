@@ -386,13 +386,13 @@ class MobileNewAction
         $this->assign('openid', $_GET['openid']);
         $InterView = model('Interview')->getInterView('', 20);
         $this->assign('InterView', $InterView);
-        $this->setTitle("卢勤问答访谈汇总");
+        $this->setTitle("卢勤问答见面会汇总");
         $this->display();
     }
 
 
     /**
-     * 卢老师的回答(访谈内容)
+     * 卢老师的回答见面会谈内容)
      *
      * @return void
      *
@@ -424,7 +424,7 @@ class MobileNewAction
     }
 
     /**
-     * 网友提问(访谈)
+     * 网友提见面会访谈)
      *
      * @return void
      *

@@ -47,7 +47,7 @@ class InterviewAction extends Action
             $this->assign('page2', $list['totalPages']);
 
         } else {
-            $this->error("访谈数据错误");
+            $this->error("见面会数据错误");
         }
 
         //顶级专家
@@ -122,7 +122,7 @@ class InterviewAction extends Action
         $InterView = model('Interview')->getInterView('', 20);
         //print_r($InterView);
         $this->assign('InterView', $InterView);
-        $this->setTitle("卢勤问答访谈汇总");
+        $this->setTitle("卢勤问见面会谈汇总");
         $this->display();
     }
 }

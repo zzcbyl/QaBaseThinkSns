@@ -128,7 +128,7 @@ class FeedAction extends Action
             $uid = -1;
         }
 
-        //根据配置设置访谈内容是否需要审核
+        //根据配置设置见面会内容是否需要审核
         if (intval($d['questionid']) <= 0) {
             if (C('AuditInterview') == 0)
                 $d['interview_audit'] = 1;

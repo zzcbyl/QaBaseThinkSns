@@ -15,19 +15,19 @@ class InterviewModel extends Model
     public function addInterView($map = array())
     {
         if (empty($map['iv_name'])) {
-            $this->error = '访谈名称不能为空';
+            $this->error = '见面会名称不能为空';
             return false;
         }
         if (empty($map['iv_startdt'])) {
-            $this->error = '访谈开始时间不能为空';
+            $this->error = '见面会开始时间不能为空';
             return false;
         }
         if (empty($map['iv_enddt'])) {
-            $this->error = '访谈结束时间不能为空';
+            $this->error = '见面会结束时间不能为空';
             return false;
         }
         if (empty($map['iv_object'])) {
-            $this->error = '访谈对象不能为空';
+            $this->error = '见面会对象不能为空';
             return false;
         }
         if (empty($map['iv_state'])) {

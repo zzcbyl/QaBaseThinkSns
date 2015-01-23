@@ -79,7 +79,7 @@ $menu = array(
 				L('PUBLIC_INVITE_CALCULATION')	=>	U('admin/Home/invatecount'),
 				'模板管理'	=>	U('admin/Content/template'),
 				'朋友圈'	=>	U('admin/Content/friendcircle'),
-                '卢勤访谈'	=>	U('admin/Content/interview')
+                '卢勤见面会'	=>	U('admin/Content/interview')
 	    	),
     	),
     	'task'	=> array(

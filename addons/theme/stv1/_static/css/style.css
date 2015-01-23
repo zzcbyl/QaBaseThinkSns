@@ -6,7 +6,7 @@ input,textarea{outline:none; font-size:12px;}
 .header{overflow:hidden; height:60px;}
 .header .menu{float:left;width:380px; margin-left:20px}
 .header .menu li{float:left; height:60px; line-height:60px;}
-.header .menu li a{font-size:14px; color:#fff; text-decoration:none; display:block; padding:0px 17px}
+.header .menu li a{font-size:14px; color:#fff; text-decoration:none; display:block; padding:0px 15px}
 .header .menu li a:hover,.header .menu li a.current{font-size:14px; color:#fff; text-decoration:none; background:#941d1d;}
 .header .search_box{width:280px; float:left; padding-top:18px}
 .header .search_box input{float:left}

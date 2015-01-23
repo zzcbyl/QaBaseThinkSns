@@ -7,11 +7,11 @@
 </style>
 <div class="so_main">
     <div class="page_tit">
-        卢勤访谈</div>
+        卢勤见面会</div>
     <div class="tit_tab">
         <ul>
-            <li><a href="{:U('admin/Content/interview')}">访谈列表</a></li>
-            <li><a class="on" href="{:U('admin/Content/interviewadd')}">添加访谈</a></li>
+            <li><a href="{:U('admin/Content/interview')}"见面会谈列表</a></li>
+            <li><a class="on" href="{:U('admin/Content/interviewadd')}">见面会访谈</a></li>
         </ul>
     </div>
     <div class="Toolbar_inbox">
@@ -20,27 +20,27 @@
         <form id="uploadForm" action="{:U('admin/Content/interviewadd')}" method="post" enctype="multipart/form-data">
             <table cellpadding=0 cellspacing=0>
                 <tr>
-                    <td style="width:100px; text-align:right;">访谈标题：</td>
+                    <td style="width:100px; text-align:right见面会>访谈标题：</td>
                     <td>
                         <input type="text" name="name" style="width: 300px;"  />
                         <span style="margin-left: 20px; color: red;">{$errorinfo}</span>
                     </td>
                 </tr>
                 <tr>
-                    <td style="width:100px; text-align:right;">访谈描述：</td>
+                    <td style="width:100px; text-align:righ见面会">访谈描述：</td>
                     <td>
                         <textarea name="content" id="content" class="input_tips" style="line-height:25px; width:400px; display:inline; height:100px;"></textarea>
                     </td>
                 </tr>
                 <tr>
-                    <td style="width:100px; text-align:right;">访谈时间：</td>
+                    <td style="width:100px; text-align:rig见面会;">访谈时间：</td>
                     <td>
                         <input type="text" id="startdt" class="s-txt" name="startdt" style="width:150px;" readonly="readonly" onfocus="core.rcalendar(this,'full');" onblur="this.className='s-txt'" value="" />－
                         <input type="text" id="enddt" class="s-txt" name="enddt" style="width:150px;" readonly="readonly" onfocus="core.rcalendar(this,'full');" onblur="this.className='s-txt'" value="" />
                     </td>
                 </tr>
                 <tr>
-                    <td style="width:100px; text-align:right;">访谈对象ID：</td>
+                    <td style="width:100px; text-align:ri见面会t;">访谈对象ID：</td>
                     <td>
                         <input type="text" name="objectid" style="width: 200px;"  />
                         （专家id以“,”分割，卢勤ID:1901）

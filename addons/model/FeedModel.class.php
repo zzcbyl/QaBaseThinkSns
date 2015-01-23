@@ -449,7 +449,7 @@ class FeedModel extends Model {
     }
 
     /**
-     * 获取问题和答案列表(访谈)
+     * 获取问题和答案列表(见面会)
      * @param array $map 查询条件
      * @param integer $limit 结果集数目，默认为10
      * @return array 提问列表数据
@@ -561,7 +561,7 @@ class FeedModel extends Model {
 	}
 
     /**
-     * 获取回答列表 (访谈)
+     * 获取回答列表 (见面会)
      * $where 查询条件
      * $limit 结果集数目，默认为10
      * @return array 提问列表数据
@@ -1766,7 +1766,7 @@ class FeedModel extends Model {
 	}
 
     /**
-     * 审核访谈提问
+     * 审核见面会提问
      * @param integer $feed_id 提问ID
      * @return array 操作后的结果信息数组
      */
