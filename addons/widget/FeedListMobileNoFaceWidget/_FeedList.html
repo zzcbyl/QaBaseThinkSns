@@ -66,9 +66,9 @@
                     <div class="contTit">
                         <eq name="vl['answer'][0]['is_del']" value='0'>
                             <php>if (intval($vl['answer'][0]['uid']) > 0 ) { </php>
-                            <a href="{$vl['answer'][0]['user_info']['space_url']}"><img class="thumb" src="{$vl['answer'][0]['user_info']['avatar_small']}"  event-node="face_card" uid='{$vl['answer'][0]['user_info']['uid']}'></a>
+                            <a href="{$vl['answer'][0]['user_info']['space_url']}"><img class="thumb_m" src="{$vl['answer'][0]['user_info']['avatar_small']}"  event-node="face_card" uid='{$vl['answer'][0]['user_info']['uid']}'></a>
                             <php> } else { </php>
-                            <a><img class="thumb" src="__THEME__/image/noavatar/small.jpg"  /></a>
+                            <a><img class="thumb_m" src="__THEME__/image/noavatar/small.jpg"  /></a>
                             <php> } </php>
                         <div style="height:25px;font-size:16px; line-height:25px; color:#424141; font-weight:bold;">
                             <php>if (intval($vl['answer'][0]['uid']) > 0 ) { </php>
