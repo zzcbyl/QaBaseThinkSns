@@ -5,10 +5,10 @@
             <div class="contTit" id ='feed{$vl.feed_id}' model-node='feed_list' style="border-bottom: 1px solid #ccc;">
                 <div style="padding:5px 0 0 5px; background: #fff;">
                     <php>if (intval($vl['uid']) > 0 ) { </php>
-                        <a href="{:U('public/Mobile/personal',array('uid'=>$vl['user_info']['uid']))}"><img class="thumb_m" src="{$vl['user_info']['avatar_small']}"  uid='{$vl['user_info']['uid']}'></a></div>
+                        <a href="{:U('public/Mobile/personal',array('uid'=>$vl['user_info']['uid']))}"><img class="thumb_m" src="{$vl['user_info']['avatar_small']}"  uid='{$vl['user_info']['uid']}'></a>
                     <php> } else { </php>
                         <a><img class="thumb_m" src="__THEME__/image/noavatar/small.jpg"  /></a>
-                    <php> } </php>
+                    <php> } </php></div>
                 <eq name='vl.is_del' value='0'>
                 <div style="height:25px;font-size:16px; line-height:25px; margin-left: 65px; color:#424141; font-weight:bold; border-bottom:1px dashed #ddd; ">
                     <php>if (intval($vl['uid']) > 0 ) { </php>
@@ -51,21 +51,31 @@
                         </div>
                 </div>
 
+
+
  	            <else />
 	            <p>{:L('PUBLIC_INFO_ALREADY_DELETE_TIPS')}</p>
                 </eq>
             </div>
              <!--答-->
             <php>
-                if(is_array($vl['answer']) && $expert== C('TopExpert')) {
+                if(is_array($vl['answer']) ) {
             </php>
             <div class="answer12" id ="feed{$vl['answer'][0].feed_id}" model-node='feed_list' style="padding-left:0; padding-top:0;">
                 <div class="aCenter2" style="border:none; padding:5px 0 5px 5px; width:auto; background:#fff;">
                     <div class="contTit">
                         <eq name="vl['answer'][0]['is_del']" value='0'>
-                        <a href="javascript:void(0)"><img class="thumb_m" src="__THEME__/image/lulaoshi_avatar.jpg" /></a>
+                            <php>if (intval($vl['answer'][0]['uid']) > 0 ) { </php>
+                            <a href="{$vl['answer'][0]['user_info']['space_url']}"><img class="thumb" src="{$vl['answer'][0]['user_info']['avatar_small']}"  event-node="face_card" uid='{$vl['answer'][0]['user_info']['uid']}'></a>
+                            <php> } else { </php>
+                            <a><img class="thumb" src="__THEME__/image/noavatar/small.jpg"  /></a>
+                            <php> } </php>
                         <div style="height:25px;font-size:16px; line-height:25px; color:#424141; font-weight:bold;">
-                            <a class="name">卢勤</a>
+                            <php>if (intval($vl['answer'][0]['uid']) > 0 ) { </php>
+                            {$vl['answer'][0].title}
+                            <php> } else { </php>
+                            <a class="name">匿名</a>
+                            <php> } </php>
                         </div>
                         <php>
                             if(strlen($vl['answer'][0]['body'])>279) {
