@@ -1,9 +1,12 @@
-<include file="__THEME__/mobile_header" />
+<include file="__THEME__/_header_mobile" />
+<body style="background:#fff;">
 <style>
-    .fontSize { width:100%;}
+    .fontSize { width:100%;  } /*C22B2B*/
+    .container table td { padding: 5px; }
 </style>
 <div class="fontSize">
     <div class="container" style="width:auto; background:#fff; margin-top:0;">
+        <div><img src="__THEME__/image/iv_banner_small.jpg" style="width: 100%;" /></div>
         {:W('FeedListMobileNoFace',array('type'=>$type,'expert'=>$expert,'openid'=>$openid,'startdt'=>$startdt,'enddt'=>$enddt))}
     </div>
 </div>
@@ -17,7 +20,7 @@
         <a href="{:U('public/MobileNew/qainterview',array('interview_id'=>$_GET['interview_id'],'openid'=>$openid))}" style="margin:0px 0 0 20px;  display:block;">见面会内容</a>
     </div>
     <div style="float: left; width: 33%;  height:40px; text-align: center;border-right: 2px solid #ddd;">
-        <a href="{:U('public/MobileNew/qinterview',array('interview_id'=>$_GET['interview_id'],'openid'=>$openid))}" style="margin:0px auto; display:block; ">网友提问</a>
+        <a href="{:U('public/MobileNew/qinterview',array('interview_id'=>$_GET['interview_id'],'openid'=>$openid))}" style="margin:0px auto; display:block; ">家长的提问</a>
     </div>
     <div style="float: left; width: 32%;  height:40px; text-align: center;">
         <a href="{:U('public/MobileNew/quickask',array('interview_id'=>$_GET['interview_id'],'openid'=>$openid))}" style="margin:0px auto; display:block; ">我要提问</a>
