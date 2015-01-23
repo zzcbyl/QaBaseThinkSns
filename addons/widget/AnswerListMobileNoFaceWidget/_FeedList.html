@@ -8,7 +8,7 @@
                         <!--卢老师的回答-->
                         <a href="javascript:void(0)"><img class="thumb_m" src="__THEME__/image/lulaoshi_avatar.jpg" /></a>
                         <div style="height:25px;font-size:16px; line-height:25px; color:#424141; font-weight:bold;">
-                            卢勤
+                            <a class="name">卢勤</a>
                         </div>
                         <p style="padding-left:0px;">
                             <php>
@@ -47,13 +47,13 @@
                     <php>} else {</php>
                         <!--普通回答-->
                 <php>if (intval($vl['uid']) > 0 ) { </php>
-                <a href="{$vl['user_info']['space_url']}"><img class="thumb_m" src="{$vl['user_info']['avatar_small']}"  event-node="face_card" uid='{$vl['user_info']['uid']}'></a>
+                <a href="javascript:void(0);"><img class="thumb_m" src="{$vl['user_info']['avatar_small']}"  event-node="face_card" uid='{$vl['user_info']['uid']}'></a>
                 <php> } else { </php>
                 <a><img class="thumb_m" src="__THEME__/image/noavatar/small.jpg"  /></a>
                 <php> } </php>
                 <div style="height:25px;font-size:16px; line-height:25px; color:#424141; font-weight:bold;">
                     <php>if (intval($vl['uid']) > 0 ) { </php>
-                    {$vl.title}
+                    <a class="name">{$vl['user_info']['uname']}</a>
                     <php> } else { </php>
                     <a class="name">匿名</a>
                     <php> } </php>
