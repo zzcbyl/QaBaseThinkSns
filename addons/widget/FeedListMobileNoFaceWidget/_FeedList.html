@@ -1,7 +1,8 @@
 <volist name='data' id='vl'>
 <div class="conts" style="padding:5px 0 0 0; border:none;">
     <div class="contTwo" style="border:1px solid #999;">
-        <div class="contCenter2" style="border:none; padding: 0px; width:auto; background:#fff;">
+        <div class="contCenter2" style="border:none; padding: 0px; width:auto; background:#fff; position: relative;">
+            <div style="position: absolute; right: 0; top: 0;width: 52px; height: 52px; z-index: 99;"><a style="display: block; background: url(__THEME__/image/sprite.png) -288px -5px; width: 52px; height: 52px;"></a></div>
             <div class="contTit" id ='feed{$vl.feed_id}' model-node='feed_list' style="border-bottom: 1px solid #ccc;">
                 <div style="padding:5px 0 0 5px; background: #fff;">
                     <php>if (intval($vl['uid']) > 0 ) { </php>
@@ -10,7 +11,7 @@
                         <a><img class="thumb_m" src="__THEME__/image/noavatar/small.jpg"  /></a>
                     <php> } </php></div>
                 <eq name='vl.is_del' value='0'>
-                <div style="height:25px;font-size:16px; line-height:25px; margin-left: 65px; color:#424141; font-weight:bold; border-bottom:1px dashed #ddd; ">
+                <div style="height:25px;font-size:16px; line-height:25px; margin-left: 65px; color:#424141; font-weight:bold; ">
                     <php>if (intval($vl['uid']) > 0 ) { </php>
                         <a class="name">{$vl.user_info.uname}</a>
                     <php> } else { </php>
@@ -62,7 +63,8 @@
                 if(is_array($vl['answer']) ) {
             </php>
             <div class="answer12" id ="feed{$vl['answer'][0].feed_id}" model-node='feed_list' style="padding-left:0; padding-top:0;">
-                <div class="aCenter2" style="border:none; padding:5px 0 5px 5px; width:auto; background:#fff;">
+                <div class="aCenter2" style="border:none; padding:5px 0 5px 5px; width:auto; background:#fff; position: relative;">
+                    <div style="position: absolute; right: 0; top: 0;width: 52px; height: 52px; z-index: 99;"><a style="display: block; background: url(__THEME__/image/sprite.png) -368px -5px; width: 52px; height: 52px;"></a></div>
                     <div class="contTit">
                         <eq name="vl['answer'][0]['is_del']" value='0'>
                             <php>if (intval($vl['answer'][0]['uid']) > 0 ) { </php>
