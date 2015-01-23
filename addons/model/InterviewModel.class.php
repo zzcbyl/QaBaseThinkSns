@@ -82,7 +82,7 @@ class InterviewModel extends Model
         return $list;
     }
 
-    private function getState($startdt, $enddt)
+    public function getState($startdt, $enddt)
     {
         $str = '';
         $currentdt = intval(time());
@@ -96,5 +96,18 @@ class InterviewModel extends Model
         return $str;
     }
 
+    public function getStateInt($startdt, $enddt)
+    {
+        $str = 0;
+        $currentdt = intval(time());
+        if ($startdt > $currentdt) {
+            $str = 0;
+        } else if ($enddt < $currentdt) {
+            $str = 2;
+        } else {
+            $str = 1;
+        }
+        return $str;
+    }
 
 }
