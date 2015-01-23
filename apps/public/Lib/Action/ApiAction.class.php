@@ -540,6 +540,6 @@ class ApiAction
                 return;
             }
         }
-        echo '{"status":0,"info":"暂无访谈内容","data":}';
+        echo '{"status":0,"info":"暂无见面会内容","data":}';
     }
 }

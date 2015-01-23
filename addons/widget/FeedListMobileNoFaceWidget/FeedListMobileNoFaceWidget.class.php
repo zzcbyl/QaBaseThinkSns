@@ -236,7 +236,7 @@ class FeedListMobileNoFaceWidget extends Widget
                 //print_r($list);
                 //print($where);
                 break;
-            case 'qainterview':    //卢老师回答列表(访谈内容)
+            case 'qainterview':    //卢老师回答列表(见面会内容)
                 $startdt = $var['startdt'];
                 $enddt = $var['enddt'];
                 $LoadWhere = " AND last_updtime < '" . $enddt . "'";
@@ -251,7 +251,7 @@ class FeedListMobileNoFaceWidget extends Widget
                 //echo $list['data'][(count($list['data']) - 1)]['last_updtime'];
                 //return model('Feed')->getLastSql();
                 break;
-            case 'qinterview':    //网友提问(访谈)
+            case 'qinterview':    //网友提问(见面会)
                 $startdt = $var['startdt'];
                 $enddt = $var['enddt'];
                 $LoadWhere = " AND last_updtime < '" . $enddt . "'";

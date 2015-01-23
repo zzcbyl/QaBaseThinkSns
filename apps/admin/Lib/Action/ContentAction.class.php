@@ -985,11 +985,11 @@ class ContentAction extends AdministratorAction
 
     public function interview()
     {
-        $this->assign('pageTitle', '卢勤问答访谈');
+        $this->assign('pageTitle', '卢勤问答见面会');
         // 设置列表主键
         $this->_listpk = 'iv_id';
-        $this->pageTab[] = array('title' => '访谈列表', 'tabHash' => 'list', 'url' => U('admin/Content/interview'));
-        $this->pageTab[] = array('title' => '添加访谈', 'tabHash' => 'interviewadd', 'url' => U('admin/Content/interviewadd'));
+        $this->pageTab[] = array('title' => '见面会列表', 'tabHash' => 'list', 'url' => U('admin/Content/interview'));
+        $this->pageTab[] = array('title' => '添加见面会', 'tabHash' => 'interviewadd', 'url' => U('admin/Content/interviewadd'));
         $this->pageKeyList = array('iv_id', 'iv_name', 'iv_content', 'iv_startdt', 'iv_enddt', 'iv_state', 'iv_object', 'iv_crt', 'operate');
         $listData = model('Interview')->getInterViewPage();
         foreach ($listData['data'] as &$v) {
@@ -1034,7 +1034,7 @@ class ContentAction extends AdministratorAction
         $this->assign('pageTitle', $_GET['pagetitle']);
         $this->pageKeyList = array('feed_id', 'uid', 'uname', 'body', 'description', 'publish_time', 'type', 'from');
         $this->pageTab[] = array('title' => '待审列表', 'tabHash' => 'unAudit', 'url' => '#');
-        $this->pageTab[] = array('title' => '访谈列表', 'tabHash' => 'list', 'url' => U('admin/Content/interview'));
+        $this->pageTab[] = array('title' => '见面会列表', 'tabHash' => 'list', 'url' => U('admin/Content/interview'));
         $this->pageButton[] = array('title' => '通过', 'onclick' => "admin.ContentEdit('','InterviewAuditFeed','" . '通过' . "','" . L('PUBLIC_DYNAMIC') . "')");
 
         $where = ' is_del = 0 and is_audit = 1 and interview_audit = 0 and feed_questionid = 0 and add_feedid = 0 and last_updtime>= ' . $sdt . ' and last_updtime <' . $edt;
@@ -1053,7 +1053,7 @@ class ContentAction extends AdministratorAction
     }
 
 
-    //访谈提问通过审核
+    //见面会提问通过审核
     public function InterviewAuditFeed()
     {
 
