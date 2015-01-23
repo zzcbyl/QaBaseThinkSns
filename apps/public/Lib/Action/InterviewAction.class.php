@@ -122,7 +122,7 @@ class InterviewAction extends Action
         $InterView = model('Interview')->getInterView('', 20);
         //print_r($InterView);
         $this->assign('InterView', $InterView);
-        $this->setTitle("卢勤问见面会谈汇总");
+        $this->setTitle("卢勤问答见面会谈汇总");
         $this->display();
     }
 }

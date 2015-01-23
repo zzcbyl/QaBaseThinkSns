@@ -379,12 +379,15 @@ class MobileNewAction
 
     public function interviewlist()
     {
-        if(empty($_GET['openid']))
-        {
+        if (empty($_GET['openid'])) {
             return;
         }
         $this->assign('openid', $_GET['openid']);
         $InterView = model('Interview')->getInterView('', 20);
+        foreach ($InterView as &$v) {
+            $v['iv_state'] = $v['iv_state'] == '未开始' ? 0 : ($v['iv_state'] == '进行中...' ? 1 : ($v['iv_state'] == '已结束' ? 2 : 0));
+        }
+        //print_r($InterView);
         $this->assign('InterView', $InterView);
         $this->setTitle("卢勤问答见面会汇总");
         $this->display();
@@ -399,11 +402,10 @@ class MobileNewAction
      */
     public function qainterview()
     {
-        if(empty($_GET['interview_id']))
-        {
+        if (empty($_GET['interview_id'])) {
             return;
         }
-        $InterView = model('Interview')->getInterView('iv_id='.$_GET['interview_id'], 1);
+        $InterView = model('Interview')->getInterView('iv_id=' . $_GET['interview_id'], 1);
         if (!empty($InterView)) {
 
             $data = $InterView[0];
@@ -431,11 +433,10 @@ class MobileNewAction
      */
     public function qinterview()
     {
-        if(empty($_GET['interview_id']))
-        {
+        if (empty($_GET['interview_id'])) {
             return;
         }
-        $InterView = model('Interview')->getInterView('iv_id='.$_GET['interview_id'], 1);
+        $InterView = model('Interview')->getInterView('iv_id=' . $_GET['interview_id'], 1);
         if (!empty($InterView)) {
 
             $data = $InterView[0];

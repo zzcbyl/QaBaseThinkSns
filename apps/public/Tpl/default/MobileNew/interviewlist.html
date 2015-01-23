@@ -1,24 +1,30 @@
-<include file="__THEME__/mobile_header" />
+<include file="__THEME__/_header_mobile" />
+<body style="background:#fff;">
 <style>
-    .fontSize { width:100%;}
+    .fontSize { width:100%; border-top:5px solid #4C9A18; } /*C22B2B*/
     .container table td { padding: 5px; }
 </style>
 <div class="fontSize">
-    <div class="container" style="width:auto; background:#fff; margin-top:0;">
-        <div><img src="__THEME__/image/iv_banner_small.jpg" style="width: 100%;" /></div>
+    <div class="container" style="width:auto; background:#fff; margin-top:0; min-height: 600px;">
+        <div style="margin-bottom: 10px;"><img src="__THEME__/image/iv_banner_small.jpg" style="width: 100%;" /></div>
+        <div>
         <volist name='InterView' id='vl'>
-        <div class="contTit" style="padding: 10px 5px; border-bottom: 1px dashed #ccc;">
+        <div class="contTit" style="padding: 10px 5px; border-top: 3px solid #4C9A18; min-height: 60px;">
             <div>
                 <img class="thumb_m" src="__THEME__/image/lulaoshi_avatar.jpg" />
             </div>
-            <div style="font-size:16px; line-height:25px; color:#424141; font-weight:bold; padding-left: 60px; padding-right: 45px;">
+            <div style="font-size:16px; line-height:25px; color:#424141; font-weight:bold; padding-left: 60px; padding-right: 55px;">
                 <a href="{:U('public/MobileNew/qainterview',array('interview_id'=>$vl['iv_id'],'openid'=>$openid))}">{$vl['iv_name']}</a>
             </div>
             <p style="padding-left:60px; font-size:14px;">{$vl['iv_content']}</p>
+            <php>if($vl['iv_state']=='进行中...'){</php>
             <p style="padding:5px 0 0 60px; font-size:12px; ">开始时间：{$vl['iv_startdt']}<br />结束时间：{$vl['iv_enddt']}</p>
-            <div style="position: absolute; left: 10px; top: 65px; z-index: 9;">{$vl['iv_state']}</div>
+            <php>}</php>
+            <div style="position: absolute; right: 0px; top: 0px; z-index: 9;">
+                <a style="display: block; width: 51px; height: 50px; background: url(__THEME__/image/iv_state{$vl['iv_state']}.png) no-repeat;"></a></div>
         </div>
         </volist>
+        </div>
     </div>
 </div>
 
