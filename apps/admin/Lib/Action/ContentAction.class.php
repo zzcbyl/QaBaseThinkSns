@@ -1032,7 +1032,7 @@ class ContentAction extends AdministratorAction
         $sdt = $_GET['sdt'];
         $edt = $_GET['edt'];
         $this->assign('pageTitle', $_GET['pagetitle']);
-        $this->pageKeyList = array('feed_id', 'uid', 'uname', 'body', 'description', 'publish_time', 'type', 'from');
+        $this->pageKeyList = array('feed_id', 'uid', 'uname', 'body', 'description', 'publish_time', 'last_updtime', 'type', 'from');
         $this->pageTab[] = array('title' => '待审列表', 'tabHash' => 'unAudit', 'url' => '#');
         $this->pageTab[] = array('title' => '见面会列表', 'tabHash' => 'list', 'url' => U('admin/Content/interview'));
         $this->pageButton[] = array('title' => '通过', 'onclick' => "admin.ContentEdit('','InterviewAuditFeed','" . '通过' . "','" . L('PUBLIC_DYNAMIC') . "')");
@@ -1046,6 +1046,7 @@ class ContentAction extends AdministratorAction
             $v['body'] = '<div style="width:200px;line-height:22px" model-node="feed_list" class="feed_list">' . $v['body'] . '　<br /><a target="_blank" href="' . U('public/Index/feed', array('feed_id' => $v['feed_id'], 'uid' => $v['uid'])) . '">' . L('PUBLIC_VIEW_DETAIL') . '&raquo;</a>&nbsp;&nbsp;&nbsp;&nbsp;<a target="_blank" href ="' . U('admin/Content/answer', array('feed_id' => $v['feed_id'])) . '">查看回答(' . $v['answer_count'] . ')&raquo;</a></div>';
             $v['description'] = '<div style="width:500px;line-height:22px" model-node="feed_list" class="feed_list">' . getShort($v['description'], 100, '...') . '  </div>';
             $v['publish_time'] = date('Y-m-d H:i:s', $v['publish_time']);
+            $v['last_updtime'] = date('Y-m-d H:i:s', $v['last_updtime']);
         }
         $this->_listpk = 'feed_id';
         //print_r($listData);
