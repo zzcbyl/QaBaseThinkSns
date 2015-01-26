@@ -1038,7 +1038,7 @@ class ContentAction extends AdministratorAction
         $this->pageButton[] = array('title' => '通过', 'onclick' => "admin.ContentEdit('','InterviewAuditFeed','" . '通过' . "','" . L('PUBLIC_DYNAMIC') . "')");
 
         $where = ' is_del = 0 and is_audit = 1 and interview_audit = 0 and feed_questionid = 0 and add_feedid = 0 and last_updtime>= ' . $sdt . ' and last_updtime <' . $edt;
-        $listData = model('Feed')->getList($where, 20, 'publish_time asc');
+        $listData = model('Feed')->getList($where, 20, 'last_updtime asc');
         foreach ($listData['data'] as &$v) {
             $v['uname'] = $v['user_info']['space_link'];
             $v['type'] = $this->opt['type'][$v['type']];
