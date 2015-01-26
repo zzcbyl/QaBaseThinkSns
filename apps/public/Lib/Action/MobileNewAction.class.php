@@ -664,7 +664,6 @@ class MobileNewAction
      */
     private function _dispatch_jump($message, $status = 1)
     {
-
         // 提示标题
         $this->assign('msgTitle', $status ? L('_OPERATION_SUCCESS_') : L('_OPERATION_FAIL_'));
         //如果设置了关闭窗口，则提示完毕后自动关闭窗口
@@ -732,4 +731,23 @@ class MobileNewAction
         }
         return 4;
     }*/
+
+    /*public function getNewInterviewState()
+    {
+        // 返回数据格式
+        $return = array('status' => 1, 'data' => '');
+        if (empty($_GET['newdt']) && intval($_GET['newdt']) <= 0) {
+            $return = array('status' => 0, 'data' => '');
+            exit(json_encode($return));
+        }
+        $newDT = intval($_GET['newdt']);
+
+
+
+        exit(json_encode($return));
+    }*/
 }
+
+
+
+
