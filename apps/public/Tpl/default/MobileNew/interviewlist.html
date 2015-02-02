@@ -11,12 +11,12 @@
         <volist name='InterView' id='vl'>
         <div class="contTit" style="padding: 10px 5px; border-top: 3px solid #4C9A18; min-height: 60px;">
             <div>
-                <img class="thumb_m" src="__THEME__/image/lulaoshi_avatar.jpg" />
+                <a href="{:U('public/MobileNew/qainterview',array('interview_id'=>$vl['iv_id'],'openid'=>$openid))}"><img class="thumb_m" src="__THEME__/image/lulaoshi_avatar.jpg" /></a>
             </div>
             <div style="font-size:16px; line-height:25px; color:#424141; font-weight:bold; padding-left: 60px; padding-right: 55px;">
                 <a href="{:U('public/MobileNew/qainterview',array('interview_id'=>$vl['iv_id'],'openid'=>$openid))}">{$vl['iv_name']}</a>
             </div>
-            <p style="padding-left:60px; font-size:14px;">{$vl['iv_content']}</p>
+            <p style="padding-left:60px; font-size:14px;"><a style="color: #777;" href="{:U('public/MobileNew/qainterview',array('interview_id'=>$vl['iv_id'],'openid'=>$openid))}">{$vl['iv_content']}</a></p>
             <php>if($vl['iv_state']!=2){</php>
             <p style="padding:5px 0 0 60px; font-size:12px; ">开始时间：{$vl['iv_startdt']}<br />结束时间：{$vl['iv_enddt']}</p>
             <php>}</php>

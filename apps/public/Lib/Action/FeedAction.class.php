@@ -146,6 +146,28 @@ class FeedAction extends Action
             exit(json_encode($return));
         }
 
+        //附件
+        $feed_data = unserialize($data['feed_data']);
+        if (!empty($feed_data['attach_id'])) {
+            $attachInfo = model('Attach')->getAttachByIds($feed_data['attach_id']);
+            $_attach = array();
+            $index = 0;
+            foreach ($attachInfo as $ak => $av) {
+                //存放mp3,格式模版使用
+                if (trim($av['extension']) == 'mp3') {
+                    $_attach = array(
+                        'attach_id' => $av['attach_id'],
+                        'attach_name' => $av['name'],
+                        'attach_url' => getImageUrl($av['save_path'] . $av['save_name']),
+                        'extension' => $av['extension'],
+                        'size' => $av['size']
+                    );
+                    $data["attach_mp3"][$index] = $_attach;
+                    $index++;
+                }
+            }
+        }
+
         //分享到新浪微博
         if ($_POST['ShareSina'] == "1") {
             $WBTxt = $data['body'] . '　' . $data['description'];

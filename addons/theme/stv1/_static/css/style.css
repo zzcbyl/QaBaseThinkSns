@@ -406,7 +406,7 @@ p.FloatNew{background:url(../image/new.png) no-repeat; position:absolute; width:
 .tiwenK{ background:#f0f0f0; border:solid 1px #e8e8e8; margin:0px 0px 40px;  padding:10px 20px; _padding:10px; position:relative;}
 .tiwen_area textarea{width:495px; padding:5px; background:#fff; height:80px; font-size:14px; color:#999; border:none; border-top:solid 1px #ccc; border-left:solid 1px #ccc;}
 .tiwenB{height:20px; padding-top:15px; position:relative}
-.tiwenB ul li{float:left; position:relative; width:75px; height:50px;}
+.tiwenB .webItem > li{float:left; position:relative; width:75px; height:50px;}
 .wenzi,.biaoqing,.tupian,.shipin{ display:inline-block; width:75px; height:25px;}
 .wenzi{background-position:0px -120px;}
 .biaoqing{background-position:-80px -120px;}
@@ -706,4 +706,17 @@ p.FloatNew{background:url(../image/new.png) no-repeat; position:absolute; width:
 .BookIndexModel li .bookimg { border: 1px solid #ccc; padding: 2px;}
 .BookIndexModel li .booktitle { height: 18px; line-height: 18px; font-weight: normal; }
 .BookIndexModel li .bookprice {  color: red; font-weight: normal;}
+
+.jp-audio, .jp-audio-stream, .jp-video { margin-left: 5px; border: 1px solid #7AA23F; background: url(../image/jplayerbg.png);  border-radius:4px;  width: 90px; height: 36px; line-height: 36px; padding:0 5px;}
+.jp-play { width: 100%; height: 36px; display: block;}
+.jplay_play { background: url(../image/jplayerstop.png) no-repeat; width: 16px; height: 19px; display: block; margin-top: 9px;}
+.jp-play:focus { background: none;}
+.jp-stop {  width: 100%; height: 36px; display: block; margin-left: 0;  }
+.jplay_stop { display: block; margin-top: 9px; margin-left: 0px;}
+.jp-stop:focus { background: none; margin-left: 0; }
+.feed_file_list, .feed_file_list li { border: none; }
+.jp-stop_1 { background: url(../image/jplayerplay.png) no-repeat 0 0; width: 16px; height: 19px;  }
+.jp-stop_2 { background: url(../image/jplayerplay.png) no-repeat -18px 0; width: 16px; height: 19px;  }
+.jp-stop_3 { background: url(../image/jplayerplay.png) no-repeat -39px 0; width: 18px; height: 19px;  }
+
 

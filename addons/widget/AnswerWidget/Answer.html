@@ -6,9 +6,26 @@
         <div model-node="post_ok" style="display:none;text-align:center;position:absolute;left:0;top:80px;width:100%"><i class="ico-ok"></i>{:L('PUBLIC_SHARE_SUCCESS')}</div>
     </div>
     <div class="tiwenB" model-node='send_action'>
-        <ul>
-            <li><!--<a href="#" class="wenzi"></a>--></li>
-            <li><!--<a href="#" class="biaoqing"></a>--></li>
+        <ul class="webItem">
+            <li>
+                <php>if($GLOBALS['ts']['mid']==1901) {</php>
+                <a href="javascript:void(0);" onclick="showUploadAudio();">录音上传</a>
+                <div id="uploadAudioDiv" class="twbq_box none" style="background: #f0f0f0; padding: 0 5px 5px; height: auto;">
+                    <p class="tw_icon">
+                    </p>
+                    <div class="tpCont none" style="width: auto;">
+                        <p>
+                        <form style='display:inline;padding:0;margin:0;border:0;outline:none;' >
+                            <input type="file" name="attach" inputname='attach' onchange="core.plugInit('uploadFile',this,'','audio')" urlquery='attach_type=feed_audio&upload_type=file&thumb=0&width=100&height=100&cut=0' hidefocus="true">
+                        </form>
+                        </p>
+                        <p class="twps">
+                            支持mp3格式，大小限制2M以内</p>
+                    </div>
+                </div>
+                <php>}</php>
+            </li>
+            <li></li>
             <li><!--<a href="#" class="tupian"></a>--></li>
             <li><!--<a href="#" class="shipin"></a>--></li>
             <li></li>
@@ -44,4 +61,16 @@ setTimeout(function() {
 	atWho($('#inputor{$time}'));
 	atWho($('#message_inputor'));
 }, 1000);
+
+function showUploadAudio()
+{
+    if ($('#uploadAudioDiv .tpCont').css('display') == 'block') {
+        $('#uploadAudioDiv').hide();
+        $('#uploadAudioDiv .tpCont').hide();
+    }
+    else {
+        $('#uploadAudioDiv').show();
+        $('#uploadAudioDiv .tpCont').show();
+    }
+}
 </script>

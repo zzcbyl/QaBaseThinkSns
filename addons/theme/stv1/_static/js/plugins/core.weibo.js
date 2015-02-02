@@ -7,11 +7,11 @@ core.weibo = {
     init: function (agrs) {
         this.initNums = agrs.initNums; 	// 提问字数
         this.maxId = args.maxId, 		// 最大提问ID
-		this.loadId = args.loadId, 		// 载入的提问ID
-		this.feedType = args.feedType, 	// 提问类型
-		this.loadmore = args.loadmore, 	// 是否载入更多
-		this.uid = args.uid, 			// 当前提问列表对应的UID
-		this.loadnew = args.loadnew; 	// 是否载入最新
+            this.loadId = args.loadId, 		// 载入的提问ID
+            this.feedType = args.feedType, 	// 提问类型
+            this.loadmore = args.loadmore, 	// 是否载入更多
+            this.uid = args.uid, 			// 当前提问列表对应的UID
+            this.loadnew = args.loadnew; 	// 是否载入最新
         this.feed_type = args.feed_type;
         this.feed_key = args.feed_key;
         this.firstId = args.firstId;
@@ -67,7 +67,17 @@ core.weibo = {
         var _this = this;
         _this.canLoading = false;
         // 获取提问数据
-        $.get(U('widget/FeedList/loadMore'), { 'loadId': _this.loadId, 'type': _this.feedType, 'uid': _this.uid, 'feed_type': _this.feed_type, 'feed_key': _this.feed_key, 'fgid': fgid, 'topic_id': _this.topic_id, 'load_count': _this.loadCount, 'gid': _this.gid }, function (msg) {
+        $.get(U('widget/FeedList/loadMore'), {
+            'loadId': _this.loadId,
+            'type': _this.feedType,
+            'uid': _this.uid,
+            'feed_type': _this.feed_type,
+            'feed_key': _this.feed_key,
+            'fgid': fgid,
+            'topic_id': _this.topic_id,
+            'load_count': _this.loadCount,
+            'gid': _this.gid
+        }, function (msg) {
             //alert(msg);
             // 加载失败
             if (msg.status == "0" || msg.status == "-1") {
@@ -136,7 +146,18 @@ core.weibo = {
         var _this = this;
         _this.canLoading = false;
         // 获取提问数据
-        $.get(U('widget/AnswerList/loadMore'), { 'feed_id': answerid, 'loadId': _this.loadId, 'type': _this.feedType, 'uid': _this.uid, 'feed_type': _this.feed_type, 'feed_key': _this.feed_key, 'fgid': fgid, 'topic_id': _this.topic_id, 'load_count': _this.loadCount, 'gid': _this.gid }, function (msg) {
+        $.get(U('widget/AnswerList/loadMore'), {
+            'feed_id': answerid,
+            'loadId': _this.loadId,
+            'type': _this.feedType,
+            'uid': _this.uid,
+            'feed_type': _this.feed_type,
+            'feed_key': _this.feed_key,
+            'fgid': fgid,
+            'topic_id': _this.topic_id,
+            'load_count': _this.loadCount,
+            'gid': _this.gid
+        }, function (msg) {
             // 加载失败
             if (msg.status == "0" || msg.status == "-1") {
                 $('#loadMore').remove();
@@ -229,7 +250,11 @@ core.weibo = {
                 return false;
             }
             // 加载最新的数据
-            $.post(U('widget/FeedList/loadNew'), { maxId: _this.firstId, type: 'new' + _this.feedType, uid: _this.uid }, function (msg) {
+            $.post(U('widget/FeedList/loadNew'), {
+                maxId: _this.firstId,
+                type: 'new' + _this.feedType,
+                uid: _this.uid
+            }, function (msg) {
                 if (msg.status == 1 && msg.count > 0) {
                     _this.showNew(msg.count);
                     _this.tempHtml = msg.html;
@@ -243,9 +268,9 @@ core.weibo = {
     // 提示有多少新提问数据
     showNew: function (nums) {
         if ($('#feed-lists').find('.notes').length > 0) {
-            $('#feed-lists').find('.notes').html(L('PUBLIC_WEIBO_NUM', { 'sum': nums }));
+            $('#feed-lists').find('.notes').html(L('PUBLIC_WEIBO_NUM', {'sum': nums}));
         } else {
-            var html = '<a href="javascript:core.weibo.showNewList()" class="notes">' + L('PUBLIC_WEIBO_NUM', { 'sum': nums }) + '</a>';
+            var html = '<a href="javascript:core.weibo.showNewList()" class="notes">' + L('PUBLIC_WEIBO_NUM', {'sum': nums}) + '</a>';
             $('#feed-lists').prepend(html);
         }
     },
@@ -261,7 +286,8 @@ core.weibo = {
         if (topicHtml == '') {
             textarea.value = '';
             if (description != undefined)
-                description.value = ''; ;
+                description.value = '';
+            ;
         } else {
             textarea.value = topicHtml;
         }
@@ -444,7 +470,7 @@ core.weibo = {
             }
             // 获取剩余字数
             if (leftNums >= 0) {
-                var html = (leftNums == initNums) ? L('PUBLIC_INPUT_TIPES', { 'sum': '<span>' + leftNums + '</span>' }) : L('PUBLIC_PLEASE_INPUT_TIPES', { 'sum': '<span>' + leftNums + '</span>' });
+                var html = (leftNums == initNums) ? L('PUBLIC_INPUT_TIPES', {'sum': '<span>' + leftNums + '</span>'}) : L('PUBLIC_PLEASE_INPUT_TIPES', {'sum': '<span>' + leftNums + '</span>'});
                 obj.parentModel.parentModel.parentModel.childModels['numsLeft'][0].innerHTML = html;
                 $(obj).removeClass('fb');
                 if (leftNums == initNums && $(obj).find('img').size() == 0) {
@@ -458,7 +484,7 @@ core.weibo = {
                 }
                 return true;
             } else {
-                var html = L('PUBLIC_INPUT_ERROR_TIPES', { 'sum': '<span style="color:red">' + Math.abs(leftNums) + '</span>' });
+                var html = L('PUBLIC_INPUT_ERROR_TIPES', {'sum': '<span style="color:red">' + Math.abs(leftNums) + '</span>'});
                 $(obj).addClass('fb');
                 obj.parentModel.parentModel.parentModel.childModels['numsLeft'][0].innerHTML = html;
                 if (typeof (objInput) == 'object') {
@@ -475,7 +501,7 @@ core.weibo = {
             inviteList = inviteList.substring(0, inviteList.length - 1);
         //alert(url);
         //alert(inviteList);
-        $.post(url, { QuestionID: feedID, InviteUids: inviteList }, function (msg) {
+        $.post(url, {QuestionID: feedID, InviteUids: inviteList}, function (msg) {
             ui.showMessage(msg.data, 2, 3);
             $("#InvitedFriend").html('');
         }, 'json');
@@ -547,17 +573,21 @@ core.weibo = {
         var channel_id = $.trim($('#contribute').val());
         // 为空处理
         var data = textarea.value;
-        if (data == '' || data.length < 0) {
-            // TODO 只有一次情况才会执行到这里面 一般是不会的
-            ui.error(L('PUBLIC_CENTE_ISNULL'));
-            obj.isposting = false;
-            return false;
-        }
-        data = removeHTMLTag(data);
-        if (data == '' || data.length < 0) {
-            ui.error('请勿输入非法与敏感字符');
-            obj.isposting = false;
-            return false;
+        if (attach_id == '' && attach_id.length <= 0) {
+            if (data == '' || data.length < 0) {
+                // TODO 只有一次情况才会执行到这里面 一般是不会的
+                ui.error(L('PUBLIC_CENTE_ISNULL'));
+                obj.isposting = false;
+                return false;
+            }
+
+
+            data = removeHTMLTag(data);
+            if (data == '' || data.length < 0) {
+                ui.error('请勿输入非法与敏感字符');
+                obj.isposting = false;
+                return false;
+            }
         }
 
         var txtVal = '';
@@ -589,7 +619,25 @@ core.weibo = {
         if (isAdd)
             int_isadd = 1;
         // 发布提问
-        $.post(url, { body: data, type: type, app_name: app_name, content: '', attach_id: attach_id, videourl: videourl, channel_id: channel_id, source_url: attrs.source_url, gid: attrs.gid, description: txtVal, questionid: Qid, addask: int_isadd, inviteid: inviteid, ShareSina: sinaShare, ShareQQ: qqShare, IsNoName: isnoname, IsInterview: interview }, function (msg) {
+        $.post(url, {
+            body: data,
+            type: type,
+            app_name: app_name,
+            content: '',
+            attach_id: attach_id,
+            videourl: videourl,
+            channel_id: channel_id,
+            source_url: attrs.source_url,
+            gid: attrs.gid,
+            description: txtVal,
+            questionid: Qid,
+            addask: int_isadd,
+            inviteid: inviteid,
+            ShareSina: sinaShare,
+            ShareQQ: qqShare,
+            IsNoName: isnoname,
+            IsInterview: interview
+        }, function (msg) {
             //alert(msg.data);
             //return;
             obj.isposting = false;
@@ -601,11 +649,11 @@ core.weibo = {
                 }
                 var postOk = mini_editor.childModels['post_ok'][0];
                 $(postOk).fadeIn('fast');
-                if($('.answerTab').html() != null) {
+                if ($('.answerTab').html() != null) {
                     $('.reveal-modal').animate({
                         "opacity": 0
-                    }, 1000, function() {
-                        $('.reveal-modal').css({ 'visibility': 'hidden'});
+                    }, 1000, function () {
+                        $('.reveal-modal').css({'visibility': 'hidden'});
                     });
                     $('.reveal-modal-bg').fadeOut(1000);
                 }

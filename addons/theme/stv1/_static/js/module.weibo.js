@@ -125,6 +125,7 @@ M.addEventFns({
                 ui.error(L('PUBLIC_ATTACH_UPLOADING_NOSENT'));
                 return false;
             }
+
             var _this = this;
             var mini_editor = this.parentModel.parentModel.childModels['mini_editor'][0];
             var textarea = $(mini_editor).find('textarea').get(0);

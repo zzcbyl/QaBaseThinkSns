@@ -1085,3 +1085,47 @@ function showContentAll(strid, feedid) {
         $("#" + strid + "All" + feedid).hide();
     }
 }
+
+var ssset = 0;
+var stopindex = 1;
+function changePlay(id) {
+    if ($('#a_jp_stop_' + id).css('display') == 'none') {
+        stopindex = 1;
+        playA();
+        clearInterval(ssset)
+        ssset = setInterval("playA()", 500);
+        $('.jp-stop').hide();
+        $('.jp-play').show();
+        $('#a_jp_stop_' + id).show();
+        $('#a_jp_play_' + id).hide();
+
+    }
+    else {
+        $('#a_jp_play_' + id).show();
+        $('#a_jp_stop_' + id).hide();
+        clearInterval(ssset)
+    }
+}
+
+function playA() {
+    if (stopindex == 4) stopindex = 1;
+    $(".jplay_stop").attr("class", "jplay_stop jp-stop_" + stopindex);
+    stopindex++;
+}
+
+function autojplayerWidth() {
+    $(".jp-audio").each(function () {
+        var currdt = $(this).find('div:last').html();
+        var dtarr = currdt.split(':');
+        var secondnum = (parseInt(dtarr[0])*60) + parseInt(dtarr[1]);
+        secondnum = parseInt(secondnum*0.6);
+        if(secondnum>=200)
+            secondnum=200;
+        if(secondnum<60)
+            secondnum=60;
+        $(this).css('width',secondnum.toString());
+    });
+}
+
+
+
