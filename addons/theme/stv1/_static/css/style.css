@@ -718,5 +718,6 @@ p.FloatNew{background:url(../image/new.png) no-repeat; position:absolute; width:
 .jp-stop_1 { background: url(../image/jplayerplay.png) no-repeat 0 0; width: 16px; height: 19px;  }
 .jp-stop_2 { background: url(../image/jplayerplay.png) no-repeat -18px 0; width: 16px; height: 19px;  }
 .jp-stop_3 { background: url(../image/jplayerplay.png) no-repeat -39px 0; width: 18px; height: 19px;  }
+.feed_file_list li { padding-left: 0px;}
 
 
