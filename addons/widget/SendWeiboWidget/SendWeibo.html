@@ -1,5 +1,4 @@
 <!--提问-->
-
 <div class="tw_box"  model-node="weibo_post_box">
     <div id="sendWeiboTab" model-node="mini_editor" model-args="prompt={$prompt}" style="position: relative;">
         <h1>
@@ -16,7 +15,7 @@
         <div model-node="post_ok" style="display:none;text-align:center;position:absolute;left:45%;top:45%;width:100px"><i class="ico-ok"></i>{:L('PUBLIC_SHARE_SUCCESS')}</div>
     </div>
     <div class="tw_B" model-node="send_action">
-        <ul>
+        <ul class="webItem">
             <li>
                 <eq name="actions.face" value="true">
 				<php>if(in_array('face',$weibo_type)):</php>
@@ -32,14 +31,14 @@
                 <div id="uploadImgDiv" class="twbq_box none">
                     <p class="tw_icon">
                     </p>
-                    <div class="tpCont">
+                    <div class="tpCont none">
                         <p>
                             <form style='display:inline;padding:0;margin:0;border:0;outline:none;' >
                                 <input type="file" name="attach" inputname='attach' onchange="core.plugInit('uploadFile',this,'','image')" urlquery='attach_type=feed_image&upload_type=image&thumb=1&width=100&height=100&cut=1' hidefocus="true">
                             </form>
                         </p>
                         <p class="twps">
-                            请不要上传与回答无关的图片</p>
+                            请不要上传与回答无关的图片<br />支持JPG,JPGE格式，大小限制2M以内</p>
                     </div>
                 </div>
 				
@@ -199,11 +198,18 @@ $(document).ready(function () {
 });
 
 function showUploadImg() {
-    if ($('#uploadImgDiv').css('display') == 'block')
+    if ($('#uploadImgDiv .tpCont').css('display') == 'block') {
         $('#uploadImgDiv').hide();
-    else
+        $('#uploadImgDiv .tpCont').hide();
+    }
+    else {
         $('#uploadImgDiv').show();
+        $('#uploadImgDiv .tpCont').show();
+    }
 }
+
+
+
 var expertLi = "";
 function changeExpert(uid) {
     var expertList = $(".zjList");

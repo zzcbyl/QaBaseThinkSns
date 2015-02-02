@@ -38,6 +38,50 @@
                             </div>
                             <php> } else {  print('<p style="padding-left:60px; font-size:16px;">'.$descriptionTxt.$descriptionImg.'</p>'); } </php>
                         </p>
+                        <php>if(!empty($vl['attach_mp3'])){</php>
+                        <div style="padding-left: 60px;">
+                            <ul class="feed_file_list">
+                                <volist name="vl['attach_mp3']" id='vo'>
+                                    <li>
+                                        <div id="jquery_jplayer_{$vo['attach_id']}" class="jp-jplayer"></div>
+                                        <div style="background: url(__THEME__/image/jplayerleft.png); width: 6px; height: 36px; float: left; position: absolute;"></div>
+                                        <div id="jp_container_{$vo['attach_id']}" class="jp-audio" role="application" aria-label="media player" onclick='changePlay("{$vo['attach_id']}");'>
+                                        <a id="a_jp_play_{$vo['attach_id']}" class="jp-play" role="button" tabindex="0">
+                                            <span class="jplay_play"></span>
+                                        </a>
+                                        <a id="a_jp_stop_{$vo['attach_id']}" class="jp-stop" style="display: none;" role="button" tabindex="0">
+                                            <span class="jplay_stop"></span>
+                                        </a>
+                                        <div class="jp-duration" role="timer" aria-label="duration" style="display: none;"></div>
+                                        </div>
+
+                                        <script type="text/javascript">
+                                            $("#jquery_jplayer_{$vo['attach_id']}").jPlayer({
+                                                ready: function () {
+                                                    $(this).jPlayer("setMedia", {
+                                                        mp3: "{$vo['attach_url']}"
+                                                    });
+                                                },
+                                                play: function () {
+                                                    $(this).jPlayer("stopOthers");
+                                                },
+                                                swfPath: "__THEME__/js",
+                                                supplied: "mp3",
+                                                cssSelectorAncestor: "#jp_container_{$vo['attach_id']}",
+                                                wmode: "window",
+                                                globalVolume: true,
+                                                useStateClassSkin: true,
+                                                autoBlur: false,
+                                                smoothPlayBar: true,
+                                                keyEnabled: true
+                                            });
+
+                                        </script>
+                                    </li>
+                                </volist>
+                            </ul>
+                        </div>
+                        <php>}</php>
                         <div class="info_gz" style="margin-top:3px;">
                             <p class="gz_info" style="padding-left:60px;">
                                 <i>{$vl.publish_time|friendlyDate}</i></p>
@@ -86,6 +130,52 @@
                             </div>        
                             <php> } else {  print('<p style="padding-left:60px; font-size:16px;">'.$descriptionTxt.$descriptionImg.'</p>'); } </php>
                         </p>
+
+                        <php>if(!empty($vl['attach_mp3'])){</php>
+                        <div style="padding-left: 60px;">
+                            <ul class="feed_file_list">
+                                <volist name="vl['attach_mp3']" id='vo'>
+                                    <li>
+                                        <div id="jquery_jplayer_{$vo['attach_id']}" class="jp-jplayer"></div>
+                                        <div style="background: url(__THEME__/image/jplayerleft.png); width: 6px; height: 36px; float: left; position: absolute;"></div>
+                                        <div id="jp_container_{$vo['attach_id']}" class="jp-audio" role="application" aria-label="media player" onclick='changePlay("{$vo['attach_id']}");'>
+                                        <a id="a_jp_play_{$vo['attach_id']}" class="jp-play" role="button" tabindex="0">
+                                            <span class="jplay_play"></span>
+                                        </a>
+                                        <a id="a_jp_stop_{$vo['attach_id']}" class="jp-stop" style="display: none;" role="button" tabindex="0">
+                                            <span class="jplay_stop"></span>
+                                        </a>
+                                        <div class="jp-duration" role="timer" aria-label="duration" style="display: none;"></div>
+                                        </div>
+
+                                        <script type="text/javascript">
+                                            $("#jquery_jplayer_{$vo['attach_id']}").jPlayer({
+                                                ready: function () {
+                                                    $(this).jPlayer("setMedia", {
+                                                        mp3: "{$vo['attach_url']}"
+                                                    });
+                                                },
+                                                play: function () {
+                                                    $(this).jPlayer("stopOthers");
+                                                },
+                                                swfPath: "__THEME__/js",
+                                                supplied: "mp3",
+                                                cssSelectorAncestor: "#jp_container_{$vo['attach_id']}",
+                                                wmode: "window",
+                                                globalVolume: true,
+                                                useStateClassSkin: true,
+                                                autoBlur: false,
+                                                smoothPlayBar: true,
+                                                keyEnabled: true
+                                            });
+
+                                        </script>
+                                    </li>
+                                </volist>
+                            </ul>
+                        </div>
+                        <php>}</php>
+
                         <div class="info_gz" style="margin-top:3px;">
                             <p class="gz_info" style="padding-left:60px;">
                                 <i>{$vl.publish_time|friendlyDate}</i></p>
@@ -101,3 +191,8 @@
     </div>
 
 </volist>
+<script>
+    $(document).ready(function() {
+        autojplayerWidth();
+    });
+</script>

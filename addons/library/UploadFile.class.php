@@ -439,6 +439,7 @@ class UploadFile
             $this->error = '上传文件MIME类型不允许！';
             return false;
         }
+
         //检查文件类型
         if(!$this->checkExt($file['extension'])) {
             $this->error ='上传文件类型不允许';

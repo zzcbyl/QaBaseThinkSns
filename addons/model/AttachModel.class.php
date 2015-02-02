@@ -230,6 +230,7 @@ class AttachModel extends Model {
 
 		// 创建目录
 		mkdir($upload->save_path, 0777, true);
+
 		
 		// 执行上传操作
         if(!$upload->upload()) {
