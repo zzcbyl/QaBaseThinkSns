@@ -708,11 +708,11 @@ p.FloatNew{background:url(../image/new.png) no-repeat; position:absolute; width:
 .BookIndexModel li .bookprice {  color: red; font-weight: normal;}
 
 .jp-audio, .jp-audio-stream, .jp-video { margin-left: 5px; border: 1px solid #7AA23F; background: url(../image/jplayerbg.png);  border-radius:4px;  width: 90px; height: 36px; line-height: 36px; padding:0 5px;}
-.jp-play { width: 100%; height: 36px; display: block;}
-.jplay_play { background: url(../image/jplayerstop.png) no-repeat; width: 16px; height: 19px; display: block; margin-top: 9px;}
+.jp-play { width: 100%; height: 36px; display: block; padding-top: 9px;}
+.jplay_play { background: url(../image/jplayerstop.png) no-repeat; width: 16px; height: 19px; display: block; }
 .jp-play:focus { background: none;}
-.jp-stop {  width: 100%; height: 36px; display: block; margin-left: 0;  }
-.jplay_stop { display: block; margin-top: 9px; margin-left: 0px;}
+.jp-stop {  width: 100%; height: 36px; display: block; margin-left: 0; padding-top: 9px; margin-top: 0; }
+.jplay_stop { display: block; margin-left: 0px;}
 .jp-stop:focus { background: none; margin-left: 0; }
 .feed_file_list, .feed_file_list li { border: none; }
 .jp-stop_1 { background: url(../image/jplayerplay.png) no-repeat 0 0; width: 16px; height: 19px;  }
