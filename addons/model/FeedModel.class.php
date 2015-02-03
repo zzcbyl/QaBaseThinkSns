@@ -460,7 +460,6 @@ class FeedModel extends Model
 
                 //附件
                 $feed_data = unserialize($AnswerFeedData[0]['feed_data']);
-                //print_r($feed_data['attach_id']);
                 if (!empty($feed_data['attach_id'])) {
                     $attachInfo = model('Attach')->getAttachByIds($feed_data['attach_id']);
                     $_attach = array();
@@ -513,6 +512,28 @@ class FeedModel extends Model
                 $AnswerFeed = $this->field('feed_id')->where($AnswerWhere)->order("publish_time desc")->findPage(1);
                 $AnswerFeed_id = getSubByKey($AnswerFeed['data'], 'feed_id');
                 $AnswerFeedData = $this->getFeeds($AnswerFeed_id);
+
+                //附件
+                $feed_data = unserialize($AnswerFeedData[0]['feed_data']);
+                if (!empty($feed_data['attach_id'])) {
+                    $attachInfo = model('Attach')->getAttachByIds($feed_data['attach_id']);
+                    $_attach = array();
+                    $index = 0;
+                    foreach ($attachInfo as $ak => $av) {
+                        //存放mp3,格式模版使用
+                        if (trim($av['extension']) == 'mp3') {
+                            $_attach = array(
+                                'attach_id' => $av['attach_id'],
+                                'attach_name' => $av['name'],
+                                'attach_url' => getImageUrl($av['save_path'] . $av['save_name']),
+                                'extension' => $av['extension'],
+                                'size' => $av['size']
+                            );
+                            $AnswerFeedData[0]["attach_mp3"][$index] = $_attach;
+                            $index++;
+                        }
+                    }
+                }
 
                 $vv["answer"] = $AnswerFeedData;
                 $feedlist["data"][$v] = $vv;
@@ -650,6 +671,29 @@ class FeedModel extends Model
                     $AnswerFeedData[0]['newcount'] = '1';
                     $index++;
                 }
+
+                //附件
+                $feed_data = unserialize($AnswerFeedData[0]['answer'][0]['feed_data']);
+                if (!empty($feed_data['attach_id'])) {
+                    $attachInfo = model('Attach')->getAttachByIds($feed_data['attach_id']);
+                    $_attach = array();
+                    $index = 0;
+                    foreach ($attachInfo as $ak => $av) {
+                        //存放mp3,格式模版使用
+                        if (trim($av['extension']) == 'mp3') {
+                            $_attach = array(
+                                'attach_id' => $av['attach_id'],
+                                'attach_name' => $av['name'],
+                                'attach_url' => getImageUrl($av['save_path'] . $av['save_name']),
+                                'extension' => $av['extension'],
+                                'size' => $av['size']
+                            );
+                            $AnswerFeedData[0]['answer'][0]["attach_mp3"][$index] = $_attach;
+                            $index++;
+                        }
+                    }
+                }
+
                 $feedlist["data"][$v] = $AnswerFeedData[0];
             }
         }
