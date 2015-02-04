@@ -14,7 +14,6 @@ data/database/131125_c77222690c_1.php
 
 *.bak
 
-
 .idea/workspace.xml
 
 snap_image_test.php
