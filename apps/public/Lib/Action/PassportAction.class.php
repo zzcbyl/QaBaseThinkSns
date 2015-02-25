@@ -1484,6 +1484,45 @@ class PassportAction extends Action
         }
     }
 
+    public function doActivityFormBJ()
+    {
+        $map['childname'] = $_POST['childName'];
+        $map['childage'] = $_POST['childAge'];
+        $map['childsex'] = $_POST['childSex'];
+        $map['childheight'] = $_POST['childHeight'];
+        $map['childminzu'] = $_POST['childMinzu'];
+        $map["childidcard"] = t($_POST['childIDcard']);
+        $map['parentsname1'] = $_POST['parentName1'];
+        $map['parentsex1'] = $_POST['parentSex1'];
+        $map['parentheight1'] = $_POST['parentHeight1'];
+        $map['parentminzu1'] = $_POST['parentMinzu1'];
+        $map['parentsmobile1'] = $_POST['parentMobile1'];
+        $map['parentsemail1'] = $_POST['parentEmail1'];
+        $map["parentidcard1"] = t($_POST['parentIDcard1']);
+        $map['parentsname2'] = $_POST['parentName2'];
+        $map['parentsex2'] = $_POST['parentSex2'];
+        $map['parentheight2'] = $_POST['parentHeight2'];
+        $map['parentminzu2'] = $_POST['parentMinzu2'];
+        $map['parentsmobile2'] = $_POST['parentMobile2'];
+        $map['parentsemail2'] = $_POST['parentEmail2'];
+        $map["parentidcard2"] = t($_POST['parentIDcard2']);
+        $map['istogether'] = $_POST['istogether'];
+        $map['remarks'] = $_POST['remarks'];
+        $map['ctime'] = time();
+        $map['activityname'] = $_POST['activityname'];
+        $map["location"] = t($_POST['city_names']);
+        $map['paytime'] = time();
+        $map['paytotal'] = 6380.00;
+
+        $result = model('ActivityForm')->add($map);
+        if ($result > 0) {
+            //报名成功,去支付
+            $body = urlencode('“放飞梦想我能行”知心姐姐北京精品营再次出发');
+            $detail = urlencode('孩子姓名：' . $map['childname'] . '　家长姓名：' . $map['parentsname1'] . '　手机号：' . $map['parentsmobile1']);
+            redirect('http://weixin.luqinwenda.com/payment/payment.aspx?body=' . $body . '&detail=' . $detail . '&product_id=' . $result . '&total_fee=638000');
+        }
+    }
+
     public function sendActivityEmail($name, $email)
     {
         $data['node'] = '';
@@ -1697,10 +1736,22 @@ class PassportAction extends Action
     //支付成功
     public function paysuccess()
     {
-        if ($_GET['order']) {
+       if ($_GET['order']) {
             $updInfo['ispay'] = 1;
             $updInfo['paysuccesstime'] = time();
             model('ActivityForm')->where("`orderID`='" . $_GET['order'] . "'")->save($updInfo);
+        }
+        $this->display();
+    }
+
+    //支付成功
+    public function paysuccess2()
+    {
+        if(!empty($_GET['product_id'])) {
+            $map['orderID'] = '';
+            $map['ispay'] = 1;
+            $map['paysuccesstime'] = time();
+            model('ActivityForm')->where("`activity_form_id`=" . $_GET['product_id'])->save($map);
         }
         $this->display();
     }

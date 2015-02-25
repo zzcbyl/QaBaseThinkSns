@@ -1,10 +1,21 @@
+.gitignore
+
 config/config.inc.php
+config/config.inc.php.bak
+data/develop/notValueForKey.php
+data/iswf/notify1.ini
+
 _runtime/*
 data/*
 .idea/*
 data/
 data/database/131125_c77222690c_1.php
 
+<<<<<<< HEAD
+=======
+*.bak
+
+>>>>>>> develop
 .idea/workspace.xml
 
 snap_image_test.php

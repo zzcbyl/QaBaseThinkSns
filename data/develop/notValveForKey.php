@@ -97,5 +97,6 @@ return array (
   'PUBLIC_CANCEL' => '?app=public&mod=Register&act=avatar',
   '<BR />邀请“管理员”成功<BR />' => '?app=public&mod=profile&act=invitefriendanswer',
   '_NOT_SUPPERT_' => '?app=public&mod=Passport&act=login',
+  'PUBLIC_LOGIN_AUTOMATICALLY' => '?app=public&mod=Passport&act=login',
 );
 ?>
