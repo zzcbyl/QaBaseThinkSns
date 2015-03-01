@@ -94,7 +94,7 @@ class InterviewAction extends Action
             $fuhao = '>';
         }
         $where = " is_del = 0 AND feed_questionid!=0 AND add_feedid=0 AND is_audit=1 and interview_audit=1 and last_updtime " . $fuhao . " '"
-            . $startdt . "' AND last_updtime < '" . $enddt . "' and `uid` in (" . $expert . ")";
+            . $startdt . "' AND last_updtime < '" . $enddt . "' and `uid` in (" . $expert . ",4191)";
         //echo $where;
         //return;
         $list = model('Feed')->getAnswerListbyInterview($where, $limitnums . ',10');
