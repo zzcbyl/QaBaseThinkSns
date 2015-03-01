@@ -1542,7 +1542,7 @@ class PassportAction extends Action
 
     public function activityresult()
     {
-        $name = '“放飞梦想我能行”北京夏令营';
+        $name = '“放飞梦想我能行”知心姐姐北京精品营再次出发';
         if ($_GET['name'] && $_GET['name'] != '')
             $name = $_GET['name'];
         $data = model('ActivityForm')->getList('', null, 'ctime desc', 20, $name);
