@@ -244,7 +244,7 @@ class FeedListMobileNoFaceWidget extends Widget
                     if ($enddt > $var['loadId'])
                         $LoadWhere = " AND last_updtime < '" . intval($var['loadId']) . "'";
                 }
-                $where = " is_del = 0 AND feed_questionid!=0 AND add_feedid=0 AND is_audit=1 and interview_audit=1 and last_updtime >= '" . $startdt . "' " . $LoadWhere . " and `uid` in (" . $var['expert'] . ")";
+                $where = " is_del = 0 AND feed_questionid!=0 AND add_feedid=0 AND is_audit=1 and interview_audit=1 and last_updtime >= '" . $startdt . "' " . $LoadWhere . " and `uid` in (" . $var['expert'] . ",4191)";
                 $list = model('Feed')->getAnswerList($where, $this->limitnums, 'last_updtime desc');
                 //print_r(model('Feed')->getLastSql());
                 //print_r($list);

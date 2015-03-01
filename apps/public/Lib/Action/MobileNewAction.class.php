@@ -445,7 +445,7 @@ class MobileNewAction
 
             //安全过滤
             $d['type'] = 'qinterview';
-            $d['expert'] = C('TopExpert').',4191';
+            $d['expert'] = C('TopExpert');
             $d['openid'] = $_GET['openid'];
             $this->assign($d);
 
