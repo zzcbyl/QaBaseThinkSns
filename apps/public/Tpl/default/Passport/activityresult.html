@@ -11,10 +11,10 @@
         <volist name="data['data']" id='result'>
             <tr>
                 <td>{$result['activityname']}</td>
-                <td>姓名：{$result['childname']}　性别：{$result['childsex']}　年龄：{$result['childage']}岁　身高：{$result['childheight']}cm　民族：{$result['childminzu']}　身份证：{$result['childidcard']}</td>
+                <td>姓名：{$result['childname']}　<!--性别：{$result['childsex']}　年龄：{$result['childage']}岁　身高：{$result['childheight']}cm　民族：{$result['childminzu']}-->身份证：<br />{$result['childidcard']}</td>
                 <td>
-                    <div>姓名：{$result['parentsname1']}　性别：{$result['parentsex1']}　身高：{$result['parentheight1']}cm　民族：{$result['parentminzu1']}　身份证：{$result['parentidcard1']}　<br />手机号码：{$result['parentsmobile1']}<span style="display:block;">电子邮箱：{$result['parentsemail1']}</span></div>
-                    <div style="margin-top:10px;"><neq name='result.parentsname2' value=''>姓名：{$result['parentsname2']}　性别：{$result['parentsex2']}　身高：{$result['parentheight2']}cm　民族：{$result['parentminzu2']}　身份证：{$result['parentidcard2']}<br /></neq>
+                    <div>姓名：{$result['parentsname1']}　<!--性别：{$result['parentsex1']}　身高：{$result['parentheight1']}cm　民族：{$result['parentminzu1']}　身份证：{$result['parentidcard1']}-->　<br />手机号码：{$result['parentsmobile1']}<span style="display:block;">电子邮箱：{$result['parentsemail1']}</span></div>
+                    <div style="margin-top:10px;"><neq name='result.parentsname2' value=''>姓名：{$result['parentsname2']}　<!--性别：{$result['parentsex2']}　身高：{$result['parentheight2']}cm　民族：{$result['parentminzu2']}　身份证：{$result['parentidcard2']}--><br /></neq>
                     <neq name='result.parentsmobile2' value=''>手机号码：{$result['parentsmobile2']}</neq>
                     <neq name='result.parentsemail2' value=''><span style="display:block;">电子邮箱：{$result['parentsemail2']}</span></neq></div>
                 </td>
