@@ -1519,7 +1519,7 @@ class PassportAction extends Action
             //报名成功,去支付
             $body = urlencode('“放飞梦想我能行”知心姐姐北京精品营再次出发');
             $detail = urlencode('孩子姓名：' . $map['childname'] . '　家长姓名：' . $map['parentsname1'] . '　手机号：' . $map['parentsmobile1']);
-            redirect('http://weixin.luqinwenda.com/payment/payment.aspx?body=' . $body . '&detail=' . $detail . '&product_id=' . $result . '&total_fee=638000');
+            redirect('http://weixin.luqinwenda.com/payment/payment.aspx?body=' . $body . '&detail=' . $body . '&product_id=' . $result . '&total_fee=638000');
         }
     }
 

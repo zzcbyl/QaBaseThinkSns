@@ -43,6 +43,7 @@
 <script src="http://www.luqinwenda.com/addons/theme/stv1/_static/js/js.php?t=js&f=jquery-1.7.1.min.js,jquery.form.js,common.js,core.js,module.js,module.common.js,jwidget_1.0.0.js,jquery.atwho.js,jquery.caret.js,ui.core.js,ui.draggable.js&v=20130523.js"></script>
 <script src="http://www.luqinwenda.com/addons/theme/stv1/_static/js/plugins/core.comment.js?v=20130523"></script>
 <script src="http://www.luqinwenda.com/addons/theme/stv1/_static/js/plugins/core.share.js?v=20130523"></script>
+<script src="http://www.luqinwenda.com/addons/theme/stv1/_static/js/common.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
         var url = U('public/Passport/logpv');
@@ -134,11 +135,22 @@
             $('#childName').css('border-color', 'red');
             return false;
         }
+
         if ($('#childIDcard').val().Trim() == "") {
             ui.error('孩子身份证不能为空!');
             $('#childIDcard').focus();
             $('#childIDcard').css('border-color', 'red');
             return false;
+        }
+        else {
+            alert($('#childIDcard').val().Trim());
+            var result = isIdCardNo($('#childIDcard').val().Trim());
+            if (result != "") {
+                ui.error('孩子身份证格式有误!');
+                $('#childIDcard').focus();
+                $('#childIDcard').css('border-color', 'red');
+                return false;
+            }
         }
         if ($('#parentName1').val().Trim() == "") {
             ui.error('家长姓名不能为空!');
@@ -179,6 +191,8 @@
         if (result == null) return false;
         return true;
     }
+
+
 
 </script>
 
