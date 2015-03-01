@@ -55,6 +55,8 @@ class InterviewAction extends Action
         $TopExpert = model('user')->getUserInfo($expertUid);
         $this->assign('TopExpert', $TopExpert);
 
+        $TopExpert1 = model('user')->getUserInfo(4191);
+        $this->assign('TopExpert1', $TopExpert1);
         $this->display();
     }
 
