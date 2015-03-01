@@ -1320,7 +1320,7 @@ function isIdCardNo(num) {
 //验证手机号
 function ismobile(str)
 {
-    var result = str.match(/^0*(13|15|18)\d{9}$/);
+    var result = str.match(/^0*(13|15|18|17)\d{9}$/);
     if(result==null) return false;
     return true;
 }
