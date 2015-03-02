@@ -414,13 +414,12 @@ class MobileNewAction
 
             //安全过滤
             $d['type'] = 'qainterview';
-            $d['expert'] = C('TopExpert');
+            $d['expert'] = $data['iv_object']; //C('TopExpert');
             $d['openid'] = $_GET['openid'];
             $this->assign($d);
 
             $this->setTitle($data['iv_name']);
             $this->setKeywords($data['iv_content']);
-
         }
         $this->display();
     }

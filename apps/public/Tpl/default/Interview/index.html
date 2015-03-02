@@ -71,32 +71,21 @@
             <div>{$InterViewState}</div>
             <div>见面会时间：<br /><php> echo date('Y-m-d H:i',$InterView['iv_startdt']);</php><br /><php> echo date('Y-m-d H:i',$InterView['iv_enddt']);</php></div>
         </div>
+        <volist name="users" id="user">
         <div class="rightObject">
             <div class="rightObjectTitle">
                 见面会嘉宾
             </div>
             <div class="rightObjectContent">
-                <div style="float: left; "><a href="{$TopExpert['space_url']}"><img src="{$TopExpert['avatar_big']}" event-node="face_card" uid="{$TopExpert['uid']}" /></a></div>
-                <div style="float: left; margin-left: 10px; font-size: 14px;"><a href="{$TopExpert['space_url']}" event-node="face_card" uid="{$TopExpert['uid']}">{$TopExpert['uname']}</a></div>
+                <div style="float: left; "><a href="{$user['space_url']}"><img src="{$user['avatar_big']}" event-node="face_card" uid="{$user['uid']}" /></a></div>
+                <div style="float: left; margin-left: 10px; font-size: 14px;"><a href="{$user['space_url']}" event-node="face_card" uid="{$user['uid']}">{$user['uname']}</a></div>
                 <div class="clear"></div>
                 <p style="margin-top: 10px;">
-                    <strong>简介：</strong>{$TopExpert['intro']}
+                    <strong>简介：</strong>{$user['intro']}
                 </p>
             </div>
         </div>
-        <div class="rightObject">
-            <div class="rightObjectTitle">
-                见面会嘉宾
-            </div>
-            <div class="rightObjectContent">
-                <div style="float: left; "><a href="{$TopExpert1['space_url']}"><img src="{$TopExpert1['avatar_big']}" event-node="face_card" uid="{$TopExpert1['uid']}" /></a></div>
-                <div style="float: left; margin-left: 10px; font-size: 14px;"><a href="{$TopExpert1['space_url']}" event-node="face_card" uid="{$TopExpert1['uid']}">{$TopExpert1['uname']}</a></div>
-                <div class="clear"></div>
-                <p style="margin-top: 10px;">
-                    <strong>简介：</strong>{$TopExpert1['intro']}
-                </p>
-            </div>
-        </div>
+        </volist>
         <div class="compereTab">
             <div class="compereTabTitle">
                 见面会主持人
@@ -128,6 +117,7 @@
 </div>
 
 <script type="text/javascript">
+    var interviewid = '{$interview_id}';
     var sdt = '{$InterView.iv_startdt}';
     var edt = '{$InterView.iv_enddt}';
     var url1 = U('public/Interview/qafeedlist');
@@ -161,7 +151,7 @@
         //alert(sdt);
         $('#pageNum1').html(page1);
         $('#feed-lists1').html("<div style='margin-top: 50px; text-align: center;'>数据加载中 <img src='__THEME__/image/loadingAnimation.gif' /></div>");
-        $.get(url1,{startdt : sdt, enddt : edt, limit:page1-1, dataindex:newdataindex },function(msg){
+        $.get(url1,{startdt : sdt, enddt : edt, limit:page1-1, dataindex:newdataindex, interview_id:interviewid },function(msg){
             if(msg == '') {
                 $('#feed-lists1').html('<div style="text-align: center; margin-top: 20px;">暂无数据</div>');
             }
@@ -210,7 +200,7 @@
 
     function autoflansh(set) {
         if (($('#autoFlash').attr('checked') || set == 1)) {
-            $.get(url1,{startdt : newdata1, enddt : edt, limit:0, dataindex:0, flansh:1, random:Math.round() },function(msg){
+            $.get(url1,{startdt : newdata1, enddt : edt, limit:0, dataindex:0, interview_id:interviewid, flansh:1, random:Math.round() },function(msg){
                 //alert(newdata1);
                 $('#feed-lists1').prepend(msg);
             });

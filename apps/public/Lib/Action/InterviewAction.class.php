@@ -20,7 +20,7 @@ class InterviewAction extends Action
             $this->error('参数错误');
             return;
         }
-
+        $this->assign('interview_id', $_GET['interview_id']);
         $InterView = model('Interview')->getInterView('iv_id='.$_GET['interview_id'], 1);
         if (!empty($InterView)) {
             //print_r($InterView['data'][0]);
@@ -46,17 +46,26 @@ class InterviewAction extends Action
             $this->assign('dataCount', $list['count']);
             $this->assign('page2', $list['totalPages']);
 
+            //见面会嘉宾
+            $object = $data['iv_object'];
+            if(!empty($object)) {
+                $usersData = model('user')->getUserInfoByUids($object);
+                if (!empty($usersData)) {
+                    $this->assign('users', array_values($usersData));
+                }
+            }
+
         } else {
             $this->error("见面会数据错误");
         }
 
         //顶级专家
-        $expertUid = C('TopExpert');
+        /*$expertUid = C('TopExpert');
         $TopExpert = model('user')->getUserInfo($expertUid);
         $this->assign('TopExpert', $TopExpert);
 
         $TopExpert1 = model('user')->getUserInfo(4191);
-        $this->assign('TopExpert1', $TopExpert1);
+        $this->assign('TopExpert1', $TopExpert1);*/
         $this->display();
     }
 
@@ -84,24 +93,33 @@ class InterviewAction extends Action
     {
         $flansh = $_GET['flansh'];
         $startdt = intval($_GET['startdt']);
-        //echo $startdt;
-        //return;
-        $enddt = intval($_GET['enddt']);
-        $expert = C('TopExpert');
+
+        $enddate = date('Y-m-d H:i:s', intval($_GET['enddt']));
+        $enddate = date("Y-m-d H:i:s", strtotime("$enddate  +" . C('AddMinutes') . "  minute"));
+        $enddt = strtotime($enddate);
         $limitnums = intval($_GET['limit']) * 10;
         $fuhao = '>=';
         if ($flansh == '1') {
             $fuhao = '>';
         }
-        $where = " is_del = 0 AND feed_questionid!=0 AND add_feedid=0 AND is_audit=1 and interview_audit=1 and last_updtime " . $fuhao . " '"
-            . $startdt . "' AND last_updtime < '" . $enddt . "' and `uid` in (" . $expert . ",4191)";
-        //echo $where;
-        //return;
-        $list = model('Feed')->getAnswerListbyInterview($where, $limitnums . ',10');
-        //echo model('Feed')->getLastSql();
-        $this->assign('list', $list);
-        $dataindex = $_GET['dataindex'];
-        $this->assign('dataindex', $dataindex);
+        if (empty($_GET['interview_id'])) {
+            $this->display();
+            return;
+        }
+        $InterView = model('Interview')->getInterView('iv_id=' . $_GET['interview_id'], 1);
+        if (!empty($InterView)) {
+            $data = $InterView[0];
+
+            $where = " is_del = 0 AND feed_questionid!=0 AND add_feedid=0 AND is_audit=1 and interview_audit=1 and last_updtime " . $fuhao . " '"
+                . $startdt . "' AND last_updtime < '" . $enddt . "' and `uid` in (" . $data['iv_object'] . ")";
+            //echo $where;
+            //return;
+            $list = model('Feed')->getAnswerListbyInterview($where, $limitnums . ',10');
+            //echo model('Feed')->getLastSql();
+            $this->assign('list', $list);
+            $dataindex = $_GET['dataindex'];
+            $this->assign('dataindex', $dataindex);
+        }
         $this->display();
     }
 
