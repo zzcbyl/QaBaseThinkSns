@@ -1513,13 +1513,19 @@ class PassportAction extends Action
         $map["location"] = t($_POST['city_names']);
         $map['paytime'] = time();
         $map['paytotal'] = 6380.00;
+        $total_fee = 638000;
+        $enddate = strtotime('2015-05-30');
+        if (time() <= $enddate) {
+            $map['paytotal'] = 6000.00;
+            $total_fee = 600000;
+        }
 
         $result = model('ActivityForm')->add($map);
         if ($result > 0) {
             //报名成功,去支付
             $body = urlencode('“放飞梦想我能行”知心姐姐北京精品营再次出发');
             $detail = urlencode('孩子姓名：' . $map['childname'] . '　家长姓名：' . $map['parentsname1'] . '　手机号：' . $map['parentsmobile1']);
-            redirect('http://weixin.luqinwenda.com/payment/payment.aspx?body=' . $body . '&detail=' . $body . '&product_id=' . $result . '&total_fee=638000');
+            redirect('http://weixin.luqinwenda.com/payment/payment.aspx?body=' . $body . '&detail=' . $body . '&product_id=' . $result . '&total_fee=' . $total_fee);
         }
     }
 
