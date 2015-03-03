@@ -7,7 +7,7 @@
 <div style="padding:20px;">
     <div><h3>报名结果</h3></div>
     <table>
-        <tr style="text-align:center;"><td>夏令营</td><td style="width:140px;">孩子信息</td><td style="width:190px">参营家长信息</td><td style="width:60px">所在地区</td><td style="width:40px;">家长是否同行</td><td style="width:120px;">备注</td><td style="width:80px;">报名时间</td><td style="width:130px;">缴费信息</td></tr>
+        <tr style="text-align:center;"><td>夏令营</td><td style="width:200px;">孩子信息</td><td style="width:250px">参营家长信息</td><!--<td style="width:60px">所在地区</td><td style="width:40px;">家长是否同行</td><td style="width:120px;">备注</td>--><td style="width:100px;">报名时间</td><td style="width:150px;">缴费信息</td></tr>
         <volist name="data['data']" id='result'>
             <tr>
                 <td>{$result['activityname']}</td>
@@ -18,9 +18,9 @@
                     <neq name='result.parentsmobile2' value=''>手机号码：{$result['parentsmobile2']}</neq>
                     <neq name='result.parentsemail2' value=''><span style="display:block;">电子邮箱：{$result['parentsemail2']}</span></neq></div>
                 </td>
-                <td>{$result['location']}</td>
+                <!--<td>{$result['location']}</td>
                 <td style="text-align:center;"><php>if($result['istogether']==0) echo '否';else echo '是';</php></td>
-                <td>{$result['remarks']}</td>
+                <td>{$result['remarks']}</td>-->
                 <td style="text-align:center;"><php>if($result['ctime']>0) echo date("Y-m-d H:i:s",$result['ctime']);</php></td>
                 <td style="text-align:center;">是否缴费：<php>echo $result['ispay']==1 ? '是' : '否';</php><br />缴费金额：{$result['paytotal']}<br />缴费时间：<br /><php>if($result['paysuccesstime']>0) echo date("Y-m-d H:i:s",$result['paysuccesstime']);</php></td></tr>
         </volist>
