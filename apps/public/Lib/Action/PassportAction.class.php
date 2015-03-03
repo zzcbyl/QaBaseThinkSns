@@ -1548,8 +1548,8 @@ class PassportAction extends Action
 
     public function activityresult()
     {
-        $body = urlencode('放飞梦想我能行知心姐姐北京精品营再次出发');
-        echo 'http://weixin.luqinwenda.com/payment/payment.aspx?body=' . $body . '&detail=' . $body . '&product_id=999&total_fee=600000';
+        //$body = urlencode('放飞梦想我能行知心姐姐北京精品营再次出发');
+        //echo 'http://weixin.luqinwenda.com/payment/payment.aspx?body=' . $body . '&detail=' . $body . '&product_id=999&total_fee=600000';
 
 
         $name = '“放飞梦想我能行”知心姐姐北京精品营再次出发';
