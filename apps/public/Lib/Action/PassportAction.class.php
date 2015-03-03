@@ -1523,7 +1523,7 @@ class PassportAction extends Action
         $result = model('ActivityForm')->add($map);
         if ($result > 0) {
             //报名成功,去支付
-            $body = urlencode('“放飞梦想我能行”知心姐姐北京精品营再次出发');
+            $body = urlencode('2015北京精品营');
             $detail = urlencode('孩子姓名：' . $map['childname'] . '　家长姓名：' . $map['parentsname1'] . '　手机号：' . $map['parentsmobile1']);
             redirect('http://weixin.luqinwenda.com/payment/payment.aspx?body=' . $body . '&detail=' . $body . '&product_id=' . $result . '&total_fee=' . $total_fee);
         }
@@ -1548,6 +1548,10 @@ class PassportAction extends Action
 
     public function activityresult()
     {
+        $body = urlencode('放飞梦想我能行知心姐姐北京精品营再次出发');
+        echo 'http://weixin.luqinwenda.com/payment/payment.aspx?body=' . $body . '&detail=' . $body . '&product_id=999&total_fee=600000';
+
+
         $name = '“放飞梦想我能行”知心姐姐北京精品营再次出发';
         if ($_GET['name'] && $_GET['name'] != '')
             $name = $_GET['name'];
