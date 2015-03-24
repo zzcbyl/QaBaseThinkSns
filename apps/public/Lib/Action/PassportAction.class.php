@@ -1535,14 +1535,15 @@ class PassportAction extends Action
 
         $result = model('ActivityForm')->add($map);
         if ($result > 0) {
-            $this->redirect('public/Passport/pactbj_result2');
+            //$this->redirect('public/Passport/pactbj_result2');
             //报名成功,去支付
-            //$body = urlencode('2015北京精品营');
-            //$detail = urlencode('孩子姓名：' . $map['childname'] . '　家长姓名：' . $map['parentsname1'] . '　手机号：' . $map['parentsmobile1']);
-            //if (!empty($_POST['from']) && $_POST['from'] == 1)
-            //    redirect('http://weixin.luqinwenda.com/payment/payment.aspx?body=' . $body . '&detail=' . $body . '&product_id=' . $result . '&total_fee=' . $total_fee);
-            //else
-            //    redirect('http://yeepay.luqinwenda.com/weixin_payment.aspx?body=' . $body . '&detail=' . $body . '&product_id=' . $result . '&total_fee=' . $total_fee);
+            $body = urlencode('2015北京精品营');
+            $detail = urlencode('孩子姓名：' . $map['childname'] . '　家长姓名：' . $map['parentsname1'] . '　手机号：' . $map['parentsmobile1']);
+            if (!empty($_POST['from']) && $_POST['from'] == 1)
+                redirect('http://weixin.luqinwenda.com/payment/payment.aspx?body=' . $body . '&detail=' . $body . '&product_id=' . $result . '&total_fee=' . $total_fee);
+            else
+                $this->redirect('public/Passport/pactbj_result2');
+                //redirect('http://yeepay.luqinwenda.com/weixin_payment.aspx?body=' . $body . '&detail=' . $body . '&product_id=' . $result . '&total_fee=' . $total_fee);
         }
     }
 
