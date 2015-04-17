@@ -198,6 +198,7 @@ class PassportAction extends Action
         $login = t($_POST['login_email']);
         $password = trim($_POST['login_password']);
         $remember = intval($_POST['login_remember']);
+        $reurl = t($_POST['reurl']);
         if ($login == '用户名')
             $login = '';
         if ($password == '******')
@@ -211,7 +212,10 @@ class PassportAction extends Action
         } else {
             $status = 1;
             $info = $this->passport->getSuccess();
-            $data = ($GLOBALS['ts']['site']['home_url']) ? $GLOBALS['ts']['site']['home_url'] : 0;
+            if (!empty($reurl))
+                $data = urldecode($reurl);
+            else
+                $data = ($GLOBALS['ts']['site']['home_url']) ? $GLOBALS['ts']['site']['home_url'] : 0;
         }
         $this->ajaxReturn($data, $info, $status);
     }

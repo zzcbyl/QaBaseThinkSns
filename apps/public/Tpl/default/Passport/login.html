@@ -40,6 +40,9 @@
                     <input id="pwd_input" name="login_password" type="password" class="lInput" autocomplete="off"
                            value="******"/>
 
+
+                    <input type="hidden" name="reurl" id="reurl" value='<php>echo $_GET['reurl'];</php>'>
+
                     <input type="submit" value="" class="lBtn" onclick="$('#ajax_login_form').submit();"/>
 
                     <!--<php>if($register_type == 'open'):</php>
