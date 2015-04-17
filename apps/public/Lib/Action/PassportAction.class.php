@@ -212,8 +212,14 @@ class PassportAction extends Action
         } else {
             $status = 1;
             $info = $this->passport->getSuccess();
-            if (!empty($reurl))
-                $data = urldecode($reurl);
+            if (!empty($reurl)) {
+                $jumpurl = urldecode($reurl);
+                if (strstr($jumpurl, "?")) {
+                    $jumpurl = $jumpurl . '&openid=' . $login;
+                } else {
+                    $jumpurl = $jumpurl . '?openid=' . $login;
+                }
+            }
             else
                 $data = ($GLOBALS['ts']['site']['home_url']) ? $GLOBALS['ts']['site']['home_url'] : 0;
         }
