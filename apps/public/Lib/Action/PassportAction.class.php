@@ -213,11 +213,10 @@ class PassportAction extends Action
             $status = 1;
             $info = $this->passport->getSuccess();
             if (!empty($reurl)) {
-                $jumpurl = urldecode($reurl);
-                if (strstr($jumpurl, "?")) {
-                    $jumpurl = $jumpurl . '&openid=' . $login;
+                if (strstr($reurl, "?")) {
+                    $data = $reurl . '&openid=' . $login;
                 } else {
-                    $jumpurl = $jumpurl . '?openid=' . $login;
+                    $data = $reurl . '?openid=' . $login;
                 }
             }
             else
