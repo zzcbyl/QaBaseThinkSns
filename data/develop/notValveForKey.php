@@ -98,5 +98,8 @@ return array (
   '<BR />邀请“管理员”成功<BR />' => '?app=public&mod=profile&act=invitefriendanswer',
   '_NOT_SUPPERT_' => '?app=public&mod=Passport&act=login',
   'PUBLIC_LOGIN_AUTOMATICALLY' => '?app=public&mod=Passport&act=login',
+  '_MODULE_NOT_EXIST_' => '?app=public&mod=Passport&act=login',
+  '_TEMPLATE_NOT_EXIST_' => '?app=public&mod=Index&act=index',
+  'PUBLIC_USER_POINTS_CALCULATION' => '?app=public&mod=Index&act=index',
 );
 ?>
