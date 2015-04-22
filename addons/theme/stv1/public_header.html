@@ -9,15 +9,17 @@
             <php> 
                   if(ACTION_NAME=='square'){ $tabClass['square'] = 'current'; $tabClass['index'] = '';$tabClass['expert'] = ''; $tabClass['course'] = ''; }
 	              else if(ACTION_NAME=='expert') { $tabClass['expert'] = 'current'; $tabClass['square'] = ''; $tabClass['index'] = '';$tabClass['course'] = ''; }
-                  else if(ACTION_NAME=='course') { $tabClass['course'] = 'current'; $tabClass['square'] = ''; $tabClass['index'] = '';  $tabClass['expert'] =''; }
+                  else if(ACTION_NAME=='course'||ACTION_NAME=='coursedetail') { $tabClass['course'] = 'current'; $tabClass['square'] = ''; $tabClass['index'] = '';  $tabClass['expert'] =''; }
                   else{ $tabClass['index'] = 'current'; $tabClass['square'] = ''; $tabClass['expert'] = '';$tabClass['course'] = ''; }
             </php>
-            <ul class="menu" style="display:none;">
+            <ul class="menu">
         	    <li><a class="{$tabClass.index}" href="{:SITE_URL}">首页</a></li>
                 <li><a class="{$tabClass.square}" href="{:U('public/Passport/square')}">广场</a></li>
                 <li><a class="{$tabClass.expert}" href="{:U('public/Passport/expert')}">专家</a></li>
                 <li><a class="{$tabClass.course}" href="{:U('public/Passport/course')}">课程</a></li>
-                <li><a href="#">活动</a></li>
+                <li><a class="" href="<php>echo C('MallDomain');</php>Default_xly.aspx">夏令营</a></li>
+                <li><a class="" href="<php>echo C('MallDomain');</php>Default_bk.aspx">书城</a></li>
+                <!--<li><a href="#">活动</a></li>-->
             </ul>
             <div class="person" style="float:right; display:none;">
                 <ul class="short_nav">
@@ -49,14 +51,18 @@
                 else if(ACTION_NAME=='book') { $tabClass['book'] = 'current'; $tabClass['square'] = ''; $tabClass['index'] = '';  $tabClass['expert'] =''; $tabClass['course'] = ''; $tabClass['interview'] = '';  }
                 else if((ACTION_NAME=='index' && MODULE_NAME=='Interview') || (ACTION_NAME=='interviewlist' && MODULE_NAME=='Interview')) { $tabClass['interview'] = 'current'; $tabClass['square'] = ''; $tabClass['index'] = '';$tabClass['expert'] = ''; $tabClass['course'] = ''; $tabClass['book'] = '';}
                 else{ $tabClass['index'] = 'current'; $tabClass['square'] = ''; $tabClass['expert'] = '';$tabClass['course'] = ''; $tabClass['book'] = ''; $tabClass['interview'] = ''; }
+
+                $LoginUser = model('user')->getUserInfo($GLOBALS['ts']['mid']);
             </php>
             <ul class="menu">
                 <li><a class="{$tabClass.index}" href="{:SITE_URL}">首页</a></li>
                 <li><a class="{$tabClass.square}" href="{:U('public/Passport/square')}">广场</a></li>
                 <li><a class="{$tabClass.expert}" href="{:U('public/Passport/expert')}">专家</a></li>
                 <li><a class="{$tabClass.course}" href="{:U('public/Passport/course')}">课程</a></li>
-                <li><a class="{$tabClass.book}" href="{:U('public/Passport/book')}">著作</a></li>
+                <!--<li><a class="{$tabClass.book}" href="{:U('public/Passport/book')}">著作</a></li>-->
                 <li><a class="{$tabClass.interview}" href="{:U('public/interview/interviewlist')}">见面会</a></li>
+                <li><a class="" href="<php>echo C('MallDomain');</php>Default_xly.aspx?openid=<php>echo $LoginUser['login'];</php>">夏令营</a></li>
+                <li><a class="" href="<php>echo C('MallDomain');</php>Default_bk.aspx?openid=<php>echo $LoginUser['login'];</php>">书城</a></li>
                 <!--<li><a href="#">活动</a></li>-->
             </ul>
             <div class="search_box">

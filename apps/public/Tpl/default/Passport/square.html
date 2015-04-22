@@ -1,7 +1,18 @@
 <include file="__THEME__/public_header" />
 <div class="container">
 <div class="cont_left pd17">
-    <!--<div class="g_adimg"><a href="http://item.taobao.com/item.htm?spm=a1z10.1.w4004-7262783863.12.o1f6Pi&id=42685318065" target="_blank"><img src="__THEME__/image/act_xjp670.gif" /></a></div>-->
+    <php>if(!empty($GLOBALS['ts']['mid'])&&$GLOBALS['ts']['mid']>0){
+        $LoginUser = model('user')->getUserInfo($GLOBALS['ts']['mid']);</php>
+        <div class="g_adimg" style="border: 1px solid #e0e0e0;width: 670px;">
+            <a href="<php>echo C('MallDomain');</php>Default_xly.aspx?openid=<php>echo $LoginUser['login'];</php>" target="_blank" style="float: left;"><img src="__THEME__/image/mall_xly335.jpg" width="335px" /></a>
+            <a href="<php>echo C('MallDomain');</php>Default_bk.aspx?openid=<php>echo $LoginUser['login'];</php>" target="_blank" style="float: left;"><img src="__THEME__/image/mall_bk335.jpg" width="335px" /></a>
+        </div>
+    <php>} else {</php>
+        <div class="g_adimg" style="border: 1px solid #e0e0e0;width: 670px;">
+            <a href="<php>echo C('MallDomain');</php>Default_xly.aspx" target="_blank" style="float: left;"><img src="__THEME__/image/mall_xly335.jpg" width="335px" /></a>
+            <a href="<php>echo C('MallDomain');</php>Default_bk.aspx" target="_blank" style="float: left;"><img src="__THEME__/image/mall_bk335.jpg" width="335px" /></a>
+        </div>
+    <php>}</php>
     <!--排行-->
     <div class="g_paihang">
         <div class="g_wtpaihang">

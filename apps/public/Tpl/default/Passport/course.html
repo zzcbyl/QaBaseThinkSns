@@ -5,10 +5,10 @@
         <div class="zhuanjia_left" style="width: auto;">
             <div class="profile">
                 <div class="pro_img">
-                    <a href="{$TopExpert['space_url']}"><img src="{$TopExpert['avatar_big']}" event-node="face_card" uid="{$TopExpert['uid']}" /></a>
+                    <a href="{:U('public/Passport/newperson',array('uid'=>$TopExpert['uid']))}" target="_blank"><img src="{$TopExpert['avatar_big']}" event-node="face_card" uid="{$TopExpert['uid']}" /></a>
                 </div>
                 <div class="pro_cont">
-                    <h4><a href="{$TopExpert['space_url']}" event-node="face_card" uid="{$TopExpert['uid']}">{$TopExpert['uname']}</a></h4>
+                    <h4><a href="{:U('public/Passport/newperson',array('uid'=>$TopExpert['uid']))}" target="_blank" event-node="face_card" uid="{$TopExpert['uid']}">{$TopExpert['uname']}</a></h4>
                     <p style="height:auto;"><strong>简介：</strong>{$TopExpert['intro']}</p>
                     <p class="comm hd pt0" style="height:auto; padding:0;">
                         <strong>获得：</strong>

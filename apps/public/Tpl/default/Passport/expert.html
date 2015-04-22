@@ -7,10 +7,10 @@
         <div class="zhuanjia_left">
         	<div class="profile">
             <div class="pro_img">
-                <a href="{$TopExpert['space_url']}"><img src="{$TopExpert['avatar_big']}" event-node="face_card" uid="{$TopExpert['uid']}" /></a>
+                <a href="{:U('public/Passport/newperson',array('uid'=>$TopExpert['uid']))}" target="_blank"><img src="{$TopExpert['avatar_big']}" event-node="face_card" uid="{$TopExpert['uid']}" /></a>
             </div>
             <div class="pro_cont" style="width:555px;">
-                <h4><a href="{$TopExpert['space_url']}" event-node="face_card" uid="{$TopExpert['uid']}">{$TopExpert['uname']}</a></h4>
+                <h4><a href="{:U('public/Passport/newperson',array('uid'=>$TopExpert['uid']))}" target="_blank" event-node="face_card" uid="{$TopExpert['uid']}">{$TopExpert['uname']}</a></h4>
                 <p style="height:auto;"><strong>简介：</strong>{$TopExpert['intro']}</p>
                 <p class="comm hd pt0" style="height:auto; padding:0;">
                     <strong>获得：</strong>
@@ -89,7 +89,7 @@
             	<dl>
                 	<dt>
                         <!--<img src="images/img.jpg" />-->
-                        <a href="{:U('public/Index/feed',array('feed_id'=>$eqa['feed_id'],'uid'=>$eqa['uid']))}" target="_blank" title="{$eqa.body}">{$eqa.body|getShort=20,'...'}</a>
+                        <a href="{:U('public/Passport/newquestion',array('feed_id'=>$eqa['feed_id']))}" target="_blank" title="{$eqa.body}">{$eqa.body|getShort=20,'...'}</a>
                     </dt>
                     <dd title="">{$eqa['answer'][0]['body']|getShort=112,'...'}</dd>
                 </dl>
@@ -128,10 +128,10 @@
         	<li>
                 <div class="profile">
                 <div class="pro_img">
-                    <a href="{$expert['space_url']}"><img src="{$expert['avatar_big']}" event-node="face_card" uid="{$expert['uid']}" /></a>
+                    <a href="{:U('public/Passport/newperson',array('uid'=>$expert['uid']))}" target="_blank"><img src="{$expert['avatar_big']}" event-node="face_card" uid="{$expert['uid']}" /></a>
                 </div>
                 <div class="pro_cont">
-                    <h4><a href="{$expert['space_url']}" event-node="face_card" uid="{$expert['uid']}">{$expert['uname']}</a></h4>
+                    <h4><a href="{:U('public/Passport/newperson',array('uid'=>$expert['uid']))}" target="_blank" event-node="face_card" uid="{$expert['uid']}">{$expert['uname']}</a></h4>
                     <p style="height:36px; overflow:hidden;" title="{$expert['intro']}"><strong>简介：</strong>
                         <php>if(strlen($expert['intro'])>72) echo utf_substr($expert['intro'],52).'...'; else echo $expert['intro'];</php>
                     </p>
@@ -166,8 +166,8 @@
             <volist name="answerList.data" id="feed">
             <li>
                 <div>
-                    <h2 class="tit"><a href="{:U('public/Index/feed',array('feed_id'=>$feed['feed_id'],'uid'=>$feed['uid']))}" target="_blank" title="{$feed.body}">{$feed.body|getShort=28,'...'}</a></h2>
-                    <p class="name">{$feed['answer'][0]['title']}<a class="dp">点评</a><span>{$feed['answer'][0]['publish_time']|friendlyDate}</span></p>
+                    <h2 class="tit"><a href="{:U('public/Passport/newquestion',array('feed_id'=>$feed['feed_id']))}" target="_blank" title="{$feed.body}">{$feed.body|getShort=28,'...'}</a></h2>
+                    <p class="name">{$feed['answer'][0]['user_info']['uname']}<a class="dp">点评</a><span>{$feed['answer'][0]['publish_time']|friendlyDate}</span></p>
                     <p class="cont">
                         <!--{$feed.description}-->{$feed['answer'][0]['body']}
                     </p>
