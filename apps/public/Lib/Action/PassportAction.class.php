@@ -1614,11 +1614,7 @@ class PassportAction extends Action
         $map['parentsmobile2'] = $_POST['parentMobile2'];
         $map['parentsemail2'] = $_POST['parentEmail2'];
         $map["parentidcard2"] = t($_POST['parentIDcard2']);
-        if ($_POST['istogether'] != null && $_POST['istogether'] == 'on')
-            $map['istogether'] = 1;
-        else
-            $map['istogether'] = 0;
-        $map['remarks'] = '参营人数：' . $_POST['remarks'];
+
         $map['ctime'] = time();
         $map['activityname'] = $_POST['activityname'];
 
