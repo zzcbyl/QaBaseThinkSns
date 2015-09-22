@@ -1582,8 +1582,6 @@ class PassportAction extends Action
             $map['istogether'] = 1;
         else
             $map['istogether'] = 0;
-        echo $map['istogether'];
-        return;
         $map['remarks'] = '参营人数：' . $_POST['remarks'];
         $map['ctime'] = time();
         $map['activityname'] = $_POST['activityname'];
