@@ -1556,6 +1556,40 @@ class PassportAction extends Action
         }
     }
 
+    public function doSingaporeCampForm()
+    {
+        $map['childname'] = $_POST['childName'];
+        $map['childage'] = $_POST['childAge'];
+        $map['childsex'] = $_POST['childSex'];
+        $map['childheight'] = $_POST['childHeight'];
+        $map['childminzu'] = $_POST['childMinzu'];
+        $map["childidcard"] = t($_POST['childIDcard']);
+        $map['parentsname1'] = $_POST['parentName1'];
+        $map['parentsex1'] = $_POST['parentSex1'];
+        $map['parentheight1'] = $_POST['parentHeight1'];
+        $map['parentminzu1'] = $_POST['parentMinzu1'];
+        $map['parentsmobile1'] = $_POST['parentMobile1'];
+        $map['parentsemail1'] = $_POST['parentEmail1'];
+        $map["parentidcard1"] = t($_POST['parentIDcard1']);
+        $map['parentsname2'] = $_POST['parentName2'];
+        $map['parentsex2'] = $_POST['parentSex2'];
+        $map['parentheight2'] = $_POST['parentHeight2'];
+        $map['parentminzu2'] = $_POST['parentMinzu2'];
+        $map['parentsmobile2'] = $_POST['parentMobile2'];
+        $map['parentsemail2'] = $_POST['parentEmail2'];
+        $map["parentidcard2"] = t($_POST['parentIDcard2']);
+        $map['istogether'] = $_POST['istogether'];
+        $map['remarks'] = '参营人数：' . $_POST['remarks'];
+        $map['ctime'] = time();
+        $map['activityname'] = $_POST['activityname'];
+
+
+        $result = model('ActivityForm')->add($map);
+        if ($result > 0) {
+            $this->redirect('public/Passport/SingaporeCamp_result');
+        }
+    }
+
     public function sendActivityEmail($name, $email)
     {
         $data['node'] = '';

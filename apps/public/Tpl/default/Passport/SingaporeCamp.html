@@ -1,0 +1,150 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+    <meta name="viewport" content="width=device-width"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>2016年大开眼界新加坡文明之旅</title>
+    <meta content="卢勤问答平台" name="keywords">
+    <meta content="卢勤问答平台" name="description">
+    <meta property="qc:admins" content="5235562777645116756416375" />
+    <link href="http://www.luqinwenda.com/addons/theme/stv1/_static/image/favicon.ico?v=20130523" type="image/x-icon" rel="shortcut icon">
+        <link href="http://www.luqinwenda.com/addons/theme/stv1/_static/css/css.php?t=css&f=global.css,module.css,menu.css,form.css,jquery.atwho.css,style.css&v=20130523.css" rel="stylesheet" type="text/css" />
+    <script>
+        /**
+         * 全局变量
+         */
+        var SITE_URL = 'http://www.luqinwenda.com';
+        var UPLOAD_URL = 'http://www.luqinwenda.com/data/upload';
+        var THEME_URL = 'http://www.luqinwenda.com/addons/theme/stv1/_static';
+        var APPNAME = 'public';
+        var MID = '0';
+        var UID = '0';
+        var initNums = '300';
+        var SYS_VERSION = '20130523'
+        // Js语言变量
+        var LANG = new Array();
+    </script>
+    <script src="http://www.luqinwenda.com/data/lang/public_zh-cn.js?v=20130523"></script>
+    <script src="http://www.luqinwenda.com/addons/theme/stv1/_static/js/js.php?t=js&f=jquery-1.7.1.min.js,jquery.form.js,common.js,core.js,module.js,module.common.js,jwidget_1.0.0.js,jquery.atwho.js,jquery.caret.js,ui.core.js,ui.draggable.js&v=20130523.js"></script>
+    <script src="http://www.luqinwenda.com/addons/theme/stv1/_static/js/plugins/core.comment.js?v=20130523"></script>
+    <script src="http://www.luqinwenda.com/addons/theme/stv1/_static/js/plugins/core.share.js?v=20130523"></script>
+    <script src="http://www.luqinwenda.com/addons/theme/stv1/_static/js/common.js"></script>
+</head>
+
+<body style="background:#f3f3f3;">
+<!--未登录时-->
+<div class="header_box">
+    <div class="header">
+        <div class="h_logo">
+            <a href="http://www.luqinwenda.com" style="background:url(http://www.luqinwenda.com/addons/theme/stv1/_static/image/logo.png) no-repeat center; "> </a></div>
+    </div>
+</div><!--登录后-->
+
+<style type="text/css">
+    div{ line-height:20px;}
+    select { width:50px; height:20px; line-height:20px;}
+    table td { padding:5px 0; font-size:14px; color:#666;}
+    table td input[type=text] { width:110px;}
+    table td textarea { line-height:20px; padding:0 5px;}
+    .tdtitle { text-align:right; width:110px;}
+    .xingchengCss{ width:800px; border-bottom:1px solid #ccc; border-left:1px solid #ccc; }
+    .xingchengCss td { border-top:1px solid #ccc; border-right:1px solid #ccc; padding:2px 5px; }
+    .bgtitle { background:#800080; color:#fff; padding:2px 3px;}
+</style>
+<div class="container regContent" style="padding:0; width:100%">
+    <div class="reg_info" style="margin-top:0; width:100%">
+        <div class="reg_info_center" style="padding:20px 10px;">
+            <div style="font-size:12px; line-height:30px; width:100%; margin:0 auto; position:relative;">
+                <h1 style="text-align:center;">2016年大开眼界新加坡文明之旅</h1>
+
+                <div style="border:1px solid #ccc; margin:20px 0; padding:10px;">
+                    <div style="padding:0 0 10px 0; font-size:16px; font-weight:bold;">报名表格</div>
+                    <form action="{:U('public/Passport/doSingaporeCampForm')}" method="post">
+                        <table>
+                            <tr><td class="tdtitle"><i class="RedStar">*</i>孩子姓名：</td><td><input class="s-txt" type="text" maxlength="10" value="" id="childName" name="childName" /></td></tr>
+                            <tr><td class="tdtitle"><i class="RedStar">*</i>孩子年龄：</td><td><input class="s-txt" type="text" maxlength="20" value="" id="childAge" name="childAge" style="width:150px;" /></td></tr>
+                            <tr><td class="tdtitle"><i class="RedStar">*</i>家长姓名：</td><td><input class="s-txt" type="text" maxlength="10" value="" id="parentName1" name="parentName1" /></td></tr>
+                            <tr><td class="tdtitle"><i class="RedStar">*</i>手机号码：</td><td><input class="s-txt" type="text" maxlength="11" value="" id="parentMobile1" name="parentMobile1"></td></tr>
+                            <tr><td class="tdtitle">电子邮箱：</td><td><input class="s-txt" type="text" maxlength="50" value="" id="parentEmail1" name="parentEmail1" style="width:150px;" /></td></tr>
+                            <tr><td></td><td>家长是否参营 <input type="checkbox" id="istogether" name="istogether" />  </td></tr>
+                            <tr><td></td><td>参营人数 <select id="remarks" name="remarks"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option></select></td></tr>
+                            <tr><td colspan="6" style="text-align:center; padding-top:10px;">
+                                <input type="hidden" name="activityname" id="activityname" value="2016年大开眼界新加坡文明之旅" />
+                                <input type="hidden" name="webType" id="webType" value="mobile" />
+                                <input type="submit" value="提 交" onclick="return checkSubmit();" style="padding:3px 10px;" /></td></tr>
+                        </table>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    function checkSubmit() {
+
+        $('input[type=text]').blur(function () {
+            $(this).css('border-color', '#ccc');
+        });
+
+        if ($('#childName').val().Trim() == "") {
+            ui.error('孩子姓名不能为空!');
+            $('#childName').focus();
+            $('#childName').css('border-color', 'red');
+            return false;
+        }
+
+        if ($('#childAge').val().Trim() == "") {
+            ui.error('孩子年龄不能为空!');
+            $('#childAge').focus();
+            $('#childAge').css('border-color', 'red');
+            return false;
+        }
+        else {
+            var result = isInt($('#childAge').val().Trim());
+            if (result != "") {
+                ui.error('孩子年龄格式有误!');
+                $('#childAge').focus();
+                $('#childAge').css('border-color', 'red');
+                return false;
+            }
+        }
+        if ($('#parentName1').val().Trim() == "") {
+            ui.error('家长姓名不能为空!');
+            $('#parentName1').focus();
+            $('#parentName1').css('border-color', 'red');
+            return false;
+        }
+        if ($('#parentMobile1').val().Trim() == "") {
+            ui.error('手机号码不能为空!');
+            $('#parentMobile1').focus();
+            $('#parentMobile1').css('border-color', 'red');
+            return false;
+        }
+        if (!ismobile($('#parentMobile1').val().Trim())) {
+            ui.error('手机号格式有误');
+            $('#parentMobile1').focus();
+            $('#parentMobile1').css('border-color', 'red');
+            return false;
+        }
+        var myReg = /^[-._A-Za-z0-9]+@([_A-Za-z0-9]+\.)+[A-Za-z0-9]{2,3}$/;
+        if ($('#parentEmail1').val().Trim() != "") {
+            if(!myReg.test($('#parentEmail1').val().Trim())) {
+                ui.error('电子邮箱格式有误!');
+                $('#parentEmail1').focus();
+                $('#parentEmail1').css('border-color', 'red');
+                return false;
+            }
+        }
+
+        return true;
+    }
+    //验证手机号
+    function ismobile(str) {
+        var result = str.match(/^0*(13|15|18|17)\d{9}$/);
+        if (result == null) return false;
+        return true;
+    }
+</script>
+</body>
+</html>

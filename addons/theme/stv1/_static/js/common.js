@@ -1203,6 +1203,15 @@ function isIdCardNo(num) {
     return result;
 }
 
+String.prototype.isInt = function() {
+    var re = /^-{0,1}\d{1,}$/;
+    return re.test(this);
+}
+String.prototype.IsInt = function() {
+    return this.isInt();
+}
+
+
 
 
 
