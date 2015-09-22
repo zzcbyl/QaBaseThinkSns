@@ -75,7 +75,6 @@
                         </table>
                     </form>
                 </div>
-
             </div>
         </div>
     </div>
@@ -101,8 +100,7 @@
             return false;
         }
         else {
-            var result = isInt($('#childAge').val().Trim());
-            if (result != "") {
+            if (!isInt($('#childAge').val())) {
                 ui.error('孩子年龄格式有误!');
                 $('#childAge').focus();
                 $('#childAge').css('border-color', 'red');
@@ -139,6 +137,12 @@
 
         return true;
     }
+
+    function isInt(str) {
+        var re = /^-{0,1}\d{1,}$/;
+        return re.test(str);
+    }
+
     //验证手机号
     function ismobile(str) {
         var result = str.match(/^0*(13|15|18|17)\d{9}$/);
