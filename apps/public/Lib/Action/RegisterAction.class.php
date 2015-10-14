@@ -62,7 +62,8 @@ class RegisterAction extends Action
     public function index() {
 		$this->setTitle ( '输入邀请码' );
 		$this->setKeywords ( '输入邀请码' );
-        $this->display();
+        //$this->display();
+        $this->redirect('public/Register/Home');
     }
     public function terms() {
 
