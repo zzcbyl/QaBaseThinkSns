@@ -119,6 +119,7 @@
     function showAnswerModel(){
         $('#commentCtrl').animate({bottom:'0px'});
         $('#coverbg').show();
+        $('textarea').eq(0).focus().select();
     }
     function hideAnswerModel(){
         $('#commentCtrl').animate({bottom:'-160px'});
