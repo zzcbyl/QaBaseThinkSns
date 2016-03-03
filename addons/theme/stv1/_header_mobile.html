@@ -15,6 +15,7 @@
 <link href="__THEME__/css/form.css?v={$site.sys_version}" rel="stylesheet" type="text/css" />
 <link href="__THEME__/css/jquery.atwho.css?v={$site.sys_version}" rel="stylesheet" type="text/css" /> -->
 <link href="__THEME__/css/css.php?t=css&f=global.css,module.css,menu.css,form.css,jquery.atwho.css,jplayer.blue.monday.min.css,style.css&v={$site.sys_version}.css" rel="stylesheet" type="text/css" />
+
 <php>if(!empty($appCssList)):</php>
 <volist name='appCssList' id='cl'>
 <link href="{:APP_PUBLIC_URL}/{$cl}?v={$site.sys_version}" rel="stylesheet" type="text/css"/>
@@ -55,4 +56,6 @@ var LANG = new Array();
 <script src="__THEME__/js/plugins/core.comment_mobile.js?v={$site.sys_version}"></script>
 <script src="__THEME__/js/plugins/core.share.js?v={$site.sys_version}"></script>
 
+<link href="__THEME__/js/bootstrap-3.3.5-dist/css/bootstrap.min.css?v={$site.sys_version}" rel="stylesheet" type="text/css" />
+<script src="__THEME__/js/bootstrap-3.3.5-dist/js/bootstrap.min.js?v={$site.sys_version}"></script>
 </head>

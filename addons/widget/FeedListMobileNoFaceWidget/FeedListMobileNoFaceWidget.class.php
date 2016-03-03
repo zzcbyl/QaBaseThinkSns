@@ -199,7 +199,7 @@ class FeedListMobileNoFaceWidget extends Widget
                     }
                 }
                 $list = model('Feed')->getQuestionAndAnswer($where, $this->limitnums);
-                //print($where);
+
                 break;
             case 'manage': //管理(卢老师)
                 //$where =" (is_audit=1 OR is_audit=0) AND is_del = 0 AND feed_questionid=0 AND add_feedid=0 and openid != ''";

@@ -1,27 +1,33 @@
 <include file="__THEME__/_header_mobile" />
-<body style="background:#fff;">
+<body style="background:#F7F7F7;">
 <style>
     .fontSize { font-size:12p width:100%;}
+    .name { color:#777; width: 45%; overflow: hidden; height: 25px; display: inline-block; }
+    .contTit p { color: #000;}
+    .info_content { margin-top: 5px; height: 18px;}
+    .info_content .answer { display: inline-block; float: right; margin-right: 10px; }
+    .info_content .answered { display: inline-block; float: right; margin-right: 10px; }
 </style>
 <div class="fontSize">
 <!--登录后-->
     <div class="header_box">
 	    <div class="header" style="width:100%;">
-    	    <div class="h_logo" style="float:none; margin:0 auto;">
+            <div style="float: none; margin: 0px auto; padding-top: 12px;" class="h_logo">
+                <!--<a href="http://www.luqinwenda.com/index.php?app=public&amp;mod=MobileNew&amp;act=all&amp;openid=o5jgRt17EmebKpmy6-Wowxvsu9v0" style="text-align: center; width: 100%; font-weight: bold; color: rgb(255, 255, 255); font-size: 25px; text-indent:0;">卢 勤 问 答 平 台</a></div>-->
                 <a href="{:U('public/MobileNew/all',array('openid'=>$openid))}" <php>if(strpos($_SERVER['HTTP_USER_AGENT'],'MSIE 6.0') !== false):</php>style="_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='{$site.logo}', sizingMethod='crop');_background:none;"<php>else:</php>style="background:url({$site.logo}) no-repeat center;"<php>endif;</php>> </a></div>
-           
-            <!--<ul class="menu">
-        	    <li><a class="{$tabClass.index}" href="{:SITE_URL}">首页</a></li>
-                <li><a class="{$tabClass.square}" href="{:U('public/Passport/square')}">广场</a></li>
-                <li><a class="{$tabClass.expert}" href="{:U('public/Passport/expert')}">专家</a></li>
-                <li><!--<a href="#">活动</a></li>
-            </ul>
-            <session name="mid">
-                <php>
-                    $userModel = model('user')->getUserInfo($mid);
-                </php>
-                <div style="float:right; margin-right:10px;"><a href="{:U('public/Mobile/personal',array('uid'=>$mid))}" title="{$userModel['uname']}"><img style="height:38px; padding:10px;" src="{$userModel['avatar_small']}" /></a></div>
-            </session>-->
+
+        <!--<ul class="menu">
+            <li><a class="{$tabClass.index}" href="{:SITE_URL}">首页</a></li>
+            <li><a class="{$tabClass.square}" href="{:U('public/Passport/square')}">广场</a></li>
+            <li><a class="{$tabClass.expert}" href="{:U('public/Passport/expert')}">专家</a></li>
+            <li><!--<a href="#">活动</a></li>
+        </ul>
+        <session name="mid">
+            <php>
+                $userModel = model('user')->getUserInfo($mid);
+            </php>
+            <div style="float:right; margin-right:10px;"><a href="{:U('public/Mobile/personal',array('uid'=>$mid))}" title="{$userModel['uname']}"><img style="height:38px; padding:10px;" src="{$userModel['avatar_small']}" /></a></div>
+        </session>-->
         </div>
     </div>
     

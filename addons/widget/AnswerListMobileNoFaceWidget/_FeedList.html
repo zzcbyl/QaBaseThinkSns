@@ -1,44 +1,27 @@
 <volist name='data' id ='vl'>
     <div class="answer12" model-node='feed_list' style="padding:0; border-bottom:1px solid #ddd;">
         <eq name='vl.is_del' value='0'>
-            <div class="aCenter2" style="width:auto; border:none; padding:5px; background:#fff;">
+            <div class="aCenter2" style="width:auto; border:none; padding:5px; background:#f7f7f7;">
                 <div class="contTit">
 
                     <php>if($vl['openid'] == C('TopExpert')){</php>
                         <!--卢老师的回答-->
                         <a href="javascript:void(0)"><img class="thumb_m" src="__THEME__/image/lulaoshi_avatar.jpg" /></a>
-                        <div style="height:25px;font-size:16px; line-height:25px; color:#424141; font-weight:bold;">
-                            <a class="name">卢勤</a>
-                        </div>
-                        <p style="padding-left:0px;">
-                            <php>
-                                $descriptionTxt = $vl['body'];
-                                $descriptionImg = "";
-                                if(strpos($vl['body'],'<div') > 0)
-                                {
-                                    $descriptionTxt = substr($vl['body'], 0, strpos($vl['body'],'<div'));
-                                    $descriptionImg = substr($vl['body'], strpos($vl['body'],'<div'), strrpos($vl['body'],'div>'));
-                                }
-                                if(strlen($descriptionTxt) > 279) {
-                            </php>
-                            <div id="feedSubData{$vl['comment'].comment_id}{$vl.feed_id}{$vl['answer'][0].feed_id}">
-                                <p style="padding-left:60px; font-size:16px; ">
-                                    <php> print(utf_substr(str_replace('<br />',' ',$descriptionTxt),185).'... '); </php>
-                                    <div style="padding-left:60px; margin-top: 5px;"><a style="font-size:14px; cursor:pointer;" onclick="showContentAll('feed','{$vl['comment'].comment_id}{$vl.feed_id}{$vl['answer'][0].feed_id}');">查看全文</a></div>
-                                    <php>print($descriptionImg);</php>
-                                </p>
-                            </div>
-                            <div id="feedAll{$vl['comment'].comment_id}{$vl.feed_id}{$vl['answer'][0].feed_id}" style="display:none;">
-                                <p style="padding-left:60px; font-size:16px;">
-                                    <php> print($descriptionTxt); </php>
-                                    <div style="padding-left:60px; margin-top: 5px;" ><a style="font-size:14px; cursor:pointer;" onclick="showContentAll('feed','{$vl['comment'].comment_id}{$vl.feed_id}{$vl['answer'][0].feed_id}');">收起</a></div>
-                                    <div style="clear:both;"></div>
-                                    <php>print($descriptionImg);</php>
-                                </p>
-                            </div>
-                            <php> } else {  print('<p style="padding-left:60px; font-size:16px;">'.$descriptionTxt.$descriptionImg.'</p>'); } </php>
-                        </p>
-                        <php>if(!empty($vl['attach_mp3'])){</php>
+                    <div style="height:25px;font-size:14px; line-height:25px; margin-left: 60px; ">
+                        <a class="name">卢勤</a>
+                        <a class="name" style="float: right;display: inline-block; text-align: right; font-size: 12px; color: #c5c5c5;"><i>{$vl.publish_time|friendlyDate}　</i></a>
+                    </div>
+                    <php>
+                        $descriptionTxt = $vl['body'];
+                        $descriptionImg = "";
+                        if(strpos($vl['body'],'<div') > 0)
+                        {
+                            $descriptionTxt = substr($vl['body'], 0, strpos($vl['body'],'<div'));
+                            $descriptionImg = substr($vl['body'], strpos($vl['body'],'<div'), strrpos($vl['body'],'div>'));
+                        }
+                        print('<p style="padding-left:60px; font-size:16px;">'.$descriptionTxt.$descriptionImg.'</p>');  </php>
+
+                    <php>if(!empty($vl['attach_mp3'])){</php>
                         <div style="padding-left: 60px;">
                             <ul class="feed_file_list">
                                 <volist name="vl['attach_mp3']" id='vo'>
@@ -82,27 +65,28 @@
                             </ul>
                         </div>
                         <php>}</php>
-                        <div class="info_gz" style="margin-top:3px;">
+                        <!--<div class="info_gz" style="margin-top:3px;">
                             <p class="gz_info" style="padding-left:60px;">
                                 <i>{$vl.publish_time|friendlyDate}</i></p>
-                        </div>
+                        </div>-->
 
 
                     <php>} else {</php>
                         <!--普通回答-->
-                <php>if (intval($vl['uid']) > 0 ) { </php>
-                <a href="javascript:void(0);"><img class="thumb_m" src="{$vl['user_info']['avatar_small']}"  event-node="face_card" uid='{$vl['user_info']['uid']}'></a>
-                <php> } else { </php>
-                <a><img class="thumb_m" src="__THEME__/image/noavatar/small.jpg"  /></a>
-                <php> } </php>
-                <div style="height:25px;font-size:16px; line-height:25px; color:#424141; font-weight:bold;">
-                    <php>if (intval($vl['uid']) > 0 ) { </php>
-                    <a class="name">{$vl['user_info']['uname']}</a>
-                    <php> } else { </php>
-                    <a class="name">匿名</a>
-                    <php> } </php>
-                </div>
-                        <p style="padding-left:0px;">
+                        <php>if (intval($vl['uid']) > 0 ) { </php>
+                        <a href="javascript:void(0);"><img class="thumb_m" src="{$vl['user_info']['avatar_small']}"  event-node="face_card" uid='{$vl['user_info']['uid']}'></a>
+                        <php> } else { </php>
+                        <a><img class="thumb_m" src="__THEME__/image/noavatar/small.jpg"  /></a>
+                        <php> } </php>
+                        <div style="height:25px;font-size:14px; line-height:25px; margin-left: 60px; ">
+                            <php>if (intval($vl['uid']) > 0 ) { </php>
+                            <a class="name">{$vl['user_info']['uname']}</a>
+                            <php> } else { </php>
+                            <a class="name">匿名</a>
+                            <php> } </php>
+                            <a class="name" style="float: right;display: inline-block; text-align: right; font-size: 12px; color: #c5c5c5;"><i>{$vl.publish_time|friendlyDate}　</i></a>
+                        </div>
+
                             <php>
                                 $descriptionTxt = $vl['body'];
                                 $descriptionImg = "";
@@ -111,25 +95,9 @@
                                     $descriptionTxt = substr($vl['body'], 0, strpos($vl['body'],'<div'));
                                     $descriptionImg = substr($vl['body'], strpos($vl['body'],'<div'), strrpos($vl['body'],'div>'));
                                 }
-                            if(strlen($descriptionTxt) > 279) {
+                                print('<p style="padding-left:60px; font-size:14px;">'.$descriptionTxt.$descriptionImg.'</p>');
                             </php>
-                            <div id="feedSubData{$vl['comment'].comment_id}{$vl.feed_id}{$vl['answer'][0].feed_id}">
-                                <p style="padding-left:60px; font-size:16px; ">
-                                    <php> print(utf_substr(str_replace('<br />',' ',$descriptionTxt),185).'... '); </php>
-                                    <div style="margin-top: 5px;"><a style="font-size:14px; cursor:pointer;" onclick="showContentAll('feed','{$vl['comment'].comment_id}{$vl.feed_id}{$vl['answer'][0].feed_id}');">查看全文</a></div>
-                                    <php>print($descriptionImg);</php>
-                                </p>
-                            </div>
-                            <div id="feedAll{$vl['comment'].comment_id}{$vl.feed_id}{$vl['answer'][0].feed_id}" style="display:none;">
-                                <p style="padding-left:60px; font-size:16px;">
-                                    <php> print($descriptionTxt); </php>
-                                    <div style="margin-top: 5px;" ><a style="font-size:14px; cursor:pointer;" onclick="showContentAll('feed','{$vl['comment'].comment_id}{$vl.feed_id}{$vl['answer'][0].feed_id}');">收起</a></div>
-                                    <div style="clear:both;"></div>
-                                    <php>print($descriptionImg);</php>
-                                </p>
-                            </div>        
-                            <php> } else {  print('<p style="padding-left:60px; font-size:16px;">'.$descriptionTxt.$descriptionImg.'</p>'); } </php>
-                        </p>
+
 
                         <php>if(!empty($vl['attach_mp3'])){</php>
                         <div style="padding-left: 60px;">
@@ -176,10 +144,10 @@
                         </div>
                         <php>}</php>
 
-                        <div class="info_gz" style="margin-top:3px;">
+                        <!--<div class="info_gz" style="margin-top:3px;">
                             <p class="gz_info" style="padding-left:60px;">
                                 <i>{$vl.publish_time|friendlyDate}</i></p>
-                        </div>
+                        </div>-->
 
                     <php>}</php>
                 </div>

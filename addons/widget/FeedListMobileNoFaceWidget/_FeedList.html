@@ -1,8 +1,8 @@
 <volist name='data' id='vl'>
-<div class="conts" style="padding:5px 0 0 0; border:none;">
-    <div class="contTwo" style="border:1px solid #999;">
+<div class="conts" style="padding:0; border:none;" onclick='location.href="{:U('public/MobileNew/feed',array('feed_id'=>$vl['feed_id'],'openid'=>$openid))}";'>
+    <div class="contTwo" style="">
         <div class="contCenter2" style="border:none; padding: 0px; width:auto; background:#fff; position: relative;">
-            <div style="position: absolute; right: 0; top: 0;width: 52px; height: 52px; z-index: 99;"><a style="display: block; background: url(__THEME__/image/sprite.png) -288px -5px; width: 52px; height: 52px;"></a></div>
+            <!--<div style="position: absolute; right: 0; top: 0;width: 52px; height: 52px; z-index: 99;"><a style="display: block; background: url(__THEME__/image/sprite.png) -288px -5px; width: 52px; height: 52px;"></a></div>-->
             <div class="contTit" id ='feed{$vl.feed_id}' model-node='feed_list' style="border-bottom: 1px solid #ccc;">
                 <div style="padding:5px 0 0 5px; background: #fff;">
                     <php>if (intval($vl['uid']) > 0 ) { </php>
@@ -11,15 +11,15 @@
                         <a><img class="thumb_m" src="__THEME__/image/noavatar/small.jpg"  /></a>
                     <php> } </php></div>
                 <eq name='vl.is_del' value='0'>
-                <div style="height:25px;font-size:16px; line-height:25px; margin-left: 65px; color:#424141; font-weight:bold; ">
+                <div style="height:25px; font-size:14px; line-height:25px; margin-left: 65px; ">
                     <php>if (intval($vl['uid']) > 0 ) { </php>
                         <a class="name">{$vl.user_info.uname}</a>
                     <php> } else { </php>
                         <a class="name">匿名</a>
-                    <php> } </php></div>
-                <h2 style=" padding:1px; background:#fff; margin-left: 60px; margin-top: 0;">
-                    <a style="font-size:18px;" href="{:U('public/MobileNew/feed',array('feed_id'=>$vl['feed_id'],'openid'=>$openid))}">{$vl.body|format=true}</a></h2>
-                <div style="padding:0px 5px 5px 65px; background:#fff;">
+                    <php> } </php><a class="name" style="float: right;display: inline-block; text-align: right; font-size: 12px; color: #c5c5c5;"><i>{$vl.publish_time|friendlyDate}　</i></a></div>
+                <h4 style=" margin-top: 0px; display: block;  font-weight: bold; margin-bottom: 0; line-height: 22px; margin-left: 65px; letter-spacing: 0.1em;">
+                    {$vl.body|format=true}</h4>
+                <div style="padding:5px 5px 5px 65px; background:#fff;">
                     <php>
                         $descriptionTxt = $vl['description'];
                         $descriptionImg = "";
@@ -31,25 +31,42 @@
                     if(strlen($descriptionTxt) > 279) {
                     </php>
                     <div id="feedSubData{$vl['comment'].comment_id}{$vl.feed_id}{$vl['answer'][0].feed_id}">
-                        <p style="padding-left:0px; font-size:16px;">
-                            <php> print(utf_substr(str_replace('<br />',' ',$descriptionTxt),185).'... '); </php>
-                            <div style="margin-top: 5px;"><a style="font-size:14px; cursor:pointer;" onclick="showContentAll('feed','{$vl['comment'].comment_id}{$vl.feed_id}{$vl['answer'][0].feed_id}');">查看全文</a></div>
+                        <div style="padding-left:0px; font-size:14px;">
+                            <php> print(utf_substr(str_replace('<br />',' ',$descriptionTxt),135).'... '); </php>
+
+                            <div class="info_content">
+                                <a style="font-weight: bold; font-size: 12px;">查看全文</a>
+                                <a class="answer">
+                                    <neq name='vl.answer_count' value='0'>
+                                        <img src="__THEME__/image/comment_yes.png" width="20px" />
+                                    </neq>
+                                    <eq name='vl.answer_count' value='0'>
+                                        <img src="__THEME__/image/comment_no.png" width="20px" />
+                                    </eq>
+                                </a>
+                            </div>
                             <php>print($descriptionImg);</php>
-                        </p>
+                        </div>
                     </div>
-                    <div id="feedAll{$vl['comment'].comment_id}{$vl.feed_id}{$vl['answer'][0].feed_id}" style="display:none;">
-                        <p style="padding-left:0px; font-size:16px;">
-                            <php> print($descriptionTxt); </php>
-                            <div style="margin-top: 5px;" ><a style="font-size:14px; cursor:pointer;" onclick="showContentAll('feed','{$vl['comment'].comment_id}{$vl.feed_id}{$vl['answer'][0].feed_id}');">收起</a></div>
-                            <div style="clear:both;"></div>
-                            <php>print($descriptionImg);</php>
-                        </p>
-                    </div>        
-                    <php> } else {  print('<p style="padding-left:0px; font-size:16px;">'.$descriptionTxt.$descriptionImg.'</p>'); } </php>
-                    <div class="info_gz" >
+                    <php> } else {  </php>
+                        <div style="padding-left:0px; font-size:14px;">
+                            <php>print($descriptionTxt.$descriptionImg);</php>
+                            <div class="info_content">
+                                <a class="answer">
+                                    <neq name='vl.answer_count' value='0'>
+                                        <img src="__THEME__/image/comment_yes.png" width="20px" />
+                                    </neq>
+                                    <eq name='vl.answer_count' value='0'>
+                                        <img src="__THEME__/image/comment_no.png" width="20px" />
+                                    </eq>
+                                </a>
+                            </div>
+                        </div>
+                    <php> } </php>
+                    <!--<div class="info_gz" >
                             <p class="gz_info" style="padding-left:0px;">
                                 <i>{$vl.publish_time|friendlyDate}</i></p>
-                        </div>
+                        </div>-->
                 </div>
 
 
@@ -58,119 +75,8 @@
 	            <p>{:L('PUBLIC_INFO_ALREADY_DELETE_TIPS')}</p>
                 </eq>
             </div>
-             <!--答-->
-            <php>
-                if(is_array($vl['answer']) ) {
-            </php>
-            <div class="answer12" id ="feed{$vl['answer'][0].feed_id}" model-node='feed_list' style="padding-left:0; padding-top:0;">
-                <div class="aCenter2" style="border:none; padding:5px 0 5px 5px; width:auto; background:#fff; position: relative;">
-                    <div style="position: absolute; right: 0; top: 0;width: 52px; height: 52px; z-index: 99;"><a style="display: block; background: url(__THEME__/image/sprite.png) -368px -5px; width: 52px; height: 52px;"></a></div>
-                    <div class="contTit">
-                        <eq name="vl['answer'][0]['is_del']" value='0'>
-                            <php>if (intval($vl['answer'][0]['uid']) > 0 ) { </php>
-                            <a href="javascript:void(0);"><img class="thumb_m" src="{$vl['answer'][0]['user_info']['avatar_small']}"  event-node="face_card" uid='{$vl['answer'][0]['user_info']['uid']}'></a>
-                            <php> } else { </php>
-                            <a><img class="thumb_m" src="__THEME__/image/noavatar/small.jpg"  /></a>
-                            <php> } </php>
-                        <div style="height:25px;font-size:16px; line-height:25px; color:#424141; font-weight:bold;">
-                            <php>if (intval($vl['answer'][0]['uid']) > 0 ) { </php>
-                            <a class="name">{$vl['answer'][0]['user_info']['uname']}</a>
-                            <php> } else { </php>
-                            <a class="name">匿名</a>
-                            <php> } </php>
-                        </div>
-                        <php>
-                            if(strlen($vl['answer'][0]['body'])>279) {
-                        </php>
-                            <div id="answerSubData{$vl['comment'].comment_id}{$vl.feed_id}{$vl['answer'][0].feed_id}">
-                                <p style="padding-left:60px; font-size:16px;">
-                                <php>
-                                        print(utf_substr(str_replace('<br />',' ',$vl['answer'][0]['body']),180).'... ');
-                                </php>
-                                <div style="padding-left:60px;margin-top: 5px;"><a style="font-size:14px; cursor:pointer;" onclick="showContentAll('answer','{$vl['comment'].comment_id}{$vl.feed_id}{$vl['answer'][0].feed_id}');">显示全部</a></div>
-                                </p>
-                            </div>
-                            <div id="answerAll{$vl['comment'].comment_id}{$vl.feed_id}{$vl['answer'][0].feed_id}" style="display:none;">
-                                <p style="padding-left:60px; font-size:16px;">
-                                {$vl['answer'][0].body|format=true}
-                                <div style="padding-left:60px; margin-top: 5px;"><a style="font-size:14px; cursor:pointer;" onclick="showContentAll('answer','{$vl['comment'].comment_id}{$vl.feed_id}{$vl['answer'][0].feed_id}');">收起</a></div>
-                                <div style="clear:both;"></div>
-                                </p>
-                            </div>
-                        <php> } else {
-                            print('<p style="padding-left:60px; font-size:16px;">'.$vl['answer'][0]['body'].'</p>');
-                            }
-                        </php>
-                            <php>if(!empty($vl['answer'][0]['attach_mp3'])){</php>
-                            <div style="padding-left: 60px;">
-                                <ul class="feed_file_list">
-                                    <volist name="vl['answer'][0]['attach_mp3']" id='vo'>
-                                        <li>
-                                            <div id="jquery_jplayer_{$vo['attach_id']}" class="jp-jplayer"></div>
-                                            <div style="background: url(__THEME__/image/jplayerleft.png); width: 6px; height: 36px; float: left; position: absolute;"></div>
-                                            <div id="jp_container_{$vo['attach_id']}" class="jp-audio" role="application" aria-label="media player" onclick='changePlay("{$vo['attach_id']}");'>
-                                            <a id="a_jp_play_{$vo['attach_id']}" class="jp-play" role="button" tabindex="0">
-                                                <span class="jplay_play"></span>
-                                            </a>
-                                            <a id="a_jp_stop_{$vo['attach_id']}" class="jp-stop" style="display: none;" role="button" tabindex="0">
-                                                <span class="jplay_stop"></span>
-                                            </a>
-                                            <div class="jp-duration" role="timer" aria-label="duration" style="display: none;"></div>
-                                            </div>
 
-                                            <script type="text/javascript">
-                                                $("#jquery_jplayer_{$vo['attach_id']}").jPlayer({
-                                                    ready: function () {
-                                                        $(this).jPlayer("setMedia", {
-                                                            mp3: "{$vo['attach_url']}"
-                                                        });
-                                                    },
-                                                    play: function () {
-                                                        $(this).jPlayer("stopOthers");
-                                                    },
-                                                    swfPath: "__THEME__/js",
-                                                    supplied: "mp3",
-                                                    cssSelectorAncestor: "#jp_container_{$vo['attach_id']}",
-                                                    wmode: "window",
-                                                    globalVolume: true,
-                                                    useStateClassSkin: true,
-                                                    autoBlur: false,
-                                                    smoothPlayBar: true,
-                                                    keyEnabled: true
-                                                });
-                                            </script>
-                                        </li>
-                                </volist>
-                            </ul>
-                        </div>
-                        <php>}</php>
-                        <div class="info_gz" >
-                            <p class="gz_info" style="padding-left:60px;">
-                                <i>{$vl['answer'][0].publish_time|friendlyDate}</i></p>
-                        </div>
-
-                        <div model-node="comment_detail" class="repeat clearfix" style="display:none;"></div>
-	   	                <div class="praise-list clearfix" style="display:none;">
-	   		                <i class="arrow arrow-t"></i>
-	   	                    <ul>
-	   	  	                    <li><a href=""><img src="{$vl['answer'][0]['user_info']['avatar_small']}" width="30" height="30"/></a><a href="" class="ico-close1"></a></li>
-	   	  	                    <li><a href=""><img src="{$vl['answer'][0]['user_info']['avatar_small']}" width="30" height="30"/></a></li>
-	   	  	                    <li><a href=""><img src="{$vl['answer'][0]['user_info']['avatar_small']}" width="30" height="30"/></a></li>
-	   	  	                    <li><a href=""><img src="{$vl['answer'][0]['user_info']['avatar_small']}" width="30" height="30"/></a></li>
-	   	  	                    <li><a href=""><i class="arrow-next-page"></i></a></li>
-	   	                    </ul>
-                        </div>
- 	
- 	                    <else />
-                            <p>{:L('PUBLIC_INFO_ALREADY_DELETE_TIPS')}</p>
-                        </eq> 
-                    </div>
-                </div>
-
-            </div>
-            <php> } </php>
-            <!--//答-->
-            <div style="width: 100%; background: #f3f3f3; line-height: 40px; height:40px; border-top: 2px solid #ddd; border-bottom: 2px solid #ddd; ">
+            <!--<div style="width: 100%; background: #f3f3f3; line-height: 40px; height:40px; border-top: 2px solid #ddd; border-bottom: 2px solid #ddd; ">
                 <div style="float: left; width: 33%; text-align:left; border-right: 2px solid #ddd; height:40px;">
                     <a class="mobilecommentbg" href="{:U('public/MobileNew/feed',array('feed_id'=>$vl['feed_id'],'openid'=>$openid))}" style="margin:0px 0 0 20px; display:block; float:left;"></a>
                     <div style="float:left;">&nbsp;<neq name='vl.answer_count' value='0'><a style="font-size:16px;" href="{:U('public/MobileNew/feed',array('feed_id'=>$vl['feed_id'],'openid'=>$openid))}">{$vl.answer_count}</a></neq></div>
@@ -185,10 +91,10 @@
                     <a class="mobilecollectbg" href="javascript:void(0);" onclick="shareWeiXin('{$vl.body|format=true}','{:U('public/MobileNew/feed',array('feed_id'=>$vl['feed_id'],'openid'=>$openid))}');" style="margin:0px auto;  display:block; "></a>
                 </div>
                 <div style="clear: both;"></div>
-            </div>
+            </div>-->
         </div>
 
-    </div>   
+    </div>
 </div>
 </volist>
 <script type="text/javascript">
