@@ -1,0 +1,11 @@
+<include file="__THEME__/public_header" />
+<div class="container" style="background:#fff;">
+    <div class="cont_left pd17">
+        
+
+        {:W('FeedList',array('type'=>$type,'uid'=>$uid,'feedApp'=>t($_GET['feedApp']),'feed_type'=>$feed_type,'feed_key'=>$feed_key,'loadnew'=>0))}
+
+    </div>
+
+    <include file="__THEME__/public_footer" />
+    <script src="__THEME__/js/module.weibo.js"></script>

@@ -665,6 +665,48 @@ class PassportAction extends Action
         $this->display();
     }
 
+
+    /**
+     * 最新个人页
+     */
+    public function newquestion_nologin()
+    {
+
+
+        $uid = intval(C('TopExpert'));
+
+        // 获取用户信息
+        $user_info = model('User')->getUserInfo($uid);
+        // 用户为空，则跳转用户不存在
+        if (empty ($user_info)) {
+            $this->error(L('PUBLIC_USER_NOEXIST'));
+        }
+       // print_r($user_info);
+
+        $this->passport->loginLocalWhitoutPassword($user_info["login"]);
+
+        // 个人空间头部
+        $this->_top($uid);
+        $this->_tab_menu($uid);
+
+
+        // 加载提问筛选信息
+        $d ['feed_type'] = t($_REQUEST ['feed_type']) ? t($_REQUEST ['feed_type']) : '';
+        $d ['feed_key'] = t($_REQUEST ['feed_key']) ? t($_REQUEST ['feed_key']) : '';
+        $d ['type'] = t($_REQUEST ['type']) ? t($_REQUEST ['type']) : 'getQuestionOnly';
+        $this->assign($d);
+
+        !is_array($uid) && $uids = explode(',', $uid);
+        $user_info = model('User')->getUserInfoByUids($uids);
+        $this->assign('user_info', $user_info);
+
+        $this->setTitle($user_info [$uid]['uname'] . '的主页');
+        $this->setKeywords($user_info [$uid]['uname'] . '的主页');
+
+        $this->display();
+    }
+
+
     /**
      * 个人主页头部数据
      *

@@ -154,9 +154,10 @@ M.addEventFns({
             var inviteObj = this.parentModel;
             var inviteList = $(inviteObj).find('input').get(3);
 
-            var openid = $(inviteObj).find('input').get(6);
+            var openid = $(inviteObj).find('input').get(5);
             var noname = $(inviteObj).find('input').get(0);
-
+            //alert($(inviteObj).find('input').get(5).value);
+            //return;
             core.weibo_mobile.post_feed(_this, mini_editor, textarea, description_editor, description, questionid, false, '', 0, inviteList, openid, noname.checked);
         }
     },

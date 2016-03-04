@@ -398,6 +398,15 @@ class FeedListWidget extends Widget
                 $list = model('Feed')->getInviteList($current_uid, $this->limitnums, $LoadWhere, $var['newcount']);
                 //print_r($list);
                 break;
+            case 'getQuestionOnly':    //获取未回答的问题列表
+                $where = ' is_audit=1 AND is_del = 0 AND feed_questionid=0 AND add_feedid=0 AND answer_count=0 ';
+                if ($var['loadId'] > 0) { //非第一次
+                    $where .= " AND `feed_id` < " . intval($var['loadId']);
+                }
+
+                $list = model('Feed')->getQuestionList($where, $this->limitnums);
+                //print_r($list);
+                break;
         }
         // 分页的设置
         isset($list['html']) && $var['html'] = $list['html'];
@@ -443,6 +452,10 @@ class FeedListWidget extends Widget
                 case 'all':
                     $content['firstId'] = $var['firstId'] = $list['data'][0]['last_updtime'];
                     $content['lastId'] = $var['lastId'] = $list['data'][(count($list['data']) - 1)]['last_updtime'];
+                    break;
+                case 'getQuestionOnly':
+                    $content['firstId'] = $var['firstId'] = $list['data'][0]['feed_id'];
+                    $content['lastId'] = $var['lastId'] = $list['data'][(count($list['data']) - 1)]['feed_id'];
                     break;
                 default:
                     $content['firstId'] = $var['firstId'] = $list['data'][0]['publish_time'];

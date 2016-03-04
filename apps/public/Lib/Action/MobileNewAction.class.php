@@ -353,8 +353,21 @@ class MobileNewAction
      */
     public function all()
     {
-        //安全过滤
         $d['type'] = 'all';
+        $d['openid'] = $_GET['openid'];
+        $this->assign($d);
+        $this->display();
+    }
+
+    /**
+     * 卢勤登录回答
+     *
+     * @return void
+     *
+     */
+    public function newquestion_nologin()
+    {
+        $d['type'] = 'getQuestionOnly';
         $d['openid'] = $_GET['openid'];
         $this->assign($d);
         $this->display();
