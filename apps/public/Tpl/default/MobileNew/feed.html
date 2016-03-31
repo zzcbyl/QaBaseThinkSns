@@ -52,32 +52,33 @@
             
         </div>
         <!--//问-->
-        <div style="width: 100%; background: #F4F5F7; line-height: 40px; height:40px; border: 1px solid #ddd; position:fixed; z-index:12; bottom:0; left:0; padding: 0 5px;">
-            <!--<div style="float: left; width: 33%; height:40px; text-align:left; border-right: 2px solid #ddd;  ">
-                <a class="mobilecommentbg" href="javascript:void(0);" style="margin:0px 0 0 20px;  display:block; float:left;"></a>
-                <div style="float:left;">&nbsp;<neq name='feedInfo.answer_count' value='0'><span style="font-size:16px;">{$feedInfo.answer_count}</span></neq></div>
-            </div>
-            <div style="float: left; width: 22%;  height:40px; border-right: 2px solid #ddd;">
-                <a class="mobileanswerbg" href="{:U('public/MobileNew/answer',array('feed_id'=>$feedInfo['feed_id'],'openid'=>$openid))}" style="margin:0px auto; display:block; "></a>
-            </div>
-            <div style="float: left; width: 22%;  height:40px;border-right: 2px solid #ddd; ">
-                <a class="mobilesharebg" href="javascript:void(0);" onclick="shareWeiXin('{$feedInfo.body|format=true}','{:U('public/MobileNew/feed',array('feed_id'=>$feedInfo['feed_id'],'openid'=>$openid))}');" style="margin:0px auto; display:block; "></a>
-            </div>
-            <div style="float: left; width: 21%;  height:40px;">
-                <a class="mobilecollectbg" href="javascript:void(0);" onclick="shareWeiXin('{$feedInfo.body|format=true}','{:U('public/MobileNew/feed',array('feed_id'=>$feedInfo['feed_id'],'openid'=>$openid))}');" style="margin:0px auto; display:block; "></a>
-            </div>-->
-            <div style="width: 60%; float: left;">
-                <input type="text" class="form-control" placeholder="写评论..." style="width: 100%; height: 30px; font-size: 12px; border-radius: 15px; margin-top: 5px;" onclick="showAnswerModel();">
-            </div>
-            <div style="width: 30%; margin-left: 10%; float: left; text-align: center;" onclick="shareWeiXin('{$feedInfo.body|format=true}','{:U('public/MobileNew/feed',array('feed_id'=>$feedInfo['feed_id'],'openid'=>$openid))}');" >
-                <img src="__THEME__/image/collection_icon.png" style=" width: 25px; margin-top: -5px;" />　
-                <img src="__THEME__/image/share_icon.png" style=" width: 28px; margin-top: -5px;" />
-            </div>
-        </div>
+
     </div>
     <!--//内容列表-->
     <input type="hidden" id="feed_questionid" value="{$feedInfo['feed_id']}" />
     
+</div>
+<div style="width: 100%; background: #fff; line-height: 40px; height:40px; border: 1px solid #ddd; position:fixed; z-index:12; bottom:0; left:0; padding: 0 5px;">
+    <!--<div style="float: left; width: 33%; height:40px; text-align:left; border-right: 2px solid #ddd;  ">
+        <a class="mobilecommentbg" href="javascript:void(0);" style="margin:0px 0 0 20px;  display:block; float:left;"></a>
+        <div style="float:left;">&nbsp;<neq name='feedInfo.answer_count' value='0'><span style="font-size:16px;">{$feedInfo.answer_count}</span></neq></div>
+    </div>
+    <div style="float: left; width: 22%;  height:40px; border-right: 2px solid #ddd;">
+        <a class="mobileanswerbg" href="{:U('public/MobileNew/answer',array('feed_id'=>$feedInfo['feed_id'],'openid'=>$openid))}" style="margin:0px auto; display:block; "></a>
+    </div>
+    <div style="float: left; width: 22%;  height:40px;border-right: 2px solid #ddd; ">
+        <a class="mobilesharebg" href="javascript:void(0);" onclick="shareWeiXin('{$feedInfo.body|format=true}','{:U('public/MobileNew/feed',array('feed_id'=>$feedInfo['feed_id'],'openid'=>$openid))}');" style="margin:0px auto; display:block; "></a>
+    </div>
+    <div style="float: left; width: 21%;  height:40px;">
+        <a class="mobilecollectbg" href="javascript:void(0);" onclick="shareWeiXin('{$feedInfo.body|format=true}','{:U('public/MobileNew/feed',array('feed_id'=>$feedInfo['feed_id'],'openid'=>$openid))}');" style="margin:0px auto; display:block; "></a>
+    </div>-->
+    <div style="width: 60%; float: left;">
+        <input type="text" class="form-control" placeholder="写评论..." style="width: 100%; height: 30px; font-size: 12px; border-radius: 15px; margin-top: 5px;" onclick="showAnswerModel();">
+    </div>
+    <div style="width: 30%; margin-left: 10%; float: left; text-align: center;" onclick="shareWeiXin('{$feedInfo.body|format=true}','{:U('public/MobileNew/feed',array('feed_id'=>$feedInfo['feed_id'],'openid'=>$openid))}');" >
+        <img src="__THEME__/image/collection_icon.png" style=" width: 25px; margin-top: -5px;" />　
+        <img src="__THEME__/image/share_icon.png" style=" width: 28px; margin-top: -5px;" />
+    </div>
 </div>
 <div id="commentCtrl" style="position: fixed; left: 0; bottom: -160px; height: 150px; width: 100%; background: #F4F5F7; z-index: 13; display:;">
     <!--<div style="text-align: center;">
