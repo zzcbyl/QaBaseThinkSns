@@ -1,12 +1,12 @@
 <include file="__THEME__/mobile_header" />
-<div class="container" style="background:#F7F7F7; width:auto; margin:0px; padding:0px; position: relative;">
+<div class="container" style="margin:10px; background:#fff; border-radius: 10px; border: 1px solid #ccc; opacity: 0.7; filter:alpha(opacity=70); width:auto; padding:0px; position: relative;">
     <!--内容列表-->
-    <div class="contsNum" style="margin:0px 1px; padding:0;">
+    <div class="contsNum" style="margin:0px; padding:0;">
         <!--问-->
         <div class="contTwo">
             <div class="contCenter2" model-node='feed_list' style="width:auto; border:none; padding:0px; background: none; ">
-                <div class="contTit" style="background:#fff; border-bottom:1px solid #ddd; " >
-                    <div style="padding:5px 0 0 5px; background: #fff;">
+                <div class="contTit" style="background:#ff9b80; border-bottom:1px solid #ddd; padding: 5px; " >
+                    <div style="padding:5px 0 0 5px;">
                         <php>if (intval($feedInfo['uid']) > 0 ) { </php>
                         <a href="{:U('public/Mobile/personal',array('uid'=>$feedInfo['user_info']['uid']))}"><img class="thumb_m" src="{$feedInfo['user_info']['avatar_small']}"  uid='{$feedInfo['user_info']['uid']}'></a>
                         <php> } else { </php>
@@ -19,13 +19,13 @@
                         <php> } else { </php>
                         <a class="name">匿名</a>
                         <php> } </php>
-                        <a class="name" style="float: right;display: inline-block; text-align: right; font-size: 12px; color: #c5c5c5;">
+                        <a class="name" style="float: right;display: inline-block; text-align: right; font-size: 12px;">
                             <i>{$feedInfo.publish_time|friendlyDate}　</i>
                         </a>
                     </div>
                     <h4 style="margin-top: 0px; display: block; line-height: 22px; font-weight: bold; margin-left: 65px; letter-spacing: 0.1em; margin-bottom: 0;">
                         {$feedInfo.body|format=true}</h4>
-                    <div style="padding:5px 5px 5px 65px; background:#fff;">
+                    <div style="padding:5px 5px 5px 65px;">
                         <php>
                             $descriptionTxt = $feedInfo['description'];
                             $descriptionImg = "";
@@ -35,7 +35,7 @@
                                 $descriptionImg = substr($feedInfo['description'], strpos($feedInfo['description'],'<div'), strrpos($feedInfo['description'],'div>'));
                             }
 
-                            print('<p style="padding-left:0px;font-size:14px;">'.$descriptionTxt.$descriptionImg.'</p>');
+                            print('<p style="padding-left:0px;font-size:14px; color:#555;">'.$descriptionTxt.$descriptionImg.'</p>');
                         </php>
                         <!--<div class="info_gz" >
                             <p class="gz_info" style="padding-left:0px;">
@@ -43,7 +43,7 @@
                         </div>-->
                     </div>
                 </div>
-                <div style="margin-top:5px;">
+                <div style="padding:5px;">
                 <!--答案列表-->
                 {:W('AnswerListMobileNoFace',array('type'=>'answer','feed_id'=>t($_GET['feed_id'])))}
                 <!--答案列表-->

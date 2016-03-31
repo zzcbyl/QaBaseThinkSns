@@ -19,7 +19,7 @@
                             $descriptionTxt = substr($vl['body'], 0, strpos($vl['body'],'<div'));
                             $descriptionImg = substr($vl['body'], strpos($vl['body'],'<div'), strrpos($vl['body'],'div>'));
                         }
-                        print('<p style="padding-left:60px; font-size:16px;">'.$descriptionTxt.$descriptionImg.'</p>');  </php>
+                        print('<p style="padding-left:60px; font-size:16px; color:#555;">'.$descriptionTxt.$descriptionImg.'</p>');  </php>
 
                     <php>if(!empty($vl['attach_mp3'])){</php>
                         <div style="padding-left: 60px;">
@@ -95,7 +95,7 @@
                                     $descriptionTxt = substr($vl['body'], 0, strpos($vl['body'],'<div'));
                                     $descriptionImg = substr($vl['body'], strpos($vl['body'],'<div'), strrpos($vl['body'],'div>'));
                                 }
-                                print('<p style="padding-left:60px; font-size:14px;">'.$descriptionTxt.$descriptionImg.'</p>');
+                                print('<p style="padding-left:60px; font-size:14px; color:#555;">'.$descriptionTxt.$descriptionImg.'</p>');
                             </php>
 
 

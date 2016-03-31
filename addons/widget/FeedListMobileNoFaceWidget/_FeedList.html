@@ -1,10 +1,11 @@
 <volist name='data' id='vl'>
-<div class="conts" style="padding:0; border:none;" onclick='location.href="{:U('public/MobileNew/feed',array('feed_id'=>$vl['feed_id'],'openid'=>$openid))}";'>
+<div class="contsNum" style='padding:0;'
+     onclick='location.href="{:U('public/MobileNew/feed',array('feed_id'=>$vl['feed_id'],'openid'=>$openid))}";'>
     <div class="contTwo" style="">
-        <div class="contCenter2" style="border:none; padding: 0px; width:auto; background:#fff; position: relative;">
+        <div class="contCenter2" style="border:none; padding: 0px; width:auto; background: none; position: relative;">
             <!--<div style="position: absolute; right: 0; top: 0;width: 52px; height: 52px; z-index: 99;"><a style="display: block; background: url(__THEME__/image/sprite.png) -288px -5px; width: 52px; height: 52px;"></a></div>-->
-            <div class="contTit" id ='feed{$vl.feed_id}' model-node='feed_list' style="border-bottom: 1px solid #ccc;">
-                <div style="padding:5px 0 0 5px; background: #fff;">
+            <div class="contTit" id ='feed{$vl.feed_id}' model-node='feed_list' style="border-bottom: 1px solid #ddd; padding:5px; <php>intval($vl["answer_count"]) > 0 ? print("background: #ff9b80;"): print("")</php>'">
+                <div style="padding:5px 0 0 5px; ">
                     <php>if (intval($vl['uid']) > 0 ) { </php>
                         <a href="javascript:void(0);"><img class="thumb_m" src="{$vl['user_info']['avatar_small']}"  uid='{$vl['user_info']['uid']}'></a>
                     <php> } else { </php>
@@ -13,13 +14,13 @@
                 <eq name='vl.is_del' value='0'>
                 <div style="height:25px; font-size:14px; line-height:25px; margin-left: 65px; ">
                     <php>if (intval($vl['uid']) > 0 ) { </php>
-                        <a class="name">{$vl.user_info.uname}</a>
+                        <a class="name" style="color:#333;">{$vl.user_info.uname}</a>
                     <php> } else { </php>
-                        <a class="name">匿名</a>
-                    <php> } </php><a class="name" style="float: right;display: inline-block; text-align: right; font-size: 12px; color: #c5c5c5;"><i>{$vl.publish_time|friendlyDate}　</i></a></div>
+                        <a class="name" style="color:#333;">匿名</a>
+                    <php> } </php><a class="name" style="float: right;display: inline-block; text-align: right; font-size: 12px; color: #666;"><i>{$vl.publish_time|friendlyDate}　</i></a></div>
                 <h4 style=" margin-top: 0px; display: block;  font-weight: bold; margin-bottom: 0; line-height: 22px; margin-left: 65px; letter-spacing: 0.1em;">
                     {$vl.body|format=true}</h4>
-                <div style="padding:5px 5px 5px 65px; background:#fff;">
+                <div style="padding:5px 5px 5px 65px; ">
                     <php>
                         $descriptionTxt = $vl['description'];
                         $descriptionImg = "";
@@ -31,35 +32,35 @@
                     if(strlen($descriptionTxt) > 279) {
                     </php>
                     <div id="feedSubData{$vl['comment'].comment_id}{$vl.feed_id}{$vl['answer'][0].feed_id}">
-                        <div style="padding-left:0px; font-size:14px;">
+                        <div style="padding-left:0px; font-size:14px; color:#555;">
                             <php> print(utf_substr(str_replace('<br />',' ',$descriptionTxt),135).'... '); </php>
 
                             <div class="info_content">
-                                <a style="font-weight: bold; font-size: 12px;">查看全文</a>
-                                <a class="answer">
+                                <a style="font-weight: bold; font-size: 12px; color:#555;">查看全文</a>
+                                <!--<a class="answer">
                                     <neq name='vl.answer_count' value='0'>
                                         <img src="__THEME__/image/comment_yes.png" width="20px" />
                                     </neq>
                                     <eq name='vl.answer_count' value='0'>
                                         <img src="__THEME__/image/comment_no.png" width="20px" />
                                     </eq>
-                                </a>
+                                </a>-->
                             </div>
                             <php>print($descriptionImg);</php>
                         </div>
                     </div>
                     <php> } else {  </php>
-                        <div style="padding-left:0px; font-size:14px;">
+                        <div style="padding-left:0px; font-size:14px; color:#555;">
                             <php>print($descriptionTxt.$descriptionImg);</php>
                             <div class="info_content">
-                                <a class="answer">
+                                <!--<a class="answer">
                                     <neq name='vl.answer_count' value='0'>
                                         <img src="__THEME__/image/comment_yes.png" width="20px" />
                                     </neq>
                                     <eq name='vl.answer_count' value='0'>
                                         <img src="__THEME__/image/comment_no.png" width="20px" />
                                     </eq>
-                                </a>
+                                </a>-->
                             </div>
                         </div>
                     <php> } </php>
