@@ -141,7 +141,7 @@ class IndexAction extends Action {
 		$feedlist = model ( 'Feed' )->getAnswerList('feed_questionid='.$feed_id.' and uid='.$GLOBALS['ts']['mid'].' and is_del = 0 and (is_audit=1 OR is_audit=0)');
 		if((is_array($feedlist) && is_array($feedlist['data']) && count($feedlist['data'])>0) || ($feedInfo['uid']==$this->mid))
 		{
-			$this->assign ( 'hasAnswer', '1' );
+			//$this->assign ( 'hasAnswer', '1' );
 		}
 
 		// 获取用户信息
