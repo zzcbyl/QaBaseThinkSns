@@ -108,17 +108,17 @@ class IndexAction extends Action {
 	*/
 	public function feed() {
 		$feed_id = intval ( $_GET ['feed_id'] );
-		
+
 		if (empty($feed_id)) {
 			$this->error( L ( 'PUBLIC_INFO_ALREADY_DELETE_TIPS' ) );
 		}
-		
+
 		$invite_id = intval($_GET['invite_id']);
 		$this->assign('inviteid', $invite_id);
-		
+
 		//增加浏览数
 		model ('Feed')->UpdatePV($feed_id);
-		
+
 		//获取提问信息
 		$feedInfo = model ( 'Feed' )->get ( $feed_id );
 
@@ -126,35 +126,35 @@ class IndexAction extends Action {
 			$this->error ( '该提问不存在或已被删除' );
 			exit();
 		}
-		
+
 		if ($feedInfo ['is_audit'] == '0' && $feedInfo ['uid'] != $this->mid) {
 			$this->error ( '此提问正在审核' );
 			exit();
-		}
+        }
 
-		if ($feedInfo ['is_del'] == '1') {
-			$this->error ( L ( 'PUBLIC_NO_RELATE_WEIBO' ) );
-			exit();
-		}
-		
-		//判断用户是否已经回答过
-		$feedlist = model ( 'Feed' )->getAnswerList('feed_questionid='.$feed_id.' and uid='.$GLOBALS['ts']['mid'].' and is_del = 0 and (is_audit=1 OR is_audit=0)');
-		if((is_array($feedlist) && is_array($feedlist['data']) && count($feedlist['data'])>0) || ($feedInfo['uid']==$this->mid))
-		{
-			//$this->assign ( 'hasAnswer', '1' );
-		}
+        if ($feedInfo ['is_del'] == '1') {
+            $this->error ( L ( 'PUBLIC_NO_RELATE_WEIBO' ) );
+            exit();
+        }
 
-		// 获取用户信息
+        //判断用户是否已经回答过
+        $feedlist = model ( 'Feed' )->getAnswerList('feed_questionid='.$feed_id.' and uid='.$GLOBALS['ts']['mid'].' and is_del = 0 and (is_audit=1 OR is_audit=0)');
+        if((is_array($feedlist) && is_array($feedlist['data']) && count($feedlist['data'])>0) || ($feedInfo['uid']==$this->mid))
+        {
+            //$this->assign ( 'hasAnswer', '1' );
+        }
+
+        // 获取用户信息
 		$user_info = model ( 'User' )->getUserInfo ( $feedInfo['uid'] );
-		
+
 		// 个人空间头部
 		//$this->_top ();
-		
+
 		// 判断隐私设置
 		$userPrivacy = $this->privacy ( $this->uid );
 		if ($userPrivacy ['space'] !== 1) {
-			//$this->_sidebar ();	
-				
+			//$this->_sidebar ();
+
 			$weiboSet = model ( 'Xdata' )->get ( 'admin_Config:feed' );
 			$a ['initNums'] = $weiboSet ['weibo_nums'];
 			$a ['weibo_type'] = $weiboSet ['weibo_type'];
@@ -173,34 +173,34 @@ class IndexAction extends Action {
 		} else {
 			$this->_assignUserInfo ( $this->uid );
 		}
-		
+
 		//认证专家
 		$uids = model('UserGroupLink')->getUserByGroupID(8);
 		$user_count = model ( 'UserData' )->getUserDataByUids ($uids);
 		$authenticateExpert = model('user')->getUserInfoByUids($uids);
 		//print_r($authenticateExpert);
 		$this->assign ( 'authenticateExpert_UserCount', $user_count );
-		$this->assign('authenticateExpert',$authenticateExpert);	
-		
+		$this->assign('authenticateExpert',$authenticateExpert);
+
 		//获取追问信息
 		$addFeed =	model('feed')->getQuestionList('add_feedid = '.$feed_id.' and is_del = 0 and (is_audit=1 OR is_audit=0)');
 		$this->assign('addquestionlist', $addFeed['data']);
-		
+
 		$loginData = model('Login')->get($GLOBALS['ts']['mid'], 'sina');
 		if($loginData['oauth_token'] != '')
 		{
 			$this->assign('token', '1');
 		}
-		
+
 		$loginData = model('Login')->get($GLOBALS['ts']['mid'], 'qzone');
 		if($loginData['oauth_token'] != '')
 		{
 			$this->assign('qqtoken', '1');
 		}
-	
+
 		$this->setTitle($feedInfo['body']);
 		$this->setKeywords($feedInfo['body']);
-		
+
 		$this->display ();
 	}
 	
