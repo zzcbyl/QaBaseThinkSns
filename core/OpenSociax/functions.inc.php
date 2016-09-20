@@ -783,6 +783,10 @@ function model($name,$params=array()) {
 
 // 调用接口服务
 function X($name,$params=array(),$domain='model') {
+
+
+$name = ucfirst($name);
+
     static $_service = array();
 
     $app =  C('DEFAULT_APP');
